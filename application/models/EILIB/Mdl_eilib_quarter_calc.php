@@ -20,11 +20,11 @@ public function quarterCalc(DateTime $startdate,DateTime $enddate)
     }
     else{
         $s_year=intval($startdate->format('Y'));
-        $s_month=intval($startdate->format('m'))+1;
+        $s_month=intval($startdate->format('m'));
         $s_date=intval($startdate->format('d'));
 
         $e_year=intval($enddate->format('Y'));
-        $e_month=intval($enddate->format('m'))+1;
+        $e_month=intval($enddate->format('m'));
         $e_date=intval($enddate->format('d'));
 
         $date = new DateTime();

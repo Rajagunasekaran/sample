@@ -8,13 +8,17 @@ class Mdl_eilib_currency_to_word extends CI_Model {
     public function currency_To_Word($amt){
         $amtSplit=explode('.',$amt);
         $dollar= $this->toText($amtSplit[0]);
+        if($amtSplit[1]>0)
         $cent= $this->toText($amtSplit[1]);
+        if($amtSplit[1]>0)
         return $dollar.($amtSplit[0]==1?' Dollar and ':' Dollars and ').$cent.($amtSplit[1]==01?' Cent ':' Cents');
+        else
+            return $dollar.($amtSplit[0]==1?' Dollar and ':' Dollars');
+
     }
     public function toText($amt) {
         if (is_numeric($amt)) {
-            echo '' . number_format($amt, 0, '.', ',') . '';
-            $sign = $amt > 0 ? '' : 'Negative ';
+            $sign = $amt >= 0 ? '' : 'Negative ';
             return $sign . $this->toQuadrillions(abs($amt));
         } else {
             throw new Exception('Only numeric values are allowed.');

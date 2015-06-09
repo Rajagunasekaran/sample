@@ -53,7 +53,7 @@ class Mdl_eilib_invoice_contract extends CI_Model{
             } catch (Exception $e) {
             }
         }
-        SetDocOwnerGivenId($service,$docid,$docowner);
+        $this->SetDocOwnerGivenId($service,$docid,$docowner);
     }
 //SET THE DOC OWNER
     public   function CUST_SetDocOwner($service,$docid,$docowner,$semailid)
@@ -77,11 +77,12 @@ class Mdl_eilib_invoice_contract extends CI_Model{
             } catch (Exception $e) {
             }
         }
+        $this-> SetDocOwnerGivenId($service,$docid,$docowner);
     }
 //FUNCTION TO REMOVE EDITORS IF SESSION ID NOT OWNER OR EDITOR
     public function RemoveEditors($service,$docid,$email_fetch,$docowner,$UserStamp)
     {
-        SetDocOwnerGivenId($service,$docid,$docowner);
+        $this-> SetDocOwnerGivenId($service,$docid,$docowner);
         if(($email_fetch!=$UserStamp)&&($docowner!=$UserStamp))
         {
             try {
@@ -143,8 +144,8 @@ class Mdl_eilib_invoice_contract extends CI_Model{
         $e_day=date("d", $enddateString);
         $e_month=date("m", $enddateString);
         $e_year=date("Y", $enddateString);
-        $dateStringCheckin=strtotime($startdate);
-        $startdate_oneMonth = strtotime ("+1 month",$dateStringCheckin);
+        $startdate_oneMonth=strtotime($startdate);
+        $startdate_oneMonth = strtotime ("+1 month",$startdate_oneMonth);
         $newstartdate= date("Y-m-d",$startdate_oneMonth);
         $startdate_array=[];
         $enddate_array=[];
@@ -224,13 +225,13 @@ class Mdl_eilib_invoice_contract extends CI_Model{
                     $startdate_array[]=$startdates;
                 }
                 $dateStringCheckin=strtotime($startdate);
-                $startdate_oneMonth = strtotime ("+".(intval($i)+1)." month",$dateStringCheckin);
+                $startdate_oneMonth = strtotime ("+".(intval($i))." month",$dateStringCheckin);
                 $monthenddate= date("Y-m-d",$startdate_oneMonth);
                 if($monthenddate<$enddate)
                 {
                     $MonthMinusDay = strtotime ("-1 day",strtotime($monthenddate));
                     $date = new DateTime();
-                    $date->setDate($s_year,(intval($s_month)+$i+1),date("d", strtotime($MonthMinusDay)));
+                    $date->setDate($s_year,(intval($s_month)+$i),date("d", strtotime($MonthMinusDay)));
                     $enddate_array[]=$date->format('Y-m-d') ;
                 }
                 else
@@ -347,13 +348,12 @@ class Mdl_eilib_invoice_contract extends CI_Model{
     }
 //CUSTOMER CONTRACT
     public   function CUST_contract($service,$unitno,$checkindate,$checkoutdate,$companyname,$customername,$noticeperiod,$passportno,$passportdate,$epno,$epdate,$noticedate,$lp,$cardno,$rent,$airquartfee,$airfixedfee,$electcap,$dryclean,$chkoutfee,$procfee,$deposit,$waived,$roomtype,$rent_check,$formname,$sendmailid,$docowner) {
-        try {
+        try {$ntc_date1='';$DEPOSITword='';
             $todaydatestring =  date("d-M-Y");$flagProratedRentCkout=0;
             $flag_paraAlign='';$flag_paraAlign_sec=''; $flag_paraAlign_thrd=''; $flag_paraAlign_four=''; $flag_paraAlign_five='';$noepcontlineno='';
             $this->load->model('EILIB/Mdl_eilib_common_function');
             $this->load->model('EILIB/Mdl_eilib_currency_to_word');
             $this->load->model('EILIB/Mdl_eilib_prorated_calc');
-
             $fileid= $this->Mdl_eilib_common_function->CUST_FileId_invoiceTem();
             $parentId= $this->Mdl_eilib_common_function->CUST_TargetFolderId();
             $url= $this->Mdl_eilib_common_function->getUrlAccessGasScript();
@@ -419,26 +419,26 @@ class Mdl_eilib_invoice_contract extends CI_Model{
                 $depstring =$DEPOSITno;//.toString();
                 $DEPOSITEword= $this->Mdl_eilib_currency_to_word->currency_To_Word($depstring);
             }
-            $todaydat =date('d-m-Y');
+            $todaydat =date('d/m/Y');
             $check_in_dated_lastmonth=strtotime($checkindate);
 //            $check_in_dated_lastmonth = strtotime ("-1 month",$dateStringCheckin);
             $check_in_date= date("Y-m-d",$check_in_dated_lastmonth);
-            $check_in_dated=date("d-m-Y",$check_in_dated_lastmonth);
+            $check_in_dated=date("d-M-Y",$check_in_dated_lastmonth);
             $datecheckedin = intval(date("d", $check_in_dated_lastmonth));
             $check_out_dated_lastmonth=strtotime($checkoutdate);
 //            $check_out_dated_lastmonth = strtotime ("+1 month",$dateStringCheckOut);
             $check_out_date= date("Y-m-d",$check_out_dated_lastmonth);
-            $cexdd=date("d-m-Y",$check_out_dated_lastmonth);
+            $cexdd=date("d-M-Y",$check_out_dated_lastmonth);
             $datecheckedin = intval(date("d", $check_out_dated_lastmonth));
 // to generate last date of a month
             $lastMonthString= strtotime ("+1 month",$check_in_dated_lastmonth);
             $LastMonth = date("Y-m-d",$lastMonthString);
-            $LastMonthformat=date("d-m-Y",$lastMonthString);
+            $LastMonthformat=date("d-M-Y",$lastMonthString);
 //end
             if( $noticedate!="")
             {            $dateStringNotice=strtotime($noticedate);
-                $notice_lastmonth = strtotime ("-1 month",$dateStringNotice);
-                $ntc_date1=date("d-m-Y",$notice_lastmonth);
+//                $notice_lastmonth = strtotime ("-1 month",$dateStringNotice);
+                $ntc_date1=date("d/m/Y",$dateStringNotice);
                 $noticeSt=$cust_config_array[11];
                 $noticeSt=$noticeSt;
             }
@@ -466,7 +466,7 @@ class Mdl_eilib_invoice_contract extends CI_Model{
             {
                 $address1value=$cust_config_array[14];
             }
-            if($waived != "")
+            if($waived != "null")
             {
                 $waived = "(WAIVED)";
             }
@@ -488,7 +488,7 @@ class Mdl_eilib_invoice_contract extends CI_Model{
                 $fixedstmtfetch=str_replace("AIRFIXED",$fixedaircon_fetch,$fixedstmtfetch);
                 $fixedstmtfetch= $fixedstmtfetch;
             }
-            else if($quartaircon_fetch!=null)
+            else if($quartaircon_fetch!='null')
             {
                 $quartstmtfetch=$cust_config_array[15];
                 $quartstmtfetch=str_replace("AIRQ",$quartaircon_fetch,$quartstmtfetch);
@@ -533,14 +533,14 @@ class Mdl_eilib_invoice_contract extends CI_Model{
             }
             if($passportdate!="")
             {
-                $dateStringPassport=strtotime($passportdate);
-                $passport_dated_lastmonth = strtotime ("-1 month",$dateStringPassport);
-                $passportdate= date("d-m-Y",$passport_dated_lastmonth);
+                $passport_dated_lastmonth=strtotime($passportdate);
+//                $passport_dated_lastmonth = strtotime ("-1 month",$dateStringPassport);
+                $passportdate= date("d/m/Y",$passport_dated_lastmonth);
             }
             if($epdate!="")
             {
-                $dateStringEP=strtotime($epdate);
-                $EP_lastmonth = strtotime ("-1 month",$dateStringEP);
+                $EP_lastmonth=strtotime($epdate);
+//                $EP_lastmonth = strtotime ("-1 month",$dateStringEP);
                 $epdate= date("d/m/Y",$EP_lastmonth);
             }
             if($noticeperiod=="")
@@ -681,10 +681,12 @@ class Mdl_eilib_invoice_contract extends CI_Model{
             $parent = new Google_Service_Drive_ParentReference();
             $parent->setId($parentId);
             $file->setParents(array($parent));
+            echo $response;exit;
             $service->files->patch($response, $file);
             $file = $service->files->get($response);
             return [1,$response,$file->embedLink];
         } catch (Exception $ex) {
+            return $ex->getMessage();
             return [0];
         }
 //        $this->CUST_SetDocOwner($service,$response,$docowner,$sendmailid);
@@ -716,6 +718,7 @@ class Mdl_eilib_invoice_contract extends CI_Model{
         try {
             $service->permissions->insert($fileid, $newPermission);
         } catch (Exception $e) {
+            echo $e->getMessage();
         }
     }
 //FUNCTION TO CREATE INVOICE
@@ -810,6 +813,7 @@ class Mdl_eilib_invoice_contract extends CI_Model{
             $month_calculation=$this->nonproratedmonthcalculation(  $check_in_date,  $check_out_date);
             $startdate_array=  $month_calculation[0];
             $enddate_array=  $month_calculation[1];
+
             if(  $formname=="CREATION" ||   $formname=="RECHECKIN")
             {
                 if((  $yearchk>0)||(  $monthschk>0)||((  $monthchk>0)&&(  $daychk>0)))

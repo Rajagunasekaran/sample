@@ -1608,7 +1608,7 @@ if($(this).val()!='SELECT'){
     $(".preloader").show();
     $.ajax({
         type:'POST',
-        'url':"<?php echo base_url();?>" + "index.php/Ctrl_Access_Rights_Search_Update/URSRC_get_roledetails",
+        'url':controller_url+"URSRC_get_roledetails",
         data:{'role':$(this).val()},
         success:function(data){
             var roledetails=JSON.parse(data);

@@ -656,7 +656,7 @@ class Mdl_access_rights_search_update extends CI_Model{
     }
 
     public function URSRC_login_creation_save($URSRC_mainradiobutton,$URSRC_tb_joindate,$URSRC_custom_role,$URSRC_tb_loginid,$USERSTAMP,$service){
-                        set_time_limit(0);
+//                        set_time_limit(0);
         $URSRC_sharedocflag='';$URSRC_sharecalflag='';$URSRC_sharesiteflag=0;
         try{
           $URSRC_temptable='';

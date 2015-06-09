@@ -957,7 +957,7 @@ class Mdl_eilib_invoice_contract extends CI_Model{
                     }
                     else
                     {
-                        $reminingmonths= number_format(floatval($reminingmonths)+floatval($reminingmonths),2,'.','');
+                        $reminingmonths= number_format(floatval($reminingmonths)+floatval($amount),2,'.','');
                     }
                 }
             }

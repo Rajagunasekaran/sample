@@ -50,7 +50,7 @@ class Mdl_finance_extract_deposit_pdf extends CI_Model{
         $data=array('DDE_flag'=>1,'DDE_currentfile_id'=>$DDE_currentfile_id);
         $sheetarray=array();
         $sheetarray=$this->Mdl_eilib_common_function->Func_curl($data);
-        $sheetarray=explode(',',$sheetarray);
+        $sheetarray=json_decode($sheetarray,true);
         $montharray=[];
         for($i=0;$i<count($sheetarray);$i++){
             if($sheetarray[$i]!=''){
@@ -67,7 +67,7 @@ class Mdl_finance_extract_deposit_pdf extends CI_Model{
         $data1=array('DDE_flag'=>2,'shturl'=>$shturl,'selectedsheet'=>$month);
         $unitarray=array();
         $unitarray=$this->Mdl_eilib_common_function->Func_curl($data1);
-        $unitarray=explode(',',$unitarray);
+        $unitarray=json_decode($unitarray,true);
         $unitarray=array_values(array_unique($unitarray));
         sort($unitarray);
         return $unitarray;
@@ -78,7 +78,7 @@ class Mdl_finance_extract_deposit_pdf extends CI_Model{
         $data2=array('DDE_flag'=>3,'shturl'=>$shturl,'selectedunit'=>$unitno,'selectedsheet'=>$month);
         $custarray=array();
         $custarray=$this->Mdl_eilib_common_function->Func_curl($data2);
-        $custarray=explode(',',$custarray);
+        $custarray=json_decode($custarray,true);
         $custarray=array_values(array_unique($custarray));
         sort($custarray);
         for($i=0;$i<count($custarray);$i++){
@@ -99,7 +99,7 @@ class Mdl_finance_extract_deposit_pdf extends CI_Model{
         $data3=array('DDE_flag'=>4,'shturl'=>$shturl,'selectedunit'=>$unitno,'selectedname'=>$name,'selectedsheet'=>$month);
         $custidarray=array();
         $custidarray=$this->Mdl_eilib_common_function->Func_curl($data3);
-        $custidarray=explode(',',$custidarray);
+        $custidarray=json_decode($custidarray,true);
         if($custidarray[0]!="")
         {
             $custidarray=$custidarray;
@@ -115,7 +115,34 @@ class Mdl_finance_extract_deposit_pdf extends CI_Model{
             'nocustid'=>$nocustid);
         $recverarray=array();
         $recverarray=$this->Mdl_eilib_common_function->Func_curl($data4);
-        $recverarray=explode(',',$recverarray);
+        $recverarray=json_decode($recverarray,true);
         return $recverarray;
+    }
+    public function DDE_Dep_Exctsubmit($shturl,$selectedunit,$customername,$checkarray,$selectedsheet,$customermail,$customeridname){
+        for($k=0;$k<count($checkarray);$k++){
+            if($k==0){
+                $checkarray=$checkarray[$k];
+            }
+            else{
+                $checkarray=$checkarray.'^^'.$checkarray[$k];
+            }
+        }
+        $sub_exequery ="SELECT ETD .ETD_EMAIL_SUBJECT,ETD. ETD_EMAIL_BODY FROM  EMAIL_TEMPLATE_DETAILS ETD ,EMAIL_TEMPLATE ET WHERE (ET .ET_ID=ETD .ET_ID) AND ET_EMAIL_SCRIPT='DEPOSIT DEDUCTION'";
+        $sub_rs = $this->db->query($sub_exequery);
+            $subject_db=$sub_rs->row()->ETD_EMAIL_SUBJECT;
+            $message_db=$sub_rs->row()->ETD_EMAIL_BODY;
+        $rcontent = $customername. " - ".$selectedunit;
+        $subject =str_replace('[UNIT_NO - CUSTOMER_NAME]',$rcontent,$subject_db);
+        $body =str_replace('[UNIT_NO-  CUSTOMER_NAME]',$rcontent,$message_db);
+        $emailindex = strstr($customermail,'@',true);
+        $eusername = strtoupper($emailindex);
+        $body = str_replace('[MAILID_USERNAME]',$eusername,$body);
+        $this->load->model('EILIB/Mdl_eilib_common_function');
+        $data5=array('DDE_flag'=>6,'shturl'=>$shturl,'selectedunit'=>$selectedunit,'customername'=>$customername,'checkarray'=>$checkarray,
+            'selectedsheet'=>$selectedsheet,'customeridname'=>$customeridname);
+        $submitarray=array();
+        $submitarray=$this->Mdl_eilib_common_function->Func_curl($data5);
+        $submitarray=json_decode($submitarray,true);
+        return $submitarray;
     }
 }

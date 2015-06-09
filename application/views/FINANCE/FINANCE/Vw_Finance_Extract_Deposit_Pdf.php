@@ -87,7 +87,7 @@ require_once('application/libraries/EI_HDR.php');
                     $('#DDE_recvertable').hide();
                     $('#em').hide();
                     $('#DDE_unitselect').hide();
-                    $('#DDE_emailtable tr').remove();
+                    $('#DDE_emailtable >div').remove();
                     $('#DDE_emailtable').hide();
                 }
             });
@@ -243,10 +243,10 @@ require_once('application/libraries/EI_HDR.php');
                 $.ajax({
                     type: "POST",
                     url: ctrl_DDExtract_url+'/DDE_Dep_Exct_submit',
-                    data: formelement,
+                    data: formelement+'&shturl='+shturl,
                     success: function(submitdata){
                         var submit_values=JSON.parse(submitdata);
-                        DDE_clearandshowmsg(submit_values);
+//                        DDE_clearandshowmsg(submit_values);
                     },
                     error:function(data){
                         var errordata=(JSON.stringify(data));
@@ -495,7 +495,7 @@ require_once('application/libraries/EI_HDR.php');
                 $('#DDE_Emaillist').hide();
                 $('#DDE_emailtable').hide();
                 var email='<label></label>';
-                email='<div class="form-group" id="DDE_Emaillable"><label class="col-sm-2" id="DDE_LBL_Emaillable"> EMAIL ADDRESS <em>*</em></label><div class="col-sm-3"><select id="DDE_LB_Emaillist" name="DDE_LB_Emaillist" class="submitvalidate form-control" ></select></div></div>';
+                email='<div class="form-group" id="DDE_Emaillist"><label class="col-sm-2" id="DDE_LBL_Emaillable"> EMAIL ADDRESS <em>*</em></label><div class="col-sm-4"><select id="DDE_LB_Emaillist" name="DDE_LB_Emaillist" class="submitvalidate form-control" ></select></div></div>';
                 $('#DDE_emailtable').append(email);
                 var options =' <option>SELECT</option>';
                 for (var i = 0; i < srtemailarray.length; i++) {
@@ -521,7 +521,7 @@ require_once('application/libraries/EI_HDR.php');
                 $("html, body").animate({ scrollTop: $(document).height() }, "slow");
                 var idckb= $(this).val();
                 var checkid =$(this).attr('id');
-                var cc_check=$("input[name=DDE_chk_checkboxinc]:checked").is(":checked");
+                var cc_check=$('input[name="DDE_chk_checkboxinc[]"]:checked').is(":checked");
                 var email=$("#DDE_LB_Emaillist").val();
                 var checkid =$(this).attr('id');
                 var dd=$("#DDE_LB_Emaillist").val();
@@ -542,12 +542,28 @@ require_once('application/libraries/EI_HDR.php');
                         $('#DDE_btn_sbutton').hide();
                         $('#DDE_btn_rbutton').hide();
                     }
-                    if((cc_check==true)&&sd!="" && ed!="")
+                    else if((cc_check==true)&&sd!="" && sd!="")
                     {
-                        $('#DDE_btn_sbutton').hide();
-                        $('#DDE_btn_rbutton').hide();
                         $('#DDE_Emaillist').show();
                         $('#DDE_emailtable').show();
+                        if((email=="SELECT"))
+                        {
+                            $("#DDE_btn_sbutton").attr("disabled", "disabled");
+                            $('#DDE_btn_sbutton').hide();
+                            $('#DDE_btn_rbutton').hide();
+                        }
+                        else
+                        {
+                            $("#DDE_btn_sbutton").removeAttr("disabled");
+                            $('#DDE_btn_sbutton').show();
+                            $('#DDE_btn_rbutton').show();
+                        }
+                    }
+                    if((cc_check==false)&&(email=="SELECT"))
+                    {
+                        $("#DDE_btn_sbutton").attr("disabled", "disabled");
+                        $('#DDE_btn_sbutton').hide();
+                        $('#DDE_btn_rbutton').hide();
                     }
                     var checkid=checkid.replace( /^\D+/g, '');
                     var sdateid ="Dep_Exct_sdatetb"+checkid;
@@ -555,7 +571,7 @@ require_once('application/libraries/EI_HDR.php');
                     var sd=$("#"+sdateid).val();
                     var ed=$("#"+edateid).val();
                     var errid="errid"+checkid;
-                    var cc_check=$("input[name=DDE_chk_checkboxinc]:checked").is(":checked");
+                    var cc_check=$('input[name="DDE_chk_checkboxinc[]"]:checked').is(":checked");
                     var sedatetb='<label></label>';
                     if((sd=="")||(ed==""))
                     {
@@ -610,10 +626,8 @@ require_once('application/libraries/EI_HDR.php');
                 else
                 {
                     $('#'+errid).hide();
-                    var STDLY_INPUT_table = document.getElementById('DDE_recvertable');
-                    var STDLY_INPUT_table_rowlength=STDLY_INPUT_table.rows.length;
                     var getid=[];
-                    $('input:checkbox[name=DDE_chk_checkboxinc]:checked').each(function() {
+                    $('input:checkbox[name="DDE_chk_checkboxinc[]"]:checked').each(function() {
                         var checkgetid=$(this).attr('id');
                         getid.push(checkgetid.replace( /^\D+/g, ''))
                     });
@@ -633,8 +647,14 @@ require_once('application/libraries/EI_HDR.php');
                     }
                     if(count==(getid.length))
                     {
-                        $('#DDE_btn_sbutton').hide();
-                        $('#DDE_btn_rbutton').hide();
+                        if(getid.length==0){
+                            $('#DDE_btn_sbutton').hide();
+                            $('#DDE_btn_rbutton').hide();
+                        }
+                        else{
+                            $('#DDE_btn_sbutton').show();
+                            $('#DDE_btn_rbutton').show();
+                        }
                         $('#DDE_Emaillist').show();
                         $('#DDE_emailtable').show();
                     }
@@ -658,7 +678,7 @@ require_once('application/libraries/EI_HDR.php');
                 var edateid ="Dep_Exct_edatetb"+checkid;
                 var sd=$("#"+sdateid).val();
                 var ed=$("#"+edateid).val();
-                if(($("#DDE_LB_Emaillist").val()=="SELECT")||($("#DDE_lb_unitselect").val()=="SELECT")||(($('input:checkbox[name=DDE_chk_checkboxinc]').is(':checked')==false)&&(checkid>1))||($("#DDE_lb_customerselect").val()=="SELECT" ||sd==""||ed==""))
+                if(($("#DDE_LB_Emaillist").val()=="SELECT")||($("#DDE_lb_unitselect").val()=="SELECT")||(($('input:checkbox[name="DDE_chk_checkboxinc[]"]').is(':checked')==false)&&(checkid>1))||($("#DDE_lb_customerselect").val()=="SELECT" ||sd==""||ed==""))
                 {
                     $('#DDE_btn_sbutton').attr("disabled", "disabled");
                 }
@@ -724,7 +744,7 @@ require_once('application/libraries/EI_HDR.php');
                     </div>
                     <div class="form-group" id="DDE_customerselect">
                         <label class="col-sm-2">CUSTOMER NAME <em id='em'#>*</em></label>
-                        <div class="col-sm-3"><select id='DDE_lb_customerselect' name="DDE_lb_customerselect" class="form-control"><option>SELECT</option></select></div>
+                        <div class="col-sm-4"><select id='DDE_lb_customerselect' name="DDE_lb_customerselect" class="form-control"><option>SELECT</option></select></div>
                     </div>
                     <div class="form-group" id="DDE_radiotable" hidden>
                     </div>

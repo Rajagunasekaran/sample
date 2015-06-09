@@ -155,7 +155,7 @@ class Ctrl_Personal_Daily_Entry_Search_Update_Delete extends CI_Controller{
     }
     //EXPENSE CAR UPDATEFUNCTION
     public function expensecarupdate(){
-        global $USERSTAMP;
+        $USERSTAMP= $this->Mdl_eilib_common_function->getSessionUserStamp();
         $ecid= $this->input->post('rowid');
         $carcategory= $this->input->post('carcategory');
         $carcategory=$this->db->escape_like_str($carcategory);
@@ -178,7 +178,7 @@ class Ctrl_Personal_Daily_Entry_Search_Update_Delete extends CI_Controller{
     }
     //EXPENSE PERSONAL UPDATEFUNCTION
     public function expensepersonalupdate(){
-        global $USERSTAMP;
+        $USERSTAMP= $this->Mdl_eilib_common_function->getSessionUserStamp();
         $epid= $this->input->post('rowid');
         $personalcategory= $this->input->post('personalcategory');
         $personalcategory=$this->db->escape_like_str($personalcategory);
@@ -201,7 +201,7 @@ class Ctrl_Personal_Daily_Entry_Search_Update_Delete extends CI_Controller{
     }
     //EXPENSE CAR LOAN UPDATEFUNCTION
     public function expensecarloanupdate(){
-        global $USERSTAMP;
+        $USERSTAMP= $this->Mdl_eilib_common_function->getSessionUserStamp();
         $eclid= $this->input->post('rowid');
         $eclpaiddate= $this->input->post('eclpaiddate');
         $eclpaiddate=date('Y-m-d',strtotime($eclpaiddate));
@@ -222,7 +222,7 @@ class Ctrl_Personal_Daily_Entry_Search_Update_Delete extends CI_Controller{
     }
     //DELETE OPTION
     public function deleteoption(){
-        global $USERSTAMP;
+        $USERSTAMP= $this->Mdl_eilib_common_function->getSessionUserStamp();
         $PDLY_rowid= $this->input->post('PDLY_rowid');
         $startdate= $this->input->post('startdate');
         $startdate=date('Y-m-d',strtotime($startdate));

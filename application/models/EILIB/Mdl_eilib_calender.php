@@ -107,53 +107,34 @@ class Mdl_eilib_calender  extends CI_Model {
             return $ex->getMessage();
         }
     }
-//UNIT AND STARHUB CALENDAR UPDATION
-    public  function StarHubUnit_DeleteCalEvent($cal,$startdate,$startdate_starttime,$startdate_endtime,$enddate,$enddate_starttime,$enddate_endtime,$TypeOfExp,$unitno,$accountno,$starteventtype,$endeventtype,$eiornonei,$rent
-        ,$oldStartDate,$oldEndDate){
+///FUNCTION TO DELETE CALENDER EVENTS FOR STAR HUB
+    public function StarHubUnit_DeleteCalEvent($cal,$unitno,$startdate,$start_time_in,$start_time_out,$enddate,$end_time_in,$end_time_out,$formname)
+    {
         $calId=$this->GetEICalendarId();
-        //create start event
-        $events = $cal->events->listEvents($calId);
+        $startevents= $this->CalenderTime_Convertion($startdate,$start_time_in,$start_time_out);
+        $optDate= array('timeMax' => $startdate.'T'.$start_time_out.'+08:00','timeMin' => $startdate.'T'.$start_time_in.'+08:00');
+        $events = $cal->events->listEvents($calId,$optDate);
         foreach ($events->getItems() as $event) {
-            $summaryStarUnit= $event->getSummary();
-            if(preg_match("/-/",(String)$summaryStarUnit)){
-                $descriptionName=explode(' - ',$event->getSummary());
-                $startDateCheck=explode('T',$event->getstart()->dateTime);
-                $endDateCheck=explode('T',$event->getetart()->dateTime);
-                if($event->getSummary()!='')
-                    $checkStartEndDateFlag=$descriptionName[1];
-                else
-                    $checkStartEndDateFlag='';
-                if($TypeOfExp=='UNIT'){
-                    $checkStarUnit=$unitno;
-                }
-                else{
-                    $checkStarUnit=$TypeOfExp.' '.$unitno;
-                    $checkStartEndDateFlag=$descriptionName[1];
-                }
-                if( $descriptionName[0] === $checkStarUnit && $startDateCheck[0] == $oldStartDate && $starteventtype==$checkStartEndDateFlag){
-                    $eventUpdate = $cal->events->get($calId, $event->getId());
-                    $startEndCal=$this->CalenderTime_Convertion($startdate,$startdate_starttime,$startdate_endtime);
-                    $eventUpdate->setStart($startEndCal[0]);
-                    $eventUpdate->setEnd($startEndCal[1]);
-                    $getDescLocTiltle=$this->getConcateOfDescLoc($TypeOfExp,$unitno,$starteventtype,$accountno,$eiornonei,$rent);
-                    $eventUpdate->setDescription($getDescLocTiltle[1]);
-                    $eventUpdate->setLocation($getDescLocTiltle[2]);
-                    $eventUpdate->setSummary($getDescLocTiltle[0]);
-                    $updatedEvent = $cal->events->update($calId, $eventUpdate->getId(), $eventUpdate);
-                }
-                if( $descriptionName[0] === $checkStarUnit && $endDateCheck[0] == $oldEndDate && $starteventtype==$checkStartEndDateFlag){
-                    $eventUpdate = $cal->events->get($calId, $event->getId());
-                    $startEndCal=$this->CalenderTime_Convertion($enddate,$enddate_starttime,$enddate_endtime);
-                    $eventUpdate->setStart($startEndCal[0]);
-                    $eventUpdate->setEnd($startEndCal[1]);
-                    $getDescLocTiltle=$this->getConcateOfDescLoc($TypeOfExp,$unitno,$starteventtype,$accountno,$eiornonei,$rent);
-                    $eventUpdate->setDescription($getDescLocTiltle[1]);
-                    $eventUpdate->setLocation($getDescLocTiltle[2]);
-                    $eventUpdate->setSummary($getDescLocTiltle[0]);
-                    $updatedEvent = $cal->events->update($calId, $eventUpdate->getId(), $eventUpdate);
-                }
-            }
-        }
+            $summaryStarUnit=$event->getDescription();
+            if(preg_match("/-/",(String)$summaryStarUnit)==1){
+                $start_desc=explode(' - ',$event->getDescription());
+                if($start_desc[1]!='undefined' && (preg_match("/EI/",(String)$start_desc[1]==1)&&$formname=="UNIT")||($formname=="INTERNET")||($formname=="CABLE"))
+                {
+                    if(($start_desc[0]==$unitno && $formname=="UNIT")||($start_desc[0]==$unitno && preg_match("/$formname/",(String)$start_desc[2])== 1 ))
+                    {
+                        $cal->events->delete($calId, $event->getId());}}}}
+        $optDate= array('timeMax' => $enddate.'T'.$end_time_out.'+08:00','timeMin' => $enddate.'T'.$end_time_in.'+08:00');
+        $events = $cal->events->listEvents($calId,$optDate);
+        foreach ($events->getItems() as $event) {
+            $summaryStarUnit=$event->getDescription();
+            if(preg_match("/-/",(String)$summaryStarUnit)==1){
+
+                $start_desc=explode(' - ',$event->getDescription());
+                if($start_desc[1]!='undefined' && (preg_match("/EI/",(String)$start_desc[1]==1)&&$formname=="UNIT")||($formname=="INTERNET")||($formname=="CABLE"))
+                {
+                    if(($start_desc[0]==$unitno && $formname=="UNIT")||($start_desc[0]==$unitno && preg_match("/$formname/",(String)$start_desc[2])== 1 ))
+                    {
+                        $cal->events->delete($calId, $event->getId());}}}}
     }
 //COMMON FUNCTION FOR CONCATING THE STARHUB AND UNIT
     function getConcateOfDescLoc($TypeOfExp,$unitno,$endeventtype,$accountno,$eiornonei,$rent){

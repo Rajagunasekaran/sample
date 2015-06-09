@@ -62,11 +62,11 @@ require_once('application/libraries/EI_HDR.php');
         var BTDTL_SEARCH_configmon_aircon=[];
         var BTDTL_SEARCH_starhubid=[];
         var BTDTL_SEARCH_airconserviceby=[];
-        var BTDTL_SEARCH_aircontypes ='<option>SELECT</option>';
-        var BTDTL_SEARCH_carparktypes ='<option>SELECT</option>';
-        var BTDTL_SEARCH_digitaltypes ='<option>SELECT</option>';
-        var BTDTL_SEARCH_electricitytypes ='<option>SELECT</option>';
-        var BTDTL_SEARCH_starhubtypes ='<option>SELECT</option>';
+        var BTDTL_SEARCH_aircontypes ='';
+        var BTDTL_SEARCH_carparktypes ='';
+        var BTDTL_SEARCH_digitaltypes ='';
+        var BTDTL_SEARCH_electricitytypes ='';
+        var BTDTL_SEARCH_starhubtypes ='';
         var BTDTL_SEARCH_aircontypes_flag ='';
         var BTDTL_SEARCH_carparktypes_flag ='';
         var BTDTL_SEARCH_digitaltypes_flag ='';
@@ -80,8 +80,13 @@ require_once('application/libraries/EI_HDR.php');
     //RADIO  BUTTON CLICK FUNCTION
         $('.BDE_rd_selectform').click(function(){
             $('#BTDTL_SEARCH_lb_searchoptions').html('');
-            var radiooption=$(this).val();
-            if(radiooption=='bizdetailentryform')
+            BTDTL_SEARCH_aircontypes='';
+            BTDTL_SEARCH_carparktypes ='';
+            BTDTL_SEARCH_digitaltypes ='';
+            BTDTL_SEARCH_electricitytypes ='';
+            BTDTL_SEARCH_starhubtypes ='';
+            var bizdetailradiooption=$(this).val();
+            if(bizdetailradiooption=='bizdetailentryform')
             {
                 $('.preloader').show();
                 $.ajax({
@@ -106,8 +111,9 @@ require_once('application/libraries/EI_HDR.php');
                 $('#BDTL_INPUT_lbl_unitno_list').hide();
                 $('#BDTL_INPUT_lb_unitno_list').hide();
                 $('#BDTL_INPUT_tble_btn').hide();
+                $('#BTDTL_SEARCH_lb_searchoptions').html('');
             }
-            else if(radiooption=='bizdetailsearchform')
+            else if(bizdetailradiooption=='bizdetailsearchform')
             {
                $('.preloader').show();
                 $.ajax({
@@ -534,10 +540,10 @@ require_once('application/libraries/EI_HDR.php');
                     }
                     var BDTL_INPUT_errormsg_replace = BDTL_INPUT_errorarr[3].EMC_DATA.replace("[TYPE]",$('#BDTL_INPUT_lb_expense_type').find('option:selected').text());
                     show_msgbox("BIZ EXPENSE DETAIL ENTRY/SEARCH/UPDATE/DELETE",BDTL_INPUT_errormsg_replace,"success",false);
-                    $(':input,textarea','#BDTL_INPUT_form_biz_detail')
-                        .not(':button')
-                        .val('')
-                        .removeAttr('selected');
+//                    $(':input,textarea','#BDTL_INPUT_form_biz_detail')
+//                        .not(':button')
+//                        .val('')
+//                        .removeAttr('selected');
                     $('#BDTL_INPUT_lb_unitno_list').hide();
                     $('#BDTL_INPUT_lbl_unitno_list').hide();
                     $('#BDTL_INPUT_div_aircon').hide();
@@ -617,6 +623,11 @@ require_once('application/libraries/EI_HDR.php');
                 $('#BDTL_INPUT_form_biz_detail').show();
                 $('#BTDTL_SEARCH_lb_expense_type').html(BTDTL_SEARCH_options).show();
                 $('#srchexpensetype').show();
+                BTDTL_SEARCH_aircontypes ='<option>SELECT</option>';
+                BTDTL_SEARCH_carparktypes ='<option>SELECT</option>';
+                BTDTL_SEARCH_digitaltypes ='<option>SELECT</option>';
+                BTDTL_SEARCH_electricitytypes ='<option>SELECT</option>';
+                BTDTL_SEARCH_starhubtypes ='<option>SELECT</option>';
                 for (var i = 0; i < BTDTL_SEARCH_expensearr.length; i++)
                 {
                     if((BTDTL_SEARCH_expensearr[i].BTDTL_SEARCH_expensetypes_id ==100)||(BTDTL_SEARCH_expensearr[i].BTDTL_SEARCH_expensetypes_id ==101)||(BTDTL_SEARCH_expensearr[i].BTDTL_SEARCH_expensetypes_id ==191)||(BTDTL_SEARCH_expensearr[i].BTDTL_SEARCH_expensetypes_id ==195))
@@ -733,6 +744,7 @@ require_once('application/libraries/EI_HDR.php');
         $('#BTDTL_SEARCH_lb_expense_type').change(function(){
             $("html, body").animate({ scrollTop: $(document).height() }, "slow");
             $("textarea").height(116);
+            $('#BTDTL_SEARCH_lb_searchoptions').html('');
             var BTDTL_SEARCH_bizdetail_search_exp_types = $(this).val();
             $('#BTDTL_SEARCH_tble_update').empty();
             $('#BTDTL_SEARCH_lb_searchoptions').hide();
@@ -750,6 +762,7 @@ require_once('application/libraries/EI_HDR.php');
                     else{
                         $('#BTDTL_SEARCH_lb_searchoptions').show();
                         $('#BTDTL_SEARCH_lbl_searchoptions').show();
+                        $('#BTDTL_SEARCH_lb_searchoptions').html('');
                         $('#BTDTL_SEARCH_lb_searchoptions').html(BTDTL_SEARCH_aircontypes);
                         $('#BTDTL_SEARCH_lbl_errmsg_notable').text('');
                     }}
@@ -759,6 +772,7 @@ require_once('application/libraries/EI_HDR.php');
                     else{
                         $('#BTDTL_SEARCH_lb_searchoptions').show();
                         $('#BTDTL_SEARCH_lbl_searchoptions').show();
+                        $('#BTDTL_SEARCH_lb_searchoptions').html('');
                         $('#BTDTL_SEARCH_lb_searchoptions').html(BTDTL_SEARCH_carparktypes);
                         $('#BTDTL_SEARCH_lbl_errmsg_notable').text('');
                     }}
@@ -768,6 +782,7 @@ require_once('application/libraries/EI_HDR.php');
                     else{
                         $('#BTDTL_SEARCH_lb_searchoptions').show();
                         $('#BTDTL_SEARCH_lbl_searchoptions').show();
+                        $('#BTDTL_SEARCH_lb_searchoptions').html('');
                         $('#BTDTL_SEARCH_lb_searchoptions').html(BTDTL_SEARCH_digitaltypes);
                         $('#BTDTL_SEARCH_lbl_errmsg_notable').text('');
                     }}
@@ -777,6 +792,7 @@ require_once('application/libraries/EI_HDR.php');
                     else{
                         $('#BTDTL_SEARCH_lb_searchoptions').show();
                         $('#BTDTL_SEARCH_lbl_searchoptions').show();
+                        $('#BTDTL_SEARCH_lb_searchoptions').html('');
                         $('#BTDTL_SEARCH_lb_searchoptions').html(BTDTL_SEARCH_electricitytypes);
                         $('#BTDTL_SEARCH_lbl_errmsg_notable').text('');
                     }}
@@ -786,6 +802,7 @@ require_once('application/libraries/EI_HDR.php');
                     else{
                         $('#BTDTL_SEARCH_lb_searchoptions').show();
                         $('#BTDTL_SEARCH_lbl_searchoptions').show();
+                        $('#BTDTL_SEARCH_lb_searchoptions').html('');
                         $('#BTDTL_SEARCH_lb_searchoptions').html(BTDTL_SEARCH_starhubtypes);
                         $('#BTDTL_SEARCH_lbl_errmsg_notable').text('');
                     }}}
@@ -1635,11 +1652,12 @@ require_once('application/libraries/EI_HDR.php');
                             BTDTL_SEARCH_tr += '<table class="srcresult" id="BTDTL_SEARCH_tble_flex" style="width: 2750px;"><thead><tr><th style="width:20px">EDIT</th><th style="width:75px">UNIT NUMBER</th><th style="width:140px">INVOICE TO</th><th style="width:100px">STARHUB ACCOUNT NO<em>*</em></th><th style="width:75px" class="uk-date-column">APPL DATE</th><th style="width:75px" class="uk-date-column">CABLE START DATE</th><th style="width:75px" class="uk-date-column">CABLE END DATE</th><th style="width:75px" class="uk-date-column">INTERNET START DATE</th><th style="width:75px" class="uk-date-column">INTERNET END DATE</th><th style="width:200px">SSID</th><th style="width:200px">PWD</th><th style="width:200px">CABLE BOX SERIAL NO</th><th style="width:250px">MODEM SERIAL NO</th><th style="width:200px">BASIC GROUP</th><th style="width:200px">ADDTNL CH</th><th style="width:300px">COMMENTS</th><th style="width:200px">USERSTAMP</th><th style="width:130px" class="uk-timestp-column">TIMESTAMP</th></tr></thead><tbody>';
 
                         }
-
+                        $('#BDTL_btn_pdf').show();
                     }
                     else if(BTDTL_SEARCH_response.length==1)
                     {
                         $('#BTDTL_SEARCH_btn_datesearch').attr("disabled", "disabled")
+                        $('#BDTL_btn_pdf').hide();
                         if($('#BTDTL_SEARCH_lb_searchoptions').val()==108)
                         {
                             var BTDTL_SEARCH_error_replace=BTDTL_SEARCH_errorarr[49].EMC_DATA.replace('[DCOMTS]',$('#BTDTL_SEARCH_ta_digitalcomments').val());
@@ -1941,6 +1959,8 @@ require_once('application/libraries/EI_HDR.php');
                         {
                             if(j!=BTDTL_SEARCH_response.length-1)
                             {
+                                if(BTDTL_SEARCH_response[j][1]==null){BTDTL_SEARCH_response[j][1]='';}
+                                if(BTDTL_SEARCH_response[j][2]==null){BTDTL_SEARCH_response[j][2]='';}
                                 if(BTDTL_SEARCH_response[j][3]==null){BTDTL_SEARCH_response[j][3]='';}
                                 if(BTDTL_SEARCH_response[j][4]==null){BTDTL_SEARCH_response[j][4]='';}
                                 if(BTDTL_SEARCH_response[j][5]==null){BTDTL_SEARCH_response[j][5]='';}
@@ -1983,7 +2003,6 @@ require_once('application/libraries/EI_HDR.php');
                         BTDTL_SEARCH_tr +='</tbody></table>';
                     }
                     $('#BTDTL_SEARCH_div_flex_searchbtn').show();
-                    $('#BDTL_btn_pdf').show();
                     $('section').html(BTDTL_SEARCH_tr);
                     $('#BTDTL_SEARCH_tble_flex').DataTable( {
                         "aaSorting": [],

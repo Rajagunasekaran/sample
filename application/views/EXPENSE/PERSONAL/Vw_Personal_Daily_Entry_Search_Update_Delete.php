@@ -2244,9 +2244,6 @@ $(document).ready(function(){
                 else
                 {
                     show_msgbox("PERSONAL EXPENSE ENTRY/SEARCH/UPDATE/DELETE",PDLY_SEARCH_hdrmsgArray[36].EMC_DATA,"success",false);
-//                            PDLY_SEARCH_loadflextable()
-//                            PDLY_SEARCH_babysearchdetails(PDLY_SEARCH_babysearchdetailsvalues)
-//                            PDLY_SEARCH_searchvalue()
                 }
             }
         });
@@ -2385,9 +2382,6 @@ $(document).ready(function(){
                 else
                 {
                     show_msgbox("PERSONAL EXPENSE ENTRY/SEARCH/UPDATE/DELETE",PDLY_SEARCH_hdrmsgArray[36].EMC_DATA,"success",false);
-//                            PDLY_SEARCH_loadflextable()
-//                            PDLY_SEARCH_babysearchdetails(PDLY_SEARCH_babysearchdetailsvalues)
-//                            PDLY_SEARCH_searchvalue()
                 }
             }
         });

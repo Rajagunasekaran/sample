@@ -116,8 +116,9 @@ var BDLY_SRC_flag_autocom='';
     //RADIO BUTTON CLICK FUNCTION
         var initial_values=[];
             $('.BE_rd_selectform').click(function(){
-            var radiooption=$(this).val();
-            if(radiooption=='bizentryform')
+                $('#BDLY_SRC_lb_ExpenseList').html('');
+            var bizdailyradiooption=$(this).val();
+            if(bizdailyradiooption=='bizentryform')
             {
                 $('.preloader').show();
                 $.ajax({
@@ -152,7 +153,7 @@ var BDLY_SRC_flag_autocom='';
                 $('#BDLY_INPUT_btn_resetbutton').hide();
 
             }
-            if(radiooption=='bizsearchform')
+            if(bizdailyradiooption=='bizsearchform')
             {
                 $('.preloader').show();
                 $.ajax({
@@ -2465,7 +2466,7 @@ var BDLY_SRC_flag_autocom='';
             else{
                 if(BDLY_INPUT_clearresponse[1]==0)
                     BDLY_INPUT_clearresponse[1]=BDLY_INPUT_tableerrmsgarr[18].EMC_DATA;
-                show_msgbox("PERSONAL EXPENSE ENTRY/SEARCH/UPDATE/DELETE",BDLY_INPUT_clearresponse[1],"success",false);
+                show_msgbox("BIZ EXPENSE DAILY ENTRY/SEARCH/UPDATE/DELETE",BDLY_INPUT_clearresponse[1],"success",false);
             }$(".preloader").hide();
         }
         $(document).on('change','.BDLY_INPUT_uexp_class_unit',function()
@@ -3307,7 +3308,7 @@ var BDLY_SRC_flag_autocom='';
       $('#BDLY_INPUT_form_dailyentry').replaceWith(BDLY_SRC_append_errmsg)
       }
       else{
-      var options;
+      var options='<option value="SELECT" >SELECT</option>';
       for (var i = 0; i < ExpenseList.length; i++)
       {
       options +='<option value="'+ExpenseList[i][0]+'">' + ExpenseList[i][1] + '</option>';
@@ -5926,7 +5927,7 @@ var BDLY_SRC_flag_autocom='';
                 <div id="BDLY_SRC_tble_maintable" hidden>
                     <div class="form-group">
                         <label  id='BDLY_INPUT_srch_lbl_typeofexp' class="col-sm-2">TYPE OF EXPENSE<em>*</em></label>
-                        <div class="col-sm-3"><select id="BDLY_SRC_lb_ExpenseList" name="BDLY_SRC_lb_ExpenseList" class="form-control" ><option value="SELECT" >SELECT</option></select></div>
+                        <div class="col-sm-3"><select id="BDLY_SRC_lb_ExpenseList" name="BDLY_SRC_lb_ExpenseList" class="form-control" ></select></div>
                     </div>
                     <div class="form-group" id="BDLY_SRC_tr_serachopt" style="display: none;">
                         <label class="col-sm-2">SEARCH BY</label>

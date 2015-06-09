@@ -7,7 +7,7 @@
 <!--HTML TAG START-->
 <?php
 
-include "EI_HDR.php";
+include "application/libraries/EI_HDR.php";
 
 ?>
 <html>
@@ -16,41 +16,46 @@ include "EI_HDR.php";
 
     <!--SCRIPT TAG START-->
     <script>
-        //CHECK PRELOADER STATUS N HIDE START
-        var SubPage=1;
-        function CheckPageStatus(){
-            if(MenuPage!=1 && SubPage!=1)
-                $(".preloader").hide();
-        }
-        //CHECK PRELOADER STATUS N HIDE END
-        //FAILURE FUNCTION START
-        function onFailure(REP_error) {
-            $(".preloader").hide();
-            if(REP_error=="ScriptError: Failed to establish a database connection. Check connection string, username and password.")
-            {
-                REP_error="DB USERNAME/PWD WRONG, PLZ CHK UR CONFIG FILE FOR THE CREDENTIALS."
-                $('#REP_form_report').replaceWith('<center><label class="dberrormsg">'+REP_error+'</label></center>');
-            }
-            else
-            {
-                if(REP_error=='ScriptError: No item with the given ID could be found, or you do not have permission to access it.')
-                {
-                    REP_error=REP_errorMsg_array[3];
-                }
-                $(document).doValidation({rule:'messagebox',prop:{msgtitle:"REPORT",msgcontent:REP_error,position:{top:150,left:500}}});
-            }
-        }
+//        //CHECK PRELOADER STATUS N HIDE START
+//        var SubPage=1;
+//        function CheckPageStatus(){
+//            if(MenuPage!=1 && SubPage!=1)
+//                $(".preloader").hide();
+//        }
+//        //CHECK PRELOADER STATUS N HIDE END
+//        //FAILURE FUNCTION START
+//        function onFailure(REP_error) {
+//            $(".preloader").hide();
+//            if(REP_error=="ScriptError: Failed to establish a database connection. Check connection string, username and password.")
+//            {
+//                REP_error="DB USERNAME/PWD WRONG, PLZ CHK UR CONFIG FILE FOR THE CREDENTIALS."
+//                $('#REP_form_report').replaceWith('<center><label class="dberrormsg">'+REP_error+'</label></center>');
+//            }
+//            else
+//            {
+//                if(REP_error=='ScriptError: No item with the given ID could be found, or you do not have permission to access it.')
+//                {
+//                    REP_error=REP_errorMsg_array[3];
+//                }
+//                $(document).doValidation({rule:'messagebox',prop:{msgtitle:"REPORT",msgcontent:REP_error,position:{top:150,left:500}}});
+//            }
+//        }
         //FAILURE FUNCTION END
         //DOCUMENT READY FUNCTION START
         $(document).ready(function(){
+            var REP_controller_url="<?php echo base_url(); ?>" + '/index.php/REPORT/Ctrl_Report_Report/' ;
             $(".preloader").hide();
             $('#spacewidth').height('0%');
             $.ajax({
               type:'post',
-              url:"<?php echo base_url();?>"+"index.php/Ctrl_Report_Report/REP_getdomain_err",
+                url:REP_controller_url+"REP_getdomain_err",
                 success:function(data) {
+                    alert(data)
                      var REP_getdomain_errresult_response=JSON.parse(data);
                      REP_getdomain_errresult(REP_getdomain_errresult_response);
+                },
+                error:function(data){
+                    alert(JSON.stringify(data));
                 }
             });
 //            google.script.run.withFailureHandler(onFailure).withSuccessHandler(REP_getdomain_errresult).REP_getdomain_err();
@@ -144,17 +149,12 @@ include "EI_HDR.php";
                     $(".preloader").show();
                     $.ajax({
                         type:'post',
-                        url:"<?php echo base_url();?>"+"index.php/Ctrl_Report_Report/REP_func_load_searchby_option",
+                        url:"<?php echo base_url();?>"+"index.php/REPORT/Ctrl_Report_Report/REP_func_load_searchby_option",
                         data:{'REP_report_optionfetch':REP_report_optionfetch},
                         success:function(data){
-
                            var REP_response_load_searchby=JSON.parse(data);
                             REP_success_load_searchby_lb(REP_response_load_searchby);
-
                         }
-
-
-
                     })
                 }
             });
@@ -208,8 +208,20 @@ include "EI_HDR.php";
             });
 //CLICK FUNCTION FOR SAVE BUTTON
             $('#REP_btn_send').click(function(){
-                $(".preloader").show();
-                google.script.run.withFailureHandler(onFailure).withSuccessHandler(REP_ss_getdatas_result).REP_ss_getdatas($('#REP_lb_reportname').val(),$('#REP_lb_reportname').find('option:selected').text(),($('#REP_lb_emailid').val()),$('#REP_lb_catgreportname').find('option:selected').text(),$("#REP_db_month").val());
+//                $(".preloader").show();
+                $.ajax({
+                    type:'post',
+                    url:REP_controller_url+"REP_ss_getdatas",
+                    data:{'reportNameVal':$('#REP_lb_reportname').val(),'reportNameText':$('#REP_lb_reportname').find('option:selected').text(),'emailId':($('#REP_lb_emailid').val()),'categoryName':$('#REP_lb_catgreportname').find('option:selected').text(),'month':$("#REP_db_month").val()},
+                    success:function(data){
+                        alert(data);
+                        $(".preloader").hide();
+//                        var REP_response_load_searchby=JSON.parse(data);
+//                        REP_success_load_searchby_lb(REP_response_load_searchby);
+                    },error:function(data){
+                        alert(data);
+                    }
+                })
             });
 //SUCCESS FUNCTION FOR SEND BUTTON
             function REP_ss_getdatas_result(REP_response)

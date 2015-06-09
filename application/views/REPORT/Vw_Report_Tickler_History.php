@@ -4,13 +4,14 @@
 //VER 0.01-INITIAL VERSION, SD:26/05/2015 ED:26/05/2015
 //************************************************************************************************************-->
 <?php
-include 'EI_HDR.php';
+require_once('application/libraries/EI_HDR.php');
 ?>
 <html>
 <head>
     <script>
         //READY FUNCTION START
         $(document).ready(function() {
+            var TH_controller_url="<?php echo base_url(); ?>" + '/index.php/REPORT/Ctrl_Report_Tickler_History/' ;
             $('#spacewidth').height('0%');
             $(".preloader").hide();
             TH_customername_autocompleteresult()
@@ -33,7 +34,7 @@ include 'EI_HDR.php';
             {
                 $.ajax({
                         type: "POST",
-                            'url': "<?php echo base_url(); ?>" + "index.php/Ctrl_Report_Tickler_History/TH_customername_autocomplete",
+                    'url':TH_controller_url+"TH_customername_autocomplete",
                     data:{'ErrorList':'46,368,369'},
                     success: function(data) {
                             $(".preloader").hide();
@@ -41,7 +42,9 @@ include 'EI_HDR.php';
                             TH_customername=TH_customername_array[0]
                             TH_error=TH_customername_array[1]
                             $("#TH_ta_customername").val("");
-                        }
+                        },error:function(data){
+                        alert(JSON.stringify(data))
+                    }
                 });
             }
             //KEY PRESS FUNCTION
@@ -110,7 +113,7 @@ include 'EI_HDR.php';
                 $('#TH_ta_customername').val('');
                 $.ajax({
                     type: "POST",
-                    'url': "<?php echo base_url(); ?>" + "index.php/Ctrl_Report_Tickler_History/fetchdata",
+                    'url':TH_controller_url+"fetchdata",
                     data: {'cust_first_name':cust_first_name,'cust_last_name':cust_last_name},
                     success: function(data) {
                         $('.preloader').hide();
@@ -175,7 +178,9 @@ include 'EI_HDR.php';
                             $('#TH_div_flexdata_result').hide();
                         }
                         $('#TH_btn_search_customername').attr("disabled", "disabled");
-            }
+            },error:function(data){
+                        alert(JSON.stringify(data))
+                    }
                 });
             }
             //FUNCTION FOR FORMTABLEDATEFORMAT

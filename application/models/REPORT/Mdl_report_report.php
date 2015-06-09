@@ -8,10 +8,59 @@
 
 class Mdl_report_report extends CI_Model {
 
+    function __construct() {
+        parent::__construct();
+        $this->load->model('EILIB/Mdl_eilib_common_function');
+    }
+public function getDataAppendSS($reportNameVal,$reportNameText,$emailId,$categoryName,$month){
+    $timeZoneFormat= $this->Mdl_eilib_common_function->getTimezone();
+    $this->load->library('Google');
+    $service = $this->Mdl_eilib_common_function->get_service_document();
+//    print_r( $service);exit;
+    $this->db->select("RCN_DATA");
+    $this->db->from('REPORT_CONFIGURATION');
+    $this->db->where("CGN_ID=48");
+    $folderId = $this->db->get()->row()->RCN_DATA;
+    $SSfileid = $this->Mdl_eilib_common_function->NewSpreadsheetCreation($service, $reportNameText, 'PAYMENT_DETAILS', $folderId);
+    $arrQuery=[$reportNameVal=>["SELECT DISTINCT U.UNIT_NO AS UNIT_NO,ULD.ULDTL_DOORCODE AS DOOR_CODE,ULD.ULDTL_WEBLOGIN AS WEB_LOGIN,ULD.ULDTL_WEBPWD AS WEB_PASSWORD,EDSH.EDSH_SSID AS SSID,EDSH.EDSH_PWD AS PWD,USLD.ULD_LOGINID AS USERSTAMP,DATE_FORMAT(CONVERT_TZ(ULD.ULDTL_TIMESTAMP,".$timeZoneFormat."),'%d-%m-%Y %T') AS TIMESTAMP FROM UNIT_LOGIN_DETAILS ULD,UNIT U,USER_LOGIN_DETAILS USLD,EXPENSE_DETAIL_STARHUB EDSH WHERE USLD.ULD_ID=ULD.ULD_ID AND ULD.UNIT_ID=U.UNIT_ID AND U.UNIT_ID=EDSH.UNIT_ID ORDER BY U.UNIT_NO ASC",
+        'UNIT_NO^^DOOR_CODE^^WEB_LOGIN^^WEB_PASSWORD^^SSID^^PWD^^USERSTAMP^^TIMESTAMP'],
+        ""];
+    $resultset=$this->db->query($arrQuery[$reportNameVal][0]);
+    $splitHeader=explode('^^',$arrQuery[$reportNameVal][1]);
+    $concatArray='';
+    $arrDatass=[];
+echo $SSfileid;
+    $arrDatass = array('sheetId'=>$SSfileid,'header'=>str_replace('_'," ",$arrQuery[$reportNameVal][1]),"Fileid"=>$SSfileid,'flag'=>3);
 
-
+    foreach ($resultset->result_array() as $key => $value) {
+        foreach($splitHeader as $keyCol => $column){
+            if($keyCol==0)
+                $concatArray=$value[$splitHeader[$keyCol]];
+            else
+                $concatArray.='^~^'.$value[$splitHeader[$keyCol]];
+       }
+        $arrDatass["data".$key] = $concatArray;
+    }
+    $url ="https://script.google.com/macros/s/AKfycbyv58HZU2XsR2kbCMWZjNzMWSmOwoE7xsg_fesXktGk4Kj574u1/exec";
+    $ch = curl_init();
+    $data = http_build_query($arrDatass );
+    curl_setopt($ch, CURLOPT_URL, $url);
+    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+    curl_setopt($ch, CURLOPT_POST, true);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+    curl_setopt($ch, CURLOPT_ENCODING, "gzip,deflate");
+    try {
+        $response = curl_exec($ch);
+        return '**'.$response;
+    } catch (Exception $e) {
+        return $e->getMessage();
+    }
+    curl_close($ch);
+    return $response;
+}
     public function REP_getdomain_err(){
-
         $REP_searchoptions_dataid=array();
         $this->db->select('CGN_ID,CGN_TYPE');
         $this->db->from('CONFIGURATION');
@@ -48,13 +97,12 @@ class Mdl_report_report extends CI_Model {
               //        REP_report_name_stmt.close();
         //EMAIL ID
         $REP_emailid_array=array();
-        $this->load->model('EILIB/Common_function');
-        $REP_emailid_array= $this->Common_function->getProfileEmailId('REPORT');
+        $REP_emailid_array= $this->Mdl_eilib_common_function->getProfileEmailId('REPORT');
                //        $REP_emailid_array=eilib.getProfileEmailId(REP_conn,"REPORT")
     //RETRIEVE MESSAGE FOR REPORT RECORD FROM ERROR TABLE
         $REP_errmsgids="282,341,395,459";
         $REP_errorMsg_array=array();
-        $REP_errorMsg_array=$this->Common_function->getErrorMessageList($REP_errmsgids);
+        $REP_errorMsg_array=$this->Mdl_eilib_common_function->getErrorMessageList($REP_errmsgids);
         $REP_result=(object)["REP_catagoryreportname"=>$REP_searchoptions_dataid,"REP_reportname"=>$REP_report_name_arraydataid,"REP_emailid"=>$REP_emailid_array,"REP_errormsg"=>$REP_errorMsg_array];
           //    REP_conn.close();
         return $REP_result;

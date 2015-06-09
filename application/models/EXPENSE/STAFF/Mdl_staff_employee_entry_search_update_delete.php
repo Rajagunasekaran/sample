@@ -41,7 +41,6 @@ class Mdl_staff_employee_entry_search_update_delete extends CI_Model{
     }
     //FUNCTION FOR SAVE PART
     public function EMP_ENTRY_insert($USERSTAMP,$EMP_ENTRY_email,$EMP_ENTRY_comments,$EMP_ENTRY_radio_null,$submenu){
-        global  $USERSTAMP;
         $EMP_ENTRY_cardno=$submenu;
         $EMP_ENTRY_firstname =$_POST['EMP_ENTRY_firstname'];
         $EMP_ENTRY_lastname = $_POST['EMP_ENTRY_lastname'];
@@ -108,10 +107,10 @@ class Mdl_staff_employee_entry_search_update_delete extends CI_Model{
 //        $EMP_ENTRY_multi_array = $this->EMP_ENTRY_gettreeviewunit() ;
         return $result[]=array($result1,$result2,$result3,$ErrorMessage);
     }
-    public function fetch_data($EMPSRC_UPD_DEL_lb_designation_listbox,$emp_first_name,$emp_last_name,$EMPSRC_UPD_DEL_ta_mobile,$EMPSRC_UPD_DEL_ta_email,$EMPSRC_UPD_DEL_lb_searchoption,$EMPSRC_UPD_DEL_ta_comments)
+    public function fetch_data($timeZoneFormat,$EMPSRC_UPD_DEL_lb_designation_listbox,$emp_first_name,$emp_last_name,$EMPSRC_UPD_DEL_ta_mobile,$EMPSRC_UPD_DEL_ta_email,$EMPSRC_UPD_DEL_lb_searchoption,$EMPSRC_UPD_DEL_ta_comments)
     {
         if($EMPSRC_UPD_DEL_lb_searchoption==95){
-            $this->db->select("ED.EMP_ID AS ID, ED.EMP_FIRST_NAME AS Femployeename,ED.EMP_LAST_NAME AS Lemployeename,ED.EMP_MOBILE AS mobile,ED.EMP_EMAIL AS email,EXPCONFIG.ECN_DATA AS designation,ED.EMP_COMMENTS AS comments,ULD.ULD_LOGINID AS userstamp,UASD.UASD_ACCESS_CARD AS cardnumber,DATE_FORMAT(CONVERT_TZ(ED.EMP_TIMESTAMP,'+00:00','+05:30'), '%d-%m-%Y %T') AS timestamp,U.UNIT_NO AS EMPSRC_UPD_DEL_unitno");
+            $this->db->select("ED.EMP_ID AS ID, ED.EMP_FIRST_NAME AS Femployeename,ED.EMP_LAST_NAME AS Lemployeename,ED.EMP_MOBILE AS mobile,ED.EMP_EMAIL AS email,EXPCONFIG.ECN_DATA AS designation,ED.EMP_COMMENTS AS comments,ULD.ULD_LOGINID AS userstamp,UASD.UASD_ACCESS_CARD AS cardnumber,DATE_FORMAT(CONVERT_TZ(ED.EMP_TIMESTAMP,".$timeZoneFormat."), '%d-%m-%Y %T') AS timestamp,U.UNIT_NO AS EMPSRC_UPD_DEL_unitno");
             $this->db->from("EMPLOYEE_DETAILS ED,EXPENSE_CONFIGURATION EXPCONFIG ,USER_LOGIN_DETAILS ULD");
             $this->db->join('EMPLOYEE_CARD_DETAILS ECD','ED.EMP_ID=ECD.EMP_ID','left');
             $this->db->join('UNIT_ACCESS_STAMP_DETAILS UASD','ECD.UASD_ID=UASD.UASD_ID','left');
@@ -121,7 +120,7 @@ class Mdl_staff_employee_entry_search_update_delete extends CI_Model{
             return $query->result();
         }
         if($EMPSRC_UPD_DEL_lb_searchoption==90){
-            $this->db->select("ED.EMP_ID AS ID, ED.EMP_FIRST_NAME AS Femployeename,ED.EMP_LAST_NAME AS Lemployeename,ED.EMP_MOBILE AS mobile,ED.EMP_EMAIL AS email,EXPCONFIG.ECN_DATA AS designation,ED.EMP_COMMENTS AS comments,ULD.ULD_LOGINID AS userstamp,UASD.UASD_ACCESS_CARD AS cardnumber,DATE_FORMAT(CONVERT_TZ(ED.EMP_TIMESTAMP,'+00:00','+05:30'), '%d-%m-%Y %T') AS timestamp,U.UNIT_NO AS EMPSRC_UPD_DEL_unitno");
+            $this->db->select("ED.EMP_ID AS ID, ED.EMP_FIRST_NAME AS Femployeename,ED.EMP_LAST_NAME AS Lemployeename,ED.EMP_MOBILE AS mobile,ED.EMP_EMAIL AS email,EXPCONFIG.ECN_DATA AS designation,ED.EMP_COMMENTS AS comments,ULD.ULD_LOGINID AS userstamp,UASD.UASD_ACCESS_CARD AS cardnumber,DATE_FORMAT(CONVERT_TZ(ED.EMP_TIMESTAMP,".$timeZoneFormat."), '%d-%m-%Y %T') AS timestamp,U.UNIT_NO AS EMPSRC_UPD_DEL_unitno");
             $this->db->from("EMPLOYEE_DETAILS ED,EXPENSE_CONFIGURATION EXPCONFIG ,USER_LOGIN_DETAILS ULD");
             $this->db->join('EMPLOYEE_CARD_DETAILS ECD','ED.EMP_ID=ECD.EMP_ID','left');
             $this->db->join('UNIT_ACCESS_STAMP_DETAILS UASD','ECD.UASD_ID=UASD.UASD_ID','left');
@@ -132,7 +131,7 @@ class Mdl_staff_employee_entry_search_update_delete extends CI_Model{
         }
         if($EMPSRC_UPD_DEL_lb_searchoption==99)//MOBILE NO
         {
-            $this->db->select("ED.EMP_ID AS ID, ED.EMP_FIRST_NAME AS Femployeename,ED.EMP_LAST_NAME AS Lemployeename,ED.EMP_MOBILE AS mobile,ED.EMP_EMAIL AS email,EXPCONFIG.ECN_DATA AS designation,ED.EMP_COMMENTS AS comments,ULD.ULD_LOGINID AS userstamp,UASD.UASD_ACCESS_CARD AS cardnumber,DATE_FORMAT(CONVERT_TZ(ED.EMP_TIMESTAMP,'+00:00','+05:30'), '%d-%m-%Y %T') AS timestamp,U.UNIT_NO AS EMPSRC_UPD_DEL_unitno");
+            $this->db->select("ED.EMP_ID AS ID, ED.EMP_FIRST_NAME AS Femployeename,ED.EMP_LAST_NAME AS Lemployeename,ED.EMP_MOBILE AS mobile,ED.EMP_EMAIL AS email,EXPCONFIG.ECN_DATA AS designation,ED.EMP_COMMENTS AS comments,ULD.ULD_LOGINID AS userstamp,UASD.UASD_ACCESS_CARD AS cardnumber,DATE_FORMAT(CONVERT_TZ(ED.EMP_TIMESTAMP,".$timeZoneFormat."'), '%d-%m-%Y %T') AS timestamp,U.UNIT_NO AS EMPSRC_UPD_DEL_unitno");
             $this->db->from("EMPLOYEE_DETAILS ED,EXPENSE_CONFIGURATION EXPCONFIG ,USER_LOGIN_DETAILS ULD");
             $this->db->join('EMPLOYEE_CARD_DETAILS ECD','ED.EMP_ID=ECD.EMP_ID','left');
             $this->db->join('UNIT_ACCESS_STAMP_DETAILS UASD','ECD.UASD_ID=UASD.UASD_ID','left');
@@ -143,7 +142,7 @@ class Mdl_staff_employee_entry_search_update_delete extends CI_Model{
         }
         if($EMPSRC_UPD_DEL_lb_searchoption==96)//EMAIL ID
         {
-            $this->db->select("ED.EMP_ID AS ID, ED.EMP_FIRST_NAME AS Femployeename,ED.EMP_LAST_NAME AS Lemployeename,ED.EMP_MOBILE AS mobile,ED.EMP_EMAIL AS email,EXPCONFIG.ECN_DATA AS designation,ED.EMP_COMMENTS AS comments,ULD.ULD_LOGINID AS userstamp,UASD.UASD_ACCESS_CARD AS cardnumber,DATE_FORMAT(CONVERT_TZ(ED.EMP_TIMESTAMP,'+00:00','+05:30'), '%d-%m-%Y %T') AS timestamp,U.UNIT_NO AS EMPSRC_UPD_DEL_unitno");
+            $this->db->select("ED.EMP_ID AS ID, ED.EMP_FIRST_NAME AS Femployeename,ED.EMP_LAST_NAME AS Lemployeename,ED.EMP_MOBILE AS mobile,ED.EMP_EMAIL AS email,EXPCONFIG.ECN_DATA AS designation,ED.EMP_COMMENTS AS comments,ULD.ULD_LOGINID AS userstamp,UASD.UASD_ACCESS_CARD AS cardnumber,DATE_FORMAT(CONVERT_TZ(ED.EMP_TIMESTAMP,".$timeZoneFormat."), '%d-%m-%Y %T') AS timestamp,U.UNIT_NO AS EMPSRC_UPD_DEL_unitno");
             $this->db->from("EMPLOYEE_DETAILS ED,EXPENSE_CONFIGURATION EXPCONFIG ,USER_LOGIN_DETAILS ULD");
             $this->db->join('EMPLOYEE_CARD_DETAILS ECD','ED.EMP_ID=ECD.EMP_ID','left');
             $this->db->join('UNIT_ACCESS_STAMP_DETAILS UASD','ECD.UASD_ID=UASD.UASD_ID','left');
@@ -154,7 +153,7 @@ class Mdl_staff_employee_entry_search_update_delete extends CI_Model{
         }
         if($EMPSRC_UPD_DEL_lb_searchoption==94)//COMMENTS
         {
-            $this->db->select("ED.EMP_ID AS ID, ED.EMP_FIRST_NAME AS Femployeename,ED.EMP_LAST_NAME AS Lemployeename,ED.EMP_MOBILE AS mobile,ED.EMP_EMAIL AS email,EXPCONFIG.ECN_DATA AS designation,ED.EMP_COMMENTS AS comments,ULD.ULD_LOGINID AS userstamp,UASD.UASD_ACCESS_CARD AS cardnumber,DATE_FORMAT(CONVERT_TZ(ED.EMP_TIMESTAMP,'+00:00','+05:30'), '%d-%m-%Y %T') AS timestamp,U.UNIT_NO AS EMPSRC_UPD_DEL_unitno");
+            $this->db->select("ED.EMP_ID AS ID, ED.EMP_FIRST_NAME AS Femployeename,ED.EMP_LAST_NAME AS Lemployeename,ED.EMP_MOBILE AS mobile,ED.EMP_EMAIL AS email,EXPCONFIG.ECN_DATA AS designation,ED.EMP_COMMENTS AS comments,ULD.ULD_LOGINID AS userstamp,UASD.UASD_ACCESS_CARD AS cardnumber,DATE_FORMAT(CONVERT_TZ(ED.EMP_TIMESTAMP,".$timeZoneFormat."), '%d-%m-%Y %T') AS timestamp,U.UNIT_NO AS EMPSRC_UPD_DEL_unitno");
             $this->db->from("EMPLOYEE_DETAILS ED,EXPENSE_CONFIGURATION EXPCONFIG ,USER_LOGIN_DETAILS ULD");
             $this->db->join('EMPLOYEE_CARD_DETAILS ECD','ED.EMP_ID=ECD.EMP_ID','left');
             $this->db->join('UNIT_ACCESS_STAMP_DETAILS UASD','ECD.UASD_ID=UASD.UASD_ID','left');
@@ -251,7 +250,6 @@ class Mdl_staff_employee_entry_search_update_delete extends CI_Model{
     }
     //FUNCTION FOR UPDATE PART
     public function EMPSRC_UPD_DEL_update($USERSTAMP,$EMPSRC_UPD_DEL_email,$EMPSRC_UPD_DEL_comments,$EMP_ENTRY_radio_null,$submenu,$EMPSRC_UPD_DEL_id){
-        global  $USERSTAMP;
         $EMPSRC_UPD_DEL_cardno=$submenu;
         $EMPSRC_UPD_DEL_searchoption =$_POST['EMPSRC_UPD_DEL_searchoption'];
         $EMPSRC_UPD_DEL_firstname =$_POST['EMPSRC_UPD_DEL_firstname'];

@@ -4,7 +4,7 @@
 //VER 0.01-INITIAL VERSION, SD:27/05/2015 ED:18/05/2015
 //************************************************************************************************************-->
 <?php
-include 'EI_HDR.php';
+require_once('application/libraries/EI_HDR.php');
 ?>
 <html>
 <head>
@@ -16,6 +16,7 @@ include 'EI_HDR.php';
         var EMP_ENTRY_error=[];
         var EMP_ENTRY_fullarr=[];
         $(document).ready(function() {
+            var EMP_ENTRY_controller_url="<?php echo base_url(); ?>" + '/index.php/EXPENSE/STAFF/Ctrl_Staff_Employee_Entry_Search_Update_Delete/' ;
             $('#spacewidth').height('0%');
             $(".preloader").hide();
             $('textarea').autogrow({onInitialize: true});
@@ -73,7 +74,7 @@ include 'EI_HDR.php';
                     $("#EMPSRC_UPD_DEL_table_updateform").hide();
                     $.ajax({
                         type: "POST",
-                        url: "<?php echo site_url('Ctrl_Staff_Employee_Entry_Search_Update_Delete/Initialdata'); ?>",
+                        url:EMP_ENTRY_controller_url+"Initialdata",
                         data:{'ErrorList':'1,2,34,71,154,248,135,136,153,155,157,158,163,164,165,166,167,168,169,170,315,339,400,401,446'},
                         success: function(data){
                             $('.preloader').hide();
@@ -82,7 +83,6 @@ include 'EI_HDR.php';
                             EMP_ENTRY_unitArray=EMP_ENTRY_fullarr[1];
                             EMP_ENTRY_multi_array=EMP_ENTRY_fullarr[2];
                             EMP_ENTRY_error=EMP_ENTRY_fullarr[3];
-//                            alert(EMP_ENTRY_multi_array)
                             $(".EMP_ENTRY_title_alpha").prop("title",EMP_ENTRY_error[0].EMC_DATA);
                             $("#EMP_ENTRY_tb_mobile").prop("title",EMP_ENTRY_error[1].EMC_DATA)
                             if(((EMP_ENTRY_unitArray).length!=0))
@@ -109,7 +109,6 @@ include 'EI_HDR.php';
                             }
                         },
                         error:function(data){
-
                             alert(JSON.stringify(data))
                         }
                     });
@@ -137,7 +136,7 @@ include 'EI_HDR.php';
             function EMPSRC_UPD_DEL_employlstbx(){
                 $.ajax({
                     type: "POST",
-                    url: "<?php echo site_url('Ctrl_Staff_Employee_Entry_Search_Update_Delete/EMPSRC_UPD_DEL_searchoptionresult'); ?>",
+                    url:EMP_ENTRY_controller_url+"EMPSRC_UPD_DEL_searchoptionresult",
                     data:{'ErrorList':'1,2,34,71,154,248,135,136,153,155,157,158,163,164,165,166,167,168,169,170,315,339,400,401,446'},
                     success: function(data){
                         $('.preloader').hide();
@@ -181,6 +180,9 @@ include 'EI_HDR.php';
                         $('#EMPSRC_UPD_DEL_lb_employeename_listbox').html(EMPSRC_UPD_DEL_expensearray_employeename);
 //                            $('#EMPSRC_UPD_DEL_lb_empdesig').html(EMPSRC_UPD_DEL_searchoption_desigdata)
 //                            alert(EMPSRC_UPD_DEL_searchoption_desigdata)
+                    },
+                    error:function(data){
+                        alert(JSON.stringify(data))
                     }
                 });
                 $('#EMPSRC_UPD_DEL_tble_htmltable').hide();
@@ -462,7 +464,7 @@ include 'EI_HDR.php';
                 var form_element = $('#EMP_ENTRY_form_employeename').serialize();
                 $.ajax({
                     type: "POST",
-                    'url': "<?php echo base_url(); ?>" + "index.php/Ctrl_Staff_Employee_Entry_Search_Update_Delete/EMP_ENTRY_save",
+                    url:EMP_ENTRY_controller_url+"EMP_ENTRY_save",
                     data:form_element+"&EMP_ENTRY_firstname="+EMP_ENTRY_firstname+"&EMP_ENTRY_lastname="+EMP_ENTRY_lastname+"&EMP_ENTRY_empdesigname="+EMP_ENTRY_empdesigname+"&EMP_ENTRY_mobilenumber="+EMP_ENTRY_mobilenumber+"&EMP_ENTRY_comments="+EMP_ENTRY_comments+"&EMP_ENTRY_radio_null="+EMP_ENTRY_radio_null,
                     success: function(data) {
                         $(".preloader").hide();
@@ -716,7 +718,7 @@ include 'EI_HDR.php';
                 var form_element = $('#EMP_ENTRY_form_employeename').serialize();
                 $.ajax({
                     type: "POST",
-                    'url': "<?php echo base_url(); ?>" + "index.php/Ctrl_Staff_Employee_Entry_Search_Update_Delete/EMPSRC_UPD_DEL_comments",
+                    url:EMP_ENTRY_controller_url+"EMPSRC_UPD_DEL_comments",
                     data:form_element,
                     success: function(data){
                         $('.preloader').hide();
@@ -843,7 +845,7 @@ include 'EI_HDR.php';
                 var form_element = $('#EMP_ENTRY_form_employeename').serialize();
                 $.ajax({
                     type: "POST",
-                    'url': "<?php echo base_url(); ?>" + "index.php/Ctrl_Staff_Employee_Entry_Search_Update_Delete/fetchdata",
+                    url:EMP_ENTRY_controller_url+"fetchdata",
                     data:form_element+"&EMPSRC_UPD_DEL_lb_designation_listbox="+EMPSRC_UPD_DEL_lb_designation_listbox+"&emp_first_name="+emp_first_name+"&emp_last_name="+emp_last_name,
                     success: function(data) {
                         $('.preloader').hide();
@@ -983,7 +985,7 @@ include 'EI_HDR.php';
                 $("textarea").width(300);
                 $.ajax({
                     type: "POST",
-                    url: "<?php echo site_url('Ctrl_Staff_Employee_Entry_Search_Update_Delete/EMPSRC_UPD_DEL_getcardnoandunitno'); ?>",
+                    url:EMP_ENTRY_controller_url+"EMPSRC_UPD_DEL_getcardnoandunitno",
                     data :{'EMPSRC_UPD_DEL_id':currentid},
                     success: function(data){
                         $('.preloader').hide();
@@ -1336,7 +1338,7 @@ include 'EI_HDR.php';
                 var form_element = $('#EMP_ENTRY_form_employeename').serialize();
                 $.ajax({
                     type: "POST",
-                    'url': "<?php echo base_url(); ?>" + "index.php/Ctrl_Staff_Employee_Entry_Search_Update_Delete/EMPSRC_UPD_DEL_update",
+                    url:EMP_ENTRY_controller_url+"EMPSRC_UPD_DEL_update",
                     data:form_element+"&EMPSRC_UPD_DEL_id="+currentid+"&EMPSRC_UPD_DEL_searchoption="+EMPSRC_UPD_DEL_searchoption+"&EMPSRC_UPD_DEL_firstname="+EMPSRC_UPD_DEL_firstname+"&EMPSRC_UPD_DEL_lastname="+EMPSRC_UPD_DEL_lastname+"&EMPSRC_UPD_DEL_empdesigname="+EMPSRC_UPD_DEL_empdesigname+"&EMPSRC_UPD_DEL_mobilenumber="+EMPSRC_UPD_DEL_mobilenumber+"&EMPSRC_UPD_DEL_comments="+EMPSRC_UPD_DEL_comments+"&EMP_ENTRY_radio_null="+EMP_ENTRY_radio_null+"&EMPSRC_UPD_DEL_email="+EMPSRC_UPD_DEL_email,
                     success: function(data) {
                         $(".preloader").hide();
@@ -1400,7 +1402,7 @@ include 'EI_HDR.php';
                 $(".preloader").show();
                 $.ajax({
                     type: "POST",
-                    url: "<?php echo base_url(); ?>" + "index.php/Ctrl_Staff_Employee_Entry_Search_Update_Delete/deleteoption",
+                    url:EMP_ENTRY_controller_url+"deleteoption",
                     data :{'EMPSRC_UPD_DEL_deleteid':rowid},
                     success: function(data) {
                         $('.preloader').hide();

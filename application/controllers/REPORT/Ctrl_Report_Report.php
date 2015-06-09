@@ -7,24 +7,34 @@
  */
 
 class Ctrl_Report_Report extends CI_Controller{
-
+    function __construct() {
+        parent::__construct();
+        $this->load->model('EILIB/Mdl_eilib_common_function');
+        $this->load->model('REPORT/Mdl_report_report');
+    }
+    //LOAD FORM
     public function index(){
-
         $this->load->view('REPORT/Vw_Report_Report');
     }
-
+//FUNCTION TO GET ERR MSG
     public function REP_getdomain_err(){
-          $this->load->model('REPORT/Mdl_report_report');
           $final_value=$this->Mdl_report_report->REP_getdomain_err();
           echo json_encode($final_value);
-
     }
+    //FUNCTION TO GET SRCH OPTION
     public function  REP_func_load_searchby_option(){
-
-        $this->load->model('REPORT/Mdl_report_report');
         $final_value=$this->Mdl_report_report->REP_func_load_searchby_option($this->input->post('REP_report_optionfetch'));
         echo json_encode($final_value);
-
     }
-
+    //FUNCTION FOR SS PART
+        public function  REP_ss_getdatas(){
+            $reportNameVal=$_POST['reportNameVal'];
+            $reportNameText=$_POST['reportNameText'];
+            $emailId=$_POST['emailId'];
+            $categoryName=$_POST['categoryName'];
+            $month=$_POST['month'];
+           $data= $this->Mdl_report_report->getDataAppendSS($reportNameVal,$reportNameText,$emailId,$categoryName,$month);
+//        $final_value=$this->Mdl_report_report->REP_func_load_searchby_option($this->input->post('REP_report_optionfetch'));
+        echo json_encode($data);
+    }
 }

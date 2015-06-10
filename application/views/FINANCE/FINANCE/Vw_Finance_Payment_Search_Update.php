@@ -1,6 +1,6 @@
 <!--********************************************PAYMENT SEARCH /UPDATE / DELETE********************************************-->
 <!--*******************************************FILE DESCRIPTION***************************************************-->
-<!--VER 6.6 -SD:05/06/2015 ED:05/06/2015 GETTING HEADER FILE FROM LIB AND UPDATED PAYMENT EXTRACT SCRIPT-->
+VER 8.2 - SD:
 <!--VER 0.02- SD:04/06/2015 ED:04/06/2015,changed Controller Model and View names in ver0.02-->
 <!--VER 0.01-INITIAL VERSION-SD:11/05/2015 ED:12/05/2015 in ver0.01-->
 <html>
@@ -13,6 +13,7 @@
         var controller_url="<?php echo base_url(); ?>" + '/index.php/FINANCE/FINANCE/Ctrl_Finance_Payment_Search_Update/' ;
         $('.amtonly').doValidation({rule:'numbersonly',prop:{realpart:5,imaginary:2}});
         $('.autogrowcomments').autogrow({onInitialize: true});
+        $('.preloader').hide();
         var Allunits;
         var PaymentType;
         var Errormsg;
@@ -928,7 +929,7 @@
                     <div id="Payment_Updation_form" style="padding-left:30px;"hidden>
                         <form id="Updation_form">
                             <br>
-                            <h4 style="color:#498af3;"><u>PAYMENT UPDATION</u></h4><br>
+                            <h4 style="color:#498af3;">PAYMENT UPDATION</h4><br>
                             <div class="row form-group">
                                 <div class="col-md-3">
                                     <label>UNIT<span class="labelrequired"><em>*</em></span></label>

@@ -1,6 +1,5 @@
 <!--********************************************OUTSTANDING PAYEES LIST*******************************************-->
 <!--*******************************************FILE DESCRIPTION***************************************************-->
-<!--VER 6.6 -SD:05/06/2015 ED:05/06/2015 GETTING HEADER FILE FROM LIB AND UPDATED ACTIVE CC LIST-->
 <!--VER 0.02- SD:04/06/2015 ED:04/06/2015,changed Controller Model and View names AND active cc list in ver0.02-->
 <!--VER 0.01-INITIAL VERSION-SD:11/05/2015 ED:12/05/2015 in ver0.01-->
 <html>
@@ -90,6 +89,7 @@
         }
 // //************************FORM RESET FUNCTION START******************************//
         $(document).on('click','#FIN_OPL_btn_save',function(){
+            $('.preloader').show();
             var FormElements=$('#FIN_OPL_outstanding_form').serialize();
             $.ajax({
                 type: "POST",
@@ -97,16 +97,15 @@
                 data:FormElements,
                 success: function(data){
                     $('.preloader').hide();
-                    var returnvalue=JSON.parse(data);
-                    if(returnvalue=='opllist')
+                    if(data=='opllist')
                     {
                         show_msgbox("OUTSTANDING PAYEES LIST",'EMAIL SENT WITH THE CURRENT OUTSTANDING PAYEES LIST',"success",false);
                     }
-                    else if(returnvalue=='emptylist')
+                    else if(data=='emptylist')
                     {
                         show_msgbox("OUTSTANDING PAYEES LIST",'EMAIL LIST EMPTY',"success",false);
                     }
-                    else if(returnvalue=='ACTIVECCLIST')
+                    else if(data=='ACTIVECCLIST')
                     {
                         show_msgbox("OUTSTANDING PAYEES LIST",'EMAIL SENT WITH THE CURRENT ACTIVE CUSTOMER LIST',"success",false);
                     }
@@ -114,6 +113,7 @@
                     {
                         show_msgbox("OUTSTANDING PAYEES LIST",returnvalue,"success",false);
                     }
+                    oplreset();
                 },
                 error: function(data){
                     alert('error in getting'+JSON.stringify(data));

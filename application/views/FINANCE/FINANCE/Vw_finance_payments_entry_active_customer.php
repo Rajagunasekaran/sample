@@ -1,5 +1,6 @@
 <!--********************************************PAYMENT ENTRY FOR ACTIVE CUSTOMER*********************************************-->
 <!--*******************************************FILE DESCRIPTION***************************************************-->
+<!--VER 8.2 -SD:09/06/2015 ED:09/06/2015,Cleared button vlaidation ussue -->
 <!--VER 0.02- SD:04/06/2015 ED:04/06/2015,changed Controller Model and View names in ver0.02-->
 <!--VER 0.01-INITIAL VERSION-SD:11/05/2015 ED:11/05/2015 in ver0.01-->
 <html>
@@ -111,6 +112,8 @@
             $('.preloader').show();
             var splittedid=id.split('_');
             var unit=$('#'+id).val();
+            $('#Payment_btn_submitbutton').attr("disabled", "disabled");
+            $('#AddNewPayment').attr("disabled", "disabled");
             $('#customeremptymessage').text('');
             var options ='<option value="empty">SELECT</option>';
             if(unit!='SELECT')
@@ -283,6 +286,8 @@
             var id=this.id;
             $('.preloader').show();
             var splittedid=id.split('_');
+            $('#Payment_btn_submitbutton').attr("disabled", "disabled");
+            $('#AddNewPayment').attr("disabled", "disabled");
             var Leaseperiod=$('#Leaseperiodid_'+splittedid[1]).val();
             var paymenttype=$('#Paymentid_'+splittedid[1]).val();
             var unit=$('#Unitid_'+splittedid[1]).val();
@@ -335,6 +340,7 @@
             }
             else
             {
+                $('.preloader').hide();
                 $('#Forperiodid_'+splittedid[1]).val('');
                 $('#vlaidation_'+splittedid[1]).val(0);
                 $('#AddNewPayment').attr("disabled", "disabled");

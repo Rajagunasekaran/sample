@@ -32,8 +32,9 @@ Class Ctrl_Customer_Erm_Entry_Search_Update extends CI_Controller
         $username=strtoupper($splitMailid[0]);
         $Create_confirm=$this->Mdl_customer_erm_entry_search_update->ERM_EntrySave($UserStamp,$username);
         $mydate=getdate(date("U"));
-        $sysdate="$mydate[month] $mydate[mday], $mydate[year]";
-        $emailsubject="NEW ERM LEED -".$sysdate;
+        $month=strtoupper($mydate[month]);
+        $sysdate="$mydate[mday]-$month-$mydate[year]";
+        $emailsubject="NEW ERM LEED -[".$sysdate."]";
         if($Create_confirm[1]==1)
         {
             $message1 = new Message();
@@ -117,8 +118,9 @@ Class Ctrl_Customer_Erm_Entry_Search_Update extends CI_Controller
         $Returnvalues=array($Create_confirm[0],$Create_confirm[1],$Create_confirm[2]);
         $message=$Create_confirm[3];
         $mydate=getdate(date("U"));
-        $sysdate="$mydate[month] $mydate[mday], $mydate[year]";
-        $emailsubject="NEW ERM LEED -".$sysdate;
+        $month=strtoupper($mydate[month]);
+        $sysdate="$mydate[mday]-$month-$mydate[year]";
+        $emailsubject="NEW ERM LEED -[".$sysdate."]";
         if($Create_confirm[0]==1)
         {
             $message1 = new Message();
@@ -131,4 +133,5 @@ Class Ctrl_Customer_Erm_Entry_Search_Update extends CI_Controller
         }
         echo json_encode($Returnvalues);
     }
+
 }

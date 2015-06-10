@@ -352,8 +352,30 @@ class Mdl_customer_search_update_delete extends CI_Model
             $this->load->model('EILIB/Mdl_eilib_common_function');
             $service = $this->Mdl_eilib_common_function->get_service_document();
             if ($filetempname != '' && $Confirm_Meessage == 1) {
-                $TargetFolderid = $this->Mdl_eilib_common_function->getFileUploadfolder();
-                $this->Mdl_eilib_common_function->Customer_FileUpload($service, $filename, 'PersonalDetails', $TargetFolderid, $mimetype, $filetempname);
+                $Targetfolderid=$this->Mdl_eilib_common_function->CUST_TargetFolderId();
+                $UnitFolderid=$this->Mdl_eilib_common_function->getUnitfolderId($Uint,$Customerid);
+                $unitcount=count($UnitFolderid);
+                if($unitcount!=0 && $UnitFolderid[0]!='' && $UnitFolderid[1]!='')
+                {
+                    $UnitFolder= $UnitFolderid[0];
+                    $CustomerFolder=$UnitFolderid[1];
+                }
+                else
+                {
+                    if ($unitcount == 0) {
+                        $UnitFolder = $this->Mdl_eilib_common_function->Customer_FolderCreation($service, $Uint, 'PersonalDetails', $Targetfolderid);
+                    } else {
+                        $UnitFolder = $UnitFolderid[0];
+                    }
+                    if ($UnitFolder != '') {
+                        $customerfoldername = $Customerid . '-' . $FirstName . ' ' . $Lastname;
+                        $CustomerFolder = $this->Mdl_eilib_common_function->Customer_FolderCreation($service, $customerfoldername, 'PersonalDetails', $UnitFolder);
+                    }
+                }
+
+                $Fileidinsertquery="CALL SP_INSERT_UPDATE_CUSTOMER_FILE_DIRECTORY($Uint,'$UnitFolder',$Customerid,'$CustomerFolder','$UserStamp',@SUCCESS_MESSAGE)";
+                $result=$this->db->query($Fileidinsertquery);
+                $this->Mdl_eilib_common_function->Customer_FileUpload($service, $filename, 'PersonalDetails', $CustomerFolder, $mimetype, $filetempname);
             }
             if ($Confirm_Meessage == 1) {
                 $this->load->model('EILIB/Mdl_eilib_calender');
@@ -377,7 +399,7 @@ class Mdl_customer_search_update_delete extends CI_Model
                         $Messagebody = str_replace('[MAILID_USERNAME]', $Username, $Messagebody);
                         $Messagebody = $Messagebody . '<br><br>INVOICE :' . $InvoiceId[2];
                         $Displayname = $this->Mdl_eilib_common_function->Get_MailDisplayName('INVOICE');
-                        $ReturnValue = array($Confirm_Meessage,$CCoption,$Emailsub, $Messagebody, $Displayname);
+                        $ReturnValue = array($Confirm_Meessage,$Emailsub, $Messagebody, $Displayname);
                         return $ReturnValue;
                     } else if ($CCoption == 5) {
                         $ContractId = $this->Mdl_eilib_invoice_contract->CUST_contract($service, $Uint, $Startdate, $Enddate, $CompanyName, $Name, $NoticePeriod, $PassportNo, $PassportDate, $EpNo, $EPDate, $NoticePeriodDate, $Leaseperiod, $Cont_cardno, $Rent, $InvQuaterlyfee, $InvFixedaircon_fee, $InvElectricitycapFee, $InvCurtain_DrycleanFee, $InvCheckOutCleanFee, $InvProcessingFee, $InvDepositFee, $Invwaived, $RoomType, $InvProrated, 'CREATION', $Sendmailid, $Docowner);
@@ -389,7 +411,7 @@ class Mdl_customer_search_update_delete extends CI_Model
                         $Messagebody = str_replace('[MAILID_USERNAME]', $Username, $Messagebody);
                         $Messagebody = $Messagebody . '<br><br>CONTRACT :' . $ContractId[2];
                         $Displayname = $this->Mdl_eilib_common_function->Get_MailDisplayName('CONTRACT');
-                        $ReturnValue = array($Confirm_Meessage,$CCoption,$Emailsub, $Messagebody, $Displayname);
+                        $ReturnValue = array($Confirm_Meessage,$Emailsub, $Messagebody, $Displayname);
                         return $ReturnValue;
                     } else if ($CCoption == 6) {
                         $InvoiceId = $this->Mdl_eilib_invoice_contract->CUST_invoice($UserStamp, $service, $Uint, $Name, $CompanyName, $Invoiceandcontractid[9], $Invoiceandcontractid[0], $Invoiceandcontractid[1], $Rent, $ProcessingFee, $DepositFee, $StartDate, $EndDate, $RoomType, $Leaseperiod, $InvProrated, $Sendmailid, $Docowner, 'CREATION', $Invwaived, $Customerid);
@@ -404,7 +426,7 @@ class Mdl_customer_search_update_delete extends CI_Model
                         $Messagebody = $Messagebody . '<br><br>INVOICE :' . $InvoiceId[2];
                         $Messagebody = $Messagebody . '<br><br>CONTRACT :' . $ContractId[2];
                         $Displayname = $this->Mdl_eilib_common_function->Get_MailDisplayName('INVOICE_N_CONTRACT');
-                        $ReturnValue = array($Confirm_Meessage,$CCoption,$Emailsub, $Messagebody, $Displayname);
+                        $ReturnValue = array($Confirm_Meessage,$Emailsub, $Messagebody, $Displayname);
                         return $ReturnValue;
                     }
                     $this->db->query('COMMIT');

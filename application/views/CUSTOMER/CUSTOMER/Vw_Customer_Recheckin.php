@@ -299,8 +299,46 @@ var CustomernameDetails;
         /******ELECTRICITY CAP************/
         var electricity=$('#CCRE_ElectricitycapFee').val();
         if(electricity!=""){var electamount=electricity.split('.');if(electamount[0].length>=2){var electflag=1;$('#CCRE_lbl_electcaperrormsg').hide();$('#CCRE_ElectricitycapFee').removeClass('invalid');}else{electflag=0;$('#CCRE_lbl_electcaperrormsg').show();$('#CCRE_ElectricitycapFee').addClass('invalid');}}else{$('#CCRE_lbl_electcaperrormsg').hide();$('#CCRE_ElectricitycapFee').removeClass('invalid');electflag=1}
-        if($('#CCRE_PassportDate').val()=="" && $('#CCRE_PassportNo').val()=="") { var passportflag=1;$('#CCRE_lbl_passportdateerrormsg').hide();$('#CCRE_PassportNo').removeClass('invalid'); } else { if($('#CCRE_PassportDate').val()!="" && $('#CCRE_PassportNo').val()==""){passportflag=0;$('#CCRE_lbl_passportdateerrormsg').show();$('#CCRE_PassportNo').addClass('invalid');} else {passportflag=1;$('#CCRE_lbl_passportdateerrormsg').hide();$('#CCRE_PassportNo').removeClass('invalid');} }
-        if($('#CCRE_EPDate').val()=="" && $('#CCRE_EpNo').val()=="") { var epflag=1;$('#CCRE_lbl_epnodateerrormsg').hide();$('#CCRE_EpNo').removeClass('invalid') } else { if($('#CCRE_EPDate').val()!="" && $('#CCRE_EpNo').val()==""){epflag=0;$('#CCRE_lbl_epnodateerrormsg').show();$('#CCRE_EpNo').addClass('invalid');} else {epflag=1;$('#CCRE_lbl_epnodateerrormsg').hide();$('#CCRE_EpNo').removeClass('invalid')} }
+//        if($('#CCRE_PassportDate').val()=="" && $('#CCRE_PassportNo').val()=="") { var passportflag=1;$('#CCRE_lbl_passportdateerrormsg').hide();$('#CCRE_PassportNo').removeClass('invalid'); } else { if($('#CCRE_PassportDate').val()!="" && $('#CCRE_PassportNo').val()==""){passportflag=0;$('#CCRE_lbl_passportdateerrormsg').show();$('#CCRE_PassportNo').addClass('invalid');} else {passportflag=1;$('#CCRE_lbl_passportdateerrormsg').hide();$('#CCRE_PassportNo').removeClass('invalid');} }
+//        if($('#CCRE_EPDate').val()=="" && $('#CCRE_EpNo').val()=="") { var epflag=1;$('#CCRE_lbl_epnodateerrormsg').hide();$('#CCRE_EpNo').removeClass('invalid') } else { if($('#CCRE_EPDate').val()!="" && $('#CCRE_EpNo').val()==""){epflag=0;$('#CCRE_lbl_epnodateerrormsg').show();$('#CCRE_EpNo').addClass('invalid');} else {epflag=1;$('#CCRE_lbl_epnodateerrormsg').hide();$('#CCRE_EpNo').removeClass('invalid')} }
+        var ppdate=$('#CCRE_PassportDate').val();
+        var ppno=$('#CCRE_PassportNo').val();
+        if (ppdate!= "" || ppno!= "")
+        {
+            var ppnoappenddata='<div id="passportnumber"><div class="col-md-3" ><label >PASSPORT NUMBER<span class="labelrequired"><em>*</em></span></label></div></div>';
+            $('#passportnumber').replaceWith(ppnoappenddata);
+            var ppdateappenddata='<div id="passportdate"><div class="col-md-3"><label>PASSPORT EXPIRY DATE<span class="labelrequired"><em>*</em></span></label></div></div>';
+            $('#passportdate').replaceWith(ppdateappenddata);
+            if (ppdate != "" && ppno != ""){var passportflag=1;}
+            else{passportflag=0;}
+        }
+        else if(ppdate == "" && ppno == "")
+        {
+            passportflag=1;
+            var ppnoappenddata1='<div id="passportnumber"><div class="col-md-3" ><label >PASSPORT NUMBER</label></div></div>';
+            $('#passportnumber').replaceWith(ppnoappenddata1);
+            var ppdateappenddata1='<div id="passportdate"><div class="col-md-3"><label>PASSPORT EXPIRY DATE</label></div></div>';
+            $('#passportdate').replaceWith(ppdateappenddata1);
+        }
+        var EPdate=$('#CCRE_EPDate').val();
+        var EPno=$('#CCRE_EpNo').val();
+        if (EPdate!= "" || EPno!= "")
+        {
+            var EPnoappenddata='<div id="epnumber"><div class="col-md-3" ><label >EP NUMBER<span class="labelrequired"><em>*</em></span></label></div></div>';
+            $('#epnumber').replaceWith(EPnoappenddata);
+            var EPdateappenddata='<div id="EPdate"><div class="col-md-3"><label>EP EXPIRY DATE<span class="labelrequired"><em>*</em></span></label></div></div>';
+            $('#EPdate').replaceWith(EPdateappenddata);
+            if (EPdate != "" && EPno != ""){var epflag=1;}
+            else{epflag=0;}
+        }
+        else if(EPdate == "" && EPno == "")
+        {
+            epflag=1;
+            var EPnoappenddata='<div id="epnumber"><div class="col-md-3" ><label >EP NUMBER</label></div></div>';
+            $('#epnumber').replaceWith(EPnoappenddata);
+            var EPdateappenddata='<div id="EPdate"><div class="col-md-3"><label>EP EXPIRY DATE</label></div></div>';
+            $('#EPdate').replaceWith(EPdateappenddata);
+        }
         var CCRE_emailid=$("#CCRE_Emailid").val();
         var CCRE_atpos=CCRE_emailid.indexOf("@");
         var CCRE_dotpos=CCRE_emailid.lastIndexOf(".");
@@ -1066,8 +1104,6 @@ var CustomernameDetails;
                 }
             }
         }
-//        var custurl=controller_url+"UnitCardNumbers",
-        var option = 'SAVE';
         xmlhttp.open("POST",controller_url+"CustomerRecheckinSave", true);
         xmlhttp.send(new FormData(FormElements));
     });
@@ -1124,7 +1160,9 @@ var CustomernameDetails;
         $('#RecheckinForm').hide();
         $('#CC_fileupload').val('');
         $('input:checkbox[name=CCRE_process_waived]').attr("checked", false);
-        $('input:checkbox[name=CCRE_lbl_waived]').attr("checked", false);
+        $('input:checkbox[name=CCRE_Rent_Prorated]').attr("checked", false);
+        $('#CCRE_Quarterly_fee').hide();
+        $('#CCRE_Fixedaircon_fee').hide();
     }
     $(document).on('change', '.fileextensionchk', function () {
         var filename = $('#CC_fileupload').val();
@@ -1302,8 +1340,10 @@ var CustomernameDetails;
                     </div>
                 </div>
                 <div class="row form-group">
+                    <div id="passportnumber">
                     <div class="col-md-3">
                         <label>PASSPORT NUMBER</label>
+                    </div>
                     </div>
                     <div class="col-md-3">
                         <input class="form-control alnumonlyzero" name="CCRE_PassportNo" maxlength="15" style="max-width:170px;" id="CCRE_PassportNo" placeholder="Passport No"/>
@@ -1311,26 +1351,32 @@ var CustomernameDetails;
                     <div class="col-md-3"><label id="CCRE_lbl_passporterrormsg" class="errormsg" hidden></label></div>
                 </div>
                 <div class="row form-group">
+                    <div id="passportdate">
                     <div class="col-md-3">
-                        <label>PASSPORT DATE</label>
+                        <label>PASSPORT EXPIRY DATE</label>
+                    </div>
                     </div>
                     <div class="col-md-3">
                         <input class="form-control passportdatevalidation datenonmandtry" name="CCRE_PassportDate" maxlength="15" style="max-width:120px;" id="CCRE_PassportDate" placeholder="PassportDate">
                     </div>
-                    <div class="col-md-3"><label id="CCRE_lbl_passportdateerrormsg" class="errormsg" hidden></label></div>
+                    <div class="col-md-5"><label id="CCRE_lbl_passportdateerrormsg" class="errormsg" hidden></label></div>
                 </div>
                 <div class="row form-group">
+                    <div id="epnumber">
                     <div class="col-md-3">
                         <label>EP NUMBER</label>
+                    </div>
                     </div>
                     <div class="col-md-3">
                         <input class="form-control alnumonlynozero" name="CCRE_EpNo" style="max-width:170px;" maxlength="15" id="CCRE_EpNo" placeholder="EP No"/>
                     </div>
-                    <div class="col-md-3"><label id="CCRE_lbl_epnoerrormsg" class="errormsg" hidden></label></div>
+                    <div class="col-md-5"><label id="CCRE_lbl_epnoerrormsg" class="errormsg" hidden></label></div>
                 </div>
                 <div class="row form-group">
+                    <div id="EPdate">
                     <div class="col-md-3">
                         <label>EP EXPIRY DATE</label>
+                    </div>
                     </div>
                     <div class="col-md-3">
                         <input class="form-control epdatevalidation" name="CCRE_EPDate" style="max-width:120px;" id="CCRE_EPDate" placeholder="EP Date"/>

@@ -68,27 +68,32 @@ Class Ctrl_Customer_Recheckin extends CI_Controller
     }
     public function CustomerRecheckinSave()
     {
-        $UserStamp=$this->Mdl_eilib_common_function->getSessionUserStamp();
-        $Startdate=$_POST['CCRE_Startdate'];
-        $Enddate=$_POST['CCRE_Enddate'];
+        $UserStamp = $this->Mdl_eilib_common_function->getSessionUserStamp();
+        $Startdate = $_POST['CCRE_Startdate'];
+        $Enddate = $_POST['CCRE_Enddate'];
         $Sendmailid = $_POST['CCRE_MailList'];
-        $Leaseperiod=$this->Mdl_eilib_common_function->getLeasePeriod($Startdate,$Enddate);
-        $Q_Startdate=date('Y-m-d',strtotime($Startdate));
-        $Q_Enddate=date('Y-m-d',strtotime($Enddate));
-        $Quoters=$this->Mdl_eilib_quarter_calc->quarterCalc(new DateTime($Q_Startdate),new DateTime($Q_Enddate));
+        $Leaseperiod = $this->Mdl_eilib_common_function->getLeasePeriod($Startdate, $Enddate);
+        $Q_Startdate = date('Y-m-d', strtotime($Startdate));
+        $Q_Enddate = date('Y-m-d', strtotime($Enddate));
+        $CCoption = $_POST['CCRE_Option'];
+        $Quoters = $this->Mdl_eilib_quarter_calc->quarterCalc(new DateTime($Q_Startdate), new DateTime($Q_Enddate));
         $this->load->library('Google');
-        $Create_confirm=$this->Mdl_customer_creation->Customer_Recheckin_Save($UserStamp,$Leaseperiod,$Quoters);
-        $AllUnit =$this->Mdl_eilib_common_function->getRecheckinCustomerUnit();
-        if($Create_confirm[0]==1)
-        {
-            $message1 = new Message();
-            $message1->setSender($Create_confirm[3].'<'.$UserStamp.'>');
-            $message1->addTo($Sendmailid);
-            $message1->setSubject($Create_confirm[1]);
-            $message1->setHtmlBody($Create_confirm[2]);
-            $message1->send();
+        $Create_confirm = $this->Mdl_customer_creation->Customer_Recheckin_Save($UserStamp, $Leaseperiod, $Quoters);
+        $AllUnit = $this->Mdl_eilib_common_function->getRecheckinCustomerUnit();
+        if ($Create_confirm[0] == 1) {
+            if ($CCoption != '3') {
+                $message1 = new Message();
+                $message1->setSender($Create_confirm[3] . '<' . $UserStamp . '>');
+                $message1->addTo($Sendmailid);
+                $message1->setSubject($Create_confirm[1]);
+                $message1->setHtmlBody($Create_confirm[2]);
+                $message1->send();
+                $returnflag = $Create_confirm[0];
+            } else {
+                $returnflag = $Create_confirm[0];
+            }
         }
-        $Returnvalue=array($Create_confirm[0],$AllUnit);
-        echo json_encode($Create_confirm);
+        $Returnvalue = array($returnflag, $AllUnit);
+        echo json_encode($Returnvalue);
     }
 }

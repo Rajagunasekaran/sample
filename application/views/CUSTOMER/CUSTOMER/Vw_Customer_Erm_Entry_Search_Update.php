@@ -682,7 +682,7 @@ var ErrorControl ={AmountCompare:'InValid'}
             tdstr += "<td style='vertical-align: middle'><input type='text' id='age' name='age'  class='form-control alphanumonly FormValidation' maxlength='10' style='font-weight:bold;width:120px' value='"+$(tds[8]).html()+"'></td>";
             tdstr += "<td style='vertical-align: middle'><input type='text' id='Contactno' name='Contactno'  class='form-control FormValidation' maxlength='20' style='font-weight:bold;width:150px' value='"+$(tds[9]).html()+"'></td>";
             tdstr += "<td style='vertical-align: middle'><input type='text' id='Emailid' name='Emailid'  class='form-control FormValidation' maxlength='40' style='font-weight:bold;width:250px' value='"+$(tds[10]).html()+"'></td>";
-            tdstr += "<td style='vertical-align: middle'><textarea id='Comments' name='Comments'  class='form-control autogrowcomments FormValidation'  style='font-weight:bold;'>"+$(tds[11]).html()+"</textarea></td>";
+            tdstr += "<td style='vertical-align: middle'><textarea id='Comments' name='Comments'  class='form-control autogrowcomments FormValidation'  style='font-weight:bold;width:350px' nowrap>"+$(tds[11]).html()+"</textarea></td>";
             tdstr += "<td style='vertical-align: middle'>"+$(tds[12]).html()+"</td>";
             tdstr += "<td style='vertical-align: middle'>"+$(tds[13]).html()+"</td>";
             $('#'+Rowid).html(tdstr);
@@ -851,7 +851,7 @@ var ErrorControl ={AmountCompare:'InValid'}
                         </div>
                     </div>
                     <div id="ERM_Entry_Form" style="display:none;">
-                        <h4 style="color:#498af3;"><U>ERM ENTRY FORM</U></h4>
+                        <h4 style="color:#498af3;">ERM ENTRY FORM</h4>
                         <br>
                         <form id="ERM_Form_Entry" class="form-horizontal" role="form">
                             <div class="row form-group">
@@ -963,7 +963,7 @@ var ErrorControl ={AmountCompare:'InValid'}
                     </div>
                     <div id="ERM_search_update_Form" style="display:none;">
                         <form class="form-horizontal" role="form">
-                        <h4 style="color:#498af3;"><U>ERM SEARCH / UPDATE FORM</U></h4>
+                        <h4 style="color:#498af3;">ERM SEARCH / UPDATE FORM</h4>
                         <br>
                         <div class="row form-group">
                             <div class="col-md-2">

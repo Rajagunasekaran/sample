@@ -58,14 +58,22 @@ Class Ctrl_Customer_Creation extends CI_Controller
         $Create_confirm=$this->Mdl_customer_creation->Customer_Creation_Save($UserStamp,$Leaseperiod,$Quoters);
         if($Create_confirm[0]==1)
         {
+            if($CCoption!='3')
+            {
             $message1 = new Message();
             $message1->setSender($Create_confirm[3].'<'.$UserStamp.'>');
             $message1->addTo($Sendmailid);
             $message1->setSubject($Create_confirm[1]);
             $message1->setHtmlBody($Create_confirm[2]);
             $message1->send();
+                $returnflag=$Create_confirm[0];
+            }
+            else
+            {
+                $returnflag=$Create_confirm[0];
+            }
         }
-        echo json_encode($Create_confirm[0]);
+        echo json_encode($returnflag);
     }
 
     public function Prorated_check()
@@ -75,5 +83,6 @@ Class Ctrl_Customer_Creation extends CI_Controller
         $Prorated=$this->Mdl_eilib_common_function->CUST_chkProrated($Startdate,$Enddate);
         echo $Prorated;
     }
-
 }
+
+

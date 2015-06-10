@@ -31,6 +31,18 @@ class Mdl_eilib_common_function extends CI_Model {
         $this->db->where('CGN_ID=96');
         return $this->db->get()->row()->CCN_DATA;
     }
+    //FUNCTION GET UNIT FOLDER ID
+    public function getUnitfolderId($Uint,$Customerid)
+    {
+        $selectquery="SELECT UNIT_ID,UFD_FOLDERID,CUSTOMER_ID,CUFD_CUSTOMER_FOLDER_ID FROM UNIT_FOLDER_DIRECTORY U LEFT JOIN CUSTOMER_FILE_DIRECTORY C ON U.UFD_ID=C.UFD_ID AND CUSTOMER_ID='$Customerid' WHERE UNIT_ID=(SELECT UNIT_ID FROM UNIT WHERE UNIT_NO='$Uint')";
+        $resultset=$this->db->query($selectquery);
+        foreach ($resultset->result_array() as $key=>$val)
+        {
+            $result[]=$val['UFD_FOLDERID'];
+            $result[]=$val['CUFD_CUSTOMER_FOLDER_ID'];
+        }
+        return $result;
+    }
 //FUNCTION TO GET BANK_TRANSFER_MODELS
 public function getRecheckinCustomerUnit()
 {
@@ -1158,6 +1170,31 @@ public function getActive_Customer_Recver_Dates($unit,$customer,$Recever)
             return $e->getMessage();
         }
         curl_close($ch);
+    }
+    //Customer folder creation
+    public function Customer_FolderCreation($service, $title, $description, $parentId)
+    {
+
+        $file = new Google_Service_Drive_DriveFile();
+        $file->setTitle($title);
+        $file->setDescription($description);
+        $file->setMimeType('application/vnd.google-apps.folder');
+        if ($parentId != null) {
+            $parent = new Google_Service_Drive_ParentReference();
+            $parent->setId($parentId);
+            $file->setParents(array($parent));
+        }
+        try
+        {
+            $createdFile = $service->files->insert($file, array(
+                'mimeType' => 'application/vnd.google-apps.folder',
+            ));
+            return $createdFile->id;
+        }
+        catch (Exception $e)
+        {
+            return 0;
+        }
     }
     //*****************FILE DELETE***********************//
     function DeleteFile($service, $fileId) {

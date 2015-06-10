@@ -26,7 +26,7 @@ class Mdl_customer_erm_entry_search_update extends CI_Model
       $query = $this->db->query($ERM_Entry_flag);
       $Confirm_Meessage=$query->row()->FLAG_INSERT;
       $dataarray=array($Customername,$Rent,$_POST['ERM_Entry_MovingDate'],$_POST['ERM_Entry_Minimumstay'],$Occupation,$_POST['ERM_Entry_Nationality'],$_POST['ERM_Entry_Numberofguests'],$_POST['ERM_Entry_Age'],$Contactno,$Mailid,$_POST['ERM_Entry_Comments']);
-      $subject="HELLO ".','."<font color='gray'></font><font color='#498af3'><b>.$username.</b> </font><br>PLEASE FIND ATTACHED NEW LEED DETAILS FROM ERM: <br>";
+      $subject="HELLO, "."<font color='gray'></font><font color='#498af3'><b>$username</b> </font><br>PLEASE FIND ATTACHED NEW LEED DETAILS FROM ERM: <br>";
       $message = '<body><br><h> '.$subject.'</h><br</body>';
       $head_array=array('CUSTOMER NAME','RENT','MOVING DATE','MIN STAY','OCCUPATION','NATIONALITY','NO OF GUESTS','AGE','CONTACT','EMAIL','COMMENTS');
       if($Confirm_Meessage==1)
@@ -130,7 +130,7 @@ class Mdl_customer_erm_entry_search_update extends CI_Model
         $Movedate=date('d-m-Y',strtotime($Movedate));
         $dataarray=array($Name,$Rent,$Movedate,$Minstay,$Occupation,$Nation,$Guests,$Custage,$Contactno,$Emailid,$Comment);
         $head_array=array('CUSTOMER NAME','RENT','MOVING DATE','MIN STAY','OCCUPATION','NATIONALITY','NO OF GUESTS','AGE','CONTACT','EMAIL','COMMENTS');
-        $subject="HELLO ".','."<font color='gray'></font><font color='#498af3'><b>.$username.</b> </font><br>PLEASE FIND ATTACHED NEW LEED DETAILS FROM ERM: <br>";
+        $subject="HELLO "."<font color='gray'></font><font color='#498af3'><b>$username</b> </font><br>PLEASE FIND ATTACHED NEW LEED DETAILS FROM ERM: <br>";
         $message = '<body><br><h> '.$subject.'</h><br</body>';
         if($Confirm_Meessage==1)
         {

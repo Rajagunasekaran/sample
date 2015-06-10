@@ -133,14 +133,19 @@ Class Ctrl_Customer_Search_Update_Delete extends CI_Controller
         $Leaseperiod=$this->Mdl_eilib_common_function->getLeasePeriod($Startdate,$Enddate);
         $Quoters=$this->Mdl_eilib_quarter_calc->quarterCalc(new DateTime(date('Y-m-d',strtotime($Startdate))), new DateTime(date('Y-m-d',strtotime($Enddate))));
         $Create_confirm=$this->Mdl_customer_search_update_delete->Customer_Search_Update($UserStamp,$Leaseperiod,$Quoters);
-        if($Create_confirm[0]==1 && ($Create_confirm[1]==4 || $Create_confirm[1]==5 || $Create_confirm[1]==6))
+        $CCoption = $_POST['CCRE_SRC_Option'];
+        if($Create_confirm[0]==1)
         {
+            if($CCoption!=3)
+            {
             $message1 = new Message();
-            $message1->setSender($Create_confirm[4].'<'.$UserStamp.'>');
+            $message1->setSender($Create_confirm[3].'<'.$UserStamp.'>');
             $message1->addTo($Sendmailid);
-            $message1->setSubject($Create_confirm[2]);
-            $message1->setHtmlBody($Create_confirm[3]);
+            $message1->setSubject($Create_confirm[1]);
+            $message1->setHtmlBody($Create_confirm[2]);
             $message1->send();
+            }
+
         }
         print_r($Create_confirm[0]);
     }
@@ -151,4 +156,5 @@ Class Ctrl_Customer_Search_Update_Delete extends CI_Controller
         $Prorated=$this->Mdl_eilib_common_function->CUST_chkProrated($Startdate,$Enddate);
         echo $Prorated;
     }
+
 }

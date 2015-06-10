@@ -5,7 +5,6 @@ class Mdl_customer_creation extends CI_Model
         public function Customer_Creation_Save($UserStamp,$Leaseperiod,$Quoters)
         {
             try {
-
                 $FirstName = $_POST['CCRE_FirstName'];
                 $Lastname = $_POST['CCRE_LastName'];
                 $CompanyName = $_POST['CCRE_CompanyName'];
@@ -43,7 +42,7 @@ class Mdl_customer_creation extends CI_Model
                 if($NoticePeriodDate!='') {
                     $NoticePeriodDate = date('Y-m-d', strtotime($_POST['CCRE_NoticePeriodDate']));
                 }
-                $Quaterlyfee = $_POST['CCRE_Quaterlyfee'];if($Quaterlyfee==''){$InvQuaterlyfee='null';}else{$InvQuaterlyfee=$Quaterlyfee;}
+                $Quaterlyfee = $_POST['CCRE_Quarterly_fee'];if($Quaterlyfee==''){$InvQuaterlyfee='null';}else{$InvQuaterlyfee=$Quaterlyfee;}
                 $Fixedaircon_fee = $_POST['CCRE_Fixedaircon_fee'];if($Fixedaircon_fee==''){$InvFixedaircon_fee='null';}else{$InvFixedaircon_fee=$Fixedaircon_fee;}
                 $ElectricitycapFee = $_POST['CCRE_ElectricitycapFee'];if($ElectricitycapFee==''){$InvElectricitycapFee='null';}else{$InvElectricitycapFee=$ElectricitycapFee;}
                 $Curtain_DrycleanFee = $_POST['CCRE_Curtain_DrycleanFee'];if($Curtain_DrycleanFee==''){$InvCurtain_DrycleanFee='null';}else{$InvCurtain_DrycleanFee=$Curtain_DrycleanFee;}
@@ -120,7 +119,7 @@ class Mdl_customer_creation extends CI_Model
                 $CCRE_quators = $Quoters;
                 $StartDate = date('Y-m-d', strtotime($Startdate));
                 $EndDate = date('Y-m-d', strtotime($Enddate));
-                $CallQuery = "CALL SP_CUSTOMER_CREATION_INSERT('$FirstName','$Lastname','$CompanyName','$CompanyAddress','$CompanyPostalCode','$Officeno',$Uint,'$RoomType','$S_starttime','$S_endtime','$E_starttime','$E_endtime','$Leaseperiod',$CCRE_quators,'$processwaived','$Prorated','$NoticePeriod','$NoticePeriodDate',$Rent,'$DepositFee','$ProcessingFee','$Fixedaircon_fee','$Quaterlyfee','$ElectricitycapFee','$CheckOutCleanFee','$Curtain_DrycleanFee','$cardno','$StartDate','$UserStamp','$StartDate','$EndDate','$accesscard','$Nationality','$Mobile','$IntlMobile','$Emailid','$PassportNo','$PassportDate','$DOB','$EpNo','$EPDate','$Comments',@CUSTOMER_CREATION_TEMPTBLNAME,@CUSTOMER_SUCCESSFLAG)";
+                $CallQuery = "CALL SP_CUSTOMER_CREATION_INSERT(1,null,'$FirstName','$Lastname','$CompanyName','$CompanyAddress','$CompanyPostalCode','$Officeno',$Uint,'$RoomType','$S_starttime','$S_endtime','$E_starttime','$E_endtime','$Leaseperiod',$CCRE_quators,'$processwaived','$Prorated','$NoticePeriod','$NoticePeriodDate',$Rent,'$DepositFee','$ProcessingFee','$Fixedaircon_fee','$Quaterlyfee','$ElectricitycapFee','$CheckOutCleanFee','$Curtain_DrycleanFee','$cardno','$StartDate','$UserStamp','$StartDate','$EndDate','$accesscard','$Nationality','$Mobile','$IntlMobile','$Emailid','$PassportNo','$PassportDate','$DOB','$EpNo','$EPDate','$Comments',@CUSTOMER_CREATION_TEMPTBLNAME,@CUSTOMER_SUCCESSFLAG)";
                 $this->db->query($CallQuery);
                 $outparm_query = 'SELECT @CUSTOMER_CREATION_TEMPTBLNAME AS TEMP_TABLE';
                 $outparm_result = $this->db->query($outparm_query);
@@ -140,8 +139,23 @@ class Mdl_customer_creation extends CI_Model
                 $service = $this->Mdl_eilib_common_function->get_service_document();
                 if ($filetempname != '' && $Confirm_Meessage==1)
                 {
-                    $TargetFolderid=$this->Mdl_eilib_common_function->getFileUploadfolder();
-                    $this->Mdl_eilib_common_function->Customer_FileUpload($service, $filename, 'PersonalDetails', $TargetFolderid, $mimetype, $filetempname);
+                    $Targetfolderid=$this->Mdl_eilib_common_function->CUST_TargetFolderId();
+                    $UnitFolderid=$this->Mdl_eilib_common_function->getUnitfolderId($Uint,$Customerid);
+                    $unitcount=count($UnitFolderid);
+                    if($unitcount==0)
+                    {
+                        $UnitFolder=$this->Mdl_eilib_common_function->Customer_FolderCreation($service, $Uint, 'PersonalDetails', $Targetfolderid);
+                    }
+                    else{$UnitFolder=$UnitFolderid[0];}
+                    if($UnitFolder!='')
+                    {
+                        $customerfoldername=$Customerid . '-' . $FirstName . ' ' . $Lastname;
+                        $CustomerFolder=$this->Mdl_eilib_common_function->Customer_FolderCreation($service, $customerfoldername, 'PersonalDetails', $UnitFolder);
+                    }
+
+                    $Fileidinsertquery="CALL SP_INSERT_UPDATE_CUSTOMER_FILE_DIRECTORY($Uint,'$UnitFolder',$Customerid,'$CustomerFolder','$UserStamp',@SUCCESS_MESSAGE)";
+                    $result=$this->db->query($Fileidinsertquery);
+                    $this->Mdl_eilib_common_function->Customer_FileUpload($service, $filename, 'PersonalDetails', $CustomerFolder, $mimetype, $filetempname);
                 }
                 if ($Confirm_Meessage==1)
                 {
@@ -156,51 +170,22 @@ class Mdl_customer_creation extends CI_Model
                         $mail_username=explode('@',$Sendmailid);
                         $Username=strtoupper($mail_username[0]);
                         $this->load->model('EILIB/Mdl_eilib_invoice_contract');
-                        if ($CCoption == 4)
+                        if($CCoption == 4)
                         {
-                            $InvoiceId = $this->Mdl_eilib_invoice_contract->CUST_invoice($UserStamp, $service, $Uint, $Name, $CompanyName, $Invoiceandcontractid[9], $Invoiceandcontractid[0], $Invoiceandcontractid[1], $Rent, $ProcessingFee, $DepositFee, $StartDate, $EndDate, $RoomType, $Leaseperiod, $InvProrated, $Sendmailid, $Docowner, 'CREATION',$Invwaived, $Customerid);
-                            $subcontent=$Uint.'-'.$Name.'-'.$InvoiceId[3];
-                            $Messcontent=$Uint.'-'.$Name;
-                            $Emailsub=$Emailtemplate[2]['subject'];
-                            $Messagebody=$Emailtemplate[2]['message'];
-                            $Emailsub =str_replace('[UNIT NO- CUSTOMER_NAME - INVOICE_NO]',$subcontent,$Emailsub);
-                            $Messagebody =str_replace('[UNIT NO - CUSTOMER_NAME]',$Messcontent,$Messagebody);
-                            $Messagebody=str_replace('[MAILID_USERNAME]',$Username,$Messagebody);
-                            $Messagebody=$Messagebody.'<br><br>INVOICE :'.$InvoiceId[2];
-                            $Displayname=$this->Mdl_eilib_common_function->Get_MailDisplayName('INVOICE');
-                            $ReturnValue=array($Confirm_Meessage,$Emailsub,$Messagebody,$Displayname);
-                            return $ReturnValue;
+                            $InvoiceId = $this->Mdl_eilib_invoice_contract->CUST_invoice($UserStamp, $service, $Uint, $Name, $CompanyName, $Invoiceandcontractid[9], $Invoiceandcontractid[0], $Invoiceandcontractid[1], $Rent, $ProcessingFee, $DepositFee, $StartDate, $EndDate, $RoomType, $Leaseperiod, $Prorated, $Sendmailid, $Docowner, 'CREATION',$processwaived, $Customerid);
+                            return $this->InvoiceCreation($InvoiceId,$Emailtemplate,$Username,$Confirm_Meessage,$Uint,$Name);
                         }
-                        else if ($CCoption == 5)
+                        else if($CCoption == 5)
                         {
                             $ContractId = $this->Mdl_eilib_invoice_contract->CUST_contract($service,$Uint,$Startdate,$Enddate,$CompanyName,$Name,$NoticePeriod,$PassportNo,$PassportDate,$EpNo,$EPDate,$NoticePeriodDate,$Leaseperiod,$Cont_cardno,$Rent,$InvQuaterlyfee,$InvFixedaircon_fee,$InvElectricitycapFee,$InvCurtain_DrycleanFee,$InvCheckOutCleanFee,$InvProcessingFee,$InvDepositFee,$Invwaived,$RoomType,$InvProrated,'CREATION',$Sendmailid,$Docowner);
-                            $Messcontent=$Uint.'-'.$Name;
-                            $Emailsub=$Emailtemplate[1]['subject'];
-                            $Messagebody=$Emailtemplate[1]['message'];
-                            $Emailsub =str_replace('[UNIT NO - CUSTOMER_NAME]',$Messcontent,$Emailsub);
-                            $Messagebody =str_replace('[UNIT NO - CUSTOMER_NAME]',$Messcontent,$Messagebody);
-                            $Messagebody=str_replace('[MAILID_USERNAME]',$Username,$Messagebody);
-                            $Messagebody=$Messagebody.'<br><br>CONTRACT :'.$ContractId[2];
-                            $Displayname=$this->Mdl_eilib_common_function->Get_MailDisplayName('CONTRACT');
-                            $ReturnValue=array($Confirm_Meessage,$Emailsub,$Messagebody,$Displayname);
-                            return $ReturnValue;
+                            return $this->ContractCreation($ContractId,$Emailtemplate,$Username,$Confirm_Meessage,$Uint,$Name);
                         }
                         else if ($CCoption == 6)
                         {
-                            $InvoiceId = $this->Mdl_eilib_invoice_contract->CUST_invoice($UserStamp, $service, $Uint, $Name, $CompanyName, $Invoiceandcontractid[9], $Invoiceandcontractid[0], $Invoiceandcontractid[1], $Rent, $ProcessingFee, $DepositFee, $StartDate, $EndDate, $RoomType, $Leaseperiod, $InvProrated, $Sendmailid, $Docowner, 'CREATION',$Invwaived, $Customerid);
+                            $InvoiceId = $this->Mdl_eilib_invoice_contract->CUST_invoice($UserStamp, $service, $Uint, $Name, $CompanyName, $Invoiceandcontractid[9], $Invoiceandcontractid[0], $Invoiceandcontractid[1], $Rent, $ProcessingFee, $DepositFee, $StartDate, $EndDate, $RoomType, $Leaseperiod, $Prorated, $Sendmailid, $Docowner, 'CREATION',$processwaived, $Customerid);
                             $ContractId = $this->Mdl_eilib_invoice_contract->CUST_contract($service,$Uint,$Startdate,$Enddate,$CompanyName,$Name,$NoticePeriod,$PassportNo,$PassportDate,$EpNo,$EPDate,$NoticePeriodDate,$Leaseperiod,$Cont_cardno,$Rent,$InvQuaterlyfee,$InvFixedaircon_fee,$InvElectricitycapFee,$InvCurtain_DrycleanFee,$InvCheckOutCleanFee,$InvProcessingFee,$InvDepositFee,$Invwaived,$RoomType,$InvProrated,'CREATION',$Sendmailid,$Docowner);
-                            $subcontent=$Uint.'-'.$Name.'-'.$InvoiceId[3];
-                            $Messcontent=$Uint.'-'.$Name;
-                            $Emailsub=$Emailtemplate[0]['subject'];
-                            $Messagebody=$Emailtemplate[0]['message'];
-                            $Emailsub =str_replace('[UNIT NO - CUSTOMER NAME - INVOICE NO]',$subcontent,$Emailsub);
-                            $Messagebody =str_replace('[UNIT NO - CUSTOMER_NAME]',$Messcontent,$Messagebody);
-                            $Messagebody=str_replace('[MAILID_USERNAME]',$Username,$Messagebody);
-                            $Messagebody=$Messagebody.'<br><br>INVOICE :'.$InvoiceId[2];
-                            $Messagebody=$Messagebody.'<br><br>CONTRACT :'.$ContractId[2];
-                            $Displayname=$this->Mdl_eilib_common_function->Get_MailDisplayName('INVOICE_N_CONTRACT');
-                            $ReturnValue=array($Confirm_Meessage,$Emailsub,$Messagebody);
-                            return $ReturnValue;
+                            return $this->InvoiceandContract($InvoiceId,$ContractId,$Emailtemplate,$Username,$Confirm_Meessage,$Uint,$Name);
+
                         }
                         $this->db->query('COMMIT');
                     }
@@ -217,9 +202,78 @@ class Mdl_customer_creation extends CI_Model
                 $this->db->query('ROLLBACK');
                 $ReturnValue = array($e->getMessage());
                 return $ReturnValue;
-
             }
         }
+      public function InvoiceCreation($InvoiceId,$Emailtemplate,$Username,$Confirm_Meessage,$Uint,$Name)
+      {
+          if($InvoiceId[0]==1)
+          {
+              $subcontent = $Uint . '-' . $Name . '-' . $InvoiceId[3];
+              $Messcontent = $Uint . '-' . $Name;
+              $Emailsub = $Emailtemplate[2]['subject'];
+              $Messagebody = $Emailtemplate[2]['message'];
+              $Emailsub = str_replace('[UNIT NO- CUSTOMER_NAME - INVOICE_NO]', $subcontent, $Emailsub);
+              $Messagebody = str_replace('[UNIT NO - CUSTOMER_NAME]', $Messcontent, $Messagebody);
+              $Messagebody = str_replace('[MAILID_USERNAME]', $Username, $Messagebody);
+              $Messagebody = $Messagebody . '<br><br>INVOICE :' . $InvoiceId[2];
+              $Displayname = $this->Mdl_eilib_common_function->Get_MailDisplayName('INVOICE');
+              $ReturnValue = array($Confirm_Meessage, $Emailsub, $Messagebody, $Displayname);
+              return $ReturnValue;
+          }
+          else
+          {
+              $this->db->query('ROLLBACK');
+              $ReturnValue=array($Confirm_Meessage);
+              return $ReturnValue;
+          }
+      }
+    public function ContractCreation($ContractId,$Emailtemplate,$Username,$Confirm_Meessage,$Uint,$Name)
+    {
+        if($ContractId[0]==1)
+        {
+            $Messcontent = $Uint . '-' . $Name;
+            $Emailsub = $Emailtemplate[1]['subject'];
+            $Messagebody = $Emailtemplate[1]['message'];
+            $Emailsub = str_replace('[UNIT NO - CUSTOMER_NAME]', $Messcontent, $Emailsub);
+            $Messagebody = str_replace('[UNIT NO - CUSTOMER_NAME]', $Messcontent, $Messagebody);
+            $Messagebody = str_replace('[MAILID_USERNAME]', $Username, $Messagebody);
+            $Messagebody = $Messagebody . '<br><br>CONTRACT :' . $ContractId[2];
+            $Displayname = $this->Mdl_eilib_common_function->Get_MailDisplayName('CONTRACT');
+            $ReturnValue = array($Confirm_Meessage, $Emailsub, $Messagebody, $Displayname);
+            return $ReturnValue;
+        }
+        else
+            {
+                $this->db->query('ROLLBACK');
+                $ReturnValue=array($Confirm_Meessage);
+                return $ReturnValue;
+            }
+    }
+    public function InvoiceandContract($InvoiceId,$ContractId,$Emailtemplate,$Username,$Confirm_Meessage,$Uint,$Name)
+    {
+        if($InvoiceId[0]==1 && $ContractId[0]==1)
+        {
+            $subcontent = $Uint . '-' . $Name . '-' . $InvoiceId[3];
+            $Messcontent = $Uint . '-' . $Name;
+            $Emailsub = $Emailtemplate[0]['subject'];
+            $Messagebody = $Emailtemplate[0]['message'];
+            $Emailsub = str_replace('[UNIT NO - CUSTOMER NAME - INVOICE NO]', $subcontent, $Emailsub);
+            $Messagebody = str_replace('[UNIT NO - CUSTOMER_NAME]', $Messcontent, $Messagebody);
+            $Messagebody = str_replace('[MAILID_USERNAME]', $Username, $Messagebody);
+            $Messagebody = $Messagebody . '<br><br>INVOICE :' . $InvoiceId[2];
+            $Messagebody = $Messagebody . '<br><br>CONTRACT :' . $ContractId[2];
+            $Displayname = $this->Mdl_eilib_common_function->Get_MailDisplayName('INVOICE_N_CONTRACT');
+            $ReturnValue = array($Confirm_Meessage, $Emailsub, $Messagebody, $Displayname);
+            return $ReturnValue;
+        }
+        else
+        {
+            $this->db->query('ROLLBACK');
+            $ReturnValue=array($Confirm_Meessage);
+            return $ReturnValue;
+        }
+
+    }
       public function getRecheckinCustomer($unit)
         {
             $this->db->select("CUSTOMER_ID,CUSTOMERNAME,CED_REC_VER");
@@ -283,7 +337,7 @@ class Mdl_customer_creation extends CI_Model
                 if($NoticePeriodDate!='') {
                     $NoticePeriodDate = date('Y-m-d', strtotime($_POST['CCRE_NoticePeriodDate']));
                 }
-                $Quaterlyfee = $_POST['CCRE_Quaterlyfee'];if($Quaterlyfee==''){$InvQuaterlyfee='null';}else{$InvQuaterlyfee=$Quaterlyfee;}
+                $Quaterlyfee = $_POST['CCRE_Quarterly_fee'];if($Quaterlyfee==''){$InvQuaterlyfee='null';}else{$InvQuaterlyfee=$Quaterlyfee;}
                 $Fixedaircon_fee = $_POST['CCRE_Fixedaircon_fee'];if($Fixedaircon_fee==''){$InvFixedaircon_fee='null';}else{$InvFixedaircon_fee=$Fixedaircon_fee;}
                 $ElectricitycapFee = $_POST['CCRE_ElectricitycapFee'];if($ElectricitycapFee==''){$InvElectricitycapFee='null';}else{$InvElectricitycapFee=$ElectricitycapFee;}
                 $Curtain_DrycleanFee = $_POST['CCRE_Curtain_DrycleanFee'];if($Curtain_DrycleanFee==''){$InvCurtain_DrycleanFee='null';}else{$InvCurtain_DrycleanFee=$Curtain_DrycleanFee;}
@@ -359,7 +413,7 @@ class Mdl_customer_creation extends CI_Model
                 $Emailid = $_POST['CCRE_Emailid'];
                 $CCoption = $_POST['CCRE_Option'];
                 $Sendmailid = $_POST['CCRE_MailList'];
-                $CallQuery = "CALL SP_CUSTOMER_RECHECKIN_INSERT('$Customerid','$FirstName','$Lastname','$CompanyName','$CompanyAddress','$CompanyPostalCode','$Officeno',$Uint,'$RoomType','$S_starttime','$S_endtime','$E_starttime','$E_endtime','$Leaseperiod',$CCRE_quators,'$processwaived','$Prorated','$NoticePeriod','$NoticePeriodDate',$Rent,'$DepositFee','$ProcessingFee','$Fixedaircon_fee','$Quaterlyfee','$ElectricitycapFee','$CheckOutCleanFee','$Curtain_DrycleanFee','$cardno','$StartDate','$UserStamp','$StartDate','$EndDate','$accesscard','$Nationality','$Mobile','$IntlMobile','$Emailid','$PassportNo','$PassportDate','$DOB','$EpNo','$EPDate','$Comments',@CUSTOMER_RECHECKIN_TEMPTBLNAME,@CUSTOMER_RECHECKIN_FLAG)";
+                $CallQuery = "CALL SP_CUSTOMER_CREATION_INSERT(2,'$Customerid','$FirstName','$Lastname','$CompanyName','$CompanyAddress','$CompanyPostalCode','$Officeno',$Uint,'$RoomType','$S_starttime','$S_endtime','$E_starttime','$E_endtime','$Leaseperiod',$CCRE_quators,'$processwaived','$Prorated','$NoticePeriod','$NoticePeriodDate',$Rent,'$DepositFee','$ProcessingFee','$Fixedaircon_fee','$Quaterlyfee','$ElectricitycapFee','$CheckOutCleanFee','$Curtain_DrycleanFee','$cardno','$StartDate','$UserStamp','$StartDate','$EndDate','$accesscard','$Nationality','$Mobile','$IntlMobile','$Emailid','$PassportNo','$PassportDate','$DOB','$EpNo','$EPDate','$Comments',@CUSTOMER_RECHECKIN_TEMPTBLNAME,@CUSTOMER_RECHECKIN_FLAG)";
                 $this->db->query($CallQuery);
                 $outparm_query = 'SELECT @CUSTOMER_RECHECKIN_TEMPTBLNAME AS TEMP_TABLE';
                 $outparm_result = $this->db->query($outparm_query);
@@ -377,8 +431,23 @@ class Mdl_customer_creation extends CI_Model
                 $service = $this->Mdl_eilib_common_function->get_service_document();
                 if ($filetempname != '' && $Confirm_Meessage==1)
                 {
-                    $TargetFolderid=$this->Mdl_eilib_common_function->getFileUploadfolder();
-                    $this->Mdl_eilib_common_function->Customer_FileUpload($service, $filename, 'PersonalDetails', $TargetFolderid, $mimetype, $filetempname);
+                    $Targetfolderid=$this->Mdl_eilib_common_function->CUST_TargetFolderId();
+                    $UnitFolderid=$this->Mdl_eilib_common_function->getUnitfolderId($Uint,$Customerid);
+                    $unitcount=count($UnitFolderid);
+                    if($unitcount==0)
+                    {
+                        $UnitFolder=$this->Mdl_eilib_common_function->Customer_FolderCreation($service, $Uint, 'PersonalDetails', $Targetfolderid);
+                    }
+                    else  {  $UnitFolder=$UnitFolderid[0];   }
+                    if($UnitFolder!='')
+                    {
+                        $customerfoldername=$Customerid . '-' . $FirstName . ' ' . $Lastname;
+                        $CustomerFolder=$this->Mdl_eilib_common_function->Customer_FolderCreation($service, $customerfoldername, 'PersonalDetails', $UnitFolder);
+                    }
+                    else   {   $CustomerFolder=$UnitFolderid[0];     }
+                    $Fileidinsertquery="CALL SP_INSERT_UPDATE_CUSTOMER_FILE_DIRECTORY($Uint,'$UnitFolder',$Customerid,'$CustomerFolder','$UserStamp',@SUCCESS_MESSAGE)";
+                    $result=$this->db->query($Fileidinsertquery);
+                    $this->Mdl_eilib_common_function->Customer_FileUpload($service, $filename, 'PersonalDetails', $CustomerFolder, $mimetype, $filetempname);
                 }
                 if ($Confirm_Meessage==1)
                 {
@@ -395,49 +464,19 @@ class Mdl_customer_creation extends CI_Model
                         $this->load->model('EILIB/Mdl_eilib_invoice_contract');
                         if ($CCoption == 4)
                         {
-                            $InvoiceId = $this->Mdl_eilib_invoice_contract->CUST_invoice($UserStamp, $service, $Uint, $Name, $CompanyName, $Invoiceandcontractid[9], $Invoiceandcontractid[0], $Invoiceandcontractid[1], $Rent, $ProcessingFee, $DepositFee, $StartDate, $EndDate, $RoomType, $Leaseperiod, $InvProrated, $Sendmailid, $Docowner, 'CREATION',$Invwaived, $Customerid);
-                            $subcontent=$Uint.'-'.$Name.'-'.$InvoiceId[3];
-                            $Messcontent=$Uint.'-'.$Name;
-                            $Emailsub=$Emailtemplate[2]['subject'];
-                            $Messagebody=$Emailtemplate[2]['message'];
-                            $Emailsub =str_replace('[UNIT NO- CUSTOMER_NAME - INVOICE_NO]',$subcontent,$Emailsub);
-                            $Messagebody =str_replace('[UNIT NO - CUSTOMER_NAME]',$Messcontent,$Messagebody);
-                            $Messagebody=str_replace('[MAILID_USERNAME]',$Username,$Messagebody);
-                            $Messagebody=$Messagebody.'<br><br>INVOICE :'.$InvoiceId[2];
-                            $Displayname=$this->Mdl_eilib_common_function->Get_MailDisplayName('INVOICE');
-                            $ReturnValue=array($Confirm_Meessage,$Emailsub,$Messagebody,$Displayname);
-                            return $ReturnValue;
+                            $InvoiceId = $this->Mdl_eilib_invoice_contract->CUST_invoice($UserStamp, $service, $Uint, $Name, $CompanyName, $Invoiceandcontractid[9], $Invoiceandcontractid[0], $Invoiceandcontractid[1], $Rent, $ProcessingFee, $DepositFee, $StartDate, $EndDate, $RoomType, $Leaseperiod, $Prorated, $Sendmailid, $Docowner, 'CREATION',$processwaived, $Customerid);
+                            return $this->InvoiceCreation($InvoiceId,$Emailtemplate,$Username,$Confirm_Meessage,$Uint,$Name);
                         }
                         else if ($CCoption == 5)
                         {
                             $ContractId = $this->Mdl_eilib_invoice_contract->CUST_contract($service,$Uint,$Startdate,$Enddate,$CompanyName,$Name,$NoticePeriod,$PassportNo,$PassportDate,$EpNo,$EPDate,$NoticePeriodDate,$Leaseperiod,$Cont_cardno,$Rent,$InvQuaterlyfee,$InvFixedaircon_fee,$InvElectricitycapFee,$InvCurtain_DrycleanFee,$InvCheckOutCleanFee,$InvProcessingFee,$InvDepositFee,$Invwaived,$RoomType,$InvProrated,'CREATION',$Sendmailid,$Docowner);
-                            $Messcontent=$Uint.'-'.$Name;
-                            $Emailsub=$Emailtemplate[1]['subject'];
-                            $Messagebody=$Emailtemplate[1]['message'];
-                            $Emailsub =str_replace('[UNIT NO - CUSTOMER_NAME]',$Messcontent,$Emailsub);
-                            $Messagebody =str_replace('[UNIT NO - CUSTOMER_NAME]',$Messcontent,$Messagebody);
-                            $Messagebody=str_replace('[MAILID_USERNAME]',$Username,$Messagebody);
-                            $Messagebody=$Messagebody.'<br><br>CONTRACT :'.$ContractId[2];
-                            $Displayname=$this->Mdl_eilib_common_function->Get_MailDisplayName('CONTRACT');
-                            $ReturnValue=array($Confirm_Meessage,$Emailsub,$Messagebody,$Displayname);
-                            return $ReturnValue;
+                            return $this->ContractCreation($ContractId,$Emailtemplate,$Username,$Confirm_Meessage,$Uint,$Name);
                         }
                         else if ($CCoption == 6)
                         {
-                            $InvoiceId = $this->Mdl_eilib_invoice_contract->CUST_invoice($UserStamp, $service, $Uint, $Name, $CompanyName, $Invoiceandcontractid[9], $Invoiceandcontractid[0], $Invoiceandcontractid[1], $Rent, $ProcessingFee, $DepositFee, $StartDate, $EndDate, $RoomType, $Leaseperiod, $InvProrated, $Sendmailid, $Docowner, 'CREATION',$Invwaived, $Customerid);
+                            $InvoiceId = $this->Mdl_eilib_invoice_contract->CUST_invoice($UserStamp, $service, $Uint, $Name, $CompanyName, $Invoiceandcontractid[9], $Invoiceandcontractid[0], $Invoiceandcontractid[1], $Rent, $ProcessingFee, $DepositFee, $StartDate, $EndDate, $RoomType, $Leaseperiod, $Prorated, $Sendmailid, $Docowner, 'CREATION',$processwaived, $Customerid);
                             $ContractId = $this->Mdl_eilib_invoice_contract->CUST_contract($service,$Uint,$Startdate,$Enddate,$CompanyName,$Name,$NoticePeriod,$PassportNo,$PassportDate,$EpNo,$EPDate,$NoticePeriodDate,$Leaseperiod,$Cont_cardno,$Rent,$InvQuaterlyfee,$InvFixedaircon_fee,$InvElectricitycapFee,$InvCurtain_DrycleanFee,$InvCheckOutCleanFee,$InvProcessingFee,$InvDepositFee,$Invwaived,$RoomType,$InvProrated,'CREATION',$Sendmailid,$Docowner);
-                            $subcontent=$Uint.'-'.$Name.'-'.$InvoiceId[3];
-                            $Messcontent=$Uint.'-'.$Name;
-                            $Emailsub=$Emailtemplate[0]['subject'];
-                            $Messagebody=$Emailtemplate[0]['message'];
-                            $Emailsub =str_replace('[UNIT NO - CUSTOMER NAME - INVOICE NO]',$subcontent,$Emailsub);
-                            $Messagebody =str_replace('[UNIT NO - CUSTOMER_NAME]',$Messcontent,$Messagebody);
-                            $Messagebody=str_replace('[MAILID_USERNAME]',$Username,$Messagebody);
-                            $Messagebody=$Messagebody.'<br><br>INVOICE :'.$InvoiceId[2];
-                            $Messagebody=$Messagebody.'<br><br>CONTRACT :'.$ContractId[2];
-                            $Displayname=$this->Mdl_eilib_common_function->Get_MailDisplayName('INVOICE_N_CONTRACT');
-                            $ReturnValue=array($Confirm_Meessage,$Emailsub,$Messagebody,$Displayname);
-                            return $ReturnValue;
+                            return $this->InvoiceandContract($InvoiceId,$ContractId,$Emailtemplate,$Username,$Confirm_Meessage,$Uint,$Name);
                         }
                         $this->db->query('COMMIT');
                     }
@@ -450,6 +489,7 @@ class Mdl_customer_creation extends CI_Model
                 }
                 else
                 {
+                    $this->db->query('ROLLBACK');
                     $ReturnValue=array($Confirm_Meessage);
                     return $ReturnValue;
                 }

@@ -10,7 +10,7 @@ Class Ctrl_Configuration_Trigger extends CI_Controller
     }
     public function Index()
     {
-    $this->load->view('CONFIGURATION/TRIGGER/Vw_Configuration_Trigger');
+    $this->load->view('CONFIGURATION/Vw_Configuration_Trigger');
     }
     public function TriggerConfiguration()
     {
@@ -27,7 +27,7 @@ Class Ctrl_Configuration_Trigger extends CI_Controller
     {
         try {
             $UserStamp=$this->Mdl_eilib_common_function->getSessionUserStamp();
-            $this->load->model('CONFIGURATION/TRIGGER/Mdl_configuration_trigger');
+            $this->load->model('CONFIGURATION/Mdl_configuration_trigger');
             $data = $this->Mdl_configuration_trigger->getMonthlyPaymentReminder();
             $Displayname = $data[0];
             $EmailSubject = $data[1];

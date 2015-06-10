@@ -87,7 +87,6 @@ var BDLY_SRC_flag_autocom='';
         $(".amtonlyfivedigit").doValidation({rule:'numbersonly',prop:{realpart:5,imaginary:2}});
         $(".thramtonly").doValidation({rule:'numbersonly',prop:{realpart:3,imaginary:2}});
         $(".autosize").doValidation({rule:'general',prop:{autosize:true}});
-        $("input.autosize").autoGrowInput();
         $(".numonly").doValidation({rule:'numbersonly',prop:{realpart:5}});
         $(".hrnumonly").doValidation({rule:'numbersonly',prop:{realpart:2}});
         $('#BDLY_INPUT_btn_multisubmitbutton').hide();
@@ -367,7 +366,7 @@ var BDLY_SRC_flag_autocom='';
         {
             BDLY_INPUT_exptype_array=initial_values.BDLY_INPUT_expanse_array;
             var BDLY_INPUT_errmsgarr=initial_values.BDLY_INPUT_tableerrmsgarr;
-            $(".BDLY_INPUT_class_numonly").prop("title",BDLY_INPUT_errmsgarr[0]);
+            $(".BDLY_INPUT_class_numonly").prop("title",BDLY_INPUT_errmsgarr[0].EMC_DATA);
             for(var e=0;e<=BDLY_INPUT_errmsgarr.length-1;e++){
                 BDLY_INPUT_tableerrmsgarr[e]=BDLY_INPUT_errmsgarr[e+1];
             }
@@ -926,6 +925,7 @@ var BDLY_SRC_flag_autocom='';
         $("#BDLY_INPUT_tb_cp_invoicedate").datepicker({
             dateFormat: "dd-mm-yy",  changeYear: true, changeMonth: true,
             onSelect: function(date){
+                var BDLY_INPUT_type=$('#BDLY_INPUT_lb_selectexptype').val();
                 if(BDLY_INPUT_type==8){
                     if(($('#BDLY_INPUT_tb_cp_invoicedate').val()!='')&&($('#BDLY_INPUT_tb_cp_fromdate').val()!='')&&($('#BDLY_INPUT_tb_cp_todate').val()!='')&&($('#BDLY_INPUT_tb_cp_invoiceamt').val()!='')){
                         $('#BDLY_INPUT_btn_submitbutton').removeAttr('disabled')
@@ -1224,7 +1224,6 @@ var BDLY_SRC_flag_autocom='';
             $('#BDLY_INPUT_tble_electricity').empty();
             $('<tr><td nowrap><label id="BDLY_INPUT_lbl_elect_unit" >UNIT</label><em>*</em> </td><td nowrap><label  id="BDLY_INPUT_lbl_elect_invoiceto" >INVOICE TO</label><em>*</em></td><td nowrap> <label id="BDLY_INPUT_lbl_elect_invoicedate" >INVOICE DATE</label><em>*</em> </td><td nowrap><label id="BDLY_INPUT_lbl_elect_fromperiod" >FROM PERIOD</label><em>*</em> </td><td nowrap><label id="BDLY_INPUT_lbl_elect_toperiod" >TO PERIOD</label><em>*</em></td><td nowrap><label id="BDLY_INPUT_lbl_elect_payment"  >PAYMENT OF</label><em>*</em> </td><td nowrap><label id="BDLY_INPUT_lbl_elect_amount" >AMOUNT</label><em>*</em> </td><td ><label id="BDLY_INPUT_lbl_elect_comments" >COMMENTS</label> </td><td ><label id="BDLY_INPUT_lbl_elect_add" ></label> </td><td ><label id="BDLY_INPUT_lbl_elect_del" ></label> </td></tr><tr><td> <select  class="BDLY_INPUT_class_unit submultivalid form-control"  name="BDLY_INPUT_lb_elect_unit[]" id="BDLY_INPUT_lb_elect_unit-1" style="width: 90px;" hidden><option value="">SELECT</option></select> </td> <td><input  class="submultivalid rdonly form-control"  type="text" name ="BDLY_INPUT_tb_invoiceto[]" id="BDLY_INPUT_tb_invoiceto1"  style="display: none;" readonly/><input type="text" id="BDLY_INPUT_hidden_ecnid_elec1" name="BDLY_INPUT_hidden_ecnid_elec[]" class="form-control" style="display: none;"  hidden> </td><td><input  class="eledatepicker submultivalid datemandtry form-control"   type="text" name ="BDLY_INPUT_db_invoicedate[]" id="BDLY_INPUT_db_invoicedate1" style="width:100px;display: none;" hidden /> </td><td><input   class="eledatepicker submultivalid datemandtry form-control"  type="text" name ="BDLY_INPUT_db_fromperiod[]" id="BDLY_INPUT_db_fromperiod1" style="width:100px;display: none;" hidden/> </td><td><input  class="eledatepicker submultivalid datemandtry form-control"  type="text" name ="BDLY_INPUT_db_toperiod[]" id="BDLY_INPUT_db_toperiod1" style="width:100px;display: none;" hidden/> </td><td><select style="display: none;"   name="BDLY_INPUT_lb_elect_payment[]" class="submultivalid amtentry form-control" id="BDLY_INPUT_lb_elect_payment1" hidden><option value="" >SELECT</option></select></td><td><input  class="amtonlyvalidation submultivalid form-control" type="text" name ="BDLY_INPUT_tb_elect_amount[]" id="BDLY_INPUT_tb_elect_amount1" style="width:70px;display: none;" hidden /> <input class="amtonlyvalidation submultivalid form-control"  type="text" name ="BDLY_INPUT_tb_elect_minusamt[]" id="BDLY_INPUT_tb_elect_minusamt1" style="width:70px;display: none;" hidden /><input type="hidden" id="BDLY_INPUT_hidden_amt_elec1" style="display: none;"  name="BDLY_INPUT_hidden_amt_elec[]" ></td><td><textarea row="3" class=" submultivalid form-control" name ="BDLY_INPUT_ta_comments[]"  style="display: none;" id="BDLY_INPUT_ta_comments1" hidden ></textarea> </td><td><input type="button" value="+" class="addbttn" alt="Add Row" height="30" width="30" name ="BDLY_INPUT_add[]" id="BDLY_INPUT_add1" disabled > </td><td><input  type="button" value="-" class="deletebttn" alt="delete Row" height="30" width="30" name ="BDLY_INPUT_delete[]" id="BDLY_INPUT_del1" disabled ></td></tr>').appendTo($('#BDLY_INPUT_tble_electricity'));
             $(".autosize").doValidation({rule:'general',prop:{autosize:true}});
-            $("input.autosize").autoGrowInput();
             $(".datepickdate").datepicker({dateFormat:'dd-mm-yy',
                 changeYear: true,
                 changeMonth: true});
@@ -1239,7 +1238,6 @@ var BDLY_SRC_flag_autocom='';
             $('<tr><td nowrap><label id="BDLY_INPUT_lbl_uexp_unit" >UNIT</label><em>*</em> </td><td nowrap><label  id="BDLY_INPUT_lbl_uexp_category" >CATEGORY</label><em>*</em></td><td nowrap><label  id="BDLY_INPUT_lbl_uexp_customer" hidden>CUSTOMER<em>*</em></label></td><td nowrap><label  id="BDLY_INPUT_lbl_uexp_customerid" hidden></label></td><td nowrap> <label id="BDLY_INPUT_lbl_uexp_invoicedate" >INVOICE DATE</label><em>*</em> </td><td ><label id="BDLY_INPUT_lbl_uexp_invoiceitem" >INVOICE ITEM</label><em>*</em> </td><td nowrap><label id="BDLY_INPUT_lbl_uexp_invoicefrom" >INVOICE FROM</label><em>*</em></td><td nowrap><label id="BDLY_INPUT_lbl_uexp_amount" >AMOUNT</label><em>*</em> </td><td nowrap><label id="BDLY_INPUT_lbl_uexp_comments" >COMMENTS</label> </td><td ><label id="BDLY_INPUT_lbl_uexp_add" ></label> </td><td ><label id="BDLY_INPUT_lbl_uexp_del" ></label> </td></tr><tr><td style="max-width:200px;"> <select  class="BDLY_INPUT_uexp_class_unit uexp_submultivalid form-control"  name="BDLY_INPUT_lb_uexp_unit[]" id="BDLY_INPUT_lb_uexp_unit-1" style="display: none;" hidden><option value="">SELECT</option></select> </td> <td style="max-width:200px;"><select  name="BDLY_INPUT_lb_uexp_category[]" class="uexp_submultivalid BDLY_INPUT_uexp_class_category form-control" id="BDLY_INPUT_lb_uexp_category-1" style="display: none;" hidden><option value="" >SELECT</option></select></td><td style="max-width:200px;"><select  name="BDLY_INPUT_lb_uexp_customer[]" class="uexp_submultivalid BDLY_INPUT_uexp_class_custname form-control" id="BDLY_INPUT_lb_uexp_customer1" style="display: none;" hidden><option value="" >SELECT</option></select></td><td style="max-width:200px;"><table id="multiplecustomer-1" width="250px" hidden></table><td style="max-width:150px;"><input  class="datepickdate uexp_submultivalid datemandtry form-control "  type="text" name ="BDLY_INPUT_db_uexp_invoicedate[]" id="BDLY_INPUT_db_uexp_invoicedate1" style="width:100px;display: none;" hidden /> </td><td style="max-width:250px;"><textarea  class="uexp_submultivalid form-control"  name ="BDLY_INPUT_tb_uexp_invoiceitem[]" id="BDLY_INPUT_tb_uexp_invoiceitem1" style="display: none;" hidden/></textarea> </td><td style="max-width:200px;"><input  class="uexp_submultivalid autosize autocomplete form-control" type="text" name ="BDLY_INPUT_tb_uexp_invoicefrom[]" id="BDLY_INPUT_tb_uexp_invoicefrom1" style="display: none;" hidden/> </td><td style="max-width:100px;"><input  class="amtonlyfivedigit uexp_submultivalid form-control"  type="text" name ="BDLY_INPUT_tb_uexp_amount[]" id="BDLY_INPUT_tb_uexp_amount1" style="width:60px;display: none;" hidden /> </td><td><textarea style="max-width:250px;" row="3" name ="BDLY_INPUT_ta_uexpcomments[]" id="BDLY_INPUT_ta_uexpcomments1" class=" uexp_submultivalid form-control" hidden ></textarea> </td><td><input type="button" value="+" class="uexp_addbttn" alt="Add Row" height="30" width="30" name ="BDLY_INPUT_uexpadd[]" id="BDLY_INPUT_uexp_add1" disabled > </td><td><input  type="button" value="-" class="uexp_deletebttn" alt="delete Row" height="30" width="30" name ="BDLY_INPUT_uexpdelete[]" id="BDLY_INPUT_uexp_del1" disabled ></td><td><input    type="text" name ="BDLY_INPUT_tb_uexp_hideradioid[]" id="BDLY_INPUT_tb_uexp_hideradioid1" style="width:75px;" hidden/> </td></tr>').appendTo($('#BDLY_INPUT_tble_unitexpense'))
             $(".amtonlyfivedigit").doValidation({rule:'numbersonly',prop:{realpart:5,imaginary:2}});
             $(".autosize").doValidation({rule:'general',prop:{autosize:true}});
-            $("input.autosize").autoGrowInput();
             $(".datepickdate").datepicker({dateFormat:'dd-mm-yy', changeYear: true, changeMonth: true});
             if(BDLY_INPUT_unit_response[0]!='BDLY_INPUT_flag_notsave'){
                 BDLY_INPUT_load_unitno(BDLY_INPUT_unit_response);
@@ -1250,7 +1248,6 @@ var BDLY_SRC_flag_autocom='';
             $('#BDLY_INPUT_tble_starhub').empty();
             $('<tr> <td nowrap><label id="BDLY_INPUT_lbl_star_unit" >UNIT</label><em>*</em> </td><td nowrap><label  id="BDLY_INPUT_lbl_star_invoiceto" >INVOICE TO</label><em>*</em></td><td nowrap><label id="BDLY_INPUT_lbl_star_accountno"  >ACCOUNT NO</label><em>*</em> </td><td nowrap> <label id="BDLY_INPUT_lbl_star_invoicedate" >INVOICE DATE</label><em>*</em> </td><td nowrap><label id="BDLY_INPUT_lbl_star_fromperiod" >FROM PERIOD</label><em>*</em> </td><td nowrap><label id="BDLY_INPUT_lbl_star_toperiod" >TO PERIOD</label><em>*</em></td><td nowrap><label id="BDLY_INPUT_lbl_star_amount" >AMOUNT</label><em>*</em> </td><td nowrap><label id="BDLY_INPUT_lbl_star_comments" >COMMENTS</label> </td><td ><label id="BDLY_INPUT_lbl_star_add" ></label> </td><td ><label id="BDLY_INPUT_lbl_star_del" ></label> </td></tr><tr><td> <select  class="BDLY_INPUT_class_star_unit star_submultivalid form-control"  name="BDLY_INPUT_lb_star_unit[]" id="BDLY_INPUT_lb_star_unit-1" style="display:none;" hidden>'+BDLY_INPUT_unitno_options+'</select> </td> <td> <select  class="BDLY_INPUT_class_star_invoice star_submultivalid form-control"  name="BDLYUT_lb_star_invoiceto[]" id="BDLY_INPUT_lb_star_invoice-1" style="display:none;" hidden><option value="">SELECT</option></select><input type="hidden" id="BDLY_INPUT_hidden_star_ecnid1" name="BDLY_INPUT_hidden_star_ecnid[]"> </td><td><input  class="star_submultivalid rdonly form-control"  type="text" name ="BDLY_INPUT_tb_star_accno[]" id="BDLY_INPUT_tb_star_accno1"  style="display:none;" hidden readonly/> </td><td><input  class="starinvdatepickdate star_submultivalid datemandtry form-control"  type="text" name ="BDLY_INPUT_db_star_invoicedate[]" id="BDLY_INPUT_db_star_invoicedate1" style="width:100px;display: none;" hidden /> </td><td><input  class="starfrmdatepickdate star_submultivalid datemandtry form-control"  type="text" name ="BDLY_INPUT_db_star_fromperiod[]" id="BDLY_INPUT_db_star_fromperiod1" style="width:100px;display: none;" hidden/> </td><td><input  class="startodatepickdate star_submultivalid datemandtry form-control"  type="text" name ="BDLY_INPUT_db_star_toperiod[]" id="BDLY_INPUT_db_star_toperiod1" style="width:100px;display: none;" hidden/> </td><td><input  class=" star_submultivalid includeminusfour form-control"  type="text" name ="BDLY_INPUT_tb_star_amount[]" id="BDLY_INPUT_tb_star_amount1" style="width:70px;display: none;" maxlength=4 hidden /> </td><td><textarea row="3" class=" star_submultivalid form-control"  name ="BDLY_INPUT_ta_star_comments[]" id="BDLY_INPUT_ta_star_comments1" style="display:none;" hidden ></textarea> </td><td><input type="button" value="+" class="star_addbttn" alt="Add Row" height="30" width="30" name ="BDLY_INPUT_add[]" id="BDLY_INPUT_star_add1" disabled > </td><td><input  type="button" value="-" class="star_deletebttn" alt="delete Row" height="30" width="30" name ="BDLY_INPUT_delete[]" id="BDLY_INPUT_star_del1" disabled ></td></tr>').appendTo($('#BDLY_INPUT_tble_starhub'));
             $(".autosize").doValidation({rule:'general',prop:{autosize:true}});
-            $("input.autosize").autoGrowInput();
             $('.includeminusfour').doValidation({rule:'numbersonly',prop:{integer:true,realpart:4,imaginary:2}});
             $(".datepickdate").datepicker({dateFormat:'dd-mm-yy',
                 changeYear: true,
@@ -1472,7 +1469,7 @@ var BDLY_SRC_flag_autocom='';
                 $('#BDLY_INPUT_tb_digi_voiceno').val(BDLY_INPUT_invoiceno)
                 if(BDLY_INPUT_invoiceto!="")
                 {
-                    var values='<input type="text"  class="rdonly" id="BDLY_INPUT_lb_digi_invoiceto" name="BDLY_INPUT_tb_digi_invoiceto" value="'+BDLY_INPUT_invoiceto+'" readonly >'
+                    var values='<input type="text"  class="rdonly form-control" id="BDLY_INPUT_lb_digi_invoiceto" name="BDLY_INPUT_tb_digi_invoiceto" value="'+BDLY_INPUT_invoiceto+'" readonly >'
                     $('#BDLY_INPUT_lb_digi_invoiceto').replaceWith(values)
                     $('#BDLY_INPUT_lbl_digi_invoiceto').attr("size",225);
                     $('#BDLY_INPUT_lb_digi_invoiceto').attr("size",(BDLY_INPUT_invoicetoval+4));
@@ -1489,7 +1486,7 @@ var BDLY_SRC_flag_autocom='';
                             BDLY_INPUT_options += '<option value="' + expense_id[i] + '">' + expense_Data[i]+ '</option>';
                         }
                     }
-                    var values='<select id="BDLY_INPUT_lb_digi_invoiceto" name="BDLY_INPUT_lb_digi_invoiceto" class="BDLY_INPUT_class_submitvalidate" > '+BDLY_INPUT_options+'</select>'
+                    var values='<select id="BDLY_INPUT_lb_digi_invoiceto" name="BDLY_INPUT_lb_digi_invoiceto" class="BDLY_INPUT_class_submitvalidate form-control" > '+BDLY_INPUT_options+'</select>'
                     $('#BDLY_INPUT_lb_digi_invoiceto').replaceWith(values);
                     $('#BDLY_INPUT_lbl_digi_invoiceto').attr("size",225);
                     BDLY_INPUT_Sortit('BDLY_INPUT_lb_digi_invoiceto');
@@ -2712,7 +2709,6 @@ var BDLY_SRC_flag_autocom='';
             oCell = newRow.insertCell(6);
             oCell.innerHTML ="<input  class='uexp_submultivalid autosize autocomplete form-control'  type='text' name ='BDLY_INPUT_tb_uexp_invoicefrom[]' id='"+"BDLY_INPUT_tb_uexp_invoicefrom"+newid+"'  style='display:none;' hidden/> ";
             $(".autosize").doValidation({rule:'general',prop:{autosize:true}});
-            $("input.autosize").autoGrowInput();
             oCell = newRow.insertCell(7);
             oCell.innerHTML ="<input  class='amtonlyfivedigit uexp_submultivalid form-control' type='text' name ='BDLY_INPUT_tb_uexp_amount[]' id='"+"BDLY_INPUT_tb_uexp_amount"+newid+"' style='width:60px;display:none;' hidden /> ";
             $(".amtonlyfivedigit").doValidation({rule:'numbersonly',prop:{realpart:5,imaginary:2}});
@@ -3438,9 +3434,9 @@ var BDLY_SRC_flag_autocom='';
 //CREATE DYNAMIC SEARCH FORM ELEMENTS START
                     var TempInvoiceFromTR ='<div id="BDLY_SRC_tr_searchopt_invoicefrom" class="BDLY_SRC_class_dynamicrows form-group" ><label class="col-sm-2">INVOICE FROM</label><div class="col-sm-2"><input type="text" name="BDLY_SRC_invoicefrom" id="BDLY_SRC_invoicefrom" class="auto form-control" disabled /></div></div>';
                     var TempVoiceNoTR ='<div id="BDLY_SRC_tr_searchopt_voiceno" class="BDLY_SRC_class_dynamicrows form-group" ><label class="col-sm-2">DIGITAL VOICE NO</label><div class="col-sm-2"><input type="text" name="BDLY_SRC_voiceno" id="BDLY_SRC_voiceno" class="auto form-control" disabled /></div></div>';
-                    var TempDurationFromTR ='<div id="BDLY_SRC_tr_searchopt_durationfrom" class="BDLY_SRC_class_dynamicrows form-group" ><label class="col-sm-2">FROM DURATION</label><div class="col-sm-2"><input type="text" name="BDLY_SRC_duration" id="BDLY_SRC_durationfrom" class="BDLY_SCR_Field duration form-control"/></div></div>';
-                    var TempDurationToTR ='<div id="BDLY_SRC_tr_searchopt_durationto" class="BDLY_SRC_class_dynamicrows form-group" ><label class="col-sm-2">TO DURATION</label><div class="col-sm-2"><input type="text" name="BDLY_SRC_duration" id="BDLY_SRC_durationto" class="BDLY_SCR_Field duration form-control"/></div><div><label id="BDLY_SCR_lbl_err_durationmin" class="errormsg"></label></div><div><label id="BDLY_SCR_lbl_err_durationhrs" class="errormsg"></label></div><div><label id="BDLY_SCR_lbl_err_duration" class="errormsg"></label></div></div>';
-                    var TempServiceDueTR ='<div id="BDLY_SRC_tr_searchopt_servicedue" class="form-group"><label class=" col-sm-2">SERVICE DUE</label><div class="col-sm-3"><input type="text" name="BDLY_SRC_servicedue" id="BDLY_SRC_servicedue" class="BDLY_SCR_Field BDLY_SCR_forperiod BDLT_SRC_Month_picker monthpicker datemandtry form-control"/></div></div>';
+                    var TempDurationFromTR ='<div id="BDLY_SRC_tr_searchopt_durationfrom" class="BDLY_SRC_class_dynamicrows form-group" ><label class="col-sm-2">FROM DURATION</label><div class="col-sm-2"><div class="input-group addon"><input type="text" name="BDLY_SRC_duration" id="BDLY_SRC_durationfrom" class="BDLY_SCR_Field duration form-control"/><label for="BDLY_SRC_durationfrom" class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></label></div></div></div>';
+                    var TempDurationToTR ='<div id="BDLY_SRC_tr_searchopt_durationto" class="BDLY_SRC_class_dynamicrows form-group" ><label class="col-sm-2">TO DURATION</label><div class="col-sm-2"><div class="input-group addon"><input type="text" name="BDLY_SRC_duration" id="BDLY_SRC_durationto" class="BDLY_SCR_Field duration form-control"/><label for="BDLY_SRC_durationto" class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></label></div><div><label id="BDLY_SCR_lbl_err_durationmin" class="errormsg"></label></div><div><label id="BDLY_SCR_lbl_err_durationhrs" class="errormsg"></label></div><div><label id="BDLY_SCR_lbl_err_duration" class="errormsg"></label></div></div>';
+                    var TempServiceDueTR ='<div id="BDLY_SRC_tr_searchopt_servicedue" class="form-group"><label class=" col-sm-2">SERVICE DUE</label><div style="padding-left:0px;" class="col-sm-9"><div class="col-sm-3"><div class="input-group addon"><input type="text" name="BDLY_SRC_servicedue" id="BDLY_SRC_servicedue" class="BDLY_SCR_Field BDLY_SCR_forperiod BDLT_SRC_Month_picker monthpicker datemandtry form-control"/><label for="BDLY_SRC_servicedue" class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></label></div></div></div></div>';
                     var TempCommentsTR ='<div id="BDLY_SRC_tr_searchopt_comments" class="BDLY_SRC_class_dynamicrows form-group" ><label class="col-sm-2">COMMENTS</label><div class="col-sm-3"><textarea name="BDLY_SRC_comments" id="BDLY_SRC_comments"  class="auto form-control" disabled ></textarea></div></div>';
                     var TempItemsTR ='<div id="BDLY_SRC_tr_searchopt_invoiceitem" class="BDLY_SRC_class_dynamicrows form-group" ><label class="col-sm-2">INVOICE ITEMS</label><div class="col-sm-3"><textarea name="BDLY_SRC_invoiceitem" id="BDLY_SRC_invoiceitem"  class="auto form-control" disabled ></textarea></div></div>';
                     var TempCategoryTR ='<div id="BDLY_SRC_tr_searchopt_category" class="BDLY_SRC_class_dynamicrows form-group" ><label class="BDLY_SRC_class_lb_lbl col-sm-2">CATEGORY</label><div class="col-sm-2"><select class="BDLY_SRC_class_Searchbtn_list_box BDLY_SCR_Field form-control" name="BDLY_SRC_lb_category" id="BDLY_SRC_lb_category" ><option>SELECT</option></select></div></div>';
@@ -3455,10 +3451,10 @@ var BDLY_SRC_flag_autocom='';
                     var TempAccountTR ='<div id="BDLY_SRC_tr_searchopt_accountno" class="BDLY_SRC_class_dynamicrows form-group" ><label class="BDLY_SRC_class_lb_lbl col-sm-2">ACCOUNT NO</label><div class="col-sm-2"><select  class="BDLY_SRC_class_Searchbtn_list_box BDLY_SCR_Field form-control" name="BDLY_SRC_lb_accountno" id="BDLY_SRC_lb_accountno" ><option>SELECT</option></select></div></div>';
                     var TempFromamtTR ='<div id="BDLY_SRC_tr_searchopt_fromamt" class="BDLY_SRC_class_dynamicrows form-group" ><label class="col-sm-2">FROM AMOUNT</label><div class="col-sm-2" ><input class="BDLY_SCR_Field form-control" type="text" id="BDLY_SRC_tb_fromamt" name="BDLY_SRC_tb_fromamnt" /></div></div>';
                     var TempToamtTR ='<div id="BDLY_SRC_tr_searchopt_toamt" class="BDLY_SRC_class_dynamicrows form-group" ><label class="col-sm-2">TO AMOUNT</label><div class="col-sm-2"><input class="BDLY_SCR_Field form-control" type="text" id="BDLY_SRC_tb_toamt"  name="BDLY_SRC_tb_toamnt" /></div><div class="errormsg" id="BDLY_SRC_tb_fromtoamnt_errormsg"></div></div>';
-                    var TempStart_DateTR ='<div id="BDLY_SRC_tr_searchopt_startdate" class="BDLY_SRC_class_dynamicrowss form-group" ><label class="col-sm-2">START DATE</label><div class="col-sm-2"><input  type="text" id="BDLY_SRC_startdate" name="BDLY_SRC_startdate" class="BDLY_SCR_Field datepickerbox BDLY_class_sedatechange datemandtry form-control" style="width:100px;"/></div><div class="errormsg" id="BDLY_SRC_startdate_errormsg"></div></div>';
-                    var TempEnd_DateTR ='<div id="BDLY_SRC_tr_searchopt_enddate" class="BDLY_SRC_class_dynamicrowss form-group" ><label class="col-sm-2">END DATE</label><div class="col-sm-2"><input class="BDLY_SCR_Field datepickerbox BDLY_class_sedatechange datemandtry form-control" type="text" id="BDLY_SRC_enddate" name="BDLY_SRC_enddate"  style="width:100px;"/></div><div class="errormsg" id="BDLY_SRC_enddate_errormsg"></div></div>';
-                    var TempStart_ForperiodTR ='<div id="BDLY_SRC_tr_searchopt_startforperiod"  class="form-group"><label class="col-sm-2">START PERIOD</label><div class="col-sm-2"><input type="text" name="BDLY_SRC_startforperiod" id="BDLY_SRC_startforperiod"  class="BDLY_SCR_Field BDLY_SCR_forperiod monthpicker datemandtry form-control" /></div></div>';
-                    var TempEnd_ForperiodTR ='<div id="BDLY_SRC_tr_searchopt_endforperiod" class="form-group" ><label class="col-sm-2">END PERIOD</label><div class="col-sm-2"><input type="text" name="BDLY_SRC_endforperiod" id="BDLY_SRC_endforperiod"  class="BDLY_SCR_Field BDLY_SCR_forperiod monthpicker datemandtry form-control" /></div></div>';
+                    var TempStart_DateTR ='<div id="BDLY_SRC_tr_searchopt_startdate" class="BDLY_SRC_class_dynamicrowss form-group" ><label class="col-sm-2">START DATE</label><div class="col-sm-2"><div class="input-group addon"><input  type="text" id="BDLY_SRC_startdate" name="BDLY_SRC_startdate" class="BDLY_SCR_Field datepickerbox BDLY_class_sedatechange datemandtry form-control" style="width:100px;"/><label for="BDLY_SRC_startdate" class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></label></div></div><div class="errormsg" id="BDLY_SRC_startdate_errormsg"></div></div>';
+                    var TempEnd_DateTR ='<div id="BDLY_SRC_tr_searchopt_enddate" class="BDLY_SRC_class_dynamicrowss form-group" ><label class="col-sm-2">END DATE</label><div class="col-sm-2"><div class="input-group addon"><input class="BDLY_SCR_Field datepickerbox BDLY_class_sedatechange datemandtry form-control" type="text" id="BDLY_SRC_enddate" name="BDLY_SRC_enddate"  style="width:100px;"/><label for="BDLY_SRC_enddate" class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></label></div></div><div class="errormsg" id="BDLY_SRC_enddate_errormsg"></div></div></div>';
+                    var TempStart_ForperiodTR ='<div id="BDLY_SRC_tr_searchopt_startforperiod"  class="form-group"><label class="col-sm-2">START PERIOD</label><div style="padding-left:0px;" class="col-sm-9"><div class="col-sm-3"><div class="input-group addon"><input type="text" name="BDLY_SRC_startforperiod" id="BDLY_SRC_startforperiod"  class="BDLY_SCR_Field BDLY_SCR_forperiod monthpicker datemandtry form-control" /><label for="BDLY_SRC_startforperiod" class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></label></div></div></div></div>';
+                    var TempEnd_ForperiodTR ='<div id="BDLY_SRC_tr_searchopt_endforperiod" class="form-group" ><label class="col-sm-2">END PERIOD</label><div style="padding-left:0px;" class="col-sm-9"><div class="col-sm-3"><div class="input-group addon"><input type="text" name="BDLY_SRC_endforperiod" id="BDLY_SRC_endforperiod"  class="BDLY_SCR_Field BDLY_SCR_forperiod monthpicker datemandtry form-control" /><label for="BDLY_SRC_endforperiod" class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></label></div></div></div></div>';
                     var BDLY_SRC_Form_search_btn_html='<div class="col-lg-offset-2" style="padding-left:65px;"><input type="button" name="BDLY_SRC_btn_search" id="BDLY_SRC_btn_search" class="btn" value="SEARCH"  />';
                     var TempdurationamtTR ='<div id="BDLY_SRC_tr_searchopt_durationamt" class="form-group" ><label class="col-sm-2">AMOUNT PER DURATION</label><div class="col-sm-2" ><input class="BDLY_SCR_Field form-control" type="text" id="BDLY_SRC_tb_durationamt" name="BDLY_SRC_tb_durationamt" /></div></div>';
 //CREATE DYNAMIC SEARCH FORM ELEMENTS END
@@ -5580,44 +5576,64 @@ var BDLY_SRC_flag_autocom='';
                 <div id="BDLY_INPUT_tble_aircon" hidden>
                     <div class="form-group">
                         <label  id='BDLY_INPUT_lbl_serviceby' class="col-sm-2">AIRCON SERVICE BY<em>*</em></label>
-                        <div class="col-sm-2"><input type="text" id="BDLY_INPUT_tb_serviceby" name="BDLY_INPUT_tb_serviceby" class="BDLY_INPUT_class_submitvalidate autosize form-control" readonly  >
+                        <div class="col-sm-4"><input type="text" id="BDLY_INPUT_tb_serviceby" name="BDLY_INPUT_tb_serviceby" class="BDLY_INPUT_class_submitvalidate autosize form-control" readonly  >
                             <input type="hidden" id="BDLY_INPUT_hidden_edasid" name="BDLY_INPUT_hidden_edasid">
                         </div>
                     </div>
                     <div class="form-group">
                         <label  id='BDLY_INPUT_lbl_air_date' class="col-sm-2" >DATE<em>*</em></label>
-                        <div class="col-sm-4"><input type="text" id="BDLY_INPUT_tb_air_date" name="BDLY_INPUT_tb_air_date" class="datepickdate BDLY_INPUT_class_submitvalidate datemandtry form-control" style="width:100px" ></div>
+                        <div class="col-sm-4">
+                            <div class="input-group addon">
+                                <input type="text" id="BDLY_INPUT_tb_air_date" name="BDLY_INPUT_tb_air_date" class="datepickdate BDLY_INPUT_class_submitvalidate datemandtry form-control" placeholder="Date" style="width:100px" >
+                                <label for="BDLY_INPUT_tb_air_date" class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></label>
+                            </div>
+                        </div>
                     </div>
                     <div class="form-group">
                         <label  id='BDLY_INPUT_lbl_comment' class="col-sm-2">COMMENTS</label>
-                        <div class="col-sm-4"><textarea rows="5" name="BDLY_INPUT_ta_aircon_comments" id="BDLY_INPUT_ta_aircon_comments" class="form-control"  ></textarea></div>
+                        <div class="col-sm-4"><textarea rows="5" name="BDLY_INPUT_ta_aircon_comments" id="BDLY_INPUT_ta_aircon_comments" class="form-control"  placeholder="Comments"></textarea></div>
                     </div>
                 </div>
                     <!--CREATING OF CAR PARK ELEMENT-->
                     <div id="BDLY_INPUT_tble_cardpark" hidden>
                         <div class="form-group">
                             <label  id='BDLY_INPUT_lbl_carno' class="col-sm-2">CAR NO<em>*</em></label>
-                            <div class="col-sm-2"><input type="text" id="BDLY_INPUT_tb_carno" name="BDLY_INPUT_tb_carno" class="BDLY_INPUT_class_submitvalidate rdonly form-control" readonly  ></div>
+                            <div class="col-sm-2"><input type="text" id="BDLY_INPUT_tb_carno" name="BDLY_INPUT_tb_carno" placeholder="Car No" class="BDLY_INPUT_class_submitvalidate rdonly form-control" readonly  ></div>
                         </div>
                         <div class="form-group">
                             <label  id='BDLY_INPUT_lbl_cp_invoicedate' class="col-sm-2" >INVOICE DATE<em>*</em></label>
-                            <div class="col-sm-4"><input type="text" id="BDLY_INPUT_tb_cp_invoicedate" name="BDLY_INPUT_tb_cp_invoicedate" class=" BDLY_INPUT_class_submitvalidate datemandtry form-control" style="width:100px" ></div>
+                            <div class="col-sm-4">
+                                <div class="input-group addon">
+                                <input type="text" id="BDLY_INPUT_tb_cp_invoicedate" name="BDLY_INPUT_tb_cp_invoicedate" placeholder="Invoice Date" class="BDLY_INPUT_class_submitvalidate datemandtry form-control" style="width:100px" >
+                                <label for="BDLY_INPUT_tb_cp_invoicedate" class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></label>
+                                </div>
+                            </div>
                         </div>
                         <div class="form-group">
                             <label  id='BDLY_INPUT_lbl_cp_fromdate' class="col-sm-2">FROM PERIOD<em>*</em></label>
-                            <div class="col-sm-2"><input type="text" id="BDLY_INPUT_tb_cp_fromdate" name="BDLY_INPUT_tb_cp_fromdate" class=" BDLY_INPUT_class_submitvalidate datemandtry form-control" style="width:100px" ></div>
+                            <div class="col-sm-2">
+                                <div class="input-group addon">
+                                    <input type="text" id="BDLY_INPUT_tb_cp_fromdate" name="BDLY_INPUT_tb_cp_fromdate" placeholder="From Period" class=" BDLY_INPUT_class_submitvalidate datemandtry form-control" style="width:100px" >
+                                    <label for="BDLY_INPUT_tb_cp_fromdate" class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></label>
+                                </div>
+                            </div>
                         </div>
                         <div class="form-group">
                             <label  id='BDLY_INPUT_lbl_cp_todate' class="col-sm-2">TO PERIOD<em>*</em></label>
-                            <div class="col-sm-2"><input type="text" id="BDLY_INPUT_tb_cp_todate" name="BDLY_INPUT_tb_cp_todate" class="  BDLY_INPUT_class_submitvalidate datemandtry form-control" style="width:100px" ></div>
+                            <div class="col-sm-2">
+                                <div class="input-group addon">
+                                <input type="text" id="BDLY_INPUT_tb_cp_todate" name="BDLY_INPUT_tb_cp_todate"  placeholder="To Period"class="BDLY_INPUT_class_submitvalidate datemandtry form-control" style="width:100px" >
+                                <label for="BDLY_INPUT_tb_cp_todate" class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></label>
+                                </div>
+                            </div>
                         </div>
                         <div class="form-group">
                             <label  id='BDLY_INPUT_lbl_cp_invoiceamt' class="col-sm-2">INVOICE AMOUNT<em>*</em></label>
-                            <div class="col-sm-2"><input type="text" id="BDLY_INPUT_tb_cp_invoiceamt" name="BDLY_INPUT_tb_cp_invoiceamt" class="BDLY_INPUT_class_submitvalidate amtonly BDLY_INPUT_class_numonly form-control" style="width:70px" ></div>
+                            <div class="col-sm-2"><input type="text" id="BDLY_INPUT_tb_cp_invoiceamt" name="BDLY_INPUT_tb_cp_invoiceamt" placeholder="Invoice Amount" class="BDLY_INPUT_class_submitvalidate amtonly BDLY_INPUT_class_numonly form-control" style="width:70px" ></div>
                         </div>
                         <div class="form-group">
                             <label  id='BDLY_INPUT_lbl_cp_comment' class="col-sm-2">COMMENTS</label>
-                            <div class="col-sm-4"><textarea name="BDLY_INPUT_ta_cp_comments" id="BDLY_INPUT_ta_cp_comments" class="BDLY_INPUT_class_submitvalidate form-control" ></textarea></div>
+                            <div class="col-sm-4"><textarea name="BDLY_INPUT_ta_cp_comments" id="BDLY_INPUT_ta_cp_comments" placeholder="Comments" class="BDLY_INPUT_class_submitvalidate form-control" ></textarea></div>
                         </div>
                     </div>
                     <!--CREATING OF DIGITAL VOICE ELEMENT-->
@@ -5628,38 +5644,58 @@ var BDLY_SRC_flag_autocom='';
                                 </select></div></div>
                         <div class="form-group">
                             <label  id='BDLY_INPUT_lbl_digi_voiceno' class="col-sm-2">DIGITAL VOICE NO<em>*</em></label>
-                            <div class="col-sm-2"><input type="text" id="BDLY_INPUT_tb_digi_voiceno" name="BDLY_INPUT_tb_digi_voiceno" class="BDLY_INPUT_class_submitvalidate rdonly form-control" readonly  ></div>
+                            <div class="col-sm-2"><input type="text" id="BDLY_INPUT_tb_digi_voiceno" name="BDLY_INPUT_tb_digi_voiceno" placeholder="Digital voice No" class="BDLY_INPUT_class_submitvalidate rdonly form-control" readonly  ></div>
                         </div>
                         <div class="form-group">
                             <label  id='BDLY_INPUT_lbl_digi_accno' class="col-sm-2">ACCOUNT NO<em>*</em></label>
-                            <div class="col-sm-2"><input type="text" id="BDLY_INPUT_tb_digi_accno" name="BDLY_INPUT_tb_digi_accno" class="BDLY_INPUT_class_submitvalidate rdonly form-control"  readonly></div>
+                            <div class="col-sm-2"><input type="text" id="BDLY_INPUT_tb_digi_accno" name="BDLY_INPUT_tb_digi_accno" placeholder="Account No" class="BDLY_INPUT_class_submitvalidate rdonly form-control"  readonly></div>
                         </div>
                         <div class="form-group">
                             <label  id='BDLY_INPUT_lbl_digi_invoicedate' class="col-sm-2">INVOICE DATE<em>*</em></label>
-                            <div class="col-sm-4"><input type="text" id="BDLY_INPUT_tb_digi_invoicedate" name="BDLY_INPUT_tb_digi_invoicedate" class=" BDLY_INPUT_class_submitvalidate datemandtry form-control" style="width:100px" ></div>
+                            <div class="col-sm-4">
+                                <div class="input-group addon">
+                                <input type="text" id="BDLY_INPUT_tb_digi_invoicedate" name="BDLY_INPUT_tb_digi_invoicedate" placeholder="Invoice Date" class=" BDLY_INPUT_class_submitvalidate datemandtry form-control" style="width:100px" >
+                                <label for="BDLY_INPUT_tb_digi_invoicedate" class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></label>
+                                </div>
+                            </div>
                         </div>
                         <div class="form-group">
                             <label  id='BDLY_INPUT_lbl_digi_fromdate' class="col-sm-2">FROM PERIOD<em>*</em></label>
-                            <div class="col-sm-4"><input type="text" id="BDLY_INPUT_tb_digi_fromdate" name="BDLY_INPUT_tb_digi_fromdate" class=" BDLY_INPUT_class_submitvalidate datemandtry form-control" style="width:100px" ></div>
+                            <div class="col-sm-4">
+                                <div class="input-group addon">
+                                <input type="text" id="BDLY_INPUT_tb_digi_fromdate" name="BDLY_INPUT_tb_digi_fromdate" placeholder="From Period" class=" BDLY_INPUT_class_submitvalidate datemandtry form-control" style="width:100px" >
+                                <label for="BDLY_INPUT_tb_digi_fromdate" class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></label>
+                                </div>
+                            </div>
                         </div>
                         <div class="form-group">
                             <label  id='BDLY_INPUT_lbl_digi_todate' class="col-sm-2">TO PERIOD<em>*</em></label>
-                            <div class="col-sm-4"><input type="text" id="BDLY_INPUT_tb_digi_todate" name="BDLY_INPUT_tb_digi_todate"  class=" BDLY_INPUT_class_submitvalidate datemandtry form-control" style="width:100px" ></div>
+                            <div class="col-sm-4">
+                                <div class="input-group addon">
+                                <input type="text" id="BDLY_INPUT_tb_digi_todate" placeholder="To Period" name="BDLY_INPUT_tb_digi_todate"  class=" BDLY_INPUT_class_submitvalidate datemandtry form-control" style="width:100px" >
+                                <label for="BDLY_INPUT_tb_digi_todate" class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></label>
+                                </div>
+                            </div>
                         </div>
                         <div class="form-group">
                             <label  id='BDLY_INPUT_lbl_digi_invoiceamt' class="col-sm-2" >INVOICE AMOUNT<em>*</em></label>
-                            <div class="col-sm-2"><input type="text" id="BDLY_INPUT_tb_digi_invoiceamt" name="BDLY_INPUT_tb_digi_invoiceamt" class="BDLY_INPUT_class_submitvalidate includeminus BDLY_INPUT_class_numonly form-control" style="width:70px"></div>
+                            <div class="col-sm-2"><input type="text" id="BDLY_INPUT_tb_digi_invoiceamt" placeholder="Invoice Amount" name="BDLY_INPUT_tb_digi_invoiceamt" class="BDLY_INPUT_class_submitvalidate includeminus BDLY_INPUT_class_numonly form-control" style="width:70px"></div>
                         </div>
                         <div class="form-group">
                             <label  id='BDLY_INPUT_lbl_digi_comment' class="col-sm-2">COMMENTS</label>
-                            <div class="col-sm-4"><textarea name="BDLY_INPUT_ta_digi_comments" id="BDLY_INPUT_ta_digi_comments" class="BDLY_INPUT_class_submitvalidate form-control"></textarea></div>
+                            <div class="col-sm-4"><textarea name="BDLY_INPUT_ta_digi_comments" id="BDLY_INPUT_ta_digi_comments" placeholder="Comments" class="BDLY_INPUT_class_submitvalidate form-control"></textarea></div>
                         </div>
                     </div>
                     <!--CREATING OF FACILITY ELEMENT-->
                     <div id="BDLY_INPUT_tble_facility" hidden>
                         <div class="form-group">
                             <label  id='BDLY_INPUT_lbl_fac_invoicedate' class="col-sm-2">DATE<em>*</em></label>
-                            <div class="col-sm-4"><input type="text" style="width:100px" id="BDLY_INPUT_tb_fac_invoicedate" name="BDLY_INPUT_tb_fac_invoicedate" class=" form-control datepickdate BDLY_INPUT_class_hksubmitvalidate datemandtry" ></div>
+                            <div class="col-sm-4">
+                                <div class="input-group addon">
+                                    <input type="text" style="width:100px" id="BDLY_INPUT_tb_fac_invoicedate" placeholder="Date" name="BDLY_INPUT_tb_fac_invoicedate" class=" form-control datepickdate BDLY_INPUT_class_hksubmitvalidate datemandtry" >
+                                    <label for="BDLY_INPUT_tb_fac_invoicedate" class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></label>
+                                </div>
+                            </div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-2"></label>
@@ -5688,53 +5724,68 @@ var BDLY_SRC_flag_autocom='';
                         </div>
                         <div class="form-group">
                             <label class="col-sm-2" id='BDLY_INPUT_lbl_fac_comment' >COMMENTS</label>
-                            <div class="col-sm-4"><textarea name="BDLY_INPUT_ta_fac_comments" id="BDLY_INPUT_ta_fac_comments" class="BDLY_INPUT_class_submitvalidate form-control" ></textarea></div>
+                            <div class="col-sm-4"><textarea name="BDLY_INPUT_ta_fac_comments" id="BDLY_INPUT_ta_fac_comments" placeholder="Comments" class="BDLY_INPUT_class_submitvalidate form-control" ></textarea></div>
                         </div>
                     </div>
                     <!--CREATING OF MOVING IN AND OUT ELEMENT-->
                     <div id="BDLY_INPUT_tble_moving" hidden>
                         <div class="form-group">
                             <label  id='BDLY_INPUT_lbl_mov_date' class="col-sm-2">INVOICE DATE<em>*</em></label>
-                            <div class="col-sm-2"><input type="text" id="BDLY_INPUT_tb_mov_date" name="BDLY_INPUT_tb_mov_date" class="BDLY_INPUT_class_hksubmitvalidate datepickdate datemandtry form-control" style="width:100px" ></div>
+                            <div class="col-sm-2">
+                                <div class="input-group addon">
+                                    <input type="text" id="BDLY_INPUT_tb_mov_date" name="BDLY_INPUT_tb_mov_date" placeholder="Invoice Date" class="BDLY_INPUT_class_hksubmitvalidate datepickdate datemandtry form-control" style="width:100px" >
+                                    <label for="BDLY_INPUT_tb_mov_date" class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></label>
+                                </div>
+                            </div>
                         </div>
                         <div class="form-group">
                             <label  id='BDLY_INPUT_lbl_mov_invoiceamt' class="col-sm-2">INVOICE AMOUNT<em>*</em></label>
-                            <div class="col-sm-2"><input type="text" id="BDLY_INPUT_tb_mov_invoiceamt" name="BDLY_INPUT_tb_mov_invoiceamt" class="BDLY_INPUT_class_submitvalidate thramtonly BDLY_INPUT_class_numonly form-control" style="width:70px" ></div>
+                            <div class="col-sm-2"><input type="text" id="BDLY_INPUT_tb_mov_invoiceamt" name="BDLY_INPUT_tb_mov_invoiceamt" placeholder="Invoice Amount" class="BDLY_INPUT_class_submitvalidate thramtonly BDLY_INPUT_class_numonly form-control" style="width:70px" ></div>
                         </div>
                         <div class="form-group">
                              <label  id='BDLY_INPUT_lbl_mov_comment' class="col-sm-2">COMMENTS</label>
-                            <div class="col-sm-4"><textarea name="BDLY_INPUT_ta_mov_comments" id="BDLY_INPUT_ta_mov_comments" class="BDLY_INPUT_class_submitvalidate form-control" ></textarea></div>
+                            <div class="col-sm-4"><textarea name="BDLY_INPUT_ta_mov_comments" id="BDLY_INPUT_ta_mov_comments" placeholder="Comments" class="BDLY_INPUT_class_submitvalidate form-control" ></textarea></div>
                         </div>
                     </div>
                     <!--CREATING OF PURCHASE ELEMENT-->
                     <div id="BDLY_INPUT_tble_purchase" hidden>
                         <div class="form-group">
                             <label  id='BDLY_INPUT_lbl_access_cardno' class="col-sm-2">CARD NO<em>*</em></label>
-                            <div class="col-sm-2"><input type="text" id="BDLY_INPUT_tb_access_cardno" name="BDLY_INPUT_tb_access_cardno" style="width:73px;" class="numonly BDLY_INPUT_class_hksubmitvalidate form-control" ></div>
+                            <div class="col-sm-2"><input type="text" id="BDLY_INPUT_tb_access_cardno" name="BDLY_INPUT_tb_access_cardno" placeholder="Card No" style="width:73px;" class="numonly BDLY_INPUT_class_hksubmitvalidate form-control" ></div>
                             <label class="errormsg" id="BDLY_INPUT_lbl_pcarderrmsg" ></label>
                         </div>
                         <div class="form-group">
                             <label  id='BDLY_INPUT_lbl_access_date' class="col-sm-2">INVOICE DATE<em>*</em></label>
-                            <div class="col-sm-2"><input type="text" id="BDLY_INPUT_tb_access_date" name="BDLY_INPUT_tb_access_date" style="width:100px;" class="datepickdate BDLY_INPUT_class_hksubmitvalidate datemandtry form-control" ></div>
+                            <div class="col-sm-2">
+                                <div class="input-group addon">
+                                    <input type="text" id="BDLY_INPUT_tb_access_date" name="BDLY_INPUT_tb_access_date" placeholder="Invoice Date" style="width:100px;" class="datepickdate BDLY_INPUT_class_hksubmitvalidate datemandtry form-control" >
+                                    <label for="BDLY_INPUT_tb_access_date" class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></label>
+                                </div>
+                            </div>
                         </div>
                         <div class="form-group">
                             <label  id='BDLY_INPUT_lbl_access_invoiceamt' class="col-sm-2">INVOICE AMOUNT<em>*</em></label>
-                            <div class="col-sm-4"><input type="text" id="BDLY_INPUT_tb_access_invoiceamt" name="BDLY_INPUT_tb_access_invoiceamt" style="width:70px;" class="BDLY_INPUT_class_hksubmitvalidate amtonly BDLY_INPUT_class_numonly form-control" ></div>
+                            <div class="col-sm-4"><input type="text" id="BDLY_INPUT_tb_access_invoiceamt" name="BDLY_INPUT_tb_access_invoiceamt" placeholder="Invoice Amount" style="width:70px;" class="BDLY_INPUT_class_hksubmitvalidate amtonly BDLY_INPUT_class_numonly form-control" ></div>
                         </div>
                         <div class="form-group">
                             <label  id='BDLY_INPUT_lbl_access_comment' class="col-sm-2">COMMENTS</label>
-                            <div class="col-sm-4"><textarea name="BDLY_INPUT_ta_access_comments" id="BDLY_INPUT_ta_access_comments" class="BDLY_INPUT_class_hksubmitvalidate form-control" ></textarea></div>
+                            <div class="col-sm-4"><textarea name="BDLY_INPUT_ta_access_comments" id="BDLY_INPUT_ta_access_comments" placeholder="Comments" class="BDLY_INPUT_class_hksubmitvalidate form-control" ></textarea></div>
                         </div>
                     </div>
                     <!--CREATING OF PETTYCASH ELEMENT-->
                     <div id="BDLY_INPUT_tble_pettycash" hidden>
                         <div class="form-group">
                             <label  id='BDLY_INPUT_lbl_petty_balance' class="col-sm-2" >CURRENT BALANCE<em>*</em></label>
-                            <div class="col-sm-4"><input type="text" id="BDLY_INPUT_tb_petty_balance" name="BDLY_INPUT_tb_petty_balance" style="width:80px;" class="rdonly form-control" readonly ></div>
+                            <div class="col-sm-4"><input type="text" id="BDLY_INPUT_tb_petty_balance" name="BDLY_INPUT_tb_petty_balance" placeholder="Current Balance" style="width:80px;" class="rdonly form-control" readonly ></div>
                         </div>
                         <div class="form-group">
                             <label  id='BDLY_INPUT_lbl_petty_date'class="col-sm-2" >DATE<em>*</em></label>
-                            <div class="col-sm-4"><input type="text" id="BDLY_INPUT_tb_petty_date" name="BDLY_INPUT_tb_petty_date" class="datepickdate BDLY_INPUT_class_hksubmitvalidate datemandtry form-control"style="width:100px;" ></div><!--datepickdate-->
+                            <div class="col-sm-4">
+                                <div class="input-group addon">
+                                    <input type="text" id="BDLY_INPUT_tb_petty_date" name="BDLY_INPUT_tb_petty_date" placeholder="Date" class="datepickdate BDLY_INPUT_class_hksubmitvalidate datemandtry form-control"style="width:100px;" >
+                                    <label for="BDLY_INPUT_tb_petty_date" class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></label>
+                                </div><!--datepickdate-->
+                            </div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-2"></label>
@@ -5763,11 +5814,11 @@ var BDLY_SRC_flag_autocom='';
                         </div>
                          <div class="form-group">
                             <label  id='BDLY_INPUT_lbl_petty_invoiceitem' class="col-sm-2">INVOICE ITEM<em>*</em></label>
-                            <div class="col-sm-4"><textarea id="BDLY_INPUT_ta_petty_invoiceitem" name="BDLY_INPUT_ta_petty_invoiceitem" class="BDLY_INPUT_class_submitvalidate form-control" ></textarea></div>
+                            <div class="col-sm-4"><textarea id="BDLY_INPUT_ta_petty_invoiceitem" name="BDLY_INPUT_ta_petty_invoiceitem" placeholder="Invoice Item" class="BDLY_INPUT_class_submitvalidate form-control" ></textarea></div>
                         </div>
                         <div class="form-group">
                             <label  id='BDLY_INPUT_lbl_petty_comment'class="col-sm-2" >COMMENTS</label>
-                            <div class="col-sm-4"><textarea name="BDLY_INPUT_ta_petty_comments" id="BDLY_INPUT_ta_petty_comments" class="form-control" ></textarea></div>
+                            <div class="col-sm-4"><textarea name="BDLY_INPUT_ta_petty_comments" id="BDLY_INPUT_ta_petty_comments" placeholder="Comments" class="form-control" ></textarea></div>
                         </div>
                     </div>
                     <!--CREATING OF HOUSE KEEPING ELEMENT-->
@@ -5781,19 +5832,24 @@ var BDLY_SRC_flag_autocom='';
                         <div><table id="BDLY_INPUT_tble_radioclearnername"></table></div>
                         <div class="form-group">
                             <label  id='BDLY_INPUT_lbl_house_date' class="col-sm-2">WORK DATE<em>*</em></label>
-                            <div class="col-sm-2"><input type="text" id="BDLY_INPUT_tb_house_date" name="BDLY_INPUT_tb_house_date" class="datepickdate BDLY_INPUT_class_hksubmitvalidate datemandtry form-control" style="width:100px;" ></div>
+                            <div class="col-sm-2">
+                                <div class="input-group addon">
+                                    <input type="text" id="BDLY_INPUT_tb_house_date" name="BDLY_INPUT_tb_house_date" placeholder="Work Date" class="datepickdate BDLY_INPUT_class_hksubmitvalidate datemandtry form-control" style="width:100px;" >
+                                    <label for="BDLY_INPUT_tb_house_date" class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></label>
+                                </div>
+                            </div>
                         </div>
                         <div class="form-group">
                             <label  id='BDLY_INPUT_lbl_house_duration' class="col-sm-2">DURATION<em>*</em></label>
                             <div class="col-sm-4" style="padding-left: 0px">
-                            <div class="col-sm-2"><input type="text" id="BDLY_INPUT_tb_house_hours" name="BDLY_INPUT_tb_house_hours" class="BDLY_INPUT_class_submitvalidate hrnumonly BDLY_INPUT_class_numonly form-control" style="width:50px;" ></div>
-                            <div class="col-sm-2"><input type="text" id="BDLY_INPUT_tb_house_min" name="BDLY_INPUT_tb_house_min"  class="BDLY_INPUT_class_submitvalidate hrnumonly BDLY_INPUT_class_numonly form-control"  style="width:50px;" >
+                            <div class="col-sm-2"><input type="text" id="BDLY_INPUT_tb_house_hours" name="BDLY_INPUT_tb_house_hours" placeholder="Hrs" class="BDLY_INPUT_class_submitvalidate hrnumonly BDLY_INPUT_class_numonly form-control" style="width:50px;" ></div>
+                            <div class="col-sm-2"><input type="text" id="BDLY_INPUT_tb_house_min" name="BDLY_INPUT_tb_house_min"  placeholder="Mins" class="BDLY_INPUT_class_submitvalidate hrnumonly BDLY_INPUT_class_numonly form-control"  style="width:50px;" >
                                 </div>
                                 </div>
                         </div>
                         <div class="form-group">
                             <label  id='BDLY_INPUT_lbl_house_desc' class="col-sm-2">DESCRIPTION<em>*</em></label>
-                            <div class="col-sm-4"><textarea name="BDLY_INPUT_ta_house_desc" id="BDLY_INPUT_ta_house_desc" class="BDLY_INPUT_class_submitvalidate form-control" ></textarea></div>
+                            <div class="col-sm-4"><textarea name="BDLY_INPUT_ta_house_desc" id="BDLY_INPUT_ta_house_desc" placeholder="Description" class="BDLY_INPUT_class_submitvalidate form-control" ></textarea></div>
                         </div>
                     </div>
                     <!--CREATING OF HOUSEKEEPING PAYMENT ELEMENT-->
@@ -5808,19 +5864,29 @@ var BDLY_SRC_flag_autocom='';
                         </div>
                         <div class="form-group">
                             <label  id='BDLY_INPUT_lbl_pay_invoiceamt'  class="col-sm-2">INVOICE AMOUNT<em>*</em></label>
-                            <div class="col-sm-2"><input type="text" id="BDLY_INPUT_tb_pay_invoiceamt" name="BDLY_INPUT_tb_pay_invoiceamt" class="BDLY_INPUT_class_submitvalidate thramtonly BDLY_INPUT_class_numonly form-control" style="width:70px;" ></div>
+                            <div class="col-sm-2"><input type="text" id="BDLY_INPUT_tb_pay_invoiceamt" name="BDLY_INPUT_tb_pay_invoiceamt" placeholder="Invoice Amount" class="BDLY_INPUT_class_submitvalidate thramtonly BDLY_INPUT_class_numonly form-control" style="width:70px;" ></div>
                         </div>
                         <div class="form-group">
                             <label  id='BDLY_INPUT_lbl_pay_forperiod' class="col-sm-2">FOR PERIOD<em>*</em></label>
-                            <div class="col-sm-2"><input type="text" id="BDLY_INPUT_tb_pay_forperiod" name="BDLY_INPUT_tb_pay_forperiod" class="BDLY_INPUT_class_forperiod BDLY_INPUT_class_hksubmitvalidate datemandtry form-control" style="width:100px;"></div>
+                            <div class="col-sm-2">
+                                <div class="input-group addon">
+                                    <input type="text" id="BDLY_INPUT_tb_pay_forperiod" name="BDLY_INPUT_tb_pay_forperiod" placeholder="For Period" class="BDLY_INPUT_class_forperiod BDLY_INPUT_class_hksubmitvalidate datemandtry form-control" style="width:100px;">
+                                    <label for="BDLY_INPUT_tb_pay_forperiod" class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></label>
+                                </div>
+                            </div>
                         </div>
                         <div class="form-group">
                             <label  id='BDLY_INPUT_lbl_pay_paiddate' class="col-sm-2">PAID DATE<em>*</em></label>
-                            <div class="col-sm-2"><input type="text" id="BDLY_INPUT_tb_pay_paiddate" name="BDLY_INPUT_tb_pay_paiddate" class="datepickdate BDLY_INPUT_class_hksubmitvalidate datemandtry form-control" style="width:100px;" ></div>
+                            <div class="col-sm-2">
+                                <div class="input-group addon">
+                                    <input type="text" id="BDLY_INPUT_tb_pay_paiddate" name="BDLY_INPUT_tb_pay_paiddate" placeholder="Paid Date" class="datepickdate BDLY_INPUT_class_hksubmitvalidate datemandtry form-control" style="width:100px;" >
+                                    <label for="BDLY_INPUT_tb_pay_paiddate" class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></label>
+                                </div>
+                            </div>
                         </div>
                         <div class="form-group">
                             <label  id='BDLY_INPUT_lbl_pay_comment' class="col-sm-2">COMMENTS</label>
-                            <div class="col-sm-4"><textarea name="BDLY_INPUT_ta_pay_comments" id="BDLY_INPUT_ta_pay_comments" class="form-control" ></textarea></div>
+                            <div class="col-sm-4"><textarea name="BDLY_INPUT_ta_pay_comments" id="BDLY_INPUT_ta_pay_comments" placeholder="Comments" class="form-control" ></textarea></div>
                         </div>
                     </div>
                     <!--CREATING OF ELECTRICITY ELEMENT-->

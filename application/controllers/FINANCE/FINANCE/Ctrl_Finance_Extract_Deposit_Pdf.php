@@ -14,8 +14,6 @@ class Ctrl_Finance_Extract_Deposit_Pdf extends CI_Controller{
         return $service;
     }
     public function Initialdata(){
-        $timeZoneFrmt= $this->Mdl_eilib_common_function->getTimezone();
-        $USERSTAMP=$this->Mdl_eilib_common_function->getSessionUserStamp();
         $service=$this->Call_service();
         $query=$this->Mdl_finance_extract_deposit_pdf->Initial_data($service);
         echo json_encode($query);
@@ -51,40 +49,30 @@ class Ctrl_Finance_Extract_Deposit_Pdf extends CI_Controller{
         $getcustidquery=$this->Mdl_finance_extract_deposit_pdf->DDE_Dep_Exct_recversion($getid,$unitno,$month,$name,$shturl,$nocustid);
         echo json_encode($getcustidquery);
     }
-    public function DDE_Dep_Exct_submit(){
-        $selectedunit=$this->input->post('DDE_lb_unitselect');
-        $customername=$this->input->post('DDE_lb_customerselect');
-        $customernameid=$this->input->post('DDE_customer_id_name');
-        $shturl=$this->input->post('shturl');
-        $chkboxinc=$this->input->post('DDE_chk_checkboxinc');
-        if($customernameid!=''){
-            $customername=$customernameid;
+    public function DDE_Dep_Exct_submit()
+    {
+        $USERSTAMP=$this->Mdl_eilib_common_function->getSessionUserStamp();
+        $selectedunit = $this->input->post('DDE_lb_unitselect');
+        $customername = $this->input->post('DDE_lb_customerselect');
+        $customernameid = $this->input->post('DDE_customer_id_name');
+        $shturl = $this->input->post('shturl');
+        $chkboxinc = $this->input->post('DDE_chk_checkboxinc');
+        if ($customernameid != '') {
+            $customername = $customernameid;
         }
-        if($chkboxinc!=''){
-            if(is_array($chkboxinc)==true){
-                $checkarray=$chkboxinc;
+        if ($chkboxinc != '') {
+            if (is_array($chkboxinc) == true) {
+                $checkarray = $chkboxinc;
+            } else {
+                $checkarray[] = $chkboxinc;
             }
-            else
-            {
-                $checkarray=$chkboxinc;
-            }
+        } else {
+            $checkarray[] = $this->input->post('DDE_tb_recdate');
         }
-        else{
-            $checkarray[]=$this->input->post('DDE_tb_recdate');
-        }
-        $selectedsheet=$this->input->post('DDE_lb_monthselect');
-        $customermail=$this->input->post('DDE_LB_Emaillist');
-        $customeridname=$this->input->post('DDE_customer_id_name');
-        $getcustidquery=$this->Mdl_finance_extract_deposit_pdf->DDE_Dep_Exctsubmit($shturl,$selectedunit,$customername,$checkarray,$selectedsheet,$customermail,$customeridname);
-//        echo json_encode($getcustidquery);
-        echo $string = implode(array_map("chr", $getcustidquery));
-//        $pdfheader=$selectedunit.'-'.$customername;
-//        $this->load->library('pdf');
-//        $pdf = $this->pdf->load();
-//        $pdf=new mPDF('utf-8','A4');
-//        $pdf->SetHTMLHeader('<div style="text-align: center; font-weight: bold;">'.$pdfheader.'</div>', 'O', true);
-//        $pdf->SetHTMLFooter('<div style="text-align: center;">{PAGENO}</div>');
-//        $pdf->WriteHTML($getcustidquery);
-//        $pdf->Output($pdfheader.'.pdf', 'D');
+        $selectedsheet = $this->input->post('DDE_lb_monthselect');
+        $customermail = $this->input->post('DDE_LB_Emaillist');
+        $customeridname = $this->input->post('DDE_customer_id_name');
+        $getcustidquery = $this->Mdl_finance_extract_deposit_pdf->DDE_Dep_Exctsubmit($shturl, $selectedunit, $customername, $checkarray, $selectedsheet, $customermail, $customeridname, $USERSTAMP);
+        echo json_encode($getcustidquery);
     }
 }

@@ -246,7 +246,7 @@ require_once('application/libraries/EI_HDR.php');
                     data: formelement+'&shturl='+shturl,
                     success: function(submitdata){
                         var submit_values=JSON.parse(submitdata);
-//                        DDE_clearandshowmsg(submit_values);
+                        DDE_clearandshowmsg(submit_values);
                     },
                     error:function(data){
                         var errordata=(JSON.stringify(data));

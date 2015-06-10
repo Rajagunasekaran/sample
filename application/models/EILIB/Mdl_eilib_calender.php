@@ -404,7 +404,7 @@ class Mdl_eilib_calender  extends CI_Model {
         $resultcount=$this->db->affected_rows();
         for ($s=0;$s<$resultcount;$s++)
         {
-            $finalResult[]=array('sddate'=>$result[$s]['CLP_STARTDATE'],'sdtimein'=>$result[$s]['CED_SD_STIME'],'sdtimeout'=>$result[$s]['CED_SD_ETIME'],'eddate'=>$result[$s]['CLP_ENDDATE'],'edtimein'=>$result[$s]['CED_SD_STIME'],'edtimeout'=>$result[$s]['CED_SD_ETIME']);
+            $finalResult[]=array('sddate'=>$result[$s]['CLP_STARTDATE'],'sdtimein'=>$result[$s]['CED_SD_STIME'],'sdtimeout'=>$result[$s]['CED_SD_ETIME'],'eddate'=>$result[$s]['ENDDATE'],'edtimein'=>$result[$s]['CED_SD_STIME'],'edtimeout'=>$result[$s]['CED_SD_ETIME']);
         }
         return $finalResult;
     }

@@ -236,8 +236,8 @@ $(document).ready(function()
 });
 
 //GET CUSTOMER NAME FOR THE SELECTED UNIT
-    $('#CEXTN_lb_unitno').change(function()
-    {
+    $('#CEXTN_lb_unitno').change(function(){
+        $("html, body").animate({ scrollTop: $(document).height() }, "slow");
         $('#CEXTN_div_nocusterr').text("");
         var CEXTN_lb_unitno=$('#CEXTN_lb_unitno').val();
         var CEXTN_div_custid=$('#CEXTN_div_custid').hide();
@@ -293,6 +293,7 @@ $(document).ready(function()
 //GET CUSTOMER ID FOR THE SELECTED CUSTOMER NAME
     $('#CEXTN_lb_custname').change(function()
     {
+
         $('#CEXTN_div_nocusterr').text("");
         CEXTN_setselectIndex();
         $('#CEXTN_div_custid').hide();
@@ -331,7 +332,7 @@ $(document).ready(function()
                             $(".preloader").hide();
                             var value_array=JSON.parse(data);
                             CEXTN_getCustomerdtls_result(value_array)
-
+                            $("html, body").animate({ scrollTop:1500 }, "slow");
                         },
                         error: function(data){
                     alert('error in getting'+JSON.stringify(data));
@@ -349,7 +350,9 @@ $(document).ready(function()
                     $('#CEXTN_tble_custid > div').remove();
                     for(var i=0;i<CEXTN_name_id_array.length;i++)
                     {
-                        var CEXTN_result='<tr id="custid"><td> <input type=radio name="CEXTN_radiocustid" id='+CEXTN_name_id_array[i]+' value='+CEXTN_name_id_array[i]+' class="CEXTN_class_custid"></td><td>'+CEXTN_custname[0]+" "+CEXTN_custname[1]+' '+CEXTN_name_id_array[i]+'</tr>';
+                          var CEXTN_result = '<div class="col-sm-offset-3" style="padding-left:15px"><div class="radio"><label><input type="radio" name="CEXTN_radiocustid" id='+CEXTN_name_id_array[i]+' value='+CEXTN_name_id_array[i]+' class="CEXTN_class_custid" />'+CEXTN_custname[0]+" "+CEXTN_custname[1]+' '+CEXTN_name_id_array[i]+'</label></div></div>';
+
+//                        var CEXTN_result='<tr id="custid"><td> <input type=radio name="CEXTN_radiocustid" id='+CEXTN_name_id_array[i]+' value='+CEXTN_name_id_array[i]+' class="CEXTN_class_custid"></td><td>'+CEXTN_custname[0]+" "+CEXTN_custname[1]+' '+CEXTN_name_id_array[i]+'</tr>';
                         $('#CEXTN_tble_custid').append(CEXTN_result);
                     }
                     $('#CEXTN_div_custid').show();
@@ -613,7 +616,6 @@ $(document).ready(function()
                 url: controller_url+"CEXTN_getdiffunitCardNo",
                 data:{"unitno":CEXTN_lb_unitno,"CEXTN_tb_firstname":CEXTN_tb_firstname,"CEXTN_tb_lastname":CEXTN_tb_lastname},
                 success:function(data){
-alert(data);
                     var CEXTN_diffunitcard=JSON.parse(data);
                     CEXTN_getdiffunitCardNo_result(CEXTN_diffunitcard);
 
@@ -633,13 +635,14 @@ alert(JSON.stringify(data))
             $(".preloader").hide();
         }
     });
-//ADD CARD NOS IN THE FORM
+    //ADD CARD NOS IN THE FORM
     function CEXTN_getdiffunitCardNo_result(CEXTN_diffunitcard)
     {
         CEXTN_finalCard=CEXTN_diffunitcard[1];
         $('#CEXTN_tble_diffunitcardlist > div').remove();
         $('#CEXTN_div_diffunitnocarderrmsg').hide();
         CEXTN_chkcardlen=CEXTN_diffunitcard[0].length;
+
         if(CEXTN_diffunitcard[0].length>0)
         {
             for(var i=0;i<CEXTN_diffunitcard[0].length;i++)
@@ -664,6 +667,7 @@ alert(JSON.stringify(data))
         }
         else
         {
+//            $('#CEXTN_div_diffunitcardlist').show();
             $('#CEXTN_div_diffunitnocarderrmsg').show();
             $('#CEXTN_div_custerrmsg').hide();
         }
@@ -1818,7 +1822,6 @@ alert(JSON.stringify(data))
         var xmlhttp = new XMLHttpRequest();
         xmlhttp.onreadystatechange = function () {
             if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-                alert(xmlhttp.responseText)
                 var saveresult = JSON.parse(xmlhttp.responseText);
                 $('.preloader').hide();
 
@@ -2139,9 +2142,10 @@ alert(JSON.stringify(data))
                                         </div>
                                      </div>
                                 </div>
-                                <div id="CEXTN_div_diffunitcardlist" hidden><div id="CEXTN_tble_diffunitcardlist" class="CEXTN_btn_validate_class"></div>
-                                    <div id="CEXTN_div_diffunitnocarderrmsg" class="errormsg" hidden></div>
+                                <div id="CEXTN_div_diffunitcardlist" hidden>
+                                      <div id="CEXTN_tble_diffunitcardlist" class="CEXTN_btn_validate_class"></div>
                                 </div>
+                                      <div id="CEXTN_div_diffunitnocarderrmsg" class="errormsg" ></div>
                                 <div class="radio">
                                     <label id="CEXTN_lbl_diffunitnull" hidden>
                                     <input type="radio" name="CEXTN_radio_difunitcard" id="CEXTN_radio_difunitnullcard"  value="CEXTN_radio_difunitnullcard" class="CEXTN_btn_validate_class" hidden/>
@@ -2319,7 +2323,7 @@ alert(JSON.stringify(data))
                     </div>
                     <div class="form-group">
                         <label class="col-sm-3">CHECKOUT CLEANING FEE</label>
-                        <div class="col-sm-2"><input type="text" name="CEXTN_tb_chkoutcleanfee" id="CEXTN_tb_chkoutcleanfee" style="width:77px;" maxlength="7" class="3digitdollaronly CEXTN_btn_validate_class form-control"/></div>
+                        <div class="col-sm-2"><input type="text" name="CEXTN_tb_chkoutcleanfee" id="CEXTN_tb_chkoutcleanfee" style="width:77px;" maxlength="7" class="3digitdollaronly CEXTN_btn_validate_class form-control" placeholder="0.00"/></div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-3">E-MAIL ID<em>*</em></label>

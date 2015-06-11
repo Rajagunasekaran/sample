@@ -46,8 +46,8 @@ class Ctrl_Finance_Extract_Deposit_Pdf extends CI_Controller{
         $name=$this->input->post('DDE_name');
         $shturl=$this->input->post('shturl');
         $nocustid=$this->input->post('nocustid');
-        $getcustidquery=$this->Mdl_finance_extract_deposit_pdf->DDE_Dep_Exct_recversion($getid,$unitno,$month,$name,$shturl,$nocustid);
-        echo json_encode($getcustidquery);
+        $getrecverquery=$this->Mdl_finance_extract_deposit_pdf->DDE_Dep_Exct_recversion($getid,$unitno,$month,$name,$shturl,$nocustid);
+        echo json_encode($getrecverquery);
     }
     public function DDE_Dep_Exct_submit()
     {
@@ -72,7 +72,7 @@ class Ctrl_Finance_Extract_Deposit_Pdf extends CI_Controller{
         $selectedsheet = $this->input->post('DDE_lb_monthselect');
         $customermail = $this->input->post('DDE_LB_Emaillist');
         $customeridname = $this->input->post('DDE_customer_id_name');
-        $getcustidquery = $this->Mdl_finance_extract_deposit_pdf->DDE_Dep_Exctsubmit($shturl, $selectedunit, $customername, $checkarray, $selectedsheet, $customermail, $customeridname, $USERSTAMP);
-        echo json_encode($getcustidquery);
+        $submitquery = $this->Mdl_finance_extract_deposit_pdf->DDE_Dep_Exctsubmit($shturl, $selectedunit, $customername, $checkarray, $selectedsheet, $customermail, $customeridname, $USERSTAMP);
+        echo json_encode($submitquery);
     }
 }

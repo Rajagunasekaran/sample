@@ -830,8 +830,8 @@ require_once('application/libraries/EI_HDR.php');
                 else
                     $("#USU_lbl_errmsg_paymentdate").text('');
             });
-        // CHANGE EVENT FOR SEARCH BY LISTBOX
-            $(document).on('change','.USU_all_searchby',function(){
+        // CHANGE EVENT FOR UNTI LISTBOX
+            $(document).on('change','#USU_lb_unitno',function(){
                 $('#USU_cardtype,#USU_cardno,#USU_paymentamtdiv,#USU_stampamtdiv,#USU_div_flex,#USU_headermsg,#USU_errmsg_roominventory,#USU_div_updateform').hide();
                 $('#USU_form_unitupdate').find('input:text').val('');
                 $('#USU_cardtype,#USU_cardno').find('select').val('SELECT');
@@ -841,7 +841,7 @@ require_once('application/libraries/EI_HDR.php');
                 $('#pdf_btn').hide();
                 var USU_unit_optionfetch =$('#USU_lb_searchby').val();
                 var formelement=$('#unit_createupdate_form').serialize();
-                if($('#USU_lb_unitno').val()!='SELECT' || $('#USU_lb_roomtyps').val()!='SELECT'){
+                if($('#USU_lb_unitno').val()!='SELECT'){
                     if(USU_unit_optionfetch==1)//INVENTORY CARD
                     {
                         $('#USU_lb_typeofcard').html(USU_select_options_card);
@@ -867,6 +867,43 @@ require_once('application/libraries/EI_HDR.php');
                     }
                 }
             });
+        // CHANGE EVENT FOR ROOM TYPE LISTBOX
+        $(document).on('change','#USU_lb_roomtyps',function(){
+            $('#USU_cardtype,#USU_cardno,#USU_paymentamtdiv,#USU_stampamtdiv,#USU_div_flex,#USU_headermsg,#USU_errmsg_roominventory,#USU_div_updateform').hide();
+            $('#USU_form_unitupdate').find('input:text').val('');
+            $('#USU_cardtype,#USU_cardno').find('select').val('SELECT');
+            $('#USU_headermsg,#USU_errmsg_roominventory').text('');
+            $('#USU_section1,#USU_section2').empty();
+            $('#USU_lb_typeofcard').html('');
+            $('#pdf_btn').hide();
+            var USU_unit_optionfetch =$('#USU_lb_searchby').val();
+            var formelement=$('#unit_createupdate_form').serialize();
+            if($('#USU_lb_roomtyps').val()!='SELECT'){
+                if(USU_unit_optionfetch==1)//INVENTORY CARD
+                {
+                    $('#USU_lb_typeofcard').html(USU_select_options_card);
+                    $('#USU_cardtype').show();
+                }
+                else
+                {
+                    $(".preloader").show();
+                    $.ajax({
+                        type: "POST",
+                        url: ctrl_unitcreate_url+'/USU_flexttable',
+                        data: formelement,
+                        success: function(flexdata) {
+                            var flxsarray=JSON.parse(flexdata);
+                            USU_success_flex(flxsarray);
+                            $("html, body").animate({ scrollTop: $(document).height() }, "slow");
+                        },
+                        error:function(data){
+                            var errordata=(JSON.stringify(data));
+                            show_msgbox("UNIT SEARCH/UPDATE",errordata,'error',false);
+                        }
+                    });
+                }
+            }
+        });
         // CHANGE EVENT FOR SEARCH BY CARD
             $(document).on('change','#USU_lb_typeofcard',function(){
                 $('#USU_cardno,#USU_paymentamtdiv,#USU_stampamtdiv,#USU_div_flex,#USU_headermsg,#USU_errmsg_roominventory,#USU_div_updateform').hide();
@@ -954,17 +991,17 @@ require_once('application/libraries/EI_HDR.php');
         // SUCCESS FUNCTION FOR FLEX TABLE
             function USU_success_flex(USU_response_flex){
                 $(".preloader").hide();
+                var sucssvar=USU_response_flex.USU_parentfunc_obj;
                 if(USU_response_flex.toString().match("error:"))
                 {
                     show_msgbox("UNIT SEARCH/UPDATE",USU_response_flex,'error',false);
                 }
                 else{
-                    if((USU_response_flex.USU_parentfunc_obj!=true && USU_response_flex.USU_parentfunc_obj!=0) || (USU_response_flex.USU_parentfunc_obj=="")){
+                    if((sucssvar!='true' && sucssvar!='zero') || (sucssvar=='')){
                         $('#USU_div_updateform').hide();
                         $("#USU_btn_search").attr("disabled","disabled");
                         $('#USU_div_stamphtmltable').hide();
                         $('#USU_div_flex').show();
-                        $('#pdf_btn').show();
                         $('#USU_div_htmltable').hide();
                         $('#USU_div_htmltable','#USU_div_stamphtmltable').empty();
                         $('#USU_headermsg').text('');
@@ -1243,10 +1280,16 @@ require_once('application/libraries/EI_HDR.php');
                     var USU_unitid=$tds.eq(0).text();
                     if((USU_lb_selectoption_unit==3)||(USU_lb_selectoption_unit==4)||(USU_lb_selectoption_unit==6)||(USU_lb_selectoption_unit==7))
                     {
-                        USU_upd_tr +='<div id="USU_updateform" style="padding-top:20px"> <div class="form-group" id="USU_unitno"> <label class="col-sm-2">UNIT NUMBER <em>*</em></label> <div class="col-sm-2"><input type="text" value="'+$tds.eq(1).text()+'" name="USU_tb_unitno" id="USU_tb_unitno" maxlength=4 class="USU_class_title_nums USU_class_updvalidation numonlyzero form-control" placeholder="Unit Number"></div> <div class="col-sm-4"> <label id="USU_lbl_alreadyexists" class="errormsg errpadding"></label> </div> </div> <div class="form-group" id="USU_startdate"> <label class="col-sm-2">START DATE <em>*</em></label> <div class="col-sm-2"> <div class="input-group addon"> <input value="'+$tds.eq(2).text()+'" type="text" name="USU_db_startdate_update" id="USU_db_startdate_update" class="USU_class_updvalidation form-control" placeholder="Start Date"/> <label for="USU_db_startdate_update" class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></label> </div> </div> </div> <div class="form-group" id="USU_enddate"> <label class="col-sm-2">END DATE <em>*</em></label> <div class="col-sm-2"> <div class="input-group addon"> <input value="'+$tds.eq(3).text()+'" type="text" name="USU_db_enddate_update" id="USU_db_enddate_update" class="USU_class_updvalidation form-control" placeholder="End Date"/> <label for="USU_db_enddate_update" class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></label> </div> </div> <div class="col-sm-2"> <div class="checkbox"> <label id="USU_lbl_obsolete"><input id ="USU_cb_obsolete" type="checkbox" name="USU_cb_obsolete" class="USU_class_obsolete USU_class_updvalidation" disabled>OBSOLETE</label> </div> </div> <div class="col-sm-4 errpadding errormsg" id="USU_lbl_obsolete_errmsg"> </div> </div> <div class="form-group" id="USU_unitrent"> <label class="col-sm-2">UNIT RENTAL <em>*</em></label> <div class="col-sm-2"><input value="'+$tds.eq(6).text()+'" id= "USU_tb_unitreltal" type = "text" name="USU_tb_unitreltal" maxlength=4 class="numonly USU_class_title_nums USU_class_updvalidation form-control" placeholder="Unit Rental"></div> </div> <div class="form-group" id="USU_unitdepo"> <label class="col-sm-2">UNIT DEPOSIT </label> <div class="col-sm-2"><input value="'+$tds.eq(7).text()+'" id="USU_tb_unitdeposit" type="text" name = "USU_tb_unitdeposit" maxlength=5 class="numonly USU_class_title_nums USU_class_updvalidation form-control" placeholder="Unit Deposit"></div> </div> <div class="form-group" id="USU_accntnumber"> <label class="col-sm-2">ACCOUNT NUMBER </label> <div class="col-sm-3"><input value="'+$tds.eq(8).text()+'" id ="USU_tb_accnoid" type="USU_tb_accnoid" name="USU_tb_accnoid" placeholder="Account Number" maxlength="15" class="numonlyzero USU_class_updvalidation USU_class_title_nums form-control"/></div> </div> <div class="form-group" id="USU_accntname"> <label class="col-sm-2">ACCOUNT NAME </label> <div class="col-sm-3"><input id="USU_tb_accname" type="text" name="USU_tb_accname" value="'+$tds.eq(9).text()+'" maxlength=25 class="general USU_class_updvalidation form-control" placeholder="Account Name"/></div> </div> <div class="form-group" id="USU_bankcode"> <label class="col-sm-2">BANK CODE</label> <div class="col-sm-2"><input id = "USU_tb_bankcodeid" type="text" name="USU_tb_bankcodeid"  maxlength=5 value="'+$tds.eq(10).text()+'" class="numonlyzero USU_class_title_nums USU_class_updvalidation form-control" placeholder="Bank Code"/></div> </div> <div class="form-group" id="USU_branchcode"> <label class="col-sm-2">BRANCH CODE</label> <div class="col-sm-2"><input id ="USU_tb_branchcode" type="text" name="USU_tb_branchcode" value="'+$tds.eq(11).text()+'" maxlength=5 class="numonlyzero USU_class_title_nums USU_class_updvalidation form-control" placeholder="Branch Code"/></div> </div> <div class="form-group" id="USU_bankaddress"> <label class="col-sm-2">BANK ADDRESS</label> <div class="col-sm-4"><textarea id="USU_tb_bankaddr" name="USU_tb_bankaddr" placeholder="Bank Address" class="USU_class_updvalidation form-control" rows="5">'+$tds.eq(12).text()+'</textarea></div> </div> <div class="form-group" id="USU_comments"> <label class="col-sm-2">COMMENTS</label> <div class="col-sm-4"><textarea id="USU_ta_comments" name="USU_ta_comments" placeholder="Comments" class="USU_class_updvalidation form-control" rows="5">'+$tds.eq(13).text()+'</textarea></div> </div> <div class="form-group" id="USU_nonEI"> <label class="col-sm-2">EI/NON_EI</label> <div class="radio"> <label><input type="checkbox" name="USU_cb_nonei" id ="USU_cb_nonei" class="USU_class_updvalidation"></label> </div> </div> </div>';
+                        USU_upd_tr +='<div id="USU_updateform" style="padding-top:20px"> <div class="form-group" id="USU_unitno"> <label class="col-sm-2">UNIT NUMBER <em>*</em></label> <div class="col-sm-2"><input type="text" value="'+$tds.eq(1).text()+'" name="USU_tb_unitno" id="USU_tb_unitno" maxlength=4 class="USU_class_title_nums USU_class_updvalidation numonlyzero form-control" placeholder="Unit Number"></div> <div class="col-sm-4"> <label id="USU_lbl_alreadyexists" class="errormsg errpadding"></label> </div> </div> <div class="form-group" id="USU_startdate"> <label class="col-sm-2">START DATE <em>*</em></label> <div class="col-sm-2"> <div class="input-group addon"> <input value="'+$tds.eq(2).text()+'" type="text" name="USU_db_startdate_update" id="USU_db_startdate_update" class="USU_class_updvalidation form-control" placeholder="Start Date"/> <label for="USU_db_startdate_update" class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></label> </div> </div> </div> <div class="form-group" id="USU_enddate"> <label class="col-sm-2">END DATE <em>*</em></label> <div class="col-sm-2"> <div class="input-group addon"> <input value="'+$tds.eq(3).text()+'" type="text" name="USU_db_enddate_update" id="USU_db_enddate_update" class="USU_class_updvalidation form-control" placeholder="End Date"/> <label for="USU_db_enddate_update" class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></label> </div> </div> <div class="col-sm-2"> <div class="checkbox"> <label id="USU_lbl_obsolete"><input id ="USU_cb_obsolete" type="checkbox" name="USU_cb_obsolete" class="USU_class_obsolete USU_class_updvalidation" disabled>OBSOLETE</label> </div> </div> <div class="col-sm-4 errpadding errormsg" id="USU_lbl_obsolete_errmsg"> </div> </div> <div class="form-group" id="USU_unitrent"> <label class="col-sm-2">UNIT RENTAL <em>*</em></label> <div class="col-sm-2"><input value="'+$tds.eq(6).text()+'" id= "USU_tb_unitreltal" type = "text" name="USU_tb_unitreltal" maxlength=4 class="numonly USU_class_title_nums USU_class_updvalidation form-control" placeholder="Unit Rental"></div> </div> <div class="form-group" id="USU_unitdepo"> <label class="col-sm-2">UNIT DEPOSIT </label> <div class="col-sm-2"><input value="'+$tds.eq(7).text()+'" id="USU_tb_unitdeposit" type="text" name = "USU_tb_unitdeposit" maxlength=5 class="numonly USU_class_title_nums USU_class_updvalidation form-control" placeholder="Unit Deposit"></div> </div> <div class="form-group" id="USU_accntnumber"> <label class="col-sm-2">ACCOUNT NUMBER </label> <div class="col-sm-2"><input value="'+$tds.eq(8).text()+'" id ="USU_tb_accnoid" type="USU_tb_accnoid" name="USU_tb_accnoid" placeholder="Account Number" maxlength="15" class="numonlyzero USU_class_updvalidation USU_class_title_nums form-control"/></div> </div> <div class="form-group" id="USU_accntname"> <label class="col-sm-2">ACCOUNT NAME </label> <div class="col-sm-3"><input id="USU_tb_accname" type="text" name="USU_tb_accname" value="'+$tds.eq(9).text()+'" maxlength=25 class="general USU_class_updvalidation form-control" placeholder="Account Name"/></div> </div> <div class="form-group" id="USU_bankcode"> <label class="col-sm-2">BANK CODE</label> <div class="col-sm-2"><input id = "USU_tb_bankcodeid" type="text" name="USU_tb_bankcodeid"  maxlength=5 value="'+$tds.eq(10).text()+'" class="numonlyzero USU_class_title_nums USU_class_updvalidation form-control" placeholder="Bank Code"/></div> </div> <div class="form-group" id="USU_branchcode"> <label class="col-sm-2">BRANCH CODE</label> <div class="col-sm-2"><input id ="USU_tb_branchcode" type="text" name="USU_tb_branchcode" value="'+$tds.eq(11).text()+'" maxlength=5 class="numonlyzero USU_class_title_nums USU_class_updvalidation form-control" placeholder="Branch Code"/></div> </div> <div class="form-group" id="USU_bankaddress"> <label class="col-sm-2">BANK ADDRESS</label> <div class="col-sm-4"><textarea id="USU_tb_bankaddr" name="USU_tb_bankaddr" placeholder="Bank Address" class="USU_class_updvalidation form-control" rows="5">'+$tds.eq(12).text()+'</textarea></div> </div> <div class="form-group" id="USU_comments"> <label class="col-sm-2">COMMENTS</label> <div class="col-sm-4"><textarea id="USU_ta_comments" name="USU_ta_comments" placeholder="Comments" class="USU_class_updvalidation form-control" rows="5">'+$tds.eq(13).text()+'</textarea></div> </div> <div class="form-group" id="USU_nonEI"> <label class="col-sm-2">EI/NON_EI</label> <div class="radio"> <label><input type="checkbox" name="USU_cb_nonei" id ="USU_cb_nonei" class="USU_class_updvalidation"></label> </div> </div> </div>';
                         $(USU_upd_tr).appendTo($("#USU_tble_update"));
                         $("#USU_db_startdate_update").datepicker({dateFormat: "dd-mm-yy",changeYear:true,changeMonth:true,maxDate:'+2Y' });
-                        $("#USU_db_enddate_update").datepicker({dateFormat: "dd-mm-yy" ,changeYear:true,changeMonth:true,maxDate:'+2Y' });
+                        $("#USU_db_enddate_update").datepicker({dateFormat: "dd-mm-yy" ,changeYear:true,changeMonth:true });
+                        var USU_unitenddate = new Date( Date.parse( USU_FormTableDateFormat($tds.eq(3).text())) );
+                        var USU_new_date=USU_unitenddate.getDate();
+                        var USU_new_month = USU_unitenddate.getMonth();
+                        var USU_enddate_year=USU_unitenddate.getFullYear()+2;
+                        var USU_enddate_unit =  new Date(USU_enddate_year,USU_new_month,USU_new_date);
+                        $('#USU_db_enddate_update').datepicker("option","maxDate",USU_enddate_unit);
                         if($tds.eq(8).text()!='')
                             $('#USU_tb_accnoid').attr("size",$tds.eq(8).text().length+1);
                         if($tds.eq(9).text()!='')
@@ -1485,7 +1528,7 @@ require_once('application/libraries/EI_HDR.php');
                 var splittedcid=cid.split('_');
                 var rowcid=splittedcid[0];
                 var primcid=splittedcid[1];
-                rid=rowcid
+                rid=rowcid;
                 previous_id=primcid;
                 editrowid=primcid;
                 tdvalue=$(this).text();
@@ -1960,7 +2003,7 @@ require_once('application/libraries/EI_HDR.php');
         // PDF BUTTON EVENT
             $('#USU_btn_pdf').click(function()
             {
-                var pdfurl=document.location.href='<?php echo site_url('Ctrl_Unit_Creation_Search_Update/USU_flexttablepdf')?>?USU_parent_updation=USU_parent_updation&USU_lb_searchby='+$("#USU_lb_searchby").val()+'&USU_tb_dutyamt_fromamt='+$("#USU_tb_dutyamt_fromamt").val()+'&USU_tb_dutyamt_toamt='+$("#USU_tb_dutyamt_toamt").val()+'&USU_tb_payment_fromamt='+$("#USU_tb_payment_fromamt").val()+'&USU_tb_payment_toamt='+$("#USU_tb_payment_toamt").val()+'&USU_db_fromdate='+$("#USU_db_fromdate").val()+'&USU_db_todate='+$("#USU_db_todate").val()+'&USU_lb_unitno='+$("#USU_lb_unitno").val()+'&USU_lb_roomtyps='+$("#USU_lb_roomtyps").val()+'&USU_lb_cardno='+$("#USU_lb_cardno").val();
+                var pdfurl=document.location.href='<?php echo site_url('UNIT/Ctrl_Unit_Creation_Search_Update/USU_flexttablepdf')?>?USU_parent_updation=USU_parent_updation&USU_lb_searchby='+$("#USU_lb_searchby").val()+'&USU_tb_dutyamt_fromamt='+$("#USU_tb_dutyamt_fromamt").val()+'&USU_tb_dutyamt_toamt='+$("#USU_tb_dutyamt_toamt").val()+'&USU_tb_payment_fromamt='+$("#USU_tb_payment_fromamt").val()+'&USU_tb_payment_toamt='+$("#USU_tb_payment_toamt").val()+'&USU_db_fromdate='+$("#USU_db_fromdate").val()+'&USU_db_todate='+$("#USU_db_todate").val()+'&USU_lb_unitno='+$("#USU_lb_unitno").val()+'&USU_lb_roomtyps='+$("#USU_lb_roomtyps").val()+'&USU_lb_cardno='+$("#USU_lb_cardno").val();
             });
         });
     </script>
@@ -2030,7 +2073,7 @@ require_once('application/libraries/EI_HDR.php');
                     </div>
                     <div class="form-group" id="UC_accntnumber">
                         <label class="col-sm-2">ACCOUNT NUMBER </label>
-                        <div class="col-sm-3"><input type="text" name="UC_tb_accntnumber" id="UC_tb_accntnumber" placeholder="Account Number" maxlength="15" class="numonly UC_class_numonly form-control"/></div>
+                        <div class="col-sm-2"><input type="text" name="UC_tb_accntnumber" id="UC_tb_accntnumber" placeholder="Account Number" maxlength="15" class="numonly UC_class_numonly form-control"/></div>
                     </div>
                     <div class="form-group" id="UC_accntname">
                         <label class="col-sm-2">ACCOUNT NAME </label>

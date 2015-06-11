@@ -52,6 +52,9 @@ class Mdl_unit_creation_search_update extends CI_Model{
         return $UC_flag;
     }
     public function Unit_saveprocess($nonei,$newroomtype,$newstamptype,$oldroomtype,$oldstamptype,$UserStamp,$cal){
+        $this->load->model('EILIB/Mdl_eilib_common_function');
+        $this->load->model('EILIB/Mdl_eilib_calender');
+        $UC_sh_arr=$this->Mdl_eilib_common_function->getStarHubUnitCalTime();
         try{
             $UC_unitnumber = $_POST['UC_tb_unitno'];
             $UC_unitrental = $_POST['UC_tb_unitrentalamt'];
@@ -158,13 +161,13 @@ class Mdl_unit_creation_search_update extends CI_Model{
                 $UC_flag_created=0;
             }
             if($UC_flag_save==1){
-                $this->load->model('EILIB/Mdl_eilib_common_function');
-                $this->load->model('EILIB/Mdl_eilib_calender');
-                $UC_sh_arr=$this->Mdl_eilib_common_function->getStarHubUnitCalTime();
                 $value=$this->Mdl_eilib_calender->StarHubUnit_CreateCalEvent($cal,$UC_startdate,$UC_sh_arr[0]['ECN_DATA'],$UC_sh_arr[1]['ECN_DATA'],$UC_enddate,$UC_sh_arr[0]['ECN_DATA'],$UC_sh_arr[1]['ECN_DATA'],'',$UC_unitnumber,'','START DATE','END DATE',$UC_nonei_calendar,$UC_unitrental);
             }
             $UC_getroomstamp=$this->Initial_data($UC_flag_created);
-            if ($this->db->trans_status() === FALSE){
+            if ($this->db->trans_status() === FALSE) {
+                if($UC_flag_save==1){
+                    $value = $this->Mdl_eilib_calender->StarHubUnit_DeleteCalEvent($cal, $UC_unitnumber, $UC_startdate, $UC_sh_arr[0]['ECN_DATA'], $UC_sh_arr[1]['ECN_DATA'], $UC_enddate, $UC_sh_arr[0]['ECN_DATA'], $UC_sh_arr[1]['ECN_DATA'], 'UNIT');
+                }
                 $this->db->trans_rollback();
             }
             else{
@@ -180,7 +183,7 @@ class Mdl_unit_creation_search_update extends CI_Model{
                 $this->db->trans_rollback();
             }
             if($UC_flag_save==1){
-//                $value=$this->Mdl_eilib_calender->StarHubUnit_DeleteCalEvent($UC_unitnumber,$cal,$UC_startdate,$UC_sh_arr[0],$UC_sh_arr[1],$UC_enddate,$UC_sh_arr[0],$UC_sh_arr[1],'UNIT');
+                $value=$this->Mdl_eilib_calender->StarHubUnit_DeleteCalEvent($cal,$UC_unitnumber,$UC_startdate,$UC_sh_arr[0]['ECN_DATA'],$UC_sh_arr[1]['ECN_DATA'],$UC_enddate,$UC_sh_arr[0]['ECN_DATA'],$UC_sh_arr[1]['ECN_DATA'],'UNIT');
             }
             log_message('error:',$ex->getMessage());
             return;
@@ -188,6 +191,7 @@ class Mdl_unit_creation_search_update extends CI_Model{
     }
 
     //--------------------------------------------UNIT SEARCH AND UPDATE FUNCTION---------------------------------------------//
+
     public function Usu_initial_data(){
         $this->db->select();
         $this->db->from('UNIT');
@@ -262,7 +266,7 @@ class Mdl_unit_creation_search_update extends CI_Model{
     public function USU_already_exists($USU_inventory_unitno,$USU_typeofcard,$USU_flag_card_unitno,$USU_parent_func,$UserStamp){
         $USU_cardarray=[];
         $USU_loadunitno=[];
-        $USU_flag_unitno=false;
+        $USU_flag_unitno='false';
         $USU_arr_custexpense=[];
         $this->load->model('EILIB/Mdl_eilib_common_function');
         if(($USU_flag_card_unitno==5)||($USU_flag_card_unitno==8)||($USU_flag_card_unitno=='USU_flag_check_accesscard')){
@@ -275,7 +279,7 @@ class Mdl_unit_creation_search_update extends CI_Model{
         }
         else{
             if($USU_flag_card_unitno=='USU_flag_check_unitno'){
-                $USU_cardunitno_query="SELECT * FROM UNIT WHERE UNIT_NO=".$USU_inventory_unitno."";
+                $USU_cardunitno_query="SELECT * FROM UNIT WHERE UNIT_NO=".$USU_inventory_unitno;
                 $USU_card_rs = $this->db->query($USU_cardunitno_query);
                 if ($USU_card_rs->num_rows() > 0)
                 {
@@ -505,7 +509,7 @@ class Mdl_unit_creation_search_update extends CI_Model{
             $USU_TB_stampbox[]=$row["USDT_DATA"];
         }
         $USU_result_stamproom_obj=(object)["USU_roomtype"=>$USU_TB_roombox,"USU_stamptype"=>$USU_TB_stampbox];
-    return $USU_result_stamproom_obj;
+        return $USU_result_stamproom_obj;
     }
     public function USU_funcupdate($USU_upd_selectoption_unit,$USU_upd_unitid_stampid,$USU_upd_startdate_update
         ,$USU_upd_unitno,$USU_upd_enddate_update,$USU_upd_unitdeposit,$USU_upd_obsolete,$USU_upd_unitpayment,$USU_upd_accnoid,$USU_upd_accname
@@ -514,6 +518,11 @@ class Mdl_unit_creation_search_update extends CI_Model{
         ,$USU_upd_lost,$USU_upd_inventory,$USU_update_lb_roomtype,$USU_upd_tb_stampamt,$USU_update_lb_stampdate,$USU_upd_typeofcard,$USU_cb_inventory
         ,$USU_cb_lost,$USU_obj_rowvalue,$USU_unit_searchby,$USU_dutyamt_fromamt,$USU_dutyamt_toamt,$USU_payment_frmamt,$USU_payment_toamt,$USU_frmdate
         ,$USU_enddate,$USU_all_searchby,$USU_accesscard,$USU_parent_updation,$timeZoneFrmt,$UserStamp,$cal){
+        $this->load->model('EILIB/Mdl_eilib_common_function');
+        $this->load->model('EILIB/Mdl_eilib_Calender');
+        $USU_sh_arr=$this->Mdl_eilib_common_function->getStarHubUnitCalTime();
+        $USU_oldvalues_sdate = date('Y-m-d',strtotime($USU_obj_rowvalue['USU_tr_second']));
+        $USU_oldvalues_edate = date('Y-m-d',strtotime($USU_obj_rowvalue['USU_tr_third']));
         try{
             if(($USU_upd_startdate_update!='')||($USU_upd_enddate_update!=''))
             {
@@ -539,7 +548,7 @@ class Mdl_unit_creation_search_update extends CI_Model{
             $USU_temp_chktrans='';$USU_temp_cust='';$USU_temp_custlp='';
             if(($USU_upd_selectoption_unit==3)||($USU_upd_selectoption_unit==4)||($USU_upd_selectoption_unit==6)||($USU_upd_selectoption_unit==7))
             {
-                /*------------------------------------UPDATION FOR SEARCH BY END DATE,PAYMENT,START DATE & UNIT-----------------------*/
+                // UPDATION FOR SEARCH BY END DATE,PAYMENT,START DATE & UNIT
                 if($USU_upd_accname!='')
                     $USU_upd_accname=$this->db->escape_like_str($USU_upd_accname);
                 if($USU_upd_bankaddr!='')
@@ -557,7 +566,7 @@ class Mdl_unit_creation_search_update extends CI_Model{
             }
             else if(($USU_upd_selectoption_unit==2)||($USU_upd_selectoption_unit==1)||($USU_upd_selectoption_unit==9))
             {
-                /*--------------------------------UPDATION SEARCH BY STAMP DUTY AMT,INVENTORY CARD NO,ROOM TYPE WITH UNIT--------------------------*/
+                // UPDATION SEARCH BY STAMP DUTY AMT,INVENTORY CARD NO,ROOM TYPE WITH UNIT
                 if(($USU_upd_lb_stamptype=='SELECT')||($USU_upd_lb_stamptype==''))
                     $USU_upd_lb_stamptype='';
                 if(($USU_update_lb_roomtype=='SELECT')||($USU_update_lb_roomtype==''))
@@ -593,7 +602,7 @@ class Mdl_unit_creation_search_update extends CI_Model{
                 }
                 if(($USU_obj_rowvalue['USU_tr_second']!=$USU_upd_access)&&($USU_upd_access!='')){
                     $USU_sep_upd_flag_access=$this->USU_already_exists($USU_upd_access,'','USU_flag_check_accesscard','USU_upd_flag_accesscard',$UserStamp);
-                    if($USU_sep_upd_flag_access->USU_truefalse_flag==true){
+                    if($USU_sep_upd_flag_access->USU_truefalse_flag=='true'){
                         return ["USU_parentfunc_obj"=>$USU_sep_upd_flag_access->USU_truefalse_flag];
                     }
                 }
@@ -619,12 +628,7 @@ class Mdl_unit_creation_search_update extends CI_Model{
             $USU_flag_flag_update=$USU_flag_rs->row()->FLAG_UPDATE;
             if($USU_flag_flag_update==1){
                 if(($USU_upd_selectoption_unit==3)||($USU_upd_selectoption_unit==4)||($USU_upd_selectoption_unit==6)||($USU_upd_selectoption_unit==7)){
-                    $this->load->model('EILIB/Mdl_eilib_common_function');
-                    $this->load->model('EILIB/Mdl_eilib_Calender');
-                    $USU_sh_arr=$this->Mdl_eilib_common_function->getStarHubUnitCalTime();
-                    $USU_oldvalues_sdate = date('Y-m-d',strtotime($USU_obj_rowvalue['USU_tr_second']));
-                    $USU_oldvalues_edate = date('Y-m-d',strtotime($USU_obj_rowvalue['USU_tr_third']));
-//                    $value=$this->Mdl_eilib_calender->StarHubUnit_DeleteCalEvent($USU_obj_rowvalue['USU_tr_first'],$USU_calenderIDcode,$USU_oldvalues_sdate,$USU_sh_arr[0],$USU_sh_arr[1],$USU_oldvalues_edate,$USU_sh_arr[0],$USU_sh_arr[1],'UNIT');
+                    $value=$this->Mdl_eilib_calender->StarHubUnit_DeleteCalEvent($cal,$USU_obj_rowvalue['USU_tr_first'],$USU_oldvalues_sdate,$USU_sh_arr[0]['ECN_DATA'],$USU_sh_arr[1]['ECN_DATA'],$USU_oldvalues_edate,$USU_sh_arr[0]['ECN_DATA'],$USU_sh_arr[1]['ECN_DATA'],'UNIT');
                     $value=$this->Mdl_eilib_calender->StarHubUnit_CreateCalEvent($cal,$USU_upd_startdate_update,$USU_sh_arr[0]['ECN_DATA'],$USU_sh_arr[1]['ECN_DATA'],$USU_upd_enddate_update,$USU_sh_arr[0]['ECN_DATA'],$USU_sh_arr[1]['ECN_DATA'],'',$USU_upd_unitno,'','START DATE','END DATE',$USU_upd_nonei_event,$USU_upd_unitpayment);
                 }
             }
@@ -641,15 +645,21 @@ class Mdl_unit_creation_search_update extends CI_Model{
                 $this->db->query($drop_query);
             }
             if ($this->db->trans_status() === FALSE){
+                if($USU_flag_flag_update==1){
+                    if(($USU_upd_selectoption_unit==3)||($USU_upd_selectoption_unit==4)||($USU_upd_selectoption_unit==6)||($USU_upd_selectoption_unit==7)){
+                        $value=$this->Mdl_eilib_calender->StarHubUnit_DeleteCalEvent($cal,$USU_obj_rowvalue['USU_tr_first'],$USU_oldvalues_sdate,$USU_sh_arr[0]['ECN_DATA'],$USU_sh_arr[1]['ECN_DATA'],$USU_oldvalues_edate,$USU_sh_arr[0]['ECN_DATA'],$USU_sh_arr[1]['ECN_DATA'],'UNIT');
+                        $value=$this->Mdl_eilib_calender->StarHubUnit_CreateCalEvent($cal,$USU_oldvalues_sdate,$USU_sh_arr[0]['ECN_DATA'],$USU_sh_arr[1]['ECN_DATA'],$USU_oldvalues_edate,$USU_sh_arr[0]['ECN_DATA'],$USU_sh_arr[1]['ECN_DATA'],'',$USU_obj_rowvalue['USU_tr_first'],'','START DATE','END DATE',$USU_upd_nonei_event,$USU_upd_unitpayment);
+                    }
+                }
                 $this->db->trans_rollback();
             }
             else{
                 $this->db->trans_commit();
             }
             if($USU_flag_flag_update==0){
-                return ["USU_parentfunc_obj"=>0];
+                return ["USU_parentfunc_obj"=>'zero'];
             }
-            //*-------------------------------------REFRESH DATA AFTER UPDATION--------------------------------------------------------------*/
+            // REFRESH DATA AFTER UPDATION
             if((($USU_upd_selectoption_unit==1)&&($USU_obj_rowvalue['USU_tr_second']!=$USU_upd_access))||(($USU_upd_selectoption_unit==1)&&($USU_obj_rowvalue['USU_tr_second']==$USU_upd_access)&&($USU_obj_rowvalue['USU_tr_four']!=$USU_cb_inventory))||(($USU_upd_selectoption_unit==1)&&($USU_obj_rowvalue['USU_tr_second']==$USU_upd_access)&&($USU_obj_rowvalue['USU_tr_five']!=$USU_cb_lost))||(($USU_upd_selectoption_unit==7)&&($USU_obj_rowvalue['USU_tr_first']!=$USU_upd_unitno))){
                 if($USU_upd_selectoption_unit==1){
                     $USU_refresh= $this->USU_already_exists($USU_obj_rowvalue['USU_tr_first'],$USU_upd_typeofcard,'USU_flag_check_cardunitno','USU_parent_updation',$UserStamp);
@@ -686,8 +696,8 @@ class Mdl_unit_creation_search_update extends CI_Model{
                 $drop_query = "DROP TABLE ".$USU_temp_custlp;
                 $this->db->query($drop_query);
             }
-//            $value=$this->Mdl_eilib_calender->StarHubUnit_DeleteCalEvent($USU_obj_rowvalue['USU_tr_first'],$USU_calenderIDcode,$USU_oldvalues_sdate,$USU_sh_arr[0],$USU_sh_arr[1],$USU_oldvalues_edate,$USU_sh_arr[0],$USU_sh_arr[1],'UNIT');
-//            $value=$this->Mdl_eilib_calender->StarHubUnit_CreateCalEvent($USU_calenderIDcode,$USU_upd_startdate_update,$USU_sh_arr[0],$USU_sh_arr[1],$USU_upd_enddate_update,$USU_sh_arr[0],$USU_sh_arr[1],'',$USU_upd_unitno,'','START DATE','END DATE',$USU_upd_nonei_event,$USU_upd_unitpayment);
+            $value=$this->Mdl_eilib_calender->StarHubUnit_DeleteCalEvent($cal,$USU_obj_rowvalue['USU_tr_first'],$USU_oldvalues_sdate,$USU_sh_arr[0]['ECN_DATA'],$USU_sh_arr[1]['ECN_DATA'],$USU_oldvalues_edate,$USU_sh_arr[0]['ECN_DATA'],$USU_sh_arr[1]['ECN_DATA'],'UNIT');
+            $value=$this->Mdl_eilib_calender->StarHubUnit_CreateCalEvent($cal,$USU_oldvalues_sdate,$USU_sh_arr[0]['ECN_DATA'],$USU_sh_arr[1]['ECN_DATA'],$USU_oldvalues_edate,$USU_sh_arr[0]['ECN_DATA'],$USU_sh_arr[1]['ECN_DATA'],'',$USU_obj_rowvalue['USU_tr_first'],'','START DATE','END DATE',$USU_obj_rowvalue['USU_tr_five'],$USU_obj_rowvalue['USU_tr_six']);
             log_message('error:',$ex->getMessage());
             return;
         }

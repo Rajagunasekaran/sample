@@ -531,19 +531,19 @@ require_once('application/libraries/EI_HDR.php');
             {
                 var CV_searchby =$('#CV_lb_searchby').val();
                 if(CV_searchby==40){
-                    var pdfurl=document.location.href='<?php echo site_url('Ctrl_Access_Card_View/Pdfcreation')?>?custname=&custnameid=&unitno=&cardno=&option='+CV_searchby;
+                    var pdfurl=document.location.href='<?php echo site_url('CUSTOMER/ACCESSCARD/Ctrl_Access_Card_View/Pdfcreation')?>?custname=&custnameid=&unitno=&cardno=&option='+CV_searchby;
                 }
                 if(CV_searchby==18){
                     var cardno =$('#CV_lb_cardno').val();
-                    var pdfurl=document.location.href='<?php echo site_url('Ctrl_Access_Card_View/Pdfcreation')?>?custname=&custnameid=&unitno=&cardno='+cardno+'&option='+CV_searchby;
+                    var pdfurl=document.location.href='<?php echo site_url('CUSTOMER/ACCESSCARD/Ctrl_Access_Card_View/Pdfcreation')?>?custname=&custnameid=&unitno=&cardno='+cardno+'&option='+CV_searchby;
                 }
                 if(CV_searchby==31){
                     var unitno =$('#CV_lb_unitno').val();
-                    var pdfurl=document.location.href='<?php echo site_url('Ctrl_Access_Card_View/Pdfcreation')?>?custname=&custnameid=&unitno='+unitno+'&cardno=&option='+CV_searchby;
+                    var pdfurl=document.location.href='<?php echo site_url('CUSTOMER/ACCESSCARD/Ctrl_Access_Card_View/Pdfcreation')?>?custname=&custnameid=&unitno='+unitno+'&cardno=&option='+CV_searchby;
                 }
                 if(CV_searchby==21){
                     var custname =$('#CV_tb_custname').val();
-                    var pdfurl=document.location.href='<?php echo site_url('Ctrl_Access_Card_View/Pdfcreation')?>?custname='+custname+'&custnameid='+custnameid+'&unitno=&cardno=&option='+CV_searchby;
+                    var pdfurl=document.location.href='<?php echo site_url('CUSTOMER/ACCESSCARD/Ctrl_Access_Card_View/Pdfcreation')?>?custname='+custname+'&custnameid='+custnameid+'&unitno=&cardno=&option='+CV_searchby;
                 }
             });
         });

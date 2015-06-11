@@ -637,18 +637,65 @@ class Mdl_Customer_Extension extends CI_Model{
                   $service = $this->Mdl_eilib_common_function->get_service_document();
                   if ($filetempname != '')
                   {
-                      $this->Mdl_eilib_common_function->Customer_FileUpload($service, $filename, 'PersonalDetails', '0B1AhtyM5U79zREp5QkpiYmphODg', $mimetype, $filetempname);
+                      $Targetfolderid=$this->Mdl_eilib_common_function->CUST_TargetFolderId();
+                      $UnitFolderid=$this->Mdl_eilib_common_function->getUnitfolderId($CEXTN_unitno,$CEXTN_hidden_custid);
+                      $unitcount=count($UnitFolderid);
+                      $ext_flag=0;
+                      if($unitcount!=0 && $UnitFolderid[0]!='' && $UnitFolderid[1]!='')
+                      {
+                          $UnitFolder= $UnitFolderid[0];
+                          $CustomerFolder=$UnitFolderid[1];
+                          $ext_flag=1;
+                      }
+                      else
+                      {
+                          if ($unitcount == 0) {
+                              $UnitFolder = $this->Mdl_eilib_common_function->Customer_FolderCreation($service, $CEXTN_unitno, 'PersonalDetails', $Targetfolderid);
+                          } else {
+                              $UnitFolder = $UnitFolderid[0];
+                          }
+                          if ($UnitFolder != '') {
+                              $customerfoldername = $CEXTN_hidden_custid . '-' . $CEXTN_tb_firstname . ' ' . $CEXTN_tb_lastname;
+                              $CustomerFolder = $this->Mdl_eilib_common_function->Customer_FolderCreation($service, $customerfoldername, 'PersonalDetails', $UnitFolder);
+                          }
+                      }
+
+//                      if($unitcount==0){
+//                          $UnitFolder=$this->Mdl_eilib_common_function->Customer_FolderCreation($service, $CEXTN_unitno, 'PersonalDetails', $Targetfolderid);
+//                      }
+//                      else{
+//                          $UnitFolder=$UnitFolderid[0];
+//                          $custFolder=$UnitFolderid[1];
+//                      }
+//                      print_r($UnitFolder.'sss');
+//                      if($UnitFolder!='')
+//                      {
+//                          echo ($custFolder.'c');
+//                          if($custFolder=='') {
+//                              $customerfoldername = $CEXTN_hidden_custid . '-' . $CEXTN_tb_firstname . ' ' . $CEXTN_tb_lastname;
+//                              $CustomerFolder = $this->Mdl_eilib_common_function->Customer_FolderCreation($service, $customerfoldername, 'PersonalDetails', $UnitFolder);
+//                          }
+//                          else{
+//                              $CustomerFolder=$custFolder;
+//                          }
+//                      }
+//                      print_r($CustomerFolder);
+                      if($CustomerFolder!='') {
+                          $Fileidinsertquery = "CALL SP_INSERT_UPDATE_CUSTOMER_FILE_DIRECTORY($CEXTN_unitno,'$UnitFolder',$CEXTN_hidden_custid,'$CustomerFolder','$UserStamp',@SUCCESS_MESSAGE)";
+                          $result = $this->db->query($Fileidinsertquery);
+                      }
+                          $this->Mdl_eilib_common_function->Customer_FileUpload($service, $filename, 'PersonalDetails', $CustomerFolder, $mimetype, $filetempname);
+
+//                      $this->Mdl_eilib_common_function->Customer_FileUpload($service, $filename, 'PersonalDetails', '0B1AhtyM5U79zREp5QkpiYmphODg', $mimetype, $filetempname);
                   }
+
                   $this->load->model('EILIB/Mdl_eilib_calender');
                   $cal_service=$this->Mdl_eilib_calender->createCalendarService();
                   $CEXTN_TargetFolderId=$this->Mdl_eilib_common_function->CUST_TargetFolderId();//GET TARGER FOLDER ID
                   $docowner=$this->Mdl_eilib_common_function->CUST_documentowner($UserStamp);//get doc owner
                   $CEXTN_CALEVENTS=$this->Mdl_eilib_calender->CTermExtn_GetCalevent($CEXTN_hidden_custid);
-                  print_r($CEXTN_CALEVENTS);
-
                   //CALL CALENDAR EVENT FUNCTION FROM EILIB
                   $cal_flag=$this->Mdl_eilib_calender->CTermExtn_Calevent($cal_service,$CEXTN_hidden_custid,"",$CEXTN_formname,"");
-                  $cal_flag=0;
                   if($cal_flag==1) {
                       $cust_config_array = array();
                       $cust_config_array = $this->Mdl_eilib_common_function->CUST_invoice_contractreplacetext();
@@ -671,7 +718,7 @@ class Mdl_Customer_Extension extends CI_Model{
                           if($contract[0]==0){
                               $this->db->trans_rollback();
                               for($ijk=0;$ijk<count($CEXTN_CALEVENTS);$ijk++){
-                                  $this->Mdl_eilib_calender->CUST_customerTermcalenderdeletion($cal_service,$CEXTN_hidden_custid,$CEXTN_CALEVENTS[$ijk].sddate,$CEXTN_CALEVENTS[$ijk].sdtimein,$CEXTN_CALEVENTS[$ijk].sdtimeout,$CEXTN_CALEVENTS[$ijk].eddate,$CEXTN_CALEVENTS[$ijk].edtimein,$CEXTN_CALEVENTS[$ijk].edtimeout,"");
+                                  $this->Mdl_eilib_calender->CUST_customerTermcalenderdeletion($cal_service,$CEXTN_hidden_custid,$CEXTN_CALEVENTS[$ijk]['sddate'],$CEXTN_CALEVENTS[$ijk]['sdtimein'],$CEXTN_CALEVENTS[$ijk]['sdtimeout'],$CEXTN_CALEVENTS[$ijk]['eddate'],$CEXTN_CALEVENTS[$ijk]['edtimein'],$CEXTN_CALEVENTS[$ijk]['edtimeout'],"");
                               }
                               $cal_flag=$this->Mdl_eilib_calender->CTermExtn_Calevent($cal_service,$CEXTN_hidden_custid,"",$CEXTN_formname,"");
                           }
@@ -696,6 +743,8 @@ class Mdl_Customer_Extension extends CI_Model{
                              if ($CEXTN_profeeamt == 'null') {
                                  $CEXTN_profeeamt = '';
                              }
+//                             echo "CUST_invoice($UserStamp, $service, $CEXTN_unitno, $CEXTN_continvoicecustomename, $CEXTN_tb_contrcompname, $CEXTN_invoiceid, $CEXTN_invoicesno, $CEXTN_invoicedate, $CEXTN_rentamt, $CEXTN_profeeamt, $CEXTN_depositamt, $CEXTN_db_chkindate, $CEXTN_db_chkoutdate, $CEXTN_roomtype, $CEXTN_Leaseperiod, $CEXTN_rent_check, $CEXTN_lb_emailid, $docowner, 'EXTENSION', $CEXTN_waivedvalue, $CEXTN_hidden_custid)";
+
                              $InvoiceId = $this->Mdl_eilib_invoice_contract->CUST_invoice($UserStamp, $service, $CEXTN_unitno, $CEXTN_continvoicecustomename, $CEXTN_tb_contrcompname, $CEXTN_invoiceid, $CEXTN_invoicesno, $CEXTN_invoicedate, $CEXTN_rentamt, $CEXTN_profeeamt, $CEXTN_depositamt, $CEXTN_db_chkindate, $CEXTN_db_chkoutdate, $CEXTN_roomtype, $CEXTN_Leaseperiod, $CEXTN_rent_check, $CEXTN_lb_emailid, $docowner, 'EXTENSION', $CEXTN_waivedvalue, $CEXTN_hidden_custid);
                              //            eilib.CUST_invoicecontractmail(CEXTN_saveconn,CEXTN_unitno,CEXTN_invoiceid,CEXTN_db_chkindate,CEXTN_db_chkoutdate,CEXTN_tb_contrcompname,CEXTN_continvoicecustomename,CEXTN_invoicesno,CEXTN_invoicedate,CEXTN_contractnoticeperiod,CEXTN_tb_contrpassno,CEXTN_tb_contrpassdate,CEXTN_tb_contrepno,CEXTN_tb_contrepdate,CEXTN_tb_contrnoticedate,CEXTN_Leaseperiod,CEXTN_customercard,CEXTN_rentamt,CEXTN_tb_airquarterfee,CEXTN_tb_fixedairfee,CEXTN_tb_electcapfee,CEXTN_tb_curtaindryfee,CEXTN_tb_chkoutcleanfee,CEXTN_profeeamt,CEXTN_depositamt,CEXTN_waivedvalue,CEXTN_roomtype,CEXTN_TargetFolderId,CEXTN_rent_check,docowner,CEXTN_lb_emailid,"EXTENSION",CEXTN_hidden_custid)
                              if($InvoiceId[0]==1) {

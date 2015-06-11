@@ -239,6 +239,7 @@ $(document).ready(function()
     $('#CEXTN_lb_unitno').change(function(){
         $("html, body").animate({ scrollTop: $(document).height() }, "slow");
         $('#CEXTN_div_nocusterr').text("");
+        $('#CEXTN_fileupload').val('');
         var CEXTN_lb_unitno=$('#CEXTN_lb_unitno').val();
         var CEXTN_div_custid=$('#CEXTN_div_custid').hide();
         var CEXTN_div_seconform=$('#CEXTN_div_seconform').hide();
@@ -296,6 +297,7 @@ $(document).ready(function()
 
         $('#CEXTN_div_nocusterr').text("");
         CEXTN_setselectIndex();
+        $('#CEXTN_fileupload').val('');
         $('#CEXTN_div_custid').hide();
         $('#CEXTN_div_seconform').hide();
         var CEXTN_lb_custname=$('#CEXTN_lb_custname').val();
@@ -1174,19 +1176,53 @@ alert(JSON.stringify(data))
         }
         var CEXTN_epnoflag=0,CEXTN_passnoflag=0;
 //VALIDATING PASSPORT EXPIRY DATE N NO,EP EXPIRY DATE N NO
-        if(CEXTN_db_passdate!=""&&CEXTN_tb_passno=="")
+//        if(CEXTN_db_passdate!=""&&CEXTN_tb_passno=="")
+//        {
+//            CEXTN_validinput=0;
+//            CEXTN_passnoflag=1;
+//            $("#CEXTN_passno_err").text(CEXTN_errmsgs[22].EMC_DATA);
+//            $("#CEXTN_tb_passno").addClass("invalid")
+//        }
+//        if(CEXTN_db_epdate!=""&&CEXTN_tb_epno=="")
+//        {
+//            CEXTN_epnoflag=1;
+//            CEXTN_validinput=0;
+//            $("#CEXTN_epno_err").text(CEXTN_errmsgs[23].EMC_DATA);
+//            $("#CEXTN_tb_epno").addClass("invalid")
+//        }
+        if (CEXTN_db_passdate!= "" || CEXTN_tb_passno!= "")
         {
-            CEXTN_validinput=0;
-            CEXTN_passnoflag=1;
-            $("#CEXTN_passno_err").text(CEXTN_errmsgs[22].EMC_DATA);
-            $("#CEXTN_tb_passno").addClass("invalid")
+            var ppnoappenddata='<div id="passportnumber"><div class="col-md-3" ><label >PASSPORT NUMBER<span class="labelrequired"><em>*</em></span></label></div></div>';
+            $('#passportnumber').replaceWith(ppnoappenddata);
+            var ppdateappenddata='<div id="passportdate"><div class="col-md-3"><label>PASSPORT EXPIRY DATE<span class="labelrequired"><em>*</em></span></label></div></div>';
+            $('#passportdate').replaceWith(ppdateappenddata);
+            if (CEXTN_db_passdate != "" && CEXTN_tb_passno != ""){ CEXTN_passnoflag=0;}
+            else{CEXTN_passnoflag=1;CEXTN_validinput=0;}
         }
-        if(CEXTN_db_epdate!=""&&CEXTN_tb_epno=="")
+        else if(CEXTN_db_passdate == "" && CEXTN_tb_passno == "")
+        {
+            CEXTN_passnoflag=1;
+            var ppnoappenddata1='<div id="passportnumber"><div class="col-md-3" ><label >PASSPORT NUMBER</label></div></div>';
+            $('#passportnumber').replaceWith(ppnoappenddata1);
+            var ppdateappenddata1='<div id="passportdate"><div class="col-md-3"><label>PASSPORT EXPIRY DATE</label></div></div>';
+            $('#passportdate').replaceWith(ppdateappenddata1);
+        }
+        if (CEXTN_db_epdate!= "" || CEXTN_tb_epno!= "")
+        {
+            var EPnoappenddata='<div id="epnumber"><div class="col-md-3" ><label >EP NUMBER<span class="labelrequired"><em>*</em></span></label></div></div>';
+            $('#epnumber').replaceWith(EPnoappenddata);
+            var EPdateappenddata='<div id="EPdate"><div class="col-md-3"><label>EP EXPIRY DATE<span class="labelrequired"><em>*</em></span></label></div></div>';
+            $('#EPdate').replaceWith(EPdateappenddata);
+            if (CEXTN_db_epdate != "" && CEXTN_tb_epno != ""){ CEXTN_epnoflag=0;}
+            else{CEXTN_epnoflag=1;CEXTN_validinput=0;}
+        }
+        else if(CEXTN_db_epdate == "" && CEXTN_tb_epno == "")
         {
             CEXTN_epnoflag=1;
-            CEXTN_validinput=0;
-            $("#CEXTN_epno_err").text(CEXTN_errmsgs[23].EMC_DATA);
-            $("#CEXTN_tb_epno").addClass("invalid")
+            var EPnoappenddata='<div id="epnumber"><div class="col-md-3" ><label >EP NUMBER</label></div></div>';
+            $('#epnumber').replaceWith(EPnoappenddata);
+            var EPdateappenddata='<div id="EPdate"><div class="col-md-3"><label>EP EXPIRY DATE</label></div></div>';
+            $('#EPdate').replaceWith(EPdateappenddata);
         }
 //MINIMUM DIGIT VALIDATION START
         if((parseInt($("#CEXTN_tb_electcapfee").val().split('.')[0])==0||$("#CEXTN_tb_electcapfee").val().split('.')[0]==""||parseInt($("#CEXTN_tb_electcapfee").val().split('.')[0]).toString().length<2)&&parseFloat($("#CEXTN_tb_electcapfee").val())!=0&&$("#CEXTN_tb_electcapfee").val()!="")
@@ -1816,12 +1852,52 @@ alert(JSON.stringify(data))
         $("#CEXTN_lb_emailid").val("SELECT");
         $("#CEXTN_btn_save").attr("disabled","disabled");
     }
+
+//    var ppdate=$('#CEXTN_tb_passno').val();
+//    var ppno=$('#CEXTN_tb_passno').val();
+//    if (ppdate!= "" || ppno!= "")
+//    {
+//        var ppnoappenddata='<div id="passportnumber"><div class="col-md-3" ><label >PASSPORT NUMBER<span class="labelrequired"><em>*</em></span></label></div></div>';
+//        $('#passportnumber').replaceWith(ppnoappenddata);
+//        var ppdateappenddata='<div id="passportdate"><div class="col-md-3"><label>PASSPORT EXPIRY DATE<span class="labelrequired"><em>*</em></span></label></div></div>';
+//        $('#passportdate').replaceWith(ppdateappenddata);
+//        if (ppdate != "" && ppno != ""){var passportflag=1;}
+//        else{passportflag=0;}
+//    }
+//    else if(ppdate == "" && ppno == "")
+//    {
+//        passportflag=1;
+//        var ppnoappenddata1='<div id="passportnumber"><div class="col-md-3" ><label >PASSPORT NUMBER</label></div></div>';
+//        $('#passportnumber').replaceWith(ppnoappenddata1);
+//        var ppdateappenddata1='<div id="passportdate"><div class="col-md-3"><label>PASSPORT EXPIRY DATE</label></div></div>';
+//        $('#passportdate').replaceWith(ppdateappenddata1);
+//    }
+//    var EPdate=$('#CCRE_EPDate').val();
+//    var EPno=$('#CCRE_EpNo').val();
+//    if (EPdate!= "" || EPno!= "")
+//    {
+//        var EPnoappenddata='<div id="epnumber"><div class="col-md-3" ><label >EP NUMBER<span class="labelrequired"><em>*</em></span></label></div></div>';
+//        $('#epnumber').replaceWith(EPnoappenddata);
+//        var EPdateappenddata='<div id="EPdate"><div class="col-md-3"><label>EP EXPIRY DATE<span class="labelrequired"><em>*</em></span></label></div></div>';
+//        $('#EPdate').replaceWith(EPdateappenddata);
+//        if (EPdate != "" && EPno != ""){var epflag=1;}
+//        else{epflag=0;}
+//    }
+//    else if(EPdate == "" && EPno == "")
+//    {
+//        epflag=1;
+//        var EPnoappenddata='<div id="epnumber"><div class="col-md-3" ><label >EP NUMBER</label></div></div>';
+//        $('#epnumber').replaceWith(EPnoappenddata);
+//        var EPdateappenddata='<div id="EPdate"><div class="col-md-3"><label>EP EXPIRY DATE</label></div></div>';
+//        $('#EPdate').replaceWith(EPdateappenddata);
+//    }
     $('#CEXTN_btn_save').on('click', function () {
 //        $('.preloader').show();
         var FormElements = document.getElementById("CEXTN_form");
         var xmlhttp = new XMLHttpRequest();
         xmlhttp.onreadystatechange = function () {
             if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+//                alert(xmlhttp.responseText)
                 var saveresult = JSON.parse(xmlhttp.responseText);
                 $('.preloader').hide();
 
@@ -1981,6 +2057,7 @@ alert(JSON.stringify(data))
         $("#CEXTN_epdate_err").text("");
         $('#CEXTN_db_passdate').removeClass("invalid");
         $("#CEXTN_passdate_err").text("");
+        $('#CEXTN_fileupload').val('');
     }
 });
 </script>
@@ -2027,23 +2104,38 @@ alert(JSON.stringify(data))
                     </div>
                     <div class="form-group">
                         <label class="col-sm-3">COMPANY POSTAL CODE</label>
-                        <div class="col-sm-3"> <input type="text" name="CEXTN_tb_comppostcode" id="CEXTN_tb_comppostcode" maxlength="6" style="max-width:100px;" class="form-control CEXTN_btn_validate_class" placeholder="Postal Code" /> <p id="CEXTN_postcode_err" class="errormsg" ></p></div>
+                        <div class="col-sm-3">
+                            <input type="text" name="CEXTN_tb_comppostcode" id="CEXTN_tb_comppostcode" maxlength="6" style="max-width:100px;" class="form-control CEXTN_btn_validate_class" placeholder="Postal Code" />
+                        </div>
+                        <div class="col-sm-4"><p id="CEXTN_postcode_err" class="errormsg" ></p></div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-3">EMAIL ID</label>
-                        <div class="col-sm-3"> <input type="text" name="CEXTN_tb_emailid" id="CEXTN_tb_emailid"  maxlength="40"  class="form-control CEXTN_btn_validate_class"  placeholder="Customer Email Id" readonly/><label  id="CEXTN_lbl_emailerrmsg" class="errormsg"></label></div>
+                        <div class="col-sm-3">
+                            <input type="text" name="CEXTN_tb_emailid" id="CEXTN_tb_emailid"  maxlength="40"  class="form-control CEXTN_btn_validate_class"  placeholder="Customer Email Id" readonly/>
+                        </div>
+                        <div class="col-sm-4"><label  id="CEXTN_lbl_emailerrmsg" class="errormsg"></label></div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-3">MOBILE</label>
-                        <div class="col-sm-2"> <input type="text" name="CEXTN_tb_mobileno" id="CEXTN_tb_mobileno"  style="width:90px;" class="numonlynozero CEXTN_btn_validate_class form-control" placeholder="Mobile No" /><p id="CEXTN_mobile_err" class="errormsg"></p></div>
+                        <div class="col-sm-2">
+                            <input type="text" name="CEXTN_tb_mobileno" id="CEXTN_tb_mobileno"  style="width:90px;" class="numonlynozero CEXTN_btn_validate_class form-control" placeholder="Mobile No" />
+                        </div>
+                        <div class="col-sm-4"><p id="CEXTN_mobile_err" class="errormsg"></p></div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-3">INT'L MOBILE NO</label>
-                        <div class="col-sm-3"> <input type="text" name="CEXTN_tb_intmobileno" style="max-width:200px;" id="CEXTN_tb_intmobileno"  class="CEXTN_btn_validate_class form-control" placeholder="Int'l Mobile No"/><p id="CEXTN_intlmobile_err" class="errormsg"></p></div>
+                        <div class="col-sm-3">
+                            <input type="text" name="CEXTN_tb_intmobileno" style="max-width:200px;" id="CEXTN_tb_intmobileno"  class="CEXTN_btn_validate_class form-control" placeholder="Int'l Mobile No"/>
+                        </div>
+                        <div class="col-sm-4"><p id="CEXTN_intlmobile_err" class="errormsg"></p></div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-3">OFFICE NO</label>
-                        <div class="col-sm-2"> <input type="text" name="CEXTN_tb_officeno" id="CEXTN_tb_officeno"  style="width:90px;" maxlength="8"  class="numonlynozero CEXTN_btn_validate_class form-control" placeholder="Office No" /><p id="CEXTN_officeno_err" class="errormsg"></p></div>
+                        <div class="col-sm-2">
+                            <input type="text" name="CEXTN_tb_officeno" id="CEXTN_tb_officeno"  style="width:90px;" maxlength="8"  class="numonlynozero CEXTN_btn_validate_class form-control" placeholder="Office No" />
+                        </div>
+                        <div class="col-sm-4"><p id="CEXTN_officeno_err" class="errormsg"></p></div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-3">DATE OF BIRTH</label>
@@ -2054,20 +2146,36 @@ alert(JSON.stringify(data))
                         <div class="col-sm-3"> <input type="text" name="CEXTN_tb_nation" id="CEXTN_tb_nation" maxlength="50" class="form-control"  readonly/></div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-3">PASSPORT NUMBER</label>
-                        <div class="col-sm-3"> <input type="text" name="CEXTN_tb_passno" id="CEXTN_tb_passno" style="max-width:170px;" maxlength="15" class="alnumonlyzero CEXTN_btn_validate_class form-control" /><p id="CEXTN_passno_err" class="errormsg"></p></div>
+                        <label class="col-sm-3" id="passportnumber">PASSPORT NUMBER</label>
+                        <div class="col-sm-3">
+                            <input type="text" name="CEXTN_tb_passno" id="CEXTN_tb_passno" style="max-width:170px;" maxlength="15" class="alnumonlyzero CEXTN_btn_validate_class form-control" />
+                        </div>
+                        <div class="col-sm-4"><p id="CEXTN_passno_err" class="errormsg"></p></div>
+                    </div>
+                    <div class="form-group" >
+                        <label class="col-sm-3" id="passportdate">PASSPORT EXPIRY DATE</label>
+                        <div class="col-sm-2">
+                            <div class="input-group addon">
+                                 <input type="text" name="CEXTN_db_passdate" id="CEXTN_db_passdate"  maxlength="10" style="width:110px;" class="datenonmandtry CEXTN_btn_validate_class form-control"/><label for="CEXTN_db_passdate" class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></label>
+                            </div>
+                        </div>
+                        <div class="col-sm-4"><p id="CEXTN_passdate_err" class="errormsg" ></p></div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-3">PASSPORT EXPIRY DATE</label>
-                        <div class="col-sm-2"> <input type="text" name="CEXTN_db_passdate" id="CEXTN_db_passdate"  maxlength="10" style="width:110px;" class="datenonmandtry CEXTN_btn_validate_class form-control"/><p id="CEXTN_passdate_err" class="errormsg" ></p></div>
+                        <label class="col-sm-3" id="epnumber">EP NUMBER</label>
+                        <div class="col-sm-3">
+                            <input type="text" name="CEXTN_tb_epno" id="CEXTN_tb_epno"  style="max-width:170px;" maxlength="15" class="alnumonlynozero CEXTN_btn_validate_class form-control" />
+                        </div>
+                        <div class="col-sm-4"><p id="CEXTN_epno_err" class="errormsg"></div>
                     </div>
-                    <div class="form-group">
-                        <label class="col-sm-3">EP NUMBER</label>
-                        <div class="col-sm-3"> <input type="text" name="CEXTN_tb_epno" id="CEXTN_tb_epno"  style="max-width:170px;" maxlength="15" class="alnumonlynozero CEXTN_btn_validate_class form-control" /><p id="CEXTN_epno_err" class="errormsg"></div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-3">EP EXPIRY DATE</label>
-                        <div class="col-sm-2"> <input type="text" name="CEXTN_db_epdate" id="CEXTN_db_epdate"  maxlength="10" style="width:110px;" class="datenonmandtry CEXTN_btn_validate_class form-control"/><p id="CEXTN_epdate_err" class="errormsg" ></p></div>
+                    <div class="form-group" >
+                        <label class="col-sm-3" id="EPdate">EP EXPIRY DATE</label>
+                        <div class="col-sm-2">
+                            <div class="input-group addon">
+                                <input type="text" name="CEXTN_db_epdate" id="CEXTN_db_epdate"  maxlength="10" style="width:110px;" class="datenonmandtry CEXTN_btn_validate_class form-control"/><label for="CEXTN_db_epdate" class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></label>
+                            </div>
+                        </div>
+                        <div class="col-sm-4"><p id="CEXTN_epdate_err" class="errormsg" ></p></div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-3">SAME/DIFFERENT UNIT<em>*</em></label>
@@ -2179,7 +2287,10 @@ alert(JSON.stringify(data))
                     <div class="row form-group">
                         <label class="col-sm-3">NEW CHECK OUT DATE<em>*</em></label>
                         <div class="col-sm-2">
-                             <input type="text" name="CEXTN_db_chkoutdate" id="CEXTN_db_chkoutdate" maxlength="10" class="CEXTN_class_prowaiv datemandtry CEXTN_btn_validate_class form-control" style="width:110px;" />
+                            <div class="input-group addon">
+                                  <input type="text" name="CEXTN_db_chkoutdate" id="CEXTN_db_chkoutdate" maxlength="10" class="CEXTN_class_prowaiv datemandtry CEXTN_btn_validate_class form-control" style="width:110px;" />
+                                  <label for="CEXTN_db_chkoutdate" class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></label>
+                            </div>
                         </div>
                         <div class="col-sm-1.5">
                             <select id="CEXTN_lb_chkoutfromtime" name="CEXTN_lb_chkoutfromtime" style="width:110px;display:none;" class="CEXTN_btn_validate_class form-control col-sm-2" hidden><option>SELECT</option>
@@ -2274,7 +2385,7 @@ alert(JSON.stringify(data))
                             <div id="CEXTN_tble_diffamt" class="col-sm-offset-3" style="padding-left: 15px">
                                 <div class="form-group">
                                     <label class="col-sm-3" id="CEXTN_lbl_diffamtdep">DEPOSIT</label>
-                                    <div class="col-sm-2"><input type="text" name="CEXTN_tb_diffamtdep" id="CEXTN_tb_diffamtdep" style="width:77px;" class="5digitdollaronly CEXTN_btn_validate_class form-control"/>
+                                    <div class="col-sm-2"><input type="text" name="CEXTN_tb_diffamtdep" id="CEXTN_tb_diffamtdep" style="width:77px;" class="5digitdollaronly CEXTN_btn_validate_class form-control" placeholder="0.00"/>
                                         <p id="CEXTN_diffamtdeposit_err" class="errormsg"></p>
                                     </div>
                                 </div>
@@ -2283,7 +2394,7 @@ alert(JSON.stringify(data))
                                     <div class="col-sm-6">
                                         <div class="row form-group">
                                             <div class="col-md-3">
-                                                <input type="text" name="CEXTN_tb_diffamtrent" id="CEXTN_tb_diffamtrent" style="width:77px;" class="CEXTN_class_prowaiv 5digitdollaronly CEXTN_btn_validate_class form-control"/>
+                                                <input type="text" name="CEXTN_tb_diffamtrent" id="CEXTN_tb_diffamtrent" style="width:77px;" class="CEXTN_class_prowaiv 5digitdollaronly CEXTN_btn_validate_class form-control" placeholder="0.00"/>
                                             </div>
                                             <div class="col-md-1">
                                                 <input type="checkbox" name="CEXTN_cb_diffamtprorated" id="CEXTN_cb_diffamtprorated"  class="CEXTN_btn_validate_class" disabled/>
@@ -2298,7 +2409,7 @@ alert(JSON.stringify(data))
                                     <div class="col-sm-6">
                                         <div class="row form-group">
                                             <div class="col-md-3">
-                                                 <input type="text" name="CEXTN_tb_diffamtprocost" id="CEXTN_tb_diffamtprocost" style="width:77px;" maxlength="7" class="CEXTN_class_prowaiv CEXTN_btn_validate_class form-control"/>
+                                                 <input type="text" name="CEXTN_tb_diffamtprocost" id="CEXTN_tb_diffamtprocost" style="width:77px;" maxlength="7" class="CEXTN_class_prowaiv CEXTN_btn_validate_class form-control" placeholder="0.00"/>
                                             </div>
                                             <div class="col-md-1">
                                                   <input type="checkbox" name="CEXTN_cb_diffamtwaived" id="CEXTN_cb_diffamtwaived" class="CEXTN_class_prowaiv CEXTN_btn_validate_class" disabled />
@@ -2313,13 +2424,13 @@ alert(JSON.stringify(data))
                     </div>
                     <div class="form-group">
                         <label class="col-sm-3">ELECTRICITY CAPPED</label>
-                        <div class="col-sm-2"><input type="text" name="CEXTN_tb_electcapfee" id="CEXTN_tb_electcapfee" style="width:77px;" maxlength="7" class="3digitdollaronly CEXTN_btn_validate_class form-control"/>
+                        <div class="col-sm-2"><input type="text" name="CEXTN_tb_electcapfee" id="CEXTN_tb_electcapfee" style="width:77px;" maxlength="7" class="3digitdollaronly CEXTN_btn_validate_class form-control" placeholder="0.00"/>
                             <p id="CEXTN_electcap_err" class="errormsg"></p>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-3">CURTAIN DRY CLEANING FEE</label>
-                        <div class="col-sm-2"><input type="text" name="CEXTN_tb_curtaindryfee" id="CEXTN_tb_curtaindryfee" style="width:77px;" maxlength="7" class="3digitdollaronly CEXTN_btn_validate_class form-control"/></div>
+                        <div class="col-sm-2"><input type="text" name="CEXTN_tb_curtaindryfee" id="CEXTN_tb_curtaindryfee" style="width:77px;" maxlength="7" class="3digitdollaronly CEXTN_btn_validate_class form-control" placeholder="0.00"/></div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-3">CHECKOUT CLEANING FEE</label>

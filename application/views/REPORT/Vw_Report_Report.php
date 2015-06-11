@@ -1,8 +1,7 @@
 <!--//*******************************************FILE DESCRIPTION*********************************************//
 //***********************************************REPORT*******************************************************//
-//DONE BY:SAFI
-
-//VER 0.01-INITIAL VERSION,
+//DONE BY:SARADA
+//VER 0.02-INITIAL VERSION SD:10-06-2015 ED:11-06-2015 LOADED ALL REPORT IN CATEGORY LIST BOX,COMPLETED ALL REPORT USING ARR DYNAMIC ARRAY CONCEPT
 //*********************************************************************************************************//
 <!--HTML TAG START-->
 <?php
@@ -153,6 +152,7 @@ include "application/libraries/EI_HDR.php";
                         data:{'REP_report_optionfetch':REP_report_optionfetch},
                         success:function(data){
                            var REP_response_load_searchby=JSON.parse(data);
+                            alert(REP_response_load_searchby);
                             REP_success_load_searchby_lb(REP_response_load_searchby);
                         }
                     })
@@ -164,6 +164,7 @@ include "application/libraries/EI_HDR.php";
                 $(".preloader").hide();
                 var REP_report_optionfetch=REP_response_load_searchby.REP_flag;
                 REP_report_optionvalues=REP_response_load_searchby.REP_loaddata_searchby;
+                alert(JSON.stringify(REP_report_optionvalues))
                 var REP_report_options='<option>SELECT</option>';
                 for(var i = 0;i<REP_report_optionvalues.length; i++)
                 {
@@ -219,7 +220,7 @@ include "application/libraries/EI_HDR.php";
 //                        var REP_response_load_searchby=JSON.parse(data);
 //                        REP_success_load_searchby_lb(REP_response_load_searchby);
                     },error:function(data){
-                        alert(data);
+                        alert(JSON.stringify(data));
                     }
                 })
             });

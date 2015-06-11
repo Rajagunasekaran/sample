@@ -28,13 +28,21 @@ class Ctrl_Report_Report extends CI_Controller{
     }
     //FUNCTION FOR SS PART
         public function  REP_ss_getdatas(){
+
+            //7--customer active,6--employee card,32--ERM LEEDS,28--expenseunit
             $reportNameVal=$_POST['reportNameVal'];
-            $reportNameText=$_POST['reportNameText'];
+            $reportNameText=$_POST['categoryName'];
             $emailId=$_POST['emailId'];
-            $categoryName=$_POST['categoryName'];
+            $categoryName=$_POST['reportNameText'];
             $month=$_POST['month'];
+//            $reportNameVal=31;
+//            $reportNameText="EXPIRY LIST";
+//            $emailId="saradagaya@gmail.com";
+//
+//            $categoryName="EXPIRY";
+//            $month="";
            $data= $this->Mdl_report_report->getDataAppendSS($reportNameVal,$reportNameText,$emailId,$categoryName,$month);
 //        $final_value=$this->Mdl_report_report->REP_func_load_searchby_option($this->input->post('REP_report_optionfetch'));
-        echo json_encode($data);
+            echo json_encode($data);
     }
 }

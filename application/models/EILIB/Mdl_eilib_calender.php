@@ -107,7 +107,7 @@ class Mdl_eilib_calender  extends CI_Model {
             return $ex->getMessage();
         }
     }
-///FUNCTION TO DELETE CALENDER EVENTS FOR STAR HUB
+//FUNCTION TO DELETE CALENDER EVENTS FOR STAR HUB
     public function StarHubUnit_DeleteCalEvent($cal,$unitno,$startdate,$start_time_in,$start_time_out,$enddate,$end_time_in,$end_time_out,$formname)
     {
         $calId=$this->GetEICalendarId();
@@ -118,7 +118,7 @@ class Mdl_eilib_calender  extends CI_Model {
             $summaryStarUnit=$event->getDescription();
             if(preg_match("/-/",(String)$summaryStarUnit)==1){
                 $start_desc=explode(' - ',$event->getDescription());
-                if($start_desc[1]!='undefined' && (preg_match("/EI/",(String)$start_desc[1]==1)&&$formname=="UNIT")||($formname=="INTERNET")||($formname=="CABLE"))
+                if(($start_desc[1]!='undefined' && (preg_match("/EI/",(String)$start_desc[1])==1)&&$formname=="UNIT")||($formname=="INTERNET")||($formname=="CABLE"))
                 {
                     if(($start_desc[0]==$unitno && $formname=="UNIT")||($start_desc[0]==$unitno && preg_match("/$formname/",(String)$start_desc[2])== 1 ))
                     {
@@ -130,7 +130,7 @@ class Mdl_eilib_calender  extends CI_Model {
             if(preg_match("/-/",(String)$summaryStarUnit)==1){
 
                 $start_desc=explode(' - ',$event->getDescription());
-                if($start_desc[1]!='undefined' && (preg_match("/EI/",(String)$start_desc[1]==1)&&$formname=="UNIT")||($formname=="INTERNET")||($formname=="CABLE"))
+                if(($start_desc[1]!='undefined' && (preg_match("/EI/",(String)$start_desc[1])==1) && $formname=="UNIT")||($formname=="INTERNET")||($formname=="CABLE"))
                 {
                     if(($start_desc[0]==$unitno && $formname=="UNIT")||($start_desc[0]==$unitno && preg_match("/$formname/",(String)$start_desc[2])== 1 ))
                     {

@@ -53,7 +53,7 @@ class Mdl_eilib_invoice_contract extends CI_Model{
             } catch (Exception $e) {
             }
         }
-        $this->SetDocOwnerGivenId($service,$docid,$docowner);
+       $this->SetDocOwnerGivenId($service,$docid,$docowner);
     }
 //SET THE DOC OWNER
     public   function CUST_SetDocOwner($service,$docid,$docowner,$semailid)
@@ -77,7 +77,7 @@ class Mdl_eilib_invoice_contract extends CI_Model{
             } catch (Exception $e) {
             }
         }
-        $this-> SetDocOwnerGivenId($service,$docid,$docowner);
+       $this-> SetDocOwnerGivenId($service,$docid,$docowner);
     }
 //FUNCTION TO REMOVE EDITORS IF SESSION ID NOT OWNER OR EDITOR
     public function RemoveEditors($service,$docid,$email_fetch,$docowner,$UserStamp)
@@ -135,7 +135,32 @@ class Mdl_eilib_invoice_contract extends CI_Model{
         return $this->db->get()->row()->FP_FOLDER_ID;
     }
 //FUNCTION TO CALCULATE PRORATED RENT
-    public  function proratedmonthcalculation($startdate,$enddate) {
+  public function proratedmonthcalculation($startDate, $endDate)
+    {
+        $return =[];
+        $end =[];
+        $start = $startDate;
+        $i=0;
+        if (strtotime($startDate) <= strtotime($endDate))
+        {
+            while (strtotime($start) <= strtotime($endDate))
+            {
+                $start = date('Y-m-d', strtotime($startDate.'+'.$i.' days'));
+                if($i==0)
+                    $return[] = $start;
+                else if(date('Y-m-d', strtotime($startDate.'+'.$i.' days'))==date('Y-m-01', strtotime($startDate.'+'.$i.' days'))&& date('Y-m-d', strtotime($startDate.'+'.$i.' days'))<= date('Y-m-d', strtotime($endDate)))
+                    $return[] = $start;
+                if( date('Y-m-d', strtotime($startDate.'+'.$i.' days'))==date('Y-m-t',strtotime($startDate.'+'.$i.' days'))	)
+                    $end[] = $start;
+                else if( date('Y-m-d', strtotime($startDate.'+'.$i.' days'))==date('Y-m-d',strtotime($endDate))	){
+                    $end[] = $endDate;
+                    break;}
+                $i++;
+            }
+        }
+        return [$return,$end];
+    }
+    public  function proratedmonthcalculation1($startdate,$enddate) {
         $startdateString = strtotime ($startdate);
         $enddateString = strtotime ($enddate);
         $s_day=date("d", $startdateString);
@@ -193,7 +218,38 @@ class Mdl_eilib_invoice_contract extends CI_Model{
         return $return_array;
     }
 //FUNCTION TO CALCULATE NON PRORATED RENT
-    public  function nonproratedmonthcalculation($startdate,$enddate)
+    public function nonproratedmonthcalculation($startDate, $endDate)
+    {
+        $return =[];
+        $end =[];
+        $start = $startDate;
+        $i=0;
+        $minusDay='';
+        if (strtotime($startDate) <= strtotime($endDate))
+        {
+            while (strtotime($start) <= strtotime($endDate))
+            {
+                $start = date('Y-m-d', strtotime($startDate.'+'.$i.' days'));
+                if($i==0){
+                    $return[] = date('Y-m-d', strtotime($startDate));
+                    $minusDay=date('Y-m-d',(strtotime('next month',strtotime($startDate))));
+                    $end[]=date('Y-m-d', strtotime($minusDay.'-1'.' days'));
+                }
+                else if(strtotime($endDate)>=strtotime($minusDay) && date('Y-m-d', strtotime($start))==date('Y-m-'.date('d',strtotime($startDate)), strtotime($start))){
+                    $return []= date('Y-m-d', strtotime($minusDay));
+
+                    $minusDay=date('Y-m-d',(strtotime('next month',strtotime($minusDay))));
+                    if(strtotime($minusDay)<=strtotime($endDate))
+                        $end[]=date('Y-m-d', strtotime($minusDay.'-1'.' days'));
+                    else
+                        $end[]=date('Y-m-d', strtotime($endDate));
+                }
+                $i++;
+            }
+        }
+        return [$return,$end];
+    }
+    public  function nonproratedmonthcalculation1($startdate,$enddate)
     {
         $startdateString = strtotime ($startdate);
         $enddateString = strtotime ($enddate);
@@ -681,7 +737,6 @@ class Mdl_eilib_invoice_contract extends CI_Model{
             $parent = new Google_Service_Drive_ParentReference();
             $parent->setId($parentId);
             $file->setParents(array($parent));
-            echo $response;exit;
             $service->files->patch($response, $file);
             $file = $service->files->get($response);
             return [1,$response,$file->embedLink];
@@ -737,10 +792,10 @@ class Mdl_eilib_invoice_contract extends CI_Model{
             $checkin_fetch=$sdate;
             $checkout_fetch=$edate;
             $deposit=$deposit;
-            if($deposit==null)
+            if($deposit=='null'||$deposit=='')
             {  $A3='00.00';  }  else  {    $A3=$deposit;  }
             $process=$process;
-            if($process==null||$waived!="")
+            if($process=='null'||$waived!="")
             {$A4='00.00';}else{$A4=$process;}
             $A5=$rent;
             $lease_fetch=$Leaseperiod;
@@ -781,13 +836,13 @@ class Mdl_eilib_invoice_contract extends CI_Model{
             $check_in_date= date("Y-m-d",$check_in_dated_minus);
 
             $dateStringCheckin=strtotime($check_in_date);
-            $check_in_dated_lastmonth = strtotime ("+1 month",$dateStringCheckin);
-            $check_in_date1= date("d-M-Y",$check_in_dated_lastmonth);
+//            $check_in_dated_lastmonth = strtotime ("+1 month",$dateStringCheckin);
+            $check_in_date1= date("d/M/Y",$dateStringCheckin);
 
             $check_out_dated_lastmonth=strtotime($checkout_fetch);
 //        $check_out_dated_lastmonth = strtotime ("-1 month",$dateStringCheckOut);
             $check_out_date= date("Y-m-d",$check_out_dated_lastmonth);
-            $check_out_date1= date("d-M-Y",$check_out_dated_lastmonth);
+            $check_out_date1= date("d/M/Y",$check_out_dated_lastmonth);
 // to generate last date of a month
             $curr_date = 0;
             $curr_month = intval(date("m", $check_in_dated_minus));
@@ -899,7 +954,7 @@ class Mdl_eilib_invoice_contract extends CI_Model{
                 {
                     $startdate=$startdate_array[$i];
                     $enddate=$enddate_array[$i];
-                    if(date("d", strtotime($startdate))!=1 && $i==0){$amount=$this->Mdl_eilib_prorated_calc->sMonthProratedCalc($check_in_date,$A5);}else{$amount=$A5;}
+                    if(intval(date("d", strtotime($startdate)))!=1 && $i==0){$amount=$this->Mdl_eilib_prorated_calc->sMonthProratedCalc($check_in_date,$A5);}else{$amount=$A5;}
                     if($i==$length-1)
                     {
                         $date = new DateTime();
@@ -908,8 +963,8 @@ class Mdl_eilib_invoice_contract extends CI_Model{
                         if(date("d", strtotime($enddate))==date("d", strtotime($finaldate))-1)
                         {$amount=$A5;}else{$amount=$this->Mdl_eilib_prorated_calc->eMonthProratedCalc($check_out_date,$A5);}
                     }
-                    $checkdate1= date("d-M-Y",strtotime($startdate));
-                    $checkdate2= date("d-M-Y",strtotime($enddate));
+                    $checkdate1= date("d/M/Y",strtotime($startdate));
+                    $checkdate2= date("d/M/Y",strtotime($enddate));
                     if($i==0)
                         $arrCheckDateAmtConcate.= $amount.'^^'.$checkdate1.'^^'.$checkdate2;
                     else
@@ -948,8 +1003,8 @@ class Mdl_eilib_invoice_contract extends CI_Model{
                             $amount=number_format(floatval($proratedsmonth)+floatval($proratedemonth),2,'.','');
                         }
                     }
-                    $checkdate1= date("d-M-Y",strtotime($startdate));
-                    $checkdate2=date("d-M-Y",strtotime($enddate));
+                    $checkdate1= date("d/M/Y",strtotime($startdate));
+                    $checkdate2=date("d/M/Y",strtotime($enddate));
                     if($i==0)
                         $arrCheckDateAmtConcate.= $amount.'^^'.$checkdate1.'^^'.$checkdate2;
                     else

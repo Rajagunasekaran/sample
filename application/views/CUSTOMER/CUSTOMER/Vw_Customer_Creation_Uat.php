@@ -27,7 +27,7 @@
         //******************CUSTOMER INITIAL DATA LODING***********************//
         var timearray;
         var errormsg
-        var controller_url="<?php echo base_url(); ?>" + '/index.php/CUSTOMER/CUSTOMER/Ctrl_Customer_Creation/' ;
+        var controller_url="<?php echo base_url(); ?>" + '/index.php/CUSTOMER/CUSTOMER/Ctrl_Customer_Creation_Uat/' ;
         $.ajax({
             type: "POST",
             url: controller_url+"Customer_Initaildatas",

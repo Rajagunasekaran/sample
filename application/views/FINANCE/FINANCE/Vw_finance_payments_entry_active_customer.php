@@ -45,8 +45,8 @@
                 InitialDataSetting()
             },
             error: function(data){
-            alert('error in getting'+JSON.stringify(data));
-            $('.preloader').hide();
+                alert('error in getting'+JSON.stringify(data));
+                $('.preloader').hide();
             }
         });
         function InitialDataSetting()
@@ -60,12 +60,12 @@
                 '<SELECT class="form-control CustomernameChange Btn_validation" disabled style="width:250px" name="Customer[]" id=Customerid_'+counter+'><OPTION>SELECT</OPTION></SELECT><div id=multiplecustomerdiv_'+counter+'></div>',
                 '<SELECT class="form-control LPChange Btn_validation" disabled name="LeasePeriod[]" style="width:120px" id=Leaseperiodid_'+counter+'><OPTION>SELECT</OPTION></SELECT><input type="text" class="form-control" hidden style="max-width:50px" id=TempCustomerid_'+counter+'>',
                 '<SELECT class="form-control LPChange Btn_validation" name="Payment[]" style="width:150px" id=Paymentid_'+counter+'><OPTION>SELECT</OPTION></SELECT>',
-                '<input type="text" class="form-control amtonly Btn_validation" name="Amount[]" style="width:120px" id=Amountid_'+counter+'>',
-                '<input type="checkbox" class="form-control Btn_validation" name="Amountflag[]" style="width:100px" id=Amountflag_'+counter+'>',
-                '<input type="text" class="form-control datepickperiod Btn_validation" name="ForPeriod[]" style="width:150px" id=Forperiodid_'+counter+'>',
-                '<input type="text" class="form-control datepickpaiddate Btn_validation" name="PaidDate[]" style="width:100px" id=Paiddate_'+counter+'>',
+                '<div class="col-lg-6"><div class="input-group"><input type="text" name="Amount[]" class="form-control amtonly Btn_validation" style="width:120px" id=Amountid_'+counter+'><span class="input-group-addon"><input type="checkbox" class="Btn_validation" name="Amountflag[]" id=Amountflag_'+counter+'></span></div></div>',
+                '<div class="col-sm-4"><div class="input-group addon"><input type="text" class="form-control datepickperiod Btn_validation" name="ForPeriod[]" style="width:150px" id=Forperiodid_'+counter+' ><label  class="input-group-addon" for=Forperiodid_'+counter+'><span class="glyphicon glyphicon-calendar"></span></label></div></div>',
+                '<div class="col-sm-4"><div class="input-group addon"><input type="text" class="form-control datepickpaiddate Btn_validation" name="PaidDate[]" style="width:120px" id=Paiddate_'+counter+' ><label  class="input-group-addon" for=Paiddate_'+counter+'><span class="glyphicon glyphicon-calendar"></span></label></div></div>',
                 '<textarea class="form-control autogrowcomments Btn_validation" name="Comments[]" style="width:200px" id=Comments_'+counter+'></textarea>'
             ] ).draw();
+//            '<div class="col-sm-4"><div class="input-group addon"><input type="text" id="BDLY_INPUT_tb_petty_date" name="BDLY_INPUT_tb_petty_date" placeholder="Date" class="datepickdate BDLY_INPUT_class_hksubmitvalidate datemandtry form-control"style="width:100px;" ><label for="BDLY_INPUT_tb_petty_date" class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></label></div></div>';
             $('.autogrowcomments').autogrow({onInitialize: true});
             $(".amtonly").doValidation({rule:'numbersonly',prop:{realpart:5,imaginary:2}});
             $(".datepickperiod").datepicker(
@@ -78,9 +78,9 @@
                         var month = $("#ui-datepicker-div .ui-datepicker-month :selected").val();
                         var year = $("#ui-datepicker-div .ui-datepicker-year :selected").val();
                         $(this).datepicker('setDate', new Date(year, month, 1));
-                    var sub_id=$(this).attr('id');
-                    var no=(sub_id.toString()).split('_');
-                    Form_Btn_Validation(no[1]);
+                        var sub_id=$(this).attr('id');
+                        var no=(sub_id.toString()).split('_');
+                        Form_Btn_Validation(no[1]);
                     }
                 });
             $(".datepickperiod").focus(function () {
@@ -213,7 +213,7 @@
                     $('#multiplecustomerdiv_'+splittedid[1]).show();
                 }
             }
-           else
+            else
             {
                 $('#multiplecustomerdiv_'+splittedid[1]).html('');
                 $('#Customerid_'+splittedid[1]).prop('disabled', false);
@@ -297,46 +297,46 @@
             var DBenddate;
             if(Leaseperiod!='SELECT' && Leaseperiod!='')
             {
-            $.ajax({
-                type: "POST",
-                url: controller_url+"ActiveCustomerLeasePeriodDates",
-                data:{"UNIT":unit,"CUSTOMERID":customer,"RECVER":lp},
-                success: function(data){
-                    $('.preloader').hide();
-                    var value_array=JSON.parse(data);
-                    DBstartdate=value_array[0].CLP_STARTDATE;
-                    if(value_array[0].CLP_PRETERMINATE_DATE!=null && value_array[0].CLP_PRETERMINATE_DATE!='')
-                    {DBenddate=value_array[0].CLP_PRETERMINATE_DATE}else{DBenddate=value_array[0].CLP_ENDDATE}
-                    var startdate=DBfrom_dateConversion(DBstartdate);
-                    var enddate=DBfrom_dateConversion(DBenddate);
-                    if(paymenttype=='PAYMENT' || paymenttype=='CLEANING FEE')
-                    {
+                $.ajax({
+                    type: "POST",
+                    url: controller_url+"ActiveCustomerLeasePeriodDates",
+                    data:{"UNIT":unit,"CUSTOMERID":customer,"RECVER":lp},
+                    success: function(data){
+                        $('.preloader').hide();
+                        var value_array=JSON.parse(data);
+                        DBstartdate=value_array[0].CLP_STARTDATE;
+                        if(value_array[0].CLP_PRETERMINATE_DATE!=null && value_array[0].CLP_PRETERMINATE_DATE!='')
+                        {DBenddate=value_array[0].CLP_PRETERMINATE_DATE}else{DBenddate=value_array[0].CLP_ENDDATE}
                         var startdate=DBfrom_dateConversion(DBstartdate);
                         var enddate=DBfrom_dateConversion(DBenddate);
-                        $('#Forperiodid_'+splittedid[1]).datepicker("option","minDate",startdate);
-                        $('#Forperiodid_'+splittedid[1]).datepicker("option","maxDate",enddate);
-                    }
-                    if(paymenttype=='DEPOSIT' || paymenttype=='PROCESSING FEE')
-                    {
-                        var depositmindate=DBstartdate_dateConversion(DBstartdate);
-                        var depositmaxdate=DBenddate_dateConversion(DBstartdate);
-                        $('#Forperiodid_'+splittedid[1]).datepicker("option","minDate",depositmindate);
-                        $('#Forperiodid_'+splittedid[1]).datepicker("option","maxDate",depositmaxdate);
-                    }
-                    if(paymenttype=='DEPOSIT REFUND')
-                    {
-                        var depositmindate=DBstartdate_dateConversion(DBenddate);
-                        var depositmaxdate=DBenddate_dateConversion(DBenddate);
-                        $('#Forperiodid_'+splittedid[1]).datepicker("option","minDate",depositmindate);
-                        $('#Forperiodid_'+splittedid[1]).datepicker("option","maxDate",depositmaxdate);
-                    }
+                        if(paymenttype=='PAYMENT' || paymenttype=='CLEANING FEE')
+                        {
+                            var startdate=DBfrom_dateConversion(DBstartdate);
+                            var enddate=DBfrom_dateConversion(DBenddate);
+                            $('#Forperiodid_'+splittedid[1]).datepicker("option","minDate",startdate);
+                            $('#Forperiodid_'+splittedid[1]).datepicker("option","maxDate",enddate);
+                        }
+                        if(paymenttype=='DEPOSIT' || paymenttype=='PROCESSING FEE')
+                        {
+                            var depositmindate=DBstartdate_dateConversion(DBstartdate);
+                            var depositmaxdate=DBenddate_dateConversion(DBstartdate);
+                            $('#Forperiodid_'+splittedid[1]).datepicker("option","minDate",depositmindate);
+                            $('#Forperiodid_'+splittedid[1]).datepicker("option","maxDate",depositmaxdate);
+                        }
+                        if(paymenttype=='DEPOSIT REFUND')
+                        {
+                            var depositmindate=DBstartdate_dateConversion(DBenddate);
+                            var depositmaxdate=DBenddate_dateConversion(DBenddate);
+                            $('#Forperiodid_'+splittedid[1]).datepicker("option","minDate",depositmindate);
+                            $('#Forperiodid_'+splittedid[1]).datepicker("option","maxDate",depositmaxdate);
+                        }
 
-                },
-                error: function(data){
-                    alert('error in getting'+JSON.stringify(data));
-                    $('.preloader').hide();
-                }
-               });
+                    },
+                    error: function(data){
+                        alert('error in getting'+JSON.stringify(data));
+                        $('.preloader').hide();
+                    }
+                });
             }
             else
             {
@@ -373,172 +373,171 @@
             });
             return result;
         }
-    $(document).on('change','.Btn_validation',function() {
-        var id=this.id;
-        var splittedid=id.split('_');
-        Form_Btn_Validation(splittedid[1]);
-    });
-    $(document).on('click', '.removebutton', function () {
-        var row = $(this).closest('tr');
-        var rowCount = ($('#Finance_Entry_Table tr').length);
-        if(rowCount>2)
-        {
-            $('#Finance_Entry_Table').dataTable().fnDeleteRow(row);
-        }
-        var rowCount = ($('#Finance_Entry_Table tr').length)-1;
-        var count=0;
-        for(var j=1;j<=counter;j++)
-        {
-            if($('#vlaidation_'+j).val()==1)
+        $(document).on('change','.Btn_validation',function() {
+            var id=this.id;
+            var splittedid=id.split('_');
+            Form_Btn_Validation(splittedid[1]);
+        });
+        $(document).on('click', '.removebutton', function () {
+            var row = $(this).closest('tr');
+            var rowCount = ($('#Finance_Entry_Table tr').length);
+            if(rowCount>2)
             {
-                count++;
+                $('#Finance_Entry_Table').dataTable().fnDeleteRow(row);
+            }
+            var rowCount = ($('#Finance_Entry_Table tr').length)-1;
+            var count=0;
+            for(var j=1;j<=counter;j++)
+            {
+                if($('#vlaidation_'+j).val()==1)
+                {
+                    count++;
+                }
+            }
+            if(rowCount==count)
+            {
+                $('#AddNewPayment').removeAttr("disabled");
+                $('#Payment_btn_submitbutton').removeAttr("disabled");
+            }
+            else
+            {
+                $('#AddNewPayment').attr("disabled", "disabled");
+                $('#Payment_btn_submitbutton').attr("disabled", "disabled");
+            }
+        });
+        function Form_Btn_Validation(rowid)
+        {
+            var unit=$('#Unitid_'+rowid).val();
+            var customer=$('#Customerid_'+rowid).val();
+            var leaseperiod=$('#Leaseperiodid_'+rowid).val();
+            var Paymenttype=$('#Paymentid_'+rowid).val();
+            var amount=$('#Amountid_'+rowid).val();
+            var Period=$('#Forperiodid_'+rowid).val();
+            var Paiddate=$('#Paiddate_'+rowid).val();
+            if(unit!='SELECT' && customer!='SELECT' && leaseperiod!='SELECT' && leaseperiod!='' && Paymenttype!='SELECT' && amount!='' && Period!='' && Paiddate!='')
+            {
+                $('#vlaidation_'+rowid).val(1);
+            }
+            else
+            {
+                $('#vlaidation_'+rowid).val(0);
+            }
+            var rowCount = ($('#Finance_Entry_Table tr').length)-1;
+            var count=0;
+            for(var j=1;j<=counter;j++)
+            {
+                if($('#vlaidation_'+j).val()==1)
+                {
+                    count++;
+                }
+            }
+            if(rowCount==count)
+            {
+                $('#AddNewPayment').removeAttr("disabled");
+                $('#Payment_btn_submitbutton').removeAttr("disabled");
+            }
+            else
+            {
+                $('#AddNewPayment').attr("disabled", "disabled");
+                $('#Payment_btn_submitbutton').attr("disabled", "disabled");
             }
         }
-        if(rowCount==count)
-        {
-            $('#AddNewPayment').removeAttr("disabled");
-            $('#Payment_btn_submitbutton').removeAttr("disabled");
-        }
-        else
-        {
-            $('#AddNewPayment').attr("disabled", "disabled");
-            $('#Payment_btn_submitbutton').attr("disabled", "disabled");
-        }
+        $(document).on('click', '#Payment_btn_submitbutton', function () {
+            $('.preloader').show();
+            var unitarray=[];
+            var Customerarray=[];
+            var Leasperiodarray=[];
+            var paymenttypearray=[];
+            var amountarray=[];
+            var forperiodarray=[];
+            var paiddatearray=[];
+            var commentsarray=[];
+            var amountflag=[];
+            for(var i=1;i<=counter;i++)
+            {
+                unitarray.push($('#Unitid_'+i).val());
+                Customerarray.push($('#TempCustomerid_'+i).val());
+                Leasperiodarray.push($('#Leaseperiodid_'+i).val());
+                paymenttypearray.push($('#Paymentid_'+i).val());
+                amountarray.push($('#Amountid_'+i).val());
+                forperiodarray.push($('#Forperiodid_'+i).val());
+                paiddatearray.push($('#Paiddate_'+i).val());
+                commentsarray.push($('#Comments_'+i).val());
+                var amount_flag=$('#Amountflag_'+i).is(":checked");
+                if(amount_flag==true)
+                {             var flag='X';          }
+                else
+                {              flag='';          }
+                amountflag.push(flag);
+            }
+            $.ajax({
+                type: "POST",
+                url: controller_url+"PaymentEntrySave",
+                data:{"UNIT":unitarray,"CUSTOMERID":Customerarray,"LP":Leasperiodarray,"PAYMENT":paymenttypearray,"AMOUNT":amountarray,"FORPERIOD":forperiodarray,"PAIDDATE":paiddatearray,"Comments":commentsarray,"FLAG":amountflag},
+                success: function(data){
+                    $('.preloader').hide();
+                    var value_array=JSON.parse(data);
+                    if(value_array=='' || value_array==null)
+                    {
+                        show_msgbox("PAYMENT ENTRY-ACTIVE CUSTOMER",ErrorMsg[1].EMC_DATA,"success",false);
+                    }
+                    else
+                    {
+                        show_msgbox("PAYMENT ENTRY-ACTIVE CUSTOMER",value_array,"success",false);
+                    }
+                    counter=0;
+                    t.clear().draw();
+                    InitialDataSetting();
+                    $('.preloader').hide();
+                },
+                error: function(data){
+                    alert('error in getting'+JSON.stringify(data));
+                    $('.preloader').hide();
+                }
+            });
+        });
     });
-    function Form_Btn_Validation(rowid)
-    {
-         var unit=$('#Unitid_'+rowid).val();
-         var customer=$('#Customerid_'+rowid).val();
-         var leaseperiod=$('#Leaseperiodid_'+rowid).val();
-         var Paymenttype=$('#Paymentid_'+rowid).val();
-         var amount=$('#Amountid_'+rowid).val();
-         var Period=$('#Forperiodid_'+rowid).val();
-         var Paiddate=$('#Paiddate_'+rowid).val();
-         if(unit!='SELECT' && customer!='SELECT' && leaseperiod!='SELECT' && leaseperiod!='' && Paymenttype!='SELECT' && amount!='' && Period!='' && Paiddate!='')
-         {
-           $('#vlaidation_'+rowid).val(1);
-         }
-        else
-        {
-           $('#vlaidation_'+rowid).val(0);
-        }
-        var rowCount = ($('#Finance_Entry_Table tr').length)-1;
-        var count=0;
-        for(var j=1;j<=counter;j++)
-        {
-         if($('#vlaidation_'+j).val()==1)
-         {
-           count++;
-         }
-        }
-        if(rowCount==count)
-        {
-            $('#AddNewPayment').removeAttr("disabled");
-            $('#Payment_btn_submitbutton').removeAttr("disabled");
-        }
-        else
-        {
-            $('#AddNewPayment').attr("disabled", "disabled");
-            $('#Payment_btn_submitbutton').attr("disabled", "disabled");
-        }
-    }
-     $(document).on('click', '#Payment_btn_submitbutton', function () {
-         $('.preloader').show();
-      var unitarray=[];
-      var Customerarray=[];
-      var Leasperiodarray=[];
-      var paymenttypearray=[];
-      var amountarray=[];
-      var forperiodarray=[];
-      var paiddatearray=[];
-      var commentsarray=[];
-      var amountflag=[];
-      for(var i=1;i<=counter;i++)
-      {
-          unitarray.push($('#Unitid_'+i).val());
-          Customerarray.push($('#TempCustomerid_'+i).val());
-          Leasperiodarray.push($('#Leaseperiodid_'+i).val());
-          paymenttypearray.push($('#Paymentid_'+i).val());
-          amountarray.push($('#Amountid_'+i).val());
-          forperiodarray.push($('#Forperiodid_'+i).val());
-          paiddatearray.push($('#Paiddate_'+i).val());
-          commentsarray.push($('#Comments_'+i).val());
-          var amount_flag=$('#Amountflag_'+i).is(":checked");
-          if(amount_flag==true)
-          {             var flag='X';          }
-          else
-          {              flag='';          }
-          amountflag.push(flag);
-      }
-      $.ajax({
-          type: "POST",
-          url: controller_url+"PaymentEntrySave",
-          data:{"UNIT":unitarray,"CUSTOMERID":Customerarray,"LP":Leasperiodarray,"PAYMENT":paymenttypearray,"AMOUNT":amountarray,"FORPERIOD":forperiodarray,"PAIDDATE":paiddatearray,"Comments":commentsarray,"FLAG":amountflag},
-          success: function(data){
-              $('.preloader').hide();
-              var value_array=JSON.parse(data);
-              if(value_array=='' || value_array==null)
-              {
-                  show_msgbox("PAYMENT ENTRY-ACTIVE CUSTOMER",ErrorMsg[1].EMC_DATA,"success",false);
-              }
-              else
-              {
-                  show_msgbox("PAYMENT ENTRY-ACTIVE CUSTOMER",value_array,"success",false);
-              }
-              counter=0;
-              t.clear().draw();
-              InitialDataSetting();
-              $('.preloader').hide();
-          },
-          error: function(data){
-              alert('error in getting'+JSON.stringify(data));
-              $('.preloader').hide();
-          }
-     });
-    });
- });
 </script>
 <body>
 <body>
-    <div class="container">
-        <div class="wrapper">
-            <div class="preloader" hidden><span class="Centerer"></span><img class="preloaderimg"/> </div>
-            <div class="row title text-center"><h4><b>PAYMENT ENTRY-ACTIVE CUSTOMER</b></h4></div>
-            <div class ='row content'>
-                <div class="panel-body">
-                    <div id="Finance_Entry_Container" class="table-responsive">
-                        <div><input type="button" class="maxbtn" value="ADD ROW" id="AddNewPayment" disabled></div>
-                         <section>
-                            <table id="Finance_Entry_Table" border=1 cellspacing='0' data-class='table'  class=' srcresult table' style="width: 1500px">
-                                <thead>
-                                     <tr>
-                                        <th style='width:70px !important;vertical-align: middle'>ACTION</th>
-                                        <th style='width:130px !important;vertical-align: middle'>UNIT<span class="labelrequired"><em>*</em></span></th>
-                                        <th style='width:250px !important;vertical-align: middle'>CUSTOMER<span class="labelrequired"><em>*</em></span></th>
-                                        <th style='width:130px !important;vertical-align: middle'>LEASE PERIOD<span class="labelrequired"><em>*</em></span></th>
-                                        <th style='width:200px !important;vertical-align: middle'>PAYMENT<span class="labelrequired"><em>*</em></span></th>
-                                        <th style='width:80px !important;vertical-align: middle'>AMOUNT<span class="labelrequired"><em>*</em></span></th>
-                                         <th style='width:70px !important;vertical-align: middle'>PAYMENT FLAG</th>
-                                        <th style='width:120px !important;vertical-align: middle'>FOR PERIOD<span class="labelrequired"><em>*</em></span></th>
-                                        <th style='width:100px !important;vertical-align: middle'>PAID DATE<span class="labelrequired"><em>*</em></span></th>
-                                        <th style='width:200px !important;vertical-align: middle'>COMMENTS</th>
-                                     </tr>
-                                </thead>
-                            </table>
-                         </section>
-                    </div>
-                    <br>
-                        <div>
-                            <label id="customeremptymessage" class="errormsg"></label>
-                        </div>
-                    <br>
-                    <div class="row form-group">
-                        <div class="col-lg-offset-1 col-lg-2">
-                            <input type="button" id="Payment_btn_submitbutton" class="btn" value="SAVE" disabled>
-                        </div>
+<div class="container">
+    <div class="wrapper">
+        <div class="preloader" hidden><span class="Centerer"></span><img class="preloaderimg"/> </div>
+        <div class="row title text-center"><h4><b>PAYMENT ENTRY-ACTIVE CUSTOMER</b></h4></div>
+        <div class ='row content'>
+            <div class="panel-body">
+                <div id="Finance_Entry_Container" class="table-responsive">
+                    <div><input type="button" class="maxbtn" value="ADD ROW" id="AddNewPayment" disabled></div>
+                    <section>
+                        <table id="Finance_Entry_Table" border=1 cellspacing='0' data-class='table'  class=' srcresult table' style="width: 1500px;">
+                            <thead style="height: 15px;font-size:13px;">
+                            <tr>
+                                <th style='width:70px !important;vertical-align: middle'>ACTION</th>
+                                <th style='width:130px !important;vertical-align: middle'>UNIT<span class="labelrequired"><em>*</em></span></th>
+                                <th style='width:250px !important;vertical-align: middle'>CUSTOMER<span class="labelrequired"><em>*</em></span></th>
+                                <th style='width:130px !important;vertical-align: middle'>LEASE PERIOD<span class="labelrequired"><em>*</em></span></th>
+                                <th style='width:200px !important;vertical-align: middle'>PAYMENT<span class="labelrequired"><em>*</em></span></th>
+                                <th style='width:80px !important;vertical-align: middle'>AMOUNT<span class="labelrequired"><em>*</em></span></th>
+                                <th style='width:120px !important;vertical-align: middle'>FOR PERIOD<span class="labelrequired"><em>*</em></span></th>
+                                <th style='width:100px !important;vertical-align: middle'>PAID DATE<span class="labelrequired"><em>*</em></span></th>
+                                <th style='width:200px !important;vertical-align: middle'>COMMENTS</th>
+                            </tr>
+                            </thead>
+                        </table>
+                    </section>
+                </div>
+                <br>
+                <div>
+                    <label id="customeremptymessage" class="errormsg"></label>
+                </div>
+                <br>
+                <div class="row form-group">
+                    <div class="col-lg-offset-1 col-lg-2">
+                        <input type="button" id="Payment_btn_submitbutton" class="btn" value="SAVE" disabled>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
 </body>

@@ -58,8 +58,8 @@
             }
             else if(value=='Cheque_searchform')
             {
-               $('#Cheque_Entry_Form').hide();
-               $('#Cheque_Search_Update_Form').show();
+                $('#Cheque_Entry_Form').hide();
+                $('#Cheque_Search_Update_Form').show();
                 $.ajax({
                     type: "POST",
                     url: controller_url+"Cheque_Search_InitialDataLoad",
@@ -103,14 +103,14 @@
                 data:FormElements,
                 success: function(data){
                     var value_array=JSON.parse(data);
-                   if(value_array==1)
-                   {
-                       show_msgbox("CHEQUE ENTRY/SEARCH/UPDATE",Entry_errormsg[1].EMC_DATA,"success",false);
-                   }
+                    if(value_array==1)
+                    {
+                        show_msgbox("CHEQUE ENTRY/SEARCH/UPDATE",Entry_errormsg[1].EMC_DATA,"success",false);
+                    }
                     else
-                   {
-                       show_msgbox("CHEQUE ENTRY/SEARCH/UPDATE",Entry_errormsg[2].EMC_DATA,"success",false);
-                   }
+                    {
+                        show_msgbox("CHEQUE ENTRY/SEARCH/UPDATE",Entry_errormsg[2].EMC_DATA,"success",false);
+                    }
                     $('.preloader').hide();
                     $('#Form_Cheque_entry')[0].reset();
                     $('#CHEQUE_ENTRY_ta_comments').height(30);
@@ -122,7 +122,7 @@
                 }
             });
         });
-     //*******************ERM ENTRY FORM DETAILS END ************************//
+        //*******************ERM ENTRY FORM DETAILS END ************************//
         var AllchequenoArray=[];
         var AllchequeunitArray=[];
         $('#CHEQUE_SRC_SearchOption').change(function(){
@@ -154,10 +154,10 @@
                 var appenddata='<BR><h4 style="color:#498af3;">DATE RANGE SEARCH</h4><BR>';
                 appenddata+='<div class="row form-group">';
                 appenddata+='<div class="col-md-2"><label>FROM DATE<span class="labelrequired"><em>*</em></span></label></div>';
-                appenddata+='<div class="col-md-3"><input class="form-control Daterange_btn_validation" name="CQ_SRC_FromDate"  id="CQ_SRC_FromDate" style="max-width:120px;" /></div></div>';
+                appenddata+='<div class="col-md-9"><div class="col-sm-3" style="padding-left: 0px;"><div class="input-group addon"><input type="text" class="form-control Daterange_btn_validation datemandtry" name="CQ_SRC_FromDate" id="CQ_SRC_FromDate"  placeholder="From Date"><label  class="input-group-addon" for=CQ_SRC_FromDate><span class="glyphicon glyphicon-calendar"></span></label></div></div></div></div>';
                 appenddata+='<div class="row form-group">';
                 appenddata+='<div class="col-md-2"><label>TO DATE<span class="labelrequired"><em>*</em></span></label></div>';
-                appenddata+='<div class="col-md-3"><input class="form-control Daterange_btn_validation" name="CQ_SRC_ToDate"  id="CQ_SRC_ToDate" style="max-width:120px;" /></div></div>';
+                appenddata+='<div class="col-md-9"><div class="col-sm-3" style="padding-left: 0px;"><div class="input-group addon"><input type="text" class="form-control Daterange_btn_validation datemandtry" name="CQ_SRC_ToDate" id="CQ_SRC_ToDate"  placeholder="From Date"><label  class="input-group-addon" for=CQ_SRC_ToDate><span class="glyphicon glyphicon-calendar"></span></label></div></div></div></div>';
                 appenddata+='<div class="row form-group">';
                 appenddata+='<div class="col-lg-offset-1 col-lg-2">';
                 appenddata+='<input type="button" id="CQ_src_btn_search" class="btn" value="SEARCH" disabled></div></div>';
@@ -234,7 +234,7 @@
                             var data=value_array[i].CHEQUE_UNIT_NO;
                             if(data!=null && data!="" && data!='null')
                             {
-                             AllchequeunitArray.push(data);
+                                AllchequeunitArray.push(data);
                             }
                         }
                         $('#autocompleteerrormsg').text(SRC_errormsg[5].EMC_DATA);
@@ -345,6 +345,7 @@
         });
         var Cheque_id=[];
         $(document).on('click','#CQ_src_btn_search',function() {
+            $('.preloader').show();
             var searchoption=$('#CHEQUE_SRC_SearchOption').val();
             if(searchoption==1)
             {
@@ -364,12 +365,12 @@
             }
             if(searchoption==3)
             {
-             var fromdate=$("#CQ_SRC_FromDate").val();
-             var todate=$("#CQ_SRC_ToDate").val();
-             var data={'Option':searchoption,'Data1':fromdate,'Data2':todate};
-             $('#CQ_SRC_FromDate').val('');
-             $('#CQ_SRC_ToDate').val('');
-             var title="DETAILS OF SELECTED DATE RANGE : "+fromdate+" TO "+todate;
+                var fromdate=$("#CQ_SRC_FromDate").val();
+                var todate=$("#CQ_SRC_ToDate").val();
+                var data={'Option':searchoption,'Data1':fromdate,'Data2':todate};
+                $('#CQ_SRC_FromDate').val('');
+                $('#CQ_SRC_ToDate').val('');
+                var title="DETAILS OF SELECTED DATE RANGE : "+fromdate+" TO "+todate;
             }
             if(searchoption==4)
             {
@@ -411,31 +412,33 @@
                         if(value_array[i].CHEQUE_COMMENTS==null){var comments='';}else{comments=value_array[i].CHEQUE_COMMENTS;}
                         if(value_array[i].CHEQUE_DEBITED_RETURNED_DATE==null){var date='';}else{date=value_array[i].CHEQUE_DEBITED_RETURNED_DATE;}
                         tabledata+='<tr id='+value_array[i].CHEQUE_ID+'>' +
-                            "<td style='width:80px !important;vertical-align: middle'><div class='col-lg-2'><span style='display: block;color:green' title='Edit' class='glyphicon glyphicon-edit Cheque_editbutton' disabled id="+edit+"></div></td>" +
-                            "<td style='width:100px !important;vertical-align: middle;text-align: center'>"+value_array[i].CHEQUE_DATE+"</td>" +
-                            "<td style='width:100px !important;vertical-align: middle;text-align: center' >"+value_array[i].CHEQUE_NO+"</td>" +
-                            "<td style='width:250px !important;vertical-align: middle'>"+value_array[i].CHEQUE_TO+"</td>" +
-                            "<td style='width:250px !important;vertical-align: middle'>"+value_array[i].CHEQUE_FOR+"</td>" +
-                            "<td style='width:120px !important;vertical-align: middle;text-align: center'>"+value_array[i].CHEQUE_AMOUNT+"</td>" +
-                            "<td style='width:150px !important;vertical-align: middle;text-align: center'>"+unit+"</td>" +
-                            "<td style='width:100px !important;vertical-align: middle;text-align: center'>"+value_array[i].BCN_DATA+"</td>" +
-                            "<td style='width:100px !important;vertical-align: middle;text-align: center'>"+date+"</td>" +
-                            "<td style='width:250px !important;vertical-align: middle'>"+comments+"</td>" +
-                            "<td style='width:200px !important;vertical-align: middle'>"+value_array[i].ULD_LOGINID+"</td>" +
-                            "<td style='width:150px !important;vertical-align: middle'>"+value_array[i].CED_TIME_STAMP+"</td></tr>";
+                        "<td style='width:80px !important;vertical-align: middle' nowrap><div class='col-lg-2'><span style='display: block;color:green' title='Edit' class='glyphicon glyphicon-edit Cheque_editbutton' disabled id="+edit+"></div></td>" +
+                        "<td style='width:100px !important;vertical-align: middle;text-align: center' nowrap>"+value_array[i].CHEQUE_DATE+"</td>" +
+                        "<td style='width:100px !important;vertical-align: middle;text-align: center' nowrap>"+value_array[i].CHEQUE_NO+"</td>" +
+                        "<td style='width:250px !important;vertical-align: middle' >"+value_array[i].CHEQUE_TO+"</td>" +
+                        "<td style='width:250px !important;vertical-align: middle' >"+value_array[i].CHEQUE_FOR+"</td>" +
+                        "<td style='width:120px !important;vertical-align: middle;text-align: center' nowrap>"+value_array[i].CHEQUE_AMOUNT+"</td>" +
+                        "<td style='width:150px !important;vertical-align: middle;text-align: center'nowrap>"+unit+"</td>" +
+                        "<td style='width:100px !important;vertical-align: middle;text-align: center' nowrap>"+value_array[i].BCN_DATA+"</td>" +
+                        "<td style='width:100px !important;vertical-align: middle;text-align: center' nowrap>"+date+"</td>" +
+                        "<td style='width:250px !important;vertical-align: middle'>"+comments+"</td>" +
+                        "<td style='width:200px !important;vertical-align: middle' nowrap>"+value_array[i].ULD_LOGINID+"</td>" +
+                        "<td style='width:150px !important;vertical-align: middle' nowrap>"+value_array[i].CED_TIME_STAMP+"</td></tr>";
                     }
                     tabledata+="</body>";
                     $('section').html(tabledata);
                     $('#CHEQUE_SEARCH_DataTable').show();
                     var table = $('#CHEQUE_Datatable').DataTable();
+                    $('.preloader').hide();
                 },
                 error: function(data){
                     show_msgbox("CHEQUE ENTRY/SEARCH/UPDATE",JSON.stringify(data),"success",false);
+                    $('.preloader').hide();
                 }
             });
         });
-       var selectedrowid;
-       var pre_tds;
+        var selectedrowid;
+        var pre_tds;
         $(document).on('click','.Cheque_editbutton', function (){
             var cid = $(this).attr('id');
             var SplittedData=cid.split('_');
@@ -454,7 +457,7 @@
             tdstr += "<td style='vertical-align: middle'><input id='amount' name='amount'  class='amtonly form-control FormValidation' style='font-weight:bold;width:120px' value='"+$(tds[5]).html()+"'></td>";
             tdstr += "<td style='vertical-align: middle'><input id='unit' name='unit'  class='form-control FormValidation' style='font-weight:bold;width:150px' value='"+$(tds[6]).html()+"'></td>";
             tdstr += "<td style='vertical-align: middle'><SELECT id='status' name='status'  class='form-control  FormValidation Debitedvalidation'  style='font-weight:bold;width:150px' value='"+$(tds[7]).html()+"'><OPTION>SELECT</OPTION></SELECT></td>";
-            tdstr += "<td style='vertical-align: middle'><input type='text' id='debiteddate' name='debiteddate'  class='form-control FormValidation' style='font-weight:bold;width:120px' value='"+$(tds[8]).html()+"'></td>";
+            tdstr += "<td style='vertical-align: middle'><div class='col-sm-4'><div class='input-group addon'><input type='text' class='form-control FormValidation datemandtry' id=debiteddate style='width:120px;' value='"+$(tds[8]).html()+"'><label  class='input-group-addon' for=debiteddate><span class='glyphicon glyphicon-calendar'></span></label></div></div></td>";
             tdstr += "<td style='vertical-align: middle'><textarea id='Comments' name='Comments'  class='form-control autogrowcomments FormValidation'  style='font-weight:bold;'>"+$(tds[9]).html()+"</textarea></td>";
             tdstr += "<td style='vertical-align: middle'>"+$(tds[10]).html()+"</td>";
             tdstr += "<td style='vertical-align: middle'>"+$(tds[11]).html()+"</td>";
@@ -616,7 +619,7 @@
             });
         });
     });
- </script>
+</script>
 <body>
 <div class="container">
     <div class="wrapper">
@@ -640,8 +643,12 @@
                             <div class="col-md-3">
                                 <label>CHEQUE DATE<span class="labelrequired"><em>*</em></span></label>
                             </div>
-                            <div class="col-md-3">
-                                <input class="form-control datemandtry" name="CHEQUE_ENTRY_db_date" required id="CHEQUE_ENTRY_db_date" style="width:120px" placeholder="Cheque Date"/>
+                            <div class="col-md-9">
+                                <div class="col-sm-3" style="padding-left: 0px;">
+                                    <div class="input-group addon">
+                                        <input type="text" class="form-control datemandtry" name="CHEQUE_ENTRY_db_date" id="CHEQUE_ENTRY_db_date"  placeholder="Cheque Date"><label  class="input-group-addon" for=CHEQUE_ENTRY_db_date><span class="glyphicon glyphicon-calendar"></span></label>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div class="row form-group">
@@ -701,29 +708,29 @@
                 </div>
                 <div id="Cheque_Search_Update_Form" hidden>
                     <form id="Form_Cheque_searchupdate" class="form-horizontal" role="form">
-                            <h4 style="color:#498af3;"><U>CHEQUE SEARCH / UPDATE FORM</U></h4>
-                            <br>
-                            <div class="row form-group">
-                                <div class="col-md-2">
-                                    <label>SEARCH BY<span class="labelrequired"><em>*</em></span></label>
-                                </div>
-                                <div class="col-md-3">
-                                    <SELECT class="form-control" name="CHEQUE_SRC_SearchOption"  id="CHEQUE_SRC_SearchOption">
-                                        <OPTION>SELECT</OPTION>
-                                    </SELECT>
-                                </div>
+                        <h4 style="color:#498af3;"><U>CHEQUE SEARCH / UPDATE FORM</U></h4>
+                        <br>
+                        <div class="row form-group">
+                            <div class="col-md-2">
+                                <label>SEARCH BY<span class="labelrequired"><em>*</em></span></label>
                             </div>
-
-                            <div id="SearchformDiv">
-
+                            <div class="col-md-3">
+                                <SELECT class="form-control" name="CHEQUE_SRC_SearchOption"  id="CHEQUE_SRC_SearchOption">
+                                    <OPTION>SELECT</OPTION>
+                                </SELECT>
                             </div>
-                            <div id="CHEQUE_SEARCH_DataTable" class="table-responsive" hidden>
-                                <h4 style="color:#498af3;" id="Tableheader"></h4>
-                                <section>
+                        </div>
 
-                                </section>
-                            </div>
-                        </form>
+                        <div id="SearchformDiv">
+
+                        </div>
+                        <div id="CHEQUE_SEARCH_DataTable" class="table-responsive" hidden>
+                            <h4 style="color:#498af3;" id="Tableheader"></h4>
+                            <section>
+
+                            </section>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>

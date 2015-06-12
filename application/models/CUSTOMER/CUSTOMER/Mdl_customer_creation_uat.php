@@ -2,7 +2,7 @@
 error_reporting(0);
 require_once 'google/appengine/api/mail/Message.php';
 use google\appengine\api\mail\Message;
-class Mdl_customer_creation extends CI_Model
+class Mdl_customer_creation_uat extends CI_Model
 {
     public function Customer_Creation_Save($UserStamp,$Leaseperiod,$Quoters)
     {

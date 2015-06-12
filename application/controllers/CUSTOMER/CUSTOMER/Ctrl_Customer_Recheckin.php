@@ -79,21 +79,7 @@ Class Ctrl_Customer_Recheckin extends CI_Controller
         $Quoters = $this->Mdl_eilib_quarter_calc->quarterCalc(new DateTime($Q_Startdate), new DateTime($Q_Enddate));
         $this->load->library('Google');
         $Create_confirm = $this->Mdl_customer_creation->Customer_Recheckin_Save($UserStamp, $Leaseperiod, $Quoters);
-        $AllUnit = $this->Mdl_eilib_common_function->getRecheckinCustomerUnit();
-        if ($Create_confirm[0] == 1) {
-            if ($CCoption != '3') {
-                $message1 = new Message();
-                $message1->setSender($Create_confirm[3] . '<' . $UserStamp . '>');
-                $message1->addTo($Sendmailid);
-                $message1->setSubject($Create_confirm[1]);
-                $message1->setHtmlBody($Create_confirm[2]);
-                $message1->send();
-                $returnflag = $Create_confirm[0];
-            } else {
-                $returnflag = $Create_confirm[0];
-            }
-        }
-        $Returnvalue = array($returnflag, $AllUnit);
-        echo json_encode($Returnvalue);
+//        $Returnvalue = array($returnflag, $AllUnit);
+        echo json_encode($Create_confirm);
     }
 }

@@ -1,14 +1,17 @@
 <?php
 error_reporting(0);
+require_once 'google/appengine/api/mail/Message.php';
+use google\appengine\api\mail\Message;
 class Mdl_configuration_trigger extends CI_Model {
-    public function getCSVfileRecords()
+    public function getCSVfileRecords($UserStamp)
     {
-//        set_time_limit(0);
+        set_time_limit(0);
         $this->db->select("OCN_DATA");
         $this->db->from('OCBC_CONFIGURATION');
         $this->db->where('CGN_ID=29');
         $query = $this->db->get()->row()->OCN_DATA;
         $this->load->model('EILIB/Mdl_eilib_common_function');
+        $CSVMailid=$this->Mdl_eilib_common_function->getProfileEmailId('CSV');
         $service = $this->Mdl_eilib_common_function->get_service_document();
         $children1 = $service->children->listChildren($query);
         $filearray1=$children1->getItems();
@@ -21,10 +24,8 @@ class Mdl_configuration_trigger extends CI_Model {
                 $url=$data->downloadUrl;
                 $data=$this->downloadFile($service,$url);
                 $data = array_map("str_getcsv", preg_split('/\r*\n+|\r+/', $data));
-//                return $data;
                 break;
         }
-//        return $data;
         $monthname=explode('.',$filename);
         $year=substr($monthname[0],0,4);
         $month=substr($monthname[0],4,2);
@@ -43,7 +44,6 @@ class Mdl_configuration_trigger extends CI_Model {
             array_push($AfterDBRecords,$csvnewrowfindkey);
         }
         $DBcount=count($CSV_DB_Records);
-//        return $DBcount;
         /************************END OF OCBC TABLE RECORDS************************************/
         /************************CSV FILE RECORDS***************************************/
         $CSV_File_comparisionRecords=array();
@@ -84,6 +84,7 @@ class Mdl_configuration_trigger extends CI_Model {
         $CSV_Old_Records=array_unique($CSV_Old_Records);
         $Old_rcordsCount=count($CSV_Old_Records);
         $updationdata=array();
+//        return $CSV_Old_RecordsBC.'/'.$DBcount;
         if($Old_rcordsCount==$DBcount)
         {
             for($k=0;$k<count($CSV_Old_Records);$k++)
@@ -118,7 +119,7 @@ class Mdl_configuration_trigger extends CI_Model {
         }
         else
         {
-            if($Old_rcordsCount<$DBcount && $Old_rcordsCount!=$CSV_Old_RecordsBC)
+            if($Old_rcordsCount!=$DBcount)
             {
                 $dups = array();
                 foreach(array_count_values($CSV_File_comparisionRecords) as $val => $c)
@@ -134,13 +135,14 @@ class Mdl_configuration_trigger extends CI_Model {
                         $csv_compdate = $CSV_array[11] . '_' . $CSV_array[16] . '_' . $CSV_array[17] . '_' . $CSV_array[18];
                         if ($csv_compdate == $dups[$b])
                         {
-                            $csverrorbodymessage=$csverrorbodymessage.'\n\n'.$CSV_Files_Records[$a];
+                            $csverrorbodymessage=$csverrorbodymessage.'  \n\n'.$CSV_Files_Records[$a];
                         }
                     }
                 }
-                return $csverrorbodymessage;
+                $Subject="WARNING ,MESSAGE";
+                $this->Warningmailpart($Subject,$csverrorbodymessage,'CSV',$UserStamp,$CSVMailid);
             }
-            else
+            if($Old_rcordsCount<$DBcount)
             {
                 $csvmissedrecord=array_diff($CSV_DB_Records,$CSV_dup_oldRecords);
                 $keyvalue=array_keys($csvmissedrecord);
@@ -161,9 +163,10 @@ class Mdl_configuration_trigger extends CI_Model {
                 foreach ($resultset-> result_array() as $val)
                 {
                     $error=$val['ACCOUNT'].','.$val['CURRENCY'].','.$val['OBR_OPENING_BALANCE'].','.$val['OBR_CLOSING_BALANCE'].','.$val['OBR_PREVIOUS_BALANCE'].','.$val['OBR_LAST_BALANCE'].','.$val['OBR_NO_OF_CREDITS'].','.$val['OBR_TRANS_DATE'].','.$val['OBR_NO_OF_DEBITS'].','.$val['OBR_OLD_BALANCE'].','.$val['OBR_D_AMOUNT'].','.$val['OBR_POST_DATE'].','.$val['OBR_VALUE_DATE'].','.$val['OBR_DEBIT_AMOUNT'].','.$val['OBR_CREDIT_AMOUNT'].','.$val['OBR_CLIENT_REFERENCE'].','.$val['OBR_TRANSACTION_DESC_DETAILS'].','.$val['OBR_BANK_REFERENCE'].','.$val['OBR_TRX_TYPE'];
-                    $csverrorbodymessage=$csverrorbodymessage.'\n\n'.$error;
+                    $csverrorbodymessage=$csverrorbodymessage.'    \n\n  '.$error;
                 }
-                return $csverrorbodymessage;
+                $Subject="WARNING ,MESSAGE";
+                $this->Warningmailpart($Subject,$csverrorbodymessage,'CSV',$UserStamp,$CSVMailid);
             }
         }
         if(count($newcsvfilerecords)!=0)
@@ -335,18 +338,38 @@ class Mdl_configuration_trigger extends CI_Model {
                 $sum=$sum+$final_count[$v];
             }
             $message.='</table></body>';
-
             $subjectmess='DATABASE UPDATED-['.$Header.']';
+            $this->Confirmmailpart($subjectmess,$message,'CSV',$UserStamp,$CSVMailid);
+            $this->Warningmailpart($subjectmess,$d,'CSV',$UserStamp,$CSVMailid);
         }
         else
         {
-            return 'No New Records';
+            $Subject="CONFIRMATION";
+            $message="NEW DATA NOT AVAILABLE IN CSV FILE";
+            $this->Warningmailpart($Subject,$message,'CSV',$UserStamp,$CSVMailid);
         }
-        if($mailflag==1)
-        {
-
-        }
-        return $message;
+    }
+    public function Confirmmailpart($mailsub,$mailbody,$EmailDisplayname,$UserStamp,$CSVMailid)
+    {
+        $message1 = new Message();
+        $message1->setSender($EmailDisplayname . '<' . $UserStamp . '>');
+        $message1->addTo($CSVMailid[0]);
+        $message1->addCC($CSVMailid[1]);
+        $message1->setSubject($mailsub);
+        $message1->setHtmlBody($mailbody);
+        $message1->send();
+        return 'success';
+    }
+    public function Warningmailpart($mailsub,$mailbody,$EmailDisplayname,$UserStamp,$CSVMailid)
+    {
+        $message1 = new Message();
+        $message1->setSender($EmailDisplayname . '<' . $UserStamp . '>');
+        $message1->addTo($CSVMailid[0]);
+        $message1->addCC($CSVMailid[1], $CSVMailid[2]);
+        $message1->setSubject($mailsub);
+        $message1->setHtmlBody($mailbody);
+        $message1->send();
+        return 'success';
     }
     public function getTriggerConfiguration()
     {
@@ -401,7 +424,7 @@ class Mdl_configuration_trigger extends CI_Model {
         }
         return $array;
     }
-    public function getMonthlyPaymentReminder()
+    public function getMonthlyPaymentReminder($UserStamp)
     {
         $this->load->model('EILIB/Mdl_eilib_common_function');
         $PAYMENT_reminderdisplayname=$this->Mdl_eilib_common_function->Get_MailDisplayName("MONTHLY_PAYMENT_REMINDER");
@@ -414,20 +437,36 @@ class Mdl_configuration_trigger extends CI_Model {
         }
         $PAYMENT_reminderquery="SELECT DISTINCT CUSTOMERNAME,PAYMENT,CPD_EMAIL,UNIT_NO FROM VW_PAYMENT_CURRENT_ACTIVE_CUSTOMER WHERE CLP_ENDDATE>CURDATE() AND CLP_STARTDATE<=CURDATE()AND(CLP_PRETERMINATE_DATE IS NULL OR CLP_PRETERMINATE_DATE>CURDATE())";
         $resultset=$this->db->query($PAYMENT_reminderquery);
-        $customer=array();
-        $payment=array();
-        $email=array();
-        $unit=array();
+        $this->load->model('CONFIGURATION/Mdl_configuration_trigger');
+        $data = $this->Mdl_configuration_trigger->getMonthlyPaymentReminder();
+        $PAYMENT_reminderdisplayname = $data[0];
+        $EmailSubject = $data[1];
+        $EmailBody = $data[2];
         foreach ($resultset->result_array() as $key=>$val)
         {
-            $customer[]=$val['CUSTOMERNAME'];
-            $payment[]=$val['PAYMENT'];
-            $email[]=$val['CPD_EMAIL'];
-            $unit[]=$val['UNIT_NO'];
+            $customer=$val['CUSTOMERNAME'];
+            $payment=$val['PAYMENT'];
+            $email=$val['CPD_EMAIL'];
+            $unit=$val['UNIT_NO'];
+            $EmailSubject = str_replace('[CURRENT_MONTH]', '', $EmailSubject);
+            $EmailBody = str_replace('[CUSTOMER_NAME]', $customer, $EmailBody);
+            $EmailBody = str_replace('[UNIT-NO]', $unit, $EmailBody);
+            $EmailBody = str_replace('[RENTAL_AMOUNT]', $payment, $EmailBody);
+            $this->Remindermailpart($EmailSubject,$EmailBody,$PAYMENT_reminderdisplayname,$UserStamp,$email);
         }
-        $Returnvalues=array($PAYMENT_reminderdisplayname,$Emailsubject,$Emailbody,$customer,$payment,$email,$unit);
-        return $Returnvalues;
+        return 'success';
     }
+    public function Remindermailpart($mailsub,$mailbody,$EmailDisplayname,$UserStamp,$Mailid)
+    {
+        $message1 = new Message();
+        $message1->setSender($EmailDisplayname . '<' . $UserStamp . '>');
+        $message1->addTo($Mailid);
+        $message1->setSubject($mailsub);
+        $message1->setHtmlBody($mailbody);
+        $message1->send();
+        return 'success';
+    }
+
     public function getNonPaymentReminder()
     {
         $this->load->model('EILIB/Mdl_eilib_common_function');
@@ -442,4 +481,6 @@ class Mdl_configuration_trigger extends CI_Model {
         $PAYMENT_reminderquery="SELECT DISTINCT CUSTOMERNAME,CUSTOMER_ID,CPD_EMAIL,UNIT_NO,CED_REC_VER,CLP_STARTDATE,PAYMENT FROM VW_PAYMENT_CURRENT_ACTIVE_CUSTOMER WHERE CLP_ENDDATE>CURDATE() AND CLP_STARTDATE<=CURDATE()AND(CLP_PRETERMINATE_DATE IS NULL OR CLP_PRETERMINATE_DATE>CURDATE())";
         $resultset=$this->db->query($PAYMENT_reminderquery);
     }
+
+
 }

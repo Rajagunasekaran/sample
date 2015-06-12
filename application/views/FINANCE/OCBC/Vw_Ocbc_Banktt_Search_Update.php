@@ -56,7 +56,7 @@ require_once('application/libraries/EI_HDR.php');
                     {
                         if(data.BCN_ID!=13 && data.BCN_ID!=14)
                         {
-                         statusoptions += '<option value="' + data.BCN_DATA + '">' + data.BCN_DATA + '</option>';
+                            statusoptions += '<option value="' + data.BCN_DATA + '">' + data.BCN_DATA + '</option>';
                         }
                     }
                     if(data.CGN_ID==71)
@@ -94,7 +94,7 @@ require_once('application/libraries/EI_HDR.php');
             {
                 $('.preloader').show();
                 var appenddata='<h4 style="color:#498af3;">UNIT NUMBER SEARCH</h4><br>';
-                appenddata+='<div class="row form-group" style="padding-left:20px;">';
+                appenddata+='<div class="row form-group">';
                 appenddata+='<div class="col-md-2"><label>UNIT NUMBER<span class="labelrequired"><em>*</em></span></label></div>';
                 appenddata+='<div class="col-md-3"><SELECT class="form-control" name="Banktt_SRC_Uintsearch"  id="Banktt_SRC_Uintsearch" style="max-width: 120px"></SELECT></div>';
                 appenddata+='</div>';
@@ -115,11 +115,11 @@ require_once('application/libraries/EI_HDR.php');
             {
                 $('.preloader').show();
                 var appenddata='<h4 style="color:#498af3;">CUSTOMER NAME SEARCH</h4><br>';
-                appenddata+='<div class="row form-group" style="padding-left:20px;">';
+                appenddata+='<div class="row form-group">';
                 appenddata+='<div class="col-md-2"><label>UNIT NO<span class="labelrequired"><em>*</em></span></label></div>';
                 appenddata+='<div class="col-md-3"><SELECT class="form-control customer_btn_validation" name="Banktt_SRC_unit"  id="Banktt_SRC_unit" style="max-width: 120px"></SELECT></div>';
                 appenddata+='</div>';
-                appenddata+='<div class="row form-group" style="padding-left:20px;">';
+                appenddata+='<div class="row form-group">';
                 appenddata+='<div class="col-md-2"><label>CUSTOMER NAME<span class="labelrequired"><em>*</em></span></label></div>';
                 appenddata+='<div class="col-md-3"><SELECT class="form-control customer_btn_validation" name="Banktt_SRC_Customer"  id="Banktt_SRC_Customer" disabled><option>SELECT</option></SELECT></div>';
                 appenddata+='</div>';
@@ -140,14 +140,12 @@ require_once('application/libraries/EI_HDR.php');
             {
                 $('.preloader').show();
                 var appenddata='<h4 style="color:#498af3;">DATE RANGE SEARCH</h4><br>';
-                appenddata+='<div class="row form-group" style="padding-left:20px;">';
+                appenddata+='<div class="row form-group">';
                 appenddata+='<div class="col-md-2"><label>FROM DATE<span class="labelrequired"><em>*</em></span></label></div>';
-                appenddata+='<div class="col-md-3"><input class="form-control Date_btn_validation datemandtry" name="Banktt_SRC_fromdate"  id="Banktt_SRC_fromdate" style="max-width: 120px"></div>';
-                appenddata+='</div>';
-                appenddata+='<div class="row form-group" style="padding-left:20px;">';
+                appenddata+='<div class="col-md-9"><div class="col-sm-3" style="padding-left: 0px;"><div class="input-group addon"><input type="text" class="form-control Date_btn_validation datemandtry" name="Banktt_SRC_fromdate" id="Banktt_SRC_fromdate"  placeholder="From Date"><label  class="input-group-addon" for=Banktt_SRC_fromdate><span class="glyphicon glyphicon-calendar"></span></label></div></div></div></div>';
+                appenddata+='<div class="row form-group">';
                 appenddata+='<div class="col-md-2"><label>TO DATE<span class="labelrequired"><em>*</em></span></label></div>';
-                appenddata+='<div class="col-md-3"><input class="form-control Date_btn_validation datemandtry" name="Banktt_SRC_todate"  id="Banktt_SRC_todate" style="max-width: 120px"></div>';
-                appenddata+='</div>';
+                appenddata+='<div class="col-md-9"><div class="col-sm-3" style="padding-left: 0px;"><div class="input-group addon"><input type="text" class="form-control Date_btn_validation datemandtry" name="Banktt_SRC_todate" id="Banktt_SRC_todate"  placeholder="To Date"><label  class="input-group-addon" for=Banktt_SRC_todate><span class="glyphicon glyphicon-calendar"></span></label></div></div></div></div>';
                 appenddata+='<div class="row form-group">';
                 appenddata+='<div class="col-lg-offset-1 col-lg-2">';
                 appenddata+='<input type="button" id="Banktt_src_btn_search" class="btn" value="SEARCH" disabled></div></div>';
@@ -184,7 +182,7 @@ require_once('application/libraries/EI_HDR.php');
             {
                 $('.preloader').show();
                 var appenddata='<h4 style="color:#498af3;">MODEL NAME SEARCH</h4><br>';
-                appenddata+='<div class="row form-group" style="padding-left:20px;">';
+                appenddata+='<div class="row form-group">';
                 appenddata+='<div class="col-md-2"><label>MODEL NAME<span class="labelrequired"><em>*</em></span></label></div>';
                 appenddata+='<div class="col-md-3"><SELECT class="form-control" name="Banktt_SRC_Modelsearch"  id="Banktt_SRC_Modelsearch"></SELECT></div>';
                 appenddata+='</div>';
@@ -499,28 +497,28 @@ require_once('application/libraries/EI_HDR.php');
                         if(valuearray[i].BT_COMMENTS==null){var comments='';}else{comments=valuearray[i].BT_COMMENTS;}
                         if(valuearray[i].BANK_TRANSFER_CREATED_BY==null){var createdby='';}else{createdby=valuearray[i].BANK_TRANSFER_CREATED_BY;}
                         tabledata+='<tr id='+valuearray[i].BT_ID+'>' +
-                            "<td style='width:80px !important;'><div class='col-lg-2'><span style='display: block;color:green' title='Edit' class='glyphicon glyphicon-edit Banktt_editbutton' id="+edit+"></div></td>" +
-                            "<td style='width:130px !important;text-align: center' nowrap>"+valuearray[i].BANK_TRANSFER_TYPE+"</td>" +
-                            "<td style='width:100px !important;text-align: center'nowrap >"+valuearray[i].BT_DATE+"</td>" +
-                            "<td style='width:200px !important;' nowrap>"+accname+"</td>" +
-                            "<td style='width:150px !important;' nowrap>"+accno+"</td>" +
-                            "<td style='width:120px !important;text-align: center' nowrap>"+valuearray[i].BT_AMOUNT+"</td>" +
-                            "<td style='width:100px !important;text-align: center' nowrap>"+unit+"</td>" +
-                            "<td style='width:200px !important;text-align: center' nowrap>"+customer+"</td>" +
-                            "<td style='width:100px !important;text-align: center' nowrap>"+status+"</td>" +
-                            "<td style='width:150px !important;' nowrap>"+debitedon+"</td>" +
-                            "<td style='width:120px !important;' nowrap>"+bankcode+"</td>" +
-                            "<td style='width:120px !important;' nowrap>"+branchcode+"</td>" +
-                            "<td nowrap>"+bankaddress+"</td>" +
-                            "<td style='width:150px !important;' nowrap>"+swiftcode+"</td>" +
-                            "<td style='width:150px !important;' nowrap>"+chargesto+"</td>" +
-                            "<td style='width:200px !important;' nowrap>"+custoref+"</td>" +
-                            "<td nowrap>"+invdetails+"</td>" +
-                            "<td nowrap>"+comments+"</td>" +
-                            "<td style='width:150px !important;' nowrap>"+createdby+"</td>" +
-                            "<td style='width:150px !important;' nowrap>"+valuearray[i].ULD_LOGINID+"</td>" +
-                            "<td style='width:150px !important;' nowrap>"+valuearray[i].BT_TIME_STAMP+"</td>" +
-                            "</tr>";
+                        "<td style='width:80px !important;'><div class='col-lg-2'><span style='display: block;color:green' title='Edit' class='glyphicon glyphicon-edit Banktt_editbutton' id="+edit+"></div></td>" +
+                        "<td style='width:130px !important;text-align: center' nowrap>"+valuearray[i].BANK_TRANSFER_TYPE+"</td>" +
+                        "<td style='width:100px !important;text-align: center'nowrap >"+valuearray[i].BT_DATE+"</td>" +
+                        "<td style='width:200px !important;' nowrap>"+accname+"</td>" +
+                        "<td style='width:150px !important;' nowrap>"+accno+"</td>" +
+                        "<td style='width:120px !important;text-align: center' nowrap>"+valuearray[i].BT_AMOUNT+"</td>" +
+                        "<td style='width:100px !important;text-align: center' nowrap>"+unit+"</td>" +
+                        "<td style='width:200px !important;text-align: center' nowrap>"+customer+"</td>" +
+                        "<td style='width:100px !important;text-align: center' nowrap>"+status+"</td>" +
+                        "<td style='width:150px !important;' nowrap>"+debitedon+"</td>" +
+                        "<td style='width:120px !important;' nowrap>"+bankcode+"</td>" +
+                        "<td style='width:120px !important;' nowrap>"+branchcode+"</td>" +
+                        "<td nowrap>"+bankaddress+"</td>" +
+                        "<td style='width:150px !important;' nowrap>"+swiftcode+"</td>" +
+                        "<td style='width:150px !important;' nowrap>"+chargesto+"</td>" +
+                        "<td style='width:200px !important;' nowrap>"+custoref+"</td>" +
+                        "<td nowrap>"+invdetails+"</td>" +
+                        "<td nowrap>"+comments+"</td>" +
+                        "<td style='width:150px !important;' nowrap>"+createdby+"</td>" +
+                        "<td style='width:150px !important;' nowrap>"+valuearray[i].ULD_LOGINID+"</td>" +
+                        "<td style='width:150px !important;' nowrap>"+valuearray[i].BT_TIME_STAMP+"</td>" +
+                        "</tr>";
                     }
                     tabledata+="</body>";
                     $('#tableheader').text(header);
@@ -532,7 +530,7 @@ require_once('application/libraries/EI_HDR.php');
                         "pageLength": 10,
                         "sPaginationType":"full_numbers"
                     });
-                    },
+                },
                 error: function(data){
                     alert('error in getting'+JSON.stringify(data));
                     $('.preloader').hide();
@@ -540,14 +538,14 @@ require_once('application/libraries/EI_HDR.php');
             });
         });
         $(document).on('click','.Banktt_editbutton',function() {
-        var cid = $(this).attr('id');
-        var SplittedData=cid.split('_');
-        var Rowid=SplittedData[1];
-        $('#BankTT_Updation_Form').hide();
-        $("#Banktt_SRC_Updatebutton").attr("disabled", "disabled");
-        $('#BankTT_Updation_Form')[0].reset();
-        $('#Temp_Bt_id').val(Rowid);
-        var tds = $('#'+Rowid).children('td');
+            var cid = $(this).attr('id');
+            var SplittedData=cid.split('_');
+            var Rowid=SplittedData[1];
+            $('#BankTT_Updation_Form').hide();
+            $("#Banktt_SRC_Updatebutton").attr("disabled", "disabled");
+            $('#BankTT_Updation_Form')[0].reset();
+            $('#Temp_Bt_id').val(Rowid);
+            var tds = $('#'+Rowid).children('td');
             if($(tds[1]).html()=='TT')
             {
                 $('#ttgiropart1').show();
@@ -608,7 +606,7 @@ require_once('application/libraries/EI_HDR.php');
             $('#Banktt_SRC_Date').datepicker("option","minDate",new Date(BANKTT_db_chkindate1.getFullYear()-1,BANKTT_db_chkindate1.getMonth(),BANKTT_db_chkindate1.getDate()));
             if($(tds[9]).html()=='')
             {
-                 $('#debittedondiv').hide().val('');
+                $('#debittedondiv').hide().val('');
             }
             else
             {
@@ -771,197 +769,208 @@ require_once('application/libraries/EI_HDR.php');
         <div class="row title text-center"><h4><b>BANK TT SEARCH / UPDATE</b></h4></div>
         <div class ='row content'>
             <div class="panel-body">
-                    <div class="row form-group" style="padding-left:20px;">
+                <div class="row form-group" style="padding-left:20px;">
+                    <div class="col-md-2">
+                        <label>BANKTT SEARCH BY<span class="labelrequired"><em>*</em></span></label>
+                    </div>
+                    <div class="col-md-3">
+                        <SELECT class="form-control" name="Banktt_SRC_SearchOption"  id="Banktt_SRC_SearchOption">
+                            <OPTION>SELECT</OPTION>
+                        </SELECT>
+                    </div>
+                </div>
+                <div id="Banktt_SearchformDiv" style="padding-left:20px;">
+
+                </div>
+                <div id="Banktt_Search_DataTable" class="table-responsive" hidden>
+                    <h4 style="color:#498af3;" id="tableheader"></h4>
+                    <section>
+
+                    </section>
+                </div>
+                <form id="BankTT_Updation_Form" style="padding-left:20px;"><br>
+                    <h4 style="color:#498af3;">BANK TT UPDATION</h4><br>
+                    <div class="row form-group">
                         <div class="col-md-3">
-                            <label>BANKTT SEARCH BY<span class="labelrequired"><em>*</em></span></label>
+                            <label>TRANSACTION TYPE<span class="labelrequired"><em>*</em></span></label>
                         </div>
                         <div class="col-md-3">
-                            <SELECT class="form-control" name="Banktt_SRC_SearchOption"  id="Banktt_SRC_SearchOption">
-                                <OPTION>SELECT</OPTION>
-                            </SELECT>
+                            <input class="form-control" name="Banktt_SRC_TTtype" required id="Banktt_SRC_TTtype" readonly style="max-width:150px;"/><input type="hidden" class="form-control" id="Temp_Bt_id" name="Temp_Bt_id" hidden>
                         </div>
                     </div>
-                    <div id="Banktt_SearchformDiv" style="padding-left:20px;">
+                    <div id="modeldiv">
+                        <div class="row form-group">
+                            <div class="col-md-3">
+                                <label>MODEL NAME<span class="labelrequired"><em>*</em></span></label>
+                            </div>
+                            <div class="col-md-3">
+                                <SELECT class="form-control" name="Banktt_SRC_Modelnames"  required id="Banktt_SRC_Modelnames" ><OPTION>SELECT</OPTION></SELECT>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col-md-3">
+                            <label>DATE<span class="labelrequired"><em>*</em></span></label>
+                        </div>
+                        <div class="col-md-9">
+                            <div class="col-sm-3" style="padding-left: 0px;">
+                                <div class="input-group addon">
+                                    <input type="text" class="form-control datemandtry" name="Banktt_SRC_Date" id="Banktt_SRC_Date"  placeholder="Date"><label  class="input-group-addon" for=Banktt_SRC_Date><span class="glyphicon glyphicon-calendar"></span></label>
+                                </div>
+                            </div>
+                        </div>
 
                     </div>
-                    <div id="Banktt_Search_DataTable" class="table-responsive" hidden>
-                        <h4 style="color:#498af3;" id="tableheader"></h4>
-                        <section>
-
-                        </section>
+                    <div id="ttgiropart1">
+                        <div class="row form-group">
+                            <div class="col-md-3">
+                                <label>ACCOUNT NAME<span class="labelrequired"><em>*</em></span></label>
+                            </div>
+                            <div class="col-md-3">
+                                <input class="form-control autosize" name="Banktt_SRC_Accname" maxlength="40" required id="Banktt_SRC_Accname"/>
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-md-3">
+                                <label>ACCOUNT NO<span class="labelrequired"><em>*</em></span></label>
+                            </div>
+                            <div class="col-md-3">
+                                <input class="form-control" name="Banktt_SRC_Accno" maxlength="25" required id="Banktt_SRC_Accno"/>
+                            </div>
+                        </div>
                     </div>
-                    <form id="BankTT_Updation_Form" style="padding-left:20px;"><br>
-                        <h4 style="color:#498af3;">BANK TT UPDATION</h4><br>
+                    <div class="row form-group">
+                        <div class="col-md-3">
+                            <label>AMOUNT<span class="labelrequired"><em>*</em></span></label>
+                        </div>
+                        <div class="col-md-3">
+                            <input class="form-control amtonly" name="Banktt_SRC_Amount" maxlength="7" required id="Banktt_SRC_Amount" style="max-width:120px;"/>
+                        </div>
+                    </div>
+                    <div id="ttgiropart2">
                         <div class="row form-group">
                             <div class="col-md-3">
-                                <label>TRANSACTION TYPE<span class="labelrequired"><em>*</em></span></label>
+                                <label>UNIT<span class="labelrequired"><em>*</em></span></label>
                             </div>
                             <div class="col-md-3">
-                                <input class="form-control" name="Banktt_SRC_TTtype" required id="Banktt_SRC_TTtype" readonly style="max-width:150px;"/><input type="hidden" class="form-control" id="Temp_Bt_id" name="Temp_Bt_id" hidden>
-                            </div>
-                        </div>
-                        <div id="modeldiv">
-                            <div class="row form-group">
-                                <div class="col-md-3">
-                                    <label>MODEL NAME<span class="labelrequired"><em>*</em></span></label>
-                                </div>
-                                <div class="col-md-3">
-                                    <SELECT class="form-control" name="Banktt_SRC_Modelnames"  required id="Banktt_SRC_Modelnames" ><OPTION>SELECT</OPTION></SELECT>
-                                </div>
+                                <input class="form-control" name="Banktt_SRC_Unit"  required id="Banktt_SRC_Unit" style="max-width:120px;" readonly/>
                             </div>
                         </div>
                         <div class="row form-group">
                             <div class="col-md-3">
-                                <label>DATE<span class="labelrequired"><em>*</em></span></label>
+                                <label>CUSTOMER<span class="labelrequired"><em>*</em></span></label>
                             </div>
                             <div class="col-md-3">
-                                <input class="form-control datemandtry" name="Banktt_SRC_Date"  required id="Banktt_SRC_Date" style="max-width:120px;"/>
+                                <input class="form-control" name="Banktt_SRC_Customername"  required id="Banktt_SRC_Customername" readonly/>
                             </div>
                         </div>
-                        <div id="ttgiropart1">
-                            <div class="row form-group">
-                                <div class="col-md-3">
-                                    <label>ACCOUNT NAME<span class="labelrequired"><em>*</em></span></label>
-                                </div>
-                                <div class="col-md-3">
-                                    <input class="form-control autosize" name="Banktt_SRC_Accname" maxlength="40" required id="Banktt_SRC_Accname"/>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col-md-3">
+                            <label>STATUS<span class="labelrequired"><em>*</em></span></label>
+                        </div>
+                        <div class="col-md-3">
+                            <SELECT class="form-control" name="Banktt_SRC_Status"  required id="Banktt_SRC_Status" style="max-width:150px;"><OPTION>SELECT</OPTION></SELECT>
+                        </div>
+                    </div>
+                    <div id="debittedondiv">
+                        <div class="row form-group">
+
+                            <div class="col-md-3">
+                                <label>DEBITED/REJECTED DATE<span class="labelrequired"><em>*</em></span></label>
+                            </div>
+                            <div class="col-md-9">
+                                <div class="col-sm-3" style="padding-left: 0px;">
+                                    <div class="input-group addon">
+                                        <input type="text" class="form-control" name="Banktt_SRC_Debitedon" id="Banktt_SRC_Debitedon"  placeholder="Date"><label  class="input-group-addon" for=Banktt_SRC_Debitedon><span class="glyphicon glyphicon-calendar"></span></label>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="row form-group">
-                                <div class="col-md-3">
-                                    <label>ACCOUNT NO<span class="labelrequired"><em>*</em></span></label>
-                                </div>
-                                <div class="col-md-3">
-                                    <input class="form-control" name="Banktt_SRC_Accno" maxlength="25" required id="Banktt_SRC_Accno"/>
-                                </div>
+
+                        </div>
+                    </div>
+                    <div id="giropart">
+                        <div class="row form-group">
+                            <div class="col-md-3">
+                                <label>BANK CODE</label>
+                            </div>
+                            <div class="col-md-3">
+                                <input class="form-control alphanumeric" name="Banktt_SRC_Bankcode" maxlength="4" required id="Banktt_SRC_Bankcode" style="max-width:80px;"/>
                             </div>
                         </div>
                         <div class="row form-group">
                             <div class="col-md-3">
-                                <label>AMOUNT<span class="labelrequired"><em>*</em></span></label>
+                                <label>BRANCH CODE</label>
                             </div>
                             <div class="col-md-3">
-                                <input class="form-control amtonly" name="Banktt_SRC_Amount" maxlength="7" required id="Banktt_SRC_Amount" style="max-width:120px;"/>
+                                <input class="form-control alphanumeric" name="Banktt_SRC_Branchcode" maxlength="3" required id="Banktt_SRC_Branchcode" style="max-width:80px;"/>
                             </div>
                         </div>
-                        <div id="ttgiropart2">
-                            <div class="row form-group">
-                                <div class="col-md-3">
-                                    <label>UNIT<span class="labelrequired"><em>*</em></span></label>
-                                </div>
-                                <div class="col-md-3">
-                                    <input class="form-control" name="Banktt_SRC_Unit"  required id="Banktt_SRC_Unit" style="max-width:120px;" readonly/>
-                                </div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col-md-3">
+                            <label>BANK ADDRESS</label>
+                        </div>
+                        <div class="col-md-3">
+                            <textarea class="form-control autogrowcomments" name="Banktt_SRC_BankAddress"  required id="Banktt_SRC_BankAddress"></textarea>
+                        </div>
+                    </div>
+                    <div id="ttpart">
+                        <div class="row form-group">
+                            <div class="col-md-3">
+                                <label>SWIFT CODE<span class="labelrequired"><em>*</em></span></label>
                             </div>
-                            <div class="row form-group">
-                                <div class="col-md-3">
-                                    <label>CUSTOMER<span class="labelrequired"><em>*</em></span></label>
-                                </div>
-                                <div class="col-md-3">
-                                    <input class="form-control" name="Banktt_SRC_Customername"  required id="Banktt_SRC_Customername" readonly/>
-                                </div>
+                            <div class="col-md-3">
+                                <input class="form-control alphanumeric" name="Banktt_SRC_Swiftcode" maxlength="12" required id="Banktt_SRC_Swiftcode"/>
                             </div>
                         </div>
                         <div class="row form-group">
                             <div class="col-md-3">
-                                <label>STATUS<span class="labelrequired"><em>*</em></span></label>
+                                <label>CHARGES TO<span class="labelrequired"><em>*</em></span></label>
                             </div>
                             <div class="col-md-3">
-                                <SELECT class="form-control" name="Banktt_SRC_Status"  required id="Banktt_SRC_Status" style="max-width:150px;"><OPTION>SELECT</OPTION></SELECT>
+                                <SELECT class="form-control" name="Banktt_SRC_Chargesto"  required id="Banktt_SRC_Chargesto"><OPTION>SELECT</OPTION></SELECT>
                             </div>
                         </div>
-                        <div id="debittedondiv">
-                            <div class="row form-group">
-                                <div class="col-md-3">
-                                    <label>DEBITED/REJECTED DATE<span class="labelrequired"><em>*</em></span></label>
-                                </div>
-                                <div class="col-md-3">
-                                    <input class="form-control" name="Banktt_SRC_Debitedon"  required id="Banktt_SRC_Debitedon" style="max-width:120px;"/>
-                                </div>
-                            </div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col-md-3">
+                            <label>CUSTOMER REF</label>
                         </div>
-                        <div id="giropart">
-                            <div class="row form-group">
-                                <div class="col-md-3">
-                                    <label>BANK CODE</label>
-                                </div>
-                                <div class="col-md-3">
-                                    <input class="form-control alphanumeric" name="Banktt_SRC_Bankcode" maxlength="4" required id="Banktt_SRC_Bankcode" style="max-width:80px;"/>
-                                </div>
-                            </div>
-                            <div class="row form-group">
-                                <div class="col-md-3">
-                                    <label>BRANCH CODE</label>
-                                </div>
-                                <div class="col-md-3">
-                                    <input class="form-control alphanumeric" name="Banktt_SRC_Branchcode" maxlength="3" required id="Banktt_SRC_Branchcode" style="max-width:80px;"/>
-                                </div>
-                            </div>
+                        <div class="col-md-3">
+                            <input class="form-control autosize" name="Banktt_SRC_Customerref" maxlength="200" required id="Banktt_SRC_Customerref"/>
                         </div>
-                        <div class="row form-group">
-                            <div class="col-md-3">
-                                <label>BANK ADDRESS</label>
-                            </div>
-                            <div class="col-md-3">
-                                <textarea class="form-control autogrowcomments" name="Banktt_SRC_BankAddress"  required id="Banktt_SRC_BankAddress"></textarea>
-                            </div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col-md-3">
+                            <label>INV DETAILS</label>
                         </div>
-                        <div id="ttpart">
-                            <div class="row form-group">
-                                <div class="col-md-3">
-                                    <label>SWIFT CODE<span class="labelrequired"><em>*</em></span></label>
-                                </div>
-                                <div class="col-md-3">
-                                    <input class="form-control alphanumeric" name="Banktt_SRC_Swiftcode" maxlength="12" required id="Banktt_SRC_Swiftcode"/>
-                                </div>
-                            </div>
-                            <div class="row form-group">
-                                <div class="col-md-3">
-                                    <label>CHARGES TO<span class="labelrequired"><em>*</em></span></label>
-                                </div>
-                                <div class="col-md-3">
-                                    <SELECT class="form-control" name="Banktt_SRC_Chargesto"  required id="Banktt_SRC_Chargesto"><OPTION>SELECT</OPTION></SELECT>
-                                </div>
-                            </div>
+                        <div class="col-md-3">
+                            <textarea class="form-control autogrowcomments" name="Banktt_SRC_Invdetails" maxlength="300" required id="Banktt_SRC_Invdetails"></textarea>
                         </div>
-                        <div class="row form-group">
-                            <div class="col-md-3">
-                                <label>CUSTOMER REF</label>
-                            </div>
-                            <div class="col-md-3">
-                                <input class="form-control autosize" name="Banktt_SRC_Customerref" maxlength="200" required id="Banktt_SRC_Customerref"/>
-                            </div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col-md-3">
+                            <label>CREATED BY</label>
                         </div>
-                        <div class="row form-group">
-                            <div class="col-md-3">
-                                <label>INV DETAILS</label>
-                            </div>
-                            <div class="col-md-3">
-                                <textarea class="form-control autogrowcomments" name="Banktt_SRC_Invdetails" maxlength="300" required id="Banktt_SRC_Invdetails"></textarea>
-                            </div>
+                        <div class="col-md-3">
+                            <SELECT class="form-control" name="Banktt_SRC_Createdby"  required id="Banktt_SRC_Createdby" style="max-width:200px;"><OPTION>SELECT</OPTION></SELECT>
                         </div>
-                        <div class="row form-group">
-                            <div class="col-md-3">
-                                <label>CREATED BY</label>
-                            </div>
-                            <div class="col-md-3">
-                                <SELECT class="form-control" name="Banktt_SRC_Createdby"  required id="Banktt_SRC_Createdby" style="max-width:200px;"><OPTION>SELECT</OPTION></SELECT>
-                            </div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col-md-3">
+                            <label>COMMENTS</label>
                         </div>
-                        <div class="row form-group">
-                            <div class="col-md-3">
-                                <label>COMMENTS</label>
-                            </div>
-                            <div class="col-md-3">
-                                <textarea class="form-control autogrowcomments" name="Banktt_SRC_Comments" maxlength="300" required id="Banktt_SRC_Comments"/></textarea>
-                            </div>
+                        <div class="col-md-3">
+                            <textarea class="form-control autogrowcomments" name="Banktt_SRC_Comments" maxlength="300" required id="Banktt_SRC_Comments"/></textarea>
                         </div>
-                        <div class="row form-group">
-                            <div class="col-lg-offset-2 col-lg-3">
-                                <input type="button" id="Banktt_SRC_Updatebutton" class="btn" value="UPDATE" disabled>
-                            </div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col-lg-offset-2 col-lg-3">
+                            <input type="button" id="Banktt_SRC_Updatebutton" class="btn" value="UPDATE" disabled>
                         </div>
-                    </form>
+                    </div>
+                </form>
             </div>
         </div>
     </div>

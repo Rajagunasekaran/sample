@@ -74,8 +74,8 @@
             });
         $('#FIN_OPL_db_period').datepicker("option","maxDate",new Date());
         $('#FIN_OPL_db_period').datepicker("option","minDate",new Date(2010,00));
- //************************FOR PERIOD DATE PICKER FUNCTION START******************************//
- //************************FORM RESET FUNCTION START******************************//
+        //************************FOR PERIOD DATE PICKER FUNCTION START******************************//
+        //************************FORM RESET FUNCTION START******************************//
         $('#FIN_OPL_btn_reset').click(function(){
             oplreset();
         });
@@ -111,7 +111,7 @@
                     }
                     else
                     {
-                        show_msgbox("OUTSTANDING PAYEES LIST",returnvalue,"success",false);
+                        show_msgbox("OUTSTANDING PAYEES LIST",data,"success",false);
                     }
                     oplreset();
                 },
@@ -133,9 +133,9 @@
         <div class="preloader" hidden><span class="Centerer"></span><img class="preloaderimg"/> </div>
         <div class="row title text-center"><h4><b>OUTSTANDING PAYEES LIST</b></h4></div>
         <div class ='row content'>
-                <div id="Form_ErrorMessage">
+            <div id="Form_ErrorMessage">
 
-                </div>
+            </div>
             <form id="FIN_OPL_outstanding_form" class="form-horizontal" role="form">
                 <div class="panel-body">
                     <div class="row form-group">
@@ -159,8 +159,12 @@
                         <div class="col-md-2">
                             <label>FOR PERIOD </label>
                         </div>
-                        <div class="col-md-3">
-                            <input type="text" class="datemandtry form-control" id="FIN_OPL_db_period" name="FIN_OPL_db_period" style="width:125px" placeholder="For Period">
+                        <div class="col-md-9">
+                            <div class="col-sm-3" style="padding-left: 0px;">
+                                <div class="input-group addon">
+                                    <input type="text" class="datemandtry form-control" name="FIN_OPL_db_period" id="FIN_OPL_db_period"  placeholder="For Period"><label  class="input-group-addon" for=FIN_OPL_db_period><span class="glyphicon glyphicon-calendar"></span></label>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="row form-group">

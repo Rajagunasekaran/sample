@@ -4,7 +4,7 @@ Class Ctrl_Customer_Creation extends CI_Controller
 {
     function __construct() {
         parent::__construct();
-        $this->load->model('CUSTOMER/CUSTOMER/Mdl_customer_creation');
+        $this->load->model('CUSTOMER/CUSTOMER/Mdl_customer_creation_uat');
         $this->load->model('EILIB/Mdl_eilib_common_function');
         $this->load->model('EILIB/Mdl_eilib_quarter_calc');
     }
@@ -53,7 +53,7 @@ Class Ctrl_Customer_Creation extends CI_Controller
         $Q_Startdate=date('Y-m-d',strtotime($Startdate));
         $Q_Enddate=date('Y-m-d',strtotime($Enddate));
         $Quoters=$this->Mdl_eilib_quarter_calc->quarterCalc(new DateTime($Q_Startdate),new DateTime($Q_Enddate));
-        $Create_confirm=$this->Mdl_customer_creation->Customer_Creation_Save($UserStamp,$Leaseperiod,$Quoters);
+        $Create_confirm=$this->Mdl_customer_creation_uat->Customer_Creation_Save($UserStamp,$Leaseperiod,$Quoters);
         echo $Create_confirm;
     }
 

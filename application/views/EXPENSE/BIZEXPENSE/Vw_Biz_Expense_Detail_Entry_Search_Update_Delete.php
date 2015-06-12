@@ -119,7 +119,7 @@ require_once('application/libraries/EI_HDR.php');
             else if(bizdetailradiooption=='bizdetailsearchform')
             {
                $('.preloader').show();
-                $.ajax({
+                $.ajGx({
                     type: "POST",
                     url: controller_url+"BTDTL_SEARCH_expensetypes",
                     success: function(res) {

@@ -8,6 +8,7 @@ class Ctrl_Customer_Extension extends CI_Controller{
         $this->load->model('EILIB/Mdl_eilib_common_function');
     }
     public function index(){
+
         $this->load->view('CUSTOMER/CUSTOMER/Vw_Customer_Extension');
     }
     public function CEXTN_getCommonvalues(){
@@ -15,7 +16,7 @@ class Ctrl_Customer_Extension extends CI_Controller{
         $errorlist=$_POST['ErrorList'];
         $unit = $this->Mdl_customer_extension->CEXTN_getExtnUnitNo();
         $nationality = $this->Mdl_eilib_common_function->getNationality();
-        $EmailList= $this->Mdl_eilib_common_function->getEmailId($formname);
+        $EmailList= $this->Mdl_eilib_common_function->getProfileEmailId($formname);
         $Option= $this->Mdl_eilib_common_function->getOption();
         $ErrorMessage= $this->Mdl_eilib_common_function->getErrorMessageList($errorlist);
         $Timelist=$this->Mdl_eilib_common_function->getTimeList();

@@ -110,31 +110,40 @@ class Mdl_eilib_calender  extends CI_Model {
 //FUNCTION TO DELETE CALENDER EVENTS FOR STAR HUB
     public function StarHubUnit_DeleteCalEvent($cal,$unitno,$startdate,$start_time_in,$start_time_out,$enddate,$end_time_in,$end_time_out,$formname)
     {
-        $calId=$this->GetEICalendarId();
-        $startevents= $this->CalenderTime_Convertion($startdate,$start_time_in,$start_time_out);
-        $optDate= array('timeMax' => $startdate.'T'.$start_time_out.'+08:00','timeMin' => $startdate.'T'.$start_time_in.'+08:00');
-        $events = $cal->events->listEvents($calId,$optDate);
-        foreach ($events->getItems() as $event) {
-            $summaryStarUnit=$event->getDescription();
-            if(preg_match("/-/",(String)$summaryStarUnit)==1){
-                $start_desc=explode(' - ',$event->getDescription());
-                if(($start_desc[1]!='undefined' && (preg_match("/EI/",(String)$start_desc[1])==1)&&$formname=="UNIT")||($formname=="INTERNET")||($formname=="CABLE"))
-                {
-                    if(($start_desc[0]==$unitno && $formname=="UNIT")||($start_desc[0]==$unitno && preg_match("/$formname/",(String)$start_desc[2])== 1 ))
-                    {
-                        $cal->events->delete($calId, $event->getId());}}}}
-        $optDate= array('timeMax' => $enddate.'T'.$end_time_out.'+08:00','timeMin' => $enddate.'T'.$end_time_in.'+08:00');
-        $events = $cal->events->listEvents($calId,$optDate);
-        foreach ($events->getItems() as $event) {
-            $summaryStarUnit=$event->getDescription();
-            if(preg_match("/-/",(String)$summaryStarUnit)==1){
+        try {
+            $calId = $this->GetEICalendarId();
+            $startevents = $this->CalenderTime_Convertion($startdate, $start_time_in, $start_time_out);
+            $optDate = array('timeMax' => $startdate . 'T' . $start_time_out . '+08:00', 'timeMin' => $startdate . 'T' . $start_time_in . '+08:00');
+            $events = $cal->events->listEvents($calId, $optDate);
+            foreach ($events->getItems() as $event) {
+                $summaryStarUnit = $event->getDescription();
+                if (preg_match("/-/", (String)$summaryStarUnit) == 1) {
+                    $start_desc = explode(' - ', $event->getDescription());
+                    if (($start_desc[1] != 'undefined' && (preg_match("/EI/", (String)$start_desc[1]) == 1) && $formname == "UNIT") || ($formname == "INTERNET") || ($formname == "CABLE")) {
+                        if (($start_desc[0] == $unitno && $formname == "UNIT") || ($start_desc[0] == $unitno && preg_match("/$formname/", (String)$start_desc[2]) == 1)) {
+                            $cal->events->delete($calId, $event->getId());
+                        }
+                    }
+                }
+            }
+            $optDate = array('timeMax' => $enddate . 'T' . $end_time_out . '+08:00', 'timeMin' => $enddate . 'T' . $end_time_in . '+08:00');
+            $events = $cal->events->listEvents($calId, $optDate);
+            foreach ($events->getItems() as $event) {
+                $summaryStarUnit = $event->getDescription();
+                if (preg_match("/-/", (String)$summaryStarUnit) == 1) {
 
-                $start_desc=explode(' - ',$event->getDescription());
-                if(($start_desc[1]!='undefined' && (preg_match("/EI/",(String)$start_desc[1])==1) && $formname=="UNIT")||($formname=="INTERNET")||($formname=="CABLE"))
-                {
-                    if(($start_desc[0]==$unitno && $formname=="UNIT")||($start_desc[0]==$unitno && preg_match("/$formname/",(String)$start_desc[2])== 1 ))
-                    {
-                        $cal->events->delete($calId, $event->getId());}}}}
+                    $start_desc = explode(' - ', $event->getDescription());
+                    if (($start_desc[1] != 'undefined' && (preg_match("/EI/", (String)$start_desc[1]) == 1) && $formname == "UNIT") || ($formname == "INTERNET") || ($formname == "CABLE")) {
+                        if (($start_desc[0] == $unitno && $formname == "UNIT") || ($start_desc[0] == $unitno && preg_match("/$formname/", (String)$start_desc[2]) == 1)) {
+                            $cal->events->delete($calId, $event->getId());
+                        }
+                    }
+                }
+            }
+        }
+        catch(Exception $ex){
+            return $ex->getMessage();
+        }
     }
 //COMMON FUNCTION FOR CONCATING THE STARHUB AND UNIT
     function getConcateOfDescLoc($TypeOfExp,$unitno,$endeventtype,$accountno,$eiornonei,$rent){

@@ -966,7 +966,7 @@ require_once('application/libraries/EI_HDR.php');
                         <div id="EU_div_acctdetails">
                             <div class="form-group" id="EU_accntnumber">
                                 <label class="col-sm-2">ACCOUNT NUMBER </label>
-                                <div class="col-sm-3"><input type="text" name="EU_tb_accntnumber" id="EU_tb_accntnumber" class="EU_class_validupdate numonly EU_class_numsonly form-control" placeholder="Account Number" maxlength="15"/></div>
+                                <div class="col-sm-2"><input type="text" name="EU_tb_accntnumber" id="EU_tb_accntnumber" class="EU_class_validupdate numonly EU_class_numsonly form-control" placeholder="Account Number" maxlength="15"/></div>
                             </div>
                             <div class="form-group" id="EU_accntname">
                                 <label class="col-sm-2">ACCOUNT NAME </label>

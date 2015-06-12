@@ -631,7 +631,7 @@ require_once('application/libraries/EI_HDR.php');
                 $('#USU_carddiv,#USU_roomdiv').find('select').val('SELECT');
                 $('#USU_headermsg,#USU_errmsg_roominventory').text('');
                 $('#USU_section1,#USU_section2').empty();
-                $('#pdf_btn').hide();
+                $('#USU_pdf_btn').hide();
                 if(USU_unitoption_arr.length==0)
                     $('#USU_form_unitupdate').replaceWith('<div class="form-group"><label class="errormsg"> '+USU_errormsg_arr[35].EMC_DATA+'</label></div>');
                 else{
@@ -658,7 +658,7 @@ require_once('application/libraries/EI_HDR.php');
                 $('#USU_carddiv,#USU_roomdiv').find('select').val('SELECT');
                 $('#USU_headermsg,#USU_errmsg_roominventory').text('');
                 $('#USU_section1,#USU_section2').empty();
-                $('#pdf_btn').hide();
+                $('#USU_pdf_btn').hide();
                 if(USU_unit_optionfetch!='SELECT')
                 {
                     $(".preloader").show();
@@ -717,7 +717,7 @@ require_once('application/libraries/EI_HDR.php');
                         $('#USU_form_unitupdate').find('input:text').val('');
                         $('#USU_carddiv,#USU_roomdiv').find('select').val('SELECT');
                         $('#USU_headermsg,#USU_errmsg_roominventory').text('');
-                        $('#pdf_btn').hide();
+                        $('#USU_pdf_btn').hide();
                     }
                     else if(USU_unit_optionfetch==4)//PAYMENT
                     {
@@ -726,7 +726,7 @@ require_once('application/libraries/EI_HDR.php');
                         $('#USU_form_unitupdate').find('input:text').val('');
                         $('#USU_carddiv,#USU_roomdiv').find('select').val('SELECT');
                         $('#USU_headermsg,#USU_errmsg_roominventory').text('');
-                        $('#pdf_btn').hide();
+                        $('#USU_pdf_btn').hide();
                     }
                     else if((USU_unit_optionfetch==3)||(USU_unit_optionfetch==6))//END DATE,START DATE
                     {
@@ -735,7 +735,7 @@ require_once('application/libraries/EI_HDR.php');
                         $('#USU_form_unitupdate').find('input:text').val('');
                         $('#USU_carddiv,#USU_roomdiv').find('select').val('SELECT');
                         $('#USU_headermsg,#USU_errmsg_roominventory').text('');
-                        $('#pdf_btn').hide();
+                        $('#USU_pdf_btn').hide();
                     }
                 }
                 else if((USU_unit_optionfetch==1)||(USU_unit_optionfetch==5)||(USU_unit_optionfetch==9)||(USU_unit_optionfetch==8)||(USU_unit_optionfetch==7))
@@ -749,7 +749,7 @@ require_once('application/libraries/EI_HDR.php');
                             var USU_errmsg_roominventory=USU_errormsg_arr[46].EMC_DATA;
                         }
                         $('#USU_errmsg_roominventory').show();
-                        $('#USU_subheadermsg').text(USU_errmsg_roominventory);
+                        $('#USU_lbl_errmsg_roominventory').text(USU_errmsg_roominventory);
                     }
                     else
                     {
@@ -769,22 +769,22 @@ require_once('application/libraries/EI_HDR.php');
                         if((USU_unit_optionfetch==1)||(USU_unit_optionfetch==7))//INVENTORY CARD, UNIT
                         {
                             $('#USU_lb_unitno').html(USU_unit_options);
-                            $('#USU_carddiv,#USU_unitno').show();
+                            $('#USU_carddiv,#USU_unitno,#USU_subheaderdiv').show();
                             $('#USU_roomdiv,#USU_cardtype,#USU_cardno,#USU_paymentamtdiv,#USU_stampamtdiv,#USU_div_flex,#USU_headermsg,#USU_errmsg_roominventory').hide();
                             $('#USU_form_unitupdate').find('input:text').val('');
                             $('#USU_carddiv,#USU_roomdiv').find('select').val('SELECT');
                             $('#USU_headermsg,#USU_errmsg_roominventory').text('');
-                            $('#pdf_btn').hide();
+                            $('#USU_pdf_btn').hide();
                         }
                         else if(USU_unit_optionfetch==9)//ROOM TYPE WITH UNIT
                         {
                             $('#USU_lb_roomtyps').html(USU_unit_options);
-                            $('#USU_roomdiv').show();
+                            $('#USU_roomdiv,#USU_subheaderdiv').show();
                             $('#USU_carddiv,#USU_paymentamtdiv,#USU_stampamtdiv,#USU_div_flex,#USU_headermsg,#USU_errmsg_roominventory').hide();
                             $('#USU_form_unitupdate').find('input:text').val('');
                             $('#USU_carddiv,#USU_roomdiv').find('select').val('SELECT');
                             $('#USU_headermsg,#USU_errmsg_roominventory').text('');
-                            $('#pdf_btn').hide();
+                            $('#USU_pdf_btn').hide();
                         }
                     }
                 }
@@ -838,7 +838,7 @@ require_once('application/libraries/EI_HDR.php');
                 $('#USU_headermsg,#USU_errmsg_roominventory').text('');
                 $('#USU_section1,#USU_section2').empty();
                 $('#USU_lb_typeofcard').html('');
-                $('#pdf_btn').hide();
+                $('#USU_pdf_btn').hide();
                 var USU_unit_optionfetch =$('#USU_lb_searchby').val();
                 var formelement=$('#unit_createupdate_form').serialize();
                 if($('#USU_lb_unitno').val()!='SELECT'){
@@ -875,7 +875,7 @@ require_once('application/libraries/EI_HDR.php');
             $('#USU_headermsg,#USU_errmsg_roominventory').text('');
             $('#USU_section1,#USU_section2').empty();
             $('#USU_lb_typeofcard').html('');
-            $('#pdf_btn').hide();
+            $('#USU_pdf_btn').hide();
             var USU_unit_optionfetch =$('#USU_lb_searchby').val();
             var formelement=$('#unit_createupdate_form').serialize();
             if($('#USU_lb_roomtyps').val()!='SELECT'){
@@ -909,7 +909,7 @@ require_once('application/libraries/EI_HDR.php');
                 $('#USU_cardno,#USU_paymentamtdiv,#USU_stampamtdiv,#USU_div_flex,#USU_headermsg,#USU_errmsg_roominventory,#USU_div_updateform').hide();
                 $('#USU_form_unitupdate').find('input:text').val('');
                 $('#USU_cardno').find('select').val('SELECT');
-                $('#pdf_btn').hide();
+                $('#USU_pdf_btn').hide();
                 $('#USU_headermsg,#USU_errmsg_roominventory,#USU_lbl_errmsg_cardno').text('');
                 if($('#USU_lb_typeofcard').val()!='SELECT'){
                     $(".preloader").show();
@@ -935,7 +935,7 @@ require_once('application/libraries/EI_HDR.php');
                 $('#USU_form_unitupdate').find('input:text').val('');
                 $('#USU_headermsg,#USU_errmsg_roominventory').text('');
                 $('#USU_section1,#USU_section2').empty();
-                $('#pdf_btn').hide();
+                $('#USU_pdf_btn').hide();
                 if($('#USU_lb_cardno').val()!='SELECT'){
                     $(".preloader").show();
                     var formelement=$('#unit_createupdate_form').serialize();
@@ -960,7 +960,7 @@ require_once('application/libraries/EI_HDR.php');
                 $('#USU_paymentamtdiv,#USU_stampamtdiv,#USU_div_flex,#USU_headermsg,#USU_errmsg_roominventory,#USU_div_updateform').hide();
                 $('#USU_headermsg,#USU_errmsg_roominventory').text('');
                 $('#USU_section1,#USU_section2').empty();
-                $('#pdf_btn').hide();
+                $('#USU_pdf_btn').hide();
                 if(($('#USU_db_fromdate').val()=='')||($('#USU_db_todate').val()==''))
                 {
                     $('#USU_btn_search').attr("disabled", "disabled")
@@ -1056,7 +1056,7 @@ require_once('application/libraries/EI_HDR.php');
                                 $('#USU_headermsg').addClass('srctitle');
                                 $('#USU_headermsg').removeClass('errormsg');
                                 $('#USU_headermsg').text(USU_sd_msg).show();
-                                $('#pdf_btn').show();
+                                $('#USU_pdf_btn').show();
                                 var USU_tr ='';
                                 var USU_tr_common_stamp ='<th style="width:50px">ACCESS CARD</th><th style="width:50px">ACCESS ACTIVE</th><th style="width:50px">ACCESS INVENTORY</th><th style="width:50px">ACCESS LOST</th><th style="width:160px">ROOM TYPE</th><th style="width:75px">STAMP DUTY DATE</th><th style="width:140px">STAMP DUTY TYPE</th><th style="width:50px">STAMP DUTY AMOUNT</th><th style="width:500px">COMMENTS</th><th style="width:170px">USERSTAMP</th><th style="width:140px">TIMESTAMP</th></tr></thead><tbody>' ;
                                 if(USU_flex_flag==8)//STAMP TYPE
@@ -1203,12 +1203,12 @@ require_once('application/libraries/EI_HDR.php');
                                 $('#USU_headermsg').removeClass('srctitle');
                                 $('#USU_headermsg').addClass('errormsg');
                                 $('#USU_headermsg').text(USU_sd_errmsg).show();
-                                $('#pdf_btn').hide();
+                                $('#USU_pdf_btn').hide();
                             }
                         }
                         else{
                             $('#USU_div_flex').hide();
-                            $('#pdf_btn').hide();
+                            $('#USU_pdf_btn').hide();
                             var USU_unit_optionvalues=[];
                             USU_unit_optionvalues=USU_response_flex.USU_loaddata_searchby;
                             if($('#USU_lb_searchby').val()==7)
@@ -1371,7 +1371,7 @@ require_once('application/libraries/EI_HDR.php');
                         $(USU_upd_tr).appendTo($("#USU_tble_update"));
                     }
                     else if((USU_lb_selectoption_unit==2)||(USU_lb_selectoption_unit==1)||(USU_lb_selectoption_unit==9)||(USU_lb_selectoption_unit==7)){
-                        USU_upd_tr +='<div id="USU_updateform" style="padding-top: 20px"> <div class="form-group" id="USU_unitno"> <label class="col-sm-2">UNIT NUMBER <em>*</em></label> <div class="col-sm-2"><input value="'+$tds.eq(1).text()+'" type="text" id="USU_tb_accunitno" name="USU_tb_accunitno" class="rdonly USU_class_updvalidation form-control" readonly placeholder="Unit Number"></div> </div> <div class="form-group" id="USU_accesscard"> <label class="col-sm-2">ACCESS CARD </label> <div class="col-sm-2"><input value="'+$tds.eq(2).text()+'" id ="USU_tb_access" type="text" name="USU_tb_access" maxlength=7 class="numonly USU_class_title_nums USU_class_updvalidation form-control" placeholder="Access Card"></div> <div class="col-sm-1"> <div class="checkbox"> <label id="USU_lbl_lost" hidden><input type="checkbox" id="USU_cb_lost" name="USU_cb_lost" class="USU_class_updvalidation" hidden>LOST</label> </div> </div> <div class="col-sm-2"> <div class="checkbox"> <label id="USU_lbl_inventory" hidden><input type="checkbox" id="USU_cb_inventory" name="USU_cb_inventory" class="USU_class_updvalidation" hidden>INVENTORY</label> </div> </div> <div class="col-sm-3 errpadding errormsg" id="USU_lbl_alreadyexists" class="errormsg"> </div> </div> <div class="form-group" id="USU_roomtype"> <label class="col-sm-2">ROOM TYPE </label> <div class="col-sm-3"><select id="USU_lb_roomtype" name="USU_lb_roomtype" value="'+$tds.eq(6).text()+'" class="USU_class_updvalidation form-control"><option>SELECT</option></select> <div class="col-sm-4 errpadding errormsg" id="USU_lbl_alreadyexists_roomtype" class="errormsg"> </div> </div> </div> <div class="form-group" id="USU_stampdutydate"> <label class="col-sm-2">STAMP DUTY DATE </label> <div class="col-sm-2"> <div class="input-group addon"> <input id = "USU_db_stampdate" type="text" name="USU_db_stampdate" value="'+$tds.eq(7).text()+'" class="USU_class_updvalidation datenonmandtry form-control" placeholder="Stamp Duty Date"/> <label for="USU_db_stampdate" class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></label> </div> </div> </div> <div class="form-group" id="USU_stamptype"> <label class="col-sm-2">STAMP DUTY TYPE </label> <div class="col-sm-3"><select id="USU_lb_stamptype" name="USU_lb_stamptype" value="'+$tds.eq(8).text()+'" class="USU_class_updvalidation datenonmandtry form-control"><option>SELECT</option></select> </div> </div> <div class="form-group" id="USU_stampamount"> <label class="col-sm-2">STAMP DUTY AMOUNT </label> <div class="col-sm-2"><input type="text" name="USU_tb_stampamt" value="'+$tds.eq(9).text()+'" id="USU_tb_stampamt" maxlength=4 class ="amtonly USU_class_title_nums USU_class_updvalidation form-control" placeholder="Stamp Duty Amount"></div> </div> <div class="form-group" id="USU_comments"> <label class="col-sm-2">COMMENTS</label> <div class="col-sm-4"><textarea placeholder="Comments" id="USU_ta_accesscomment" name="USU_ta_accesscomment" class="USU_class_updvalidation USU_class_ta_cmts form-control" rows="5">'+$tds.eq(10).text()+'</textarea></div> </div>';
+                        USU_upd_tr +='<div id="USU_updateform" style="padding-top: 20px"> <div class="form-group" id="USU_unitno"> <label class="col-sm-2">UNIT NUMBER <em>*</em></label> <div class="col-sm-2"><input value="'+$tds.eq(1).text()+'" type="text" id="USU_tb_accunitno" name="USU_tb_accunitno" class="rdonly USU_class_updvalidation form-control" readonly placeholder="Unit Number"></div> </div> <div class="form-group" id="USU_accesscard"> <label class="col-sm-2">ACCESS CARD </label> <div class="col-sm-2"><input value="'+$tds.eq(2).text()+'" id ="USU_tb_access" type="text" name="USU_tb_access" maxlength=7 class="numonly USU_class_title_nums USU_class_updvalidation form-control" placeholder="Access Card"></div> <div class="col-sm-1"> <div class="checkbox"> <label id="USU_lbl_lost" hidden><input type="checkbox" id="USU_cb_lost" name="USU_cb_lost" class="USU_class_updvalidation" hidden>LOST</label> </div> </div> <div class="col-sm-2"> <div class="checkbox"> <label id="USU_lbl_inventory" hidden><input type="checkbox" id="USU_cb_inventory" name="USU_cb_inventory" class="USU_class_updvalidation" hidden>INVENTORY</label> </div> </div> <div class="col-sm-3 errpadding errormsg" id="USU_lbl_alreadyexists" class="errormsg"> </div> </div> <div class="form-group" id="USU_roomtype"> <label class="col-sm-2">ROOM TYPE </label> <div class="col-sm-3"><select id="USU_lb_roomtype" name="USU_lb_roomtype" value="'+$tds.eq(6).text()+'" class="USU_class_updvalidation form-control"><option>SELECT</option></select> </div> <div class="col-sm-4 errpadding errormsg" id="USU_lbl_alreadyexists_roomtype" class="errormsg"> </div> </div> <div class="form-group" id="USU_stampdutydate"> <label class="col-sm-2">STAMP DUTY DATE </label> <div class="col-sm-2"> <div class="input-group addon"> <input id = "USU_db_stampdate" type="text" name="USU_db_stampdate" value="'+$tds.eq(7).text()+'" class="USU_class_updvalidation datenonmandtry form-control" placeholder="Stamp Duty Date"/> <label for="USU_db_stampdate" class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></label> </div> </div> </div> <div class="form-group" id="USU_stamptype"> <label class="col-sm-2">STAMP DUTY TYPE </label> <div class="col-sm-3"><select id="USU_lb_stamptype" name="USU_lb_stamptype" value="'+$tds.eq(8).text()+'" class="USU_class_updvalidation datenonmandtry form-control"><option>SELECT</option></select> </div> </div> <div class="form-group" id="USU_stampamount"> <label class="col-sm-2">STAMP DUTY AMOUNT </label> <div class="col-sm-2"><input type="text" name="USU_tb_stampamt" value="'+$tds.eq(9).text()+'" id="USU_tb_stampamt" maxlength=4 class ="amtonly USU_class_title_nums USU_class_updvalidation form-control" placeholder="Stamp Duty Amount"></div> </div> <div class="form-group" id="USU_comments"> <label class="col-sm-2">COMMENTS</label> <div class="col-sm-4"><textarea placeholder="Comments" id="USU_ta_accesscomment" name="USU_ta_accesscomment" class="USU_class_updvalidation USU_class_ta_cmts form-control" rows="5">'+$tds.eq(10).text()+'</textarea></div> </div>';
                         $(USU_upd_tr).appendTo($("#USU_tble_update"));
                         $(".preloader").show();
                         $("#USU_div_updateform").hide();
@@ -2234,7 +2234,7 @@ require_once('application/libraries/EI_HDR.php');
                         <div class="form-group">
                             <lable class="col-lg-12 srctitle" id="USU_headermsg" hidden></lable>
                         </div>
-                        <div style="padding-bottom: 10px;" id="pdf_btn" hidden>
+                        <div style="padding-bottom: 10px;" id="USU_pdf_btn" hidden>
                             <input type="button" id="USU_btn_pdf" class="btnpdf" value="PDF">
                         </div>
                         <div class="table-responsive" id="USU_div_htmltable" hidden>

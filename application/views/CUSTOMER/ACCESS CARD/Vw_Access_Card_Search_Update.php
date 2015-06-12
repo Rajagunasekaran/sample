@@ -181,7 +181,7 @@ require_once('application/libraries/EI_HDR.php');
                 var CSU_unit = $('#CSU_lb_unitno').val();
                 $('#CSU_lb_curcard').val('SELECT').hide();
                 $('#CSU_detailsdiv').find('select').val('SELECT');
-                $('#CSU_curcard,#CSU_detailsdiv,#CSU_comments,#CSU_lbl_error,#CSU_buttons').hide();
+                $('#CSU_curcard,#CSU_detailsdiv,#CSU_comments,#CSU_lbl_error,#CSU_buttons,#CSU_custid').hide();
                 $('#CSU_custid > div').remove();
                 $('#CSU_btn_updatebutton').attr('disabled','disabled');
                 $('#CSU_ta_comments').val("");
@@ -315,7 +315,7 @@ require_once('application/libraries/EI_HDR.php');
                 </div>
                 <div class="form-group" id="CSU_custname" hidden>
                     <label class="col-sm-2">CUSTOMER NAME <em>*</em></label>
-                    <div class="col-sm-3"><select name="CSU_lb_custname" id="CSU_lb_custname" class="CSU_formvalidation form-control"></select></div>
+                    <div class="col-sm-4"><select name="CSU_lb_custname" id="CSU_lb_custname" class="CSU_formvalidation form-control"></select></div>
                 </div>
                 <div class="form-group" id="CSU_custid" hidden>
                 </div>

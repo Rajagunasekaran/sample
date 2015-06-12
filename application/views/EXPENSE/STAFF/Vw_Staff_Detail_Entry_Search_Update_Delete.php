@@ -774,14 +774,13 @@ require_once('application/libraries/EI_HDR.php');
                 $('.preloader').hide();
                 $.ajax({
                     type: "POST",
-                    url:SCTDTL_SEARH_controller_url+"STDTL_SEARCH_empcpfnoresult"
-
+                    url:SCTDTL_SEARH_controller_url+"STDTL_SEARCH_empcpfnoresult",
                     success: function(data){
                         cpfno=JSON.parse(data);
                         //GET STAFF CPF NUMBER
                         var STDTL_SEARCH_expensearr_cpfnumber= cpfno[0]
                         var STDTL_SEARCH_expensearr_employeename= cpfno[1]
-                        STDTL_INPUT_expensearr_empfirstname=STDTL_INPUT_expensearr_employeename[0].EMP_FIRST_NAME
+                        STDTL_INPUT_expensearr_empfirstname=STDTL_INPUT_expensearr_employeename[0].EMP_FIRST_NAME;
                         var STDTL_SEARCH_expensearrcpfnumber1='<option>SELECT</option>';
                         for (var i = 0;i < STDTL_SEARCH_expensearr_cpfnumber.length;i++)
                         {
@@ -800,6 +799,7 @@ require_once('application/libraries/EI_HDR.php');
                     }
                 });
             }
+            //***********************
             //CHANGE EVENT FUNCTION FOR EMPLOYEE NAME
             $('#STDTL_SEARCH_lb_employeename_listbox').change(function(){
                 STDTL_SEARCH_sucsval=0;
@@ -988,7 +988,7 @@ require_once('application/libraries/EI_HDR.php');
                 var emp_last_name=emp_name[1]
                 $.ajax({
                     type: "POST",
-                    url:SCTDTL_SEARH_controller_url+"fetchdata"
+                    url:SCTDTL_SEARH_controller_url+"fetchdata",
                     data: {'STDTL_SEARCH_staffexpense_selectquery':STDTL_SEARCH_staffexpense_selectquery,'STDTL_SEARCH_cpfnumber': STDTL_SEARCH_cpfnumber,'STDTL_SEARCH_cpffrom_form':STDTL_SEARCH_cpffrom_form,'STDTL_SEARCH_cpfto_form':STDTL_SEARCH_cpfto_form,'emp_first_name':emp_first_name,'emp_last_name':emp_last_name,'STDTL_SEARCH_staffcommentstxt':STDTL_SEARCH_staffcommentstxt},
                     success: function(data) {
                         $('.preloader').hide();
@@ -1162,7 +1162,7 @@ require_once('application/libraries/EI_HDR.php');
                     if((STDTL_SEARCH_cpfnoval.length==9) && (STDTL_SEARCH_cpfnoval!=tdvalue)){
                 $.ajax({
                     type: "POST",
-                    url:SCTDTL_SEARH_controller_url+"dataupd_exists"
+                    url:SCTDTL_SEARH_controller_url+"dataupd_exists",
                     data :{'tdvalue':STDTL_SEARCH_currentval},
                     success: function(data){
                         $('.preloader').hide();
@@ -1240,7 +1240,7 @@ require_once('application/libraries/EI_HDR.php');
                     var data = $('#STDTL_INPUT_form_employeename').serialize();
                     $.ajax({
                         type: "POST",
-                        url:SCTDTL_SEARH_controller_url+"updatefunction"
+                        url:SCTDTL_SEARH_controller_url+"updatefunction",
                         data:{'id':combineid,'STDTL_SEARCH_cpfnumber':STDTL_SEARCH_cpfnumber,'STDTL_SEARCH_cpfamount':STDTL_SEARCH_cpf_amount,'STDTL_SEARCH_levyamount':STDTL_SEARCH_levyamount,'STDTL_SEARCH_salaryamount':STDTL_SEARCH_salaryamount,'STDTL_SEARCH_comments':STDTL_SEARCH_comments},
                         success: function(STDTL_SEARCH_updateresult) {
                             if(STDTL_SEARCH_updateresult=='true')
@@ -1263,8 +1263,8 @@ require_once('application/libraries/EI_HDR.php');
                     });
                 }
             }
-            //click event for delete btn
-            var rowid='';
+//            //click event for delete btn
+//            var rowid='';
             $(document).on('click','.deletebutton',function(){
                 rowid = $(this).attr('id');
                 show_msgbox("STAFF EXPENSE DETAIL ENTRY/SEARCH/UPDATE/DELETE",value_err_array[19].EMC_DATA,"success","delete");

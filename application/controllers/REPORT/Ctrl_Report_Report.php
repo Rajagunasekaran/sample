@@ -43,6 +43,6 @@ class Ctrl_Report_Report extends CI_Controller{
 //            $month="";
            $data= $this->Mdl_report_report->getDataAppendSS($reportNameVal,$reportNameText,$emailId,$categoryName,$month);
 //        $final_value=$this->Mdl_report_report->REP_func_load_searchby_option($this->input->post('REP_report_optionfetch'));
-            echo json_encode($data);
+            echo $data;
     }
 }

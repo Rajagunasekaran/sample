@@ -129,6 +129,9 @@ var BDLY_SRC_flag_autocom='';
                         $("html, body").animate({ scrollTop: $(document).height() }, "slow");
                         initial_values=JSON.parse(res);
                         BDLY_INPUT_load_initialvalue(initial_values)
+                    },
+                    error: function (data) {
+                        alert('error in getting' + JSON.stringify(data));
                     }
             });
                 $('#biz_expenseentryform').show();
@@ -163,6 +166,9 @@ var BDLY_SRC_flag_autocom='';
                         $("html, body").animate({ scrollTop: $(document).height() }, "slow");
                         var initialvalue=JSON.parse(res);
                         BDLY_SRC_result_getInitialvalue(initialvalue)
+                    },
+                    error: function (data) {
+                        alert('error in getting' + JSON.stringify(data));
                     }
                 });
                 $('#biz_expenseentryform').hide();
@@ -484,6 +490,9 @@ var BDLY_SRC_flag_autocom='';
                         $('.preloader').hide();
                         checkunit=res;
                         BDLY_INPUT_checkunitnoexist(checkunit)
+                    },
+                    error: function (data) {
+                        alert('error in getting' + JSON.stringify(data));
                     }
                 });
             }
@@ -499,6 +508,9 @@ var BDLY_SRC_flag_autocom='';
                         $('.preloader').hide();
                         var responsearray=JSON.parse(res);
                         BDLY_INPUT_clearalldatas(responsearray)
+                    },
+                    error: function (data) {
+                        alert('error in getting' + JSON.stringify(data));
                     }
                 });
             }
@@ -543,6 +555,9 @@ var BDLY_SRC_flag_autocom='';
                                     var responsearray=JSON.parse(res);
                                     BDLY_INPUT_clearalldatas(responsearray)
 
+                                },
+                                error: function (data) {
+                                    alert('error in getting' + JSON.stringify(data));
                                 }
                             });
                         }
@@ -724,6 +739,9 @@ var BDLY_SRC_flag_autocom='';
                             $("html, body").animate({ scrollTop: $(document).height() }, "slow");
                             BDLY_INPUT_unitno_result_auto=JSON.parse(res);
                             BDLY_INPUT_load_unitno(BDLY_INPUT_unitno_result_auto)
+                        },
+                        error: function (data) {
+                            alert('error in getting' + JSON.stringify(data));
                         }
                     });
                 }
@@ -732,6 +750,7 @@ var BDLY_SRC_flag_autocom='';
             {
                 $('#BDLY_INPUT_lbl_checkcardno').hide();
                 $('#BDLY_INPUT_lbl_hourmsg').hide();
+                $('#BDLY_INPUT_tble_housekeeping').hide();
                 $.ajax({
                     type: "POST",
                     url: controller_url+"BDLY_INPUT_get_balance",
@@ -739,6 +758,9 @@ var BDLY_SRC_flag_autocom='';
                         $('.preloader').hide();
                         balance_result=JSON.parse(res);
                         BDLY_INPUT_load_balance(balance_result)
+                    },
+                    error: function (data) {
+                        alert('error in getting' + JSON.stringify(data));
                     }
                 });
             }
@@ -761,6 +783,9 @@ var BDLY_SRC_flag_autocom='';
                             $('.preloader').hide();
                             cleanername=JSON.parse(res);
                             BDLY_INPUT_load_cleanername(cleanername)
+                        },
+                        error: function (data) {
+                            alert('error in getting' + JSON.stringify(data));
                         }
                     });
                 }
@@ -783,6 +808,9 @@ var BDLY_SRC_flag_autocom='';
                             $('.preloader').hide();
                             BDLY_INPUT_load_allunitnoval=JSON.parse(res);
                             BDLY_INPUT_load_allunitno(BDLY_INPUT_load_allunitnoval.sort())
+                        },
+                        error: function (data) {
+                            alert('error in getting' + JSON.stringify(data));
                         }
                     });
                 }
@@ -1114,7 +1142,7 @@ var BDLY_SRC_flag_autocom='';
             if(BDLY_INPUT_listvalue==11)
             {
                 $('#BDLY_INPUT_ta_house_desc').val("");
-                $('#BDLY_INPUT_lb_house_cleanername').val("");
+                $('#BDLY_INPUT_lb_house_cleanername').val("SELECT");
                 $('#BDLY_INPUT_tb_house_date').val("");
                 $('#BDLY_INPUT_tb_house_hours').val("");
                 $('#BDLY_INPUT_tb_house_min').val("");
@@ -1222,7 +1250,7 @@ var BDLY_SRC_flag_autocom='';
             $(".preloader").hide();
             $('#BDLY_INPUT_btn_multisubmitbutton').attr('disabled','disabled')
             $('#BDLY_INPUT_tble_electricity').empty();
-            $('<tr><td nowrap><label id="BDLY_INPUT_lbl_elect_unit" >UNIT</label><em>*</em> </td><td nowrap><label  id="BDLY_INPUT_lbl_elect_invoiceto" >INVOICE TO</label><em>*</em></td><td nowrap> <label id="BDLY_INPUT_lbl_elect_invoicedate" >INVOICE DATE</label><em>*</em> </td><td nowrap><label id="BDLY_INPUT_lbl_elect_fromperiod" >FROM PERIOD</label><em>*</em> </td><td nowrap><label id="BDLY_INPUT_lbl_elect_toperiod" >TO PERIOD</label><em>*</em></td><td nowrap><label id="BDLY_INPUT_lbl_elect_payment"  >PAYMENT OF</label><em>*</em> </td><td nowrap><label id="BDLY_INPUT_lbl_elect_amount" >AMOUNT</label><em>*</em> </td><td ><label id="BDLY_INPUT_lbl_elect_comments" >COMMENTS</label> </td><td ><label id="BDLY_INPUT_lbl_elect_add" ></label> </td><td ><label id="BDLY_INPUT_lbl_elect_del" ></label> </td></tr><tr><td> <select  class="BDLY_INPUT_class_unit submultivalid form-control"  name="BDLY_INPUT_lb_elect_unit[]" id="BDLY_INPUT_lb_elect_unit-1" style="width: 90px;" hidden><option value="">SELECT</option></select> </td> <td><input  class="submultivalid rdonly form-control"  type="text" name ="BDLY_INPUT_tb_invoiceto[]" id="BDLY_INPUT_tb_invoiceto1"  style="display: none;" readonly/><input type="text" id="BDLY_INPUT_hidden_ecnid_elec1" name="BDLY_INPUT_hidden_ecnid_elec[]" class="form-control" style="display: none;"  hidden> </td><td><input  class="eledatepicker submultivalid datemandtry form-control"   type="text" name ="BDLY_INPUT_db_invoicedate[]" id="BDLY_INPUT_db_invoicedate1" style="width:100px;display: none;" hidden /> </td><td><input   class="eledatepicker submultivalid datemandtry form-control"  type="text" name ="BDLY_INPUT_db_fromperiod[]" id="BDLY_INPUT_db_fromperiod1" style="width:100px;display: none;" hidden/> </td><td><input  class="eledatepicker submultivalid datemandtry form-control"  type="text" name ="BDLY_INPUT_db_toperiod[]" id="BDLY_INPUT_db_toperiod1" style="width:100px;display: none;" hidden/> </td><td><select style="display: none;"   name="BDLY_INPUT_lb_elect_payment[]" class="submultivalid amtentry form-control" id="BDLY_INPUT_lb_elect_payment1" hidden><option value="" >SELECT</option></select></td><td><input  class="amtonlyvalidation submultivalid form-control" type="text" name ="BDLY_INPUT_tb_elect_amount[]" id="BDLY_INPUT_tb_elect_amount1" style="width:70px;display: none;" hidden /> <input class="amtonlyvalidation submultivalid form-control"  type="text" name ="BDLY_INPUT_tb_elect_minusamt[]" id="BDLY_INPUT_tb_elect_minusamt1" style="width:70px;display: none;" hidden /><input type="hidden" id="BDLY_INPUT_hidden_amt_elec1" style="display: none;"  name="BDLY_INPUT_hidden_amt_elec[]" ></td><td><textarea row="3" class=" submultivalid form-control" name ="BDLY_INPUT_ta_comments[]"  style="display: none;" id="BDLY_INPUT_ta_comments1" hidden ></textarea> </td><td><input type="button" value="+" class="addbttn" alt="Add Row" height="30" width="30" name ="BDLY_INPUT_add[]" id="BDLY_INPUT_add1" disabled > </td><td><input  type="button" value="-" class="deletebttn" alt="delete Row" height="30" width="30" name ="BDLY_INPUT_delete[]" id="BDLY_INPUT_del1" disabled ></td></tr>').appendTo($('#BDLY_INPUT_tble_electricity'));
+            $('<tr><td nowrap><label id="BDLY_INPUT_lbl_elect_unit" >UNIT</label><em>*</em> </td><td nowrap><label  id="BDLY_INPUT_lbl_elect_invoiceto" >INVOICE TO</label><em>*</em></td><td nowrap> <label id="BDLY_INPUT_lbl_elect_invoicedate" >INVOICE DATE</label><em>*</em> </td><td nowrap><label id="BDLY_INPUT_lbl_elect_fromperiod" >FROM PERIOD</label><em>*</em> </td><td nowrap><label id="BDLY_INPUT_lbl_elect_toperiod" >TO PERIOD</label><em>*</em></td><td nowrap><label id="BDLY_INPUT_lbl_elect_payment"  >PAYMENT OF</label><em>*</em> </td><td nowrap><label id="BDLY_INPUT_lbl_elect_amount" >AMOUNT</label><em>*</em> </td><td ><label id="BDLY_INPUT_lbl_elect_comments" >COMMENTS</label> </td><td ><label id="BDLY_INPUT_lbl_elect_add" ></label> </td><td ><label id="BDLY_INPUT_lbl_elect_del" ></label> </td></tr><tr><td> <select  class="BDLY_INPUT_class_unit submultivalid form-control"  name="BDLY_INPUT_lb_elect_unit[]" id="BDLY_INPUT_lb_elect_unit-1" style="width: 90px;" hidden><option value="">SELECT</option></select> </td> <td><input  class="submultivalid rdonly form-control"  type="text" name ="BDLY_INPUT_tb_invoiceto[]" id="BDLY_INPUT_tb_invoiceto1"  style="display: none;" readonly/><input type="text" id="BDLY_INPUT_hidden_ecnid_elec1" name="BDLY_INPUT_hidden_ecnid_elec[]" class="form-control" style="display: none;"  hidden> </td><td><input  class="eledatepicker submultivalid datemandtry form-control"   type="text" name ="BDLY_INPUT_db_invoicedate[]" id="BDLY_INPUT_db_invoicedate1" style="width:100px;display: none;" hidden /> </td><td><input   class="eledatepicker submultivalid datemandtry form-control"  type="text" name ="BDLY_INPUT_db_fromperiod[]" id="BDLY_INPUT_db_fromperiod1" style="width:100px;display: none;" hidden/> </td><td><input  class="eledatepicker submultivalid datemandtry form-control"  type="text" name ="BDLY_INPUT_db_toperiod[]" id="BDLY_INPUT_db_toperiod1" style="width:100px;display: none;" hidden/> </td><td><select style="display: none;width:173px;"   name="BDLY_INPUT_lb_elect_payment[]" class="submultivalid amtentry form-control" id="BDLY_INPUT_lb_elect_payment1"  hidden><option value="" >SELECT</option></select></td><td><input  class="amtonlyvalidation submultivalid form-control" type="text" name ="BDLY_INPUT_tb_elect_amount[]" id="BDLY_INPUT_tb_elect_amount1" style="width:70px;display: none;" hidden /> <input class="amtonlyvalidation submultivalid form-control"  type="text" name ="BDLY_INPUT_tb_elect_minusamt[]" id="BDLY_INPUT_tb_elect_minusamt1" style="width:70px;display: none;" hidden /><input type="hidden" id="BDLY_INPUT_hidden_amt_elec1" style="display: none;"  name="BDLY_INPUT_hidden_amt_elec[]" ></td><td><textarea row="3" class=" submultivalid form-control" name ="BDLY_INPUT_ta_comments[]"  style="display: none;" id="BDLY_INPUT_ta_comments1" hidden ></textarea> </td><td><input type="button" value="+" class="addbttn" alt="Add Row" height="30" width="30" name ="BDLY_INPUT_add[]" id="BDLY_INPUT_add1" disabled > </td><td><input  type="button" value="-" class="deletebttn" alt="delete Row" height="30" width="30" name ="BDLY_INPUT_delete[]" id="BDLY_INPUT_del1" disabled ></td></tr>').appendTo($('#BDLY_INPUT_tble_electricity'));
             $(".autosize").doValidation({rule:'general',prop:{autosize:true}});
             $(".datepickdate").datepicker({dateFormat:'dd-mm-yy',
                 changeYear: true,
@@ -1350,6 +1378,9 @@ var BDLY_SRC_flag_autocom='';
                             $('.preloader').hide();
                             BDLY_INPUT_values=JSON.parse(res);
                             BDLY_INPUT_load_form(BDLY_INPUT_values)
+                        },
+                        error: function (data) {
+                            alert('error in getting' + JSON.stringify(data));
                         }
                     });
                     $('#BDLY_INPUT_btn_submitbutton').attr("disabled", "disabled");
@@ -1363,6 +1394,9 @@ var BDLY_SRC_flag_autocom='';
                             $('.preloader').hide();
                             BDLY_INPUT_values=JSON.parse(res);
                             BDLY_INPUT_load_form(BDLY_INPUT_values)
+                        },
+                        error: function (data) {
+                            alert('error in getting' + JSON.stringify(data));
                         }
                     });
                     $('#BDLY_INPUT_btn_submitbutton').attr("disabled", "disabled");
@@ -1376,6 +1410,9 @@ var BDLY_SRC_flag_autocom='';
                             $('.preloader').hide();
                             BDLY_INPUT_values=JSON.parse(res);
                             BDLY_INPUT_load_form(BDLY_INPUT_values)
+                        },
+                        error: function (data) {
+                            alert('error in getting' + JSON.stringify(data));
                         }
                     });
                     $('#BDLY_INPUT_btn_submitbutton').attr("disabled", "disabled");
@@ -1390,6 +1427,9 @@ var BDLY_SRC_flag_autocom='';
                             BDLY_INPUT_values=JSON.parse(res);
                             BDLY_INPUT_load_form(BDLY_INPUT_values)
 
+                        },
+                        error: function (data) {
+                            alert('error in getting' + JSON.stringify(data));
                         }
                     });
                 }
@@ -1532,6 +1572,9 @@ var BDLY_SRC_flag_autocom='';
                         $('.preloader').hide();
                         elect_values=JSON.parse(res);
                         BDLY_INPUT_load_invoiceto(elect_values)
+                    },
+                    error: function (data) {
+                        alert('error in getting' + JSON.stringify(data));
                     }
                 });
             }
@@ -1721,7 +1764,7 @@ var BDLY_SRC_flag_autocom='';
             });
 //DATE PICKER FOR TO DATE ..................
             oCell = newRow.insertCell(5);
-            oCell.innerHTML ="<select  name='BDLY_INPUT_lb_elect_payment[]' class='submultivalid amtentry form-control' id='"+"BDLY_INPUT_lb_elect_payment"+newid+"' style='display:none;'hidden><option value='' >SELECT</option></select>";
+            oCell.innerHTML ="<select  name='BDLY_INPUT_lb_elect_payment[]' class='submultivalid amtentry form-control' id='"+"BDLY_INPUT_lb_elect_payment"+newid+"' style='display:none;width:173px;' hidden><option value='' >SELECT</option></select>";
             oCell = newRow.insertCell(6);
             oCell.innerHTML ="<input  class='amtonlyvalidation submultivalid form-control' type='text' name ='BDLY_INPUT_tb_elect_amoun[]t' id='"+"BDLY_INPUT_tb_elect_amount"+newid+"' style='width:70px;display:none;' hidden /> <input class='amtonlyvalidation submultivalid form-control' type='text' name ='BDLY_INPUT_tb_elect_amount[]' id='"+"BDLY_INPUT_tb_elect_minusamt"+newid+"' style='width:70px;display:none;' hidden /><input type='hidden' id='"+"BDLY_INPUT_hidden_amt_elec"+newid+"' name='BDLY_INPUT_hidden_amt_elec[]'>";
             $(".amtonlyvalidation").click(function(){
@@ -2026,6 +2069,9 @@ var BDLY_SRC_flag_autocom='';
                         var responsearray=JSON.parse(res);
                         BDLY_INPUT_clearalldatas(responsearray)
 
+                    },
+                    error: function (data) {
+                        alert('error in getting' + JSON.stringify(data));
                     }
                 });
             }
@@ -2052,6 +2098,9 @@ var BDLY_SRC_flag_autocom='';
                         $('.preloader').hide();
                         var  card_result=JSON.parse(res);
                         BDLY_INPUT_checkcard(card_result)
+                    },
+                    error: function (data) {
+                        alert('error in getting' + JSON.stringify(data));
                     }
                 });
             }
@@ -2092,6 +2141,9 @@ var BDLY_SRC_flag_autocom='';
                             var responsearray=JSON.parse(res);
                             BDLY_INPUT_clearalldatas(responsearray)
 
+                        },
+                        error: function (data) {
+                            alert('error in getting' + JSON.stringify(data));
                         }
                     });
                 }
@@ -2339,6 +2391,9 @@ var BDLY_SRC_flag_autocom='';
                         $('.preloader').hide();
                         elect_values=JSON.parse(res);
                         BDLY_INPUT_load_invoiceto(elect_values)
+                    },
+                    error: function (data) {
+                        alert('error in getting' + JSON.stringify(data));
                     }
                 });
             }
@@ -2354,6 +2409,9 @@ var BDLY_SRC_flag_autocom='';
                     var responsearray=JSON.parse(res);
                     BDLY_INPUT_clear(responsearray)
 
+                },
+                error: function (data) {
+                    alert('error in getting' + JSON.stringify(data));
                 }
             });
         });
@@ -2431,7 +2489,7 @@ var BDLY_SRC_flag_autocom='';
                         for (var i = 0; i < BDLY_INPUT_load_allunitnovalues.length; i++){
                             BDLY_INPUT_allunitno_options += '<option value="' + BDLY_INPUT_load_allunitnovalues[i] + '">' + BDLY_INPUT_load_allunitnovalues [i]+ '</option>';
                         }
-                        $('#BDLY_INPUT_tb_pay_unitnocheck').replaceWith('<select id="BDLY_INPUT_tb_pay_unitno" name="BDLY_INPUT_tb_pay_unitno" class="BDLY_INPUT_class_hksubmitvalidate" ></select>');
+                        $('#BDLY_INPUT_tb_pay_unitnocheck').replaceWith('<select id="BDLY_INPUT_tb_pay_unitno" name="BDLY_INPUT_tb_pay_unitno" class="BDLY_INPUT_class_hksubmitvalidate form-control" ></select>');
                         $('#BDLY_INPUT_tb_pay_unitno').html(BDLY_INPUT_allunitno_options)
                         $('#BDLY_INPUT_btn_removebutton').replaceWith('<input type="button" name="BDLY_INPUT_btn_addbutton" value="ADD" id="BDLY_INPUT_btn_addbutton" class="btn"/>');
                     }
@@ -2497,6 +2555,9 @@ var BDLY_SRC_flag_autocom='';
                         $('.preloader').hide();
                         var uexp_values=JSON.parse(res);
                         BDLY_INPUT_load_category(uexp_values)
+                    },
+                    error: function (data) {
+                        alert('error in getting' + JSON.stringify(data));
                     }
                 });
             }
@@ -2576,6 +2637,9 @@ var BDLY_SRC_flag_autocom='';
                         $('.preloader').hide();
                         var starhub_vlaues=JSON.parse(res);
                         BDLY_INPUT_load_accno(starhub_vlaues)
+                    },
+                    error: function (data) {
+                        alert('error in getting' + JSON.stringify(data));
                     }
                 });
             }
@@ -3359,6 +3423,9 @@ var BDLY_SRC_flag_autocom='';
                             $('.preloader').hide();
                             var Searchoptionhkpunit=JSON.parse(res);
                             BDLY_SRC_LoadSearchOption(Searchoptionhkpunit)
+                        },
+                        error: function (data) {
+                            alert('error in getting' + JSON.stringify(data));
                         }
                     });
                 }
@@ -3422,6 +3489,9 @@ var BDLY_SRC_flag_autocom='';
                         $('.preloader').hide();
                         var response=JSON.parse(res);
                         BDLY_SRC_UpdateDataTable(response)
+                    },
+                    error: function (data) {
+                        alert('error in getting' + JSON.stringify(data));
                     }
                 });
             }
@@ -3432,13 +3502,13 @@ var BDLY_SRC_flag_autocom='';
                     $("#BDLY_SRC_Optionhead").text($(this).find('option:selected').text());
                     seclectFormtype =BDLY_SRC_getsearch_optiontype(selectedSearchopt);//GET SEARCH OPTION FORM TYPE
 //CREATE DYNAMIC SEARCH FORM ELEMENTS START
-                    var TempInvoiceFromTR ='<div id="BDLY_SRC_tr_searchopt_invoicefrom" class="BDLY_SRC_class_dynamicrows form-group" ><label class="col-sm-2">INVOICE FROM</label><div class="col-sm-2"><input type="text" name="BDLY_SRC_invoicefrom" id="BDLY_SRC_invoicefrom" class="auto form-control" disabled /></div></div>';
-                    var TempVoiceNoTR ='<div id="BDLY_SRC_tr_searchopt_voiceno" class="BDLY_SRC_class_dynamicrows form-group" ><label class="col-sm-2">DIGITAL VOICE NO</label><div class="col-sm-2"><input type="text" name="BDLY_SRC_voiceno" id="BDLY_SRC_voiceno" class="auto form-control" disabled /></div></div>';
-                    var TempDurationFromTR ='<div id="BDLY_SRC_tr_searchopt_durationfrom" class="BDLY_SRC_class_dynamicrows form-group" ><label class="col-sm-2">FROM DURATION</label><div class="col-sm-2"><div class="input-group addon"><input type="text" name="BDLY_SRC_duration" id="BDLY_SRC_durationfrom" class="BDLY_SCR_Field duration form-control"/><label for="BDLY_SRC_durationfrom" class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></label></div></div></div>';
-                    var TempDurationToTR ='<div id="BDLY_SRC_tr_searchopt_durationto" class="BDLY_SRC_class_dynamicrows form-group" ><label class="col-sm-2">TO DURATION</label><div class="col-sm-2"><div class="input-group addon"><input type="text" name="BDLY_SRC_duration" id="BDLY_SRC_durationto" class="BDLY_SCR_Field duration form-control"/><label for="BDLY_SRC_durationto" class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></label></div><div><label id="BDLY_SCR_lbl_err_durationmin" class="errormsg"></label></div><div><label id="BDLY_SCR_lbl_err_durationhrs" class="errormsg"></label></div><div><label id="BDLY_SCR_lbl_err_duration" class="errormsg"></label></div></div>';
+                    var TempInvoiceFromTR ='<div id="BDLY_SRC_tr_searchopt_invoicefrom" class="BDLY_SRC_class_dynamicrows form-group" ><label class="col-sm-2">INVOICE FROM</label><div class="col-sm-2"><input type="text" name="BDLY_SRC_invoicefrom" id="BDLY_SRC_invoicefrom" class="auto form-control" style="500px; !important" disabled /></div></div>';
+                    var TempVoiceNoTR ='<div id="BDLY_SRC_tr_searchopt_voiceno" class="BDLY_SRC_class_dynamicrows form-group" ><label class="col-sm-2">DIGITAL VOICE NO</label><div class="col-sm-2"><input type="text" name="BDLY_SRC_voiceno" id="BDLY_SRC_voiceno" class="auto form-control"  style="500px; !important" disabled /></div></div>';
+                    var TempDurationFromTR ='<div id="BDLY_SRC_tr_searchopt_durationfrom" class="BDLY_SRC_class_dynamicrows form-group" ><label class="col-sm-2">FROM DURATION</label><div class="col-sm-2"><input type="text" name="BDLY_SRC_fromduration" id="BDLY_SRC_durationfrom" class="BDLY_SCR_Field duration form-control"/></div></div>';
+                    var TempDurationToTR ='<div id="BDLY_SRC_tr_searchopt_durationto" class="BDLY_SRC_class_dynamicrows form-group" ><label class="col-sm-2">TO DURATION</label><div class="col-sm-2"><input type="text" name="BDLY_SRC_toduration" id="BDLY_SRC_durationto" class="BDLY_SCR_Field duration form-control"/></div><div><label id="BDLY_SCR_lbl_err_durationmin" class="errormsg"></label></div><div><label id="BDLY_SCR_lbl_err_durationhrs" class="errormsg"></label></div><div><label id="BDLY_SCR_lbl_err_duration" class="errormsg"></label></div></div>';
                     var TempServiceDueTR ='<div id="BDLY_SRC_tr_searchopt_servicedue" class="form-group"><label class=" col-sm-2">SERVICE DUE</label><div style="padding-left:0px;" class="col-sm-9"><div class="col-sm-3"><div class="input-group addon"><input type="text" name="BDLY_SRC_servicedue" id="BDLY_SRC_servicedue" class="BDLY_SCR_Field BDLY_SCR_forperiod BDLT_SRC_Month_picker monthpicker datemandtry form-control"/><label for="BDLY_SRC_servicedue" class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></label></div></div></div></div>';
-                    var TempCommentsTR ='<div id="BDLY_SRC_tr_searchopt_comments" class="BDLY_SRC_class_dynamicrows form-group" ><label class="col-sm-2">COMMENTS</label><div class="col-sm-3"><textarea name="BDLY_SRC_comments" id="BDLY_SRC_comments"  class="auto form-control" disabled ></textarea></div></div>';
-                    var TempItemsTR ='<div id="BDLY_SRC_tr_searchopt_invoiceitem" class="BDLY_SRC_class_dynamicrows form-group" ><label class="col-sm-2">INVOICE ITEMS</label><div class="col-sm-3"><textarea name="BDLY_SRC_invoiceitem" id="BDLY_SRC_invoiceitem"  class="auto form-control" disabled ></textarea></div></div>';
+                    var TempCommentsTR ='<div id="BDLY_SRC_tr_searchopt_comments" class="BDLY_SRC_class_dynamicrows form-group" ><label class="col-sm-2">COMMENTS</label><div class="col-sm-4"><textarea name="BDLY_SRC_comments" id="BDLY_SRC_comments"  class="form-control auto" style="height:116px; width:300px; !important" disabled ></textarea></div></div>';
+                    var TempItemsTR ='<div id="BDLY_SRC_tr_searchopt_invoiceitem" class="BDLY_SRC_class_dynamicrows form-group" ><label class="col-sm-2">INVOICE ITEMS</label><div class="col-sm-4"><textarea name="BDLY_SRC_invoiceitem" id="BDLY_SRC_invoiceitem"  class="auto form-control" style="height:116px;width:300px; !important"  disabled ></textarea></div></div>';
                     var TempCategoryTR ='<div id="BDLY_SRC_tr_searchopt_category" class="BDLY_SRC_class_dynamicrows form-group" ><label class="BDLY_SRC_class_lb_lbl col-sm-2">CATEGORY</label><div class="col-sm-2"><select class="BDLY_SRC_class_Searchbtn_list_box BDLY_SCR_Field form-control" name="BDLY_SRC_lb_category" id="BDLY_SRC_lb_category" ><option>SELECT</option></select></div></div>';
                     var TempCusnameTR ='<div style="display:none;" id="BDLY_SRC_tr_searchopt_cusname" class="form-group"><label class="BDLY_SRC_class_lb_lbl col-sm-2">CUSTOMER NAME</label><div class="col-sm-4"><select class="BDLY_SRC_class_Searchbtn_list_box form-control" name="BDLY_SRC_lb_cusname" id="BDLY_SRC_lb_cusname" ><option>SELECT</option></select></div></div>';
                     var TempUnitTR ='<div id="BDLY_SRC_tr_searchopt_unit" class="BDLY_SRC_class_dynamicrows form-group" ><label class="BDLY_SRC_class_lb_lbl col-sm-2">UNIT NO</label><div class="col-sm-2"><select class="BDLY_SRC_class_Searchbtn_list_box BDLY_SCR_Field form-control" name="BDLY_SRC_lb_unitno" id="BDLY_SRC_lb_unitno" ><option>SELECT</option></select></div></div>';
@@ -3537,10 +3607,18 @@ var BDLY_SRC_flag_autocom='';
                             }
                             else if((selectedexpense==1)||(selectedexpense==2)||(selectedexpense==5)){
                                 var BDLY_SRC_realpartamt=3;
+                                var searchoption=$('#BDLY_SRC_lb_serachopt').val();
                                 if(selectedexpense==2)
-                                    BDLY_SRC_realpartamt=4;
-                                $("#BDLY_SRC_tb_fromamt").doValidation({rule:'numbersonly',prop:{integer:true,realpart:BDLY_SRC_realpartamt,imaginary:2}}).width(55);
-                                $("#BDLY_SRC_tb_toamt").doValidation({rule:'numbersonly',prop:{integer:true,realpart:BDLY_SRC_realpartamt,imaginary:2}}).width(55);
+                                {BDLY_SRC_realpartamt=4;}
+                                if(selectedexpense==1 && searchoption==160) {
+                                    $("#BDLY_SRC_tb_fromamt").doValidation({rule: 'numbersonly',prop: {realpart: BDLY_SRC_realpartamt, imaginary: 2}}).width(55);
+                                    $("#BDLY_SRC_tb_toamt").doValidation({rule: 'numbersonly',prop: {realpart: BDLY_SRC_realpartamt, imaginary: 2}}).width(55);
+                                }
+                                else
+                                {
+                                    $("#BDLY_SRC_tb_fromamt").doValidation({rule:'numbersonly',prop:{integer:true,realpart:BDLY_SRC_realpartamt,imaginary:2}}).width(55);
+                                    $("#BDLY_SRC_tb_toamt").doValidation({rule:'numbersonly',prop:{integer:true,realpart:BDLY_SRC_realpartamt,imaginary:2}}).width(55);
+                                }
                             }
                             else{
                                 $("#BDLY_SRC_tb_fromamt").doValidation({rule:'numbersonly',prop:{realpart:3,imaginary:2}}).width(45);
@@ -3614,6 +3692,9 @@ var BDLY_SRC_flag_autocom='';
                                     $('.preloader').hide();
                                 var response=JSON.parse(res);
                                 BDLY_SRC_success_exp_cleanername(response)
+                                },
+                                error: function (data) {
+                                    alert('error in getting' + JSON.stringify(data));
                                 }
                             });
                         }
@@ -3801,6 +3882,9 @@ var BDLY_SRC_flag_autocom='';
                         $('.preloader').hide();
                         var response=JSON.parse(res);
                         BDLY_SRC_success_cusname(response)
+                    },
+                    error: function (data) {
+                        alert('error in getting' + JSON.stringify(data));
                     }
                 });
             }
@@ -4002,6 +4086,9 @@ var BDLY_SRC_flag_autocom='';
                             $('.preloader').hide();
                            var BDLY_autocompl_response=JSON.parse(res);
                            BDLY_SRC_success_autodata(BDLY_autocompl_response)
+                        },
+                        error: function (data) {
+                            alert('error in getting' + JSON.stringify(data));
                         }
                     });
                 }
@@ -4021,6 +4108,9 @@ var BDLY_SRC_flag_autocom='';
                                 $('.preloader').hide();
                                 var BDLY_expcateg_response=JSON.parse(res);
                                 BDLY_SRC_success_exp_catgdata(BDLY_expcateg_response)
+                            },
+                            error: function (data) {
+                                alert('error in getting' + JSON.stringify(data));
                             }
                         });
                     }
@@ -4035,7 +4125,10 @@ var BDLY_SRC_flag_autocom='';
                                 $('.preloader').hide();
                                 var response=JSON.parse(res);
                                 BDLY_SRC_success_exp_accountno(response)
-                           }
+                           },
+                            error: function (data) {
+                                alert('error in getting' + JSON.stringify(data));
+                            }
                         });
                     }
                     else if(BDLY_SRC_getsearch_optiontypeval=="INVOICE TO")
@@ -4049,6 +4142,9 @@ var BDLY_SRC_flag_autocom='';
                                 $('.preloader').hide();
                                 var response=JSON.parse(res);
                                 BDLY_SRC_success_digital_invoiceto(response)
+                            },
+                            error: function (data) {
+                                alert('error in getting' + JSON.stringify(data));
                             }
                         });
                     }
@@ -4063,6 +4159,9 @@ var BDLY_SRC_flag_autocom='';
                                 $('.preloader').hide();
                                 var response=JSON.parse(res);
                                 BDLY_SRC_success_exp_cleanername(response)
+                            },
+                            error: function (data) {
+                                alert('error in getting' + JSON.stringify(data));
                             }
                         });
                     }
@@ -4077,6 +4176,9 @@ var BDLY_SRC_flag_autocom='';
                                 $('.preloader').hide();
                                 var response=JSON.parse(res);
                                 BDLY_SRC_success_cardno(response)
+                            },
+                            error: function (data) {
+                                alert('error in getting' + JSON.stringify(data));
                             }
                         });
                     }
@@ -4091,6 +4193,9 @@ var BDLY_SRC_flag_autocom='';
                                 $('.preloader').hide();
                                 var response=JSON.parse(res);
                                 BDLY_SRC_success_carno(response)
+                            },
+                            error: function (data) {
+                                alert('error in getting' + JSON.stringify(data));
                             }
                         });
                     }
@@ -4105,6 +4210,9 @@ var BDLY_SRC_flag_autocom='';
                                 $('.preloader').hide();
                                 var response=JSON.parse(res);
                                 BDLY_SRC_success_serviceby(response)
+                            },
+                            error: function (data) {
+                                alert('error in getting' + JSON.stringify(data));
                             }
                         });
                     }
@@ -4119,6 +4227,9 @@ var BDLY_SRC_flag_autocom='';
                                 $('.preloader').hide();
                                 var response=JSON.parse(res);
                                 BDLY_SRC_success_exp_unitno(response)
+                            },
+                            error: function (data) {
+                                alert('error in getting' + JSON.stringify(data));
                             }
                         });
                     }
@@ -4133,7 +4244,10 @@ var BDLY_SRC_flag_autocom='';
                                 $('.preloader').hide();
                                 var response=JSON.parse(res);
                                 BDLY_SRC_success_exp_digitalvoiceno(response)
+                            }, error: function (data) {
+                                alert('error in getting' + JSON.stringify(data));
                             }
+
                         });
                     }
                 }
@@ -4211,6 +4325,9 @@ var BDLY_SRC_flag_autocom='';
                     $('.preloader').hide();
                     var response=JSON.parse(res);
                     BDLY_SRC_UpdateDataTable(response)
+                },
+                error: function (data) {
+                    alert('error in getting' + JSON.stringify(data));
                 }
             });
         });
@@ -4715,6 +4832,9 @@ var BDLY_SRC_flag_autocom='';
                                 var responsearray=JSON.parse(res);
                                 BDLY_SRC_check_access_cardOrUnitnoresult(responsearray)
 
+                            },
+                            error: function (data) {
+                                alert('error in getting' + JSON.stringify(data));
                             }
                         });
                     }
@@ -4756,6 +4876,9 @@ var BDLY_SRC_flag_autocom='';
                                     var responsearray=JSON.parse(res);
                                     BDLY_SRC_check_access_cardOrUnitnoresult(responsearray)
 
+                                },
+                                error: function (data) {
+                                    alert('error in getting' + JSON.stringify(data));
                                 }
                             });
                         }
@@ -4772,7 +4895,7 @@ var BDLY_SRC_flag_autocom='';
                 var BDLY_SRC_cardalexistserr;
                 if(response==true)
                 {
-                    $(".clsupdatebtn").attr('disabled','disabled');
+                    $(".clsupdatebtn").removeClass('update');
                     if(selectedSearchopt==191){BDLY_SRC_cardalexistserr=BDLY_SRC_finalerrr[4];}
                     else{BDLY_SRC_cardalexistserr=BDLY_SRC_finalerrr[4]}
                     if(BDLY_SRC_selectedexptype==6)
@@ -4794,8 +4917,12 @@ var BDLY_SRC_flag_autocom='';
                 else if($('.unittextbox').hasClass('invalid'))
                     $('.unittextbox').removeClass('invalid');
             }
-            if((BDLY_SRC_updatebtnflag==0)||(BDLY_SRC_purchasecard==0)){$(".clsupdatebtn").attr('disabled','disabled');}
-            else{$(".clsupdatebtn").removeAttr('disabled');}
+            if((BDLY_SRC_updatebtnflag==0)||(BDLY_SRC_purchasecard==0)){
+                $(".clsupdatebtn").removeClass('update');
+            }
+            else{
+                $(".clsupdatebtn").addClass('update');
+            }
         });
         /*------------------------------------------------DATE PICKER FUNCTION FOR DATA TABLE----------------------------*/
         $(document).on('change','.unit_based_date',function(){
@@ -4882,6 +5009,9 @@ var BDLY_SRC_flag_autocom='';
                     var responsearray=JSON.parse(res);
                     BDLY_SRC_DT_success_deleterow(responsearray)
 
+                },
+                error: function (data) {
+                    alert('error in getting' + JSON.stringify(data));
                 }
             });
         });
@@ -4925,6 +5055,9 @@ var BDLY_SRC_flag_autocom='';
                             $('.preloader').hide();
                             var response=JSON.parse(res);
                             BDLY_SRC_UpdateDataTable(response)
+                        },
+                        error: function (data) {
+                            alert('error in getting' + JSON.stringify(data));
                         }
                     });
                 }
@@ -5019,12 +5152,12 @@ var BDLY_SRC_flag_autocom='';
                 var BDLY_SRC_sdate=BDLY_SRC_sdate_err_tostring.replace("[SD]",FormTableDateFormat(BDLY_SRC_unitstartdate));
                 var BDLY_SRC_date_err=BDLY_SRC_sdate.replace("[ED]", FormTableDateFormat(BDLY_SRC_unitinvdate))
                 show_msgbox("BIZ EXPENSE DAILY ENTRY/SEARCH/UPDATE/DELETE",BDLY_SRC_date_err,"success",false);
-                var td =$('.update').closest("tr").children("td");
+                var td =$('.clsupdatebtn').closest("tr").children("td");
                 $(td).each(function () {
                     if($(this).index()<td.length-3){
                         $(this).html($(this).data('restore'));
                     }});
-                $('.update').val('Edit').addClass('edit glyphicon glyphicon-edit').removeClass('update').removeClass("clsupdatebtn glyphicon glyphicon-print").removeAttr('disabled');
+                $('.clsupdatebtn').val('Edit').addClass('edit glyphicon glyphicon-edit').removeClass('update').removeClass("clsupdatebtn glyphicon glyphicon-print").removeAttr('disabled');
                 $('.edit').removeAttr("disabled").next().removeAttr("disabled");
             }
             else{
@@ -5040,7 +5173,7 @@ var BDLY_SRC_flag_autocom='';
             var td =  $(this).closest("tr").children("td");
             var tdcount = td.index()+1;
             var totallenght =td.length;
-            $(this).val('Update').addClass('update').removeClass('edit glyphicon glyphicon-edit').addClass("clsupdatebtn glyphicon glyphicon-print").attr('disabled','disabled');
+            $(this).val('Update').removeClass('edit glyphicon glyphicon-edit').addClass("clsupdatebtn glyphicon glyphicon-print");
             BDLY_DT_row_old_vals=[];
             var BDLY_DT_row_old_vals1=[];
             BDLY_DT_flg_date=1;
@@ -5226,6 +5359,9 @@ var BDLY_SRC_flag_autocom='';
                                 var responsearray=JSON.parse(res);
                                 BDLY_SRC_DT_success_cusname(responsearray)
 
+                            },
+                            error: function (data) {
+                                alert('error in getting' + JSON.stringify(data));
                             }
                         });
                         input.html(options);
@@ -5243,9 +5379,15 @@ var BDLY_SRC_flag_autocom='';
                 else if((selectedexpense==1)||(selectedexpense==2)||(selectedexpense==5))
                 {
                     var BDLY_SRC_amtrealpart=3;
-                    if(selectedexpense==2)
-                        BDLY_SRC_amtrealpart=4;
-                    $(".amount").doValidation({rule:'numbersonly',prop:{integer:true,realpart:BDLY_SRC_amtrealpart,imaginary:2}}).width(65);
+                    if(selectedexpense==2){
+                        BDLY_SRC_amtrealpart=4;}
+                    if(selectedexpense==1 && thtext=='optionalamnt1')
+                    {
+                        $(".amount").doValidation({rule:'numbersonly',prop:{realpart:BDLY_SRC_amtrealpart,imaginary:2}}).width(65);
+                    }
+                    else {
+                        $(".amount").doValidation({rule: 'numbersonly',prop: {integer: true, realpart: BDLY_SRC_amtrealpart, imaginary: 2}}).width(65);
+                    }
                 }
                 else if(selectedexpense==10)
                 {
@@ -5292,6 +5434,9 @@ var BDLY_SRC_flag_autocom='';
                             var responsearray=JSON.parse(res);
                             BDLY_SRC_succ_Unitdate(responsearray)
 
+                        },
+                        error: function (data) {
+                            alert('error in getting' + JSON.stringify(data));
                         }
                     });
                 }
@@ -5342,6 +5487,9 @@ var BDLY_SRC_flag_autocom='';
                         $('.preloader').hide();
                         var response=JSON.parse(res);
                         BDLY_SRC_DT_success_cusname(response)
+                    },
+                    error: function (data) {
+                        alert('error in getting' + JSON.stringify(data));
                     }
                 });
                 $(this).parent().next().html(input);
@@ -5428,6 +5576,9 @@ var BDLY_SRC_flag_autocom='';
                 success: function(res) {
                     $('.preloader').hide();
                     BDLY_SRC_UpdaterowData_result(res)
+                },
+                error: function (data) {
+                    alert('error in getting' + JSON.stringify(data));
                 }
             });
 //SUCCESS FUNCTION TO UPDATE DATA TABLE N TO SHOW CONFIRMATION MESSAGE
@@ -5486,6 +5637,9 @@ var BDLY_SRC_flag_autocom='';
                                 $('.preloader').hide();
                                 var response=JSON.parse(res);
                                 BDLY_SRC_UpdateDataTable(response)
+                            },
+                            error: function (data) {
+                                alert('error in getting' + JSON.stringify(data));
                             }
                         });
                     }
@@ -5543,7 +5697,7 @@ var BDLY_SRC_flag_autocom='';
 <body>
 <div class="container">
     <div class="preloader" hidden><span class="Centerer"></span><img class="preloaderimg"/> </div>
-    <div class="title text-center"><h4><b>BIZ EXPENSE DAILY ENTRY/SEARCH/UPDATE/DELETE</b></h4></div>
+    <div class="title text-center"><h4><b>BIZ EXPENSE DAILY ENTRY/ SEARCH/ UPDATE/ DELETE</b></h4></div>
     <form id="BDLY_INPUT_form_dailyentry" class="form-horizontal content"  method="post" action="<?php echo site_url("EXPENSE/Ctrl_Pdf/pdfexportbizexpense") ?>">
         <div class="panel-body">
                     <div style="padding-bottom: 15px">

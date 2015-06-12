@@ -98,6 +98,9 @@ require_once('application/libraries/EI_HDR.php');
                         var result=JSON.parse(res);
                         BDTL_INPUT_resultset(result);
 
+                    },
+                    error: function (data) {
+                        alert('error in getting' + JSON.stringify(data));
                     }
                 });
                 $('#divbizdetailentryform').show();
@@ -125,6 +128,9 @@ require_once('application/libraries/EI_HDR.php');
                         var result=JSON.parse(res);
                         BTDTL_SEARCH_success_expense(result);
 
+                    },
+                    error: function (data) {
+                        alert('error in getting' + JSON.stringify(data));
                     }
                 });
                 $('#divbizdetailupdateform').show();
@@ -239,6 +245,9 @@ require_once('application/libraries/EI_HDR.php');
                         var result=JSON.parse(res);
                         BDTL_INPUT_loadunitno(result);
 
+                    },
+                    error: function (data) {
+                        alert('error in getting' + JSON.stringify(data));
                     }
                 });
             }
@@ -366,6 +375,9 @@ require_once('application/libraries/EI_HDR.php');
                             var result=JSON.parse(res);
                             BDTL_INPUT_success_unitdate(result);
 
+                        },
+                        error: function (data) {
+                            alert('error in getting' + JSON.stringify(data));
                         }
                     });
                 }
@@ -437,6 +449,9 @@ require_once('application/libraries/EI_HDR.php');
                         $('.preloader').hide();
                         BDTL_INPUT_airconresult(res);
 
+                    },
+                    error: function (data) {
+                        alert('error in getting' + JSON.stringify(data));
                     }
                 });
             }});
@@ -528,6 +543,9 @@ require_once('application/libraries/EI_HDR.php');
                         var result=JSON.parse(res)
                         BDTL_INPUT_bizSuccess(result);
 
+                    },
+                    error: function (data) {
+                        alert('error in getting' + JSON.stringify(data));
                     }
                 });
             }});
@@ -836,6 +854,9 @@ require_once('application/libraries/EI_HDR.php');
                             var result=JSON.parse(res)
                             BTDTL_SEARCH_success_showflex(result);
 
+                        },
+                        error: function (data) {
+                            alert('error in getting' + JSON.stringify(data));
                         }
                     });
                 }
@@ -851,6 +872,9 @@ require_once('application/libraries/EI_HDR.php');
                             var result=JSON.parse(res)
                             BTDTL_SEARCH_success_searchby(result);
 
+                        },
+                        error: function (data) {
+                            alert('error in getting' + JSON.stringify(data));
                         }
                     });
                 }
@@ -991,6 +1015,9 @@ require_once('application/libraries/EI_HDR.php');
                                 $('.preloader').hide();
                                 var result=JSON.parse(res)
                                 BTDTL_SEARCH_success_comments(result);
+                            },
+                            error: function (data) {
+                                alert('error in getting' + JSON.stringify(data));
                             }
                         });
                     }
@@ -1049,6 +1076,9 @@ require_once('application/libraries/EI_HDR.php');
                         $('.preloader').hide();
                         var result=JSON.parse(res)
                         BTDTL_SEARCH_success_showflex(result);
+                    },
+                    error: function (data) {
+                        alert('error in getting' + JSON.stringify(data));
                     }
                 });
             }
@@ -1066,6 +1096,9 @@ require_once('application/libraries/EI_HDR.php');
                         $('.preloader').hide();
                         var result=JSON.parse(res)
                         BTDTL_SEARCH_success_showflex(result);
+                    },
+                    error: function (data) {
+                        alert('error in getting' + JSON.stringify(data));
                     }
                 });
             }
@@ -1082,6 +1115,9 @@ require_once('application/libraries/EI_HDR.php');
                         $('.preloader').hide();
                         var result=JSON.parse(res)
                         BTDTL_SEARCH_success_showflex(result);
+                    },
+                    error: function (data) {
+                        alert('error in getting' + JSON.stringify(data));
                     }
                 });
             }
@@ -1098,6 +1134,9 @@ require_once('application/libraries/EI_HDR.php');
                         $('.preloader').hide();
                         var result=JSON.parse(res)
                         BTDTL_SEARCH_success_showflex(result);
+                    },
+                    error: function (data) {
+                        alert('error in getting' + JSON.stringify(data));
                     }
                 });
             }
@@ -1114,6 +1153,9 @@ require_once('application/libraries/EI_HDR.php');
                         $('.preloader').hide();
                         var result=JSON.parse(res)
                         BTDTL_SEARCH_success_showflex(result);
+                    },
+                    error: function (data) {
+                        alert('error in getting' + JSON.stringify(data));
                     }
                 });
             }
@@ -1130,6 +1172,9 @@ require_once('application/libraries/EI_HDR.php');
                         $('.preloader').hide();
                         var result=JSON.parse(res)
                         BTDTL_SEARCH_success_showflex(result);
+                    },
+                    error: function (data) {
+                        alert('error in getting' + JSON.stringify(data));
                     }
                 });
             }
@@ -1146,6 +1191,9 @@ require_once('application/libraries/EI_HDR.php');
                         $('.preloader').hide();
                         var result=JSON.parse(res)
                         BTDTL_SEARCH_success_showflex(result);
+                    },
+                    error: function (data) {
+                        alert('error in getting' + JSON.stringify(data));
                     }
                 });
             }
@@ -1162,6 +1210,9 @@ require_once('application/libraries/EI_HDR.php');
                         $('.preloader').hide();
                         var result=JSON.parse(res)
                         BTDTL_SEARCH_success_showflex(result);
+                    },
+                    error: function (data) {
+                        alert('error in getting' + JSON.stringify(data));
                     }
                 });
             }
@@ -1178,6 +1229,9 @@ require_once('application/libraries/EI_HDR.php');
                         $('.preloader').hide();
                         var result=JSON.parse(res)
                         BTDTL_SEARCH_success_showflex(result);
+                    },
+                    error: function (data) {
+                        alert('error in getting' + JSON.stringify(data));
                     }
                 });
             }
@@ -1194,6 +1248,9 @@ require_once('application/libraries/EI_HDR.php');
                         $('.preloader').hide();
                         var result=JSON.parse(res)
                         BTDTL_SEARCH_success_showflex(result);
+                    },
+                    error: function (data) {
+                        alert('error in getting' + JSON.stringify(data));
                     }
                 });
             }
@@ -1210,6 +1267,9 @@ require_once('application/libraries/EI_HDR.php');
                         $('.preloader').hide();
                         var result=JSON.parse(res)
                         BTDTL_SEARCH_success_showflex(result);
+                    },
+                    error: function (data) {
+                        alert('error in getting' + JSON.stringify(data));
                     }
                 });
             }
@@ -1226,6 +1286,9 @@ require_once('application/libraries/EI_HDR.php');
                         $('.preloader').hide();
                         var result=JSON.parse(res)
                         BTDTL_SEARCH_success_showflex(result);
+                    },
+                    error: function (data) {
+                        alert('error in getting' + JSON.stringify(data));
                     }
                 });
             }
@@ -1242,6 +1305,9 @@ require_once('application/libraries/EI_HDR.php');
                         $('.preloader').hide();
                         var result=JSON.parse(res)
                         BTDTL_SEARCH_success_showflex(result);
+                    },
+                    error: function (data) {
+                        alert('error in getting' + JSON.stringify(data));
                     }
                 });
             }
@@ -1258,6 +1324,9 @@ require_once('application/libraries/EI_HDR.php');
                         $('.preloader').hide();
                         var result=JSON.parse(res)
                         BTDTL_SEARCH_success_showflex(result);
+                    },
+                    error: function (data) {
+                        alert('error in getting' + JSON.stringify(data));
                     }
                 });
             }
@@ -1274,6 +1343,9 @@ require_once('application/libraries/EI_HDR.php');
                         $('.preloader').hide();
                         var result=JSON.parse(res)
                         BTDTL_SEARCH_success_showflex(result);
+                    },
+                    error: function (data) {
+                        alert('error in getting' + JSON.stringify(data));
                     }
                 });
             }
@@ -1290,6 +1362,9 @@ require_once('application/libraries/EI_HDR.php');
                         $('.preloader').hide();
                         var result=JSON.parse(res)
                         BTDTL_SEARCH_success_showflex(result);
+                    },
+                    error: function (data) {
+                        alert('error in getting' + JSON.stringify(data));
                     }
                 });
             }
@@ -1306,6 +1381,9 @@ require_once('application/libraries/EI_HDR.php');
                         $('.preloader').hide();
                         var result=JSON.parse(res)
                         BTDTL_SEARCH_success_showflex(result);
+                    },
+                    error: function (data) {
+                        alert('error in getting' + JSON.stringify(data));
                     }
                 });
             }
@@ -1322,6 +1400,9 @@ require_once('application/libraries/EI_HDR.php');
                         $('.preloader').hide();
                         var result=JSON.parse(res)
                         BTDTL_SEARCH_success_showflex(result);
+                    },
+                    error: function (data) {
+                        alert('error in getting' + JSON.stringify(data));
                     }
                 });
             }
@@ -1335,6 +1416,9 @@ require_once('application/libraries/EI_HDR.php');
                         $('.preloader').hide();
                         var result=JSON.parse(res)
                         BTDTL_SEARCH_success_showflex(result);
+                    },
+                    error: function (data) {
+                        alert('error in getting' + JSON.stringify(data));
                     }
                 });
             }
@@ -1348,6 +1432,9 @@ require_once('application/libraries/EI_HDR.php');
                         $('.preloader').hide();
                         var result=JSON.parse(res)
                         BTDTL_SEARCH_success_showflex(result);
+                    },
+                    error: function (data) {
+                        alert('error in getting' + JSON.stringify(data));
                     }
                 });
             }
@@ -1361,6 +1448,9 @@ require_once('application/libraries/EI_HDR.php');
                         $('.preloader').hide();
                         var result=JSON.parse(res)
                         BTDTL_SEARCH_success_showflex(result);
+                    },
+                    error: function (data) {
+                        alert('error in getting' + JSON.stringify(data));
                     }
                 });
             }
@@ -1374,6 +1464,9 @@ require_once('application/libraries/EI_HDR.php');
                         $('.preloader').hide();
                         var result=JSON.parse(res)
                         BTDTL_SEARCH_success_showflex(result);
+                    },
+                    error: function (data) {
+                        alert('error in getting' + JSON.stringify(data));
                     }
                 });
             }
@@ -1387,6 +1480,9 @@ require_once('application/libraries/EI_HDR.php');
                         $('.preloader').hide();
                         var result=JSON.parse(res)
                         BTDTL_SEARCH_success_showflex(result);
+                    },
+                    error: function (data) {
+                        alert('error in getting' + JSON.stringify(data));
                     }
                 });
             }
@@ -1400,6 +1496,9 @@ require_once('application/libraries/EI_HDR.php');
                         $('.preloader').hide();
                         var result=JSON.parse(res)
                         BTDTL_SEARCH_success_showflex(result);
+                    },
+                    error: function (data) {
+                        alert('error in getting' + JSON.stringify(data));
                     }
                 });
             }
@@ -1415,6 +1514,9 @@ require_once('application/libraries/EI_HDR.php');
                         $('.preloader').hide();
                         var result=JSON.parse(res)
                         BTDTL_SEARCH_success_showflex(result);
+                    },
+                    error: function (data) {
+                        alert('error in getting' + JSON.stringify(data));
                     }
                 });
             }
@@ -1430,6 +1532,9 @@ require_once('application/libraries/EI_HDR.php');
                         $('.preloader').hide();
                         var result=JSON.parse(res)
                         BTDTL_SEARCH_success_showflex(result);
+                    },
+                    error: function (data) {
+                        alert('error in getting' + JSON.stringify(data));
                     }
                 });
             }
@@ -1445,6 +1550,9 @@ require_once('application/libraries/EI_HDR.php');
                         $('.preloader').hide();
                         var result=JSON.parse(res)
                         BTDTL_SEARCH_success_showflex(result);
+                    },
+                    error: function (data) {
+                        alert('error in getting' + JSON.stringify(data));
                     }
                 });
             }
@@ -2146,6 +2254,9 @@ require_once('application/libraries/EI_HDR.php');
                     var result=JSON.parse(data)
                     BTDTL_SEARCH_success_showflex(result);
                     airconprevious_id=undefined;
+                },
+                error: function (data) {
+                    alert('error in getting' + JSON.stringify(data));
                 }
             });
         }) ;
@@ -2216,6 +2327,9 @@ require_once('application/libraries/EI_HDR.php');
                     var result=JSON.parse(data)
                     BTDTL_SEARCH_success_showflex(result);
                     carparkprevious_id=undefined;
+                },
+                error: function (data) {
+                    alert('error in getting' + JSON.stringify(data));
                 }
             });
         }) ;
@@ -2323,6 +2437,9 @@ require_once('application/libraries/EI_HDR.php');
                     var result=JSON.parse(data)
                     BTDTL_SEARCH_success_showflex(result);
                     digitalprevious_id=undefined;
+                },
+                error: function (data) {
+                    alert('error in getting' + JSON.stringify(data));
                 }
             });
         }) ;
@@ -2400,6 +2517,9 @@ require_once('application/libraries/EI_HDR.php');
                     var result=JSON.parse(data)
                     BTDTL_SEARCH_success_showflex(result);
                     electricprevious_id=undefined;
+                },
+                error: function (data) {
+                    alert('error in getting' + JSON.stringify(data));
                 }
             });
         }) ;
@@ -2627,9 +2747,13 @@ require_once('application/libraries/EI_HDR.php');
                 url: controller_url+"starhubupdate",
                 data:{'primaryid':primaryid,'unitid':unitid,'unitno':unitno,'invoiceto':invoiceto,'acctno':acctno,'appldate':appldate,'cablestartdte':cablestartdte,'cableenddate':cableenddate,'internetstartdte':internetstartdte,'internetenddate':internetenddate,'ssid':ssid,'pwd':pwd,'cablebox':cablebox,'modemno':modemno,'basicgroup':basicgroup,'addchnnl':addchnnl,'comments':comments,'BTDTL_SEARCH_lb_searchoptions':$('#BTDTL_SEARCH_lb_searchoptions').val(),'BTDTL_SEARCH_lb_expense_type':$('#BTDTL_SEARCH_lb_expense_type').val(),'searchvalue':searchvalue,'startdate':startdate,'BTDTL_SEARCH_starhubid':BTDTL_SEARCH_starhubid},
                 success: function(data) {
+                    alert(data)
                     $('.preloader').hide();
                     var result=JSON.parse(data)
                     BTDTL_SEARCH_success_showflex(result);
+                },
+                error: function (data) {
+                    alert('error in getting' + JSON.stringify(data));
                 }
             });
             }
@@ -2799,7 +2923,7 @@ require_once('application/libraries/EI_HDR.php');
                         </div>
                     <div class="form-group">
                         <label class="col-sm-2">COMMENTS</label>
-                            <div class="col-sm-3"><textarea name="BDTL_INPUT_ta_aircon_comments" id="BDTL_INPUT_ta_aircon_comments" class="BDTL_INPUT_class_save_valid BDTL_INPUT_comments form-control"></textarea>
+                            <div class="col-sm-4"><textarea placeholder="Comments" name="BDTL_INPUT_ta_aircon_comments" id="BDTL_INPUT_ta_aircon_comments" class="BDTL_INPUT_class_save_valid BDTL_INPUT_comments form-control" ></textarea>
                             </div>
                     </div>
                     <div class="form-group">
@@ -2812,11 +2936,11 @@ require_once('application/libraries/EI_HDR.php');
                 <div id='BDTL_INPUT_div_carpark' hidden>
                         <div class="form-group">
                             <label class="col-sm-2">CAR NO<em>*</em></label>
-                            <div class="col-sm-2"><input style="width:95px" type="text" name="BDTL_INPUT_tb_exp_carno" id="BDTL_INPUT_tb_exp_carno" maxlength='9' class='alphanumeric BDTL_INPUT_class_save_valid form-control'/></div>
+                            <div class="col-sm-2"><input style="width:95px" type="text" name="BDTL_INPUT_tb_exp_carno" id="BDTL_INPUT_tb_exp_carno" maxlength='9' class='alphanumeric BDTL_INPUT_class_save_valid form-control' placeholder="Car No"/></div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-2">COMMENTS</label>
-                            <div class="col-sm-3"><textarea name="BDTL_INPUT_ta_carpark_comments" id="BDTL_INPUT_ta_carpark_comments" class="BDTL_INPUT_class_save_valid BDTL_INPUT_comments form-control"></textarea></div>
+                            <div class="col-sm-4"><textarea placeholder="Comments" name="BDTL_INPUT_ta_carpark_comments" id="BDTL_INPUT_ta_carpark_comments" class="BDTL_INPUT_class_save_valid BDTL_INPUT_comments form-control" ></textarea></div>
                         </div>
                 </div>
                 <!--------------------------------------------------CODING TO CREATE DIGITAL VOICE EXPENSE FORM------------------------------------------------------>
@@ -2830,15 +2954,15 @@ require_once('application/libraries/EI_HDR.php');
                         </div>
                         <div class="form-group">
                             <label class="col-sm-2">DIGITAL VOICE NO<em>*</em></label>
-                            <div class="col-sm-2"><input style="width:85px" type="text" name="BDTL_INPUT_tb_exp_digivoiceno" id="BDTL_INPUT_tb_exp_digivoiceno" class="numbersonly BDTL_INPUT_class_save_valid form-control" maxlength="8"/></div>
+                            <div class="col-sm-2"><input style="width:85px" type="text" name="BDTL_INPUT_tb_exp_digivoiceno" id="BDTL_INPUT_tb_exp_digivoiceno" class="numbersonly BDTL_INPUT_class_save_valid form-control" placeholder="Digital Voice No" maxlength="8"/></div>
                         </div>
                         <div class="form-group">
                              <label class="col-sm-2">DIGITAL ACCOUNT NO<em>*</em></label>
-                            <div class="col-sm-2"><input style="width:120px" type="text" name="BDTL_INPUT_tb_exp_digiaccno" id="BDTL_INPUT_tb_exp_digiaccno" maxlength="11" class='alphanumericdot BDTL_INPUT_class_save_valid form-control'/></div>
+                            <div class="col-sm-2"><input style="width:120px" type="text" name="BDTL_INPUT_tb_exp_digiaccno" placeholder="Digital Account no" id="BDTL_INPUT_tb_exp_digiaccno" maxlength="11" class='alphanumericdot BDTL_INPUT_class_save_valid form-control'/></div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-2">COMMENTS</label>
-                            <div class="col-sm-3"><textarea name="BDTL_INPUT_ta_digitalvoice_comments" id="BDTL_INPUT_ta_digitalvoice_comments" class="BDTL_INPUT_class_save_valid BDTL_INPUT_comments form-control"></textarea></div>
+                            <div class="col-sm-4"><textarea name="BDTL_INPUT_ta_digitalvoice_comments" id="BDTL_INPUT_ta_digitalvoice_comments" placeholder="Comments" class="BDTL_INPUT_class_save_valid BDTL_INPUT_comments form-control"></textarea></div>
                         </div>
                 </div>
                 <!-----------------------------------------CODING TO CREATE ELECTRICITY EXPENSE FORM-------------------------------------------------------------->
@@ -2852,7 +2976,7 @@ require_once('application/libraries/EI_HDR.php');
                         </div>
                         <div class="form-group">
                             <label class="col-sm-2">COMMENTS</label>
-                            <div class="col-sm-3"><textarea name="BDTL_INPUT_ta_ectricity_comments" id="BDTL_INPUT_ta_ectricity_comments" class="BDTL_INPUT_class_save_valid BDTL_INPUT_comments form-control"></textarea></div>
+                            <div class="col-sm-4"><textarea placeholder="Comments" name="BDTL_INPUT_ta_ectricity_comments" id="BDTL_INPUT_ta_ectricity_comments" class="BDTL_INPUT_class_save_valid BDTL_INPUT_comments form-control"></textarea></div>
                         </div>
                 </div>
                 <!-----------------------------------------------------------CODING TO CREATE STARHUB EXPENSE FORM------------------------------------------------------>
@@ -2866,55 +2990,80 @@ require_once('application/libraries/EI_HDR.php');
                         </div>
                         <div class="form-group">
                             <label class="col-sm-2">STARHUB ACCOUNT NO<em>*</em></label>
-                            <div class="col-sm-2"><input style="width:120px" type='text' name='BDTL_INPUT_tb_starhub_account_no' id='BDTL_INPUT_tb_starhub_account_no' maxlength='11' class='alphanumericdot BDTL_INPUT_class_save_valid form-control'/></div>
+                            <div class="col-sm-2"><input style="width:120px" type='text' placeholder="Account no" name='BDTL_INPUT_tb_starhub_account_no' id='BDTL_INPUT_tb_starhub_account_no' maxlength='11' class='alphanumericdot BDTL_INPUT_class_save_valid form-control'/></div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-2">APPL DATE</label>
-                            <div class="col-sm-2"><input style="width:100px" type="text" name="BDTL_INPUT_db_appl_date" id="BDTL_INPUT_db_appl_date" class='BDTL_INPUT_class_datebox BDTL_INPUT_class_save_valid datenonmandtry form-control'/></div>
+                            <div class="col-sm-2">
+                                <div class="input-group addon">
+                                    <input style="width:100px" type="text" placeholder="Appl Date" name="BDTL_INPUT_db_appl_date" id="BDTL_INPUT_db_appl_date" class='BDTL_INPUT_class_datebox BDTL_INPUT_class_save_valid datenonmandtry form-control'/>
+                                    <label for="BDTL_INPUT_db_appl_date" class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></label>
+                                </div>
+                            </div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-2">CABLE START DATE</label>
-                            <div class="col-sm-2"><input style="width:100px" type="text" name="BDTL_INPUT_db_cable_startdate"  id="BDTL_INPUT_db_cable_startdate" class='BDTL_INPUT_class_datebox BDTL_INPUT_class_save_valid datenonmandtry form-control'/></div>
+                            <div class="col-sm-2">
+                                <div class="input-group addon">
+                                    <input style="width:100px" type="text" placeholder="Cable StartDate" name="BDTL_INPUT_db_cable_startdate"  id="BDTL_INPUT_db_cable_startdate" class='BDTL_INPUT_class_datebox BDTL_INPUT_class_save_valid datenonmandtry form-control'/>
+                                    <label for="BDTL_INPUT_db_cable_startdate" class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></label>
+                                </div>
+                            </div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-2">CABLE END DATE</label>
-                            <div class="col-sm-2"><input style="width:100px" type='text' name='BDTL_INPUT_db_cable_enddate' id='BDTL_INPUT_db_cable_enddate' class='BDTL_INPUT_class_datebox BDTL_INPUT_class_save_valid BDTL_INPUT_dateInput datenonmandtry form-control'/></div>
+                            <div class="col-sm-2">
+                                <div class="input-group addon">
+                                    <input style="width:100px" type='text' placeholder="Cable Enddate" name='BDTL_INPUT_db_cable_enddate' id='BDTL_INPUT_db_cable_enddate' class='BDTL_INPUT_class_datebox BDTL_INPUT_class_save_valid BDTL_INPUT_dateInput datenonmandtry form-control'/>
+                                    <label for="BDTL_INPUT_db_cable_enddate" class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></label>
+                                </div>
+                            </div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-2">INTERNET START DATE</label>
-                            <div class="col-sm-2"><input style="width:100px" type='text' name='BDTL_INPUT_db_internet_startdate' id='BDTL_INPUT_db_internet_startdate' class='BDTL_INPUT_class_internet_datebox BDTL_INPUT_class_save_valid datenonmandtry form-control'/></div>
+                            <div class="col-sm-2">
+                                <div class="input-group addon">
+                                    <input style="width:100px" type='text' placeholder="Internet Startdate" name='BDTL_INPUT_db_internet_startdate' id='BDTL_INPUT_db_internet_startdate' class='BDTL_INPUT_class_internet_datebox BDTL_INPUT_class_save_valid datenonmandtry form-control'/>
+                                    <label for="BDTL_INPUT_db_internet_startdate" class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></label>
+                                </div>
+                            </div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-2">INTERNET END DATE</label>
-                            <div class="col-sm-2"><input style="width:100px"type='text' name='BDTL_INPUT_db_internet_enddate' id='BDTL_INPUT_db_internet_enddate' class='BDTL_INPUT_class_internet_datebox BDTL_INPUT_class_save_valid BDTL_INPUT_dateInput datenonmandtry form-control'/></div>
+                            <div class="col-sm-2">
+                                <div class="input-group addon">
+                                <input style="width:100px"type='text' placeholder="Internet Enddate" name='BDTL_INPUT_db_internet_enddate' id='BDTL_INPUT_db_internet_enddate' class='BDTL_INPUT_class_internet_datebox BDTL_INPUT_class_save_valid BDTL_INPUT_dateInput datenonmandtry form-control'/>
+                                    <label for="BDTL_INPUT_db_internet_enddate" class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></label>
+                                </div>
+                            </div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-2">SSID</label>
-                            <div class="col-sm-3"><input type='text' name='BDTL_INPUT_tb_ssid' id='BDTL_INPUT_tb_ssid' maxlength='25' class="general BDTL_INPUT_class_save_valid form-control"/></div>
+                            <div class="col-sm-3"><input type='text' placeholder="SSID" name='BDTL_INPUT_tb_ssid' id='BDTL_INPUT_tb_ssid' maxlength='25' class="general BDTL_INPUT_class_save_valid form-control"/></div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-2">PWD</label>
-                            <div class="col-sm-3"><input type='text' name='BDTL_INPUT_tb_pwd' id='BDTL_INPUT_tb_pwd' maxlength='25' class="general BDTL_INPUT_class_save_valid form-control"/></div>
+                            <div class="col-sm-3"><input type='text' placeholder="PWD" name='BDTL_INPUT_tb_pwd' id='BDTL_INPUT_tb_pwd' maxlength='25' class="general BDTL_INPUT_class_save_valid form-control"/></div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-2">CABLE BOX SERIAL NO</label>
-                            <div class="col-sm-3"><input type='text' name='BDTL_INPUT_tb_cablebox_sno' id='BDTL_INPUT_tb_cablebox_sno' maxlength='50' class="autosize BDTL_INPUT_class_save_valid form-control"/></div>
+                            <div class="col-sm-3"><input type='text' placeholder="Cablebox serialno" name='BDTL_INPUT_tb_cablebox_sno' id='BDTL_INPUT_tb_cablebox_sno' maxlength='50' class="autosize BDTL_INPUT_class_save_valid form-control"/></div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-2">MODEM SERIAL NO</label>
-                            <div class="col-sm-3"><input type='text' name='BDTL_INPUT_tb_modem_sno' id='BDTL_INPUT_tb_modem_sno' maxlength='50' class="autosize BDTL_INPUT_class_save_valid form-control"/></div>
+                            <div class="col-sm-3"><input type='text' placeholder="Modemserialno" name='BDTL_INPUT_tb_modem_sno' id='BDTL_INPUT_tb_modem_sno' maxlength='50' class="autosize BDTL_INPUT_class_save_valid form-control"/></div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-2">BASIC GROUP</label>
-                            <div class="col-sm-3"><textarea name="BDTL_INPUT_ta_basic_group" id="BDTL_INPUT_ta_basic_group" class="BDTL_INPUT_class_save_valid BDTL_INPUT_comments form-control"></textarea></div>
+                            <div class="col-sm-4"><textarea name="BDTL_INPUT_ta_basic_group" placeholder="BasicGroup" id="BDTL_INPUT_ta_basic_group" class="BDTL_INPUT_class_save_valid BDTL_INPUT_comments form-control"></textarea></div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-2">ADDITIONAL CHANNEL</label>
-                            <div class="col-sm-3"><textarea name="BDTL_INPUT_ta_addtl_ch" id="BDTL_INPUT_ta_addtl_ch" class="BDTL_INPUT_class_save_valid BDTL_INPUT_comments form-control"></textarea></div>
+                            <div class="col-sm-4"><textarea placeholder="Additional Channel" name="BDTL_INPUT_ta_addtl_ch" id="BDTL_INPUT_ta_addtl_ch" class="BDTL_INPUT_class_save_valid BDTL_INPUT_comments form-control"></textarea></div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-2">COMMENTS</label>
-                            <div class="col-sm-3"><textarea name="BDTL_INPUT_ta_starhub_comments" id="BDTL_INPUT_ta_starhub_comments" class="BDTL_INPUT_class_save_valid BDTL_INPUT_comments form-control"></textarea></div>
+                            <div class="col-sm-4"><textarea placeholder="Comments" name="BDTL_INPUT_ta_starhub_comments" id="BDTL_INPUT_ta_starhub_comments" class="BDTL_INPUT_class_save_valid BDTL_INPUT_comments form-control"></textarea></div>
                         </div>
                 </div>
                     <div class="col-lg-offset-2" id="BDTL_INPUT_tble_btn" hidden>

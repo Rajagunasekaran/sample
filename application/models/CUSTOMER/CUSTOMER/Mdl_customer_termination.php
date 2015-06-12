@@ -643,11 +643,18 @@ class Mdl_customer_termination extends CI_Model{
                     }
                     $cal_createflag=$this->Mdl_eilib_calender->CTermExtn_Calevent($cal,$CTERM_custid,$CTERM_recver,"TERMINATION",$CTERM_updateflag);
                 }
-                if($cal_delflag==1 && $cal_createflag==1){
+                if($cal_delflag==1 && $cal_createflag==1)
+                {
                     $this->db->trans_commit();
+                    $CTERM_updateflag=1;
                 }
-                else{
+                else
+                {
                     $this->db->trans_rollback();
+                    if($CTERM_customerptd!=""&&$CTERM_customerptd!='')
+                    {
+                        $this->Mdl_eilib_calender->CTermExtn_Calevent($cal,$CTERM_custid,$CTERM_recver,"TERMINATION",0);
+                    }
                     $CTERM_updateflag=0;
                 }
             }
@@ -656,9 +663,9 @@ class Mdl_customer_termination extends CI_Model{
         }
         catch(Exception $e)
         {
-            if($CTERM_customerptd!=""&&$CTERM_customerptd!='undefined')
+            if($CTERM_customerptd!=""&&$CTERM_customerptd!='')
             {
-                $this->Calender->CTermExtn_Calevent($cal,$CTERM_custid,$CTERM_recver,"TERMINATION",0);
+                $this->Mdl_eilib_calender->CTermExtn_Calevent($cal,$CTERM_custid,$CTERM_recver,"TERMINATION",0);
             }
             return "SCRIPT EXCEPTION:".$e->getMessage();
         }

@@ -148,7 +148,6 @@ class Mdl_finance_extract_deposit_pdf extends CI_Model{
         $submitarray=json_decode($submitarray,true);
         $EmailDisplayname=$this->Mdl_eilib_common_function->Get_MailDisplayName('DEPOSIT_DEDUCTION');
         $pdfheader=$selectedunit.'-'.$customername;
-        $image_content_id=$pdfheader;
         try {
             $message = new Message();
             $message->setSender($EmailDisplayname.'<'.$UserStamp.'>');
@@ -157,10 +156,14 @@ class Mdl_finance_extract_deposit_pdf extends CI_Model{
             $message->setTextBody($body);
             for ($i = 0; $i < count($submitarray); $i++) {
                 $data = implode(array_map("chr", $submitarray[$i]));
-                $message->addAttachment($pdfheader . '.pdf', $data, $image_content_id);
+                $message->addAttachment($pdfheader . '.pdf', $data);
             }
-            $message->send();
-            return 'DDC_flag_extract';
+            if(!$message->send()){
+                return 'mailnotsent';
+            }
+            else{
+                return 'DDC_flag_extract';
+            }
         }
         catch (InvalidArgumentException $e) {
             return $e->getMessage();

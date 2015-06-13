@@ -1,5 +1,6 @@
 <?php
 require_once('application/libraries/EI_HDR.php');
+require_once('application/libraries/Chart.php');
 ?>
 <html>
 <head>
@@ -539,19 +540,23 @@ $(document).ready(function(){
                     <div id="chart_fromto" hidden>
                         <div class="form-group">
                             <label class="col-sm-offset-2 col-sm-1">FROM</label>
-                            <div class="col-sm-2">
-                                <div class="input-group addon">
-                                    <input id="chart_from" name="chart_from" type="text" class="date-picker datemandtry form-control chartdatepicker" placeholder="From"/>
-                                    <label for="chart_from" class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></label>
+                            <div class="col-sm-9" style="padding-left:0px;">
+                                <div class="col-sm-3">
+                                    <div class="input-group addon">
+                                        <input id="chart_from" name="chart_from" type="text" class="date-picker datemandtry form-control chartdatepicker" placeholder="From"/>
+                                        <label for="chart_from" class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></label>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-offset-2 col-sm-1">TO</label>
-                            <div class="col-sm-2">
-                                <div class="input-group addon">
-                                    <input id="chart_to" name="chart_to" type="text" class="date-picker datemandtry form-control chartdatepicker" placeholder="To"/>
-                                    <label for="chart_to" class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></label>
+                            <div class="col-sm-9" style="padding-left:0px;">
+                                <div class="col-sm-3">
+                                    <div class="input-group addon">
+                                        <input id="chart_to" name="chart_to" type="text" class="date-picker datemandtry form-control chartdatepicker" placeholder="To"/>
+                                        <label for="chart_to" class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></label>
+                                    </div>
                                 </div>
                             </div>
                         </div>

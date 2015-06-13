@@ -2014,250 +2014,248 @@ require_once('application/libraries/EI_HDR.php');
     <div class="title text-center"><h4><b>UNIT CREATION / SEARCH AND UPDATE</b></h4></div>
     <form id="unit_createupdate_form" name="unit_createupdate_form" class="form-horizontal content" role="form">
         <div class="panel-body">
-            <fieldset>
-                <div class="form-group" id="unitselectoption">
-                    <div class="col-md-10">
-                        <div class="radio">
-                            <label><input type="radio" class="UNIT_selectform" value="unitcreate" name="UNIT_form_select" id="UNIT_form_unitcreate">UNIT CREATION</label>
-                        </div>
+            <div class="form-group" id="unitselectoption">
+                <div class="col-md-10">
+                    <div class="radio">
+                        <label><input type="radio" class="UNIT_selectform" value="unitcreate" name="UNIT_form_select" id="UNIT_form_unitcreate">UNIT CREATION</label>
                     </div>
-                    <div class="col-md-10">
-                        <div class="radio">
-                            <label><input type="radio" class="UNIT_selectform" value="unitsearchupdate" name="UNIT_form_select" id="UNIT_form_unitupdate">UNIT SEARCH AND UPDATE</label>
+                </div>
+                <div class="col-md-10">
+                    <div class="radio">
+                        <label><input type="radio" class="UNIT_selectform" value="unitsearchupdate" name="UNIT_form_select" id="UNIT_form_unitupdate">UNIT SEARCH AND UPDATE</label>
+                    </div>
+                </div>
+            </div>
+            <div id="UC_form_unitcreation" hidden>
+                <div class="form-group" id="UC_unitno">
+                    <label class="col-sm-2">UNIT NUMBER <em>*</em></label>
+                    <div class="col-sm-2"><input type="text" name="UC_tb_unitno" id="UC_tb_unitno" maxlength=4 class="UC_class_numonly numonly form-control" placeholder="Unit Number"></div>
+                    <div class="col-sm-4 errpadding errormsg" id="UC_div_errunitno" name="UC_div_errunitno">
+                    </div>
+                </div>
+                <div class="form-group" id="UC_accesscard">
+                    <label class="col-sm-2">ACCESS CARD </label>
+                    <div class="col-sm-2"><input type="text" name="UC_tb_accesscard" id="UC_tb_accesscard" class="form-control UC_class_numonly" maxlength=7 placeholder="Access Card"></div>
+                    <div class="col-sm-4 errpadding errormsg" id="UC_div_errcard" name="UC_div_errcard"> </div>
+                </div>
+                <div class="form-group" id="UC_roomtype">
+                    <label class="col-sm-2">ROOM TYPE </label>
+                    <div class="col-sm-3"><select name="UC_lb_roomtype" id="UC_lb_roomtype" class="form-control"></select></div>
+                    <div class="col-sm-2 colsmhf"><input class="btn btn-info" type="button"  name="UC_btn_addroomtype" value="ADD" id="UC_btn_addroomtype"/></div>
+                    <div class="col-sm-4 errpadding errormsg" id="UC_div_errroom" name="UC_div_errroom"> </div>
+                </div>
+                <div class="form-group" id="UC_unitrent">
+                    <label class="col-sm-2">UNIT RENTAL <em>*</em></label>
+                    <div class="col-sm-2"><input type="text" name="UC_tb_unitrentalamt" id="UC_tb_unitrentalamt" maxlength=4 class="UC_class_numonly form-control" placeholder="Unit Rental"></div>
+                </div>
+                <div class="form-group" id="UC_unitdepo">
+                    <label class="col-sm-2">UNIT DEPOSIT </label>
+                    <div class="col-sm-2"><input type="text" name="UC_tb_unitdeposite" id="UC_tb_unitdeposite" maxlength=5 class="UC_class_numonly form-control" placeholder="Unit Deposit"></div>
+                </div>
+                <div class="form-group" id="UC_startdate">
+                    <label class="col-sm-2">START PERIOD <em>*</em></label>
+                    <div class="col-sm-2">
+                        <div class="input-group addon">
+                            <input id="UC_db_startdate" name="UC_db_startdate" type="text" class="date-picker datemandtry form-control" placeholder="Start Date"/>
+                            <label for="UC_db_startdate" class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></label>
                         </div>
                     </div>
                 </div>
-                <div id="UC_form_unitcreation" hidden>
-                    <div class="form-group" id="UC_unitno">
-                        <label class="col-sm-2">UNIT NUMBER <em>*</em></label>
-                        <div class="col-sm-2"><input type="text" name="UC_tb_unitno" id="UC_tb_unitno" maxlength=4 class="UC_class_numonly numonly form-control" placeholder="Unit Number"></div>
-                        <div class="col-sm-4 errpadding errormsg" id="UC_div_errunitno" name="UC_div_errunitno">
+                <div class="form-group" id="UC_enddate">
+                    <label class="col-sm-2">END PERIOD <em>*</em></label>
+                    <div class="col-sm-2">
+                        <div class="input-group addon">
+                            <input id="UC_db_enddate" name="UC_db_enddate" type="text" class="date-picker datemandtry form-control" placeholder="End Date"/>
+                            <label for="UC_db_enddate" class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></label>
                         </div>
                     </div>
-                    <div class="form-group" id="UC_accesscard">
-                        <label class="col-sm-2">ACCESS CARD </label>
-                        <div class="col-sm-2"><input type="text" name="UC_tb_accesscard" id="UC_tb_accesscard" class="form-control UC_class_numonly" maxlength=7 placeholder="Access Card"></div>
-                        <div class="col-sm-4 errpadding errormsg" id="UC_div_errcard" name="UC_div_errcard"> </div>
+                </div>
+                <div class="form-group" id="UC_accntnumber">
+                    <label class="col-sm-2">ACCOUNT NUMBER </label>
+                    <div class="col-sm-2"><input type="text" name="UC_tb_accntnumber" id="UC_tb_accntnumber" placeholder="Account Number" maxlength="15" class="numonly UC_class_numonly form-control"/></div>
+                </div>
+                <div class="form-group" id="UC_accntname">
+                    <label class="col-sm-2">ACCOUNT NAME </label>
+                    <div class="col-sm-3"><input type="text" name="UC_tb_accntname" id="UC_tb_accntname" placeholder="Account Name" maxlength="25" class="form-control"/></div>
+                </div>
+                <div class="form-group" id="UC_bankcode">
+                    <label class="col-sm-2">BANK CODE</label>
+                    <div class="col-sm-2"><input type="text" name="UC_tb_bankcode" id="UC_tb_bankcode" maxlength=5 class="numonly UC_class_numonly form-control" placeholder="Bank Code"/></div>
+                </div>
+                <div class="form-group" id="UC_branchcode">
+                    <label class="col-sm-2">BRANCH CODE</label>
+                    <div class="col-sm-2"><input type="text" name="UC_tb_branchcode" id="UC_tb_branchcode" maxlength=5 class="numonly UC_class_numonly form-control" placeholder="Branch Code"/></div>
+                </div>
+                <div class="form-group" id="UC_bankaddress">
+                    <label class="col-sm-2">BANK ADDRESS</label>
+                    <div class="col-sm-4"><textarea name="UC_ta_address" id="UC_ta_address" placeholder="Bank Address" rows="5" class="form-control"></textarea></div>
+                </div>
+                <div class="form-group" id="UC_doorcode">
+                    <label class="col-sm-2">DOOR CODE</label>
+                    <div class="col-sm-2"><input type="text" name="UNIT_tb_doorcode" id="UNIT_tb_doorcode" class="UC_class_numonly numonly form-control" maxlength=10 placeholder="Door Code"/></div>
+                    <div class="col-sm-4 errpadding" id="UC_doorcodeerr">
+                        <label id="UC_lbl_doorcode" name="UC_lbl_doorcode" class="errormsg"></label>
                     </div>
-                    <div class="form-group" id="UC_roomtype">
+                </div>
+                <div class="form-group" id="UC_weblogin">
+                    <label class="col-sm-2">WEB LOGIN</label>
+                    <div class="col-sm-2"><input type="text" name="UNIT_tb_weblogin" id="UNIT_tb_weblogin" class="form-control" maxlength=13 placeholder="Web Login"/></div>
+                    <div class="col-sm-4 errpadding" id="UC_weblogin">
+                        <label id="UC_lbl_weblogin" name="UC_lbl_weblogin" class="errormsg"></label>
+                    </div>
+                </div>
+                <div class="form-group" id="UC_webpass">
+                    <label class="col-sm-2">WEB PASSWORD</label>
+                    <div class="col-sm-2"><input type="text" name="UC_tb_webpass" id="UC_tb_webpass" class="UC_class_numonly numonly form-control" maxlength=6 placeholder="Web Password"/></div>
+                </div>
+                <div class="form-group" id="UC_stampdutydate">
+                    <label class="col-sm-2">STAMP DUTY DATE </label>
+                    <div class="col-sm-2">
+                        <div class="input-group addon">
+                            <input id="UC_db_stampdutydate" name="UC_db_stampdutydate" type="text" class="date-picker datemandtry form-control" placeholder="Stamp Duty Date"/>
+                            <label for="UC_db_stampdutydate" class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group" id="UC_stamptype">
+                    <label class="col-sm-2">STAMP DUTY TYPE </label>
+                    <div class="col-sm-3"><select name="UC_lb_stamptype" id="UC_lb_stamptype" class="form-control "></select></div>
+                    <div class="col-sm-2 colsmhf"><input class="btn btn-info" type="button" name="UC_btn_addstamptype" value="ADD" id="UC_btn_addstamptype"/></div>
+                    <div class="col-sm-4 errpadding errormsg" id="UC_div_errstamp" name="UC_div_errstamp"></div>
+                </div>
+                <div class="form-group" id="UC_stampamount">
+                    <label class="col-sm-2">STAMP DUTY AMOUNT </label>
+                    <div class="col-sm-2"><input type="text" name="UC_tb_stampamount" id="UC_tb_stampamount" placeholder="Stamp Duty Amount" class="UC_class_numonly numonly form-control"></div>
+                </div>
+                <div class="form-group" id="UC_comments">
+                    <label class="col-sm-2">COMMENTS</label>
+                    <div class="col-sm-4"><textarea name="UC_ta_comments" id="UC_ta_comments" placeholder="Comments" rows="5" class="form-control"></textarea></div>
+                </div>
+                <div class="form-group" id="UC_nonEI">
+                    <label class="col-sm-2">EI/NON_EI</label>
+                    <div class="radio">
+                        <label><input type="checkbox" name="UC_cb_nonEI" id="UC_cb_nonEI"></label>
+                    </div>
+                </div>
+                <div class="form-group" id="UC_buttons">
+                    <div class="col-sm-offset-1 col-sm-3">
+                        <input class="btn btn-info" type="button" id="UC_btn_submit" name="submit" value="SAVE" disabled/>
+                        <input class="btn btn-info" type="button" id="UC_btn_reset" name="RESET" value="RESET"/>
+                    </div>
+                </div>
+            </div>
+            <div id="USU_form_unitupdate" hidden>
+                <div class="form-group" id="USU_searchby">
+                    <label class="col-sm-2">SEARCH BY <em>*</em></label>
+                    <div class="col-sm-3"> <select name="USU_lb_searchby" id="USU_lb_searchby" class="form-control USU_formvalidation"></select></div>
+                </div>
+                <div class="form-group" id='USU_errmsg_roominventory' hidden>
+                    <lable class="col-lg-12 errormsg" id="USU_lbl_errmsg_roominventory"></lable>
+                </div>
+                <div class="form-group" id='USU_subheaderdiv' hidden>
+                    <lable class="col-lg-12 srctitle" id="USU_subheadermsg"></lable>
+                </div>
+                <div id="USU_carddiv" hidden>
+                    <div class="form-group" id="USU_unitno">
+                        <label class="col-sm-2">UNIT NUMBER </label>
+                        <div class="col-sm-2"> <select name="USU_lb_unitno" id="USU_lb_unitno" class="USU_all_searchby form-control USU_formvalidation"></select></div>
+                    </div>
+                    <div class="form-group" id="USU_cardtype">
+                        <label class="col-sm-2">TYPE OF CARD </label>
+                        <div class="col-sm-2"> <select name="USU_lb_typeofcard" id="USU_lb_typeofcard" class="form-control USU_formvalidation"></select></div>
+                        <div class="form-group errpadding" id='USU_stamperrdiv' hidden>
+                            <lable class="col-lg-4 errormsg" id="USU_lbl_errmsg_cardno"></lable>
+                        </div>
+                    </div>
+                    <div class="form-group" id="USU_cardno">
+                        <label class="col-sm-2">CARD NUMBER </label>
+                        <div class="col-sm-2"> <select name="USU_lb_cardno" id="USU_lb_cardno" class="form-control USU_formvalidation"></select></div>
+                    </div>
+                </div>
+                <div id="USU_roomdiv" hidden>
+                    <div class="form-group" id="USU_roomtype">
                         <label class="col-sm-2">ROOM TYPE </label>
-                        <div class="col-sm-3"><select name="UC_lb_roomtype" id="UC_lb_roomtype" class="form-control"></select></div>
-                        <div class="col-sm-2 colsmhf"><input class="btn btn-info" type="button"  name="UC_btn_addroomtype" value="ADD" id="UC_btn_addroomtype"/></div>
-                        <div class="col-sm-4 errpadding errormsg" id="UC_div_errroom" name="UC_div_errroom"> </div>
-                    </div>
-                    <div class="form-group" id="UC_unitrent">
-                        <label class="col-sm-2">UNIT RENTAL <em>*</em></label>
-                        <div class="col-sm-2"><input type="text" name="UC_tb_unitrentalamt" id="UC_tb_unitrentalamt" maxlength=4 class="UC_class_numonly form-control" placeholder="Unit Rental"></div>
-                    </div>
-                    <div class="form-group" id="UC_unitdepo">
-                        <label class="col-sm-2">UNIT DEPOSIT </label>
-                        <div class="col-sm-2"><input type="text" name="UC_tb_unitdeposite" id="UC_tb_unitdeposite" maxlength=5 class="UC_class_numonly form-control" placeholder="Unit Deposit"></div>
-                    </div>
-                    <div class="form-group" id="UC_startdate">
-                        <label class="col-sm-2">START PERIOD <em>*</em></label>
-                        <div class="col-sm-2">
-                            <div class="input-group addon">
-                                <input id="UC_db_startdate" name="UC_db_startdate" type="text" class="date-picker datemandtry form-control" placeholder="Start Date"/>
-                                <label for="UC_db_startdate" class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group" id="UC_enddate">
-                        <label class="col-sm-2">END PERIOD <em>*</em></label>
-                        <div class="col-sm-2">
-                            <div class="input-group addon">
-                                <input id="UC_db_enddate" name="UC_db_enddate" type="text" class="date-picker datemandtry form-control" placeholder="End Date"/>
-                                <label for="UC_db_enddate" class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group" id="UC_accntnumber">
-                        <label class="col-sm-2">ACCOUNT NUMBER </label>
-                        <div class="col-sm-2"><input type="text" name="UC_tb_accntnumber" id="UC_tb_accntnumber" placeholder="Account Number" maxlength="15" class="numonly UC_class_numonly form-control"/></div>
-                    </div>
-                    <div class="form-group" id="UC_accntname">
-                        <label class="col-sm-2">ACCOUNT NAME </label>
-                        <div class="col-sm-3"><input type="text" name="UC_tb_accntname" id="UC_tb_accntname" placeholder="Account Name" maxlength="25" class="form-control"/></div>
-                    </div>
-                    <div class="form-group" id="UC_bankcode">
-                        <label class="col-sm-2">BANK CODE</label>
-                        <div class="col-sm-2"><input type="text" name="UC_tb_bankcode" id="UC_tb_bankcode" maxlength=5 class="numonly UC_class_numonly form-control" placeholder="Bank Code"/></div>
-                    </div>
-                    <div class="form-group" id="UC_branchcode">
-                        <label class="col-sm-2">BRANCH CODE</label>
-                        <div class="col-sm-2"><input type="text" name="UC_tb_branchcode" id="UC_tb_branchcode" maxlength=5 class="numonly UC_class_numonly form-control" placeholder="Branch Code"/></div>
-                    </div>
-                    <div class="form-group" id="UC_bankaddress">
-                        <label class="col-sm-2">BANK ADDRESS</label>
-                        <div class="col-sm-4"><textarea name="UC_ta_address" id="UC_ta_address" placeholder="Bank Address" rows="5" class="form-control"></textarea></div>
-                    </div>
-                    <div class="form-group" id="UC_doorcode">
-                        <label class="col-sm-2">DOOR CODE</label>
-                        <div class="col-sm-2"><input type="text" name="UNIT_tb_doorcode" id="UNIT_tb_doorcode" class="UC_class_numonly numonly form-control" maxlength=10 placeholder="Door Code"/></div>
-                        <div class="col-sm-4 errpadding" id="UC_doorcodeerr">
-                            <label id="UC_lbl_doorcode" name="UC_lbl_doorcode" class="errormsg"></label>
-                        </div>
-                    </div>
-                    <div class="form-group" id="UC_weblogin">
-                        <label class="col-sm-2">WEB LOGIN</label>
-                        <div class="col-sm-2"><input type="text" name="UNIT_tb_weblogin" id="UNIT_tb_weblogin" class="form-control" maxlength=13 placeholder="Web Login"/></div>
-                        <div class="col-sm-4 errpadding" id="UC_weblogin">
-                            <label id="UC_lbl_weblogin" name="UC_lbl_weblogin" class="errormsg"></label>
-                        </div>
-                    </div>
-                    <div class="form-group" id="UC_webpass">
-                        <label class="col-sm-2">WEB PASSWORD</label>
-                        <div class="col-sm-2"><input type="text" name="UC_tb_webpass" id="UC_tb_webpass" class="UC_class_numonly numonly form-control" maxlength=6 placeholder="Web Password"/></div>
-                    </div>
-                    <div class="form-group" id="UC_stampdutydate">
-                        <label class="col-sm-2">STAMP DUTY DATE </label>
-                        <div class="col-sm-2">
-                            <div class="input-group addon">
-                                <input id="UC_db_stampdutydate" name="UC_db_stampdutydate" type="text" class="date-picker datemandtry form-control" placeholder="Stamp Duty Date"/>
-                                <label for="UC_db_stampdutydate" class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group" id="UC_stamptype">
-                        <label class="col-sm-2">STAMP DUTY TYPE </label>
-                        <div class="col-sm-3"><select name="UC_lb_stamptype" id="UC_lb_stamptype" class="form-control "></select></div>
-                        <div class="col-sm-2 colsmhf"><input class="btn btn-info" type="button" name="UC_btn_addstamptype" value="ADD" id="UC_btn_addstamptype"/></div>
-                        <div class="col-sm-4 errpadding errormsg" id="UC_div_errstamp" name="UC_div_errstamp"></div>
-                    </div>
-                    <div class="form-group" id="UC_stampamount">
-                        <label class="col-sm-2">STAMP DUTY AMOUNT </label>
-                        <div class="col-sm-2"><input type="text" name="UC_tb_stampamount" id="UC_tb_stampamount" placeholder="Stamp Duty Amount" class="UC_class_numonly numonly form-control"></div>
-                    </div>
-                    <div class="form-group" id="UC_comments">
-                        <label class="col-sm-2">COMMENTS</label>
-                        <div class="col-sm-4"><textarea name="UC_ta_comments" id="UC_ta_comments" placeholder="Comments" rows="5" class="form-control"></textarea></div>
-                    </div>
-                    <div class="form-group" id="UC_nonEI">
-                        <label class="col-sm-2">EI/NON_EI</label>
-                        <div class="radio">
-                            <label><input type="checkbox" name="UC_cb_nonEI" id="UC_cb_nonEI"></label>
-                        </div>
-                    </div>
-                    <div class="form-group" id="UC_buttons">
-                        <div class="col-sm-offset-1 col-sm-3">
-                            <input class="btn btn-info" type="button" id="UC_btn_submit" name="submit" value="SAVE" disabled/>
-                            <input class="btn btn-info" type="button" id="UC_btn_reset" name="RESET" value="RESET"/>
-                        </div>
+                        <div class="col-sm-3"><select name="USU_lb_roomtyps" id="USU_lb_roomtyps" class="USU_all_searchby form-control"></select></div>
                     </div>
                 </div>
-                <div id="USU_form_unitupdate" hidden>
-                    <div class="form-group" id="USU_searchby">
-                        <label class="col-sm-2">SEARCH BY <em>*</em></label>
-                        <div class="col-sm-3"> <select name="USU_lb_searchby" id="USU_lb_searchby" class="form-control USU_formvalidation"></select></div>
-                    </div>
-                    <div class="form-group" id='USU_errmsg_roominventory' hidden>
-                        <lable class="col-lg-12 errormsg" id="USU_lbl_errmsg_roominventory"></lable>
-                    </div>
-                    <div class="form-group" id='USU_subheaderdiv' hidden>
-                        <lable class="col-lg-12 srctitle" id="USU_subheadermsg"></lable>
-                    </div>
-                    <div id="USU_carddiv" hidden>
-                        <div class="form-group" id="USU_unitno">
-                            <label class="col-sm-2">UNIT NUMBER </label>
-                            <div class="col-sm-2"> <select name="USU_lb_unitno" id="USU_lb_unitno" class="USU_all_searchby form-control USU_formvalidation"></select></div>
-                        </div>
-                        <div class="form-group" id="USU_cardtype">
-                            <label class="col-sm-2">TYPE OF CARD </label>
-                            <div class="col-sm-2"> <select name="USU_lb_typeofcard" id="USU_lb_typeofcard" class="form-control USU_formvalidation"></select></div>
-                            <div class="form-group errpadding" id='USU_stamperrdiv' hidden>
-                                <lable class="col-lg-4 errormsg" id="USU_lbl_errmsg_cardno"></lable>
-                            </div>
-                        </div>
-                        <div class="form-group" id="USU_cardno">
-                            <label class="col-sm-2">CARD NUMBER </label>
-                            <div class="col-sm-2"> <select name="USU_lb_cardno" id="USU_lb_cardno" class="form-control USU_formvalidation"></select></div>
-                        </div>
-                    </div>
-                    <div id="USU_roomdiv" hidden>
-                        <div class="form-group" id="USU_roomtype">
-                            <label class="col-sm-2">ROOM TYPE </label>
-                            <div class="col-sm-3"><select name="USU_lb_roomtyps" id="USU_lb_roomtyps" class="USU_all_searchby form-control"></select></div>
-                        </div>
-                    </div>
-                    <div id="USU_datediv" hidden>
-                        <div class="form-group" id="USU_fromdate">
-                            <label class="col-sm-2">FROM DATE </label>
-                            <div class="col-sm-2">
-                                <div class="input-group addon">
-                                    <input id="USU_db_fromdate" name="USU_db_fromdate" type="text" class="USU_class_datesearch date-picker datemandtry form-control" placeholder="From Date"/>
-                                    <label for="USU_db_fromdate" class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></label>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group" id="USU_todate">
-                            <label class="col-sm-2">TO DATE </label>
-                            <div class="col-sm-2">
-                                <div class="input-group addon">
-                                    <input id="USU_db_todate" name="USU_db_todate" type="text" class="USU_class_datesearch date-picker datemandtry form-control" placeholder="To Date"/>
-                                    <label for="USU_db_todate" class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></label>
-                                </div>
+                <div id="USU_datediv" hidden>
+                    <div class="form-group" id="USU_fromdate">
+                        <label class="col-sm-2">FROM DATE </label>
+                        <div class="col-sm-2">
+                            <div class="input-group addon">
+                                <input id="USU_db_fromdate" name="USU_db_fromdate" type="text" class="USU_class_datesearch date-picker datemandtry form-control" placeholder="From Date"/>
+                                <label for="USU_db_fromdate" class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></label>
                             </div>
                         </div>
                     </div>
-                    <div id="USU_stampamtdiv" hidden>
-                        <div class="form-group" id="USU_stampfromamt">
-                            <label class="col-sm-2">FROM AMOUNT </label>
-                            <div class="col-sm-2"><input type="text" name="USU_tb_dutyamt_fromamt" id="USU_tb_dutyamt_fromamt" placeholder="From Amount" class="USU_class_amtvalidstamp form-control"></div>
-                        </div>
-                        <div class="form-group" id="USU_stamptoamt">
-                            <label class="col-sm-2">TO AMOUNT </label>
-                            <div class="col-sm-2"><input type="text" name="USU_tb_dutyamt_toamt" id="USU_tb_dutyamt_toamt" placeholder="To Amount" class="USU_class_amtvalidstamp form-control"></div>
-                        </div>
-                        <div class="form-group" id='USU_stamperrdiv' hidden>
-                            <lable class="col-sm-offset-2 col-lg-12 errormsg" id="USU_lbl_errmsg_date"></lable>
-                        </div>
-                    </div>
-                    <div id="USU_paymentamtdiv" hidden>
-                        <div class="form-group" id="USU_paymentfromamt">
-                            <label class="col-sm-2">FROM AMOUNT </label>
-                            <div class="col-sm-2"><input type="text" name="USU_tb_payment_fromamt" id="USU_tb_payment_fromamt" maxlength="4" placeholder="From Amount" class="USU_class_title_nums USU_class_amtvalidpayment form-control"></div>
-                        </div>
-                        <div class="form-group" id="USU_paymenttoamt">
-                            <label class="col-sm-2">TO AMOUNT </label>
-                            <div class="col-sm-2"><input type="text" name="USU_tb_payment_toamt" id="USU_tb_payment_toamt" maxlength="4" placeholder="To Amount" class="USU_class_title_nums USU_class_amtvalidpayment form-control"></div>
-                        </div>
-                        <div class="form-group" id='USU_paymenterrdiv' hidden>
-                            <lable class="col-sm-offset-2 col-lg-12 errormsg" id="USU_lbl_errmsg_paymentdate"></lable>
-                        </div>
-                    </div>
-                    <div class="form-group" id="USU_searchbtn" hidden>
-                        <div class="col-sm-offset-1 col-sm-3">
-                            <input class="btn btn-info" type="button" id="USU_btn_search" name="USU_btn_search" value="SEARCH" disabled/>
-                        </div>
-                    </div>
-                    <div id="USU_div_flex">
-                        <div class="form-group">
-                            <lable class="col-lg-12 srctitle" id="USU_headermsg" hidden></lable>
-                        </div>
-                        <div style="padding-bottom: 10px;" id="USU_pdf_btn" hidden>
-                            <input type="button" id="USU_btn_pdf" class="btnpdf" value="PDF">
-                        </div>
-                        <div class="table-responsive" id="USU_div_htmltable" hidden>
-                            <section id="USU_section1">
-                            </section>
-                        </div>
-                        <div class="errpadding table-responsive" id="USU_div_stamphtmltable" hidden>
-                            <section id="USU_section2">
-                            </section>
-                        </div>
-                    </div>
-                    <div id="USU_div_updateform" hidden>
-                        <div id="USU_tble_update"></div>
-                        <div id="USU_tble_update_reset" hidden>
-                            <div class="col-sm-offset-1 col-sm-3">
-                                <input class="btn btn-info" type="button" id="USU_btn_update" name="USU_btn_update" value="UPDATE" disabled/>
-                                <input class="btn btn-info" type="button" id="USU_btn_reset" name="USU_btn_reset" value="RESET"/>
-                                <input type="hidden" id="USU_hidden_flexrowval" name="USU_hidden_flexrowval">
+                    <div class="form-group" id="USU_todate">
+                        <label class="col-sm-2">TO DATE </label>
+                        <div class="col-sm-2">
+                            <div class="input-group addon">
+                                <input id="USU_db_todate" name="USU_db_todate" type="text" class="USU_class_datesearch date-picker datemandtry form-control" placeholder="To Date"/>
+                                <label for="USU_db_todate" class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></label>
                             </div>
                         </div>
                     </div>
                 </div>
-            </fieldset>
+                <div id="USU_stampamtdiv" hidden>
+                    <div class="form-group" id="USU_stampfromamt">
+                        <label class="col-sm-2">FROM AMOUNT </label>
+                        <div class="col-sm-2"><input type="text" name="USU_tb_dutyamt_fromamt" id="USU_tb_dutyamt_fromamt" placeholder="From Amount" class="USU_class_amtvalidstamp form-control"></div>
+                    </div>
+                    <div class="form-group" id="USU_stamptoamt">
+                        <label class="col-sm-2">TO AMOUNT </label>
+                        <div class="col-sm-2"><input type="text" name="USU_tb_dutyamt_toamt" id="USU_tb_dutyamt_toamt" placeholder="To Amount" class="USU_class_amtvalidstamp form-control"></div>
+                    </div>
+                    <div class="form-group" id='USU_stamperrdiv' hidden>
+                        <lable class="col-sm-offset-2 col-lg-12 errormsg" id="USU_lbl_errmsg_date"></lable>
+                    </div>
+                </div>
+                <div id="USU_paymentamtdiv" hidden>
+                    <div class="form-group" id="USU_paymentfromamt">
+                        <label class="col-sm-2">FROM AMOUNT </label>
+                        <div class="col-sm-2"><input type="text" name="USU_tb_payment_fromamt" id="USU_tb_payment_fromamt" maxlength="4" placeholder="From Amount" class="USU_class_title_nums USU_class_amtvalidpayment form-control"></div>
+                    </div>
+                    <div class="form-group" id="USU_paymenttoamt">
+                        <label class="col-sm-2">TO AMOUNT </label>
+                        <div class="col-sm-2"><input type="text" name="USU_tb_payment_toamt" id="USU_tb_payment_toamt" maxlength="4" placeholder="To Amount" class="USU_class_title_nums USU_class_amtvalidpayment form-control"></div>
+                    </div>
+                    <div class="form-group" id='USU_paymenterrdiv' hidden>
+                        <lable class="col-sm-offset-2 col-lg-12 errormsg" id="USU_lbl_errmsg_paymentdate"></lable>
+                    </div>
+                </div>
+                <div class="form-group" id="USU_searchbtn" hidden>
+                    <div class="col-sm-offset-1 col-sm-3">
+                        <input class="btn btn-info" type="button" id="USU_btn_search" name="USU_btn_search" value="SEARCH" disabled/>
+                    </div>
+                </div>
+                <div id="USU_div_flex">
+                    <div class="form-group">
+                        <lable class="col-lg-12 srctitle" id="USU_headermsg" hidden></lable>
+                    </div>
+                    <div style="padding-bottom: 10px;" id="USU_pdf_btn" hidden>
+                        <input type="button" id="USU_btn_pdf" class="btnpdf" value="PDF">
+                    </div>
+                    <div class="table-responsive" id="USU_div_htmltable" hidden>
+                        <section id="USU_section1">
+                        </section>
+                    </div>
+                    <div class="errpadding table-responsive" id="USU_div_stamphtmltable" hidden>
+                        <section id="USU_section2">
+                        </section>
+                    </div>
+                </div>
+                <div id="USU_div_updateform" hidden>
+                    <div id="USU_tble_update"></div>
+                    <div id="USU_tble_update_reset" hidden>
+                        <div class="col-sm-offset-1 col-sm-3">
+                            <input class="btn btn-info" type="button" id="USU_btn_update" name="USU_btn_update" value="UPDATE" disabled/>
+                            <input class="btn btn-info" type="button" id="USU_btn_reset" name="USU_btn_reset" value="RESET"/>
+                            <input type="hidden" id="USU_hidden_flexrowval" name="USU_hidden_flexrowval">
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </form>
 </div>

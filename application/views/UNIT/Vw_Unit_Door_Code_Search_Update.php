@@ -314,11 +314,11 @@ require_once('application/libraries/EI_HDR.php');
                 </div>
                 <div class="form-group col-lg-12 errormsg" id="DCSU_div_errmsgNodooor" hidden>
                 </div>
-                <div class="table-responsive" id="DCSU_div_htmltable" hidden>
-                    <section id="DCSU_section">
-                    </section>
-                </div>
             </fieldset>
+            <div class="table-responsive" id="DCSU_div_htmltable" hidden>
+                <section id="DCSU_section">
+                </section>
+            </div>
         </div>
     </form>
 </div>

@@ -582,14 +582,14 @@ require_once('application/libraries/EI_HDR.php');
                         <input type="button" id="CV_btn_pdf" class="btnpdf" value="PDF">
                     </div>
                 </div>
-                <div class="table-responsive" id="CV_div_htmltable" hidden>
-                    <section>
-                    </section>
-                </div>
-                <div class="form-group" id="CV_errmsg" hidden>
-                    <lable id="CV_lbl_errmsg" class="col-sm-12 errormsg"></lable>
-                </div>
             </fieldset>
+            <div class="table-responsive" id="CV_div_htmltable" hidden>
+                <section>
+                </section>
+            </div>
+            <div class="form-group" id="CV_errmsg" hidden>
+                <lable id="CV_lbl_errmsg" class="col-sm-12 errormsg"></lable>
+            </div>
         </div>
     </form>
 </div>

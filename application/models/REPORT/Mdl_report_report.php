@@ -146,7 +146,7 @@ AND ECD.UASD_ID=UASD.UASD_ID ORDER BY ED.EMP_FIRST_NAME,ED.EMP_LAST_NAME","EMPLO
         catch(Exception $e){
             return 2;
         }
-//      $this->mailpart($mailsub,$mailbody,$mailsub,$UserStamp,$emailId);
+     $this->mailpart($mailsub,$mailbody,$mailsub,$UserStamp,$emailId);
         return 1;
     } catch (Exception $e) {
         return 0;

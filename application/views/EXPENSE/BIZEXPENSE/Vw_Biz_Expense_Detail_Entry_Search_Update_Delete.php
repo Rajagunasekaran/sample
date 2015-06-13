@@ -119,7 +119,7 @@ require_once('application/libraries/EI_HDR.php');
             else if(bizdetailradiooption=='bizdetailsearchform')
             {
                $('.preloader').show();
-                $.ajGx({
+                $.ajax({
                     type: "POST",
                     url: controller_url+"BTDTL_SEARCH_expensetypes",
                     success: function(res) {
@@ -305,11 +305,11 @@ require_once('application/libraries/EI_HDR.php');
                     $("html, body").animate({ scrollTop: $(document).height() }, "slow");
                     if($('#BDTL_INPUT_lb_airconservicedby').val()==undefined)
                     {
-                        $('#BDTL_INPUT_tb_newaircon').replaceWith('<select id="BDTL_INPUT_lb_airconservicedby" name="BDTL_INPUT_lb_airconservicedby" class="BDTL_INPUT_class_save_valid"><option>SELECT</option></select>');
+                        $('#BDTL_INPUT_tb_newaircon').replaceWith('<select id="BDTL_INPUT_lb_airconservicedby" name="BDTL_INPUT_lb_airconservicedby" class="BDTL_INPUT_class_save_valid form-control"><option>SELECT</option></select>');
                         $('#BDTL_INPUT_btn_remove_aircon').replaceWith('<input type="button" name="BDTL_INPUT_btn_add_aircon" value="ADD" id="BDTL_INPUT_btn_add_aircon" class="btn"/>');
                     }
                     if(BDTL_INPUT_arr_aircon.length==0){
-                        $('#BDTL_INPUT_lb_airconservicedby').replaceWith('<input type="text" name="BDTL_INPUT_tb_newaircon" id="BDTL_INPUT_tb_newaircon" maxlength="50" class="autosize BDTL_INPUT_class_save_valid charonly"/>');
+                        $('#BDTL_INPUT_lb_airconservicedby').replaceWith('<input type="text" name="BDTL_INPUT_tb_newaircon" id="BDTL_INPUT_tb_newaircon" maxlength="50" class="autosize BDTL_INPUT_class_save_valid charonly form-control" placeholder="Aircon Service By"/>');
                         $('#BDTL_INPUT_btn_add_aircon').hide();
                         $(".charonly").doValidation({rule:'alphabets',prop:{whitespace:true,autosize:true}});
                         $('#BDTL_INPUT_div_errmsg_aircon').text('')
@@ -414,7 +414,7 @@ require_once('application/libraries/EI_HDR.php');
             $('#BDTL_INPUT_tb_newaircon').text('');
             $('#BDTL_INPUT_btn_save').attr("disabled", "disabled");
             if($(this).attr('id')=="BDTL_INPUT_btn_add_aircon"){
-                $('#BDTL_INPUT_lb_airconservicedby').replaceWith('<input type="text" name="BDTL_INPUT_tb_newaircon" id="BDTL_INPUT_tb_newaircon" maxlength="50" class="autosize BDTL_INPUT_class_save_valid charonly form-control"/>');
+                $('#BDTL_INPUT_lb_airconservicedby').replaceWith('<input type="text" name="BDTL_INPUT_tb_newaircon" id="BDTL_INPUT_tb_newaircon" maxlength="50" class="autosize BDTL_INPUT_class_save_valid charonly form-control" placeholder="Aircon Service By"/>');
                 $(this).replaceWith('<input type="button" name="BDTL_INPUT_btn_remove_aircon"  value="CLEAR" id="BDTL_INPUT_btn_remove_aircon" class="btn" />');
                 $('.autosize').doValidation({rule:'general',prop:{autosize:true}});
                 $("input.autosize").autoGrowInput();
@@ -2886,7 +2886,7 @@ require_once('application/libraries/EI_HDR.php');
 <body>
 <div class="container">
     <div class="preloader" hidden><span class="Centerer"></span><img class="preloaderimg"/></div>
-    <div class="title text-center"><h4><b>BIZ EXPENSE DETAIL ENTRY/SEARCH/UPDATE/DELETE</b></h4></div>
+    <div class="title text-center"><h4><b>BIZ EXPENSE DETAIL ENTRY/ SEARCH/ UPDATE/ DELETE</b></h4></div>
     <form id="BDTL_INPUT_form_biz_detail" class="form-horizontal content">
         <div class="panel-body">
             <div style="padding-bottom: 15px">
@@ -2894,7 +2894,7 @@ require_once('application/libraries/EI_HDR.php');
                     <label><input type="radio" name="optradio" value="bizdetailentryform" class="BDE_rd_selectform">ENTRY</label>
                 </div>
                 <div class="radio">
-                    <label><input type="radio" name="optradio" value="bizdetailsearchform" class="BDE_rd_selectform">SEARCH/UDATE/DELETE</label>
+                    <label><input type="radio" name="optradio" value="bizdetailsearchform" class="BDE_rd_selectform">SEARCH/ UDATE/ DELETE</label>
                 </div>
             </div>
             <div id="divbizdetailentryform">
@@ -2915,10 +2915,11 @@ require_once('application/libraries/EI_HDR.php');
                 <div id='BDTL_INPUT_div_aircon' hidden>
                         <div class="form-group">
                             <label class="col-sm-2">AIRCON SERVICED BY<em>*</em></label></td>
-                            <div class="col-sm-4"><select id="BDTL_INPUT_lb_airconservicedby" name="BDTL_INPUT_lb_airconservicedby" class="BDTL_INPUT_class_save_valid form-control"><option>SELECT</option>
+                            <div class="col-sm-4">
+                                <select id="BDTL_INPUT_lb_airconservicedby" name="BDTL_INPUT_lb_airconservicedby" class="BDTL_INPUT_class_save_valid form-control"><option>SELECT</option>
                                 </select>
                             </div>
-                            <div><input class="btn" type="button" name="BDTL_INPUT_btn_add_aircon" value="ADD" id="BDTL_INPUT_btn_add_aircon"/><td><td><input type="hidden" id="BDTL_INPUT_hidden_unitno" name="BDTL_INPUT_hidden_unitno"></td>
+                            <div class="col-sm-2"><input class="btn" type="button" name="BDTL_INPUT_btn_add_aircon" value="ADD" id="BDTL_INPUT_btn_add_aircon"/><td><td><input type="hidden" id="BDTL_INPUT_hidden_unitno" name="BDTL_INPUT_hidden_unitno"></td>
                             </div>
                         </div>
                     <div class="form-group">

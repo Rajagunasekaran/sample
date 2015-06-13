@@ -21,6 +21,9 @@ require_once('application/libraries/EI_HDR.php');
     .glyphicon-remove,.glyphicon-trash{
         color:red;
     }
+    .txtareaheight{
+        height:116px !important;
+    }
 </style>
 <script>
 var ErrorControl ={AmountCompare:'InValid'}
@@ -1335,7 +1338,7 @@ $(document).ready(function(){
                             $('#PDLY_SEARCH_tb_searchabycmt').removeAttr("disabled").attr('placeholder',response_len+' Records Matching').val('');
                         }
                         else{
-                            $('#PDLY_SEARCH_tb_searchabycmt').attr("disabled", "disabled").attr('placeholder','No Matchs').val('');
+                            $('#PDLY_SEARCH_tb_searchabycmt').attr("disabled", "disabled").attr('placeholder','No Matches').val('');
                         }
                         $('#PDLY_SEARCH_lbl_searchabycmt').show();
                         $('#PDLY_SEARCH_tb_searchabycmt').show();
@@ -2761,7 +2764,7 @@ $(document).ready(function(){
 <body>
 <div class="container">
 <div class="preloader" hidden><span class="Centerer"></span><img class="preloaderimg"/> </div>
-<div class="title text-center"><h4><b>PERSONAL EXPENSE ENTRY/SEARCH/UPDATE/DELETE</b></h4></div>
+<div class="title text-center"><h4><b>PERSONAL EXPENSE ENTRY/ SEARCH/ UPDATE/ DELETE</b></h4></div>
 <form id="personalexpense" class="form-horizontal content" method="post" action="<?php echo site_url("EXPENSE/Ctrl_Pdf/pdfexport") ?>" >
 
 <div class="panel-body">
@@ -2770,7 +2773,7 @@ $(document).ready(function(){
         <label><input type="radio" name="optradio" value="entryform" class="PE_rd_selectform">ENTRY</label>
     </div>
     <div class="radio">
-        <label><input type="radio" name="optradio" value="searchform" class="PE_rd_selectform">SEARCH/UDATE/DELETE</label>
+        <label><input type="radio" name="optradio" value="searchform" class="PE_rd_selectform">SEARCH/ UDATE/ DELETE</label>
     </div>
 </div>
 <div id="PE_entryform" hidden>
@@ -2825,31 +2828,34 @@ $(document).ready(function(){
         <div class="form-group">
             <label id="PCE_lbl_invdte" class="col-sm-2" >INVOICE DATE<em>*</em></label>
             <div class="col-sm-3">
-                <input type="text" style="max-width: 100px;" id="PCE_tb_invdate" name="PCE_tb_invdate" class="form-control date-picker datemandtry carsubmultivalid"/>
+                <div class="input-group addon">
+                <input type="text" style="max-width: 100px;" placeholder="Invoice Date" id="PCE_tb_invdate" name="PCE_tb_invdate" class="form-control date-picker datemandtry carsubmultivalid"/>
+                <label for="PCE_tb_invdate" class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></label>
+            </div>
             </div>
         </div>
         <div class="form-group">
             <label id="PCE_lbl_invitems" class="col-sm-2" >INVOICE AMOUNT<em>*</em></label>
             <div class="col-sm-3">
-                <input type="text" style="max-width: 80px;" id="PCE_tb_invamt" name="PCE_tb_invamt" class="form-control amtonly carsubmultivalid" />
+                <input type="text" style="max-width: 80px;" placeholder="Invoice Amount" id="PCE_tb_invamt" name="PCE_tb_invamt" class="form-control amtonly carsubmultivalid" />
             </div>
         </div>
         <div class="form-group">
             <label id="PCE_lbl_invitems" class="col-sm-2" >INVOICE ITEMS<em>*</em></label>
-            <div class="col-sm-3">
-                <textarea rows="3" id="PCE_ta_invitems" name="PCE_ta_invitems" class="form-control carsubmultivalid PDLY_INPUT_ta_cmtItem" ></textarea>
+            <div class="col-sm-4">
+                <textarea  placeholder="Invoice Items" id="PCE_ta_invitems" name="PCE_ta_invitems" class="form-control txtareaheight carsubmultivalid PDLY_INPUT_ta_cmtItem" ></textarea>
             </div>
         </div>
         <div class="form-group">
             <label id="PCE_lbl_invfrom" class="col-sm-2" >INVOICE FROM<em>*</em></label>
             <div class="col-sm-2">
-                <input type="text" id="PCE_tb_invfrom" class="form-control carsubmultivalid autosize" name="PCE_tb_invfrom" />
+                <input type="text" placeholder="Invoice From" id="PCE_tb_invfrom" class="form-control carsubmultivalid autosize" name="PCE_tb_invfrom" />
             </div>
         </div>
         <div class="form-group">
             <label id="PCE_lbl_comments" class="col-sm-2" >COMMENTS</label>
-            <div class="col-sm-3">
-                <textarea rows="3" id="PCE_ta_comments" name="PCE_ta_comments" class="form-control carsubmultivalid PDLY_INPUT_ta_cmtItem" ></textarea>
+            <div class="col-sm-4">
+                <textarea id="PCE_ta_comments" placeholder="Comments" name="PCE_ta_comments" class="form-control txtareaheight carsubmultivalid PDLY_INPUT_ta_cmtItem" ></textarea>
             </div>
         </div>
         <div class="col-lg-offset-1">
@@ -2861,31 +2867,40 @@ $(document).ready(function(){
         <div class="form-group">
             <label id="PCLE_lbl_paiddte" class="col-sm-2" >PAID DATE<em>*</em></label>
             <div class="col-sm-3">
-                <input type="text" style="max-width: 100px;" id="PCLE_tb_paiddte" name="PCLE_tb_paiddte" class="form-control date-picker datemandtry carloansubmultivalid"  />
+                <div class="input-group addon">
+                <input type="text" placeholder="Paid Date" style="max-width: 100px;" id="PCLE_tb_paiddte" name="PCLE_tb_paiddte" class="form-control date-picker datemandtry carloansubmultivalid"  />
+                    <label for="PCLE_tb_paiddte" class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></label>
+                </div>
             </div>
         </div>
         <div class="form-group">
             <label id="PCLE_lbl_frmperiod" class="col-sm-2" >FROM PERIOD<em>*</em></label>
             <div class="col-sm-3">
-                <input type="text" style="max-width: 100px;" id="PCLE_tb_fromperiod" name="PCLE_tb_fromperiod" class="form-control date-picker datemandtry carloansubmultivalid" />
+                <div class="input-group addon">
+                <input type="text" placeholder="From Period" style="max-width: 100px;" id="PCLE_tb_fromperiod" name="PCLE_tb_fromperiod" class="form-control date-picker datemandtry carloansubmultivalid" />
+                    <label for="PCLE_tb_fromperiod" class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></label>
+                </div>
             </div>
         </div>
         <div class="form-group">
             <label id="PCLE_lbl_toperiod" class="col-sm-2" >TO PERIOD<em>*</em></label>
             <div class="col-sm-3">
-                <input type="text" style="max-width: 100px;" id="PCLE_ta_toperiod" name="PCLE_ta_toperiod" class="form-control date-picker datemandtry carloansubmultivalid" >
+                <div class="input-group addon">
+                <input type="text" placeholder="To Period" style="max-width: 100px;" id="PCLE_ta_toperiod" name="PCLE_ta_toperiod" class="form-control date-picker datemandtry carloansubmultivalid" >
+                    <label for="PCLE_ta_toperiod" class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></label>
+                </div>
             </div>
         </div>
         <div class="form-group">
             <label id="PCLE_lbl_invamt" class="col-sm-2" >INVOICE AMOUNT<em>*</em></label>
             <div class="col-sm-3">
-                <input type="text" style="max-width: 80px;" id="PCLE_tb_invamt" class="form-control amtonly carloansubmultivalid" name="PCLE_tb_invamt" />
+                <input type="text" placeholder="Invoice Amount" style="max-width: 80px;" id="PCLE_tb_invamt" class="form-control amtonly carloansubmultivalid" name="PCLE_tb_invamt" />
             </div>
         </div>
         <div class="form-group">
             <label id="PCLE_lbl_comments" class="col-sm-2" >COMMENTS</label>
-            <div class="col-sm-3">
-                <textarea rows="3" id="PCLE_ta_comments" name="PCLE_ta_comments" class="form-control PDLY_INPUT_ta_cmtItem carloansubmultivalid" ></textarea>
+            <div class="col-sm-4">
+                <textarea placeholder="Comments" id="PCLE_ta_comments" name="PCLE_ta_comments" class="form-control txtareaheight PDLY_INPUT_ta_cmtItem carloansubmultivalid" ></textarea>
             </div>
         </div>
         <div class="col-lg-offset-1">
@@ -2904,7 +2919,7 @@ $(document).ready(function(){
     </div>
     <div class="form-group" id="searchoption">
         <label id='PDLY_SEARCH_lbl_babysearchoption'  class="col-sm-2" hidden>SEARCH OPTION<em>*</em></label>
-        <div class="col-sm-2">
+        <div class="col-sm-3">
             <select  id='PDLY_SEARCH_lb_babysearchoption' name="PDLY_SEARCH_lb_babysearchoption" class="form-control"  hidden>
                 <option>SELECT</option>
             </select>
@@ -2923,32 +2938,38 @@ $(document).ready(function(){
         <div class="form-group" id="div_startdate">
             <label  id='PDLY_SEARCH_lbl_startdate' class="col-sm-2" hidden> START DATE <em>*</em></label>
             <div class="col-sm-2">
+                <div class="input-group addon">
                 <input  type="text" class="datebox submitval datemandtry form-control"  name="PDLY_SEARCH_db_startdate" id="PDLY_SEARCH_db_startdate" style="width:100px;" hidden />
-            </div>
+                    <label for="PDLY_SEARCH_db_startdate" class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></label>
+                </div>
+           </div>
         </div>
         <div class="form-group" id="div_enddate">
             <label id='PDLY_SEARCH_lbl_enddate' class="col-sm-2" hidden> END DATE <em>*</em></label>
             <div class="col-sm-2">
+                <div class="input-group addon">
                 <input  type="text" class="datebox submitval datemandtry form-control" name="PDLY_SEARCH_db_enddate" id="PDLY_SEARCH_db_enddate" style="width:100px;" hidden />
+                    <label for="PDLY_SEARCH_db_enddate" class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></label>
+            </div>
             </div>
         </div>
         <div class="form-group" id="div_comments">
-            <label  id='PDLY_SEARCH_lbl_searchabycmt' class="col-sm-2" class="auto"  hidden> COMMENTS <em>*</em></label>
-            <div class="col-sm-2">
-                <textarea rows="3" name="PDLY_SEARCH_tb_searchabycmt" class="submitval form-control" id="PDLY_SEARCH_tb_searchabycmt" style="width:330px;" hidden ></textarea>
+            <label  id='PDLY_SEARCH_lbl_searchabycmt' class="col-sm-2"   hidden> COMMENTS <em>*</em></label>
+            <div class="col-sm-4">
+                <textarea  name="PDLY_SEARCH_tb_searchabycmt" class="submitval form-control txtareaheight" id="PDLY_SEARCH_tb_searchabycmt"  hidden ></textarea>
             </div>
         </div>
         <div><label id='PDLY_SEARCH_lbl_babyshowcomments' class="errormsg" hidden >  </label></div>
         <div class="form-group" id="div_invoicefrom">
             <label  id='PDLY_SEARCH_lbl_searchbyinvfrom' class="col-sm-2" hidden> INVOICE FROM <em>*</em></label>
-            <div class="col-sm-2">
-                <input   type="text" class="submitval form-control" name ="PDLY_SEARCH_tb_searchbyinvfrom" id="PDLY_SEARCH_tb_searchbyinvfrom"   style="width:330px;"hidden />
+            <div class="col-sm-4">
+                <input  type="text" class="submitval form-control" name ="PDLY_SEARCH_tb_searchbyinvfrom" id="PDLY_SEARCH_tb_searchbyinvfrom" hidden />
             </div>
         </div>
         <div class="form-group" id="div_invoiceitem">
             <label  id='PDLY_SEARCH_lbl_searchbyinvitem' class="col-sm-2" hidden> INVOICE ITEM <em>*</em></label>
-            <div class="col-sm-2">
-                <textarea   rows="3" type="text" class="submitval form-control" name ="PDLY_SEARCH_tb_searchbyinvitem" id="PDLY_SEARCH_tb_searchbyinvitem"   style="width:330px;"hidden ></textarea>
+            <div class="col-sm-4">
+                <textarea  type="text" class="submitval form-control txtareaheight" name ="PDLY_SEARCH_tb_searchbyinvitem" id="PDLY_SEARCH_tb_searchbyinvitem"   hidden ></textarea>
             </div>
         </div>
         <div class="form-group" id="div_fromamt">

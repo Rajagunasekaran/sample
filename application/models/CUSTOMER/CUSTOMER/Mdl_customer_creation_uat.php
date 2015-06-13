@@ -182,7 +182,7 @@ class Mdl_customer_creation_uat extends CI_Model
                         $InvoiceId = $this->Mdl_eilib_invoice_contract->CUST_invoice($UserStamp, $service, $Uint, $Name, $CompanyName, $Invoiceandcontractid[9], $Invoiceandcontractid[0], $Invoiceandcontractid[1], $Rent, $ProcessingFee, $DepositFee, $StartDate, $EndDate, $RoomType, $Leaseperiod, $Prorated, $Sendmailid, $Docowner, 'CREATION', $processwaived, $Customerid,$CustomerFolder);
                         if ($InvoiceId[0] == 1)
                         {
-                            $this->InvoiceCreation($InvoiceId, $Emailtemplate, $Username, $Confirm_Meessage, $Uint, $Name, $Docowner, $UserStamp);
+                            $this->InvoiceCreation($InvoiceId, $Emailtemplate, $Username, $Confirm_Meessage, $Uint, $Name, $Sendmailid, $UserStamp);
                             echo $Confirm_Meessage;
                             exit;
                         }else
@@ -196,7 +196,7 @@ class Mdl_customer_creation_uat extends CI_Model
                         $ContractId = $this->Mdl_eilib_invoice_contract->CUST_contract($service,$Uint,$Startdate,$Enddate,$CompanyName,$Name,$NoticePeriod,$PassportNo,$PassportDate,$EpNo,$EPDate,$NoticePeriodDate,$Leaseperiod,$Cont_cardno,$Rent,$InvQuaterlyfee,$InvFixedaircon_fee,$InvElectricitycapFee,$InvCurtain_DrycleanFee,$InvCheckOutCleanFee,$InvProcessingFee,$InvDepositFee,$Invwaived,$RoomType,$InvProrated,'CREATION',$Sendmailid,$Docowner,$CustomerFolder);
                         if ($ContractId[0] == 1)
                         {
-                            $this->ContractCreation($ContractId, $Emailtemplate, $Username, $Confirm_Meessage, $Uint, $Name, $Docowner, $UserStamp);
+                            $this->ContractCreation($ContractId, $Emailtemplate, $Username, $Confirm_Meessage, $Uint, $Name, $Sendmailid, $UserStamp);
                             echo $Confirm_Meessage;
                             exit;
                         }
@@ -212,7 +212,7 @@ class Mdl_customer_creation_uat extends CI_Model
                         $ContractId = $this->Mdl_eilib_invoice_contract->CUST_contract($service,$Uint,$Startdate,$Enddate,$CompanyName,$Name,$NoticePeriod,$PassportNo,$PassportDate,$EpNo,$EPDate,$NoticePeriodDate,$Leaseperiod,$Cont_cardno,$Rent,$InvQuaterlyfee,$InvFixedaircon_fee,$InvElectricitycapFee,$InvCurtain_DrycleanFee,$InvCheckOutCleanFee,$InvProcessingFee,$InvDepositFee,$Invwaived,$RoomType,$InvProrated,'CREATION',$Sendmailid,$Docowner,$CustomerFolder);
                         if($InvoiceId[0]==1 && $ContractId[0]==1)
                         {
-                            $this->InvoiceandContract($InvoiceId, $ContractId, $Emailtemplate, $Username, $Confirm_Meessage, $Uint, $Name, $Docowner, $UserStamp);
+                            $this->InvoiceandContract($InvoiceId, $ContractId, $Emailtemplate, $Username, $Confirm_Meessage, $Uint, $Name, $Sendmailid, $UserStamp);
                             echo $Confirm_Meessage;
                             exit;
                         }
@@ -236,7 +236,7 @@ class Mdl_customer_creation_uat extends CI_Model
                     else
                     {
                         $this->db->query('ROLLBACK');
-                        $this->Mdl_eilib_calender->CUST_customercalendercreation($cal, $Customerid, $StartDate, $S_starttime, $S_endtime, $EndDate, $E_starttime, $E_endtime,'');
+//                        $this->Mdl_eilib_calender->CUST_customercalendercreation($cal, $Customerid, $StartDate, $S_starttime, $S_endtime, $EndDate, $E_starttime, $E_endtime,'');
                         echo $Confirm_Meessage;
                         exit;
                     }

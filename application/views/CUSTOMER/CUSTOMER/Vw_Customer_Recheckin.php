@@ -1179,6 +1179,7 @@ var CustomernameDetails;
         var enddate = $('#CCRE_Enddate').val();
         var Rent = $('#CCRE_Rent').val();
         if (startdate != '' && enddate != '' && Rent != '') {
+            $('.preloader').show();
             $.ajax({
                 type: "POST",
                 url: controller_url+"Prorated_check",

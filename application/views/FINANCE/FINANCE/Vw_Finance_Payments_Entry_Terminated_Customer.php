@@ -49,7 +49,7 @@ require_once('application/libraries/EI_HDR.php');
             type: "POST",
             url: controller_url+"PaymentInitialDatas",
             data:{"ErrorList":'2,3,92,248,309'},
-            success: function(data){ alert ('enteraja')
+            success: function(data){
                 $('.preloader').hide();
                 var value_array=JSON.parse(data);
                 allunitdetails=value_array[0];
@@ -315,7 +315,7 @@ require_once('application/libraries/EI_HDR.php');
             <form id="FIN_TER_PaymentEntry_form" class="form-horizontal" role="form">
                 <div class="panel-body">
                     <div class="row form-group">
-                        <div class="col-md-2">
+                        <div class="col-md-3">
                             <label>UNIT<span class="labelrequired"><em>*</em></span></label>
                         </div>
                         <div class="col-md-3">
@@ -324,7 +324,7 @@ require_once('application/libraries/EI_HDR.php');
                         </div>
                     </div>
                     <div class="row form-group">
-                        <div class="col-md-2">
+                        <div class="col-md-3">
                             <label>CUSTOMER NAME<span class="labelrequired"><em>*</em></span></label>
                         </div>
                         <div class="col-md-3">
@@ -336,7 +336,7 @@ require_once('application/libraries/EI_HDR.php');
 
                     </div>
                     <div class="row form-group">
-                        <div class="col-md-2">
+                        <div class="col-md-3">
                             <label>LEASEPERIOD<span class="labelrequired"><em>*</em></span></label>
                         </div>
                         <div class="col-md-3">
@@ -346,7 +346,7 @@ require_once('application/libraries/EI_HDR.php');
                         </div>
                     </div>
                     <div class="row form-group">
-                        <div class="col-md-2">
+                        <div class="col-md-3">
                             <label>PAYMENT TYPE<span class="labelrequired"><em>*</em></span></label>
                         </div>
                         <div class="col-md-3">
@@ -356,43 +356,34 @@ require_once('application/libraries/EI_HDR.php');
                         </div>
                     </div>
                     <div class="row form-group">
-                        <div class="col-md-2">
+                        <div class="col-md-3">
                             <label>AMOUNT<span class="labelrequired"><em>*</em></span></label>
                         </div>
-                        <div class="col-md-9">
-                            <div class="col-sm-3" style="padding-left: 0px;">
-                                <div class="input-group">
-                                    <input type="text" id="FIN_TER_Payment_Amount" placeholder="0.00" class="form-control amtonly" name="FIN_TER_Payment_Amount" ><span class="input-group-addon"><input type="checkbox" class="Btn_validation" name="Amountflag[]" id=Amountflag_'+counter+'></span>
-                                </div>
-                            </div>
+                        <div class="col-md-2">
+                            <input class="form-control amtonly" name="FIN_TER_Payment_Amount" style="max-width: 120px"  required id="FIN_TER_Payment_Amount" placeholder="0.00">
+                        </div>
+                        <div class="col-md-1">
+                            <input class="PU_Validation" type="checkbox" name="FIN_TER_Payment_Amountflag"  id="FIN_TER_Payment_Amountflag">
                         </div>
                     </div>
                     <div class="row form-group">
-                        <div class="col-md-2">
+                        <div class="col-md-3">
                             <label>FOR PERIOD<span class="labelrequired"><em>*</em></span></label>
                         </div>
-                        <div class="col-md-9">
-                            <div class="col-sm-3" style="padding-left: 0px;">
-                                <div class="input-group addon">
-                                    <input type="text" class="form-control" name="FIN_TER_Payment_Forperiod" id="FIN_TER_Payment_Forperiod"  placeholder="For Period"><label  class="input-group-addon" for=FIN_TER_Payment_Forperiod><span class="glyphicon glyphicon-calendar"></span></label>
-                                </div>
-                            </div>
+                        <div class="col-md-3">
+                            <input class="form-control datemandtry" name="FIN_TER_Payment_Forperiod"  required id="FIN_TER_Payment_Forperiod" style="max-width: 150px;" placeholder="For Period">
                         </div>
                     </div>
                     <div class="row form-group">
-                        <div class="col-md-2">
+                        <div class="col-md-3">
                             <label>PAIDDATE<span class="labelrequired"><em>*</em></span></label>
                         </div>
-                        <div class="col-md-9">
-                            <div class="col-sm-3" style="padding-left: 0px;">
-                                <div class="input-group addon">
-                                    <input type="text" class="form-control" name="FIN_TER_Payment_Paiddate" id="FIN_TER_Payment_Paiddate"  placeholder="Paid Date"><label  class="input-group-addon" for=FIN_TER_Payment_Paiddate><span class="glyphicon glyphicon-calendar"></span></label>
-                                </div>
-                            </div>
+                        <div class="col-md-3">
+                            <input class="form-control datemandtry" name="FIN_TER_Payment_Paiddate"  required id="FIN_TER_Payment_Paiddate" style="max-width: 150px;" placeholder="Paid Date">
                         </div>
                     </div>
                     <div class="row form-group">
-                        <div class="col-md-2">
+                        <div class="col-md-3">
                             <label>COMMENTS<span class="labelrequired"><em>*</em></span></label>
                         </div>
                         <div class="col-md-3">

@@ -1,5 +1,7 @@
 <?php
 error_reporting(0);
+require_once 'google/appengine/api/mail/Message.php';
+use google\appengine\api\mail\Message;
 class Mdl_customer_search_update_delete extends CI_Model
 {
     public function getSearchOption()
@@ -349,6 +351,7 @@ class Mdl_customer_search_update_delete extends CI_Model
             $mimetype = 'application/pdf';
             $CCoption = $_POST['CCRE_SRC_Option'];
             $Sendmailid = $_POST['CCRE_SRC_MailList'];
+            $Customerflag = $_POST['CCRE_SRC_Calflag'];
             $this->load->model('EILIB/Mdl_eilib_common_function');
             $service = $this->Mdl_eilib_common_function->get_service_document();
             $Fileupload='';
@@ -383,10 +386,21 @@ class Mdl_customer_search_update_delete extends CI_Model
                 }
             }
             if ($Confirm_Meessage == 1) {
-                $this->load->model('EILIB/Mdl_eilib_calender');
-                $cal = $this->Mdl_eilib_calender->createCalendarService();
-//                $this->Mdl_eilib_calender->CUST_customercalendercreation($cal, $Customerid, $StartDate, $S_starttime, $S_endtime, $EndDate, $E_starttime, $E_endtime, $FirstName, $Lastname, $Mobile, $IntlMobile, $Officeno, $Emailid, $Uint, $RoomType, '');
-                if ($CCoption == 4 || $CCoption == 5 || $CCoption == 6)
+                if($Customerflag==1)
+                {
+                    $this->load->model('EILIB/Mdl_eilib_calender');
+                    $calId = $this->Mdl_eilib_calender->GetEICalendarId();
+                    $cal = $this->Mdl_eilib_calender->createCalendarService();
+                    $calevents=$this->CAL_DEL_CREATE($Customerid);
+                    $caldelresponse=$this->CUST_customercalenderdeletion_StartDate($calId,$cal,$calevents[0],$Customerid);
+                    $calcreateresponse=$this->CUST_customercalendercreation_StartDate($calId,$cal,$calevents[1],$Customerid,$FirstName,$Lastname,$Mobile,$IntlMobile,$Officeno,$Emailid,$Uint,$RoomType);
+                }
+                else
+                {
+                    $caldelresponse=1;
+                    $calcreateresponse=1;
+                }
+                if (($CCoption == 4 || $CCoption == 5 || $CCoption == 6) && $caldelresponse==1 && $calcreateresponse==1)
                 {
                     $Invoiceandcontractid = $this->Mdl_eilib_common_function->CUST_invoice_contractreplacetext();
                     $Docowner = $this->Mdl_eilib_common_function->CUST_documentowner($UserStamp);
@@ -405,7 +419,7 @@ class Mdl_customer_search_update_delete extends CI_Model
                         $Messagebody = str_replace('[MAILID_USERNAME]', $Username, $Messagebody);
                         $Messagebody = $Messagebody . '<br><br>INVOICE :' . $InvoiceId[2];
                         $Displayname = $this->Mdl_eilib_common_function->Get_MailDisplayName('INVOICE');
-                        $this->Customercreationmailpart($Confirm_Meessage,$Emailsub,$Messagebody,$Displayname,$Docowner,$UserStamp);
+                        $this->Customercreationmailpart($Confirm_Meessage,$Emailsub,$Messagebody,$Displayname,$Sendmailid,$UserStamp);
                         echo $Confirm_Meessage;
                         exit;
                     } else if ($CCoption == 5) {
@@ -418,7 +432,7 @@ class Mdl_customer_search_update_delete extends CI_Model
                         $Messagebody = str_replace('[MAILID_USERNAME]', $Username, $Messagebody);
                         $Messagebody = $Messagebody . '<br><br>CONTRACT :' . $ContractId[2];
                         $Displayname = $this->Mdl_eilib_common_function->Get_MailDisplayName('CONTRACT');
-                        $this->Customercreationmailpart($Confirm_Meessage,$Emailsub,$Messagebody,$Displayname,$Docowner,$UserStamp);
+                        $this->Customercreationmailpart($Confirm_Meessage,$Emailsub,$Messagebody,$Displayname,$Sendmailid,$UserStamp);
                         echo $Confirm_Meessage;
                         exit;
                     } else if ($CCoption == 6) {
@@ -434,7 +448,7 @@ class Mdl_customer_search_update_delete extends CI_Model
                         $Messagebody = $Messagebody . '<br><br>INVOICE :' . $InvoiceId[2];
                         $Messagebody = $Messagebody . '<br><br>CONTRACT :' . $ContractId[2];
                         $Displayname = $this->Mdl_eilib_common_function->Get_MailDisplayName('INVOICE_N_CONTRACT');
-                        $this->Customercreationmailpart($Confirm_Meessage,$Emailsub,$Messagebody,$Displayname,$Docowner,$UserStamp);
+                        $this->Customercreationmailpart($Confirm_Meessage,$Emailsub,$Messagebody,$Displayname,$Sendmailid,$UserStamp);
                         echo $Confirm_Meessage;
                         exit;
                     }
@@ -447,7 +461,7 @@ class Mdl_customer_search_update_delete extends CI_Model
                     exit;
                 }
             } else {
-                return $Confirm_Meessage;
+                echo $Confirm_Meessage;
                 exit;
             }
         }
@@ -469,5 +483,174 @@ class Mdl_customer_search_update_delete extends CI_Model
         $message1->send();
         $this->db->trans_commit();
 
+    }
+    public function CAL_DEL_CREATE($CSRC_customerid)
+    {
+        $Selectquery="CALL SP_CUSTOMER_MIN_MAX_RV('$CSRC_customerid',@MIN_LP,@MAX_LP)";
+        $this->db->query($Selectquery);
+        $outparm_result = $this->db->query('SELECT @MIN_LP,@MAX_LP');
+        foreach ($outparm_result->result_array() as $key=>$val)
+        {
+            $CSRC_MINRV=$val['@MIN_LP'];if($CSRC_MINRV==null){$CSRC_MINRV=1;}
+            $CSRC_MAXRV=$val['@MAX_LP'];
+        }
+        $CSRC_caldetailsquery="SELECT C.CUSTOMER_FIRST_NAME,C.CUSTOMER_LAST_NAME,CED.CED_REC_VER,CTD.CLP_GUEST_CARD,CTD.CLP_STARTDATE,CTD.CLP_ENDDATE,CTD.CLP_PRETERMINATE_DATE,CPD.CPD_MOBILE,CPD.CPD_INTL_MOBILE,CCD.CCD_OFFICE_NO,CPD.CPD_EMAIL,U.UNIT_NO,URTD.URTD_ROOM_TYPE,CTPA.CTP_DATA AS CED_SD_STIME, CTPB.CTP_DATA AS CED_SD_ETIME,CTPC.CTP_DATA AS CED_ED_STIME, CTPD.CTP_DATA AS CED_ED_ETIME FROM  CUSTOMER_ENTRY_DETAILS CED LEFT JOIN CUSTOMER_TIME_PROFILE CTPA ON CED.CED_SD_STIME = CTPA.CTP_ID LEFT JOIN CUSTOMER_TIME_PROFILE CTPB ON CED.CED_SD_ETIME = CTPB.CTP_ID LEFT JOIN CUSTOMER_TIME_PROFILE CTPC ON CED.CED_ED_STIME = CTPC.CTP_ID LEFT JOIN CUSTOMER_TIME_PROFILE CTPD ON CED.CED_ED_ETIME = CTPD.CTP_ID LEFT JOIN CUSTOMER_COMPANY_DETAILS CCD ON CED.CUSTOMER_ID=CCD.CUSTOMER_ID LEFT JOIN  CUSTOMER_PERSONAL_DETAILS CPD ON CED.CUSTOMER_ID=CPD.CUSTOMER_ID,CUSTOMER_LP_DETAILS CTD,UNIT_ROOM_TYPE_DETAILS URTD, UNIT_ACCESS_STAMP_DETAILS UASD ,UNIT U,CUSTOMER C WHERE  CED.UNIT_ID=U.UNIT_ID AND CED.CUSTOMER_ID=".$CSRC_customerid." AND (CTD.CUSTOMER_ID=CED.CUSTOMER_ID) AND (CED.CED_REC_VER=CTD.CED_REC_VER) AND (CTD.CLP_GUEST_CARD IS NULL) AND CED.CED_CANCEL_DATE IS  NULL AND(UASD.UASD_ID=CED.UASD_ID) AND(UASD.URTD_ID=URTD.URTD_ID)  AND (C.CUSTOMER_ID=CED.CUSTOMER_ID) AND (CTD.CUSTOMER_ID=C.CUSTOMER_ID) AND (CED.CED_REC_VER BETWEEN ".$CSRC_MINRV." AND ".$CSRC_MAXRV.") AND CTD.CLP_GUEST_CARD IS NULL ORDER BY CED.CED_REC_VER, CTD.CLP_GUEST_CARD ASC";
+        $CSRC_caldetailsresult=$this->db->query($CSRC_caldetailsquery);
+         $calevents_array=array();
+        foreach ($CSRC_caldetailsresult->result_array() as $key=>$val)
+        {
+              $CSRC_calunit=$val['UNIT_NO'];
+              $CSRC_calsddate=$val['CLP_STARTDATE'];
+              $CSRC_caleddate=$val['CLP_ENDDATE'];
+              $CSRC_cal_ptddate=$val['CLP_PRETERMINATE_DATE'];
+              $CSRC_SD_start_time_in=$val['CED_SD_STIME'];
+              $CSRC_SD_start_time_out=$val['CED_SD_ETIME'];
+              $CSRC_ED_end_time_in=$val['CED_ED_STIME'];
+              $CSRC_ED_end_time_out=$val['CED_ED_ETIME'];
+              $CSRC_calroomtype=$val['URTD_ROOM_TYPE'];
+            if($CSRC_cal_ptddate!=null)
+            {
+                $CSRC_caleddate=$CSRC_cal_ptddate;
+            }
+            $startdateevents=$CSRC_calunit.'!~'.$CSRC_calroomtype.'!~'.$CSRC_calsddate.'!~'.$CSRC_SD_start_time_in.'!~'.$CSRC_SD_start_time_out;
+            $enddateevents=$CSRC_calunit.'!~'.$CSRC_calroomtype.'!~'.$CSRC_caleddate.'!~'.$CSRC_ED_end_time_in.'!~'.$CSRC_ED_end_time_out;
+            array_push($calevents_array,$startdateevents);
+            array_push($calevents_array,$enddateevents);
+        }
+        $DELETE_finalcaleventsarray=array();
+        $CREATE_finalcaleventsarray=array();
+        for($j=0;$j<count($calevents_array);$j++)
+         {
+           $c_eventdetails=$calevents_array[$j];
+           $eventdetails=explode('!~',$c_eventdetails);
+           if($j==0 || $j==count($calevents_array)-1)
+            {
+                if($j==0)
+                {
+                    $roomstatus='';
+                    $eventstatus="CHECKIN";
+                    $createevents=$eventdetails[0].','.$eventdetails[1].','.$eventdetails[2].','.$eventdetails[3].','.$eventdetails[4].','.$eventstatus;
+                    $deleteevents=$eventdetails[2].','.$eventdetails[3].','.$eventdetails[4];
+                    array_push($CREATE_finalcaleventsarray,$createevents);
+                    array_push($DELETE_finalcaleventsarray,$deleteevents);
+                }
+                else
+                {
+                    $roomstatus='';
+                    $eventstatus="CHECKOUT";
+                    $createevents=$eventdetails[0].','.$eventdetails[1].','.$eventdetails[2].','.$eventdetails[3].','.$eventdetails[4].','.$eventstatus;
+                    $deleteevents=$eventdetails[2].','.$eventdetails[3].','.$eventdetails[4];
+                    array_push($CREATE_finalcaleventsarray,$createevents);
+                    array_push($DELETE_finalcaleventsarray,$deleteevents);
+                }
+            }
+            else
+            {
+               $p_eventdetails=$calevents_array[$j-1];
+               $preeventdetails=explode('!~',$p_eventdetails);
+                  if($preeventdetails[0]==$eventdetails[0] && $preeventdetails[1]!=$eventdetails[1])
+                  {
+                      $roomstatus='DIFF RM';
+                      $eventstatus="CHECKIN";
+                      $createevents=$eventdetails[0].','.$eventdetails[1].','.$eventdetails[2].','.$eventdetails[3].','.$eventdetails[4].','.$eventstatus;
+                      $deleteevents=$eventdetails[2].','.$eventdetails[3].','.$eventdetails[4];
+                      array_push($CREATE_finalcaleventsarray,$createevents);
+                      array_push($DELETE_finalcaleventsarray,$deleteevents);
+                  }
+                  if($preeventdetails[0]!=$eventdetails[0])
+                  {
+                      $roomstatus='DIFF UNIT';
+                      $eventstatus="CHECKIN";
+                      $createevents=$eventdetails[0].','.$eventdetails[1].','.$eventdetails[2].','.$eventdetails[3].','.$eventdetails[4].','.$eventstatus;
+                      $deleteevents=$eventdetails[2].','.$eventdetails[3].','.$eventdetails[4];
+                      array_push($CREATE_finalcaleventsarray,$createevents);
+                      array_push($DELETE_finalcaleventsarray,$deleteevents);
+                  }
+            }
+         }
+      $returnevents=array($DELETE_finalcaleventsarray,$CREATE_finalcaleventsarray);
+      return $returnevents;
+    }
+    public function CalenderTime_Convertion($startdate,$startdate_starttime,$startdate_endtime){
+        if($startdate!=''&&$startdate_starttime!=''&&$startdate_endtime!='') {
+            $splitStart = explode(':', $startdate_starttime);
+            $startdate_starttime = $splitStart[0] . ':' . $splitStart[1];
+            $splitEnd = explode(':', $startdate_endtime);
+            $startdate_endtime = $splitEnd[0] . ':' . $splitEnd[1];
+        }
+        $start = new Google_Service_Calendar_EventDateTime();
+        $start->setDateTime($startdate.'T'.$startdate_starttime.':00.000+08:00');
+        $end = new Google_Service_Calendar_EventDateTime();
+        $end->setDateTime($startdate.'T'.$startdate_endtime.':00.000+08:00');
+        return array($start,$end);
+    }
+    public function  CUST_customercalendercreation_StartDate($calId,$calPrimary,$calevents,$custid,$firstname,$lastname,$mobile,$intmobile,$office,$customermailid,$unit,$unitrmtype)
+    {
+        try{
+           for($k=0;$k<count($calevents);$k++)
+           {
+               $Events=explode(',',$calevents[$k]);
+               $initialsdate = $Events[2];
+               $calendername = $firstname . ' ' . $lastname;
+               $contactno = "";
+               $contactaddr = "";
+               if ($mobile != null) {
+                   $contactno = $mobile;
+               } else if ($intmobile != null) {
+                   $contactno = $intmobile;
+               } else if ($office != null) {
+                   $contactno = $office;
+               }
+               if ($contactno != null && $contactno != "") {
+                   $contactaddr = $custid . " " . "EMAIL :" . $customermailid . ",CONTACT NO :" . $contactno;
+               } else {
+                   $contactaddr = $custid . " " . "EMAIL :" . $customermailid;
+               }
+               if ($Events[1] != "") {
+                   $details = $Events[0] . " " . $calendername . " " . $Events[1] . " " . $Events[0];
+               } else {
+                   $details = $Events[0] . " " . $calendername . " " . $Events[0];
+               }
+               $details1 = $Events[0] . " " . $Events[1];
+               if ($initialsdate != "") {
+                   $event = new Google_Service_Calendar_Event();
+                   $startevents = $this->CalenderTime_Convertion($Events[2], $Events[3], $Events[4]);
+                   $event->setStart($startevents[0]);
+                   $event->setEnd($startevents[1]);
+                   $event->setDescription($contactaddr);
+                   $event->setLocation($details1);
+                   $event->setSummary($details);
+                   $createdEvent = $calPrimary->events->insert($calId, $event); // to create a event
+               }
+
+           }
+            return 1;
+        }
+        catch(Exception $e){
+
+            return $e->getMessage();
+        }
+    }
+    ///FUNCTION TO DELETE CALENDER EVENTS
+    public function CUST_customercalenderdeletion_StartDate($calId,$calPrimary,$calevents,$custid)
+    {
+        try{
+            for($k=0;$k<count($calevents);$k++)
+            {
+                $Events = explode(',', $calevents[$k]);
+                $optDate = array('timeMax' => $Events[0] . 'T' . $Events[2] . '+08:00', 'timeMin' => $Events[0] . 'T' . $Events[1] . '+08:00');
+                $eventsCheckOut = $calPrimary->events->listEvents($calId, $optDate);
+                foreach ($eventsCheckOut->getItems() as $event) {
+                    if (intval(explode(' ', $event->getDescription())[0]) == $custid)
+                    {
+                        $calPrimary->events->delete($calId, $event->getId());
+                    }
+                }
+            }
+            return 1;
+        }
+        catch(Exception $e){
+            return $e->getMessage();
+        }
     }
 }

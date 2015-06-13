@@ -15,6 +15,7 @@
      $(".alphanumonly").doValidation({rule:'alphanumeric'});
      $("#CCRE_SRC_IntlMobile").doValidation({rule:'numbersonly',prop:{realpart:15,leadzero:true}});
      $("#CCRE_SRC_CompanyPostalCode").doValidation({rule:'numbersonly',prop:{realpart:6,leadzero:true}});
+     $('.autogrowcomments').autogrow({onInitialize: true});
      var nationality;
      var errormsg;
      var allunits;
@@ -79,8 +80,9 @@
      var AllIntMobilenoArray=[];
      var AllOfficenoArray=[];
      var AllCommentsArray=[];
-     $(document).on('click','#CC_SRC_SearchOption',function() {
+     $(document).on('change','#CC_SRC_SearchOption',function() {
          $('#CSRC_updation_form').hide();
+         $('.preloader').show();
          var searchoption=$('#CC_SRC_SearchOption').val();
          if(searchoption==21)
          {
@@ -107,9 +109,12 @@
                      }
                      AllcustomerArray=unique(AllcustomerArray);
                      $('#customernameautocompleteerrormsg').text(errormsg[17].EMC_DATA);
+                     $("#CC_SRC_CustomerNameSearch").focus();
+                     $('.preloader').hide();
                  },
                  error: function(data){
                      alert('error in getting'+JSON.stringify(data));
+                     $('.preloader').hide();
                  }
              });
          }
@@ -139,9 +144,12 @@
                      }
                      $('#customernameautocompleteerrormsg').text(errormsg[17].EMC_DATA);
                      $("#CC_SRC_CardNoSearch").doValidation({rule:'numbersonly',prop:{realpart:7,leadzero:true}});
+                     $("#CC_SRC_CardNoSearch").focus();
+                     $('.preloader').hide();
                  },
                  error: function(data){
                      alert('error in getting'+JSON.stringify(data));
+                     $('.preloader').hide();
                  }
              });
          }
@@ -170,9 +178,12 @@
                          }
                      }
                      $('#customernameautocompleteerrormsg').text(errormsg[17].EMC_DATA);
+                     $("#CC_SRC_CompanyNameSearch").focus();
+                     $('.preloader').hide();
                  },
                  error: function(data){
                      alert('error in getting'+JSON.stringify(data));
+                     $('.preloader').hide();
                  }
              });
          }
@@ -194,6 +205,7 @@
              $('#CC_SearchformDiv').html(appenddata);
              $(".CCRE_amtonlyvalidationmaxdigit").doValidation({rule:'numbersonly',prop:{realpart:5,imaginary:2}});
              $('#depositamterrormsg').text(errormsg[7].EMC_DATA);
+             $('.preloader').hide();
          }
          else if(searchoption==30)
          {
@@ -213,6 +225,7 @@
              $('#CC_SearchformDiv').html(appenddata);
              $(".CCRE_amtonlyvalidationmaxdigit").doValidation({rule:'numbersonly',prop:{realpart:5,imaginary:2}});
              $('#depositamterrormsg').text(errormsg[7].EMC_DATA);
+             $('.preloader').hide();
          }
          else if(searchoption==27)
          {
@@ -232,6 +245,7 @@
                  options += '<option value="' + data.NC_DATA + '">' + data.NC_DATA + '</option>';
              }
              $('#CC_SRC_listsearch').html(options);
+             $('.preloader').hide();
          }
          else if(searchoption==31)
          {
@@ -256,9 +270,11 @@
                          options += '<option value="' + data.UNIT_NO + '">' + data.UNIT_NO + '</option>';
                      }
                      $('#CC_SRC_listsearch').html(options);
+                     $('.preloader').hide();
                  },
                  error: function(data){
                      alert('error in getting'+JSON.stringify(data));
+                     $('.preloader').hide();
                  }
              });
          }
@@ -285,9 +301,11 @@
                          options += '<option value="' + data.URTD_ROOM_TYPE + '">' + data.URTD_ROOM_TYPE + '</option>';
                      }
                      $('#CC_SRC_listsearch').html(options);
+                     $('.preloader').hide();
                  },
                  error: function(data){
                      alert('error in getting'+JSON.stringify(data));
+                     $('.preloader').hide();
                  }
              });
          }
@@ -316,9 +334,12 @@
                          }
                      }
                      $('#customernameautocompleteerrormsg').text(errormsg[17].EMC_DATA);
+                     $("#CC_SRC_EmailSearch").focus();
+                     $('.preloader').hide();
                  },
                  error: function(data){
                      alert('error in getting'+JSON.stringify(data));
+                     $('.preloader').hide();
                  }
              });
          }
@@ -347,9 +368,12 @@
                          }
                      }
                      $('#customernameautocompleteerrormsg').text(errormsg[17].EMC_DATA);
+                     $("#CC_SRC_EPnoSearch").focus();
+                     $('.preloader').hide();
                  },
                  error: function(data){
                      alert('error in getting'+JSON.stringify(data));
+                     $('.preloader').hide();
                  }
              });
          }
@@ -378,9 +402,12 @@
                          }
                      }
                      $('#customernameautocompleteerrormsg').text(errormsg[17].EMC_DATA);
+                     $("#CC_SRC_PassportnoSearch").focus();
+                     $('.preloader').hide();
                  },
                  error: function(data){
                      alert('error in getting'+JSON.stringify(data));
+                     $('.preloader').hide();
                  }
              });
          }
@@ -409,9 +436,12 @@
                          }
                      }
                      $('#customernameautocompleteerrormsg').text(errormsg[17].EMC_DATA);
+                     $("#CC_SRC_MobilenoSearch").focus();
+                     $('.preloader').hide();
                  },
                  error: function(data){
                      alert('error in getting'+JSON.stringify(data));
+                     $('.preloader').hide();
                  }
              });
          }
@@ -440,9 +470,12 @@
                          }
                      }
                      $('#customernameautocompleteerrormsg').text(errormsg[17].EMC_DATA);
+                     $("#CC_SRC_IntMobilenoSearch").focus();
+                     $('.preloader').hide();
                  },
                  error: function(data){
                      alert('error in getting'+JSON.stringify(data));
+                     $('.preloader').hide();
                  }
              });
          }
@@ -471,9 +504,12 @@
                          }
                      }
                      $('#customernameautocompleteerrormsg').text(errormsg[17].EMC_DATA);
+                     $("#CC_SRC_OfficenoSearch").focus();
+                     $('.preloader').hide();
                  },
                  error: function(data){
                      alert('error in getting'+JSON.stringify(data));
+                     $('.preloader').hide();
                  }
              });
          }
@@ -502,9 +538,12 @@
                          }
                      }
                      $('#customernameautocompleteerrormsg').text(errormsg[17].EMC_DATA);
+                     $("#CC_SRC_CommentsSearch").focus();
+                     $('.preloader').hide();
                  },
                  error: function(data){
                      alert('error in getting'+JSON.stringify(data));
+                     $('.preloader').hide();
                  }
              });
          }
@@ -535,6 +574,7 @@
                  changeYear: true,
                  changeMonth: true});
              $('#CC_SRC_Todate').datepicker("option","maxDate",new Date());
+             $('.preloader').hide();
          }
         else if(searchoption==34)
          {
@@ -568,6 +608,7 @@
                      of: $(this)
                  });
              });
+             $('.preloader').hide();
          }
 
      });
@@ -1761,7 +1802,7 @@
      }
 
      $(document).on('click','#CSRC_btn_Updatebutton', function (){
-         $('.preloader').show();
+//         $('.preloader').show();
          $('#CCRE_SRC_UnitNo').prop('disabled', false);
          $('#CCRE_SRC_SDStarttime').prop('disabled', false);
          $('#CCRE_SRC_SDEndtime').prop('disabled', false);
@@ -1892,6 +1933,9 @@
              $('#CC_fileupload').val('');
          }
      });
+     $(document).on('change', '.calvalidation', function () {
+         $('#CCRE_SRC_Calflag').val(1);
+     });
  });
 </script>
 <body>
@@ -1934,9 +1978,10 @@
                                         <label>FIRST NAME<span class="labelrequired"><em>*</em></span></label>
                                     </div>
                                     <div class="col-md-3">
-                                        <input class="form-control autosize customernamechange" name="CCRE_SRC_FirstName" maxlength="30" required id="CCRE_SRC_FirstName"/>
+                                        <input class="form-control autosize customernamechange calvalidation" name="CCRE_SRC_FirstName" maxlength="30" required id="CCRE_SRC_FirstName"/>
                                         <input input type="hidden" class="form-control" name="CCRE_SRC_customerid" style="width:30px;"  id="CCRE_SRC_customerid"/>
                                         <input input type="hidden" class="form-control" name="CCRE_SRC_Recver" style="width:30px;" id="CCRE_SRC_Recver"/>
+                                        <input input type="hidden" class="form-control" name="CCRE_SRC_Calflag" style="width:50px;" id="CCRE_SRC_Calflag" value="0"/>
                                     </div>
                                 </div>
                                 <div class="row form-group">
@@ -1944,7 +1989,7 @@
                                         <label>LAST NAME<span class="labelrequired"><em>*</em></span></label>
                                     </div>
                                     <div class="col-md-3">
-                                        <input class="form-control autosize customernamechange" name="CCRE_SRC_LastName" maxlength="30" required id="CCRE_SRC_LastName" />
+                                        <input class="form-control autosize customernamechange calvalidation" name="CCRE_SRC_LastName" maxlength="30" required id="CCRE_SRC_LastName" />
                                     </div>
                                 </div>
                                 <div class="row form-group">
@@ -1977,7 +2022,7 @@
                                         <label>E-MAIL ID<span class="labelrequired"><em>*</em></span></label>
                                     </div>
                                     <div class="col-md-3">
-                                        <input class="form-control" name="CCRE_SRC_Emailid" required id="CCRE_SRC_Emailid" />
+                                        <input class="form-control calvalidation" name="CCRE_SRC_Emailid" required id="CCRE_SRC_Emailid" />
                                     </div>
                                     <div class="col-md-3"><label id="CSRC_lbl_emailiderrormsg" class="errormsg" hidden></label></div>
                                 </div>
@@ -1986,7 +2031,7 @@
                                         <label>MOBILE</label>
                                     </div>
                                     <div class="col-md-3">
-                                        <input class="form-control numonlynozero mobilevalidation" name="CCRE_SRC_Mobile" maxlength="8" style="max-width:100px;" id="CCRE_SRC_Mobile" placeholder="Mobile No"/>
+                                        <input class="form-control numonlynozero mobilevalidation calvalidation" name="CCRE_SRC_Mobile" maxlength="8" style="max-width:100px;" id="CCRE_SRC_Mobile" placeholder="Mobile No"/>
                                     </div>
                                     <div class="col-md-3"><label id="CSRC_lbl_mobileerrormsg" class="errormsg" hidden></label></div>
                                 </div>
@@ -1995,7 +2040,7 @@
                                         <label>INT'L MOBILE</label>
                                     </div>
                                     <div class="col-md-3">
-                                        <input class="form-control" name="CCRE_SRC_IntlMobile" maxlength="15" style="max-width:150px;" id="CCRE_SRC_IntlMobile" placeholder="Int'l Mobile No" />
+                                        <input class="form-control calvalidation" name="CCRE_SRC_IntlMobile" maxlength="15" style="max-width:150px;" id="CCRE_SRC_IntlMobile" placeholder="Int'l Mobile No" />
                                     </div>
                                     <div class="col-md-3"><label id="CSRC_lbl_intlmobileerrormsg" class="errormsg" hidden></label></div>
                                 </div>
@@ -2004,7 +2049,7 @@
                                         <label>OFFICE NO</label>
                                     </div>
                                     <div class="col-md-3">
-                                        <input class="form-control numonlynozero officevalidation" name="CCRE_SRC_Officeno" maxlength="8" style="max-width:110px;" id="CCRE_SRC_Officeno" placeholder="Office No"/>
+                                        <input class="form-control numonlynozero officevalidation calvalidation" name="CCRE_SRC_Officeno" maxlength="8" style="max-width:110px;" id="CCRE_SRC_Officeno" placeholder="Office No"/>
                                     </div>
                                     <div class="col-md-3"><label id="CSRC_lbl_officeerrormsg" class="errormsg" hidden></label></div>
                                 </div>
@@ -2078,7 +2123,7 @@
                                         <label>UNIT NUMBER<span class="labelrequired"><em>*</em></span></label>
                                     </div>
                                     <div class="col-md-3">
-                                        <SELECT class="form-control Unitchange" name="CCRE_SRC_UnitNo" style="max-width:120px;" id="CCRE_SRC_UnitNo">
+                                        <SELECT class="form-control Unitchange calvalidation" name="CCRE_SRC_UnitNo" style="max-width:120px;" id="CCRE_SRC_UnitNo">
                                             <OPTION>SELECT</OPTION>
                                         </SELECT>
                                     </div>
@@ -2088,7 +2133,7 @@
                                         <label>ROOM TYPE<span class="labelrequired"><em>*</em></span></label>
                                     </div>
                                     <div class="col-md-3">
-                                        <SELECT class="form-control" name="CCRE_SRC_RoomType" style="max-width:200px;" id="CCRE_SRC_RoomType">
+                                        <SELECT class="form-control calvalidation" name="CCRE_SRC_RoomType" style="max-width:200px;" id="CCRE_SRC_RoomType">
                                             <OPTION>SELECT</OPTION>
                                         </SELECT>
                                     </div>
@@ -2102,14 +2147,14 @@
                                     <div class="col-md-8">
                                         <div class="row form-group">
                                             <div class="col-md-3">
-                                                <input class="form-control prorated startdatevalidate datemandtry noticedate proratedcheck" name="CCRE_SRC_Startdate"  style="max-width:105px;" id="CCRE_SRC_Startdate"/>
+                                                <input class="form-control calvalidation prorated startdatevalidate datemandtry noticedate proratedcheck" name="CCRE_SRC_Startdate"  style="max-width:105px;" id="CCRE_SRC_Startdate"/>
                                             </div>
 
                                                 <div class="col-md-1">
                                                     <label>FROM</label>
                                                 </div>
                                                 <div class="col-md-2">
-                                                    <SELECT class="form-control totimevalidation" name="CCRE_SRC_SDStarttime"  style="max-width:100px;" id="CCRE_SRC_SDStarttime">
+                                                    <SELECT class="form-control totimevalidation calvalidation" name="CCRE_SRC_SDStarttime"  style="max-width:100px;" id="CCRE_SRC_SDStarttime">
                                                         <OPTION>Select</OPTION>
                                                     </SELECT>
                                                 </div>
@@ -2117,7 +2162,7 @@
                                                         <label>TO</label>
                                                     </div>
                                                     <div class="col-md-2">
-                                                        <SELECT class="form-control" name="CCRE_SRC_SDEndtime"  style="max-width:100px;" id="CCRE_SRC_SDEndtime" hidden>
+                                                        <SELECT class="form-control calvalidation" name="CCRE_SRC_SDEndtime"  style="max-width:100px;" id="CCRE_SRC_SDEndtime" hidden>
                                                             <OPTION>Select</OPTION>
                                                         </SELECT>
                                                     </div>
@@ -2131,13 +2176,13 @@
                                     <div class="col-md-8">
                                         <div class="row form-group">
                                             <div class="col-md-3">
-                                                <input class="form-control noticedate datemandtry Enddatevalidate proratedcheck" name="CCRE_SRC_Enddate"  style="max-width:105px;" id="CCRE_SRC_Enddate"/>
+                                                <input class="form-control calvalidation noticedate datemandtry Enddatevalidate proratedcheck" name="CCRE_SRC_Enddate"  style="max-width:105px;" id="CCRE_SRC_Enddate"/>
                                             </div>
                                             <div class="col-md-1">
                                                 <label>FROM</label>
                                             </div>
                                             <div class="col-md-2">
-                                                <SELECT class="form-control" name="CCRE_SRC_EDStarttime"  style="max-width:100px;" id="CCRE_SRC_EDStarttime">
+                                                <SELECT class="form-control calvalidation" name="CCRE_SRC_EDStarttime"  style="max-width:100px;" id="CCRE_SRC_EDStarttime">
                                                     <OPTION>Select</OPTION>
                                                 </SELECT>
                                             </div>
@@ -2145,7 +2190,7 @@
                                                     <label >TO</label>
                                                 </div>
                                                 <div class="col-md-2">
-                                                    <SELECT class="form-control" name="CCRE_SRC_EDEndtime"  style="max-width:100px;" id="CCRE_SRC_EDEndtime">
+                                                    <SELECT class="form-control calvalidation" name="CCRE_SRC_EDEndtime"  style="max-width:100px;" id="CCRE_SRC_EDEndtime">
                                                         <OPTION>Select</OPTION>
                                                     </SELECT>
                                                 </div>
@@ -2290,7 +2335,7 @@
                                         <label>COMMENTS</label>
                                     </div>
                                     <div class="col-md-3">
-                                        <textarea class="form-control" name="CCRE_SRC_Comments"  id="CCRE_SRC_Comments"></textarea>
+                                        <textarea class="form-control autogrowcomments" name="CCRE_SRC_Comments"  id="CCRE_SRC_Comments"></textarea>
                                     </div>
                                 </div>
                                 <div class="row form-group">

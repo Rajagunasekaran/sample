@@ -109,7 +109,7 @@
     <body>
     <div class="container">
         <div class="wrapper">
-            <div  class="preloader MaskPanel"><div class="preloader statusarea" ><div style="padding-top:90px; text-align:center"><img src="https://googledrive.com/host/0B5pkfK_IBDxjU1FrR3hVTXB4a28/Loading.gif" /></div></div></div>
+            <div class="preloader" hidden><span class="Centerer"></span><img class="preloaderimg"/> </div>
             <div class="row title text-center"><h4><b>TRIGGER</b></h4></div>
             <div class ='row content'>
             <form id="TriggerForm" class="form-horizontal" role="form">

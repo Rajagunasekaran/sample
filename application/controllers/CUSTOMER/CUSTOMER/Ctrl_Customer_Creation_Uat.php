@@ -10,7 +10,7 @@ Class Ctrl_Customer_Creation extends CI_Controller
     }
     public function Index()
     {
-        $this->load->view('CUSTOMER/CUSTOMER/Vw_Customer_Creation');
+        $this->load->view('CUSTOMER/CUSTOMER/Vw_Customer_Creation_Uat');
     }
     public function Customer_Initaildatas()
     {

@@ -1056,7 +1056,7 @@
                             <div class="col-md-9">
                                 <div class="col-sm-3" style="padding-left: 0px;">
                                     <div class="input-group addon">
-                                        <input type="text" class="form-control PU_Validation" name="UD_Payment_Forperiod" id="UD_Payment_Forperiod"  placeholder="For Period"><label  class="input-group-addon" for=UD_Payment_Forperiod><span class="glyphicon glyphicon-calendar"></span></label>
+                                        <input type="text" class="form-control PU_Validation datemandtry" name="UD_Payment_Forperiod" id="UD_Payment_Forperiod"  placeholder="For Period"><label  class="input-group-addon" for=UD_Payment_Forperiod><span class="glyphicon glyphicon-calendar"></span></label>
                                     </div>
                                 </div>
                             </div>
@@ -1068,7 +1068,7 @@
                             <div class="col-md-9">
                                 <div class="col-sm-3" style="padding-left: 0px;">
                                     <div class="input-group addon">
-                                        <input type="text" class="form-control PU_Validation" name="UD_Payment_Paiddate" id="UD_Payment_Paiddate"  placeholder="Paid Date"><label  class="input-group-addon" for=UD_Payment_Paiddate><span class="glyphicon glyphicon-calendar"></span></label>
+                                        <input type="text" class="form-control PU_Validation datemandtry" name="UD_Payment_Paiddate" id="UD_Payment_Paiddate"  placeholder="Paid Date"><label  class="input-group-addon" for=UD_Payment_Paiddate><span class="glyphicon glyphicon-calendar"></span></label>
                                     </div>
                                 </div>
                             </div>

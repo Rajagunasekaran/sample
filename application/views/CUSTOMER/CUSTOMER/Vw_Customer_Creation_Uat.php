@@ -1051,6 +1051,7 @@
             var Rent = $('#CCRE_Rent').val();
             $('.preloader').show();
             if (startdate != '' && enddate != '' && Rent != '') {
+                $('.preloader').show();
                 $.ajax({
                     type: "POST",
                     url: controller_url+"Prorated_check",

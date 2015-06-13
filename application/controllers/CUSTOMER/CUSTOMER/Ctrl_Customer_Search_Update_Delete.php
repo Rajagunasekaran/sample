@@ -1,7 +1,5 @@
 <?php
 error_reporting(0);
-require_once 'google/appengine/api/mail/Message.php';
-use google\appengine\api\mail\Message;
 Class Ctrl_Customer_Search_Update_Delete extends CI_Controller
 {
     function __construct() {

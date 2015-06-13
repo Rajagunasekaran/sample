@@ -49,7 +49,6 @@ include "application/libraries/EI_HDR.php";
               type:'post',
                 url:REP_controller_url+"REP_getdomain_err",
                 success:function(data) {
-                    alert(data)
                      var REP_getdomain_errresult_response=JSON.parse(data);
                      REP_getdomain_errresult(REP_getdomain_errresult_response);
                 },
@@ -75,7 +74,7 @@ include "application/libraries/EI_HDR.php";
                 REP_errorMsg_array=REP_getdomain_errresult_response.REP_errormsg;
                 if(REP_emailarr_emailid.length==0)
                 {
-                    var REP_errmsg=REP_errorMsg_array[0].replace('[PROFILE]','REPORT');
+                    var REP_errmsg=REP_errorMsg_array[0].EMC_DATA.replace('[PROFILE]','REPORT');
                     $('#REP_form_report').replaceWith('<p><label class="errormsg"> '+REP_errmsg+'</label></p>')
                 }
                 else
@@ -152,7 +151,6 @@ include "application/libraries/EI_HDR.php";
                         data:{'REP_report_optionfetch':REP_report_optionfetch},
                         success:function(data){
                            var REP_response_load_searchby=JSON.parse(data);
-                            alert(REP_response_load_searchby);
                             REP_success_load_searchby_lb(REP_response_load_searchby);
                         }
                     })
@@ -164,7 +162,6 @@ include "application/libraries/EI_HDR.php";
                 $(".preloader").hide();
                 var REP_report_optionfetch=REP_response_load_searchby.REP_flag;
                 REP_report_optionvalues=REP_response_load_searchby.REP_loaddata_searchby;
-                alert(JSON.stringify(REP_report_optionvalues))
                 var REP_report_options='<option>SELECT</option>';
                 for(var i = 0;i<REP_report_optionvalues.length; i++)
                 {
@@ -209,17 +206,17 @@ include "application/libraries/EI_HDR.php";
             });
 //CLICK FUNCTION FOR SAVE BUTTON
             $('#REP_btn_send').click(function(){
-//                $(".preloader").show();
+                $(".preloader").show();
                 $.ajax({
                     type:'post',
                     url:REP_controller_url+"REP_ss_getdatas",
                     data:{'reportNameVal':$('#REP_lb_reportname').val(),'reportNameText':$('#REP_lb_reportname').find('option:selected').text(),'emailId':($('#REP_lb_emailid').val()),'categoryName':$('#REP_lb_catgreportname').find('option:selected').text(),'month':$("#REP_db_month").val()},
                     success:function(data){
-                        alert(data);
-                        $(".preloader").hide();
+                        REP_ss_getdatas_result(data)
 //                        var REP_response_load_searchby=JSON.parse(data);
 //                        REP_success_load_searchby_lb(REP_response_load_searchby);
                     },error:function(data){
+                        $(".preloader").hide();
                         alert(JSON.stringify(data));
                     }
                 })
@@ -230,9 +227,8 @@ include "application/libraries/EI_HDR.php";
                 $(".preloader").hide();
                 var REP_reportname=$('#REP_lb_reportname').find('option:selected').text();
                 if(REP_response==1)
-                {
-                    $("#REP_btn_send").attr("disabled", "disabled");
-                    var REP_errmsg=REP_errorMsg_array[1].replace('[PROFILE]',REP_reportname);
+                {  $("#REP_btn_send").attr("disabled", "disabled");
+                    var REP_errmsg=REP_errorMsg_array[1].EMC_DATA.replace('[PROFILE]',REP_reportname);
 //MESSAGE BOX FOR SEND BUTTON
                     $(document).doValidation({rule:'messagebox',prop:{msgtitle:"REPORT",msgcontent:REP_errmsg,position:{top:150,left:500}}});
                     $('#REP_lbl_reportname').hide();
@@ -248,8 +244,12 @@ include "application/libraries/EI_HDR.php";
                 else
                 {
                     $("#REP_btn_send").attr("disabled", "disabled");
-                    var REP_errormsgnodata=REP_errorMsg_array[2].replace('[REPORT]',REP_reportname);
-                    $('#REP_div_nodata').text(REP_errormsgnodata).show();
+                    if(REP_response==2)
+                        var REP_errormsgnodata=REP_errorMsg_array[0];
+                    else
+                    var REP_errormsgnodata=REP_errorMsg_array[2].EMC_DATA.replace('[REPORT]',REP_reportname);
+                    $(document).doValidation({rule:'messagebox',prop:{msgtitle:"REPORT",msgcontent:REP_errormsgnodata,position:{top:150,left:500}}});
+                    $('#REP_div_nodata').text("");
                     $('#REP_lbl_reportname').hide();
                     $('#REP_lbl_emailid').hide();
                     $('#REP_lb_reportname').hide();

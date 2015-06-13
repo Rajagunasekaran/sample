@@ -105,7 +105,7 @@ require_once('application/libraries/EI_HDR.php');
             }
             $(document).on('blur change','.CV_customerautovalidate',function(){
                 if(CV_customerflag==1){
-                    $('#CV_lbl_custautoerrmsg,#CV_div_htmltable,#CV_headerdiv').hide();
+                    $('#CV_lbl_custautoerrmsg,#CV_div_htmltable,#CV_headerdiv,#CV_errmsg').hide();
                     $('#CV_tble_id > div').remove();
                     $('#CV_btn_search').removeAttr("disabled");
                 }
@@ -574,7 +574,7 @@ require_once('application/libraries/EI_HDR.php');
                     <label class="col-sm-2">UNIT NUMBER <em>*</em></label>
                     <div class="col-sm-2"> <select name="CV_lb_unitno" id="CV_lb_unitno" class="form-control CV_class_search CV_formvalidation"></select></div>
                 </div>
-                <div id='CV_tble_id' name='CV_tble_id' hidden>
+                <div id='CV_tble_id' name='CV_tble_id' style="padding-bottom: 15px" hidden>
                 </div>
                 <div class="form-group" id='CV_headerdiv' hidden>
                     <lable class="col-lg-12 srctitle" style="padding-top:15px; padding-bottom: 10px" id="CV_headermsg"></lable>

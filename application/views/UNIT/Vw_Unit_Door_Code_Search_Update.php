@@ -58,7 +58,7 @@ require_once('application/libraries/EI_HDR.php');
                 $("#DCSU_div_htmltable").hide();
                 $("#DCSU_div_errmsgdooor,#DCSU_div_errmsgNodooor").hide();
                 $("#DCSU_lbl_errmsgdooor").text('');
-                $("#DCSU_div_errmsgdooor").hide();
+                $('#DCSU_pdf_btn').hide();
                 $("#DCSU_div_errmsgNodooor").text('').hide();
                 if($('#DCSU_lb_unitnumber').val()!='SELECT'){
                     $(".preloader").show();
@@ -93,6 +93,7 @@ require_once('application/libraries/EI_HDR.php');
                     var DCSU_div_errmsg=DCSU_errormsg[1].EMC_DATA.replace('[UNIT NO]',DCSU_unitnumber);
                     $("#DCSU_lbl_errmsgdooor").text(DCSU_div_errmsg);
                     $("#DCSU_div_errmsgdooor").show();
+                    $('#DCSU_pdf_btn').show();
                     var tr='<table id="DCSU_tble_htmltable" border="1" cellspacing="0" data-class="table" class="srcresult"><thead bgcolor="#6495ed" style="color:white;"><tr><th style="width:100px">DOOR CODE <em>*</em></th><th style="width:130px">WEB LOGIN</th><th style="width:100px">WEB PASSWORD</th><th style="width:300px">USERSTAMP</th><th style="width:150px">TIMESTAMP</th></tr></thead><tbody>';
                     var i=0;
                     DCSU_login_id=DCSU_response.DCSU_id;
@@ -109,6 +110,7 @@ require_once('application/libraries/EI_HDR.php');
                     var DCSU_div_errmsg=DCSU_errormsg[2].EMC_DATA.replace('[UNIT NO]',DCSU_unitnumber);
                     $("#DCSU_div_errmsgNodooor").text(DCSU_div_errmsg).show();
                     $("#DCSU_div_errmsgdooor").hide();
+                    $('#DCSU_pdf_btn').hide();
                     $("#DCSU_lbl_errmsgdooor").text('');
                 }
                 if(DCSU_response.DCSU_flg==1){
@@ -284,6 +286,12 @@ require_once('application/libraries/EI_HDR.php');
                     }
                 });
             }
+        // PDF BUTTON EVENT
+            $('#DCSU_btn_pdf').click(function()
+            {
+                var DCSUunitno=$('#DCSU_lb_unitnumber').val();
+                var pdfurl=document.location.href='<?php echo site_url('UNIT/Ctrl_Unit_Door_Code_Search_Update/DCSU_tablepdf')?>?DCSUunitno='+DCSUunitno;
+            });
         });
     </script>
 </head>
@@ -301,7 +309,7 @@ require_once('application/libraries/EI_HDR.php');
                 <div class="form-group" id="DCSU_div_errmsgdooor" hidden>
                     <label id="DCSU_lbl_errmsgdooor" class="srctitle col-lg-12"></label>
                 </div>
-                <div style="padding-bottom: 10px;" id="pdf_btn" hidden>
+                <div style="padding-bottom: 10px;" id="DCSU_pdf_btn" hidden>
                     <input type="button" id="DCSU_btn_pdf" class="btnpdf" value="PDF">
                 </div>
                 <div class="form-group col-lg-12 errormsg" id="DCSU_div_errmsgNodooor" hidden>

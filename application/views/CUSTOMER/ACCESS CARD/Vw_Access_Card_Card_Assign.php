@@ -68,6 +68,7 @@ require_once('application/libraries/EI_HDR.php');
                     $('#CA_guest_cardno > div').remove();
                     $('input:radio[name=CA_selectcard]').attr('checked',false);
                     $('#CA_custid > div').remove();
+                    $('#CA_custid').hide();
                     $('#CA_btn_submitbutton').attr("disabled","disabled").hide();
                     $('input:radio[name=custid]').attr('checked',false);
                     $('#CA_lb_custname').val('SELECT').hide();
@@ -82,6 +83,7 @@ require_once('application/libraries/EI_HDR.php');
                     $('#CA_cardassigndiv').hide();
                     $('#CA_lbl_error').hide();
                     $('#CA_custid > div').remove();
+                    $('#CA_custid').hide();
                     $('#CA_avail_cardno > div').remove();
                     $('#CA_guest_cardno > div').remove();
                     $('#CA_btn_submitbutton').attr("disabled","disabled").hide();
@@ -100,7 +102,7 @@ require_once('application/libraries/EI_HDR.php');
                         }
                     }
                     CA_namearray=unique(CA_namearray);
-                    var CA_custname_options ='<option>SELECT</option>'
+                    var CA_custname_options ='<option>SELECT</option>';
                     for (var i = 0; i < CA_namearray.length; i++) {
                         var CA_myarray=CA_namearray[i].split('_');
                         var CA_custname=CA_myarray[0]+' '+CA_myarray[1];
@@ -122,6 +124,7 @@ require_once('application/libraries/EI_HDR.php');
                     $('#CA_guest_cardno > div').remove();
                     $('input:radio[name=CA_selectcard]').attr('checked',false);
                     $('#CA_custid > div').remove();
+                    $('#CA_custid').hide();
                     $('#CA_btn_submitbutton').attr("disabled","disabled").hide();
                     $('input:radio[name=custid]').attr('checked',false);
                     $('#CA_btn_resetbutton').hide();
@@ -137,6 +140,7 @@ require_once('application/libraries/EI_HDR.php');
                     $('#CA_avail_cardno > div').remove();
                     $('#CA_guest_cardno > div').remove();
                     $('#CA_custid > div').remove();
+                    $('#CA_custid').hide();
                     $('#CA_btn_resetbutton').hide();
                     $('#CA_btn_submitbutton').attr("disabled","disabled").hide();
                     $('input:radio[name=CA_selectcard]').attr('checked',false);
@@ -173,6 +177,7 @@ require_once('application/libraries/EI_HDR.php');
                         CA_cust_id=CA_name_id_array[0];
                         CA_load_customer_recver(CA_name_id_array[0]);
                         $('#CA_custid > div').remove();
+                        $('#CA_custid').hide();
                     }
                 }
             });
@@ -776,6 +781,7 @@ require_once('application/libraries/EI_HDR.php');
                 $('#CA_leaseperiod').hide();
                 $('#CA_lb_leaseperiod').val("SELECT");
                 $('#CA_custid > div').remove();
+                $('#CA_custid').hide();
                 $('#CA_btn_submitbutton').attr("disabled","disabled").hide();
                 $('#CA_btn_resetbutton').hide();
                 $('input:radio[name=custid]').attr('checked',false);
@@ -799,6 +805,7 @@ require_once('application/libraries/EI_HDR.php');
                 $('#CA_leaseperiod').hide();
                 $('#CA_lb_leaseperiod').val("SELECT");
                 $('#CA_custid > div').remove();
+                $('#CA_custid').hide();
                 $('#CA_btn_submitbutton').attr("disabled","disabled").hide();
                 $('#CA_btn_resetbutton').hide();
                 $('input:radio[name=custid]').attr('checked',false);
@@ -838,7 +845,7 @@ require_once('application/libraries/EI_HDR.php');
                 </div>
                 <div class="form-group" id="CA_custname" hidden>
                     <label class="col-sm-3">CUSTOMER NAME <em>*</em></label>
-                    <div class="col-sm-3"><select name="CA_lb_custname" id="CA_lb_custname" class="CA_formvalidation form-control"></select></div>
+                    <div class="col-sm-4"><select name="CA_lb_custname" id="CA_lb_custname" class="CA_formvalidation form-control"></select></div>
                 </div>
                 <div class="form-group" id="CA_custid" hidden>
                 </div>

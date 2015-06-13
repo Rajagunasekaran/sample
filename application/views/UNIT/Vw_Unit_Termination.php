@@ -165,19 +165,13 @@ require_once('application/libraries/EI_HDR.php');
                     <div class="form-group" id="UT_startdate">
                         <label class="col-sm-2">START DATE </label>
                         <div class="col-sm-2">
-                            <div class="input-group addon">
-                                <input id="UT_db_startdate" name="UT_db_startdate" type="text" class="form-control" readonly placeholder="Start Date"/>
-                                <label for="UT_db_startdate" class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></label>
-                            </div>
+                            <input id="UT_db_startdate" name="UT_db_startdate" type="text" class="form-control" readonly placeholder="Start Date"/>
                         </div>
                     </div>
                     <div class="form-group" id="UT_enddate">
                         <label class="col-sm-2">END DATE </label>
                         <div class="col-sm-2">
-                            <div class="input-group addon">
-                                <input id="UT_db_enddate" name="UT_db_enddate" type="text" class="form-control" readonly placeholder="End Date"/>
-                                <label for="UT_db_enddate" class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></label>
-                            </div>
+                            <input id="UT_db_enddate" name="UT_db_enddate" type="text" class="form-control" readonly placeholder="End Date"/>
                         </div>
                     </div>
                     <div class="form-group" id="UT_unitrent">

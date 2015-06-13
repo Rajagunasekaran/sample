@@ -1082,25 +1082,25 @@ var CustomernameDetails;
             if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
                 $('.preloader').hide();
                 var returnvalue=JSON.parse(xmlhttp.responseText);
-                var allunits=returnvalue[1];
-                var options ='<option value="">SELECT</option>';
-                for (var i = 0; i < allunits.length; i++)
-                {
-                    var data=allunits[i];
-                    options += '<option value="' + data.UNIT_NO + '">' + data.UNIT_NO + '</option>';
-                }
-                $('#CRC_AllUnits').html(options);
+//                var allunits=returnvalue[1];
+//                var options ='<option value="">SELECT</option>';
+//                for (var i = 0; i < allunits.length; i++)
+//                {
+//                    var data=allunits[i];
+//                    options += '<option value="' + data.UNIT_NO + '">' + data.UNIT_NO + '</option>';
+//                }
+//                $('#CRC_AllUnits').html(options);
                 $('#CRC_AllCustomers').prop('disabled',true);
                 var CUSTOMERoptions ='<option value="">SELECT</option>';
                 $('#CRC_AllCustomers').html(CUSTOMERoptions);
-                if (returnvalue[0]==1) {
+                if (returnvalue==1) {
                     $('.preloader').hide();
                     show_msgbox("CUSTOMER RECHECKIN", errormsg[7].EMC_DATA, "success", false);
                     Reset();
                 }
                 else {
                     $('.preloader').hide();
-                    show_msgbox("CUSTOMER RECHECKIN", msg_alert, "success", false);
+                    show_msgbox("CUSTOMER RECHECKIN", returnvalue, "success", false);
                 }
             }
         }

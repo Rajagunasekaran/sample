@@ -403,7 +403,7 @@ class Mdl_eilib_invoice_contract extends CI_Model{
         }
     }
 //CUSTOMER CONTRACT
-    public   function CUST_contract($service,$unitno,$checkindate,$checkoutdate,$companyname,$customername,$noticeperiod,$passportno,$passportdate,$epno,$epdate,$noticedate,$lp,$cardno,$rent,$airquartfee,$airfixedfee,$electcap,$dryclean,$chkoutfee,$procfee,$deposit,$waived,$roomtype,$rent_check,$formname,$sendmailid,$docowner) {
+    public   function CUST_contract($service,$unitno,$checkindate,$checkoutdate,$companyname,$customername,$noticeperiod,$passportno,$passportdate,$epno,$epdate,$noticedate,$lp,$cardno,$rent,$airquartfee,$airfixedfee,$electcap,$dryclean,$chkoutfee,$procfee,$deposit,$waived,$roomtype,$rent_check,$formname,$sendmailid,$docowner,$parentId) {
         try {$ntc_date1='';$DEPOSITword='';
             $todaydatestring =  date("d-M-Y");$flagProratedRentCkout=0;
             $flag_paraAlign='';$flag_paraAlign_sec=''; $flag_paraAlign_thrd=''; $flag_paraAlign_four=''; $flag_paraAlign_five='';$noepcontlineno='';
@@ -411,7 +411,7 @@ class Mdl_eilib_invoice_contract extends CI_Model{
             $this->load->model('EILIB/Mdl_eilib_currency_to_word');
             $this->load->model('EILIB/Mdl_eilib_prorated_calc');
             $fileid= $this->Mdl_eilib_common_function->CUST_FileId_invoiceTem();
-            $parentId= $this->Mdl_eilib_common_function->CUST_TargetFolderId();
+//            $parentId= $this->Mdl_eilib_common_function->CUST_TargetFolderId();
             $url= $this->Mdl_eilib_common_function->getUrlAccessGasScript();
             $cust_config_array=$this->CUST_invoice_contractreplacetext();
             if($deposit!='null' )
@@ -701,7 +701,7 @@ class Mdl_eilib_invoice_contract extends CI_Model{
             $url= $this->Mdl_eilib_common_function->getUrlAccessGasScript();
 //                $url="https://script.google.com/macros/s/AKfycbyv58HZU2XsR2kbCMWZjNzMWSmOwoE7xsg_fesXktGk4Kj574u1/exec";
 
-            $parentId= $this->Mdl_eilib_common_function->CUST_TargetFolderId();
+//            $parentId= $this->Mdl_eilib_common_function->CUST_TargetFolderId();
 //                $parentId= "0Bzvv-O9jT9r_fml4MUR6MWpVNklORHlLYTg4VEVjaWxIR2JlcGpEclZoTWQ3WHV5dGgwQzQ";
 
 //                $file = $service->files->get($cust_config_array[10]);
@@ -713,6 +713,7 @@ class Mdl_eilib_invoice_contract extends CI_Model{
 //                echo 'test'.$newfile->alternateLink.'***'.$newfile->id;
 //                echo 'line'.$noepcontlineno.'ppp'.$pro_rated_lineno;
 ////                exit;
+            $response='';
             $data = array('flagProratedRentCkout'=>$flagProratedRentCkout,'pro_rated_lineno'=>$pro_rated_lineno,'prlbl1'=>$prlbl1,'prlbl2'=>$prlbl2,'LastMonthformat'=>$LastMonthformat,'DEPOSITEword'=>$DEPOSITEword,'ntc_date1'=>$ntc_date1,'todaydat'=>$todaydat,'todaydatestring'=>$todaydatestring,'finalep_pass'=>$finalep_pass,
                 'LastMonthformat'=>$LastMonthformat,'flag_paraAlign'=>$flag_paraAlign,'flag_paraAlign_sec'=>$flag_paraAlign_sec,'flag_paraAlign_thrd'=>$flag_paraAlign_thrd,'flag_paraAlign_four'=>$flag_paraAlign_four,'flag_paraAlign_five'=>$flag_paraAlign_five,
                 'cexdd'=>$cexdd,'check_in_dated'=>$check_in_dated,'noticeSt'=>$noticeSt,'address1value'=>$address1value,'cardno'=>$cardno,'fixedstmtfetch'=>$fixedstmtfetch,'noepcontlineno'=>$noepcontlineno,'elec_fetch'=>$elec_fetch,'dryclean_fetch'=>$dryclean_fetch,
@@ -742,9 +743,9 @@ class Mdl_eilib_invoice_contract extends CI_Model{
             return [1,$response,$file->embedLink];
         } catch (Exception $ex) {
             return $ex->getMessage();
-            return [0];
+            return [0,$response];
         }
-//        $this->CUST_SetDocOwner($service,$response,$docowner,$sendmailid);
+        $this->CUST_SetDocOwner($service,$response,$docowner,$sendmailid);
         return $response;    }
 //GET INVOICE ID ,CONTRACT ID ,SERIAL NO,INVOIC DATE
     public function CUST_invoice_contractreplacetext()
@@ -777,12 +778,12 @@ class Mdl_eilib_invoice_contract extends CI_Model{
         }
     }
 //FUNCTION TO CREATE INVOICE
-    public  function CUST_invoice($UserStamp,$service,$unit,$customername,$companyname,$invoiceid,$invoicesno,$invoicedate,$rent,$process,$deposit,$sdate,$edate,$roomtype,$Leaseperiod,$rentcheck,$sendmailid,$docowner,$formname,$waived,$custid)
+    public  function CUST_invoice($UserStamp,$service,$unit,$customername,$companyname,$invoiceid,$invoicesno,$invoicedate,$rent,$process,$deposit,$sdate,$edate,$roomtype,$Leaseperiod,$rentcheck,$sendmailid,$docowner,$formname,$waived,$custid,$parentId)
     {
         try {
             $sum='';
             $invoiceidcode=$invoiceid;
-            $Slno=$invoicesno;
+            $Slno=intval($invoicesno);
             $Sdate=$invoicedate;
             $tenant_fetch=$customername;
             $unit_fetch=$unit;
@@ -792,27 +793,28 @@ class Mdl_eilib_invoice_contract extends CI_Model{
             $checkin_fetch=$sdate;
             $checkout_fetch=$edate;
             $deposit=$deposit;
-            if($deposit=='null'||$deposit=='')
+            if($deposit==null||$deposit=='')
             {  $A3='00.00';  }  else  {    $A3=$deposit;  }
             $process=$process;
-            if($process=='null'||$waived!="")
+            if($process==""||$waived!="" ||$process=='null')
             {$A4='00.00';}else{$A4=$process;}
             $A5=$rent;
             $lease_fetch=$Leaseperiod;
             $SdateD = $Sdate;
             $sysdate =date('d-m-Y');
             $todaydatc = date('Y-m-d');// Utilities.formatDate(new Date(sysdate), TimeZone, "yyyy/MM/dd");
-            $todaysDate=strtotime($todaydatc);
+            $todaysDate=date('Ymd',strtotime($todaydatc));
             $todaydat = date('d-m-Y');//Utilities.formatDate(new Date(), TimeZone, "dd/MM/yyyy");
             $todaydatR =date('m-d-Y');// Utilities.formatDate(new Date(), TimeZone, "MM/dd/yyyy");
             $this->load->model('EILIB/Mdl_eilib_common_function');
             if(strtotime($SdateD) == strtotime("today"))
             {
                 $Slno++;
-                if(0>=$Slno && $Slno<=9){
+                $Slno=$Slno+1;
+                if(0<=$Slno && $Slno<=9){
                     $Slno= (String)("00".$Slno);
                 }
-                else if(10>=$Slno && $Slno<=99){
+                else if(10<=$Slno && $Slno<=99){
                     $Slno= "0".$Slno;
                 }
                 $this->Mdl_eilib_common_function->CUST_invoicesearialnoupdation($Slno,$UserStamp);
@@ -1037,6 +1039,7 @@ class Mdl_eilib_invoice_contract extends CI_Model{
             {
                 $companyTemp="company";
             }
+            $response='';
             $data = array(
                 'arrCheckDateAmtConcate'=>$arrCheckDateAmtConcate,'singlemonth'=>$singlemonth,'reminingmonths'=>$reminingmonths, 'companyTemp'=>$companyTemp, 'replaceSum'=>$replaceSum, 'todaydat'=>$todaydat,'todaydatestring'=>$todaydatestring,'A3'=>$A3,'A4'=>$A4,'das'=>$das,'pc'=>$pc,'A5'=>$A5,'sum'=>$sum,'cdate1'=>$cdate1,'cdate2'=>$cdate2,'todaysDate'=>$todaysDate,'Slno'=>$Slno,'tenant_fetch' => $tenant_fetch,'length'=>$length,'proratedrentflag'=>$proratedrentflag,
                 'nonPror_monthCal'=>$nonPror_monthCal,'flag'=>2,'prorated_monthCal' => $prorated_monthCal, 'proratedrent' => $proratedrent, 'proratedsmonth' => $proratedsmonth,'proratedemonth'=>$proratedemonth,
@@ -1058,18 +1061,18 @@ class Mdl_eilib_invoice_contract extends CI_Model{
             curl_setopt($ch, CURLOPT_ENCODING, "gzip,deflate");
             $response = curl_exec($ch);
             curl_close($ch);
-            $parentId= $this->Mdl_eilib_common_function->CUST_TargetFolderId();
+//            $parentId= $this->Mdl_eilib_common_function->CUST_TargetFolderId();
             $file = new Google_Service_Drive_DriveFile();
             $parent = new Google_Service_Drive_ParentReference();
             $parent->setId($parentId);
             $file->setParents(array($parent));
             $service->files->patch($response, $file);
             $file = $service->files->get($response);
-//        $this->CUST_SetDocOwner($service,$response,$docowner,$sendmailid);
+        $this->CUST_SetDocOwner($service,$response,$docowner,$sendmailid);
             return [1,$response,$file->embedLink,"INV".$todaysDate.$Slno];
         }
         catch(Exception $e) {
-            return [1];
+            return [0,$response];
         }
     }
 //MAIL PART FOR CONTRACT AND INVOICE

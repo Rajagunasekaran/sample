@@ -2,12 +2,12 @@
 <!--*******************************************FILE DESCRIPTION***************************************************-->
 <!--VER 0.02- SD:04/06/2015 ED:04/06/2015,changed Controller Model and View names in ver0.02-->
 <!--VER 0.01-INITIAL VERSION-SD:15/05/2015 ED:15/05/2015 in ver0.01-->
-<html>
-<head>
-    <?php include 'EI_HDR.php'; ?>
-</head>
+<?php
+require_once('application/libraries/EI_HDR.php');
+?>
 <script>
-    $(document).ready(function() {
+    $(document).ready(function()
+    {
         var controller_url="<?php echo base_url(); ?>" + '/index.php/FINANCE/FINANCE/Ctrl_Finance_Payments_Entry_Terminated_Customer/' ;
         $('#FIN_Payment_id').hide();
         $('.autogrowcomments').autogrow({onInitialize: true});
@@ -49,7 +49,7 @@
             type: "POST",
             url: controller_url+"PaymentInitialDatas",
             data:{"ErrorList":'2,3,92,248,309'},
-            success: function(data){
+            success: function(data){ alert ('enteraja')
                 $('.preloader').hide();
                 var value_array=JSON.parse(data);
                 allunitdetails=value_array[0];
@@ -94,15 +94,15 @@
         var allcustomer=[];
         var allcustomerdetails=[];
         $(document).on('change','#FIN_TER_Payment_Unit',function() {
-           var unit=$('#FIN_TER_Payment_Unit').val();
+            var unit=$('#FIN_TER_Payment_Unit').val();
             if(unit!='SELECT')
             {
                 for (var i = 0; i < allunitdetails.length; i++)
                 {
                     if(allunitdetails[i].UNIT_NO==unit)
                     {
-                    allcustomerdetails.push(allunitdetails[i].CUSTOMER_FIRST_NAME+' '+allunitdetails[i].CUSTOMER_LAST_NAME+'-'+allunitdetails[i].CUSTOMER_ID);
-                    allcustomer.push(allunitdetails[i].CUSTOMER_FIRST_NAME+' '+allunitdetails[i].CUSTOMER_LAST_NAME);
+                        allcustomerdetails.push(allunitdetails[i].CUSTOMER_FIRST_NAME+' '+allunitdetails[i].CUSTOMER_LAST_NAME+'-'+allunitdetails[i].CUSTOMER_ID);
+                        allcustomer.push(allunitdetails[i].CUSTOMER_FIRST_NAME+' '+allunitdetails[i].CUSTOMER_LAST_NAME);
                     }
                 }
                 allcustomer=unique(allcustomer);
@@ -184,44 +184,44 @@
                     recver.push(allunitdetails[i].CED_REC_VER+'/'+allunitdetails[i].CLP_STARTDATE+'/'+allunitdetails[i].CLP_ENDDATE);
                 }
             }
-           $('#FIN_TER_Payment_Leaseperiod').html(options);
+            $('#FIN_TER_Payment_Leaseperiod').html(options);
             $('#FIN_TER_Payment_Leaseperiod').removeAttr("disabled");
         }
         $(document).on('click','.LPchange',function(){
-         var LP=$('#FIN_TER_Payment_Leaseperiod').val();
-         var paymenttype=$('#FIN_TER_Payment_Paymenttype').val();
-        for(var i=0;i<recver.length;i++)
-        {
-            var data=recver[i].split('/');
-            if(data[0]==LP)
+            var LP=$('#FIN_TER_Payment_Leaseperiod').val();
+            var paymenttype=$('#FIN_TER_Payment_Paymenttype').val();
+            for(var i=0;i<recver.length;i++)
             {
-                 var DBstartdate= data[1];
-                 var DBenddate= data[2];
+                var data=recver[i].split('/');
+                if(data[0]==LP)
+                {
+                    var DBstartdate= data[1];
+                    var DBenddate= data[2];
+                }
             }
-        }
-        var startdate=DBfrom_dateConversion(DBstartdate);
-        var enddate=DBfrom_dateConversion(DBenddate);
-        if(paymenttype=='PAYMENT' || paymenttype=='CLEANING FEE')
-        {
             var startdate=DBfrom_dateConversion(DBstartdate);
             var enddate=DBfrom_dateConversion(DBenddate);
-            $('#FIN_TER_Payment_Forperiod').datepicker("option","minDate",startdate);
-            $('#FIN_TER_Payment_Forperiod').datepicker("option","maxDate",enddate);
-        }
-        if(paymenttype=='DEPOSIT' || paymenttype=='PROCESSING FEE')
-        {
-            var depositmindate=DBstartdate_dateConversion(DBstartdate);
-            var depositmaxdate=DBenddate_dateConversion(DBstartdate);
-            $('#FIN_TER_Payment_Forperiod').datepicker("option","minDate",depositmindate);
-            $('#FIN_TER_Payment_Forperiod').datepicker("option","maxDate",depositmaxdate);
-        }
-        if(paymenttype=='DEPOSIT REFUND')
-        {
-            var depositmindate=DBstartdate_dateConversion(DBenddate);
-            var depositmaxdate=DBenddate_dateConversion(DBenddate);
-            $('#FIN_TER_Payment_Forperiod').datepicker("option","minDate",depositmindate);
-            $('#FIN_TER_Payment_Forperiod').datepicker("option","maxDate",depositmaxdate);
-        }
+            if(paymenttype=='PAYMENT' || paymenttype=='CLEANING FEE')
+            {
+                var startdate=DBfrom_dateConversion(DBstartdate);
+                var enddate=DBfrom_dateConversion(DBenddate);
+                $('#FIN_TER_Payment_Forperiod').datepicker("option","minDate",startdate);
+                $('#FIN_TER_Payment_Forperiod').datepicker("option","maxDate",enddate);
+            }
+            if(paymenttype=='DEPOSIT' || paymenttype=='PROCESSING FEE')
+            {
+                var depositmindate=DBstartdate_dateConversion(DBstartdate);
+                var depositmaxdate=DBenddate_dateConversion(DBstartdate);
+                $('#FIN_TER_Payment_Forperiod').datepicker("option","minDate",depositmindate);
+                $('#FIN_TER_Payment_Forperiod').datepicker("option","maxDate",depositmaxdate);
+            }
+            if(paymenttype=='DEPOSIT REFUND')
+            {
+                var depositmindate=DBstartdate_dateConversion(DBenddate);
+                var depositmaxdate=DBenddate_dateConversion(DBenddate);
+                $('#FIN_TER_Payment_Forperiod').datepicker("option","minDate",depositmindate);
+                $('#FIN_TER_Payment_Forperiod').datepicker("option","maxDate",depositmaxdate);
+            }
         });
         /*************UNIQUE FUNCTION*********************/
         function unique(a) {
@@ -249,22 +249,22 @@
             var newunitstartdate=new Date(inputdate[0],inputdate[1],0);
             return newunitstartdate;
         }
-     //************************PAYMENT FORM BUTTON VALIDATION******************** //
+        //************************PAYMENT FORM BUTTON VALIDATION******************** //
         $(document).on('change','#FIN_TER_PaymentEntry_form',function(){
             Submitbuttonvalidation()
         });
-       function Submitbuttonvalidation()
-       {
-         if($('#FIN_TER_Payment_Unit').val()!='SELECT' && $('#FIN_TER_Payment_Customer').val()!='SELECT' && $('#FIN_TER_Payment_Leaseperiod').val()!='SELECT' &&
-             $('#FIN_TER_Payment_Paymenttype').val()!='SELECT' && $('#FIN_TER_Payment_Amount').val()!='' && $('#FIN_TER_Payment_Forperiod').val()!='' && $('#FIN_TER_Payment_Paiddate').val()!='')
-         {
-             $("#FIN_TER_Btn_Payment_save").removeAttr("disabled");
-         }
-         else
-         {
-             $("#FIN_TER_Btn_Payment_save").attr("disabled", "disabled");
-         }
-       }
+        function Submitbuttonvalidation()
+        {
+            if($('#FIN_TER_Payment_Unit').val()!='SELECT' && $('#FIN_TER_Payment_Customer').val()!='SELECT' && $('#FIN_TER_Payment_Leaseperiod').val()!='SELECT' &&
+                $('#FIN_TER_Payment_Paymenttype').val()!='SELECT' && $('#FIN_TER_Payment_Amount').val()!='' && $('#FIN_TER_Payment_Forperiod').val()!='' && $('#FIN_TER_Payment_Paiddate').val()!='')
+            {
+                $("#FIN_TER_Btn_Payment_save").removeAttr("disabled");
+            }
+            else
+            {
+                $("#FIN_TER_Btn_Payment_save").attr("disabled", "disabled");
+            }
+        }
         $(document).on('click','#FIN_TER_Btn_Payment_reset',function(){
             Reset();
         });
@@ -303,7 +303,7 @@
             });
         });
     });
-    </script>
+</script>
 <body>
 <div class="container">
     <div class="wrapper">
@@ -315,28 +315,28 @@
             <form id="FIN_TER_PaymentEntry_form" class="form-horizontal" role="form">
                 <div class="panel-body">
                     <div class="row form-group">
-                        <div class="col-md-3">
+                        <div class="col-md-2">
                             <label>UNIT<span class="labelrequired"><em>*</em></span></label>
                         </div>
                         <div class="col-md-3">
                             <SELECT class="form-control" name="FIN_TER_Payment_Unit" style="max-width: 120px;" required id="FIN_TER_Payment_Unit">
-                            <OPTION>SELECT</OPTION></SELECT><input type="hidden" class="form-control" id="FIN_Payment_id" name="FIN_Payment_id">
+                                <OPTION>SELECT</OPTION></SELECT><input type="hidden" class="form-control" id="FIN_Payment_id" name="FIN_Payment_id">
                         </div>
                     </div>
                     <div class="row form-group">
-                        <div class="col-md-3">
+                        <div class="col-md-2">
                             <label>CUSTOMER NAME<span class="labelrequired"><em>*</em></span></label>
                         </div>
                         <div class="col-md-3">
                             <SELECT class="form-control" name="FIN_TER_Payment_Customer"  id="FIN_TER_Payment_Customer" disabled >
-                            <OPTION>SELECT</OPTION></SELECT>
+                                <OPTION>SELECT</OPTION></SELECT>
                         </div>
                     </div>
                     <div id="multiplecustomerdiv" hidden>
 
                     </div>
                     <div class="row form-group">
-                        <div class="col-md-3">
+                        <div class="col-md-2">
                             <label>LEASEPERIOD<span class="labelrequired"><em>*</em></span></label>
                         </div>
                         <div class="col-md-3">
@@ -346,7 +346,7 @@
                         </div>
                     </div>
                     <div class="row form-group">
-                        <div class="col-md-3">
+                        <div class="col-md-2">
                             <label>PAYMENT TYPE<span class="labelrequired"><em>*</em></span></label>
                         </div>
                         <div class="col-md-3">
@@ -356,34 +356,43 @@
                         </div>
                     </div>
                     <div class="row form-group">
-                        <div class="col-md-3">
+                        <div class="col-md-2">
                             <label>AMOUNT<span class="labelrequired"><em>*</em></span></label>
                         </div>
-                        <div class="col-md-2">
-                            <input class="form-control amtonly" name="FIN_TER_Payment_Amount" style="max-width: 120px"  required id="FIN_TER_Payment_Amount" placeholder="0.00">
-                        </div>
-                        <div class="col-md-1">
-                            <input class="PU_Validation" type="checkbox" name="FIN_TER_Payment_Amountflag"  id="FIN_TER_Payment_Amountflag">
+                        <div class="col-md-9">
+                            <div class="col-sm-3" style="padding-left: 0px;">
+                                <div class="input-group">
+                                    <input type="text" id="FIN_TER_Payment_Amount" placeholder="0.00" class="form-control amtonly" name="FIN_TER_Payment_Amount" ><span class="input-group-addon"><input type="checkbox" class="Btn_validation" name="Amountflag[]" id=Amountflag_'+counter+'></span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="row form-group">
-                        <div class="col-md-3">
+                        <div class="col-md-2">
                             <label>FOR PERIOD<span class="labelrequired"><em>*</em></span></label>
                         </div>
-                        <div class="col-md-3">
-                            <input class="form-control" name="FIN_TER_Payment_Forperiod"  required id="FIN_TER_Payment_Forperiod" style="max-width: 150px;" placeholder="For Period">
+                        <div class="col-md-9">
+                            <div class="col-sm-3" style="padding-left: 0px;">
+                                <div class="input-group addon">
+                                    <input type="text" class="form-control" name="FIN_TER_Payment_Forperiod" id="FIN_TER_Payment_Forperiod"  placeholder="For Period"><label  class="input-group-addon" for=FIN_TER_Payment_Forperiod><span class="glyphicon glyphicon-calendar"></span></label>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="row form-group">
-                        <div class="col-md-3">
+                        <div class="col-md-2">
                             <label>PAIDDATE<span class="labelrequired"><em>*</em></span></label>
                         </div>
-                        <div class="col-md-3">
-                            <input class="form-control" name="FIN_TER_Payment_Paiddate"  required id="FIN_TER_Payment_Paiddate" style="max-width: 150px;" placeholder="Paid Date">
+                        <div class="col-md-9">
+                            <div class="col-sm-3" style="padding-left: 0px;">
+                                <div class="input-group addon">
+                                    <input type="text" class="form-control" name="FIN_TER_Payment_Paiddate" id="FIN_TER_Payment_Paiddate"  placeholder="Paid Date"><label  class="input-group-addon" for=FIN_TER_Payment_Paiddate><span class="glyphicon glyphicon-calendar"></span></label>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="row form-group">
-                        <div class="col-md-3">
+                        <div class="col-md-2">
                             <label>COMMENTS<span class="labelrequired"><em>*</em></span></label>
                         </div>
                         <div class="col-md-3">
@@ -399,8 +408,6 @@
             </form>
         </div>
     </div>
- </div>
+</div>
 </body>
 <!--BODY TAG END-->
-</html>
-<!--HTML TAG END-->

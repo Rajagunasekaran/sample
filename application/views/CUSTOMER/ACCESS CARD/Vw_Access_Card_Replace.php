@@ -336,7 +336,7 @@ require_once('application/libraries/EI_HDR.php');
                 </div>
                 <div class="form-group" id="CR_custname" hidden>
                     <label class="col-sm-2">CUSTOMER NAME <em>*</em></label>
-                    <div class="col-sm-3"><select name="CR_lb_custname" id="CR_lb_custname" class="CR_formvalidation form-control"></select></div>
+                    <div class="col-sm-4"><select name="CR_lb_custname" id="CR_lb_custname" class="CR_formvalidation form-control"></select></div>
                 </div>
                 <div class="form-group" id="CR_custid" hidden>
                 </div>

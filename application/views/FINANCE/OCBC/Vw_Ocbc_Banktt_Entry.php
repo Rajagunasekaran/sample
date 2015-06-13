@@ -427,101 +427,106 @@ $(document).ready(function(){
 </script>
 <!--BODY TAG START-->
 <body>
- <div class="container">
+<div class="container">
     <div class="wrapper">
         <div class="preloader" hidden><span class="Centerer"></span><img class="preloaderimg"/> </div>
-    <div class="row title text-center"><h4><b>BANK TT ENTRY</b></h4></div>
+        <div class="row title text-center"><h4><b>BANK TT ENTRY</b></h4></div>
         <div class ='row content'>
             <div class="panel-body">
                 <fieldset>
-                   <form id="banktt_entry_form" name="banktt_entry_form" class="form-horizontal" role="form">
-                    <div id='banktt_errormessagetable'>
-                    </div>
-                    <div class="form-group" id="banktt_transtype">
-                        <label class=" col-sm-2">TRANSACTION TYPE<em>*</em></label>
-                        <div class="col-sm-3"> <select name="banktt_lb_transtype" id="banktt_lb_transtype" class="form-control banktt_erntryform" style="max-width: 120px"></select></div>
-                    </div>
-                    <div class="form-group" id="banktt_modelnameerrormsg">
-                        <label class=" col-sm-2"></label>
-                        <div class="col-sm-3"> <label class="errormsg">NO DATA AVAILABLE IN MODEL DETAILS TABLE</label></div>
-                    </div>
-                    <div class="form-group" id="banktt_model">
-                        <label class=" col-sm-2">MODEL NAME<em>*</em></label>
-                        <div class="col-sm-3"> <select name="banktt_lb_model" id="banktt_lb_model" class="form-control banktt_erntryform"></select></div>
-                    </div>
-                    <div class="form-group" id="banktt_dt">
-                        <label class="col-sm-2">DATE<em>*</em></label>
-                        <div class="col-sm-3">
-                                <input id="banktt_date" name="banktt_date" type="text" class="date-picker datemandtry form-control" style="width:120px" placeholder="Date"/>
+                    <form id="banktt_entry_form" name="banktt_entry_form" class="form-horizontal" role="form">
+                        <div id='banktt_errormessagetable'>
                         </div>
-                    </div>
-                    <div class="form-group" id="banktt_accname">
-                        <label class=" col-sm-2">ACCOUNT NAME<em>*</em></label>
-                        <div class="col-sm-3"><input type="text" name="banktt_tb_accname" id="banktt_tb_accname" placeholder="Account Name" maxlength="40" class="autosize banktt_erntryform form-control"/></div>
-                    </div>
-                    <div class="form-group" id="banktt_accno">
-                        <label class=" col-sm-2">ACCOUNT NO<em>*</em></label>
-                        <div class="col-sm-3"><input type="text" name="banktt_tb_accno" id="banktt_tb_accno" placeholder="Account No" maxlength="25" class="banktt_erntryform form-control"/></div>
-                    </div>
-                    <div class="form-group" id="banktt_amt">
-                        <label class=" col-sm-2">AMOUNT<em>*</em></label>
-                        <div class="col-sm-2"><input type="text" name="banktt_tb_amt" id="banktt_tb_amt" placeholder="Amount" maxlength="7" class="amtonly banktt_erntryform form-control"/></div>
-                    </div>
-                    <div class="form-group" id="banktt_unit">
-                        <label class=" col-sm-2">UNIT<em>*</em></label>
-                        <div class="col-sm-2"> <select name="banktt_lb_unit" id="banktt_lb_unit" class=" form-control banktt_erntryform"></select></div>
-                        <label id='banktt_errormsgcustomer' class="errormsg banktt_erntryform" hidden></label>
-                    </div>
-                    <div class="form-group" id="banktt_customer">
-                        <label class=" col-sm-2">CUSTOMER<em>*</em></label>
-                        <div class="col-sm-3"> <select name="banktt_lb_customer" id="banktt_lb_customer" class="form-control banktt_erntryform"></select></div>
-                        <div class="col-sm-2"><input type="hidden" name="temp_customerid" id="temp_customerid"  class="form-control"></div>
-                    </div>
-                       <div id="multiplecustomerdiv" hidden>
+                        <div class="form-group" id="banktt_transtype">
+                            <label class=" col-sm-2">TRANSACTION TYPE<em>*</em></label>
+                            <div class="col-sm-3"> <select name="banktt_lb_transtype" id="banktt_lb_transtype" class="form-control banktt_erntryform" style="max-width: 120px"></select></div>
+                        </div>
+                        <div class="form-group" id="banktt_modelnameerrormsg">
+                            <label class=" col-sm-2"></label>
+                            <div class="col-sm-3"> <label class="errormsg">NO DATA AVAILABLE IN MODEL DETAILS TABLE</label></div>
+                        </div>
+                        <div class="form-group" id="banktt_model">
+                            <label class=" col-sm-2">MODEL NAME<em>*</em></label>
+                            <div class="col-sm-3"> <select name="banktt_lb_model" id="banktt_lb_model" class="form-control banktt_erntryform"></select></div>
+                        </div>
+                        <div class="form-group" id="banktt_dt">
+                            <label class="col-sm-2">DATE<em>*</em></label>
+                            <div class="col-md-9">
+                                <div class="col-sm-3" style="padding-left: 0px;">
+                                    <div class="input-group addon">
+                                        <input type="text" class="date-picker datemandtry form-control" name="banktt_date" id="banktt_date"  placeholder="Date"><label  class="input-group-addon" for=banktt_date><span class="glyphicon glyphicon-calendar"></span></label>
+                                    </div>
+                                </div>
+                            </div>
 
-                       </div>
-                    <div class="form-group" id="banktt_bankcode">
-                        <label class="col-sm-2">BANK CODE</label>
-                        <div class="col-sm-2"><input type="text" name="banktt_tb_bankcode" id="banktt_tb_bankcode" maxlength="4" class="alphanumeric banktt_erntryform form-control" placeholder="Bank Code"/></div>
-                    </div>
-                    <div class="form-group" id="banktt_branchcode">
-                        <label class="col-sm-2">BRANCH CODE</label>
-                        <div class="col-sm-2"><input type="text" name="banktt_tb_branchcode" id="banktt_tb_branchcode" maxlength="3" class="alphanumeric banktt_erntryform form-control" placeholder="Branch Code"/></div>
-                    </div>
-                    <div class="form-group" id="banktt_bankaddress">
-                        <label class="col-sm-2">BANK ADDRESS</label>
-                        <div class="col-sm-4"> <textarea  name="banktt_ta_address" id="banktt_ta_address" placeholder="Bank Address" rows="5" class="uppercase banktt_erntryform form-control"></textarea></div>
-                    </div>
-                    <div class="form-group" id="banktt_swiftcode">
-                        <label class="col-sm-2">SWIFT CODE<em>*</em></label>
-                        <div class="col-sm-2"><input type="text" name="banktt_tb_swiftcode" id="banktt_tb_swiftcode" maxlength="12" class="alphanumeric banktt_erntryform form-control" placeholder="Swift Code"/></div>
-                    </div>
-                    <div class="form-group" id="banktt_chargeto">
-                        <label class=" col-sm-2">CHARGES TO<em>*</em></label>
-                        <div class="col-sm-2"> <select name="banktt_lb_chargeto" id="banktt_lb_chargeto" class="form-control banktt_erntryform"></select></div>
-                    </div>
-                    <div class="form-group" id="banktt_custref">
-                        <label class="col-sm-2">CUSTOMER REF</label>
-                        <div class="col-sm-3"><input type="text" name="banktt_tb_custref" id="banktt_tb_custref" maxlength="200" class="autosize banktt_erntryform form-control" placeholder="Customer Ref"/></div>
-                    </div>
-                    <div class="form-group" id="banktt_invdetails">
-                        <label class="col-sm-2">INV DETAILS</label>
-                        <div class="col-sm-4"> <textarea  name="banktt_ta_invdetails" id="banktt_ta_invdetails" placeholder="Inv Details" maxlength="300" rows="5" class="banktt_erntryform form-control"></textarea></div>
-                    </div>
-                    <div class="form-group" id="banktt_comments">
-                        <label class="col-sm-2">COMMENTS</label>
-                        <div class="col-sm-4"> <textarea  name="banktt_ta_comments" id="banktt_ta_comments" placeholder="Comments" maxlength="300" rows="5" class="banktt_erntryform form-control"></textarea></div>
-                    </div>
-                    <div class="row form-group">
-                        <div class="col-lg-offset-2 col-lg-3">
-                            <input type="button" id="banktt_submitbutton" class="btn" value="CREATE" disabled>         <input type="button" id="banktt_resetbutton" class="btn" value="RESET">
                         </div>
-                    </div>
-                  </form>
+                        <div class="form-group" id="banktt_accname">
+                            <label class=" col-sm-2">ACCOUNT NAME<em>*</em></label>
+                            <div class="col-sm-3"><input type="text" name="banktt_tb_accname" id="banktt_tb_accname" placeholder="Account Name" maxlength="40" class="autosize banktt_erntryform form-control"/></div>
+                        </div>
+                        <div class="form-group" id="banktt_accno">
+                            <label class=" col-sm-2">ACCOUNT NO<em>*</em></label>
+                            <div class="col-sm-3"><input type="text" name="banktt_tb_accno" id="banktt_tb_accno" placeholder="Account No" maxlength="25" class="banktt_erntryform form-control"/></div>
+                        </div>
+                        <div class="form-group" id="banktt_amt">
+                            <label class=" col-sm-2">AMOUNT<em>*</em></label>
+                            <div class="col-sm-2"><input type="text" name="banktt_tb_amt" id="banktt_tb_amt" placeholder="Amount" maxlength="7" class="amtonly banktt_erntryform form-control"/></div>
+                        </div>
+                        <div class="form-group" id="banktt_unit">
+                            <label class=" col-sm-2">UNIT<em>*</em></label>
+                            <div class="col-sm-2"> <select name="banktt_lb_unit" id="banktt_lb_unit" class=" form-control banktt_erntryform"></select></div>
+                            <label id='banktt_errormsgcustomer' class="errormsg banktt_erntryform" hidden></label>
+                        </div>
+                        <div class="form-group" id="banktt_customer">
+                            <label class=" col-sm-2">CUSTOMER<em>*</em></label>
+                            <div class="col-sm-3"> <select name="banktt_lb_customer" id="banktt_lb_customer" class="form-control banktt_erntryform"></select></div>
+                            <div class="col-sm-2"><input type="hidden" name="temp_customerid" id="temp_customerid"  class="form-control"></div>
+                        </div>
+                        <div id="multiplecustomerdiv" hidden>
+
+                        </div>
+                        <div class="form-group" id="banktt_bankcode">
+                            <label class="col-sm-2">BANK CODE</label>
+                            <div class="col-sm-2"><input type="text" name="banktt_tb_bankcode" id="banktt_tb_bankcode" maxlength="4" class="alphanumeric banktt_erntryform form-control" placeholder="Bank Code"/></div>
+                        </div>
+                        <div class="form-group" id="banktt_branchcode">
+                            <label class="col-sm-2">BRANCH CODE</label>
+                            <div class="col-sm-2"><input type="text" name="banktt_tb_branchcode" id="banktt_tb_branchcode" maxlength="3" class="alphanumeric banktt_erntryform form-control" placeholder="Branch Code"/></div>
+                        </div>
+                        <div class="form-group" id="banktt_bankaddress">
+                            <label class="col-sm-2">BANK ADDRESS</label>
+                            <div class="col-sm-4"> <textarea  name="banktt_ta_address" id="banktt_ta_address" placeholder="Bank Address" rows="5" class="uppercase banktt_erntryform form-control"></textarea></div>
+                        </div>
+                        <div class="form-group" id="banktt_swiftcode">
+                            <label class="col-sm-2">SWIFT CODE<em>*</em></label>
+                            <div class="col-sm-2"><input type="text" name="banktt_tb_swiftcode" id="banktt_tb_swiftcode" maxlength="12" class="alphanumeric banktt_erntryform form-control" placeholder="Swift Code"/></div>
+                        </div>
+                        <div class="form-group" id="banktt_chargeto">
+                            <label class=" col-sm-2">CHARGES TO<em>*</em></label>
+                            <div class="col-sm-2"> <select name="banktt_lb_chargeto" id="banktt_lb_chargeto" class="form-control banktt_erntryform"></select></div>
+                        </div>
+                        <div class="form-group" id="banktt_custref">
+                            <label class="col-sm-2">CUSTOMER REF</label>
+                            <div class="col-sm-3"><input type="text" name="banktt_tb_custref" id="banktt_tb_custref" maxlength="200" class="autosize banktt_erntryform form-control" placeholder="Customer Ref"/></div>
+                        </div>
+                        <div class="form-group" id="banktt_invdetails">
+                            <label class="col-sm-2">INV DETAILS</label>
+                            <div class="col-sm-4"> <textarea  name="banktt_ta_invdetails" id="banktt_ta_invdetails" placeholder="Inv Details" maxlength="300" rows="5" class="banktt_erntryform form-control"></textarea></div>
+                        </div>
+                        <div class="form-group" id="banktt_comments">
+                            <label class="col-sm-2">COMMENTS</label>
+                            <div class="col-sm-4"> <textarea  name="banktt_ta_comments" id="banktt_ta_comments" placeholder="Comments" maxlength="300" rows="5" class="banktt_erntryform form-control"></textarea></div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-lg-offset-2 col-lg-3">
+                                <input type="button" id="banktt_submitbutton" class="btn" value="CREATE" disabled>         <input type="button" id="banktt_resetbutton" class="btn" value="RESET">
+                            </div>
+                        </div>
+                    </form>
                 </fieldset>
             </div>
         </div>
-     </div>
-     </div>
-     </body>
-  </html>
+    </div>
+</div>
+</body>
+</html>

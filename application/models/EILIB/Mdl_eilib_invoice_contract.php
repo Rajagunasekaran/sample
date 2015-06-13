@@ -487,9 +487,9 @@ class Mdl_eilib_invoice_contract extends CI_Model{
             $cexdd=date("d-M-Y",$check_out_dated_lastmonth);
             $datecheckedin = intval(date("d", $check_out_dated_lastmonth));
 // to generate last date of a month
-            $lastMonthString= strtotime ("+1 month",$check_in_dated_lastmonth);
-            $LastMonth = date("Y-m-d",$lastMonthString);
-            $LastMonthformat=date("d-M-Y",$lastMonthString);
+            // $lastMonthString= strtotime ("+1 month",$check_in_dated_lastmonth);
+            // $LastMonth = date("Y-m-d",$lastMonthString);
+            $LastMonthformat=date("d-M-Y",$check_in_dated_lastmonth);
 //end
             if( $noticedate!="")
             {            $dateStringNotice=strtotime($noticedate);

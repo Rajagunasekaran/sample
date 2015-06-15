@@ -55,7 +55,7 @@ require_once('application/libraries/EI_HDR.php');
                     $('#CR_lb_unitno').html(CR_unitno_options).show();
                 }
                 else{
-                    $('#cardreplace_form').replaceWith('<form id="cardreplace_form" class="form-horizontal content" role="form"><div class="panel-body"><fieldset><div class="form-group"><label class="errormsg"> '+CR_errorAarray[2].EMC_DATA+'</label></div></fieldset></div></form>');
+                    $('#cardreplace_form').replaceWith('<form id="cardreplace_form" class="form-horizontal content" role="form"><div class="panel-body"><fieldset><div class="form-group"><label class="col-sm-12 errormsg"> '+CR_errorAarray[2].EMC_DATA+'</label></div></fieldset></div></form>');
                 }
                 var CR_reason_options ='<option>SELECT</option>';
                 for (var i = 0; i < CR_reason_array.length; i++) {
@@ -360,9 +360,9 @@ require_once('application/libraries/EI_HDR.php');
                     <div class="col-sm-4"><textarea name="CR_ta_comments" id="CR_ta_comments" class="form-control" rows="5"></textarea></div>
                 </div>
                 <div class="form-group" id="CR_buttons" hidden>
-                    <div class="col-sm-offset-1 col-sm-3">
-                        <input class="btn btn-info" type="button" id="CR_btn_submitbutton" name="REPLACE" value="REPLACE" disabled/>
-                        <input class="btn btn-info" type="button" id="CR_btn_resetbutton" name="RESET" value="RESET"/>
+                    <div class="col-sm-offset-1 col-sm-4">
+                        <input class="maxbtn btn-info" type="button" id="CR_btn_submitbutton" name="REPLACE" value="REPLACE" disabled/>
+                        <input class="maxbtn btn-info" type="button" id="CR_btn_resetbutton" name="RESET" value="RESET"/>
                     </div>
                 </div>
                 <div class="form-group" id="CR_error" hidden>

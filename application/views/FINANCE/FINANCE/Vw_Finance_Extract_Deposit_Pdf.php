@@ -52,12 +52,13 @@ require_once('application/libraries/EI_HDR.php');
         // CHANGE FUNCTION FOR MONTH SELECTION
             $('#DDE_lb_monthselect').change(function(){
                 $(".preloader").show();
+                $("#DDE_btn_sbutton").hide();
+                $("#DDE_btn_rbutton").hide();
+                $("#DDE_btn_sbutton").attr("disabled", "disabled");
                 var month = $(this).val();
                 if(month=="SELECT")
                 {
                     $(".preloader").hide();
-                    $("#DDE_btn_sbutton").hide();
-                    $("#DDE_btn_rbutton").hide();
                     $('#em').hide();
                     $('#DDE_customerselect').hide();
                     $('#DDE_emailtable >div').remove().hide();
@@ -427,6 +428,24 @@ require_once('application/libraries/EI_HDR.php');
                     }
                 });
             }
+        // convert ss date into new date
+            function formatSSDate(dt)
+            {
+                var month = dt.getMonth();
+                var day = dt.getDate();
+                month = month + 1;
+                month = month + "";
+                if (month.length == 1)
+                {
+                    month = "0" + month;
+                }
+                day = day + "";
+                if (day.length == 1)
+                {
+                    day = "0" + day;
+                }
+                return day + '-' + month + '-' + dt.getFullYear();
+            }
         // LOAD THE REC_VER, START DATE AND END DATE  IN THE FORM.................
             function DDE_getrecver(recver)
             {
@@ -461,8 +480,10 @@ require_once('application/libraries/EI_HDR.php');
                     var edateid ="Dep_Exct_edatetb"+k;
                     var errid="errid"+k;
                     var checkvalid="checkid"+k;
-                    var sd=unique_recver[y][0].startdate;
-                    var ed=unique_recver[y][0].enddate;
+                    var sd=new Date(unique_recver[y][0].startdate);
+                    var ed=new Date(unique_recver[y][0].enddate);
+                    sd=formatSSDate(sd);
+                    ed=formatSSDate(ed);
                     var sdatetb='<label></label>';
                     var edatetb='<label></label>';
                     if((sd=="01-01-1970")&&(ed=="01-01-1970"))

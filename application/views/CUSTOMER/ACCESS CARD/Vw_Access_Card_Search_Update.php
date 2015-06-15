@@ -53,7 +53,7 @@ require_once('application/libraries/EI_HDR.php');
                     $('#CSU_lb_unitno').html(CSU_unitno_options);
                 }
                 else{
-                    $('#card_search_update_form').replaceWith('<form id="card_search_update_form" class="form-horizontal content" role="form"><div class="panel-body"><fieldset><div class="form-group"><label class="errormsg"> '+CSU_errorAarray[0].EMC_DATA+'</label></div></fieldset></div></form>');
+                    $('#card_search_update_form').replaceWith('<form id="card_search_update_form" class="form-horizontal content" role="form"><div class="panel-body"><fieldset><div class="form-group"><label class="col-sm-12 errormsg"> '+CSU_errorAarray[0].EMC_DATA+'</label></div></fieldset></div></form>');
                 }
                 var CSU_reason_options ='<option>SELECT</option>';
                 for (var i = 0; i < CSU_reason_array.length; i++) {

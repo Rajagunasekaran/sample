@@ -121,7 +121,7 @@ require_once('application/libraries/EI_HDR.php');
                     var UT_unitnumber= $("#UT_lb_unitnumber").val();
                     var UT_errmsg =UT_errorarray[0].EMC_DATA.replace('[UNITNO]',UT_unitnumber);
                     if(UT_response.UT_UPDCODE_unitno_obj.length==0){
-                        $('#UT_form_termination').replaceWith('<form id="UT_form_termination" class="form-horizontal content" role="form"><div class="panel-body"><fieldset><div class="form-group"><label class="errormsg"> '+UT_errorarray[3].EMC_DATA+'</label></div></fieldset></div></form>');
+                        $('#UT_form_termination').replaceWith('<form id="UT_form_termination" class="form-horizontal content" role="form"><div class="panel-body"><fieldset><div class="form-group"><label class="col-sm-12 errormsg"> '+UT_errorarray[3].EMC_DATA+'</label></div></fieldset></div></form>');
                     }
                     else{
                         var UT_options ='<option>SELECT</option>';

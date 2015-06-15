@@ -62,7 +62,7 @@ require_once('application/libraries/EI_HDR.php');
                     $('#CV_lb_unitno').html(CV_unitno_options);
                 }
                 else{
-                    $('#card_view_form').replaceWith('<form id="card_view_form" class="form-horizontal content" role="form"><div class="panel-body"><fieldset><div class="form-group"><label class="errormsg"> '+CV_errorAarray[6].EMC_DATA+'</label></div></fieldset></div></form>');
+                    $('#card_view_form').replaceWith('<form id="card_view_form" class="form-horizontal content" role="form"><div class="panel-body"><fieldset><div class="form-group"><label class="col-sm-12 errormsg"> '+CV_errorAarray[6].EMC_DATA+'</label></div></fieldset></div></form>');
                     $(".preloader").hide();
                 }
                 var CV_cardno_options ='<option>SELECT</option>';

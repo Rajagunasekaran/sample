@@ -612,7 +612,6 @@ require_once('application/libraries/EI_HDR.php');
             });
 
     /*-------------------------------------------------UNIT SEARCH AND UPDATE FUNCTIONALITY------------------------------------------------*/
-
         // FUNCTION FOR CHANGE DATE FORMAT
             function USU_FormTableDateFormat(USU_inputdate){
                 var USU_string  = USU_inputdate.split("-");
@@ -633,7 +632,7 @@ require_once('application/libraries/EI_HDR.php');
                 $('#USU_section1,#USU_section2').empty();
                 $('#USU_pdf_btn').hide();
                 if(USU_unitoption_arr.length==0)
-                    $('#USU_form_unitupdate').replaceWith('<div class="form-group"><label class="errormsg"> '+USU_errormsg_arr[35].EMC_DATA+'</label></div>');
+                    $('#USU_form_unitupdate').replaceWith('<div class="form-group"><label class="col-sm-12 errormsg"> '+USU_errormsg_arr[35].EMC_DATA+'</label></div>');
                 else{
                     var USU_select_options ='<option>SELECT</option>';
                     for (var i = 0; i < USU_unitoption_arr.length; i++)
@@ -1058,19 +1057,19 @@ require_once('application/libraries/EI_HDR.php');
                                 $('#USU_headermsg').text(USU_sd_msg).show();
                                 $('#USU_pdf_btn').show();
                                 var USU_tr ='';
-                                var USU_tr_common_stamp ='<th style="width:50px">ACCESS CARD</th><th style="width:50px">ACCESS ACTIVE</th><th style="width:50px">ACCESS INVENTORY</th><th style="width:50px">ACCESS LOST</th><th style="width:160px">ROOM TYPE</th><th style="width:75px">STAMP DUTY DATE</th><th style="width:140px">STAMP DUTY TYPE</th><th style="width:50px">STAMP DUTY AMOUNT</th><th style="width:500px">COMMENTS</th><th style="width:170px">USERSTAMP</th><th style="width:140px">TIMESTAMP</th></tr></thead><tbody>' ;
+                                var USU_tr_common_stamp ='<th style="width:50px">ACCESS CARD</th><th style="width:50px">ACCESS ACTIVE</th><th style="width:50px">ACCESS INVENTORY</th><th style="width:50px">ACCESS LOST</th><th style="width:160px">ROOM TYPE</th><th style="width:75px" class="uk-date-column">STAMP DUTY DATE</th><th style="width:140px">STAMP DUTY TYPE</th><th style="width:50px">STAMP DUTY AMOUNT</th><th style="width:500px">COMMENTS</th><th style="width:170px">USERSTAMP</th><th style="width:140px" class="uk-timestp-column">TIMESTAMP</th></tr></thead><tbody>' ;
                                 if(USU_flex_flag==8)//STAMP TYPE
                                 {
-                                    USU_tr +='<table id="USU_tble_htmltable" border="1" cellspacing="0" data-class="table" class="srcresult"><thead bgcolor="#6495ed" style="color:white"><tr><th style="width:200px">STAMP DUTY TYPE <em>*</em></th><th style="width:200px">USERSTAMP</th><th style="width:130px">TIMESTAMP</th></tr></thead><tbody>';
+                                    USU_tr +='<table id="USU_tble_htmltable" border="1" cellspacing="0" data-class="table" class="srcresult"><thead bgcolor="#6495ed" style="color:white"><tr><th style="width:200px">STAMP DUTY TYPE <em>*</em></th><th style="width:200px">USERSTAMP</th><th style="width:130px" class="uk-timestp-column">TIMESTAMP</th></tr></thead><tbody>';
 //                                    $('#USU_lbl_msg').text($('#USU_lb_all_searchby').val())
                                 }
                                 else if(USU_flex_flag==5)//ROOM TYPE
                                 {
-                                    USU_tr += '<table id="USU_tble_htmltable" border="1" cellspacing="0" data-class="table" class="srcresult"><thead bgcolor="#6495ed" style="color:white"><tr><th style="width:200px">ROOM TYPE <em>*</em></th><th style="width:200px">USERSTAMP</th><th style="width:130px">TIMESTAMP</th></tr></thead><tbody>';
+                                    USU_tr += '<table id="USU_tble_htmltable" border="1" cellspacing="0" data-class="table" class="srcresult"><thead bgcolor="#6495ed" style="color:white"><tr><th style="width:200px">ROOM TYPE <em>*</em></th><th style="width:200px">USERSTAMP</th><th style="width:130px" class="uk-timestp-column">TIMESTAMP</th></tr></thead><tbody>';
                                 }
                                 else if((USU_flex_flag==7)||(USU_flex_flag==6)||(USU_flex_flag==3)||(USU_flex_flag==4))//UNIT,START DATE,END DATE,PAYMENT
                                 {
-                                    USU_tr += '<table style="width: 2800px" id="USU_tble_htmltable" border="1" cellspacing="0" data-class="table" class="srcresult"><thead bgcolor="#6495ed" style="color:white"><tr><th style="width:20px">EDIT</th><th style="width:40px">UNIT NUMBER</th><th style="width:75px">START DATE</th><th style="width:75px">END DATE</th><th style="width:20px">OBSOLETE</th><th style="width:20px">EI/NON_EI</th><th style="width:40px">UNIT RENTAL</th><th style="width:50px">UNIT DEPOSIT</th><th style="width:140px">ACCOUNT NUMBER</th><th style="width:200px">ACCOUNT NAME</th><th style="width:40px">BANK CODE</th><th style="width:40px">BRANCH CODE</th><th style="width:350px">BANK ADDRESS</th><th style="width:500px">COMMENTS</th><th style="width:180px">USERSTAMP</th><th style="width:130px">TIMESTAMP</th></tr></thead><tbody>';
+                                    USU_tr += '<table style="width: 2800px" id="USU_tble_htmltable" border="1" cellspacing="0" data-class="table" class="srcresult"><thead bgcolor="#6495ed" style="color:white"><tr><th style="width:20px">EDIT</th><th style="width:40px">UNIT NUMBER</th><th style="width:75px" class="uk-date-column">START DATE</th><th style="width:75px" class="uk-date-column">END DATE</th><th style="width:20px">OBSOLETE</th><th style="width:20px">EI/NON_EI</th><th style="width:40px">UNIT RENTAL</th><th style="width:50px">UNIT DEPOSIT</th><th style="width:140px">ACCOUNT NUMBER</th><th style="width:200px">ACCOUNT NAME</th><th style="width:40px">BANK CODE</th><th style="width:40px">BRANCH CODE</th><th style="width:350px">BANK ADDRESS</th><th style="width:500px">COMMENTS</th><th style="width:180px">USERSTAMP</th><th style="width:130px" class="uk-timestp-column">TIMESTAMP</th></tr></thead><tbody>';
                                 }
                                 else if((USU_flex_flag==2)||(USU_flex_flag==1)||(USU_flex_flag==9))//STAMP DUTY AMT,INVENTORY CARD,ROOM TYPE WITH UNIT
                                 {
@@ -1133,8 +1132,11 @@ require_once('application/libraries/EI_HDR.php');
                                 $('#USU_tble_htmltable').DataTable({
                                     "aaSorting": [],
                                     "pageLength": 10,
-                                    "sPaginationType":"full_numbers"
+                                    "sPaginationType":"full_numbers",
+                                    "aoColumnDefs" : [
+                                        { "aTargets" : ["uk-date-column"] , "sType" : "uk_date"}, { "aTargets" : ["uk-timestp-column"] , "sType" : "uk_timestp"} ]
                                 });
+                                sorting();
                                 $('#USU_div_htmltable').show();
                                 var USU_stamp_unitdetails=USU_response_flex.USU_obj_stamp_rowarray_val[0];
                                 var k=0;var q=75;
@@ -1157,8 +1159,11 @@ require_once('application/libraries/EI_HDR.php');
                                     $('#USU_tble_stamphtmltable').DataTable({
                                         "aaSorting": [],
                                         "pageLength": 10,
-                                        "sPaginationType":"full_numbers"
+                                        "sPaginationType":"full_numbers",
+                                        "aoColumnDefs" : [
+                                            { "aTargets" : ["uk-date-column"] , "sType" : "uk_date"}, { "aTargets" : ["uk-timestp-column"] , "sType" : "uk_timestp"} ]
                                     });
+                                    sorting();
                                     $('#USU_div_stamphtmltable').show();
                                 }
                             }

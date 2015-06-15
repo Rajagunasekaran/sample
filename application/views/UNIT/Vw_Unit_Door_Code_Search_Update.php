@@ -40,7 +40,7 @@ require_once('application/libraries/EI_HDR.php');
                 DCSU_errormsg=DCSU_response.DCSU_errorarray;
                 DCSU_unitno=DCSU_response.DCSU_unitno;
                 if(DCSU_unitno.length==0){
-                    $('#DCSU_form_doorcode').replaceWith('<form id="DCSU_form_doorcode" class="form-horizontal content" role="form"><div class="panel-body"><fieldset><div class="form-group"><label class="errormsg"> '+DCSU_errormsg[3].EMC_DATA+'</label></div></fieldset></div></form>');
+                    $('#DCSU_form_doorcode').replaceWith('<form id="DCSU_form_doorcode" class="form-horizontal content" role="form"><div class="panel-body"><fieldset><div class="form-group"><label class="col-sm-12 errormsg"> '+DCSU_errormsg[3].EMC_DATA+'</label></div></fieldset></div></form>');
                 }
                 else{
                     var DCSU_options ='<option>SELECT</option>';
@@ -94,7 +94,7 @@ require_once('application/libraries/EI_HDR.php');
                     $("#DCSU_lbl_errmsgdooor").text(DCSU_div_errmsg);
                     $("#DCSU_div_errmsgdooor").show();
                     $('#DCSU_pdf_btn').show();
-                    var tr='<table id="DCSU_tble_htmltable" border="1" cellspacing="0" data-class="table" class="srcresult"><thead bgcolor="#6495ed" style="color:white;"><tr><th style="width:100px">DOOR CODE <em>*</em></th><th style="width:130px">WEB LOGIN</th><th style="width:100px">WEB PASSWORD</th><th style="width:300px">USERSTAMP</th><th style="width:150px">TIMESTAMP</th></tr></thead><tbody>';
+                    var tr='<table id="DCSU_tble_htmltable" border="1" cellspacing="0" data-class="table" class="srcresult"><thead bgcolor="#6495ed" style="color:white;"><tr><th style="width:100px">DOOR CODE <em>*</em></th><th style="width:130px">WEB LOGIN</th><th style="width:100px">WEB PASSWORD</th><th style="width:300px">USERSTAMP</th><th style="width:150px" class="uk-timestp-column">TIMESTAMP</th></tr></thead><tbody>';
                     var i=0;
                     DCSU_login_id=DCSU_response.DCSU_id;
                     tr += '<tr id="'+DCSU_response.DCSU_id+'"><td id="doorcode_'+DCSU_login_id+'" style="text-align: center" class="data">'+DCSU_response.DCSU_doorcode+'</td><td id="weblogin_'+DCSU_login_id+'" class="data" style="text-align: center">'+DCSU_response.DCSU_weblog+'</td><td id="webpass_'+DCSU_login_id+'" class="data" style="text-align: center">'+DCSU_response.DCSU_webpass+'</td><td>'+DCSU_response.DCSU_user+'</td><td style="text-align: center">'+DCSU_response.DCSU_time+'</td></tr></tbody></table>';
@@ -102,8 +102,11 @@ require_once('application/libraries/EI_HDR.php');
                     $('#DCSU_tble_htmltable').DataTable({
                         "aaSorting": [],
                         "pageLength": 10,
-                        "sPaginationType":"full_numbers"
+                        "sPaginationType":"full_numbers",
+                        "aoColumnDefs" : [
+                            { "aTargets" : ["uk-timestp-column"] , "sType" : "uk_timestp"} ]
                     });
+                    sorting();
                     $("#DCSU_div_htmltable").show();
                 }
                 else{

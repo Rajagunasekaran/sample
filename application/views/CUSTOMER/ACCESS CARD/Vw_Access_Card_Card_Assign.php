@@ -27,7 +27,7 @@ require_once('application/libraries/EI_HDR.php');
                     CA_allcust_values=value_array[0];
                     if(CA_allcust_values.length==0)
                     {
-                        $('#cardassign_form').replaceWith('<form id="cardassign_form" class="form-horizontal content" role="form"><div class="panel-body"><fieldset><div class="form-group"><label class="errormsg"> '+CA_errorAarray[4].EMC_DATA+'</label></div></fieldset></div></form>');
+                        $('#cardassign_form').replaceWith('<form id="cardassign_form" class="form-horizontal content" role="form"><div class="panel-body"><fieldset><div class="form-group"><label class="col-sm-12 errormsg"> '+CA_errorAarray[4].EMC_DATA+'</label></div></fieldset></div></form>');
                     }
                     else
                     {
@@ -872,7 +872,7 @@ require_once('application/libraries/EI_HDR.php');
                         </div>
                         <div class="form-group">
                             <label class="col-sm-3">EMAIL ID</label>
-                            <div class="col-sm-3"> <input type="text" name="CA_tb_email" id="CA_tb_email"  maxlength="50" class="form-control CA_formvalidation" placeholder="Email Id" readonly/></div>
+                            <div class="col-sm-4"> <input type="text" name="CA_tb_email" id="CA_tb_email"  maxlength="50" class="form-control CA_formvalidation" placeholder="Email Id" readonly/></div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-3">MOBILE NO</label>

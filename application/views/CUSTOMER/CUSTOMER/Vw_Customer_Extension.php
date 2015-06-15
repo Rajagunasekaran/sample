@@ -19,11 +19,32 @@ require_once('application/libraries/EI_HDR.php');
 <script>
 
     //JQUERY FUNCTIONALITIES
-    $(document).ready(function()
-    {
-
+    $(document).ready(function(){
+        $('#spacewidth').height('0%');
         $('textarea').autogrow({onInitialize: true});
         var controller_url="<?php echo base_url(); ?>" +'/index.php/CUSTOMER/CUSTOMER/Ctrl_Customer_Extension/';
+        //FUNCTION TO ALERT TRY CATCH ERROR MESSAGE
+        //        function onFailure(CEXTN_error) {
+        //            $(".preloader").hide();
+        //            if(CEXTN_error=="ScriptError: Failed to establish a database connection. Check connection string, username and password.")
+        //            {
+        ////$('#CEXTN_form').hide();
+        //                CEXTN_error="DB USERNAME/PWD WRONG, PLZ CHK UR CONFIG FILE FOR THE CREDENTIALS."
+        //                $('#CEXTN_form').replaceWith('<center><label class="dberrormsg">'+CEXTN_error+'</label></center>');
+        //            }
+        //            else
+        //            {
+        //                if(CEXTN_error=='TypeError: Cannot call method "getEvents" of undefined.'||CEXTN_error=='TypeError: Cannot call method "createEvent" of undefined.')
+        //                {
+        //                    CEXTN_error=CEXTN_errmsgs[25];
+        //                }
+        //                else if(CEXTN_error=='ScriptError: No item with the given ID could be found, or you do not have permission to access it.')
+        //                {
+        //                    CEXTN_error=CEXTN_errmsgs[26];
+        //                }
+        //                $(document).doValidation({rule:'messagebox',prop:{msgtitle:"CUSTOMER EXTENSION",msgcontent:CEXTN_error,position:{top:150,left:500}}});
+        //            }
+        //        }
         $(".preloader").show();
         var CEXTN_cardcount=0;
         var CEXTN_chkunitdateflag=0;
@@ -37,7 +58,7 @@ require_once('application/libraries/EI_HDR.php');
         var CEXTN_currentcheckoutdate="";
         var CEXTN_initial_unitsdate="";
         var CEXTN_initial_unitedate="";
-//JQUERY VALIDATION
+        //JQUERY VALIDATION
         $('#CEXTN_tb_emailid').doValidation({rule:'general',prop:{uppercase:false,autosize:true}});
         $(".autosize").doValidation({rule:'general',prop:{autosize:true}});
         $("#CEXTN_tb_passno").doValidation({rule:'general',prop:{autosize:true}});
@@ -51,20 +72,20 @@ require_once('application/libraries/EI_HDR.php');
         $("#CEXTN_tb_noticeperiod").doValidation({rule:'numbersonly',prop:{realpart:1}});
         $("#CEXTN_tb_mobileno").doValidation({rule:'numbersonly',prop:{realpart:8}});
         $("#CEXTN_tb_intmobileno").doValidation({rule:'numbersonly',prop:{realpart:20,leadzero:true}});
-//DATE PICKER FOR CHECK IN DATE ,DOB,PASSPORT DATE,NOTICE DATE,EP DATE
-////SET CHECK OUT DATEPICKER
+        //DATE PICKER FOR CHECK IN DATE ,DOB,PASSPORT DATE,NOTICE DATE,EP DATE
+        ////SET CHECK OUT DATEPICKER
         $('#CEXTN_db_chkoutdate').datepicker({
             dateFormat: "dd-mm-yy",
             changeYear: true,
             changeMonth: true
         });
-//SET NOTICE PERIOD DATE DATEPICKER
+        //SET NOTICE PERIOD DATE DATEPICKER
         $('#CEXTN_db_noticeperioddate').datepicker({
             dateFormat: "dd-mm-yy" ,
             changeYear: true,
             changeMonth: true
         });
-//SET EP N PASSPORT MIN N MAX DATE
+        //SET EP N PASSPORT MIN N MAX DATE
         var CEXTN_date = new Date();
         CEXTN_date.setDate( CEXTN_date.getDate() + 1 );
         var CEXTN_newDate = CEXTN_date.toDateString();
@@ -88,7 +109,7 @@ require_once('application/libraries/EI_HDR.php');
         });
         $('#CEXTN_db_epdate').datepicker("option","minDate",CEXTN_newDate);
         $('#CEXTN_db_epdate').datepicker("option","maxDate",ep_changedmonth);
-//FUNCTION TO UNIQUE ARRAY VALUES
+        //FUNCTION TO UNIQUE ARRAY VALUES
         function unique(a) {
             var result = [];
             $.each(a, function(i, e) {
@@ -96,37 +117,31 @@ require_once('application/libraries/EI_HDR.php');
             });
             return result;
         }
-//FUNCTION TO CALENDER END TIME
+        //FUNCTION TO CALENDER END TIME
         function CEXTN_startendtimevalues(endtime){
             var timearray=[];
-            for(var i=0;i<calentime.length;i++)
-            {
-                if(endtime==calentime[i].TIME)
-                {
+            for(var i=0;i<calentime.length;i++){
+                if(endtime==calentime[i].TIME){
                     var endtime_status=i;
                     break;
                 }
             }
-            if(endtime=="23:30")
-            {
+            if(endtime=="23:30"){
                 timearray.push("23:59");
             }
-            else if(endtime=="23:00")
-            {
+            else if(endtime=="23:00"){
                 timearray.push("23:30");
                 timearray.push("23:59");
             }
-            else
-            {
+            else{
                 var length=endtime_status+2;
-                for(var j=endtime_status+1;j<=length;j++)
-                {
+                for(var j=endtime_status+1;j<=length;j++){
                     timearray.push(calentime[j].TIME);
                 }
             }
             return timearray;
         }
-//CALL FUNCTION TO GET UNIT NOS,ERROR MSGS,PRORATED N WAIVED VALUE
+        //CALL FUNCTION TO GET UNIT NOS,ERROR MSGS,PRORATED N WAIVED VALUE
         $.ajax({
             type: "POST",
             url: controller_url+"CEXTN_getCommonvalues",
@@ -200,12 +215,9 @@ require_once('application/libraries/EI_HDR.php');
                 $('#CEXTN_lb_chkoutfromtime').html(CEXTN_calentimeres);
                 $('#CEXTN_lb_chkinfromtime').html(CEXTN_calentimeres);
             }
-
         }
-
-//GET CUSTOMER NAME FOR THE SELECTED UNIT
+        //GET CUSTOMER NAME FOR THE SELECTED UNIT
         $('#CEXTN_lb_unitno').change(function(){
-            $("html, body").animate({ scrollTop: $(document).height() }, "slow");
             $('#CEXTN_div_nocusterr').text("");
             $('#CEXTN_fileupload').val('');
             var CEXTN_lb_unitno=$('#CEXTN_lb_unitno').val();
@@ -213,12 +225,11 @@ require_once('application/libraries/EI_HDR.php');
             var CEXTN_div_seconform=$('#CEXTN_div_seconform').hide();
             var CEXTN_lbl_custname=$('#CEXTN_lbl_custname').hide();
             var CEXTN_lb_custname=$('#CEXTN_lb_custname').hide();
-            if(CEXTN_lb_unitno!='SELECT')
-            {
+            if(CEXTN_lb_unitno!='SELECT'){
                 var  newPos= adjustPosition($(this).position(),100,150);
                 resetPreloader(newPos);
                 $(".preloader").show();
-//CALL FUNCTION TO GET UNIT NOS,ERROR MSGS,PRORATED N WAIVED VALUE
+                //CALL FUNCTION TO GET UNIT NOS,ERROR MSGS,PRORATED N WAIVED VALUE
                 $.ajax({
                     type: "POST",
                     url: controller_url+"CEXTN_getCustomerNameId_result",
@@ -227,15 +238,13 @@ require_once('application/libraries/EI_HDR.php');
                         var value_array=JSON.parse(data);
                         CEXTN_allCustExtndts=value_array;
                         var CEXTN_namearray=[];
-                        for(var k=0;k<CEXTN_allCustExtndts[1].length;k++)
-                        {
+                        for(var k=0;k<CEXTN_allCustExtndts[1].length;k++){
                             CEXTN_namearray.push(CEXTN_allCustExtndts[1][k]);
                         }
                         CEXTN_namearray=unique(CEXTN_namearray)
                         CEXTN_namearray.sort();
                         var CEXTN_nameres='<option>SELECT</option>';
-                        for(var i=0;i<CEXTN_namearray.length;i++)
-                        {
+                        for(var i=0;i<CEXTN_namearray.length;i++){
                             var CEXTN_custname=CEXTN_namearray[i].split("_");
                             CEXTN_nameres += '<option value="' + CEXTN_namearray[i] + '">' + CEXTN_custname[0]+" "+CEXTN_custname[1] + '</option>';
                         }
@@ -245,6 +254,7 @@ require_once('application/libraries/EI_HDR.php');
                         var CEXTN_lbl_custname=$('#CEXTN_lbl_custname').show();
                         var CEXTN_lb_custname=$('#CEXTN_lb_custname').show();
                         $(".preloader").hide();
+                        $("html, body").animate({ scrollTop: $(document).height() }, "slow");
 
                     },
                     error: function(data){
@@ -252,16 +262,12 @@ require_once('application/libraries/EI_HDR.php');
                     }
                 });
             }
-            else
-            {
+            else{
                 $(".preloader").hide();
             }
         });
-
-//GET CUSTOMER ID FOR THE SELECTED CUSTOMER NAME
-        $('#CEXTN_lb_custname').change(function()
-        {
-
+        //GET CUSTOMER ID FOR THE SELECTED CUSTOMER NAME
+        $('#CEXTN_lb_custname').change(function(){
             $('#CEXTN_div_nocusterr').text("");
             CEXTN_setselectIndex();
             $('#CEXTN_fileupload').val('');
@@ -271,26 +277,20 @@ require_once('application/libraries/EI_HDR.php');
             var CEXTN_lb_unitno=$('#CEXTN_lb_unitno').val();
             var CEXTN_custname=CEXTN_lb_custname.split("_");
             var CEXTN_name_id_array=[];
-            for(var k=0;k<CEXTN_allCustExtndts[1].length;k++)
-            {
-                if(CEXTN_allCustExtndts[1][k]==CEXTN_lb_custname)
-                {
+            for(var k=0;k<CEXTN_allCustExtndts[1].length;k++){
+                if(CEXTN_allCustExtndts[1][k]==CEXTN_lb_custname){
                     CEXTN_name_id_array.push(CEXTN_allCustExtndts[0][k]);
                 }
             }
             CEXTN_name_id_array=unique(CEXTN_name_id_array);
             CEXTN_name_id_array.sort(function(a,b){return a-b});
-            if(CEXTN_lb_custname!='SELECT')
-            {
+            if(CEXTN_lb_custname!='SELECT'){
                 $(".preloader").show();
-                if(CEXTN_name_id_array.length==0)
-                {
+                if(CEXTN_name_id_array.length==0){
                     $('#CEXTN_div_nocusterr').text(CEXTN_errmsgs[8].EMC_DATA.replace('[CNAME]',$('#CEXTN_lb_custname').val().split("_")[0]+" "+$('#CEXTN_lb_custname').val().split("_")[1]));
                 }
-                else
-                {
-                    if(CEXTN_name_id_array.length==1)
-                    {
+                else{
+                    if(CEXTN_name_id_array.length==1){
                         $('#CEXTN_hidden_custid').val(CEXTN_name_id_array[0]);
                         $.ajax({
                             type: "POST",
@@ -309,16 +309,12 @@ require_once('application/libraries/EI_HDR.php');
                         });
                         $('#CEXTN_div_custid').hide();
                     }
-                    else
-                    {
-//get table rows lengh
+                    else{
+                        //get table rows lengh
                         var tablelen=$('#CEXTN_tble_custid > div').length;
                         $('#CEXTN_tble_custid > div').remove();
-                        for(var i=0;i<CEXTN_name_id_array.length;i++)
-                        {
+                        for(var i=0;i<CEXTN_name_id_array.length;i++){
                             var CEXTN_result = '<div class="col-sm-offset-3" style="padding-left:15px"><div class="radio"><label><input type="radio" name="CEXTN_radiocustid" id='+CEXTN_name_id_array[i]+' value='+CEXTN_name_id_array[i]+' class="CEXTN_class_custid" />'+CEXTN_custname[0]+" "+CEXTN_custname[1]+' '+CEXTN_name_id_array[i]+'</label></div></div>';
-
-//                        var CEXTN_result='<tr id="custid"><td> <input type=radio name="CEXTN_radiocustid" id='+CEXTN_name_id_array[i]+' value='+CEXTN_name_id_array[i]+' class="CEXTN_class_custid"></td><td>'+CEXTN_custname[0]+" "+CEXTN_custname[1]+' '+CEXTN_name_id_array[i]+'</tr>';
                             $('#CEXTN_tble_custid').append(CEXTN_result);
                         }
                         $('#CEXTN_div_custid').show();
@@ -327,18 +323,16 @@ require_once('application/libraries/EI_HDR.php');
                 }
             }
         });
-//AMOUNT RADIO BUTTON VALIDATION
+        //AMOUNT RADIO BUTTON VALIDATION
         $("input[name='CEXTN_radio_amt']").on("change", function () {
-            if(this.value=="CEXTN_radio_sameamt")
-            {
+            if(this.value=="CEXTN_radio_sameamt"){
                 $('#CEXTN_div_sameamt').show();
                 $('#CEXTN_div_diffamt').hide();
                 $("#CEXTN_tb_diffamtdep").val("");
                 $("#CEXTN_tb_diffamtrent").val("");
                 $("#CEXTN_tb_diffamtprocost").val("");
             }
-            if(this.value=="CEXTN_radio_diffamt")
-            {
+            if(this.value=="CEXTN_radio_diffamt"){
                 $('#CEXTN_div_diffamt').show();
                 $('#CEXTN_tb_diffamtdep').val('')
                 $('#CEXTN_tb_diffamtrent').val('')
@@ -346,7 +340,7 @@ require_once('application/libraries/EI_HDR.php');
                 $('#CEXTN_div_sameamt').hide();
             }
         });
-//UNIT RADIO BUTTON VALIDATION
+        //UNIT RADIO BUTTON VALIDATION
         $("input[name='CEXTN_radio_unit']").on("change", function () {
             var  newPos= adjustPosition($(this).position(),100,150);
             resetPreloader(newPos);
@@ -355,8 +349,7 @@ require_once('application/libraries/EI_HDR.php');
             var CEXTN_rmtype=$('#CEXTN_tb_sameunitsamermrmtype').val();
             var CEXTN_lb_unitno=$('#CEXTN_lb_unitno').val();
             var CEXTN_radio_unit =$("input[name='CEXTN_radio_unit']:checked").val()
-            if(this.value=="CEXTN_radio_sameunit")
-            {
+            if(this.value=="CEXTN_radio_sameunit"){
                 CEXTN_SetMinMaxCheckoutDate(CEXTN_initial_unitsdate,CEXTN_initial_unitedate,CEXTN_currentcheckoutdate)//set check out min n max date
                 $('#CEXTN_div_nodiffuniterr').hide();
                 $("#CEXTN_lbl_chkindate").text("CURRENT CHECK OUT DATE");
@@ -372,16 +365,13 @@ require_once('application/libraries/EI_HDR.php');
                 $('#CEXTN_div_sameunitdiffroomerr').text("");
                 $(".preloader").hide();
             }
-            if(this.value=="CEXTN_radio_diffunit")
-            {
+            if(this.value=="CEXTN_radio_diffunit"){
                 CEXTN_cardcount=0;
-                if(CEXTN_diffunitlen==0)
-                {
+                if(CEXTN_diffunitlen==0){
                     $('#CEXTN_div_diffunit').hide();
                     $('#CEXTN_div_nodiffuniterr').text(CEXTN_errmsgs[20].EMC_DATA).show();
                 }
-                else
-                {
+                else {
                     $('#CEXTN_div_nodiffuniterr').hide();
                     $('#CEXTN_div_diffunit').show();
                 }
@@ -404,8 +394,7 @@ require_once('application/libraries/EI_HDR.php');
                 $('#CEXTN_div_sameunitdiffroomerr').text("");
                 $(".preloader").hide();
             }
-            if(this.value=="CEXTN_radio_sameunitdiffroom")
-            {
+            if(this.value=="CEXTN_radio_sameunitdiffroom"){
                 $('#CEXTN_div_nodiffuniterr').hide();
                 $('#CTERM_tbl_sameunitdiffrmcust_card').show();
                 $("#CEXTN_lbl_chkindate").text("CURRENT CHECK IN DATE");
@@ -430,14 +419,12 @@ require_once('application/libraries/EI_HDR.php');
                     }
                 });
             }
-            if(CEXTN_radio_unit!="CEXTN_radio_sameunit")
-            {
+            if(CEXTN_radio_unit!="CEXTN_radio_sameunit"){
                 $("#CEXTN_lb_chkinfromtime").show();
             }
         });
-//FUNCTION TO GET ROOM TYPE RESULT FOR SAME UNIT
-        function CEXTN_getRoomType_result(CEXTN_rmtype)
-        {
+        //FUNCTION TO GET ROOM TYPE RESULT FOR SAME UNIT
+        function CEXTN_getRoomType_result(CEXTN_rmtype){
             var CEXTN_lb_unitno=$('#CEXTN_lb_unitno').val();
             var CEXTN_lb_diffunituno=$("#CEXTN_lb_diffunituno").val();
             var CEXTN_normtypeerr=CEXTN_errmsgs[2].EMC_DATA;
@@ -446,14 +433,11 @@ require_once('application/libraries/EI_HDR.php');
             var CEXTNunitedate=CEXTN_rmtype.unitedate
             CEXTN_SetMinMaxCheckoutDate(CEXTNunitsdate,CEXTNunitedate,CEXTN_currentcheckoutdate)//set check out min n max date
             var CEXTN_unittype=$("#CEXTN_hidden_setrmtype").val();
-            if(CEXTN_roomtype.length>0)
-            {
+            if(CEXTN_roomtype.length>0){
                 $('#CEXTN_div_sameunitdiffroomerr').text("");
-                if(CEXTN_unittype=="CEXTN_radio_sameunitdiffroom")
-                {
+                if(CEXTN_unittype=="CEXTN_radio_sameunitdiffroom"){
                     var CEXTN_rmtyperes='<option>SELECT</option>';
-                    for(var i=0;i<CEXTN_roomtype.length;i++)
-                    {
+                    for(var i=0;i<CEXTN_roomtype.length;i++){
                         CEXTN_rmtyperes += '<option value="' + CEXTN_roomtype[i] + '">' + CEXTN_roomtype[i] + '</option>';
                     }
                     $('#CEXTN_lb_sameunitdiffrmrmtype').html(CEXTN_rmtyperes);
@@ -461,11 +445,9 @@ require_once('application/libraries/EI_HDR.php');
                     $('#CEXTN_div_diffunit').hide();
                     $('#CEXTN_div_sameunitdiffrm').show();
                 }
-                else
-                {
+                else{
                     var CEXTN_rmtyperes='<option>SELECT</option>';
-                    for(var i=0;i<CEXTN_roomtype.length;i++)
-                    {
+                    for(var i=0;i<CEXTN_roomtype.length;i++){
                         CEXTN_rmtyperes += '<option value="' + CEXTN_roomtype[i] + '">' + CEXTN_roomtype[i] + '</option>';
                     }
                     $('#CEXTN_lb_diffunitrmtype').html(CEXTN_rmtyperes).show();
@@ -479,15 +461,12 @@ require_once('application/libraries/EI_HDR.php');
                     $('#CEXTN_div_normtypeerr').text("");
                 }
             }
-            else
-            {
-                if(CEXTN_unittype=="CEXTN_radio_sameunitdiffroom")
-                {
+            else{
+                if(CEXTN_unittype=="CEXTN_radio_sameunitdiffroom"){
                     var CEXTN_div_normtypeerr=CEXTN_normtypeerr.replace('[UNIT NO]',CEXTN_lb_unitno)
                     $('#CEXTN_div_sameunitdiffroomerr').text(CEXTN_div_normtypeerr);
                 }
-                else
-                {
+                else{
                     $('#CEXTN_lb_diffunitrmtype').hide();
                     $('#CEXTN_lbl_diffunitrmtype').hide();
                     $('#CEXTN_lb_diffunitrmtype').hide();
@@ -502,22 +481,19 @@ require_once('application/libraries/EI_HDR.php');
             }
             $(".preloader").hide();
         }
-//AIRCON AMT RADIO BUTTON VALIDATION
-        $("input[name='CEXTN_radio_airconfee']").on("change", function () {
-            if(this.value=="CEXTN_radio_quartairconfee")
-            {
+        //AIRCON AMT RADIO BUTTON VALIDATION
+        $("input[name='CEXTN_radio_airconfee']").on("change", function (){
+            if(this.value=="CEXTN_radio_quartairconfee"){
                 $('#CEXTN_tb_airquarterfee').val("").show();
                 $('#CEXTN_tb_fixedairfee').hide();
             }
-            if(this.value=="CEXTN_radio_fixedairconfee")
-            {
+            if(this.value=="CEXTN_radio_fixedairconfee"){
                 $('#CEXTN_tb_airquarterfee').hide();
                 $('#CEXTN_tb_fixedairfee').val("").show();
             }
         });
-//ADD ROOM TYPE FOR DIFF UNIT
-        $('#CEXTN_lb_diffunituno').change(function()
-        {
+        //ADD ROOM TYPE FOR DIFF UNIT
+        $('#CEXTN_lb_diffunituno').change(function(){
             $('#CEXTN_div_custerrmsg').hide();
             $('#CEXTN_div_diffunitnocarderrmsg').hide();
             $('#CEXTN_lb_diffunitrmtype').val("SELECT");
@@ -533,12 +509,11 @@ require_once('application/libraries/EI_HDR.php');
             $('#CEXTN_lbl_diffunitnull').hide();
             var CEXTN_lb_unitno=$('#CEXTN_lb_diffunituno').val();
             var CEXTN_rmtype="";
-            if(CEXTN_lb_unitno!="SELECT")
-            {
+            if(CEXTN_lb_unitno!="SELECT"){
                 var  newPos= adjustPosition($(this).position(),100,80);
                 resetPreloader(newPos);
                 $(".preloader").show();
-//ADD DIFF UNIT ROOM TYPE
+                //ADD DIFF UNIT ROOM TYPE
                 $.ajax({
                     type: "POST",
                     url: controller_url+"CEXTN_getRoomType",
@@ -564,8 +539,7 @@ require_once('application/libraries/EI_HDR.php');
             $('#CEXTN_div_custerrmsg').hide();
             $('#CEXTN_div_diffunitnocarderrmsg').hide();
             $('#CEXTN_div_diffunitcardlist').hide();
-            if(this.value=="CEXTN_radio_difunitcardno")
-            {
+            if(this.value=="CEXTN_radio_difunitcardno"){
                 $.ajax({
                     type: "POST",
                     url: controller_url+"CEXTN_getdiffunitCardNo",
@@ -577,38 +551,29 @@ require_once('application/libraries/EI_HDR.php');
                     error:function(data){
                         show_msgbox("CUSTOMER EXTENSION",JSON.stringify(data),"error",false);
                     }
-
                 });
             }
-            else
-            {
+            else{
                 $('#CEXTN_div_diffunitcardlist').hide();
                 $(".preloader").hide();
             }
         });
         //ADD CARD NOS IN THE FORM
-        function CEXTN_getdiffunitCardNo_result(CEXTN_diffunitcard)
-        {
+        function CEXTN_getdiffunitCardNo_result(CEXTN_diffunitcard){
             CEXTN_finalCard=CEXTN_diffunitcard[1];
             $('#CEXTN_tble_diffunitcardlist > div').remove();
             $('#CEXTN_div_diffunitnocarderrmsg').hide();
             CEXTN_chkcardlen=CEXTN_diffunitcard[0].length;
-
-            if(CEXTN_diffunitcard[0].length>0)
-            {
-                for(var i=0;i<CEXTN_diffunitcard[0].length;i++)
-                {
+            if(CEXTN_diffunitcard[0].length>0){
+                for(var i=0;i<CEXTN_diffunitcard[0].length;i++){
                     var CEXTN_cardnovalue=CEXTN_diffunitcard[0][i];
                     var CEXTN_lb_diffunitcardid="CEXTN_lb_diffunitcard"+i;
                     var CEXTN_cb_diffunitcardid="CEXTN_cb_diffunitcard"+i;
                     var CEXTN_tb_diffunitcard="CEXTN_tb_diffunitcard"+i;
                     var CEXTN_cardresult ='<div class="row form-group"><div class="col-md-2"><div class="checkbox"><label><input type=checkbox class="CEXTN_class_diffunitcard CEXTN_btn_validate_class" name="CEXTN_cb_diffunitcard[]" id='+i+' value='+CEXTN_cardnovalue+'>' + CEXTN_cardnovalue + '</label></div></div><div class="col-md-5"><select name="CEXTN_lb_diffunitcard" id='+CEXTN_lb_diffunitcardid+' class="CEXTN_class_diffunitcard CEXTN_btn_validate_class form-control"  style="display: none;"></select></div><input type="hidden"  name="CEXTN_tb_diffunitcard" id='+CEXTN_tb_diffunitcard+'/></div>';
-
-//                var CEXTN_cardresult='<tr id="custid"><td> <input type=checkbox class="CEXTN_class_diffunitcard CEXTN_btn_validate_class" name="CEXTN_cb_diffunitcard" id='+i+' value='+CEXTN_cardnovalue+'>'+CEXTN_cardnovalue+'</td><td><select name="CEXTN_lb_diffunitcard" id='+CEXTN_lb_diffunitcardid+' class="CEXTN_class_diffunitcard CEXTN_btn_validate_class" hidden/></td><td><input type="text" name="CEXTN_tb_diffunitcard" id='+CEXTN_tb_diffunitcard+' hidden/></td></tr>';
                     $('#CEXTN_tble_diffunitcardlist').append(CEXTN_cardresult);
                     var CEXTN_cardnolbl='<option>SELECT</option>';
-                    for(var j=0;j<CEXTN_diffunitcard.length;j++)
-                    {
+                    for(var j=0;j<CEXTN_diffunitcard.length;j++){
                         var CEXTN_cardnolabel=CEXTN_diffunitcard[1][j];
                         CEXTN_cardnolbl += '<option value="' + CEXTN_cardnolabel + '">' + CEXTN_cardnolabel + '</option>';
                     }
@@ -616,15 +581,13 @@ require_once('application/libraries/EI_HDR.php');
                 }
                 $('#CEXTN_div_diffunitcardlist').show();
             }
-            else
-            {
-//            $('#CEXTN_div_diffunitcardlist').show();
+            else{
                 $('#CEXTN_div_diffunitnocarderrmsg').show();
                 $('#CEXTN_div_custerrmsg').hide();
             }
             $(".preloader").hide();
         }
-//FUNCTION TO COMPARE TWO ARRAYS
+       //FUNCTION TO COMPARE TWO ARRAYS
         function CEXTN_card_diffArray(a, b) {
             var seen = [], diff = [];
             for ( var i = 0; i < b.length; i++)
@@ -634,34 +597,28 @@ require_once('application/libraries/EI_HDR.php');
                     diff.push(a[i]);
             return diff;
         }
-//FUNCTION TO CALL DATE PICKER FORMAT
+        //FUNCTION TO CALL DATE PICKER FORMAT
         function FormTableDateFormat(inputdate){
             var string = inputdate.split("-");
             return string[2]+'-'+ string[1]+'-'+string[0];
         }
-//FUNCTION TO CALL PRORATED CHKING FUNCTION AND VALIDATING WAIVED CHKBOX
-        $(".CEXTN_class_prowaiv").change(function()
-        {
-//VALIDATING WAIVED CHKBOX
+        //FUNCTION TO CALL PRORATED CHKING FUNCTION AND VALIDATING WAIVED CHKBOX
+        $(".CEXTN_class_prowaiv").change(function(){
+            //VALIDATING WAIVED CHKBOX
             var CEXTN_tb_diffamtprocost=$("#CEXTN_tb_diffamtprocost").val();
             var CEXTN_tb_diffamtrent=$("#CEXTN_tb_diffamtrent").val();
             var CEXTN_radio_amt =$("input[name='CEXTN_radio_amt']:checked").val()
-            if(CEXTN_tb_diffamtprocost!="")
-            {
+            if(CEXTN_tb_diffamtprocost!=""){
                 $("#CEXTN_cb_diffamtwaived").removeAttr('disabled');
             }
-            else
-            {
+            else{
                 $("#CEXTN_cb_diffamtwaived").prop('checked',false).attr('disabled','disabled');
             }
-//
-//PRORATED CHK
+            //PRORATED CHK
             var CEXTN_db_chkindate=$("#CEXTN_db_chkindate").val();
             var CEXTN_db_chkoutdate=$("#CEXTN_db_chkoutdate").val()
-            if(CEXTN_radio_amt=="CEXTN_radio_sameamt")
-            {
-                if(CEXTN_db_chkoutdate!="")
-                {
+            if(CEXTN_radio_amt=="CEXTN_radio_sameamt"){
+                if(CEXTN_db_chkoutdate!=""){
                     $.ajax({
                         type: "POST",
                         url: controller_url+"CEXTN_chkProrated",
@@ -669,7 +626,6 @@ require_once('application/libraries/EI_HDR.php');
                         success:function(data){
                             var CEXTN_rmtype=JSON.parse(data);
                             CEXTN_chkProrated_result(CEXTN_rmtype);
-
                         },
                         error:function(data){
                             show_msgbox("CUSTOMER EXTENSION",JSON.stringify(data),"error",false);
@@ -677,10 +633,8 @@ require_once('application/libraries/EI_HDR.php');
                     });
                 }
             }
-            else
-            {
-                if(CEXTN_db_chkoutdate!=""&&CEXTN_tb_diffamtrent!="")
-                {
+            else{
+                if(CEXTN_db_chkoutdate!=""&&CEXTN_tb_diffamtrent!=""){
                     $.ajax({
                         type: "POST",
                         url: controller_url+"CEXTN_chkProrated",
@@ -688,25 +642,18 @@ require_once('application/libraries/EI_HDR.php');
                         success:function(data){
                             var CEXTN_rmtype=JSON.parse(data);
                             CEXTN_chkProrated_result(CEXTN_rmtype);
-
                         },
                         error:function(data){
-
                             show_msgbox("CUSTOMER EXTENSION",JSON.stringify(data),"error",false);
-
                         }
-
                     });
-
                 }
             }
-            if(CEXTN_tb_diffamtrent==""||CEXTN_radio_amt=="CEXTN_radio_sameamt")
-            {
+            if(CEXTN_tb_diffamtrent==""||CEXTN_radio_amt=="CEXTN_radio_sameamt"){
                 $("#CEXTN_cb_diffamtprorated").attr("disabled","disabled").prop('checked',false);
             }
-//
-            $('#CEXTN_db_noticeperioddate').removeAttr("disabled");
-//SET NOTICE PERIOD DATE
+                $('#CEXTN_db_noticeperioddate').removeAttr("disabled");
+            //SET NOTICE PERIOD DATE
             $('#CEXTN_db_noticeperioddate').datepicker({
                 dateFormat: "dd-mm-yy" ,
                 changeYear: true,
@@ -756,12 +703,10 @@ require_once('application/libraries/EI_HDR.php');
             }
             var CEXTN_db_chkoutdate=$("#CEXTN_db_chkoutdate").val();
         });
-//FUNCTION TO ENABLE PROCESSING COST CHECK BOX USING THE RETURN RESULT
-        function CEXTN_chkProrated_result(CEXTN_chkproflag)
-        {
+        //FUNCTION TO ENABLE PROCESSING COST CHECK BOX USING THE RETURN RESULT
+        function CEXTN_chkProrated_result(CEXTN_chkproflag){
             var CEXTN_radio_amt =$("input[name='CEXTN_radio_amt']:checked").val()
-            if(CEXTN_chkproflag==true)
-            {
+            if(CEXTN_chkproflag=='true'){
                 if(CEXTN_radio_amt!="CEXTN_radio_sameamt")
                 {
                     $("#CEXTN_cb_diffamtprorated").removeAttr("disabled").prop('checked',true);
@@ -820,65 +765,54 @@ require_once('application/libraries/EI_HDR.php');
                 $("#CEXTN_hidden_diffamtprorated").val("");
             }
         }
-//
-//FUNCTION TO GET TO TIME FOR CHECK IN DATE
-        $("#CEXTN_lb_chkinfromtime").change(function()
-        {
+        //FUNCTION TO GET TO TIME FOR CHECK IN DATE
+        $("#CEXTN_lb_chkinfromtime").change(function(){
             $(".preloader").show();
             var CEXTN_lb_chkinfromtime=$("#CEXTN_lb_chkinfromtime").val();
-            if(CEXTN_lb_chkinfromtime!="SELECT")
-            {
+            if(CEXTN_lb_chkinfromtime!="SELECT"){
                 var CEXTN_totimelb=''
                 var totime=CEXTN_startendtimevalues(CEXTN_lb_chkinfromtime)
-                for(var j=0;j<totime.length;j++)
-                {
+                for(var j=0;j<totime.length;j++){
                     CEXTN_totimelb += '<option value="' + totime[j] + '">' + totime[j]+ '</option>';
                 }
                 $("#CEXTN_lbl_chkinto").show();
                 $('#CEXTN_lb_chkintotime').html(CEXTN_totimelb).show();
                 $(".preloader").hide();
             }
-            else
-            {
+            else{
                 $(".preloader").hide();
                 $('#CEXTN_lb_chkintotime').hide();
                 $("#CEXTN_lbl_chkinto").hide();
             }
         });
-//FUNCTION TO GET TO TIME FOR CHECK OUT DATE
-        $("#CEXTN_lb_chkoutfromtime").change(function()
-        {
+        //FUNCTION TO GET TO TIME FOR CHECK OUT DATE
+        $("#CEXTN_lb_chkoutfromtime").change(function(){
             $(".preloader").show();
             var CEXTN_totimelb="";
             var CEXTN_lb_chkoutfromtime=$("#CEXTN_lb_chkoutfromtime").val();
-            if(CEXTN_lb_chkoutfromtime!="SELECT")
-            {
+            if(CEXTN_lb_chkoutfromtime!="SELECT"){
                 var totime=CEXTN_startendtimevalues(CEXTN_lb_chkoutfromtime)
-                for(var j=0;j<totime.length;j++)
-                {
+                for(var j=0;j<totime.length;j++){
                     CEXTN_totimelb += '<option value="' + totime[j] + '">' + totime[j]+ '</option>';
                 }
                 $('#CEXTN_lbl_chkoutto').show();
                 $('#CEXTN_lb_chkouttotime').html(CEXTN_totimelb).show();
                 $(".preloader").hide();
             }
-            else
-            {
+            else{
                 $(".preloader").hide();
                 $('#CEXTN_lb_chkouttotime').hide();
                 $('#CEXTN_lbl_chkoutto').hide();
             }
         });
-//FUNCTION TO VALIDATE FORM
-        $(document).on("change blur",'#CEXTN_form', function ()
-        {
+        //FUNCTION TO VALIDATE FORM
+        $(document).on("change blur",'#CEXTN_form', function (){
             var CEXTN_validinput=1;
             var CEXTN_validoutput=CEXTN_validateinputform(CEXTN_validinput);
             CEXTN_validatesubmitbtn(CEXTN_validoutput);
         });
-//FUNCTION TO VALIDATE INPUT FIELDS
-        function CEXTN_validateinputform(CEXTN_validinput)
-        {
+        //FUNCTION TO VALIDATE INPUT FIELDS
+        function CEXTN_validateinputform(CEXTN_validinput){
             var CEXTN_db_passdate=$('#CEXTN_db_passdate').val();
             var CEXTN_tb_passno=$('#CEXTN_tb_passno').val();
             var CEXTN_db_epdate=$('#CEXTN_db_epdate').val();
@@ -902,32 +836,27 @@ require_once('application/libraries/EI_HDR.php');
             var emailchk="";
             var atpos=CEXTN_tb_emailid.indexOf("@");
             var dotpos=CEXTN_tb_emailid.lastIndexOf(".");
-            if(CEXTN_tb_emailid.length>0)
-            {
+            if(CEXTN_tb_emailid.length>0){
                 if ((/^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/.test(CEXTN_tb_emailid) || "" == CEXTN_tb_emailid)
-                    &&(atpos-1!=CEXTN_tb_emailid.indexOf(".")))
-                {
+                    &&(atpos-1!=CEXTN_tb_emailid.indexOf("."))){
                     $('#CEXTN_tb_emailid').removeClass("invalid");
                     $("#CEXTN_lbl_emailerrmsg").text("");
                     $('#CEXTN_tb_emailid').val($('#CEXTN_tb_emailid').val().toLowerCase());
                     emailchk="valid";
                 }
-                else
-                {
+                else {
                     emailchk="invalid";
                     $("#CEXTN_lbl_emailerrmsg").text(CEXTN_errmsgs[5].EMC_DATA)
                     $('#CEXTN_tb_emailid').addClass("invalid")
                 }
             }
-            else
-            {
+            else{
                 $('#CEXTN_tb_emailid').removeClass("invalid");
                 $("#CEXTN_lbl_emailerrmsg").text("");
                 emailchk="invalid";
             }
-//SHOW OR HIDE TIME BOX
-            if($("#CEXTN_db_chkoutdate").val()!="")
-            {
+            //SHOW OR HIDE TIME BOX
+            if($("#CEXTN_db_chkoutdate").val()!=""){
                 if($("#CEXTN_db_passdate").val()!=""&&new Date(FormTableDateFormat($("#CEXTN_db_passdate").val())).setHours(0,0,0,0)<=new Date(FormTableDateFormat($("#CEXTN_db_chkoutdate").val())).setHours(0,0,0,0))
                 {
                     $('#CEXTN_db_passdate').addClass("invalid")
@@ -952,27 +881,23 @@ require_once('application/libraries/EI_HDR.php');
                 }
                 $("#CEXTN_lb_chkoutfromtime").show();
             }
-            else
-            {
+            else {
                 $("#CEXTN_lb_chkoutfromtime").val("SELECT").hide();
                 $("#CEXTN_lb_chkouttotime").hide();
                 $('#CEXTN_lbl_chkoutto').hide();
             }
-            if(CEXTN_radio_unit=="CEXTN_radio_diffunit"&&CEXTN_radio_difunitcard=="CEXTN_radio_difunitcardno")
-            {
+            if(CEXTN_radio_unit=="CEXTN_radio_diffunit"&&CEXTN_radio_difunitcard=="CEXTN_radio_difunitcardno"){
                 $("#CEXTN_btn_save").attr("disabled","disabled");
-////VALIDATION TO SHOW CARD FOR DIFFERENT UNIT OPTION N CODING  TO CHK CARD CHKBOX N LISTBOX
+                ////VALIDATION TO SHOW CARD FOR DIFFERENT UNIT OPTION N CODING  TO CHK CARD CHKBOX N LISTBOX
                 var CEXTN_cardlist=[];
                 var CEXTN_selectcardlist=[];
-                for(var k=0;k<CEXTN_finalCard.length;k++)
-                {
+                for(var k=0;k<CEXTN_finalCard.length;k++){
                     var CEXTN_Cardnos=CEXTN_finalCard[k];
                     CEXTN_cardlist.push(CEXTN_Cardnos)
                 }
                 var cardnos = [];
                 var cardid=[];
                 var cardlblll=[];
-//            $('input[name="Sub_menu[]"]:checked').each(function() {
                 $('input:checkbox[name="CEXTN_cb_diffunitcard[]"]:checked').each(function() {
                     if ($(this).val()) {
                         cardnos.push($(this).val());
@@ -1009,8 +934,7 @@ require_once('application/libraries/EI_HDR.php');
                     var CEXTN_tb_lastname=$('#CEXTN_tb_lastname').val();
                     var CEXTN_lb_diffunitcard= $('#CEXTN_lb_diffunitcard'+id).show().val();
                     CEXTN_chkcard=1;
-                    if(CEXTN_lb_diffunitcard!="SELECT")
-                    {
+                    if(CEXTN_lb_diffunitcard!="SELECT"){
                         $('#CEXTN_lb_diffunitcard'+id).attr("disabled","disabled");
                         CEXTN_cardcount++;
                         CEXTN_selectcardlist.push(CEXTN_lb_diffunitcard);
@@ -1022,45 +946,37 @@ require_once('application/libraries/EI_HDR.php');
                         $('#CEXTN_tb_diffunitcard'+id).val(cardlabl);
                     }
                 }
-                if(CEXTN_cardcount>0)
-                {
-                    if(CEXTN_chkcustflag==0)
-                    {
+                if(CEXTN_cardcount>0){
+                    if(CEXTN_chkcustflag==0){
                         CEXTN_validinput=0;
                         $('#CEXTN_div_custerrmsg').text(CEXTN_errmsgs[4].EMC_DATA).show();
                         $('#CEXTN_div_diffunitnocarderrmsg').hide();
                     }
-                    else
-                    {
+                    else{
                         $('#CEXTN_div_custerrmsg').hide();
                     }
                 }
                 var fincardlbl=CEXTN_card_diffArray(CEXTN_cardlist,CEXTN_selectcardlist);
-                for(var i=0;i<cardid.length;i++)
-                {
+                for(var i=0;i<cardid.length;i++){
                     var id=cardid[i];
                     var CEXTN_lb_diffunitcard= $('#CEXTN_lb_diffunitcard'+id).show().val();
-                    if(CEXTN_lb_diffunitcard=="SELECT")
-                    {
+                    if(CEXTN_lb_diffunitcard=="SELECT"){
                         CEXTN_validinput=0;
                         var CEXTN_cardnolbl='<option>SELECT</option>';
-                        for(var j=0;j<fincardlbl.length;j++)
-                        {
+                        for(var j=0;j<fincardlbl.length;j++){
                             var CEXTN_cardnolabel=fincardlbl[j];
                             CEXTN_cardnolbl += '<option value="' + CEXTN_cardnolabel + '">' + CEXTN_cardnolabel+ '</option>';
                         }
                         $('#CEXTN_lb_diffunitcard'+id).html(CEXTN_cardnolbl);
                     }
                 }
-                for(var i=0;i<cardid1.length;i++)
-                {
+                for(var i=0;i<cardid1.length;i++){
                     var id=cardid1[i];
                     $('#CEXTN_tb_diffunitcard'+id).val("");
-//SET CARD LABEL IN CARD LISTBOX
+                    //SET CARD LABEL IN CARD LISTBOX
                     var CEXTN_cardnolbl='<option>SELECT</option>';
                     var CEXTN_chkselect=0;
-                    for(var j=0;j<fincardlbl.length;j++)
-                    {
+                    for(var j=0;j<fincardlbl.length;j++){
                         var CEXTN_cardnolabel=fincardlbl[j];
                         CEXTN_cardnolbl += '<option value="' + CEXTN_cardnolabel + '">' + CEXTN_cardnolabel+ '</option>';
                     }
@@ -1068,17 +984,14 @@ require_once('application/libraries/EI_HDR.php');
                     $('#CEXTN_lb_diffunitcard'+id).removeAttr("disabled");
                     $('#CEXTN_lb_diffunitcard'+id).val("SELECT")
                     $('#CEXTN_lb_diffunitcard'+id).hide();
-                    for(var kk=0;kk<cardid.length;kk++)
-                    {
+                    for(var kk=0;kk<cardid.length;kk++){
                         var idd=cardid[kk];
                         var CEXTN_lb_diffunitcard= $('#CEXTN_lb_diffunitcard'+idd).val();
-                        if(CEXTN_lb_diffunitcard=="SELECT")
-                        {
+                        if(CEXTN_lb_diffunitcard=="SELECT"){
                             CEXTN_chkselect=1;
                         }
                     }
-                    if(CEXTN_chkselect==0&&CEXTN_cardcount<=3)
-                    {
+                    if(CEXTN_chkselect==0&&CEXTN_cardcount<=3){
                         $('#'+id).removeAttr("disabled");
                     }
                 }
@@ -1087,21 +1000,16 @@ require_once('application/libraries/EI_HDR.php');
             var samewaivedchk=$("#CEXTN_cb_sameamtwaived").prop("checked");
             var chkedvalue="X";
             var diffwaivedchk=$("#CEXTN_cb_diffamtwaived").prop("checked");
-            if (samewaivedchk==true)
-            {
+            if (samewaivedchk==true){
                 $("#CEXTN_hidden_sameamtwaived").val(chkedvalue);
             }
-            else
-            {
+            else{
                 $("#CEXTN_hidden_sameamtwaived").val("");
             }
-//
-            if (diffwaivedchk==true)
-            {
+            if (diffwaivedchk==true){
                 $("#CEXTN_hidden_diffamtwaived").val(chkedvalue);
             }
-            else
-            {
+            else{
                 $("#CEXTN_hidden_diffamtwaived").val("");
             }
             if(emailchk=="invalid"||CEXTN_db_chkoutdate==""||CEXTN_lb_chkoutfromtime=="SELECT"||CEXTN_lb_emailid=="SELECT"||CEXTN_chkunitdateflag==1)
@@ -1113,23 +1021,7 @@ require_once('application/libraries/EI_HDR.php');
                 CEXTN_validinput=0;
             }
             var CEXTN_epnoflag=0,CEXTN_passnoflag=0;
-//VALIDATING PASSPORT EXPIRY DATE N NO,EP EXPIRY DATE N NO
-//        if(CEXTN_db_passdate!=""&&CEXTN_tb_passno=="")
-//        {
-//            CEXTN_validinput=0;
-//            CEXTN_passnoflag=1;
-//            $("#CEXTN_passno_err").text(CEXTN_errmsgs[22].EMC_DATA);
-//            $("#CEXTN_tb_passno").addClass("invalid")
-//        }
-//        if(CEXTN_db_epdate!=""&&CEXTN_tb_epno=="")
-//        {
-//            CEXTN_epnoflag=1;
-//            CEXTN_validinput=0;
-//            $("#CEXTN_epno_err").text(CEXTN_errmsgs[23].EMC_DATA);
-//            $("#CEXTN_tb_epno").addClass("invalid")
-//        }
-            if (CEXTN_db_passdate!= "" || CEXTN_tb_passno!= "")
-            {
+            if (CEXTN_db_passdate!= "" || CEXTN_tb_passno!= ""){
                 var ppnoappenddata='<div id="passportnumber"><div class="col-md-3" ><label >PASSPORT NUMBER<span class="labelrequired"><em>*</em></span></label></div></div>';
                 $('#passportnumber').replaceWith(ppnoappenddata);
                 var ppdateappenddata='<div id="passportdate"><div class="col-md-3"><label>PASSPORT EXPIRY DATE<span class="labelrequired"><em>*</em></span></label></div></div>';
@@ -1137,16 +1029,14 @@ require_once('application/libraries/EI_HDR.php');
                 if (CEXTN_db_passdate != "" && CEXTN_tb_passno != ""){ CEXTN_passnoflag=0;}
                 else{CEXTN_passnoflag=1;CEXTN_validinput=0;}
             }
-            else if(CEXTN_db_passdate == "" && CEXTN_tb_passno == "")
-            {
+            else if(CEXTN_db_passdate == "" && CEXTN_tb_passno == ""){
                 CEXTN_passnoflag=1;
                 var ppnoappenddata1='<div id="passportnumber"><div class="col-md-3" ><label >PASSPORT NUMBER</label></div></div>';
                 $('#passportnumber').replaceWith(ppnoappenddata1);
                 var ppdateappenddata1='<div id="passportdate"><div class="col-md-3"><label>PASSPORT EXPIRY DATE</label></div></div>';
                 $('#passportdate').replaceWith(ppdateappenddata1);
             }
-            if (CEXTN_db_epdate!= "" || CEXTN_tb_epno!= "")
-            {
+            if (CEXTN_db_epdate!= "" || CEXTN_tb_epno!= ""){
                 var EPnoappenddata='<div id="epnumber"><div class="col-md-3" ><label >EP NUMBER<span class="labelrequired"><em>*</em></span></label></div></div>';
                 $('#epnumber').replaceWith(EPnoappenddata);
                 var EPdateappenddata='<div id="EPdate"><div class="col-md-3"><label>EP EXPIRY DATE<span class="labelrequired"><em>*</em></span></label></div></div>';
@@ -1154,15 +1044,14 @@ require_once('application/libraries/EI_HDR.php');
                 if (CEXTN_db_epdate != "" && CEXTN_tb_epno != ""){ CEXTN_epnoflag=0;}
                 else{CEXTN_epnoflag=1;CEXTN_validinput=0;}
             }
-            else if(CEXTN_db_epdate == "" && CEXTN_tb_epno == "")
-            {
+            else if(CEXTN_db_epdate == "" && CEXTN_tb_epno == ""){
                 CEXTN_epnoflag=1;
                 var EPnoappenddata='<div id="epnumber"><div class="col-md-3" ><label >EP NUMBER</label></div></div>';
                 $('#epnumber').replaceWith(EPnoappenddata);
                 var EPdateappenddata='<div id="EPdate"><div class="col-md-3"><label>EP EXPIRY DATE</label></div></div>';
                 $('#EPdate').replaceWith(EPdateappenddata);
             }
-//MINIMUM DIGIT VALIDATION START
+            //MINIMUM DIGIT VALIDATION START
             if((parseInt($("#CEXTN_tb_electcapfee").val().split('.')[0])==0||$("#CEXTN_tb_electcapfee").val().split('.')[0]==""||parseInt($("#CEXTN_tb_electcapfee").val().split('.')[0]).toString().length<2)&&parseFloat($("#CEXTN_tb_electcapfee").val())!=0&&$("#CEXTN_tb_electcapfee").val()!="")
             {
                 CEXTN_validinput=0;
@@ -1242,8 +1131,8 @@ require_once('application/libraries/EI_HDR.php');
                 $("#CEXTN_tb_epno").removeClass("invalid")
                 $("#CEXTN_epno_err").text("")
             }
-//MINIMUM DIGIT VALIDATION END
-//CONTACT NO VALIDATION START
+            //MINIMUM DIGIT VALIDATION END
+            //CONTACT NO VALIDATION START
             if($("#CEXTN_tb_mobileno").val()!=""&&(parseInt($("#CEXTN_tb_mobileno").val()).toString().length)<6&&parseInt($("#CEXTN_tb_mobileno").val())!=0)
             {
                 CEXTN_validinput=0;
@@ -1277,7 +1166,7 @@ require_once('application/libraries/EI_HDR.php');
                 $("#CEXTN_tb_officeno").removeClass("invalid")
                 $("#CEXTN_officeno_err").text("")
             }
-//CONTACT NO VALIDATION END
+            //CONTACT NO VALIDATION END
             if(CEXTN_radio_unit=="CEXTN_radio_sameunitdiffroom")
             {
                 if((CEXTN_lb_sameunitdiffrmrmtype=="SELECT"||CEXTN_lb_sameunitdiffrmrmtype==null))
@@ -1324,19 +1213,29 @@ require_once('application/libraries/EI_HDR.php');
             }
             return CEXTN_validinput;
         }
-//FUNCTION TO VALIDATE SUBMIT BUTTON
-        function CEXTN_validatesubmitbtn(CEXTN_validoutput)
-        {
+        function CEXTN_eppasslabel(){
+
+            var ppnoappenddata1='<div id="passportnumber"><div class="col-md-3" ><label >PASSPORT NUMBER</label></div></div>';
+            $('#passportnumber').replaceWith(ppnoappenddata1);
+            var ppdateappenddata1='<div id="passportdate"><div class="col-md-3"><label>PASSPORT EXPIRY DATE</label></div></div>';
+            $('#passportdate').replaceWith(ppdateappenddata1);
+            var EPnoappenddata='<div id="epnumber"><div class="col-md-3" ><label >EP NUMBER</label></div></div>';
+            $('#epnumber').replaceWith(EPnoappenddata);
+            var EPdateappenddata='<div id="EPdate"><div class="col-md-3"><label>EP EXPIRY DATE</label></div></div>';
+            $('#EPdate').replaceWith(EPdateappenddata);
+
+        }
+        //FUNCTION TO VALIDATE SUBMIT BUTTON
+        function CEXTN_validatesubmitbtn(CEXTN_validoutput){
             if(CEXTN_validoutput==0)
             {
                 $("#CEXTN_btn_save").attr("disabled","disabled");
             }
-            else
-            {
+            else{
                 $("#CEXTN_btn_save").removeAttr("disabled");
             }
         }
-//FUNCTION FOR ON CLICK OF CUST ID
+        //FUNCTION FOR ON CLICK OF CUST ID
         $(document).on("change",'.CEXTN_class_custid', function ()
         {
             var  newPos= adjustPosition($(this).position(),100,150);
@@ -1344,7 +1243,7 @@ require_once('application/libraries/EI_HDR.php');
             $(".preloader").show();
             CEXTN_Show_ExtensionForm()
         });
-//GET DETAILS OF SELECTED CUSTOMER ID
+        //GET DETAILS OF SELECTED CUSTOMER ID
         function CEXTN_Show_ExtensionForm()
         {
             CEXTN_setselectIndex();
@@ -1366,15 +1265,12 @@ require_once('application/libraries/EI_HDR.php');
 
                 }
             });
-
         }
-//SET VALUES OF THE CUST DETAILS RESULT
+        //SET VALUES OF THE CUST DETAILS RESULT
         function CEXTN_getCustomerdtls_result(CEXTN_custdtls1)
         {
             var CEXTN_custdtls=CEXTN_custdtls1.custdtls;
-            if(CEXTN_custdtls!=""&&CEXTN_custdtls!=undefined)
-            {
-
+            if(CEXTN_custdtls!=""&&CEXTN_custdtls!=undefined){
                 $('#CEXTN_div_nocusterr').text("");
                 CEXTN_currentcheckoutdate=CEXTN_custdtls1.currentcheckoutdate;
                 CEXTN_initial_unitsdate=CEXTN_custdtls1.unitsdate;
@@ -1389,7 +1285,7 @@ require_once('application/libraries/EI_HDR.php');
 
                 var CEXTN_diffunit=CEXTN_custdtls1.unitno;
                 CEXTN_diffunitlen=CEXTN_diffunit.length;
-//ADD DIFF UNIT UNIT NO
+                //ADD DIFF UNIT UNIT NO
                 var CEXTN_resdiffunitno='<option>SELECT</option>';
                 for(var i=0;i<CEXTN_diffunit.length;i++)
                 {
@@ -1453,13 +1349,14 @@ require_once('application/libraries/EI_HDR.php');
                     var CEXTN_d = new Date();
                     var CEXTN_year = CEXTN_d.getFullYear() - 18;
                     CEXTN_d.setFullYear(CEXTN_year);
-//SET DOB DATEPICKER
+                    //SET DOB DATEPICKER
                     $('#CEXTN_db_dob').datepicker({
                         dateFormat: 'dd-mm-yy',
                         changeYear: true,
                         changeMonth: true,
                         yearRange: '1920:' + CEXTN_year + '',
-                        defaultDate: CEXTN_d});
+                        defaultDate: CEXTN_d
+                    });
                 }
                 else
                 {
@@ -1519,7 +1416,7 @@ require_once('application/libraries/EI_HDR.php');
                 {
                     $('#CEXTN_db_chkindate').val(FormTableDateFormat(CEXTN_custdtls.cust_chkoutdate));
                 }
-////START PLACE CARD
+                ////START PLACE CARD
                 $('#CTERM_tbl_sameunitsamermcust_card').empty();
                 $('#CTERM_tbl_sameunitdiffrmcust_card').empty();
                 var CEXTN_card=[];
@@ -1584,13 +1481,13 @@ require_once('application/libraries/EI_HDR.php');
                 $('#CEXTN_tb_electcapfee').val(CEXTN_custdtls.cust_electcapfee).prop("title",CEXTN_errmsgs[1].EMC_DATA);
                 $('#CEXTN_tb_curtaindryfee').val(CEXTN_custdtls.cust_dryclean).prop("title",CEXTN_errmsgs[1].EMC_DATA);
                 $('#CEXTN_tb_chkoutcleanfee').val(CEXTN_custdtls.cust_chkoutfee).prop("title",CEXTN_errmsgs[1].EMC_DATA);
-//END PLACE AMT
+                //END PLACE AMT
                 CEXTN_SetMinMaxCheckoutDate(CEXTNunitsdate,CEXTNunitedate,CEXTN_currentcheckoutdate)//set check out min n max date
                 $("#CEXTN_lb_chkoutfromtime").val("SELECT").hide();
                 $("#CEXTN_lb_chkouttotime").hide();
                 $('#CEXTN_lbl_chkoutto').hide();
                 $('#CEXTN_db_chkoutdate').val("");
-//SET PRORATED WAIVED CHECK BOX
+                //SET PRORATED WAIVED CHECK BOX
                 if(CEXTN_custdtls.cust_prorated!="")
                 {
                     $('#CEXTN_cb_sameamtprorated').prop('checked',true);
@@ -1618,8 +1515,7 @@ require_once('application/libraries/EI_HDR.php');
                 {
                     $("#CEXTN_db_noticeperioddate").val(FormTableDateFormat(CEXTN_custdtls.cust_noticedate));
                 }
-//
-//SET CHECK IN FROM TIME N TO TIME
+                //SET CHECK IN FROM TIME N TO TIME
                 var prechkinfromtimee=CEXTN_custdtls.cust_stfrmtime.split(':');
                 var prechkintotimee=CEXTN_custdtls.cust_sttotime.split(':');
                 var chkinfromtimee=CEXTN_custdtls.cust_edfrmtime.split(':');
@@ -1630,7 +1526,7 @@ require_once('application/libraries/EI_HDR.php');
                 $('#CEXTN_hidden_chkintotime').val(chkintotimee[0]+":"+chkintotimee[1])
                 $('#CEXTN_tb_noticeperiod').val(CEXTN_custdtls.cust_noticeperiod).prop("title",CEXTN_errmsgs[1].EMC_DATA);
                 $('#CEXTN_div_seconform').show();
-//SET RADIO BUTTON
+                //SET RADIO BUTTON
                 $('#CEXTN_div_sameunitsamerm').show();
                 $('#CEXTN_radio_sameunit').prop('checked',true);
                 $('#CEXTN_radio_sameunitdiffroom').prop('checked',false);
@@ -1648,9 +1544,8 @@ require_once('application/libraries/EI_HDR.php');
             }
             $(".preloader").hide();
         }
-//FUNCTION TO SET MIN N MAX DATE FOR CHECK OUT DATE
-        function CEXTN_SetMinMaxCheckoutDate(CEXTNunitsdate,CEXTNunitedate,CEXTN_currentcheckoutdate)
-        {
+        //FUNCTION TO SET MIN N MAX DATE FOR CHECK OUT DATE
+        function CEXTN_SetMinMaxCheckoutDate(CEXTNunitsdate,CEXTNunitedate,CEXTN_currentcheckoutdate){
             $('#CEXTN_db_chkoutdate').removeAttr('disabled');
             $('#CEXTN_db_chkoutdate').val('');
             $("#CEXTN_lb_chkoutfromtime").val('SELECT').hide();
@@ -1661,7 +1556,7 @@ require_once('application/libraries/EI_HDR.php');
                 changeYear: true,
                 changeMonth: true
             });
-//get check in date
+            //get check in date
             var CEXTN_date1 = $('#CEXTN_db_chkindate').val();
             var CEXTN_chkoutmaxdate = new Date( Date.parse(CEXTNunitedate) );
             CEXTN_chkoutmaxdate.setDate( CEXTN_chkoutmaxdate.getDate()-1);
@@ -1677,8 +1572,7 @@ require_once('application/libraries/EI_HDR.php');
                 $('#CEXTN_db_chkoutdate').val('');
                 $('#CEXTN_uedatexpiremsg').text('');
             }
-            else
-            {
+            else{
                 CEXTN_chkunitdateflag=0;
                 $('#CEXTN_db_chkindate').removeClass("invalid")
                 $('#CEXTN_usdatexpiremsg').text("");
@@ -1696,7 +1590,7 @@ require_once('application/libraries/EI_HDR.php');
             CEXTN_date.setDate( CEXTN_date.getDate() + 1 );
             var CEXTN_newDate = CEXTN_date.toDateString();
             CEXTN_newDate = new Date( Date.parse( CEXTN_newDate ) );
-//get today date
+            //get today date
             var CEXTN_todaydate = new Date();
             CEXTN_todaydate.setDate( CEXTN_todaydate.getDate() + 1 );
             var CEXTN_todaydate = CEXTN_todaydate.toDateString();
@@ -1748,8 +1642,7 @@ require_once('application/libraries/EI_HDR.php');
                     $('#CEXTN_uedatexpiremsg').text(CEXTN_errmsgs[24].EMC_DATA);//.text(CEXTN_errmsgs[10])
                     CEXTN_chkunitdateflag=1;
                 }
-                else
-                {
+                else{
                     CEXTN_chkunitdateflag=0;
                     if(new Date(CEXTN_chkoutmaxdate).setHours(0,0,0,0)<=new Date().setHours(0,0,0,0))
                     {
@@ -1773,7 +1666,7 @@ require_once('application/libraries/EI_HDR.php');
             }
             CEXTN_clearerrmsg();
         }
-//FUNCTION TO SET SOME LISTBOX VALUE TO SELECT
+        //FUNCTION TO SET SOME LISTBOX VALUE TO SELECT
         function CEXTN_setselectIndex()
         {
             CEXTN_clearerrmsg()
@@ -1787,13 +1680,13 @@ require_once('application/libraries/EI_HDR.php');
             $("#CEXTN_lb_emailid").val("SELECT");
             $("#CEXTN_btn_save").attr("disabled","disabled");
         }
-
-
         $('#CEXTN_btn_save').on('click', function () {
+            $('.preloader').show();
             var FormElements = document.getElementById("CEXTN_form");
             var xmlhttp = new XMLHttpRequest();
             xmlhttp.onreadystatechange = function () {
                 if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+//                    alert(xmlhttp.responseText);
                     var saveresult = JSON.parse(xmlhttp.responseText);
                     $('.preloader').hide();
                     CEXTN_SaveDetails_result(saveresult)
@@ -1804,53 +1697,39 @@ require_once('application/libraries/EI_HDR.php');
             xmlhttp.open("POST",controller_url+"CEXTN_SaveDetails", true);
             xmlhttp.send(new FormData(FormElements));
         });
-
-//FUNCTION TO RETURN SAVE RESULT
+        //FUNCTION TO RETURN SAVE RESULT
         function CEXTN_SaveDetails_result(saveresult){
-        var CEXTN_tb_firstname=$("#CEXTN_tb_firstname").val();
-        var CEXTN_tb_lastname=$("#CEXTN_tb_lastname").val();
-        var CEXTN_successmsg=CEXTN_errmsgs[7].EMC_DATA;
-
+            var CEXTN_tb_firstname=$("#CEXTN_tb_firstname").val();
+            var CEXTN_tb_lastname=$("#CEXTN_tb_lastname").val();
+            var CEXTN_successmsg=CEXTN_errmsgs[7].EMC_DATA;
             var paymentchkmsg=saveresult[1];
             var saveresult1=saveresult[0];
             var cal_flag=saveresult[2];
-
-            if(saveresult1==1 && cal_flag==1)
-            {
+            if(saveresult1==1 && cal_flag==1){
                 CEXTN_clearForm();
                 CEXTN_successmsg=CEXTN_successmsg.replace('[FIRST NAME]',CEXTN_tb_firstname)
                 CEXTN_successmsg=CEXTN_successmsg.replace('[LAST NAME]',CEXTN_tb_lastname)
-                if(paymentchkmsg!='')
-                {
+                if(paymentchkmsg!='null'){
                     show_msgbox("CUSTOMER EXTENSION",CEXTN_successmsg+"<br>"+paymentchkmsg,"success",false);
                 }
-                else
-                {
+                else {
                     show_msgbox("CUSTOMER EXTENSION",CEXTN_successmsg,"success",false);
                 }
-
             }
-            else
-            {
-                if(saveresult1.toString()=='0')
-                {
+            else{
+                if(saveresult1.toString()=='0'){
                     show_msgbox("CUSTOMER EXTENSION",CEXTN_errmsgs[21].EMC_DATA,"success",false);
-
                 }
-                else
-                {
+                else {
                     show_msgbox("CUSTOMER EXTENSION",saveresult,"success",false);
-
                 }
                 $(".preloader").hide();
             }
-
-    }
-////FUNCTION TO CLEAR LIST BOX FIELD
-        function CEXTN_clearForm()
-        {
-//        var  newPos= adjustPosition($('#CEXTN_lb_unitno').position(),100,150);
-//        resetPreloader(newPos);
+        }
+        ////FUNCTION TO CLEAR LIST BOX FIELD
+        function CEXTN_clearForm(){
+            var  newPos= adjustPosition($('#CEXTN_lb_unitno').position(),100,150);
+            resetPreloader(newPos);
             $(".preloader").show();
             CEXTN_clearerrmsg();
             $('#CEXTN_lbl_custname').hide();
@@ -1873,14 +1752,11 @@ require_once('application/libraries/EI_HDR.php');
 
                 }
             });
-
-//CALL FUNCTION TO GET UNIT NOS,ERROR MSGS,PRORATED N WAIVED VALUE
-//        google.script.run.withFailureHandler(onFailure).withSuccessHandler(CEXTN_getCommonvalues_result).CEXTN_getCommonvalues();
         }
-//RESET FORM FIELDS
+        //RESET FORM FIELDS
         $("#CEXTN_btn_reset").click(function(){
             CEXTN_clearForm();
-//        $('#CEXTN_ta_comments').height(20);
+            // $('#CEXTN_ta_comments').height(20);
         });
         $(document).on('change', '.fileextensionchk', function () {
             var filename = $('#CEXTN_fileupload').val();
@@ -1892,7 +1768,7 @@ require_once('application/libraries/EI_HDR.php');
                 $('#CC_fileupload').val('');
             }
         });
-//FUNCTION TO CLEAR ERR MSG
+        //FUNCTION TO CLEAR ERR MSG
         function CEXTN_clearerrmsg()
         {
             $('#CEXTN_div_custerrmsg').hide();
@@ -1925,8 +1801,9 @@ require_once('application/libraries/EI_HDR.php');
             $('#CEXTN_db_passdate').removeClass("invalid");
             $("#CEXTN_passdate_err").text("");
             $('#CEXTN_fileupload').val('');
+            CEXTN_eppasslabel();
         }
-    });
+  });
 </script>
 <!--SCRIPT TAG END-->
 <!--BODY TAG START-->
@@ -2171,7 +2048,7 @@ require_once('application/libraries/EI_HDR.php');
                     </div>
                     <div class="form-group">
                         <label class="col-sm-3">NOTICE PERIOD</label>
-                        <div class="col-sm-2"><input type="text" name="CEXTN_tb_noticeperiod" id="CEXTN_tb_noticeperiod" style="width:15px;" class="form-control" placeholder="NP"/></div>
+                        <div class="col-sm-2"><input type="text" name="CEXTN_tb_noticeperiod" id="CEXTN_tb_noticeperiod" style="width:45px;" class="form-control" placeholder="NP"/></div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-3">NOTICE PERIOD DATE</label>
@@ -2257,7 +2134,7 @@ require_once('application/libraries/EI_HDR.php');
                                 <div id="CEXTN_tble_diffamt" class="col-sm-offset-3" style="padding-left: 15px">
                                     <div class="form-group">
                                         <label class="col-sm-3" id="CEXTN_lbl_diffamtdep">DEPOSIT</label>
-                                        <div class="col-sm-2"><input type="text" name="CEXTN_tb_diffamtdep" id="CEXTN_tb_diffamtdep" style="width:77px;" class="5digitdollaronly CEXTN_btn_validate_class form-control" placeholder="0.00"/>
+                                        <div class="col-sm-2"><input type="text" name="CEXTN_tb_diffamtdep" id="CEXTN_tb_diffamtdep" style="width:85px;" class="5digitdollaronly CEXTN_btn_validate_class form-control" placeholder="0.00"/>
                                             <p id="CEXTN_diffamtdeposit_err" class="errormsg"></p>
                                         </div>
                                     </div>
@@ -2266,7 +2143,7 @@ require_once('application/libraries/EI_HDR.php');
                                         <div class="col-sm-6">
                                             <div class="row form-group">
                                                 <div class="col-md-3">
-                                                    <input type="text" name="CEXTN_tb_diffamtrent" id="CEXTN_tb_diffamtrent" style="width:77px;" class="CEXTN_class_prowaiv 5digitdollaronly CEXTN_btn_validate_class form-control" placeholder="0.00"/>
+                                                    <input type="text" name="CEXTN_tb_diffamtrent" id="CEXTN_tb_diffamtrent" style="width:85px;" class="CEXTN_class_prowaiv 5digitdollaronly CEXTN_btn_validate_class form-control" placeholder="0.00"/>
                                                 </div>
                                                 <div class="col-md-1">
                                                     <input type="checkbox" name="CEXTN_cb_diffamtprorated" id="CEXTN_cb_diffamtprorated"  class="CEXTN_btn_validate_class" disabled/>

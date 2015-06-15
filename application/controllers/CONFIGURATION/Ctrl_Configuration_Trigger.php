@@ -8,7 +8,7 @@ Class Ctrl_Configuration_Trigger extends CI_Controller
     }
     public function Index()
     {
-    $this->load->view('CONFIGURATION/Vw_Configuration_Trigger');
+        $this->load->view('CONFIGURATION/Vw_Configuration_Trigger');
     }
     public function TriggerConfiguration()
     {
@@ -36,7 +36,7 @@ Class Ctrl_Configuration_Trigger extends CI_Controller
 
         }
     }
-   public function Nonpaymentreminder()
+    public function Nonpaymentreminder()
     {
         $data = $this->Mdl_configuration_trigger->getNonPaymentReminder();
     }

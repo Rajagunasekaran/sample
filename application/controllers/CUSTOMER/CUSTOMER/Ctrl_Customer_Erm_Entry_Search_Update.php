@@ -1,7 +1,7 @@
 <?php
 error_reporting(0);
-//require_once 'google/appengine/api/mail/Message.php';
-//use google\appengine\api\mail\Message;
+require_once 'google/appengine/api/mail/Message.php';
+use google\appengine\api\mail\Message;
 Class Ctrl_Customer_Erm_Entry_Search_Update extends CI_Controller
 {
     function __construct() {

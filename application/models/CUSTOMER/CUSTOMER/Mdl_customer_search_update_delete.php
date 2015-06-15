@@ -257,6 +257,7 @@ class Mdl_customer_search_update_delete extends CI_Model
     public function Customer_Search_Update($UserStamp,$Leaseperiod,$Quoters)
     {
         try {
+
             $FirstName = $_POST['CCRE_SRC_FirstName'];
             $Lastname = $_POST['CCRE_SRC_LastName'];
             $Name=$FirstName.' '.$Lastname;
@@ -285,9 +286,11 @@ class Mdl_customer_search_update_delete extends CI_Model
             $Uint = $_POST['CCRE_SRC_UnitNo'];
             $RoomType = $_POST['CCRE_SRC_RoomType'];
             $Startdate = date('Y-m-d', strtotime($_POST['CCRE_SRC_Startdate']));
+            $Start_date=$_POST['CCRE_SRC_Startdate'];
             $S_starttime = $_POST['CCRE_SRC_SDStarttime'];
             $S_endtime = $_POST['CCRE_SRC_SDEndtime'];
             $Enddate = date('Y-m-d', strtotime($_POST['CCRE_SRC_Enddate']));
+            $End_date=$_POST['CCRE_SRC_Enddate'];
             $E_starttime = $_POST['CCRE_SRC_EDStarttime'];
             $E_endtime = $_POST['CCRE_SRC_EDEndtime'];
             $NoticePeriod = $_POST['CCRE_SRC_NoticePeriod'];
@@ -325,8 +328,10 @@ class Mdl_customer_search_update_delete extends CI_Model
             $Card = $_POST['CSRC_card'];
             $acesscard = '';
             $Accesscarddates = '';
+            $Cont_cardno='';
             for ($i = 0; $i < count($Card); $i++) {
                 if ($i == 0) {
+                    $Cont_cardno=$Card[$i];
                     $acesscard = $Card[$i] . ',' . date('Y-m-d', strtotime($CustomerSDdates[$i]));
                     $Accesscarddates = $Card[$i] . ',' . date('Y-m-d', strtotime($CustomerSDdates[$i])) . ',' . date('Y-m-d', strtotime($CustomerEDdates[$i]));
                 } else {
@@ -409,7 +414,7 @@ class Mdl_customer_search_update_delete extends CI_Model
                     $Username = strtoupper($mail_username[0]);
                     $this->load->model('EILIB/Mdl_eilib_invoice_contract');
                     if ($CCoption == 4) {
-                        $InvoiceId = $this->Mdl_eilib_invoice_contract->CUST_invoice($UserStamp, $service, $Uint, $Name, $CompanyName, $Invoiceandcontractid[9], $Invoiceandcontractid[0], $Invoiceandcontractid[1], $Rent, $ProcessingFee, $DepositFee, $StartDate, $EndDate, $RoomType, $Leaseperiod, $InvProrated, $Sendmailid, $Docowner, 'CREATION', $Invwaived, $Customerid,$CustomerFolder);
+                        $InvoiceId = $this->Mdl_eilib_invoice_contract->CUST_invoice($UserStamp, $service, $Uint, $Name, $CompanyName, $Invoiceandcontractid[9], $Invoiceandcontractid[0], $Invoiceandcontractid[1], $Rent, $ProcessingFee, $DepositFee, $Start_date, $End_date, $RoomType, $Leaseperiod, $InvProrated, $Sendmailid, $Docowner, 'CREATION', $Invwaived, $Customerid,$CustomerFolder);
                         $subcontent = $Uint . '-' . $Name . '-' . $InvoiceId[3];
                         $Messcontent = $Uint . '-' . $Name;
                         $Emailsub = $Emailtemplate[2]['subject'];
@@ -419,11 +424,9 @@ class Mdl_customer_search_update_delete extends CI_Model
                         $Messagebody = str_replace('[MAILID_USERNAME]', $Username, $Messagebody);
                         $Messagebody = $Messagebody . '<br><br>INVOICE :' . $InvoiceId[2];
                         $Displayname = $this->Mdl_eilib_common_function->Get_MailDisplayName('INVOICE');
-                        $this->Customercreationmailpart($Confirm_Meessage,$Emailsub,$Messagebody,$Displayname,$Sendmailid,$UserStamp);
-                        echo $Confirm_Meessage;
-                        exit;
+                        $this->CustomerUpdatemailpart($Confirm_Meessage,$Emailsub,$Messagebody,$Displayname,$Sendmailid,$UserStamp);
                     } else if ($CCoption == 5) {
-                        $ContractId = $this->Mdl_eilib_invoice_contract->CUST_contract($service, $Uint, $Startdate, $Enddate, $CompanyName, $Name, $NoticePeriod, $PassportNo, $PassportDate, $EpNo, $EPDate, $NoticePeriodDate, $Leaseperiod, $Cont_cardno, $Rent, $InvQuaterlyfee, $InvFixedaircon_fee, $InvElectricitycapFee, $InvCurtain_DrycleanFee, $InvCheckOutCleanFee, $InvProcessingFee, $InvDepositFee, $Invwaived, $RoomType, $InvProrated, 'CREATION', $Sendmailid, $Docowner,$CustomerFolder);
+                        $ContractId = $this->Mdl_eilib_invoice_contract->CUST_contract($service, $Uint, $Start_date, $End_date, $CompanyName, $Name, $NoticePeriod, $PassportNo, $PassportDate, $EpNo, $EPDate, $NoticePeriodDate, $Leaseperiod, $Cont_cardno, $Rent, $InvQuaterlyfee, $InvFixedaircon_fee, $InvElectricitycapFee, $InvCurtain_DrycleanFee, $InvCheckOutCleanFee, $InvProcessingFee, $InvDepositFee, $Invwaived, $RoomType, $InvProrated, 'CREATION', $Sendmailid, $Docowner,$CustomerFolder);
                         $Messcontent = $Uint . '-' . $Name;
                         $Emailsub = $Emailtemplate[1]['subject'];
                         $Messagebody = $Emailtemplate[1]['message'];
@@ -433,11 +436,9 @@ class Mdl_customer_search_update_delete extends CI_Model
                         $Messagebody = $Messagebody . '<br><br>CONTRACT :' . $ContractId[2];
                         $Displayname = $this->Mdl_eilib_common_function->Get_MailDisplayName('CONTRACT');
                         $this->Customercreationmailpart($Confirm_Meessage,$Emailsub,$Messagebody,$Displayname,$Sendmailid,$UserStamp);
-                        echo $Confirm_Meessage;
-                        exit;
                     } else if ($CCoption == 6) {
-                        $InvoiceId = $this->Mdl_eilib_invoice_contract->CUST_invoice($UserStamp, $service, $Uint, $Name, $CompanyName, $Invoiceandcontractid[9], $Invoiceandcontractid[0], $Invoiceandcontractid[1], $Rent, $ProcessingFee, $DepositFee, $StartDate, $EndDate, $RoomType, $Leaseperiod, $InvProrated, $Sendmailid, $Docowner, 'CREATION', $Invwaived, $Customerid,$CustomerFolder);
-                        $ContractId = $this->Mdl_eilib_invoice_contract->CUST_contract($service, $Uint, $Startdate, $Enddate, $CompanyName, $Name, $NoticePeriod, $PassportNo, $PassportDate, $EpNo, $EPDate, $NoticePeriodDate, $Leaseperiod, $Cont_cardno, $Rent, $InvQuaterlyfee, $InvFixedaircon_fee, $InvElectricitycapFee, $InvCurtain_DrycleanFee, $InvCheckOutCleanFee, $InvProcessingFee, $InvDepositFee, $Invwaived, $RoomType, $InvProrated, 'CREATION', $Sendmailid, $Docowner,$CustomerFolder);
+                        $InvoiceId = $this->Mdl_eilib_invoice_contract->CUST_invoice($UserStamp, $service, $Uint, $Name, $CompanyName, $Invoiceandcontractid[9], $Invoiceandcontractid[0], $Invoiceandcontractid[1], $Rent, $ProcessingFee, $DepositFee, $Start_date, $End_date, $RoomType, $Leaseperiod, $InvProrated, $Sendmailid, $Docowner, 'CREATION', $Invwaived, $Customerid,$CustomerFolder);
+                        $ContractId = $this->Mdl_eilib_invoice_contract->CUST_contract($service, $Uint, $Start_date, $End_date, $CompanyName, $Name, $NoticePeriod, $PassportNo, $PassportDate, $EpNo, $EPDate, $NoticePeriodDate, $Leaseperiod, $Cont_cardno, $Rent, $InvQuaterlyfee, $InvFixedaircon_fee, $InvElectricitycapFee, $InvCurtain_DrycleanFee, $InvCheckOutCleanFee, $InvProcessingFee, $InvDepositFee, $Invwaived, $RoomType, $InvProrated, 'CREATION', $Sendmailid, $Docowner,$CustomerFolder);
                         $subcontent = $Uint . '-' . $Name . '-' . $InvoiceId[3];
                         $Messcontent = $Uint . '-' . $Name;
                         $Emailsub = $Emailtemplate[0]['subject'];
@@ -449,8 +450,6 @@ class Mdl_customer_search_update_delete extends CI_Model
                         $Messagebody = $Messagebody . '<br><br>CONTRACT :' . $ContractId[2];
                         $Displayname = $this->Mdl_eilib_common_function->Get_MailDisplayName('INVOICE_N_CONTRACT');
                         $this->Customercreationmailpart($Confirm_Meessage,$Emailsub,$Messagebody,$Displayname,$Sendmailid,$UserStamp);
-                        echo $Confirm_Meessage;
-                        exit;
                     }
                     $this->db->trans_commit();
                 }
@@ -467,13 +466,13 @@ class Mdl_customer_search_update_delete extends CI_Model
         }
         catch (Exception $e)
         {
-            $this->db->query('ROLLBACK');
+            $this->db->trans_rollback();
             return $e->getMessage();
             exit;
 
         }
      }
-    public function Customercreationmailpart($Confirm_Meessage,$Emailsub,$Messagebody,$Displayname,$Docowner,$UserStamp)
+    public function CustomerUpdatemailpart($Confirm_Meessage,$Emailsub,$Messagebody,$Displayname,$Docowner,$UserStamp)
     {
         $message1 = new Message();
         $message1->setSender($Displayname.'<'.$UserStamp.'>');
@@ -482,7 +481,8 @@ class Mdl_customer_search_update_delete extends CI_Model
         $message1->setHtmlBody($Messagebody);
         $message1->send();
         $this->db->trans_commit();
-
+        echo $Confirm_Meessage;
+        exit;
     }
     public function CAL_DEL_CREATE($CSRC_customerid)
     {

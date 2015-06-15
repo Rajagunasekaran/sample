@@ -106,7 +106,7 @@ class Mdl_finance_outstanding_payee_list extends CI_Model
                 $FIN_Active_listquery = "SELECT *FROM $activelisttablename ORDER BY UNIT_NO,CUSTOMERNAME";
                 $result1 = $this->db->query($FIN_Active_listquery);
                 $numrows=$this->db->affected_rows();
-                $FIN_Active_sortlistquery = "SELECT *FROM $sortactivelisttablename ORDER BY UNIT_NO,CUSTOMERNAME";
+                $FIN_Active_sortlistquery = "SELECT *FROM $sortactivelisttablename ORDER BY ENDDATE ASC";
                 $sortresult = $this->db->query($FIN_Active_sortlistquery);
                 $sortnumrows=$this->db->affected_rows();
                 $headerdata='UNIT,CUSTOMER,STARTDATE,ENDDATE,RENT,DEPOSIT,PROCESSING FEE,TERMINATE,PRE TERMINATE,PRE TERMINATE DATE,COMMENTS';
@@ -117,8 +117,9 @@ class Mdl_finance_outstanding_payee_list extends CI_Model
                 $EmailDisplayname = $this->Mdl_eilib_common_function->Get_MailDisplayName('ACTIVE_CC_LIST');
                 $service = $this->Mdl_eilib_common_function->get_service_document();
                 $this->load->model('EILIB/Mdl_eilib_common_function');
-                $FILEID=$this->Mdl_eilib_common_function->NewSpreadsheetCreation($service, 'ACTIVE CC LIST', 'CUSTOMER_DETAILS', $folderid);
-                $ActiveCustomerList = array('ACtiveflag'=>10,'header'=>$headerdata,"Rows"=>$numrows,"period"=>$period,"SortRows"=>$sortnumrows,"Fileid"=>$FILEID);
+                $SS_name='ACTIVE CUST LIST'.'-'.date("dmY");
+                $FILEID=$this->Mdl_eilib_common_function->NewSpreadsheetCreationwithurl($service,$SS_name, 'CUSTOMER_DETAILS', $folderid);
+                $ActiveCustomerList = array('ACtiveflag'=>10,'header'=>$headerdata,"Rows"=>$numrows,"period"=>$period,"SortRows"=>$sortnumrows,"Fileid"=>$FILEID[0]);
                 $i = 0;
                 foreach ($result1->result_array() as $key => $value) {
                     $key = 'data'.$i;
@@ -158,9 +159,9 @@ class Mdl_finance_outstanding_payee_list extends CI_Model
                 $this->db->query('DROP TABLE IF EXISTS ' . $activelisttablename);
                 $this->db->query('DROP TABLE IF EXISTS ' . $sortactivelisttablename);
                 $Returnvalue=$this->Mdl_eilib_common_function->Func_curl($ActiveCustomerList);
-                $subject='ACTIVE CUST LIST-'.$Maildate;
+                $subject='ACTIVE CUST LIST-'.date("dmY");
                 $mailbody ="HELLO  ".$Username;
-                $mailbody=$mailbody.''.'<br><br>, PLEASE FIND ATTACHED THE CURRENT : '.$Returnvalue;
+                $mailbody=$mailbody.''.'<br><br>, PLEASE FIND ATTACHED THE CURRENT : '.$FILEID[1];
                 $message1 = new Message();
                 $message1->setSender($EmailDisplayname . '<' . $UserStamp . '>');
                 $message1->addTo($mailid);

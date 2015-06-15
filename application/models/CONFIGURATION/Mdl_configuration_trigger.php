@@ -2,6 +2,7 @@
 error_reporting(0);
 require_once 'google/appengine/api/mail/Message.php';
 use google\appengine\api\mail\Message;
+//require_once 'PHPMailer-master/PHPMailerAutoload.php';
 class Mdl_configuration_trigger extends CI_Model {
     public function getCSVfileRecords($UserStamp)
     {
@@ -12,19 +13,22 @@ class Mdl_configuration_trigger extends CI_Model {
         $query = $this->db->get()->row()->OCN_DATA;
         $this->load->model('EILIB/Mdl_eilib_common_function');
         $CSVMailid=$this->Mdl_eilib_common_function->getProfileEmailId('CSV');
+        $tomailid=$CSVMailid[0];
+        $ccmailid=$CSVMailid[1];
+        $maintainmailid=$CSVMailid[2];
         $service = $this->Mdl_eilib_common_function->get_service_document();
         $children1 = $service->children->listChildren($query);
         $filearray1=$children1->getItems();
         foreach ($filearray1 as $child1)
         {
-                $fileid=$service->files->get($child1->getId())->id;
+            $fileid=$service->files->get($child1->getId())->id;
 
-                $filename=$service->files->get($child1->getId())->title;
-                $data = $service->files->get($fileid);
-                $url=$data->downloadUrl;
-                $data=$this->downloadFile($service,$url);
-                $data = array_map("str_getcsv", preg_split('/\r*\n+|\r+/', $data));
-                break;
+            $filename=$service->files->get($child1->getId())->title;
+            $data = $service->files->get($fileid);
+            $url=$data->downloadUrl;
+            $data=$this->downloadFile($service,$url);
+            $data = array_map("str_getcsv", preg_split('/\r*\n+|\r+/', $data));
+            break;
         }
         $monthname=explode('.',$filename);
         $year=substr($monthname[0],0,4);
@@ -44,6 +48,7 @@ class Mdl_configuration_trigger extends CI_Model {
             array_push($AfterDBRecords,$csvnewrowfindkey);
         }
         $DBcount=count($CSV_DB_Records);
+
         /************************END OF OCBC TABLE RECORDS************************************/
         /************************CSV FILE RECORDS***************************************/
         $CSV_File_comparisionRecords=array();
@@ -60,6 +65,7 @@ class Mdl_configuration_trigger extends CI_Model {
             }
         }
         $CSVcount=count($CSV_File_comparisionRecords);
+//        return $CSVcount;
         /***************************END OF CSV FILE RECORDS***************************************/
         /****************************ARRAY COMPARISION ******************************************/
         $REF_id=array();
@@ -140,7 +146,7 @@ class Mdl_configuration_trigger extends CI_Model {
                     }
                 }
                 $Subject="WARNING ,MESSAGE";
-                $this->Warningmailpart($Subject,$csverrorbodymessage,'CSV',$UserStamp,$CSVMailid);
+                $this->Warningmailpart($Subject,$csverrorbodymessage,'CSV',$UserStamp,$maintainmailid);
             }
             if($Old_rcordsCount<$DBcount)
             {
@@ -166,7 +172,7 @@ class Mdl_configuration_trigger extends CI_Model {
                     $csverrorbodymessage=$csverrorbodymessage.'    \n\n  '.$error;
                 }
                 $Subject="WARNING ,MESSAGE";
-                $this->Warningmailpart($Subject,$csverrorbodymessage,'CSV',$UserStamp,$CSVMailid);
+                $this->Warningmailpart($Subject,$csverrorbodymessage,'CSV',$UserStamp,$maintainmailid);
             }
         }
         if(count($newcsvfilerecords)!=0)
@@ -247,6 +253,7 @@ class Mdl_configuration_trigger extends CI_Model {
                 $OCBC_CSV_insertquery="INSERT INTO OCBC_BANK_RECORDS(OBR_ACCOUNT_NUMBER,OBR_CURRENCY,OBR_PREVIOUS_BALANCE,OBR_OPENING_BALANCE,OBR_CLOSING_BALANCE,OBR_LAST_BALANCE,OBR_NO_OF_CREDITS,OBR_TRANS_DATE,OBR_NO_OF_DEBITS,OBR_OLD_BALANCE,OBR_D_AMOUNT,OBR_POST_DATE,OBR_VALUE_DATE,OBR_DEBIT_AMOUNT,OBR_CREDIT_AMOUNT,OCN_ID,OBR_CLIENT_REFERENCE,OBR_TRANSACTION_DESC_DETAILS,OBR_BANK_REFERENCE,OBR_TRX_TYPE,OBR_REF_ID,ULD_ID,OBR_TIMESTAMP) VALUES( (SELECT OCN_ID FROM OCBC_CONFIGURATION WHERE OCN_DATA= '$CSV_array[1]'),(SELECT OCN_ID FROM OCBC_CONFIGURATION WHERE OCN_DATA= '$CSV_array[2]' ),'$CSV_array[3]', '$CSV_array[4]', '$CSV_array[5]', '$CSV_array[6]', '$CSV_array[7]','$transdate', '$CSV_array[9]', '$csv_oldbal', '$CSV_array[11]', '$postdate', '$valuedate','$debitamt', '$creditamt',(SELECT OCN_ID FROM OCBC_CONFIGURATION WHERE OCN_DATA='$CSV_array[16]'), '$bankreff','$transaction_details','$bankreference','$CSV_array[20]','$CSV_array[0]',(SELECT ULD_ID FROM USER_LOGIN_DETAILS WHERE ULD_LOGINID='kumar.r@ssomens.com'),'$csv_timstamp')";
                 $this->db->query($OCBC_CSV_insertquery);
             }
+//            return $newdatearray;
             if($mailflag==1)
             {
                 for($ar=0;$ar<count($newdatearray);$ar++)
@@ -339,24 +346,24 @@ class Mdl_configuration_trigger extends CI_Model {
             }
             $message.='</table></body>';
             $subjectmess='DATABASE UPDATED-['.$Header.']';
-            $this->Confirmmailpart($subjectmess,$message,'CSV',$UserStamp,$CSVMailid);
-            $this->Warningmailpart($subjectmess,$d,'CSV',$UserStamp,$CSVMailid);
+            $this->Confirmmailpart($subjectmess,$message,'CSV',$UserStamp,$tomailid,$ccmailid);
+            $this->Warningmailpart($subjectmess,$d,'CSV',$UserStamp,$maintainmailid);
         }
         else
         {
             $Subject="CONFIRMATION";
             $message="NEW DATA NOT AVAILABLE IN CSV FILE";
-            $this->Warningmailpart($Subject,$message,'CSV',$UserStamp,$CSVMailid);
+            $this->Warningmailpart($Subject,$message,'CSV',$UserStamp,$maintainmailid);
         }
     }
-    public function Confirmmailpart($mailsub,$mailbody,$EmailDisplayname,$UserStamp,$CSVMailid)
+    public function Confirmmailpart($Emailsub,$Messagebody,$Displayname,$UserStamp,$tomailid,$ccmailid)
     {
         $message1 = new Message();
-        $message1->setSender($EmailDisplayname . '<' . $UserStamp . '>');
-        $message1->addTo($CSVMailid[0]);
-        $message1->addCC($CSVMailid[1]);
-        $message1->setSubject($mailsub);
-        $message1->setHtmlBody($mailbody);
+        $message1->setSender($Displayname . '<' . $UserStamp . '>');
+        $message1->addTo($tomailid);
+        $message1->addCC($ccmailid);
+        $message1->setSubject($Emailsub);
+        $message1->setHtmlBody($Messagebody);
         $message1->send();
         return 'success';
     }
@@ -364,13 +371,13 @@ class Mdl_configuration_trigger extends CI_Model {
     {
         $message1 = new Message();
         $message1->setSender($EmailDisplayname . '<' . $UserStamp . '>');
-        $message1->addTo($CSVMailid[0]);
-        $message1->addCC($CSVMailid[1], $CSVMailid[2]);
+        $message1->addTo($CSVMailid);
         $message1->setSubject($mailsub);
         $message1->setHtmlBody($mailbody);
         $message1->send();
         return 'success';
     }
+
     public function getTriggerConfiguration()
     {
         $Selectquery="SELECT TC_ID,TC_DATA FROM TRIGGER_CONFIGURATION WHERE CGN_ID=31 ORDER BY TC_DATA ASC";

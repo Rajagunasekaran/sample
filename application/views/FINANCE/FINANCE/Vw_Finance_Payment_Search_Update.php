@@ -147,11 +147,11 @@
                 var appenddata='<h4 style="color:#498af3;">FOR PERIOD SEARCH</h4><br>';
                 appenddata+='<div class="row form-group" style="padding-left:20px;">';
                 appenddata+='<div class="col-md-2"><label>FROM PERIOD<span class="labelrequired"><em>*</em></span></label></div>';
-                appenddata+='<div class="col-md-9"><div class="col-sm-3" style="padding-left: 0px;"><div class="input-group addon"><input type="text" class="form-control customer_btn_validation datemandtry" name="Payment_SRC_FP_fromdate" id="Payment_SRC_FP_fromdate"  placeholder="For Period"><label  class="input-group-addon" for=Payment_SRC_FP_fromdate><span class="glyphicon glyphicon-calendar"></span></label></div></div></div>';
+                appenddata+='<input type="text" class="form-control customer_btn_validation datemandtry" name="Payment_SRC_FP_fromdate" id="Payment_SRC_FP_fromdate"  placeholder="For Period" style="width:150px"></div>';
                 appenddata+='</div>';
                 appenddata+='<div class="row form-group" style="padding-left:20px;">';
                 appenddata+='<div class="col-md-2"><label>TO PERIOD<span class="labelrequired"><em>*</em></span></label></div>';
-                appenddata+='<div class="col-md-9"><div class="col-sm-3" style="padding-left: 0px;"><div class="input-group addon"><input type="text" class="form-control customer_btn_validation datemandtry" name="Payment_SRC_FP_todate" id="Payment_SRC_FP_todate"  placeholder="For Period"><label  class="input-group-addon" for=Payment_SRC_FP_todate><span class="glyphicon glyphicon-calendar"></span></label></div></div></div>';
+                appenddata+='<input type="text" class="form-control customer_btn_validation datemandtry" name="Payment_SRC_FP_todate" id="Payment_SRC_FP_todate"  placeholder="For Period" style="width:150px"></div>';
                 appenddata+='</div>';
                 appenddata+='<div class="row form-group">';
                 appenddata+='<div class="col-lg-offset-1 col-lg-2">';
@@ -191,11 +191,11 @@
                 var appenddata='<h4 style="color:#498af3;">PAIDDATE SEARCH</h4><br>';
                 appenddata+='<div class="row form-group" style="padding-left:20px;">';
                 appenddata+='<div class="col-md-2"><label>FROM DATE<span class="labelrequired"><em>*</em></span></label></div>';
-                appenddata+='<div class="col-md-9"><div class="col-sm-3" style="padding-left: 0px;"><div class="input-group addon"><input type="text" class="form-control Paiddate_btn_validation datemandtry" name="Payment_SRC_PD_fromdate" id="Payment_SRC_PD_fromdate"  placeholder="From Date"><label  class="input-group-addon" for=Payment_SRC_PD_fromdate><span class="glyphicon glyphicon-calendar"></span></label></div></div></div>';
+                appenddata+='<input type="text" class="form-control Paiddate_btn_validation datemandtry" name="Payment_SRC_PD_fromdate" id="Payment_SRC_PD_fromdate"  placeholder="From Date" style="width:110px"></div>';
                 appenddata+='</div>';
                 appenddata+='<div class="row form-group" style="padding-left:20px;">';
                 appenddata+='<div class="col-md-2"><label>TO DATE<span class="labelrequired"><em>*</em></span></label></div>';
-                appenddata+='<div class="col-md-9"><div class="col-sm-3" style="padding-left: 0px;"><div class="input-group addon"><input type="text" class="form-control Paiddate_btn_validation datemandtry" name="Payment_SRC_PD_todate" id="Payment_SRC_PD_todate"  placeholder="To Date"><label  class="input-group-addon" for=Payment_SRC_PD_todate><span class="glyphicon glyphicon-calendar"></span></label></div></div></div>';
+                appenddata+='<input type="text" class="form-control Paiddate_btn_validation datemandtry" name="Payment_SRC_PD_todate" id="Payment_SRC_PD_todate"  placeholder="To Date" style="width:110px"></div>';
                 appenddata+='</div>';
                 appenddata+='<div class="row form-group">';
                 appenddata+='<div class="col-lg-offset-1 col-lg-2">';
@@ -221,11 +221,11 @@
                 appenddata+='</div>';
                 appenddata+='<div class="row form-group" style="padding-left:20px;">';
                 appenddata+='<div class="col-md-2"><label>FROM PERIOD<span class="labelrequired"><em>*</em></span></label></div>';
-                appenddata+='<div class="col-md-9"><div class="col-sm-3" style="padding-left: 0px;"><div class="input-group addon"><input type="text" class="form-control AR_btn_validation datemandtry" name="Payment_SRC_AR_fromdate" id="Payment_SRC_AR_fromdate"  placeholder="From Period"><label  class="input-group-addon" for=Payment_SRC_AR_fromdate><span class="glyphicon glyphicon-calendar"></span></label></div></div></div>';
+                appenddata+='<input type="text" class="form-control AR_btn_validation datemandtry" name="Payment_SRC_AR_fromdate" id="Payment_SRC_AR_fromdate"  placeholder="From Period" style="width:150px"></div>';
                 appenddata+='</div>';
                 appenddata+='<div class="row form-group" style="padding-left:20px;">';
                 appenddata+='<div class="col-md-2"><label>TO PERIOD<span class="labelrequired"><em>*</em></span></label></div>';
-                appenddata+='<div class="col-md-9"><div class="col-sm-3" style="padding-left: 0px;"><div class="input-group addon"><input type="text" class="form-control AR_btn_validation datemandtry" name="Payment_SRC_AR_todate" id="Payment_SRC_AR_todate"  placeholder="To Period"><label  class="input-group-addon" for=Payment_SRC_AR_todate><span class="glyphicon glyphicon-calendar"></span></label></div></div></div>';
+                appenddata+='<input type="text" class="form-control AR_btn_validation datemandtry" name="Payment_SRC_AR_todate" id="Payment_SRC_AR_todate"  placeholder="To Period" style="width:150px"></div>';
                 appenddata+='</div>';
                 appenddata+='<div class="row form-group" style="padding-left:20px;">';
                 appenddata+='<div class="col-md-2"><label>FROM AMOUNT<span class="labelrequired"><em>*</em></span></label></div>';
@@ -577,8 +577,8 @@
                         Payment_Tabledata += "<th style='text-align:center;vertical-align: top' nowrap>PROCESSING FEE</th>";
                         Payment_Tabledata += "<th style='text-align:center;vertical-align: top' nowrap>CLEANING FEE</th>";
                         Payment_Tabledata += "<th style='text-align:center;vertical-align: top' nowrap>DEPOSIT REFUND</th>";
-                        Payment_Tabledata += "<th style='text-align:center;vertical-align: top' nowrap>FORPERIOD</th>";
-                        Payment_Tabledata += "<th style='text-align:center;vertical-align: top' nowrap>PAIDDATE</th>";
+                        Payment_Tabledata += "<th style='text-align:center;vertical-align: top' nowrap>FOR PERIOD</th>";
+                        Payment_Tabledata += "<th style='text-align:center;vertical-align: top' nowrap>PAID DATE</th>";
                         Payment_Tabledata += "<th style='text-align:center;vertical-align: top'>COMMENTS</th>";
                         Payment_Tabledata += "<th style='text-align:center;vertical-align: top' nowrap>USERSTAMP</th>";
                         Payment_Tabledata += "<th style='text-align:center;vertical-align: top' nowrap>TIMESTAMP</th>";
@@ -679,7 +679,7 @@
                                 "<td style='width:80px !important;color:#FF0000;font-size:13px;font-weight:bold;vertical-align: middle'>" + processfee + "</td>" +
                                 "<td style='width:80px !important;color:#FF0000;font-size:13px;font-weight:bold;vertical-align: middle'>" + cleaningfee + "</td>" +
                                 "<td style='width:80px !important;color:#FF0000;font-size:13px;font-weight:bold;vertical-align: middle'>" + Depositrefund + "</td>" +
-                                "<td style='width:100px !important;vertical-align: middle'>" + valuearray[i].PD_FOR_PERIOD + "</td>" +
+                                "<td style='width:100px !important;vertical-align: middle' >" + valuearray[i].PD_FOR_PERIOD + "</td>" +
                                 "<td style='width:80px !important;vertical-align: middle'>" + valuearray[i].PD_PAID_DATE + "</td>" +
                                 "<td style='width:200px !important;vertical-align: middle'>" + comments + "</td>" +
                                 "<td style='width:150px !important;vertical-align: middle'>" + valuearray[i].ULD_lOGINID + "</td>" +
@@ -691,8 +691,10 @@
                         $('#Payment_Search_DataTable').show();
                         $('#Payment_Datatable').DataTable({
                             "pageLength": 10,
-                            "sPaginationType": "full_numbers"
+                            "sPaginationType": "full_numbers",
+//                            "aoColumnDefs" : [{ "aTargets" : ["uk-date-column"] , "sType" : "uk_date"}, { "aTargets" : ["uk-timestp-column"] , "sType" : "uk_timestp"} ]
                         });
+                        sorting();
                         if (searchoption == 3) {
                             $('#Paymeny_Extract_btn').show();
                         }
@@ -706,6 +708,7 @@
                         $('#emptytableheader').text(EMPTY_headervalue);
                         $('#tableEmptyerrormessageshow').show();
                     }
+
                     $('.preloader').hide();
                 },
                 error: function(data){
@@ -714,6 +717,34 @@
                 }
             });
         });
+        //FUNCTION TO CALL DATE PICKER FORMAT TO SHOW IN FORM ELEMENTS
+        function FormTableDateFormat(inputdate){
+            var string = inputdate.split("-");
+            return string[2]+''+ string[1]+''+string[0];
+        }
+        //FUNCTION FOR SORTING
+        function sorting(){
+            jQuery.fn.dataTableExt.oSort['uk_date-asc']  = function(a,b) {
+                var x = new Date( Date.parse(FormTableDateFormat(a)));
+                var y = new Date( Date.parse(FormTableDateFormat(b)) );
+                return ((x < y) ? -1 : ((x > y) ?  1 : 0));
+            };
+            jQuery.fn.dataTableExt.oSort['uk_date-desc'] = function(a,b) {
+                var x = new Date( Date.parse(FormTableDateFormat(a)));
+                var y = new Date( Date.parse(FormTableDateFormat(b)) );
+                return ((x < y) ? 1 : ((x > y) ?  -1 : 0));
+            };
+            jQuery.fn.dataTableExt.oSort['uk_timestp-asc']  = function(a,b) {
+                var x = new Date( Date.parse(FormTableDateFormat(a.split(' ')[0]))).setHours(a.split(' ')[1].split(':')[0],a.split(' ')[1].split(':')[1],a.split(' ')[1].split(':')[2]);
+                var y = new Date( Date.parse(FormTableDateFormat(b.split(' ')[0]))).setHours(b.split(' ')[1].split(':')[0],b.split(' ')[1].split(':')[1],b.split(' ')[1].split(':')[2]);
+                return ((x < y) ? -1 : ((x > y) ?  1 : 0));
+            };
+            jQuery.fn.dataTableExt.oSort['uk_timestp-desc'] = function(a,b) {
+                var x = new Date( Date.parse(FormTableDateFormat(a.split(' ')[0]))).setHours(a.split(' ')[1].split(':')[0],a.split(' ')[1].split(':')[1],a.split(' ')[1].split(':')[2]);
+                var y = new Date( Date.parse(FormTableDateFormat(b.split(' ')[0]))).setHours(b.split(' ')[1].split(':')[0],b.split(' ')[1].split(':')[1],b.split(' ')[1].split(':')[2]);
+                return ((x < y) ? 1 : ((x > y) ?  -1 : 0));
+            };
+        }
         var LpDetails;
         $(document).on('click','.Payment_editbutton',function() {
             $('.preloader').show();
@@ -1002,7 +1033,7 @@
                         <br>
                         <h4 style="color:#498af3;">PAYMENT UPDATION</h4><br>
                         <div class="row form-group">
-                            <div class="col-md-3">
+                            <div class="col-md-2">
                                 <label>UNIT<span class="labelrequired"><em>*</em></span></label>
                             </div>
                             <div class="col-md-3">
@@ -1010,7 +1041,7 @@
                             </div>
                         </div>
                         <div class="row form-group">
-                            <div class="col-md-3">
+                            <div class="col-md-2">
                                 <label>CUSTOMER NAME<span class="labelrequired"><em>*</em></span></label>
                             </div>
                             <div class="col-md-3">
@@ -1018,7 +1049,7 @@
                             </div>
                         </div>
                         <div class="row form-group">
-                            <div class="col-md-3">
+                            <div class="col-md-2">
                                 <label>LEASEPERIOD<span class="labelrequired"><em>*</em></span></label>
                             </div>
                             <div class="col-md-3">
@@ -1028,17 +1059,17 @@
                             </div>
                         </div>
                         <div class="row form-group">
-                            <div class="col-md-3">
+                            <div class="col-md-2">
                                 <label>PAYMENT TYPE<span class="labelrequired"><em>*</em></span></label>
                             </div>
                             <div class="col-md-3">
-                                <SELECT class="form-control LPchange PU_Validation" name="UD_Payment_Paymenttype" style="width=150px;" required id="UD_Payment_Paymenttype">
+                                <SELECT class="form-control LPchange PU_Validation" name="UD_Payment_Paymenttype" style="width:170px;" required id="UD_Payment_Paymenttype">
                                     <OPTION>SELECT</OPTION>
                                 </SELECT>
                             </div>
                         </div>
                         <div class="row form-group">
-                            <div class="col-md-3">
+                            <div class="col-md-2">
                                 <label>AMOUNT<span class="labelrequired"><em>*</em></span></label>
                             </div>
                             <div class="col-md-9">
@@ -1050,31 +1081,23 @@
                             </div>
                         </div>
                         <div class="row form-group">
-                            <div class="col-md-3">
+                            <div class="col-md-2">
                                 <label>FOR PERIOD<span class="labelrequired"><em>*</em></span></label>
                             </div>
-                            <div class="col-md-9">
-                                <div class="col-sm-3" style="padding-left: 0px;">
-                                    <div class="input-group addon">
-                                        <input type="text" class="form-control PU_Validation datemandtry" name="UD_Payment_Forperiod" id="UD_Payment_Forperiod"  placeholder="For Period"><label  class="input-group-addon" for=UD_Payment_Forperiod><span class="glyphicon glyphicon-calendar"></span></label>
-                                    </div>
-                                </div>
+                            <div class="col-md-3">
+                                <input type="text" class="form-control PU_Validation datemandtry" name="UD_Payment_Forperiod" id="UD_Payment_Forperiod"  placeholder="For Period" style="width:150px">
                             </div>
                         </div>
                         <div class="row form-group">
-                            <div class="col-md-3">
+                            <div class="col-md-2">
                                 <label>PAIDDATE<span class="labelrequired"><em>*</em></span></label>
                             </div>
-                            <div class="col-md-9">
-                                <div class="col-sm-3" style="padding-left: 0px;">
-                                    <div class="input-group addon">
-                                        <input type="text" class="form-control PU_Validation datemandtry" name="UD_Payment_Paiddate" id="UD_Payment_Paiddate"  placeholder="Paid Date"><label  class="input-group-addon" for=UD_Payment_Paiddate><span class="glyphicon glyphicon-calendar"></span></label>
-                                    </div>
-                                </div>
+                            <div class="col-md-3">
+                                <input type="text" class="form-control PU_Validation datemandtry" name="UD_Payment_Paiddate" id="UD_Payment_Paiddate"  placeholder="Paid Date" style="width:120px">
                             </div>
                         </div>
                         <div class="row form-group">
-                            <div class="col-md-3">
+                            <div class="col-md-2">
                                 <label>COMMENTS<span class="labelrequired"><em>*</em></span></label>
                             </div>
                             <div class="col-md-3">

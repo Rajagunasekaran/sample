@@ -7,6 +7,7 @@ class Mdl_customer_creation extends CI_Model
     public function Customer_Creation_Save($UserStamp,$Leaseperiod,$Quoters)
     {
         try {
+            set_time_limit(0);
             $FirstName = $_POST['CCRE_FirstName'];
             $Lastname = $_POST['CCRE_LastName'];
             $CompanyName = $_POST['CCRE_CompanyName'];
@@ -183,9 +184,8 @@ class Mdl_customer_creation extends CI_Model
                         if ($InvoiceId[0] == 1)
                         {
                             $this->InvoiceCreation($InvoiceId, $Emailtemplate, $Username, $Confirm_Meessage, $Uint, $Name, $Sendmailid, $UserStamp);
-                            echo $Confirm_Meessage;
-                            exit;
-                        }else
+                        }
+                        else
                         {
                             $this->CustomerRollback($InvoiceId[1],'',$Fileupload);
                             return $InvoiceId[0];
@@ -197,8 +197,6 @@ class Mdl_customer_creation extends CI_Model
                         if ($ContractId[0] == 1)
                         {
                             $this->ContractCreation($ContractId, $Emailtemplate, $Username, $Confirm_Meessage, $Uint, $Name, $Sendmailid, $UserStamp);
-                            echo $Confirm_Meessage;
-                            exit;
                         }
                         else
                         {
@@ -213,8 +211,6 @@ class Mdl_customer_creation extends CI_Model
                         if($InvoiceId[0]==1 && $ContractId[0]==1)
                         {
                             $this->InvoiceandContract($InvoiceId, $ContractId, $Emailtemplate, $Username, $Confirm_Meessage, $Uint, $Name, $Sendmailid, $UserStamp);
-                            echo $Confirm_Meessage;
-                            exit;
                         }
                         else
                         {
@@ -229,14 +225,12 @@ class Mdl_customer_creation extends CI_Model
                     if($calresponse==1)
                     {
                         $this->db->trans_commit();
-                        $ReturnValue = array($Confirm_Meessage);
                         echo $Confirm_Meessage;
                         exit;
                     }
                     else
                     {
-                        $this->db->query('ROLLBACK');
-                        $this->Mdl_eilib_calender->CUST_customercalendercreation($cal, $Customerid, $StartDate, $S_starttime, $S_endtime, $EndDate, $E_starttime, $E_endtime,'');
+                        $this->db->trans_rollback();
                         echo $Confirm_Meessage;
                         exit;
                     }
@@ -244,14 +238,14 @@ class Mdl_customer_creation extends CI_Model
             }
             else
             {
-                $this->db->query('ROLLBACK');
+                $this->db->trans_rollback();
                 echo $Confirm_Meessage;
                 exit;
             }
         }
         catch (Exception $e)
         {
-            $this->db->query('ROLLBACK');
+            $this->db->trans_rollback();
             echo $e->getMessage();
             exit;
         }
@@ -265,9 +259,10 @@ class Mdl_customer_creation extends CI_Model
         $message1->setHtmlBody($Messagebody);
         $message1->send();
         $this->db->trans_commit();
-
+        echo $Confirm_Meessage;
+        exit;
     }
-    public function CustomerRollback($InvoiceId,$Contractid,$Fileuploadid)
+      public function CustomerRollback($InvoiceId,$Contractid,$Fileuploadid)
     {
         $this->load->model('EILIB/Mdl_eilib_common_function');
         $service = $this->Mdl_eilib_common_function->get_service_document();
@@ -513,8 +508,6 @@ class Mdl_customer_creation extends CI_Model
                         if ($InvoiceId[0] == 1)
                         {
                             $this->InvoiceCreation($InvoiceId, $Emailtemplate, $Username, $Confirm_Meessage, $Uint, $Name, $Sendmailid, $UserStamp);
-                            echo $Confirm_Meessage;
-                            exit;
                         }else
                         {
                             $this->CustomerRollback($InvoiceId[1],'',$Fileupload);
@@ -527,8 +520,6 @@ class Mdl_customer_creation extends CI_Model
                         if ($ContractId[0] == 1)
                         {
                             $this->ContractCreation($ContractId, $Emailtemplate, $Username, $Confirm_Meessage, $Uint, $Name, $Sendmailid, $UserStamp);
-                            echo $Confirm_Meessage;
-                            exit;
                         }
                         else
                         {
@@ -543,8 +534,6 @@ class Mdl_customer_creation extends CI_Model
                         if($InvoiceId[0]==1 && $ContractId[0]==1)
                         {
                             $this->InvoiceandContract($InvoiceId, $ContractId, $Emailtemplate, $Username, $Confirm_Meessage, $Uint, $Name, $Sendmailid, $UserStamp);
-                            echo $Confirm_Meessage;
-                            exit;
                         }
                         else
                         {
@@ -552,21 +541,19 @@ class Mdl_customer_creation extends CI_Model
                             return $ContractId[0];
                         }
                     }
-                    $this->db->query('COMMIT');
+                    $this->db->trans_commit();
                 }
                 else
                 {
                     if($calresponse==1)
                     {
-                        $this->db->query('COMMIT');
-                        $ReturnValue = array($Confirm_Meessage);
+                        $this->db->trans_commit();
                         echo $Confirm_Meessage;
                         exit;
                     }
                     else
                     {
-                        $this->db->query('ROLLBACK');
-//                        $this->Mdl_eilib_calender->CUST_customercalendercreation($cal, $Customerid, $StartDate, $S_starttime, $S_endtime, $EndDate, $E_starttime, $E_endtime,'');
+                        $this->db->trans_rollback();
                         echo $Confirm_Meessage;
                         exit;
                     }
@@ -574,14 +561,14 @@ class Mdl_customer_creation extends CI_Model
             }
             else
             {
-                $this->db->query('ROLLBACK');
+                $this->db->trans_rollback();
                 echo $Confirm_Meessage;
                 exit;
             }
         }
         catch (Exception $e)
         {
-            $this->db->query('ROLLBACK');
+            $this->db->trans_rollback();
             echo $e->getMessage();
             exit;
         }

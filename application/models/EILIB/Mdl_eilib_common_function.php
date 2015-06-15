@@ -23,6 +23,33 @@ class Mdl_eilib_common_function extends CI_Model {
     $UserStamp=$user->getEmail();
     return $UserStamp;
 }
+    //SS creation
+    public  function NewSpreadsheetCreationwithurl($service, $title, $description, $parentId) {
+        $file = new Google_Service_Drive_DriveFile();
+        $file->setTitle($title);
+        $file->setDescription($description);
+        $file->setMimeType('application/vnd.google-apps.spreadsheet');
+        if ($parentId != null) {
+            $parent = new Google_Service_Drive_ParentReference();
+            $parent->setId($parentId);
+            $file->setParents(array($parent));
+        }
+        try {
+            $createdFile = $service->files->insert($file, array(
+                'mimeType' => 'application/vnd.google-apps.spreadsheet',//$mimeType,
+                'convert' => TRUE,
+                'uploadType'=>'resumable'
+            ));
+            $fileid=$createdFile->getId();
+            $data = $service->files->get($createdFile->getId());
+            $url=$data->defaultOpenWithLink;
+            $returnvalue=array($fileid,$url);
+            return $returnvalue;
+        }
+        catch (Exception $e) {
+            print "An error occurred: " . $e->getMessage();
+        }
+    }
     //CUSTOMER FILE UPLOAD TARGET FOLDER
     public function getFileUploadfolder()
     {

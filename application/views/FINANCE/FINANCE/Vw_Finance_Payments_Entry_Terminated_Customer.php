@@ -95,6 +95,8 @@ require_once('application/libraries/EI_HDR.php');
         var allcustomerdetails=[];
         $(document).on('change','#FIN_TER_Payment_Unit',function() {
             var unit=$('#FIN_TER_Payment_Unit').val();
+            allcustomer=[];
+            allcustomerdetails=[];
             if(unit!='SELECT')
             {
                 for (var i = 0; i < allunitdetails.length; i++)
@@ -315,7 +317,7 @@ require_once('application/libraries/EI_HDR.php');
             <form id="FIN_TER_PaymentEntry_form" class="form-horizontal" role="form">
                 <div class="panel-body">
                     <div class="row form-group">
-                        <div class="col-md-3">
+                        <div class="col-md-2">
                             <label>UNIT<span class="labelrequired"><em>*</em></span></label>
                         </div>
                         <div class="col-md-3">
@@ -324,7 +326,7 @@ require_once('application/libraries/EI_HDR.php');
                         </div>
                     </div>
                     <div class="row form-group">
-                        <div class="col-md-3">
+                        <div class="col-md-2">
                             <label>CUSTOMER NAME<span class="labelrequired"><em>*</em></span></label>
                         </div>
                         <div class="col-md-3">
@@ -336,7 +338,7 @@ require_once('application/libraries/EI_HDR.php');
 
                     </div>
                     <div class="row form-group">
-                        <div class="col-md-3">
+                        <div class="col-md-2">
                             <label>LEASEPERIOD<span class="labelrequired"><em>*</em></span></label>
                         </div>
                         <div class="col-md-3">
@@ -346,7 +348,7 @@ require_once('application/libraries/EI_HDR.php');
                         </div>
                     </div>
                     <div class="row form-group">
-                        <div class="col-md-3">
+                        <div class="col-md-2">
                             <label>PAYMENT TYPE<span class="labelrequired"><em>*</em></span></label>
                         </div>
                         <div class="col-md-3">
@@ -356,26 +358,27 @@ require_once('application/libraries/EI_HDR.php');
                         </div>
                     </div>
                     <div class="row form-group">
-                        <div class="col-md-3">
+                        <div class="col-md-2">
                             <label>AMOUNT<span class="labelrequired"><em>*</em></span></label>
                         </div>
-                        <div class="col-md-2">
-                            <input class="form-control amtonly" name="FIN_TER_Payment_Amount" style="max-width: 120px"  required id="FIN_TER_Payment_Amount" placeholder="0.00">
-                        </div>
-                        <div class="col-md-1">
-                            <input class="PU_Validation" type="checkbox" name="FIN_TER_Payment_Amountflag"  id="FIN_TER_Payment_Amountflag">
+                        <div class="col-md-9">
+                            <div class="col-sm-3" style="padding-left: 0px;">
+                                <div class="input-group">
+                                    <input type="text" id="FIN_TER_Payment_Amount" placeholder="0.00" class="form-control amtonly" name="FIN_TER_Payment_Amount" ><span class="input-group-addon"><input type="checkbox" class="Btn_validation" name="Amountflag[]" id=Amountflag_'+counter+'></span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="row form-group">
-                        <div class="col-md-3">
+                        <div class="col-md-2">
                             <label>FOR PERIOD<span class="labelrequired"><em>*</em></span></label>
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-2">
                             <input class="form-control datemandtry" name="FIN_TER_Payment_Forperiod"  required id="FIN_TER_Payment_Forperiod" style="max-width: 150px;" placeholder="For Period">
                         </div>
                     </div>
                     <div class="row form-group">
-                        <div class="col-md-3">
+                        <div class="col-md-2">
                             <label>PAIDDATE<span class="labelrequired"><em>*</em></span></label>
                         </div>
                         <div class="col-md-3">
@@ -383,7 +386,7 @@ require_once('application/libraries/EI_HDR.php');
                         </div>
                     </div>
                     <div class="row form-group">
-                        <div class="col-md-3">
+                        <div class="col-md-2">
                             <label>COMMENTS<span class="labelrequired"><em>*</em></span></label>
                         </div>
                         <div class="col-md-3">

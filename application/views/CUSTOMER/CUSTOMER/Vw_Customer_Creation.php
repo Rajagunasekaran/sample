@@ -1194,14 +1194,9 @@
                         <div class="col-md-3">
                             <label>DATE OF BIRTH</label>
                         </div>
-                        <div class="col-md-8">
-                            <div class="col-sm-3" style="padding-left: 0px;">
-                                <div class="input-group addon">
-                                    <input type="text" class="form-control datenonmandtry" name="CCRE_DOB" id="CCRE_DOB"  placeholder="DateOfBirth"><label  class="input-group-addon" for=CCRE_DOB><span class="glyphicon glyphicon-calendar"></span></label>
-                                </div>
-                            </div>
+                        <div class="col-md-3">
+                            <input type="text" class="form-control datenonmandtry" name="CCRE_DOB" id="CCRE_DOB"  placeholder="DateOfBirth" style="width:120px;">
                         </div>
-
                     </div>
                     <div class="row form-group">
                         <div class="col-md-3">
@@ -1230,12 +1225,10 @@
                                 <label id="passportdate">PASSPORT EXPIRY DATE</label>
                             </div>
                         </div>
-                        <div class="col-md-8">
-                            <div class="col-sm-3" style="padding-left: 0px;">
-                                <div class="input-group addon">
-                                    <input type="text" class="form-control passportdatevalidation datenonmandtry ppvalidation" name="CCRE_PassportDate" id="CCRE_PassportDate"  placeholder="PassprotDate"><label  class="input-group-addon" for=CCRE_PassportDate><span class="glyphicon glyphicon-calendar"></span></label>
-                                </div>
-                            </div>
+                        <div class="col-md-3">
+                             <input type="text" class="form-control passportdatevalidation datenonmandtry ppvalidation" name="CCRE_PassportDate" id="CCRE_PassportDate"  placeholder="PassprotDate">
+                        </div>
+                        <div>
                             <label id="CCRE_lbl_passportdateerrormsg" class="errormsg" hidden></label>
                         </div>
                     </div>
@@ -1256,12 +1249,10 @@
                                 <label>EP EXPIRY DATE</label>
                             </div>
                         </div>
-                        <div class="col-md-8">
-                            <div class="col-sm-3" style="padding-left: 0px;">
-                                <div class="input-group addon">
-                                    <input type="text" class="form-control epdatevalidation datenonmandtry" name="CCRE_EPDate" id="CCRE_EPDate"  placeholder="EP Date"><label  class="input-group-addon" for=CCRE_EPDate><span class="glyphicon glyphicon-calendar"></span></label>
-                                </div>
-                            </div>
+                        <div class="col-md-3">
+                           <input type="text" class="form-control epdatevalidation datenonmandtry" name="CCRE_EPDate" id="CCRE_EPDate"  placeholder="EP Date">
+                        </div>
+                        <div>
                             <label id="CCRE_lbl_ep_dateerrormsg" class="errormsg" hidden></label>
                         </div>
                     </div>
@@ -1510,8 +1501,8 @@
                         <div class="col-md-3">
                             <label>FILE UPLOAD</label>
                         </div>
-                        <div class="col-md-3">
-                            <input type="file" id="CC_fileupload" name="CC_fileupload" class="form-control fileextensionchk" />
+                        <div class="col-md-3 fileinputs">
+                            <input type="file" id="CC_fileupload" name="CC_fileupload"  class="form-control fileextensionchk file" />
                         </div>
                     </div>
                     <div class="row form-group">

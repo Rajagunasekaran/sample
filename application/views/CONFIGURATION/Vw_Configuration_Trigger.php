@@ -51,8 +51,8 @@
                     url: controller_url+"CSV_Updation",
                     success: function (data) {
                         var returnvalue = JSON.parse(data);
-                        $('section').html(returnvalue);
-                        show_msgbox("CSV UPDATION", returnvalue, "success", false);
+//                        $('section').html(returnvalue);
+                        show_msgbox("CSV UPDATION",'CSV RECORDS UPDATED AND MAIL SEND TO CORRESPONDING MAIL ID'  , "success", false);
                         $('.preloader').hide();
                         var value_array = JSON.parse(data);
                     },

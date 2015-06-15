@@ -1,6 +1,6 @@
 <?php
 error_reporting(0);
-Class Ctrl_Customer_Creation extends CI_Controller
+Class Ctrl_Customer_Creation_Uat extends CI_Controller
 {
     function __construct() {
         parent::__construct();

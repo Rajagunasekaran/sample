@@ -160,11 +160,7 @@
                             <label>FOR PERIOD </label>
                         </div>
                         <div class="col-md-9">
-                            <div class="col-sm-3" style="padding-left: 0px;">
-                                <div class="input-group addon">
-                                    <input type="text" class="datemandtry form-control" name="FIN_OPL_db_period" id="FIN_OPL_db_period"  placeholder="For Period"><label  class="input-group-addon" for=FIN_OPL_db_period><span class="glyphicon glyphicon-calendar"></span></label>
-                                </div>
-                            </div>
+                             <input type="text" class="datemandtry form-control" name="FIN_OPL_db_period" id="FIN_OPL_db_period"  placeholder="For Period" style="width:150px;">
                         </div>
                     </div>
                     <div class="row form-group">

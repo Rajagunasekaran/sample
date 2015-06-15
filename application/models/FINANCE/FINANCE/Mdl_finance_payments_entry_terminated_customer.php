@@ -8,7 +8,7 @@ class Mdl_finance_payments_entry_terminated_customer extends CI_Model {
         $outparm_query = 'SELECT @PAYMENT_ENTRY_TERMINATED_CUSTOMER AS TEMP_TABLE';
         $outparm_result = $this->db->query($outparm_query);
         $TEMP_tablename=$outparm_result->row()->TEMP_TABLE;
-        $Selectquery="SELECT UNIT_NO,CUSTOMER_ID,CUSTOMER_FIRST_NAME,CUSTOMER_LAST_NAME,CED_REC_VER,CLP_STARTDATE,CLP_ENDDATE FROM  $TEMP_tablename  ORDER BY UNIT_NO";
+        $Selectquery="SELECT UNIT_NO,CUSTOMER_ID,CUSTOMER_FIRST_NAME,CUSTOMER_LAST_NAME,CED_REC_VER,CLP_STARTDATE,CLP_ENDDATE FROM  $TEMP_tablename  ORDER BY UNIT_NO,CUSTOMER_FIRST_NAME";
         $resultset=$this->db->query($Selectquery);
         $this->db->query('DROP TABLE IF EXISTS '.$TEMP_tablename);
         return $resultset->result();

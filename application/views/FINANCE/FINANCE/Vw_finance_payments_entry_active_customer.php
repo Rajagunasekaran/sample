@@ -61,11 +61,10 @@
                 '<SELECT class="form-control LPChange Btn_validation" disabled name="LeasePeriod[]" style="width:120px" id=Leaseperiodid_'+counter+'><OPTION>SELECT</OPTION></SELECT><input type="text" class="form-control" hidden style="max-width:50px" id=TempCustomerid_'+counter+'>',
                 '<SELECT class="form-control LPChange Btn_validation" name="Payment[]" style="width:150px" id=Paymentid_'+counter+'><OPTION>SELECT</OPTION></SELECT>',
                 '<div class="col-lg-6"><div class="input-group"><input type="text" name="Amount[]" class="form-control amtonly Btn_validation" style="width:120px" id=Amountid_'+counter+'><span class="input-group-addon"><input type="checkbox" class="Btn_validation" name="Amountflag[]" id=Amountflag_'+counter+'></span></div></div>',
-                '<div class="col-sm-4"><div class="input-group addon"><input type="text" class="form-control datepickperiod Btn_validation datemandtry" name="ForPeriod[]" style="width:150px" id=Forperiodid_'+counter+' ><label  class="input-group-addon" for=Forperiodid_'+counter+'><span class="glyphicon glyphicon-calendar"></span></label></div></div>',
-                '<div class="col-sm-4"><div class="input-group addon"><input type="text" class="form-control datepickpaiddate Btn_validation datemandtry" name="PaidDate[]" style="width:120px" id=Paiddate_'+counter+' ><label  class="input-group-addon" for=Paiddate_'+counter+'><span class="glyphicon glyphicon-calendar"></span></label></div></div>',
+                '<input type="text" class="form-control datepickperiod Btn_validation datemandtry" name="ForPeriod[]" style="width:150px" id=Forperiodid_'+counter+' >',
+                '<input type="text" class="form-control datepickpaiddate Btn_validation datemandtry" name="PaidDate[]" style="width:120px" id=Paiddate_'+counter+' >',
                 '<textarea class="form-control autogrowcomments Btn_validation" name="Comments[]" style="width:200px" id=Comments_'+counter+'></textarea>'
             ] ).draw();
-//            '<div class="col-sm-4"><div class="input-group addon"><input type="text" id="BDLY_INPUT_tb_petty_date" name="BDLY_INPUT_tb_petty_date" placeholder="Date" class="datepickdate BDLY_INPUT_class_hksubmitvalidate datemandtry form-control"style="width:100px;" ><label for="BDLY_INPUT_tb_petty_date" class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></label></div></div>';
             $('.autogrowcomments').autogrow({onInitialize: true});
             $(".amtonly").doValidation({rule:'numbersonly',prop:{realpart:5,imaginary:2}});
             $(".datepickperiod").datepicker(
@@ -330,7 +329,8 @@
                             $('#Forperiodid_'+splittedid[1]).datepicker("option","minDate",depositmindate);
                             $('#Forperiodid_'+splittedid[1]).datepicker("option","maxDate",depositmaxdate);
                         }
-
+                        $('#Forperiodid_'+splittedid[1]).val('');
+                        Form_Btn_Validation(splittedid[1]);
                     },
                     error: function(data){
                         alert('error in getting'+JSON.stringify(data));
@@ -476,6 +476,7 @@
                 data:{"UNIT":unitarray,"CUSTOMERID":Customerarray,"LP":Leasperiodarray,"PAYMENT":paymenttypearray,"AMOUNT":amountarray,"FORPERIOD":forperiodarray,"PAIDDATE":paiddatearray,"Comments":commentsarray,"FLAG":amountflag},
                 success: function(data){
                     $('.preloader').hide();
+                    alert(data)
                     var value_array=JSON.parse(data);
                     if(value_array=='' || value_array==null)
                     {

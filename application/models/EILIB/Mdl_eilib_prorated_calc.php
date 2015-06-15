@@ -19,7 +19,7 @@ class Mdl_eilib_prorated_calc extends CI_Model {
         $Checkindate = intval(date("d", $check_in_date));
         $timestamp = strtotime ("+1 month",$check_in_date);
         $nextMonth  =  date("Y-m-d",$timestamp);
-        $LastMonth =date("Y-m-t", strtotime($nextMonth));
+        $LastMonth =date("Y-m-t", strtotime($check_in_date));
         if($Checkindate >1)
         {
             $Tdays = intval(date("d",strtotime($LastMonth)));
@@ -49,7 +49,7 @@ class Mdl_eilib_prorated_calc extends CI_Model {
         $CheckOutdate = intval(date("d", $check_out_date));
         $timestamp = strtotime ("+1 month",$check_out_date);
         $nextMonthCheckout  =  date("Y-m-d",$timestamp);
-        $LastMonth =date("Y-m-t", strtotime($nextMonthCheckout));
+        $LastMonth =date("Y-m-t", strtotime($check_out_date));
         if($CheckOutdate >1)
         {
             $Tdays = intval(date("d",strtotime($LastMonth)));

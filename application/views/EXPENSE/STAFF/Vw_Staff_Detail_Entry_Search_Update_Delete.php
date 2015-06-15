@@ -11,17 +11,17 @@ require_once('application/libraries/EI_HDR.php');
 <html>
 <head>
     <script>
-//    var value_err_array=[];
-//        var ET_SRC_UPD_DEL_result_array=[];
-//        var ET_SRC_UPD_DEL_name;
-//        var listboxoption;
-//        var ErrorControl={'cpferror':null};
-//    //SEARCH FORM
-//    var STDTL_SEARCH_sucsval=0;
-//    var ErrorControl={AmountCompare:'InValid'}
-//    var STDTL_SEARCH_result_array=[];
-//    var STDTL_SEARCH_commnts='';
-//    var validate_flag=0;
+        //    var value_err_array=[];
+        //        var ET_SRC_UPD_DEL_result_array=[];
+        //        var ET_SRC_UPD_DEL_name;
+        //        var listboxoption;
+        //        var ErrorControl={'cpferror':null};
+        //    //SEARCH FORM
+        //    var STDTL_SEARCH_sucsval=0;
+        //    var ErrorControl={AmountCompare:'InValid'}
+        //    var STDTL_SEARCH_result_array=[];
+        //    var STDTL_SEARCH_commnts='';
+        //    var validate_flag=0;
         //READY FUNCTION START
         $(document).ready(function() {
             var SCTDTL_SEARH_controller_url="<?php echo base_url(); ?>" + '/index.php/EXPENSE/STAFF/Ctrl_Staff_Detail_Entry_Search_Update_Delete/' ;
@@ -43,14 +43,14 @@ require_once('application/libraries/EI_HDR.php');
             var cpfno=[];
             var STDTL_INPUT_expensearr_empfirstname=[];
             var STDTL_INPUT_expensearr_emplastname=[];
-    //JQUERY LIB VALIDATION START
+            //JQUERY LIB VALIDATION START
             $(".autosize").doValidation({rule:'general',prop:{autosize:true}});
             $(".amountonly").doValidation({rule:'numbersonly',prop:{realpart:5,imaginary:2}});
             $(".alphanumeric").doValidation({rule:'alphanumeric',prop:{realpart:9}});
             $('textarea').autogrow({onInitialize: true});
             $("#STDTL_SEARCH_tb_fromamt").doValidation({rule:'numbersonly',prop:{realpart:5,imaginary:2,smallerthan:'STDTL_SEARCH_tb_toamt'}});
             $("#STDTL_SEARCH_tb_toamt").doValidation({rule:'numbersonly',prop:{realpart:5,imaginary:2,greaterthan:'STDTL_SEARCH_tb_fromamt'}});
-    //JQUERY LIB VALIDATION END
+            //JQUERY LIB VALIDATION END
             STDTL_SEARCH_comments_auto()
             var STDTL_SEARCH_comments=[];
             //FUNCTION TO AUTOCOMPLETE SEARCH TEXT
@@ -132,8 +132,8 @@ require_once('application/libraries/EI_HDR.php');
                 $("#STDTL_SEARCH_tb_updcpfnumber").removeClass('invalid')
                 $("#STDTL_SEARCH_tb_updcpfamount").removeClass('invalid')
                 var STDTL_SEARCH_staffcommentstxt=$('#STDTL_SEARCH_ta_comments').val();
-        var STDTL_SEARCH_errormsg=value_err_array[3].EMC_DATA.replace(' [COMMENTS]',STDTL_SEARCH_staffcommentstxt);
-        $('#STDTL_SEARCH_div_header').text(STDTL_SEARCH_errormsg).show();
+                var STDTL_SEARCH_errormsg=value_err_array[3].EMC_DATA.replace(' [COMMENTS]',STDTL_SEARCH_staffcommentstxt);
+                $('#STDTL_SEARCH_div_header').text(STDTL_SEARCH_errormsg).show();
                 $('#STDTL_SEARCH_div_headernodata').hide();
                 $('#STDTL_SEARCH_tble_srchupd').hide();
                 $('#STDTL_SEARCH_div_update').hide();
@@ -209,69 +209,69 @@ require_once('application/libraries/EI_HDR.php');
             $(document).on('click','.PE_rd_selectform',function(){
                 $('.preloader').show();
                 var STDTL_INPUT_data=$(this).val();
-                    $.ajax({
-                        type: "POST",
-                        url:SCTDTL_SEARH_controller_url+"STDTL_INPUT_getempname",
-                        data :{'STDTL_INPUT_searchby':STDTL_INPUT_data},
-                        success: function(data){
-                            $('.preloader').hide();
-                             STDTL_INPUT_expensearr_employeename=JSON.parse(data);
-                            if(STDTL_INPUT_data=='STAFF ENTRY')
-                            {
-                                if(STDTL_INPUT_expensearr_employeename[0].length!=0){
-                            var STDTL_INPUT_namearray=[];
+                $.ajax({
+                    type: "POST",
+                    url:SCTDTL_SEARH_controller_url+"STDTL_INPUT_getempname",
+                    data :{'STDTL_INPUT_searchby':STDTL_INPUT_data},
+                    success: function(data){
+                        $('.preloader').hide();
+                        STDTL_INPUT_expensearr_employeename=JSON.parse(data);
+                        if(STDTL_INPUT_data=='STAFF ENTRY')
+                        {
+                            if(STDTL_INPUT_expensearr_employeename[0].length!=0){
+                                var STDTL_INPUT_namearray=[];
 
-                            for(var k=0;k<STDTL_INPUT_expensearr_employeename[0].length;k++)
-                            {
-                                STDTL_INPUT_namearray.push(STDTL_INPUT_expensearr_employeename[0][k].STDTL_INPUT_names_concat)
-                                STDTL_INPUT_idarray.push(STDTL_INPUT_expensearr_employeename[0][k].EMP_ID)
-                            }
-                            STDTL_INPUT_namearray=unique(STDTL_INPUT_namearray);
-                            var STDTL_INPUT_expensearray_employeename='<option value="">SELECT</option>';
-                            for (var i = 0;i< STDTL_INPUT_namearray.length; i++)
-                            {
-                                var STDTL_INPUT_employeenameconcat=STDTL_INPUT_namearray[i].split("_");
-                                STDTL_INPUT_expensearray_employeename += '<option value="' + STDTL_INPUT_idarray[i] + '">' + STDTL_INPUT_employeenameconcat[0]+" "+STDTL_INPUT_employeenameconcat[1]+ '</option>';
-                            }
-                            $('#STDTL_INPUT_lb_employeename').html(STDTL_INPUT_expensearray_employeename).show();
-                                    $('#STDTL_INPUT_lbl_employeename').show();
-                                    $("#enrtyfrm").show();
-                            }
-                                else
+                                for(var k=0;k<STDTL_INPUT_expensearr_employeename[0].length;k++)
                                 {
-                                    $('#STDTL_INPUT_lb_employeename').hide();
-                                    $('#STDTL_INPUT_lbl_employeename').hide();
-                                    $("#enrtyfrm").hide();
-                                    $('#STDTL_INPUT_noform').text(value_err_array[18].EMC_DATA).show();
+                                    STDTL_INPUT_namearray.push(STDTL_INPUT_expensearr_employeename[0][k].STDTL_INPUT_names_concat)
+                                    STDTL_INPUT_idarray.push(STDTL_INPUT_expensearr_employeename[0][k].EMP_ID)
                                 }
+                                STDTL_INPUT_namearray=unique(STDTL_INPUT_namearray);
+                                var STDTL_INPUT_expensearray_employeename='<option value="">SELECT</option>';
+                                for (var i = 0;i< STDTL_INPUT_namearray.length; i++)
+                                {
+                                    var STDTL_INPUT_employeenameconcat=STDTL_INPUT_namearray[i].split("_");
+                                    STDTL_INPUT_expensearray_employeename += '<option value="' + STDTL_INPUT_idarray[i] + '">' + STDTL_INPUT_employeenameconcat[0]+" "+STDTL_INPUT_employeenameconcat[1]+ '</option>';
+                                }
+                                $('#STDTL_INPUT_lb_employeename').html(STDTL_INPUT_expensearray_employeename).show();
+                                $('#STDTL_INPUT_lbl_employeename').show();
+                                $("#enrtyfrm").show();
                             }
                             else
                             {
-                                if(STDTL_INPUT_expensearr_employeename[0].length!=0){
-                           //SEARCH FORM SEARCH BY LIST
-                           STDTL_INPUT_expensearr_searchbydata=STDTL_INPUT_expensearr_employeename[0][0].ECN_DATA
-                           STDTL_INPUT_expensearr_searchbyid=STDTL_INPUT_expensearr_employeename[0][0].ECN_ID
-                            var STDTL_SEARCH_searchoptions='<option>SELECT</option>';
-                            for (var i = 0;i < STDTL_INPUT_expensearr_employeename[0].length; i++)
-                            {
-                                STDTL_SEARCH_searchoptions+='<option value="'+STDTL_INPUT_expensearr_employeename[0][i].ECN_ID+'">'+STDTL_INPUT_expensearr_employeename[0][i].ECN_DATA+'</option>';
+                                $('#STDTL_INPUT_lb_employeename').hide();
+                                $('#STDTL_INPUT_lbl_employeename').hide();
+                                $("#enrtyfrm").hide();
+                                $('#STDTL_INPUT_noform').text(value_err_array[18].EMC_DATA).show();
                             }
-                            $('#STDTL_SEARCH_lb_searchoption').html(STDTL_SEARCH_searchoptions).show();
-                                    $('#STDTL_SEARCH_lbl_searchoption').show();
-                                    $('#searchfrm').show();
-                            }
-                                else
-                                {
-                                 $('#STDTL_INPUT_noform').text(value_err_array[4].EMC_DATA).show();
-                                    $('#STDTL_SEARCH_lb_searchoption').hide();
-                                    $('#STDTL_SEARCH_lbl_searchoption').hide();
-                                }
-                            }
-                        },
-                        error: function(data){
-                            alert('error in getting'+JSON.stringify(data));
                         }
-                    });
+                        else
+                        {
+                            if(STDTL_INPUT_expensearr_employeename[0].length!=0){
+                                //SEARCH FORM SEARCH BY LIST
+                                STDTL_INPUT_expensearr_searchbydata=STDTL_INPUT_expensearr_employeename[0][0].ECN_DATA
+                                STDTL_INPUT_expensearr_searchbyid=STDTL_INPUT_expensearr_employeename[0][0].ECN_ID
+                                var STDTL_SEARCH_searchoptions='<option>SELECT</option>';
+                                for (var i = 0;i < STDTL_INPUT_expensearr_employeename[0].length; i++)
+                                {
+                                    STDTL_SEARCH_searchoptions+='<option value="'+STDTL_INPUT_expensearr_employeename[0][i].ECN_ID+'">'+STDTL_INPUT_expensearr_employeename[0][i].ECN_DATA+'</option>';
+                                }
+                                $('#STDTL_SEARCH_lb_searchoption').html(STDTL_SEARCH_searchoptions).show();
+                                $('#STDTL_SEARCH_lbl_searchoption').show();
+                                $('#searchfrm').show();
+                            }
+                            else
+                            {
+                                $('#STDTL_INPUT_noform').text(value_err_array[4].EMC_DATA).show();
+                                $('#STDTL_SEARCH_lb_searchoption').hide();
+                                $('#STDTL_SEARCH_lbl_searchoption').hide();
+                            }
+                        }
+                    },
+                    error: function(data){
+                        alert('error in getting'+JSON.stringify(data));
+                    }
+                });
             });
             //GET EMPLOYEE ID FOR THE SELECTED EMPLOYEE NAME
             $('#STDTL_INPUT_lb_employeename').change(function()
@@ -355,6 +355,17 @@ require_once('application/libraries/EI_HDR.php');
                     $("#STDTL_INPUT_tb_cpfamount").show();
                 }
             });
+            $(".submitValidation").change(function(){
+                var STDTL_INPUT_Empname=$("#STDTL_INPUT_lb_employeename").val();
+                var STDTL_INPUT_CpfNo=$("#STDTL_INPUT_tb_cpfnumber").val();
+                var STDTL_INPUT_Salamt=$("#STDTL_INPUT_tb_salaryamount").val();
+                alert(flagSubmit)
+                if(STDTL_INPUT_Empname!='' && STDTL_INPUT_Salamt!='' && (parseFloat($('#STDTL_INPUT_tb_salaryamount').val())!=0) && flagSubmit==1)
+                    $("#STDTL_INPUT_btn_save").removeAttr("disabled");
+                else
+                    $("#STDTL_INPUT_btn_save").attr("disabled","disabled");
+            });
+            var flagSubmit=1;
             //EMPLOYEE SAVE BUTTON VALIDATION
             $("#STDTL_INPUT_tb_cpfnumber").blur(function(){
                 var STDTL_INPUT_Empname=$("#STDTL_INPUT_lb_employeename").val();
@@ -375,9 +386,10 @@ require_once('application/libraries/EI_HDR.php');
                 {
                     if(STDTL_INPUT_CpfNo.length>0)
                     {
+                        flagSubmit=0;
                         $("#STDTL_INPUT_lbl_cpfamount").hide();
                         $("#STDTL_INPUT_tb_cpfamount").hide();
-                        ErrorControl.cpferror='InValid';
+//                        ErrorControl.cpferror='InValid';
                         $('#STDTL_INPUT_lbl_validnumber').text(value_err_array[12].EMC_DATA).show();
                         $(this).addClass('invalid');
                         $('#STDTL_INPUT_lbl_validamount').hide();
@@ -385,7 +397,8 @@ require_once('application/libraries/EI_HDR.php');
                     }
                     else
                     {
-                        ErrorControl.cpferror='Valid';
+                        flagSubmit=1;
+//                        ErrorControl.cpferror='Valid';
                         if(STDTL_INPUT_Empname!='' && STDTL_INPUT_Salamt!='' && (parseFloat($('#STDTL_INPUT_tb_salaryamount').val())!=0))
                             $("#STDTL_INPUT_btn_save").removeAttr("disabled");
                         else
@@ -397,55 +410,77 @@ require_once('application/libraries/EI_HDR.php');
                     }
                 }
             });
-                //SUCCESS FUNCTION FOR ALREADY EXIST FOR SCRIPT NAME
-                function STDTL_INPUT_already_result()
-                {
-                    $(".preloader").hide();
-                    var STDTL_INPUT_Cpfno=$('#STDTL_INPUT_tb_cpfnumber').val();
-                    var STDTL_INPUT_Empname=$("#STDTL_INPUT_lb_employeename").val();
-                    var STDTL_INPUT_Salamt=$("#STDTL_INPUT_tb_salaryamount").val();
-                    var STDTL_INPUT_Cpfamt=$("#STDTL_INPUT_tb_cpfamount").val();
-                    $.ajax({
-                        type: "POST",
-                        url:SCTDTL_SEARH_controller_url+"STDTL_INPUT_already",
+            //SUCCESS FUNCTION FOR ALREADY EXIST FOR SCRIPT NAME
+            function STDTL_INPUT_already_result()
+            {alert('enter')
+                $(".preloader").hide();
+                var STDTL_INPUT_Cpfno=$('#STDTL_INPUT_tb_cpfnumber').val();
+                var STDTL_INPUT_Empname=$("#STDTL_INPUT_lb_employeename").val();
+                var STDTL_INPUT_Salamt=$("#STDTL_INPUT_tb_salaryamount").val();
+                var STDTL_INPUT_Cpfamt=$("#STDTL_INPUT_tb_cpfamount").val();
+                $.ajax({
+                    type: "POST",
+                    url:SCTDTL_SEARH_controller_url+"STDTL_INPUT_already",
 
-                        data: {'STDTL_INPUT_Cpfno': STDTL_INPUT_Cpfno},
-                        success: function(data) {
-                            var response=JSON.parse(data.script_name_already_exits_array)//retdata.final_array[0];
-                            if(response==0)
+                    data: {'STDTL_INPUT_Cpfno': STDTL_INPUT_Cpfno},
+                    success: function(data) {alert(data)
+                        var response=JSON.parse(data.script_name_already_exits_array)//retdata.final_array[0];
+                        alert(response)
+                        if(response==0)
+                        {
+                            $('#STDTL_INPUT_lbl_validnumber').hide();
+                            $("#STDTL_INPUT_tb_cpfnumber").removeClass('invalid');
+                            $("#STDTL_INPUT_lbl_cpfamount").show();
+                            $("#STDTL_INPUT_tb_cpfamount").show();
+                            $('#STDTL_INPUT_lbl_validamount').text(value_err_array[17].EMC_DATA).show();
+                            if(STDTL_INPUT_Cpfamt=='')
                             {
-                                $('#STDTL_INPUT_lbl_validnumber').hide();
-                                $("#STDTL_INPUT_tb_cpfnumber").removeClass('invalid');
-                                $("#STDTL_INPUT_lbl_cpfamount").show();
-                                $("#STDTL_INPUT_tb_cpfamount").show();
-                                $('#STDTL_INPUT_lbl_validamount').text(value_err_array[17].EMC_DATA).show();
-                                if(STDTL_INPUT_Cpfamt=='')
-                                {
-                                    ErrorControl.cpferror='Valid';
-                                    $("#STDTL_INPUT_tb_cpfamount").addClass('invalid');
-                                }
-                                else
-                                {
-                                    if(STDTL_INPUT_Empname!='' && STDTL_INPUT_Salamt!='' && (parseFloat($('#STDTL_INPUT_tb_salaryamount').val())!=0))
-                                        $("#STDTL_INPUT_btn_save").removeAttr("disabled");
-                                    ErrorControl.cpferror='Valid';
-                                    $("#STDTL_INPUT_tb_cpfamount").removeClass('invalid');
-                                    $('#STDTL_INPUT_lbl_validamount').hide();
-                                    $('#STDTL_INPUT_lbl_validnumber').hide();
-                                }
+                                $("#STDTL_INPUT_tb_cpfamount").addClass('invalid');
+                                ErrorControl.cpferror='Valid';
                             }
-                            else if(response!=0)
+                            else
                             {
-                                $(".preloader").hide();
-                                ErrorControl.cpferror='InValid';
-                                $("#STDTL_INPUT_tb_cpfnumber").addClass('invalid');
-                                $('#STDTL_INPUT_lbl_validnumber').text(value_err_array[16].EMC_DATA).show();
+                                alert('valid')
+                                if(STDTL_INPUT_Empname!='' && STDTL_INPUT_Salamt!='' && (parseFloat($('#STDTL_INPUT_tb_salaryamount').val())!=0))
+                                    $("#STDTL_INPUT_btn_save").removeAttr("disabled");
                                 $("#STDTL_INPUT_tb_cpfamount").removeClass('invalid');
                                 $('#STDTL_INPUT_lbl_validamount').hide();
+                                $('#STDTL_INPUT_lbl_validnumber').hide();
+                                ErrorControl.cpferror='Valid';
                             }
                         }
+                        else if(response!=0)
+                        {
+                            $(".preloader").hide();
+                            $("#STDTL_INPUT_tb_cpfnumber").addClass('invalid');
+                            $('#STDTL_INPUT_lbl_validnumber').text(value_err_array[16].EMC_DATA).show();
+                            $("#STDTL_INPUT_tb_cpfamount").removeClass('invalid');
+                            $('#STDTL_INPUT_lbl_validamount').hide();
+                            ErrorControl.cpferror='InValid';
+                        }
+                    },
+                    error: function(data) {
+                        alert(JSON.parse(data))
+                    }
+                });
+            }
+            //CHANGE FUNCTION FOR CPF NUMBER
+            $("#STDTL_INPUT_tb_cpfnumber").change(function(){
+                $("#STDTL_INPUT_btn_save").attr("disabled","disabled");
+                var STDTL_INPUT_cpfnumber=$(this).val();
+                var STDTL_INPUT_CpfNo=$("#STDTL_INPUT_tb_cpfnumber").val();
+                if(STDTL_INPUT_CpfNo=='')
+                {
+                    $("#STDTL_INPUT_lbl_cpfamount").hide();
+                    $("#STDTL_INPUT_tb_cpfamount").val("").hide();
+                    $('#STDTL_INPUT_lbl_validamount').hide();
+                }
+                else
+                {
+                    $("#STDTL_INPUT_lbl_cpfamount").show();
+                    $("#STDTL_INPUT_tb_cpfamount").show();
+                }
             });
-     }
             //SAVE BUTTON VALIDATION
             $(document).on('change','input:not(#STDTL_INPUT_tb_cpfnumber),select', function()
             {
@@ -586,7 +621,7 @@ require_once('application/libraries/EI_HDR.php');
                 $("#STDTL_INPUT_btn_save").attr("disabled", "disabled");
                 $('input:radio[name=STDTL_INPUT_radioemployid]').attr('checked',false);
             }
-    //SEARCH FORM CODING START
+            //SEARCH FORM CODING START
             //CHANGE EVENT FUNCTION FOR SEARCH OPTION
             $('#STDTL_SEARCH_lb_searchoption').change(function(){
                 STDTL_SEARCH_sucsval=0;
@@ -1029,12 +1064,12 @@ require_once('application/libraries/EI_HDR.php');
 
                             ET_SRC_UPD_DEL_table_header+='</tbody></table>';
                             $('section').html(ET_SRC_UPD_DEL_table_header);
-                           $('#STDTL_SEARCH_tble_htmltable').DataTable( {
-                            "aaSorting": [],
-                            "pageLength": 10,
-                            "sPaginationType":"full_numbers"
-                        });
-                        sorting()
+                            $('#STDTL_SEARCH_tble_htmltable').DataTable( {
+                                "aaSorting": [],
+                                "pageLength": 10,
+                                "sPaginationType":"full_numbers"
+                            });
+                            sorting()
                         }
                         else
                         {
@@ -1121,7 +1156,7 @@ require_once('application/libraries/EI_HDR.php');
                     cpfid='cpfamountid_'+id[1];
                     $('#cpfamt_'+id[1]).replaceWith("<td class='new' id='"+previous_id+"'><input type='text' id='"+cpfid+"' name='data'  class='staffupdate amountonly' maxlength='50'  value='"+tdvalue+"'>");
                     $(".amountonly").doValidation({rule:'numbersonly',prop:{realpart:5,imaginary:2}});
-            }
+                }
                 else if(id[0]=='levyamt'){
                     levyamount_id='levyamounttid_'+id[1];
                     $('#levyamt_'+id[1]).replaceWith("<td class='new' id='"+previous_id+"'><input type='text' id='"+levyamount_id+"' name='data'  class='staffupdate amountonly' maxlength='50'  value='"+tdvalue+"'>");
@@ -1141,7 +1176,7 @@ require_once('application/libraries/EI_HDR.php');
                 }
                 if(check==true)
                 {
-                $('#STDTL_SEARCH_tb_updcpfnumberduplicate').val(tdvalue);
+                    $('#STDTL_SEARCH_tb_updcpfnumberduplicate').val(tdvalue);
                 }
                 else
                 {
@@ -1156,36 +1191,36 @@ require_once('application/libraries/EI_HDR.php');
             });
             //blur function for subject update
             $(document).on('change','.staffupdate',function(){
-                 STDTL_SEARCH_currentval=$(this).val().trim();
+                STDTL_SEARCH_currentval=$(this).val().trim();
                 if(check==true){
                     STDTL_SEARCH_cpfnoval=$('#'+cpfnoid).val();
                     if((STDTL_SEARCH_cpfnoval.length==9) && (STDTL_SEARCH_cpfnoval!=tdvalue)){
-                $.ajax({
-                    type: "POST",
-                    url:SCTDTL_SEARH_controller_url+"dataupd_exists",
-                    data :{'tdvalue':STDTL_SEARCH_currentval},
-                    success: function(data){
-                        $('.preloader').hide();
-                        var STDTL_SEARCH_response=JSON.parse(data.already_exits_array)//retdata.final_array[0];
-                        if(STDTL_SEARCH_response==1){
-                            show_msgbox("STAFF EXPENSE DETAIL ENTRY/SEARCH/UPDATE/DELETE",value_err_array[16].EMC_DATA,"success",false)
-                            $("#data").addClass('invalid');
-                        }
-                        else
-                        {
-                            STDTL_SEARCH_cpf_amount=$('#'+cpfid).val();
-                            if(STDTL_SEARCH_cpf_amount!='')
-                            {
-                                STDTL_SEARCH_updateresult(STDTL_SEARCH_cpf_amount)
+                        $.ajax({
+                            type: "POST",
+                            url:SCTDTL_SEARH_controller_url+"dataupd_exists",
+                            data :{'tdvalue':STDTL_SEARCH_currentval},
+                            success: function(data){
+                                $('.preloader').hide();
+                                var STDTL_SEARCH_response=JSON.parse(data.already_exits_array)//retdata.final_array[0];
+                                if(STDTL_SEARCH_response==1){
+                                    show_msgbox("STAFF EXPENSE DETAIL ENTRY/SEARCH/UPDATE/DELETE",value_err_array[16].EMC_DATA,"success",false)
+                                    $("#data").addClass('invalid');
+                                }
+                                else
+                                {
+                                    STDTL_SEARCH_cpf_amount=$('#'+cpfid).val();
+                                    if(STDTL_SEARCH_cpf_amount!='')
+                                    {
+                                        STDTL_SEARCH_updateresult(STDTL_SEARCH_cpf_amount)
+                                    }
+                                    else
+                                    {
+                                        show_msgbox("STAFF EXPENSE DETAIL ENTRY/SEARCH/UPDATE/DELETE",value_err_array[17].EMC_DATA,"error",false)
+                                    }
+                                }
                             }
-                            else
-                            {
-                                show_msgbox("STAFF EXPENSE DETAIL ENTRY/SEARCH/UPDATE/DELETE",value_err_array[17].EMC_DATA,"error",false)
-                            }
-                        }
+                        });
                     }
-            });
-         }
                     else
                     {
                         show_msgbox("STAFF EXPENSE DETAIL ENTRY/SEARCH/UPDATE/DELETE",value_err_array[12].EMC_DATA,"success",false)
@@ -1200,12 +1235,12 @@ require_once('application/libraries/EI_HDR.php');
                     STDTL_SEARCH_comments=$('#'+comments_id).val();
                     if(STDTL_SEARCH_cpf_amount!='')
                     {
-                    STDTL_SEARCH_updateresult(STDTL_SEARCH_cpf_amount,STDTL_SEARCH_levyamount,STDTL_SEARCH_salaryamount,STDTL_SEARCH_comments);
+                        STDTL_SEARCH_updateresult(STDTL_SEARCH_cpf_amount,STDTL_SEARCH_levyamount,STDTL_SEARCH_salaryamount,STDTL_SEARCH_comments);
                     }
                 }
-       });
+            });
             //SUCCESS FUNCTION FOR UPDATION PART
-                function STDTL_SEARCH_updateresult(STDTL_SEARCH_cpf_amount,STDTL_SEARCH_levyamount,STDTL_SEARCH_salaryamount,STDTL_SEARCH_comments){
+            function STDTL_SEARCH_updateresult(STDTL_SEARCH_cpf_amount,STDTL_SEARCH_levyamount,STDTL_SEARCH_salaryamount,STDTL_SEARCH_comments){
                 if($('#cpfno_'+combineid).hasClass("staffedit")==true){
                     var STDTL_SEARCH_cpfnumber=$('#cpfno_'+combineid).text();
                 }
@@ -1251,7 +1286,7 @@ require_once('application/libraries/EI_HDR.php');
                                 $("#STDTL_SEARCH_lb_cpfnumber_listbox").val('SELECT');
                                 var STDTL_SEARCH_search_option=$('#STDTL_SEARCH_lb_searchoption').val();
                                 if(STDTL_SEARCH_search_option==93)
-                                STDTL_SEARCH_empcpfresult()
+                                    STDTL_SEARCH_empcpfresult()
                                 previous_id=undefined;
                             }
                             else
@@ -1366,116 +1401,116 @@ require_once('application/libraries/EI_HDR.php');
                         </div>
                         <td><input type="text" name="STDTL_INPUT_hidden_employid" id="STDTL_INPUT_hidden_employid" hidden></td>
                     </div>
-                            <div id="STDTL_INPUT_div_employid">
-                                <div id="STDTL_INPUT_tble_employid"></div>
-                            </div>
-                        <div class="row form-group">
-                            <label name="STDTL_INPUT_lbl_cpfnumber" id="STDTL_INPUT_lbl_cpfnumber" class="col-sm-2">CPF NUMBER</label>
-                            <div class="col-sm-10">
-                                <input  type="text" name="STDTL_INPUT_tb_cpfnumber" id="STDTL_INPUT_tb_cpfnumber" maxlength='9' class="alphanumeric" style="width:120px">
-                                <label id="STDTL_INPUT_lbl_validnumber" name="STDTL_INPUT_lbl_validnumber" class="errormsg" disabled="" hidden></label>
-                            </div>
+                    <div id="STDTL_INPUT_div_employid">
+                        <div id="STDTL_INPUT_tble_employid"></div>
+                    </div>
+                    <div class="row form-group">
+                        <label name="STDTL_INPUT_lbl_cpfnumber" id="STDTL_INPUT_lbl_cpfnumber" class="col-sm-2">CPF NUMBER</label>
+                        <div class="col-sm-10">
+                            <input  type="text" name="STDTL_INPUT_tb_cpfnumber" id="STDTL_INPUT_tb_cpfnumber" maxlength='9' class="alphanumeric" style="width:120px">
+                            <label id="STDTL_INPUT_lbl_validnumber" name="STDTL_INPUT_lbl_validnumber" class="errormsg submitValidation" disabled="" hidden></label>
                         </div>
-                        <div class="row form-group">
-                            <label name="STDTL_INPUT_lbl_cpfamount" id="STDTL_INPUT_lbl_cpfamount" class="col-sm-2">CPF AMOUNT</label>
-                            <div class="col-sm-10">
-                                <input  type="text" name="STDTL_INPUT_tb_cpfamount" id="STDTL_INPUT_tb_cpfamount" class="amountonly" style="width:60px">
-                                <label id="STDTL_INPUT_lbl_validamount" name="STDTL_INPUT_lbl_validamount" class="errormsg" disabled="" hidden></label>
-                            </div>
+                    </div>
+                    <div class="row form-group">
+                        <label name="STDTL_INPUT_lbl_cpfamount" id="STDTL_INPUT_lbl_cpfamount" class="col-sm-2">CPF AMOUNT</label>
+                        <div class="col-sm-10">
+                            <input  type="text" name="STDTL_INPUT_tb_cpfamount" id="STDTL_INPUT_tb_cpfamount" class="amountonly submitValidation" style="width:60px">
+                            <label id="STDTL_INPUT_lbl_validamount" name="STDTL_INPUT_lbl_validamount" class="errormsg" disabled="" hidden></label>
                         </div>
-                        <div class="row form-group">
-                            <label name="STDTL_INPUT_lbl_levyamount" id="STDTL_INPUT_lbl_levyamount" class="col-sm-2">LEVY AMOUNT</label>
-                            <div class="col-sm-10">
-                                <input  type="text" name="STDTL_INPUT_tb_levyamount" id="STDTL_INPUT_tb_levyamount" class="amountonly" style="width:60px">
-                            </div>
+                    </div>
+                    <div class="row form-group">
+                        <label name="STDTL_INPUT_lbl_levyamount" id="STDTL_INPUT_lbl_levyamount" class="col-sm-2">LEVY AMOUNT</label>
+                        <div class="col-sm-10">
+                            <input  type="text" name="STDTL_INPUT_tb_levyamount" id="STDTL_INPUT_tb_levyamount" class="amountonly submitValidation" style="width:60px">
                         </div>
-                        <div class="row form-group">
-                            <label name="STDTL_INPUT_lbl_salaryamount" id="STDTL_INPUT_lbl_salaryamount" class="col-sm-2">SALARY AMOUNT<em>*</em></label>
-                            <div class="col-sm-10">
-                                <input  type="text" name="STDTL_INPUT_tb_salaryamount" id="STDTL_INPUT_tb_salaryamount"  class="amountonly" style="width:60px">
-                            </div>
+                    </div>
+                    <div class="row form-group">
+                        <label name="STDTL_INPUT_lbl_salaryamount" id="STDTL_INPUT_lbl_salaryamount" class="col-sm-2">SALARY AMOUNT<em>*</em></label>
+                        <div class="col-sm-10">
+                            <input  type="text" name="STDTL_INPUT_tb_salaryamount" id="STDTL_INPUT_tb_salaryamount"  class="amountonly submitValidation" style="width:60px">
                         </div>
-                        <div class="row form-group">
-                            <label name="STDTL_INPUT_lbl_comments" id="STDTL_INPUT_lbl_comments" class="col-sm-2">COMMENTS</label>
-                            <div class="col-sm-5">
-                                <textarea class="form-control tarea maxlength" rows="8" name="STDTL_INPUT_ta_comments" id="STDTL_INPUT_ta_comments"  >
+                    </div>
+                    <div class="row form-group">
+                        <label name="STDTL_INPUT_lbl_comments" id="STDTL_INPUT_lbl_comments" class="col-sm-2">COMMENTS</label>
+                        <div class="col-sm-5">
+                                <textarea class="form-control tarea maxlength submitValidation" rows="8" name="STDTL_INPUT_ta_comments" id="STDTL_INPUT_ta_comments"  >
                                 </textarea>
-                            </div>
                         </div>
-                        <div class="col-lg-3 col-lg-offset-2">
-                            <input type="button" class=" btn" name="STDTL_INPUT_btn_save" id="STDTL_INPUT_btn_save"  disabled=""   value="SAVE"  >
-                            <input type="button" class=" btn" name="STDTL_INPUT_btn_reset" id="STDTL_INPUT_btn_reset"  value="RESET">
-                        </div>
-                 </div>
+                    </div>
+                    <div class="col-lg-3 col-lg-offset-2">
+                        <input type="button" class=" btn" name="STDTL_INPUT_btn_save" id="STDTL_INPUT_btn_save"  disabled=""   value="SAVE"  >
+                        <input type="button" class=" btn" name="STDTL_INPUT_btn_reset" id="STDTL_INPUT_btn_reset"  value="RESET">
+                    </div>
+                </div>
                 <div id="searchfrm" hidden>
-                        <div class="form-group">
-                            <label  name="STDTL_SEARCH_lbl_searchoption" id="STDTL_SEARCH_lbl_searchoption" class="col-sm-2" hidden>SEARCH BY<em>*</em></label>
-                            <div class="col-sm-4">
-                                <select class="form-control  validation" name="STDTL_SEARCH_lb_searchoption"  required id="STDTL_SEARCH_lb_searchoption"  hidden>
-                                    <option>SELECT</option>
-                                </select/>
-                            </div>
+                    <div class="form-group">
+                        <label  name="STDTL_SEARCH_lbl_searchoption" id="STDTL_SEARCH_lbl_searchoption" class="col-sm-2" hidden>SEARCH BY<em>*</em></label>
+                        <div class="col-sm-4">
+                            <select class="form-control  validation" name="STDTL_SEARCH_lb_searchoption"  required id="STDTL_SEARCH_lb_searchoption"  hidden>
+                                <option>SELECT</option>
+                            </select/>
                         </div>
-<!--                        <div class="col-sm-5">-->
-                        <label id="STDTL_SEARCH_lbl_searchoptionheader" name="STDTL_SEARCH_lbl_searchoptionheader" class="srctitle" disabled=""></label>
-<!--                       </div>-->
-                        <div class="form-group">
-                            <label  name="STDTL_SEARCH_lbl_employeename_listbox" id="STDTL_SEARCH_lbl_employeename_listbox" class="col-sm-2" hidden>EMPLOYEE NAME</label>
-                            <div class="col-sm-4">
-                                <select class="form-control  validation" name="STDTL_SEARCH_lb_employeename_listbox"  required id="STDTL_SEARCH_lb_employeename_listbox" hidden>
-                                    <option>SELECT</option>
-                                </select/>
-                            </div>
+                    </div>
+                    <!--                        <div class="col-sm-5">-->
+                    <label id="STDTL_SEARCH_lbl_searchoptionheader" name="STDTL_SEARCH_lbl_searchoptionheader" class="srctitle" disabled=""></label>
+                    <!--                       </div>-->
+                    <div class="form-group">
+                        <label  name="STDTL_SEARCH_lbl_employeename_listbox" id="STDTL_SEARCH_lbl_employeename_listbox" class="col-sm-2" hidden>EMPLOYEE NAME</label>
+                        <div class="col-sm-4">
+                            <select class="form-control  validation" name="STDTL_SEARCH_lb_employeename_listbox"  required id="STDTL_SEARCH_lb_employeename_listbox" hidden>
+                                <option>SELECT</option>
+                            </select/>
                         </div>
-                        <div class="form-group">
-                            <label  name="STDTL_SEARCH_lbl_cpfnumber_listbox" id="STDTL_SEARCH_lbl_cpfnumber_listbox" class="col-sm-2" hidden>CPF NUMBER</label>
-                            <div class="col-sm-4">
-                                <select class="form-control  validation" name="STDTL_SEARCH_lb_cpfnumber_listbox"  required id="STDTL_SEARCH_lb_cpfnumber_listbox"  hidden>
-                                    <option>SELECT</option>
-                                </select/>
-                            </div>
+                    </div>
+                    <div class="form-group">
+                        <label  name="STDTL_SEARCH_lbl_cpfnumber_listbox" id="STDTL_SEARCH_lbl_cpfnumber_listbox" class="col-sm-2" hidden>CPF NUMBER</label>
+                        <div class="col-sm-4">
+                            <select class="form-control  validation" name="STDTL_SEARCH_lb_cpfnumber_listbox"  required id="STDTL_SEARCH_lb_cpfnumber_listbox"  hidden>
+                                <option>SELECT</option>
+                            </select/>
                         </div>
-                        <div id="STDTL_SEARCH_tble_amt_option" hidden>
+                    </div>
+                    <div id="STDTL_SEARCH_tble_amt_option" hidden>
                         <div class="row form-group">
                             <label name="STDTL_SEARCH_lbl_fromamt" id="STDTL_SEARCH_lbl_fromamt" class="col-sm-2">FROM AMOUNT</label>
                             <div class="col-sm-10">
                                 <input  type="text" name="STDTL_SEARCH_tb_fromamt" id="STDTL_SEARCH_tb_fromamt" class = " amtsubmitval  amountonly" style="width:85px">
                             </div>
                         </div>
-                            <div class="row form-group">
-                            <label name="STDTL_SEARCH_lbl_toamt" id="STDTL_SEARCH_lbl_toamt" class="col-sm-2">TO AMOUNT</label>
-                                <div class="col-sm-10">
-                                <input  type="text" name="STDTL_SEARCH_tb_toamt" id="STDTL_SEARCH_tb_toamt" class = " amtsubmitval  amountonly" style="width:85px">
-                                    <label class="errormsg" id='STDTL_SEARCH_lbl_amounterrormsg'  hidden></label>
-                                </div>
-                        </div>
-                            <div class="col-lg-offset-2">
-                                <input type="button"   id="STDTL_SEARCH_btn_amtsearch"   value="SEARCH" class="btn" disabled hidden />
-                            </div>
-                        </div>
-                        <div id="STDTL_SEARCH_tble_comments_option" hidden>
-                            <div class="row form-group">
-                                <label name="STDTL_INPUT_lbl_comments" id="STDTL_INPUT_lbl_comments" class="col-sm-2">COMMENTS</label>
-                                <div class="col-sm-10">
-                                    <textarea name="STDTL_SEARCH_ta_comments" id="STDTL_SEARCH_ta_comments" class="auto commentsresultsvalidate form-control" ></textarea>
-                                </div>
-                            </div>
-                            <div class="col-lg-offset-2">
-                                <input type="button"   id="STDTL_SEARCH_btn_search_comments"   value="SEARCH" class="btn" disabled hidden />
-                            </div>
-                        </div>
-                        <div class="srctitle" name="STDTL_SEARCH_div_header" id="STDTL_SEARCH_div_header"></div><br>
-                        <div class="errormsg" name="STDTL_SEARCH_div_headernodata" id="STDTL_SEARCH_div_headernodata"></div>
-                        <div class="table-responsive" id="STDTL_SEARCH_div_flexdata_result" style="  overflow-y: hidden;" hidden>
-                            <section>
-                            </section>
-                        </div>
                         <div class="row form-group">
+                            <label name="STDTL_SEARCH_lbl_toamt" id="STDTL_SEARCH_lbl_toamt" class="col-sm-2">TO AMOUNT</label>
                             <div class="col-sm-10">
-                                <input  type="text" name="STDTL_SEARCH_tb_updcpfnumberduplicate" id="STDTL_SEARCH_tb_updcpfnumberduplicate" maxlength='9' class="alphanumeric" style="width:120px" hidden>
+                                <input  type="text" name="STDTL_SEARCH_tb_toamt" id="STDTL_SEARCH_tb_toamt" class = " amtsubmitval  amountonly" style="width:85px">
+                                <label class="errormsg" id='STDTL_SEARCH_lbl_amounterrormsg'  hidden></label>
                             </div>
                         </div>
-                        <fieldset>
+                        <div class="col-lg-offset-2">
+                            <input type="button"   id="STDTL_SEARCH_btn_amtsearch"   value="SEARCH" class="btn" disabled hidden />
+                        </div>
+                    </div>
+                    <div id="STDTL_SEARCH_tble_comments_option" hidden>
+                        <div class="row form-group">
+                            <label name="STDTL_INPUT_lbl_comments" id="STDTL_INPUT_lbl_comments" class="col-sm-2">COMMENTS</label>
+                            <div class="col-sm-10">
+                                <textarea name="STDTL_SEARCH_ta_comments" id="STDTL_SEARCH_ta_comments" class="auto commentsresultsvalidate form-control" ></textarea>
+                            </div>
+                        </div>
+                        <div class="col-lg-offset-2">
+                            <input type="button"   id="STDTL_SEARCH_btn_search_comments"   value="SEARCH" class="btn" disabled hidden />
+                        </div>
+                    </div>
+                    <div class="srctitle" name="STDTL_SEARCH_div_header" id="STDTL_SEARCH_div_header"></div><br>
+                    <div class="errormsg" name="STDTL_SEARCH_div_headernodata" id="STDTL_SEARCH_div_headernodata"></div>
+                    <div class="table-responsive" id="STDTL_SEARCH_div_flexdata_result" style="  overflow-y: hidden;" hidden>
+                        <section>
+                        </section>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col-sm-10">
+                            <input  type="text" name="STDTL_SEARCH_tb_updcpfnumberduplicate" id="STDTL_SEARCH_tb_updcpfnumberduplicate" maxlength='9' class="alphanumeric" style="width:120px" hidden>
+                        </div>
+                    </div>
+                    <fieldset>
                 </div>
         </div>
     </form>

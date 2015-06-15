@@ -1266,7 +1266,7 @@ var BDLY_SRC_flag_autocom='';
             $(".preloader").hide();
             $('#BDLY_INPUT_btn_multisubmitbutton').attr('disabled','disabled')
             $('#BDLY_INPUT_tble_unitexpense').empty();
-            $('<tr><td nowrap><label id="BDLY_INPUT_lbl_uexp_unit" >UNIT</label><em>*</em> </td><td nowrap><label  id="BDLY_INPUT_lbl_uexp_category" >CATEGORY</label><em>*</em></td><td nowrap><label  id="BDLY_INPUT_lbl_uexp_customer" hidden>CUSTOMER<em>*</em></label></td><td nowrap><label  id="BDLY_INPUT_lbl_uexp_customerid" hidden></label></td><td nowrap> <label id="BDLY_INPUT_lbl_uexp_invoicedate" >INVOICE DATE</label><em>*</em> </td><td ><label id="BDLY_INPUT_lbl_uexp_invoiceitem" >INVOICE ITEM</label><em>*</em> </td><td nowrap><label id="BDLY_INPUT_lbl_uexp_invoicefrom" >INVOICE FROM</label><em>*</em></td><td nowrap><label id="BDLY_INPUT_lbl_uexp_amount" >AMOUNT</label><em>*</em> </td><td nowrap><label id="BDLY_INPUT_lbl_uexp_comments" >COMMENTS</label> </td><td ><label id="BDLY_INPUT_lbl_uexp_add" ></label> </td><td ><label id="BDLY_INPUT_lbl_uexp_del" ></label> </td></tr><tr><td style="max-width:200px;"> <select  class="BDLY_INPUT_uexp_class_unit uexp_submultivalid form-control"  name="BDLY_INPUT_lb_uexp_unit[]" id="BDLY_INPUT_lb_uexp_unit-1" style="display: none;" hidden><option value="">SELECT</option></select> </td> <td style="max-width:200px;"><select  name="BDLY_INPUT_lb_uexp_category[]" class="uexp_submultivalid BDLY_INPUT_uexp_class_category form-control" id="BDLY_INPUT_lb_uexp_category-1" style="display: none;" hidden><option value="" >SELECT</option></select></td><td style="max-width:200px;"><select  name="BDLY_INPUT_lb_uexp_customer[]" class="uexp_submultivalid BDLY_INPUT_uexp_class_custname form-control" id="BDLY_INPUT_lb_uexp_customer1" style="display: none;" hidden><option value="" >SELECT</option></select></td><td style="max-width:200px;"><table id="multiplecustomer-1" width="250px" hidden></table><td style="max-width:150px;"><input  class="datepickdate uexp_submultivalid datemandtry form-control "  type="text" name ="BDLY_INPUT_db_uexp_invoicedate[]" id="BDLY_INPUT_db_uexp_invoicedate1" style="width:100px;display: none;" hidden /> </td><td style="max-width:250px;"><textarea  class="uexp_submultivalid form-control"  name ="BDLY_INPUT_tb_uexp_invoiceitem[]" id="BDLY_INPUT_tb_uexp_invoiceitem1" style="display: none;" hidden/></textarea> </td><td style="max-width:200px;"><input  class="uexp_submultivalid autosize autocomplete form-control" type="text" name ="BDLY_INPUT_tb_uexp_invoicefrom[]" id="BDLY_INPUT_tb_uexp_invoicefrom1" style="display: none;" hidden/> </td><td style="max-width:100px;"><input  class="amtonlyfivedigit uexp_submultivalid form-control"  type="text" name ="BDLY_INPUT_tb_uexp_amount[]" id="BDLY_INPUT_tb_uexp_amount1" style="width:60px;display: none;" hidden /> </td><td><textarea style="max-width:250px;" row="3" name ="BDLY_INPUT_ta_uexpcomments[]" id="BDLY_INPUT_ta_uexpcomments1" class=" uexp_submultivalid form-control" hidden ></textarea> </td><td><input type="button" value="+" class="uexp_addbttn" alt="Add Row" height="30" width="30" name ="BDLY_INPUT_uexpadd[]" id="BDLY_INPUT_uexp_add1" disabled > </td><td><input  type="button" value="-" class="uexp_deletebttn" alt="delete Row" height="30" width="30" name ="BDLY_INPUT_uexpdelete[]" id="BDLY_INPUT_uexp_del1" disabled ></td><td><input    type="text" name ="BDLY_INPUT_tb_uexp_hideradioid[]" id="BDLY_INPUT_tb_uexp_hideradioid1" style="width:75px;" hidden/> </td></tr>').appendTo($('#BDLY_INPUT_tble_unitexpense'))
+            $('<tr><td nowrap><label id="BDLY_INPUT_lbl_uexp_unit" >UNIT</label><em>*</em> </td><td nowrap><label  id="BDLY_INPUT_lbl_uexp_category" >CATEGORY</label><em>*</em></td><td nowrap><label  id="BDLY_INPUT_lbl_uexp_customer" hidden>CUSTOMER<em>*</em></label></td><td nowrap><label  id="BDLY_INPUT_lbl_uexp_customerid" hidden></label></td><td nowrap> <label id="BDLY_INPUT_lbl_uexp_invoicedate" >INVOICE DATE</label><em>*</em> </td><td ><label id="BDLY_INPUT_lbl_uexp_invoiceitem" >INVOICE ITEM</label><em>*</em> </td><td nowrap><label id="BDLY_INPUT_lbl_uexp_invoicefrom" >INVOICE FROM</label><em>*</em></td><td nowrap><label id="BDLY_INPUT_lbl_uexp_amount" >AMOUNT</label><em>*</em> </td><td nowrap><label id="BDLY_INPUT_lbl_uexp_comments" >COMMENTS</label> </td><td ><label id="BDLY_INPUT_lbl_uexp_add" ></label> </td><td ><label id="BDLY_INPUT_lbl_uexp_del" ></label> </td></tr><tr><td style="max-width:200px;"> <select  class="BDLY_INPUT_uexp_class_unit uexp_submultivalid form-control"  name="BDLY_INPUT_lb_uexp_unit[]" id="BDLY_INPUT_lb_uexp_unit-1" style="display: none;" hidden><option value="">SELECT</option></select> </td> <td style="max-width:200px;"><select  name="BDLY_INPUT_lb_uexp_category[]" class="uexp_submultivalid BDLY_INPUT_uexp_class_category form-control" id="BDLY_INPUT_lb_uexp_category-1" style="display: none;" hidden><option value="" >SELECT</option></select></td><td style="max-width:200px;"><select  name="BDLY_INPUT_lb_uexp_customer[]" class="uexp_submultivalid BDLY_INPUT_uexp_class_custname form-control" id="BDLY_INPUT_lb_uexp_customer1" style="display: none;" hidden><option value="" >SELECT</option></select></td><td style="max-width:200px;"><table id="multiplecustomer-1" width="250px" hidden></table><td style="max-width:150px;"><input  class="datepickdate uexp_submultivalid datemandtry form-control "  type="text" name ="BDLY_INPUT_db_uexp_invoicedate[]" id="BDLY_INPUT_db_uexp_invoicedate1" style="width:100px;display: none;" hidden /> </td><td style="max-width:250px;"><textarea  class="uexp_submultivalid form-control"  name ="BDLY_INPUT_tb_uexp_invoiceitem[]" id="BDLY_INPUT_tb_uexp_invoiceitem1" style="display: none;" hidden/></textarea> </td><td style="max-width:200px;"><input  class="uexp_submultivalid autosize autocomplete form-control" type="text" name ="BDLY_INPUT_tb_uexp_invoicefrom[]" id="BDLY_INPUT_tb_uexp_invoicefrom1" style="display: none;" hidden/> </td><td style="max-width:100px;"><input  class="amtonlyfivedigit uexp_submultivalid form-control"  type="text" name ="BDLY_INPUT_tb_uexp_amount[]" id="BDLY_INPUT_tb_uexp_amount1" style="width:65px;display: none;" hidden /> </td><td><textarea style="max-width:250px;" row="3" name ="BDLY_INPUT_ta_uexpcomments[]" id="BDLY_INPUT_ta_uexpcomments1" class=" uexp_submultivalid form-control" hidden ></textarea> </td><td><input type="button" value="+" class="uexp_addbttn" alt="Add Row" height="30" width="30" name ="BDLY_INPUT_uexpadd[]" id="BDLY_INPUT_uexp_add1" disabled > </td><td><input  type="button" value="-" class="uexp_deletebttn" alt="delete Row" height="30" width="30" name ="BDLY_INPUT_uexpdelete[]" id="BDLY_INPUT_uexp_del1" disabled ></td><td><input    type="text" name ="BDLY_INPUT_tb_uexp_hideradioid[]" id="BDLY_INPUT_tb_uexp_hideradioid1" style="width:75px;" hidden/> </td></tr>').appendTo($('#BDLY_INPUT_tble_unitexpense'))
             $(".amtonlyfivedigit").doValidation({rule:'numbersonly',prop:{realpart:5,imaginary:2}});
             $(".autosize").doValidation({rule:'general',prop:{autosize:true}});
             $(".datepickdate").datepicker({dateFormat:'dd-mm-yy', changeYear: true, changeMonth: true});
@@ -2777,7 +2777,7 @@ var BDLY_SRC_flag_autocom='';
             oCell.innerHTML ="<input  class='uexp_submultivalid autosize autocomplete form-control'  type='text' name ='BDLY_INPUT_tb_uexp_invoicefrom[]' id='"+"BDLY_INPUT_tb_uexp_invoicefrom"+newid+"'  style='display:none;' hidden/> ";
             $(".autosize").doValidation({rule:'general',prop:{autosize:true}});
             oCell = newRow.insertCell(7);
-            oCell.innerHTML ="<input  class='amtonlyfivedigit uexp_submultivalid form-control' type='text' name ='BDLY_INPUT_tb_uexp_amount[]' id='"+"BDLY_INPUT_tb_uexp_amount"+newid+"' style='width:60px;display:none;' hidden /> ";
+            oCell.innerHTML ="<input  class='amtonlyfivedigit uexp_submultivalid form-control' type='text' name ='BDLY_INPUT_tb_uexp_amount[]' id='"+"BDLY_INPUT_tb_uexp_amount"+newid+"' style='width:65px;display:none;' hidden /> ";
             $(".amtonlyfivedigit").doValidation({rule:'numbersonly',prop:{realpart:5,imaginary:2}});
             oCell = newRow.insertCell(8);
             oCell.innerHTML = "<textarea row='2' class=' uexp_submultivalid form-control' name ='BDLY_INPUT_ta_uexpcomments[]' id='"+"BDLY_INPUT_ta_uexpcomments"+newid+"' style='display:none;' hidden></textarea>";
@@ -4873,7 +4873,7 @@ var BDLY_SRC_flag_autocom='';
                             $.ajax({
                                 type: "POST",
                                 url: controller_url+"BDLY_SRC_check_access_cardOrUnitno",
-                                data:{'BDLY_SCR_DT_access_card':BDLY_SCR_DT_access_card,'BDLY_SRC_selectedexptype':BDLY_SRC_selectedexptype},
+                                data:{'inputval':BDLY_SCR_DT_access_card,'BDLY_SRC_selectedexptype':BDLY_SRC_selectedexptype},
                                 success: function(res) {
                                     $('.preloader').hide();
                                     var responsearray=JSON.parse(res);
@@ -4896,7 +4896,7 @@ var BDLY_SRC_flag_autocom='';
                     BDLY_SRC_selectedexptype=$("#BDLY_SRC_lb_ExpenseList").val()
                 $(".preloader").fadeOut(500);
                 var BDLY_SRC_cardalexistserr;
-                if(response==true)
+                if(response==true || response=='true' )
                 {
                     $(".clsupdatebtn").removeClass('update');
                     if(selectedSearchopt==191){BDLY_SRC_cardalexistserr=BDLY_SRC_finalerrr[4];}
@@ -5008,8 +5008,7 @@ var BDLY_SRC_flag_autocom='';
                 url: controller_url+"BDLY_SRC_DeleteRowData",
                 data:{'BDLY_SRC_DeleteKey':BDLY_SRC_DeleteKey,'selectedexpense':selectedexpense},
                 success: function(res) {
-                    $('.preloader').hide();
-                    var responsearray=JSON.parse(res);
+                    var responsearray=res;
                     BDLY_SRC_DT_success_deleterow(responsearray)
 
                 },
@@ -5043,8 +5042,8 @@ var BDLY_SRC_flag_autocom='';
                     if(BDLY_SRC_sucsval==2)
                     {
                         $("#BDLY_SRC_div_searchresult,#BDLY_SRC_div_searchresult_head,#BDLY_SRC_nodyndataerr").html('');
-                        $('#BDLY_btn_pdf').hide();
                         $(".preloader").fadeOut(500);
+                        $('#BDLY_btn_pdf').hide();
                         show_msgbox("BIZ EXPENSE DAILY ENTRY/SEARCH/UPDATE/DELETE",BDLY_SRC_confirmmessages[1].replace('[TYPE]',$('#BDLY_SRC_lb_ExpenseList').find('option:selected').text()),"success",false);
                     }
                 }
@@ -5055,7 +5054,6 @@ var BDLY_SRC_flag_autocom='';
                         url: controller_url+"BDLY_SRC_getAnyTypeExpData",
                         data:$('#BDLY_INPUT_form_dailyentry').serialize(),
                         success: function(res) {
-                            $('.preloader').hide();
                             var response=JSON.parse(res);
                             BDLY_SRC_UpdateDataTable(response)
                         },
@@ -5908,7 +5906,7 @@ var BDLY_SRC_flag_autocom='';
                     <div id="BDLY_INPUT_tble_purchase" hidden>
                         <div class="form-group">
                             <label  id='BDLY_INPUT_lbl_access_cardno' class="col-sm-2">CARD NO<em>*</em></label>
-                            <div class="col-sm-2"><input type="text" id="BDLY_INPUT_tb_access_cardno" name="BDLY_INPUT_tb_access_cardno" placeholder="Card No" style="width:73px;" class="numonly BDLY_INPUT_class_hksubmitvalidate form-control" ></div>
+                            <div class="col-sm-2"><input type="text" id="BDLY_INPUT_tb_access_cardno" name="BDLY_INPUT_tb_access_cardno" placeholder="Card No" style="width:85px;" class="numonly BDLY_INPUT_class_hksubmitvalidate form-control" ></div>
                             <label class="errormsg" id="BDLY_INPUT_lbl_pcarderrmsg" ></label>
                         </div>
                         <div class="form-group">
@@ -6097,7 +6095,7 @@ var BDLY_SRC_flag_autocom='';
                             <td><input  class='datepickdate uexp_submultivalid datemandtry'  type="text" name ="BDLY_INPUT_db_uexp_invoicedate[]" id="BDLY_INPUT_db_uexp_invoicedate1" style="width:75px;" hidden /> </td>
                             <td><textarea  class='uexp_submultivalid'  name ="BDLY_INPUT_tb_uexp_invoiceitem[]" id="BDLY_INPUT_tb_uexp_invoiceitem1"  hidden></textarea> </td>
                             <td><input  class=' uexp_submultivalid autosize autocomplete'  type="text" name ="BDLY_INPUT_tb_uexp_invoicefrom[]" id="BDLY_INPUT_tb_uexp_invoicefrom1"  hidden/> </td>
-                            <td><input  class="amtonlyfivedigit uexp_submultivalid BDLY_INPUT_class_numonly"  type="text" name ="BDLY_INPUT_tb_uexp_amount[]" id="BDLY_INPUT_tb_uexp_amount1" style="width:60px;" hidden /> </td>
+                            <td><input  class="amtonlyfivedigit uexp_submultivalid BDLY_INPUT_class_numonly"  type="text" name ="BDLY_INPUT_tb_uexp_amount[]" id="BDLY_INPUT_tb_uexp_amount1" style="width:65px;" hidden /> </td>
                             <td><textarea row="2" name ="BDLY_INPUT_ta_uexpcomments[]" id="BDLY_INPUT_ta_uexpcomments1" class=" uexp_submultivalid" hidden ></textarea> </td><td>
                                 <input type='button' value='+' class='uexp_addbttn' alt='Add Row' height='30' width='30' name ='BDLY_INPUT_uexpadd[]' id='BDLY_INPUT_uexp_add1'disabled > </td><td>
                                 <input  type='button' value='-' class='uexp_deletebttn' alt='delete Row' height='30' width='30' name ='BDLY_INPUT_uexpdelete[]' id='BDLY_INPUT_uexp_del1' disabled ></td>

@@ -43,7 +43,8 @@ class Ctrl_Biz_Expense_Detail_Entry_Search_Update_Delete extends CI_Controller{
         $USERSTAMP= $this->Mdl_eilib_common_function->getSessionUserStamp();
         $calid=$this->Cal_service();
         $BDTL_INPUT_tb_newaircon=$this->input->post('BDTL_INPUT_tb_newaircon');
-        $result = $this->Mdl_biz_expense_detail_entry_search_update_delete->BDTL_INPUT_save($USERSTAMP,$BDTL_INPUT_tb_newaircon,$calid) ;
+        $BDTL_INPUT_aircon_oldservice = $this->input->post('BDTL_INPUT_lb_airconservicedby');
+        $result = $this->Mdl_biz_expense_detail_entry_search_update_delete->BDTL_INPUT_save($USERSTAMP,$BDTL_INPUT_tb_newaircon,$calid,$BDTL_INPUT_aircon_oldservice) ;
         echo JSON_encode($result);
     }
  //SEARCH AND UPDATE FORM

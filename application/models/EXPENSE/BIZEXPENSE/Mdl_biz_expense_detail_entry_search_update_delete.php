@@ -92,7 +92,7 @@ Class Mdl_biz_expense_detail_entry_search_update_delete extends CI_Model {
         return $BDTL_INPUT_primaryid;
   }
     /*-----------------------------CODING TO SAVE THE AIRCON DETAIL,CARPARK,ELECTRICITY,DIGITAL VOICE,STARHUB IN DATABASE----------------------------------------------------------*/
-    public function BDTL_INPUT_save($USERSTAMP,$BDTL_INPUT_tb_newaircon,$calid)
+    public function BDTL_INPUT_save($USERSTAMP,$BDTL_INPUT_tb_newaircon,$calid,$BDTL_INPUT_aircon_oldservice)
      {
          try{
             $successflag=1;
@@ -100,7 +100,6 @@ Class Mdl_biz_expense_detail_entry_search_update_delete extends CI_Model {
           $BDTL_INPUT_expensetypes =$_POST['BDTL_INPUT_lb_expense_type'];
           $BDTL_INPUT_unitno =$_POST['BDTL_INPUT_lb_unitno_list'];
           $BDTL_INPUT_unitnoaircon =$_POST['BDTL_INPUT_hidden_unitno'];
-          $BDTL_INPUT_aircon_oldservice = $_POST['BDTL_INPUT_lb_airconservicedby'];
           $BDTL_INPUT_aircon_newservice = $BDTL_INPUT_tb_newaircon;
           $BDTL_INPUT_aircon_comments=$_POST['BDTL_INPUT_ta_aircon_comments'];
           $BDTL_INPUT_aircon_comments=$this->db->escape_like_str($BDTL_INPUT_aircon_comments);
@@ -648,7 +647,7 @@ Class Mdl_biz_expense_detail_entry_search_update_delete extends CI_Model {
     }
     else if($BTDTL_SEARCH_searchby==108)//SEARCH BY DIGITAL COMMENTS
     {
-        $BTDTL_SEARCH_searchval=$this->db->escape_like_sr($BTDTL_SEARCH_searchval);
+        $BTDTL_SEARCH_searchval=$this->db->escape_like_str($BTDTL_SEARCH_searchval);
         $BTDTL_SEARCH_select_digital = "SELECT EDDV.EDDV_ID,U.UNIT_ID,U.UNIT_NO,EC.ECN_DATA,EDDV.EDDV_DIGITAL_VOICE_NO,EDDV.EDDV_DIGITAL_ACCOUNT_NO,EDDV.EDDV_COMMENTS,ULD.ULD_LOGINID,DATE_FORMAT(CONVERT_TZ(EDDV.EDDV_TIMESTAMP,$timeZoneFormat),'%d-%m-%Y %T') AS TIMESTAMP FROM EXPENSE_DETAIL_DIGITAL_VOICE EDDV LEFT JOIN EXPENSE_CONFIGURATION EC ON EDDV.ECN_ID=EC.ECN_ID,UNIT U,VW_ACTIVE_UNIT VAU ,USER_LOGIN_DETAILS ULD WHERE ULD.ULD_ID=EDDV.ULD_ID AND EDDV.EDDV_COMMENTS='$BTDTL_SEARCH_searchval' AND EDDV.UNIT_ID=U.UNIT_ID  AND EDDV.UNIT_ID=VAU.UNIT_ID ORDER BY U.UNIT_NO,EDDV.EDDV_COMMENTS";
     }
     else if($BTDTL_SEARCH_searchby==107)//SEARCH BY DIGITAL INVOICE TO
@@ -839,7 +838,7 @@ Class Mdl_biz_expense_detail_entry_search_update_delete extends CI_Model {
             $BTDTL_SEARCH_selectrecrv=$row['EDAS_REC_VER'];
         }
         $BTDTL_SEARCH_insertflag=0;
-        $BTDTL_SEARCH_recordversion='null';
+        $BTDTL_SEARCH_recordversion=null;
         $BTDTL_SEARCH_select_recordversion = "SELECT * FROM $BTDTL_SEARCH_detailData[1] WHERE UNIT_ID='$unitid' AND $BTDTL_SEARCH_detailData[3]=(SELECT MAX($BTDTL_SEARCH_detailData[3]) FROM $BTDTL_SEARCH_detailData[1] WHERE UNIT_ID=$unitid)";
         $BTDTL_SEARCH_recordversion_rs = $this->db->query($BTDTL_SEARCH_select_recordversion);
         foreach($BTDTL_SEARCH_recordversion_rs->result_array() as $row){
@@ -891,7 +890,7 @@ Class Mdl_biz_expense_detail_entry_search_update_delete extends CI_Model {
             $BTDTL_SEARCH_selectrecrv=$row['EDCP_REC_VER'];
         }
         $BTDTL_SEARCH_insertflag=0;
-        $BTDTL_SEARCH_recordversion='null';
+        $BTDTL_SEARCH_recordversion=null;
         $BTDTL_SEARCH_select_recordversion = "SELECT * FROM $BTDTL_SEARCH_detailData[1] WHERE UNIT_ID='$unitid' AND $BTDTL_SEARCH_detailData[3]=(SELECT MAX($BTDTL_SEARCH_detailData[3]) FROM $BTDTL_SEARCH_detailData[1] WHERE UNIT_ID=$unitid)";
         $BTDTL_SEARCH_recordversion_rs = $this->db->query($BTDTL_SEARCH_select_recordversion);
         foreach($BTDTL_SEARCH_recordversion_rs->result_array() as $row){
@@ -940,7 +939,7 @@ Class Mdl_biz_expense_detail_entry_search_update_delete extends CI_Model {
             $BTDTL_SEARCH_selectrecrv=$row['EDDV_REC_VER'];
         }
         $BTDTL_SEARCH_insertflag=0;
-        $BTDTL_SEARCH_recordversion='null';
+        $BTDTL_SEARCH_recordversion=null;
         $BTDTL_SEARCH_select_recordversion = "SELECT * FROM $BTDTL_SEARCH_detailData[1] WHERE UNIT_ID='$unitid' AND $BTDTL_SEARCH_detailData[3]=(SELECT MAX($BTDTL_SEARCH_detailData[3]) FROM $BTDTL_SEARCH_detailData[1] WHERE UNIT_ID=$unitid)";
         $BTDTL_SEARCH_recordversion_rs = $this->db->query($BTDTL_SEARCH_select_recordversion);
         foreach($BTDTL_SEARCH_recordversion_rs->result_array() as $row){
@@ -951,14 +950,13 @@ Class Mdl_biz_expense_detail_entry_search_update_delete extends CI_Model {
                 $BTDTL_SEARCH_oldinvoiceto='null';
             $BTDTL_SEARCH_olddigvoiceno= $row["EDDV_DIGITAL_VOICE_NO"];
             $BTDTL_SEARCH_olddigacntno= $row["EDDV_DIGITAL_ACCOUNT_NO"];
-            if($BTDTL_SEARCH_oldinvoiceto!=$ecn_id&&$BTDTL_SEARCH_olddigvoiceno!=$invoiceno&&$BTDTL_SEARCH_olddigacntno!=$acctno&&$BTDTL_SEARCH_selectrecrv==$BTDTL_SEARCH_recordversion){
+            if(($BTDTL_SEARCH_oldinvoiceto!=$ecn_id || $BTDTL_SEARCH_olddigvoiceno!=$invoiceno ||$BTDTL_SEARCH_olddigacntno!=$acctno)&&$BTDTL_SEARCH_selectrecrv==$BTDTL_SEARCH_recordversion){
                 $BTDTL_SEARCH_insertflag=1;
             }
             else{
                 $BTDTL_SEARCH_oldrecordversion=$BTDTL_SEARCH_selectrecrv;
             }
         }
-
         if($BTDTL_SEARCH_recordversion==null)
             $BTDTL_SEARCH_recordversion=1;
         else
@@ -969,7 +967,7 @@ Class Mdl_biz_expense_detail_entry_search_update_delete extends CI_Model {
             $comments="'$comments'";}
         if($BTDTL_SEARCH_insertflag==1||$BTDTL_SEARCH_recordversion==1)
         {
-            $BTDTL_SEARCH_insert = "INSERT INTO EXPENSE_DETAIL_DIGITAL_VOICE(UNIT_ID,ECN_ID,EDDV_REC_VER,EDDV_DIGITAL_VOICE_NO,EDDV_DIGITAL_ACCOUNT_NO,EDDV_COMMENTS,ULD_ID)VALUES('$unitid','$ecn_id','$BTDTL_SEARCH_recordversion','$invoiceno','$acctno',$$comments,(SELECT ULD_ID FROM USER_LOGIN_DETAILS WHERE ULD_LOGINID='$USERSTAMP'))";
+            $BTDTL_SEARCH_insert = "INSERT INTO EXPENSE_DETAIL_DIGITAL_VOICE(UNIT_ID,ECN_ID,EDDV_REC_VER,EDDV_DIGITAL_VOICE_NO,EDDV_DIGITAL_ACCOUNT_NO,EDDV_COMMENTS,ULD_ID)VALUES('$unitid','$ecn_id','$BTDTL_SEARCH_recordversion','$invoiceno','$acctno',$comments,(SELECT ULD_ID FROM USER_LOGIN_DETAILS WHERE ULD_LOGINID='$USERSTAMP'))";
         }
         else{
             $BTDTL_SEARCH_insert="UPDATE EXPENSE_DETAIL_DIGITAL_VOICE SET EDDV_COMMENTS=$comments,EDDV_DIGITAL_ACCOUNT_NO='$acctno',EDDV_DIGITAL_VOICE_NO='$invoiceno',ECN_ID='$ecn_id',ULD_ID=(SELECT ULD_ID FROM USER_LOGIN_DETAILS WHERE ULD_LOGINID='$USERSTAMP') WHERE UNIT_ID='$unitid' AND EDDV_REC_VER='$BTDTL_SEARCH_oldrecordversion'";
@@ -993,7 +991,7 @@ Class Mdl_biz_expense_detail_entry_search_update_delete extends CI_Model {
             $BTDTL_SEARCH_selectrecrv=$row['EDE_REC_VER'];
         }
         $BTDTL_SEARCH_insertflag=0;
-        $BTDTL_SEARCH_recordversion='null';
+        $BTDTL_SEARCH_recordversion=null;
         $BTDTL_SEARCH_select_recordversion = "SELECT * FROM $BTDTL_SEARCH_detailData[1] WHERE UNIT_ID='$unitid' AND $BTDTL_SEARCH_detailData[3]=(SELECT MAX($BTDTL_SEARCH_detailData[3]) FROM $BTDTL_SEARCH_detailData[1] WHERE UNIT_ID=$unitid)";
          $BTDTL_SEARCH_recordversion_rs = $this->db->query($BTDTL_SEARCH_select_recordversion);
         foreach($BTDTL_SEARCH_recordversion_rs->result_array() as $row){
@@ -1036,7 +1034,7 @@ Class Mdl_biz_expense_detail_entry_search_update_delete extends CI_Model {
         if(($appldate=="")||($appldate=='undefined'))
         {
             $appldate='null';
-            $BTDTL_SEARCH_starhub_tbleappldate=$appldate;
+            $BTDTL_SEARCH_starhub_tbleappldate=null;
         }
         else
         {
@@ -1047,7 +1045,7 @@ Class Mdl_biz_expense_detail_entry_search_update_delete extends CI_Model {
         if(($cablestartdte=="")||($cablestartdte=='undefined'))
         {
             $cablestartdte='null';
-            $BTDTL_SEARCH_starhub_tblecablestartdate=$cablestartdte;}
+            $BTDTL_SEARCH_starhub_tblecablestartdate=null;}
 
         else
         {
@@ -1058,7 +1056,7 @@ Class Mdl_biz_expense_detail_entry_search_update_delete extends CI_Model {
         }
         if(($cableenddate=="")||($cableenddate=='undefined')){
             $cableenddate='null';
-            $BTDTL_SEARCH_starhub_tblecableenddate=$cableenddate;}
+            $BTDTL_SEARCH_starhub_tblecableenddate=null;}
 
         else
         {
@@ -1070,7 +1068,7 @@ Class Mdl_biz_expense_detail_entry_search_update_delete extends CI_Model {
         }
         if(($internetstartdte=="")||($internetstartdte=='undefined')){
             $internetstartdte='null';
-            $BTDTL_SEARCH_starhub_tbleinternetstartdate=$internetstartdte;}
+            $BTDTL_SEARCH_starhub_tbleinternetstartdate=null;}
         else
         {
             $BTDTL_SEARCH_starhub_internetstartdate_shtime=date('Y-m-d',strtotime($internetstartdte));
@@ -1080,7 +1078,7 @@ Class Mdl_biz_expense_detail_entry_search_update_delete extends CI_Model {
         }
         if(($internetenddate=="")||($internetenddate=='undefined')){
             $internetenddate='null';
-            $BTDTL_SEARCH_starhub_tbleinternetenddate=$internetenddate;}
+            $BTDTL_SEARCH_starhub_tbleinternetenddate=null;}
         else
         {
             $BTDTL_SEARCH_starhub_internetenddate_shtime=date('Y-m-d',strtotime($internetenddate));
@@ -1088,13 +1086,17 @@ Class Mdl_biz_expense_detail_entry_search_update_delete extends CI_Model {
             $BTDTL_SEARCH_starhub_tbleinternetenddate=$internetenddate;
             $internetenddate="'$internetenddate'";
         }
-        if(($invoiceto=='SELECT')||($invoiceto==''))
-            $invoiceto='null';
-        else
-            $invoiceto="'$invoiceto'";
+        if(($invoiceto=='SELECT')||($invoiceto=='')) {
+            $invoiceto = 'null';
+            $BTDTL_invoiceto = null;
+        }
+        else {
+            $invoiceto = "'$invoiceto'";
+            $BTDTL_invoiceto=$invoiceto;
+            }
         if($ssid=="")//SSID
         {  $ssid='null';
-            $BTDTL_SEARCH_tblestarhub_ssid=$ssid;
+            $BTDTL_SEARCH_tblestarhub_ssid=null;
         }else{
             $BTDTL_SEARCH_tblestarhub_ssid=$ssid;
                $ssid=$this->db->escape_like_str($ssid);
@@ -1102,7 +1104,7 @@ Class Mdl_biz_expense_detail_entry_search_update_delete extends CI_Model {
         }
         if($pwd=="")//PSWD
         {  $pwd='null';
-            $BTDTL_SEARCH_tblestarhub_pwd=$pwd;
+            $BTDTL_SEARCH_tblestarhub_pwd=null;
              }
         else{
             $BTDTL_SEARCH_tblestarhub_pwd=$pwd;
@@ -1111,7 +1113,7 @@ Class Mdl_biz_expense_detail_entry_search_update_delete extends CI_Model {
         }
         if($cablebox=="")//CABLE SLNO
         {  $cablebox='null';
-            $BTDTL_SEARCH_tblestarhub_cableboxno=$cablebox;
+            $BTDTL_SEARCH_tblestarhub_cableboxno=null;
         }else{
             $BTDTL_SEARCH_tblestarhub_cableboxno=$cablebox;
                $cablebox=$this->db->escape_like_str($cablebox);
@@ -1119,7 +1121,7 @@ Class Mdl_biz_expense_detail_entry_search_update_delete extends CI_Model {
         }
         if($modemno=="")//MODEM SLNO
         {  $modemno='null';
-            $BTDTL_SEARCH_tblestarhub_modemno=$modemno;
+            $BTDTL_SEARCH_tblestarhub_modemno=null;
         }else{
             $BTDTL_SEARCH_tblestarhub_modemno=$modemno;
             $modemno=$this->db->escape_like_str($modemno);
@@ -1127,7 +1129,7 @@ Class Mdl_biz_expense_detail_entry_search_update_delete extends CI_Model {
         }
         if($basicgroup=="")//BASIC GROUP
         {  $basicgroup='null';
-            $BTDTL_SEARCH_tblestarhub_basicgroup=$basicgroup;
+            $BTDTL_SEARCH_tblestarhub_basicgroup=null;
         }else{
             $BTDTL_SEARCH_tblestarhub_basicgroup=$basicgroup;
                $basicgroup=$this->db->escape_like_str($basicgroup);
@@ -1135,13 +1137,13 @@ Class Mdl_biz_expense_detail_entry_search_update_delete extends CI_Model {
         }
         if($addchnnl=="")//ADDLN
         {  $addchnnl='null';
-            $BTDTL_SEARCH_tblestarhub_addtnl=$addchnnl;
+            $BTDTL_SEARCH_tblestarhub_addtnl=null;
         }else{
             $BTDTL_SEARCH_tblestarhub_addtnl=$addchnnl;
             $addchnnl=$this->db->escape_like_str($addchnnl);
             $addchnnl="'$addchnnl'";
         }
-        $BTDTL_SEARCH_selectrecrv='null';
+        $BTDTL_SEARCH_selectrecrv=null;
         $BTDTL_SEARCH_detailData=$this->BTDTL_SEARCH_func_twodimen($BTDTL_SEARCH_lb_expense_type);
         $BTDTL_SEARCH_checkrvquery = "SELECT $BTDTL_SEARCH_detailData[3] FROM $BTDTL_SEARCH_detailData[1] WHERE $BTDTL_SEARCH_detailData[0]='$primaryid'";
         $BTDTL_SEARCH_recordversion_rs = $this->db->query($BTDTL_SEARCH_checkrvquery);
@@ -1150,7 +1152,7 @@ Class Mdl_biz_expense_detail_entry_search_update_delete extends CI_Model {
             $BTDTL_SEARCH_selectrecrv=$row['EDSH_REC_VER'];
         }
         $BTDTL_SEARCH_insertflag=0;
-        $BTDTL_SEARCH_recordversion='null';
+        $BTDTL_SEARCH_recordversion=null;
         $BTDTL_SEARCH_select_recordversion = "SELECT * FROM $BTDTL_SEARCH_detailData[1] WHERE UNIT_ID='$unitid' AND $BTDTL_SEARCH_detailData[3]=(SELECT MAX($BTDTL_SEARCH_detailData[3]) FROM $BTDTL_SEARCH_detailData[1] WHERE UNIT_ID=$unitid)";
         $BTDTL_SEARCH_recordversion_rs = $this->db->query($BTDTL_SEARCH_select_recordversion);
         foreach($BTDTL_SEARCH_recordversion_rs->result_array() as $row){
@@ -1170,7 +1172,7 @@ Class Mdl_biz_expense_detail_entry_search_update_delete extends CI_Model {
             $BTDTL_SEARCH_oldbasicgroup= $row["EDSH_BASIC_GROUP"];
             $BTDTL_SEARCH_oldadtnlchanel = $row["EDSH_ADDTNL_CH"];
 
-            if(($acctno!=$BTDTL_SEARCH_accountno||$BTDTL_SEARCH_oldinvoiceto!=$invoiceto||$BTDTL_SEARCH_oldappldate!=$appldate||$BTDTL_SEARCH_cablesdate!=$BTDTL_SEARCH_starhub_tblecablestartdate
+          if(($acctno!=$BTDTL_SEARCH_accountno||$BTDTL_SEARCH_oldinvoiceto!=$BTDTL_invoiceto||$BTDTL_SEARCH_oldappldate!=$BTDTL_SEARCH_starhub_tbleappldate ||$BTDTL_SEARCH_cablesdate!=$BTDTL_SEARCH_starhub_tblecablestartdate
                     ||$BTDTL_SEARCH_cableedate!=$BTDTL_SEARCH_starhub_tblecableenddate
                     ||$BTDTL_SEARCH_internetsdate!=$BTDTL_SEARCH_starhub_tbleinternetstartdate||$BTDTL_SEARCH_internetedate!=$BTDTL_SEARCH_starhub_tbleinternetenddate
                     ||$BTDTL_SEARCH_oldedshid!=$BTDTL_SEARCH_tblestarhub_ssid||$BTDTL_SEARCH_oldpwd!=$BTDTL_SEARCH_tblestarhub_pwd
@@ -1184,6 +1186,10 @@ Class Mdl_biz_expense_detail_entry_search_update_delete extends CI_Model {
                 $BTDTL_SEARCH_oldrecordversion=$BTDTL_SEARCH_selectrecrv;
                 }
         }
+        if($BTDTL_SEARCH_recordversion==null)
+            $BTDTL_SEARCH_recordversion=1;
+        else
+            $BTDTL_SEARCH_recordversion = intval($BTDTL_SEARCH_recordversion)+1;
         if($comments=="")//COMMENTS
         {  $comments='null';}else{
             $comments=$this->db->escape_like_str($comments);
@@ -1201,7 +1207,7 @@ Class Mdl_biz_expense_detail_entry_search_update_delete extends CI_Model {
         $this->db->query($BTDTL_SEARCH_insert);
         $BTDTL_SEARCH_sh_starttime=$BTDTL_SEARCH_starhubid[0];
         $BTDTL_SEARCH_sh_endtime=$BTDTL_SEARCH_starhubid[1];
-        if($BTDTL_SEARCH_insertflag==1||$BTDTL_SEARCH_recordversion==1)        {
+        if($BTDTL_SEARCH_insertflag==1||$BTDTL_SEARCH_recordversion==1){
 
             $this->load->model('EILIB/Mdl_eilib_common_function');
             $this->load->model('EILIB/Mdl_eilib_calender');

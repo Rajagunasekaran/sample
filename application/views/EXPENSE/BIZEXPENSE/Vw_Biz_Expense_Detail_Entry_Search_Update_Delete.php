@@ -56,7 +56,7 @@ require_once('application/libraries/EI_HDR.php');
         var BTDTL_SEARCH_internet_edate='';
         var BTDTL_SEARCH_flag_autocom;
         var BTDTL_SEARCH_arr_invoicto=[];
-        var BTDTL_SEARCH_options_invoiceto ='<option>SELECT</option>';
+        var BTDTL_SEARCH_options_invoiceto ='';
         var BTDTL_SEARCH_expensearr=[];
         var BTDTL_SEARCH_errorarr=[];
         var BTDTL_SEARCH_configmon_aircon=[];
@@ -625,6 +625,7 @@ require_once('application/libraries/EI_HDR.php');
             BTDTL_SEARCH_starhubtypes_flag=BTDTL_SEARCH_response.BTDTL_SEARCH_stardetail_obj;
             var BTDTL_SEARCH_flag_notable=BTDTL_SEARCH_response.BTDTL_SEARCH_notable_obj;
             airconservicebyarray=BTDTL_SEARCH_response.airconservicebyarray;
+            BTDTL_SEARCH_options_invoiceto='<option>SELECT</option>';
             if(BTDTL_SEARCH_flag_notable==false){
                 $('#BDTL_INPUT_form_biz_detail').replaceWith('<p><label class="errormsg"> '+BTDTL_SEARCH_errorarr[41].EMC_DATA+'<br>'+BTDTL_SEARCH_errorarr[39].EMC_DATA+'<br>'+BTDTL_SEARCH_errorarr[38].EMC_DATA+'<br>'+BTDTL_SEARCH_errorarr[40].EMC_DATA+'<br>'+BTDTL_SEARCH_errorarr[37].EMC_DATA+'</label></p>')
             }else{
@@ -2189,7 +2190,7 @@ require_once('application/libraries/EI_HDR.php');
             airconcval = $(this).text();
             if($('#BTDTL_SEARCH_lb_searchoptions').val()==100)
             {
-                $('#'+cid).replaceWith("<td  class='new' id='"+airconprevious_id+"'><input type='text' id='ASB_serviceby' name='ASB_serviceby'  class='airconserviceupdate uppercase form-control' maxlength=50 style='width: 300px' value='"+airconcval+"'></td>");
+                $('#'+cid).replaceWith("<td  class='new' id='"+airconprevious_id+"'><input type='text' id='ASB_serviceby' name='ASB_serviceby'  class='airconserviceupdate uppercase form-control charonly' maxlength=50 style='width: 300px' value='"+airconcval+"'></td>");
             }
             if(airconifcondition=='airconserviceby')
             {
@@ -2207,7 +2208,7 @@ require_once('application/libraries/EI_HDR.php');
             }
             if(airconifcondition=='airconcomments')
             {
-                $('#'+cid).replaceWith("<td  class='new' id='"+airconprevious_id+"'><textarea rows='3' id='ASB_comments' name='ASB_comments'  class='airconserviceupdate form-control' style='width: 330px'>"+airconcval+"</textarea></td>");
+                $('#'+cid).replaceWith("<td  class='new' id='"+airconprevious_id+"'><textarea rows='3' id='ASB_comments' name='ASB_comments'  class='airconserviceupdate form-control' style='width: 330px;height:100px;'>"+airconcval+"</textarea></td>");
             }
         });
 //AIRCON SERVICE UPDATE PART
@@ -2279,12 +2280,13 @@ require_once('application/libraries/EI_HDR.php');
             carparkcval = $(this).text();
             if(carparkifcondition=='carno')
             {
-                $('#'+cid).replaceWith("<td  class='new' id='"+carparkprevious_id+"'><input type='text' class='form-control carparkupdate' id='CP_carno' value='"+carparkcval+"'></td>");
+                $('#'+cid).replaceWith("<td  class='new' id='"+carparkprevious_id+"'><input type='text' class='form-control carparkupdate alphanumeric' id='CP_carno' maxlength='9' value='"+carparkcval+"'></td>");
             }
             else if(carparkifcondition=='carparkcomments')
             {
-                $('#'+cid).replaceWith("<td  class='new' id='"+carparkprevious_id+"'><textarea rows='3' id='CP_comments' name='CP_comments'  class='carparkupdate form-control' style='width: 330px'>"+carparkcval+"</textarea></td>");
+                $('#'+cid).replaceWith("<td  class='new' id='"+carparkprevious_id+"'><textarea rows='3' id='CP_comments' name='CP_comments'  class='carparkupdate form-control' style='width: 330px;height:100px;'>"+carparkcval+"</textarea></td>");
             }
+            $(".alphanumeric").doValidation({rule:'alphanumeric'});
         });
 //CARPARK UPDATE PART
         $(document).on('change','.carparkupdate', function (){
@@ -2364,16 +2366,18 @@ require_once('application/libraries/EI_HDR.php');
             }
             else if(digitalifcondition=='digitalvoiceno')
             {
-                $('#'+cid).replaceWith("<td  class='new' id='"+digitalprevious_id+"'><input type='text' class='form-control digitalupdate' id='DV_invoiceno' value='"+digitalcval+"'></td>");
+                $('#'+cid).replaceWith("<td  class='new' id='"+digitalprevious_id+"'><input type='text' class='form-control numbersonly digitalupdate' id='DV_invoiceno' maxlength='8' value='"+digitalcval+"'></td>");
             }
             else if(digitalifcondition=='digitalacctno')
             {
-                $('#'+cid).replaceWith("<td  class='new' id='"+digitalprevious_id+"'><input type='text' class='form-control digitalupdate' id='DV_acctno' value='"+digitalcval+"'></td>");
+                $('#'+cid).replaceWith("<td  class='new' id='"+digitalprevious_id+"'><input type='text' class='form-control alphanumericdot digitalupdate' maxlength='11' id='DV_acctno' value='"+digitalcval+"'></td>");
             }
             else if(digitalifcondition=='digitalcomments')
             {
-                $('#'+cid).replaceWith("<td  class='new' id='"+digitalprevious_id+"'><textarea rows='3' id='DV_comments' name='DV_comments'  class='digitalupdate form-control' style='width: 330px'>"+digitalcval+"</textarea></td>");
+                $('#'+cid).replaceWith("<td  class='new' id='"+digitalprevious_id+"'><textarea rows='3' id='DV_comments' name='DV_comments'  class='digitalupdate form-control' style='width: 330px;height:100px;'>"+digitalcval+"</textarea></td>");
             }
+            $(".alphanumericdot").doValidation({rule:'alphanumeric',prop:{allowdot:true}});
+            $(".numbersonly").doValidation({rule:'numbersonly',prop:{realpart:8},leadzero:true});
         });
 //DIGITAL VOICE UPDATE PART
         $(document).on('change','.digitalupdate', function (){
@@ -2474,7 +2478,7 @@ require_once('application/libraries/EI_HDR.php');
             }
             else if(electricifcondition=='eleccomments')
             {
-                $('#'+cid).replaceWith("<td  class='new' id='"+electricprevious_id+"'><textarea rows='3' id='ELEC_comments' name='ELEC_comments'  class='electricityupdate form-control' style='width: 330px'>"+electriccval+"</textarea></td>");
+                $('#'+cid).replaceWith("<td  class='new' id='"+electricprevious_id+"'><textarea rows='3' id='ELEC_comments' name='ELEC_comments'  class='electricityupdate form-control' style='width: 330px;height:100px;'>"+electriccval+"</textarea></td>");
             }
         });
 //ELECTRICITY UPDATE PART
@@ -2582,9 +2586,9 @@ require_once('application/libraries/EI_HDR.php');
             $("#SH_cablestartdate").datepicker({dateFormat: "dd-mm-yy",changeYear: true,changeMonth: true,
                 onSelect: function(date){
                     if((parseInt($('#SH_acctno').val())==0)||($('#SH_acctno').val()=='')||(($('#SH_cablestartdate').val()=='')&&($('#SH_cableenddate').val()!=''))||(($('#SH_cablestartdate').val()!='')&&($('#SH_cableenddate').val()==''))||(($('#SH_internetstartdate').val()=='')&&($('#SH_internetenddate').val()!=''))||(($('#SH_internetstartdate').val()!='')&&($('#SH_internetenddate').val()=='')))
-                        $('.BDTL_starhubupdatebutton').attr("disabled", "disabled");
+                        $('.BDTL_starhubupdatebutton').removeClass('BDTL_starhubupdatebutton').addClass('Checkvalidation');
                     else
-                        $('.BDTL_starhubupdatebutton').removeAttr("disabled");
+                        $('.Checkvalidation').removeClass('Checkvalidation').addClass('BDTL_starhubupdatebutton')
                     var BDTL_startdate = new Date( Date.parse( BDTL_FormTableDateFormat( $('#SH_cablestartdate').val())) );
                     BDTL_startdate.setDate( BDTL_startdate.getDate());
                     var BDTL_newsDate = BDTL_startdate.toDateString();
@@ -2594,9 +2598,9 @@ require_once('application/libraries/EI_HDR.php');
             $("#SH_internetstartdate").datepicker({dateFormat: "dd-mm-yy",changeYear: true,changeMonth: true,
                 onSelect: function(date){
                     if((parseInt($('#SH_acctno').val())==0)||($('#SH_acctno').val()=='')||(($('#SH_cablestartdate').val()=='')&&($('#SH_cableenddate').val()!=''))||(($('#SH_cablestartdate').val()!='')&&($('#SH_cableenddate').val()==''))||(($('#SH_internetstartdate').val()=='')&&($('#SH_internetenddate').val()!=''))||(($('#SH_internetstartdate').val()!='')&&($('#SH_internetenddate').val()=='')))
-                        $('.BDTL_starhubupdatebutton').attr("disabled", "disabled");
+                        $('.BDTL_starhubupdatebutton').removeClass('BDTL_starhubupdatebutton').addClass('Checkvalidation');
                     else
-                        $('.BDTL_starhubupdatebutton').removeAttr("disabled");
+                        $('.Checkvalidation').removeClass('Checkvalidation').addClass('BDTL_starhubupdatebutton')
                     var BDTL_startdate = new Date( Date.parse( BDTL_FormTableDateFormat( $('#SH_internetstartdate').val())) );
                     BDTL_startdate.setDate( BDTL_startdate.getDate());
                     var BDTL_newsDate = BDTL_startdate.toDateString();
@@ -2747,7 +2751,6 @@ require_once('application/libraries/EI_HDR.php');
                 url: controller_url+"starhubupdate",
                 data:{'primaryid':primaryid,'unitid':unitid,'unitno':unitno,'invoiceto':invoiceto,'acctno':acctno,'appldate':appldate,'cablestartdte':cablestartdte,'cableenddate':cableenddate,'internetstartdte':internetstartdte,'internetenddate':internetenddate,'ssid':ssid,'pwd':pwd,'cablebox':cablebox,'modemno':modemno,'basicgroup':basicgroup,'addchnnl':addchnnl,'comments':comments,'BTDTL_SEARCH_lb_searchoptions':$('#BTDTL_SEARCH_lb_searchoptions').val(),'BTDTL_SEARCH_lb_expense_type':$('#BTDTL_SEARCH_lb_expense_type').val(),'searchvalue':searchvalue,'startdate':startdate,'BTDTL_SEARCH_starhubid':BTDTL_SEARCH_starhubid},
                 success: function(data) {
-                    alert(data)
                     $('.preloader').hide();
                     var result=JSON.parse(data)
                     BTDTL_SEARCH_success_showflex(result);
@@ -2878,7 +2881,7 @@ require_once('application/libraries/EI_HDR.php');
                 else if($('#BTDTL_SEARCH_lb_searchoptions').val()==191)
                     var searchvalue=$('#BTDTL_SEARCH_lb_starhubunitno').val();
             }
-            var pdfurl=document.location.href='<?php echo site_url("Ctrl_Pdf/pdfexportbizdetailexpense") ?>?Expensetype='+Expensetype+'&BTDTL_SEARCH_lb_searchoptions='+$("#BTDTL_SEARCH_lb_searchoptions").val()+'&searchvalue='+searchvalue+'&startdate='+startdate+'&BTDTL_SEARCH_parentfunc_flex=BTDTL_SEARCH_parentfunc_flex&labelheadername='+$('#BTDTL_SEARCH_div_msg').text();
+            var pdfurl=document.location.href='<?php echo site_url("EXPENSE/BIZEXPENSE/Ctrl_Pdf/pdfexportbizdetailexpense") ?>?Expensetype='+Expensetype+'&BTDTL_SEARCH_lb_searchoptions='+$("#BTDTL_SEARCH_lb_searchoptions").val()+'&searchvalue='+searchvalue+'&startdate='+startdate+'&BTDTL_SEARCH_parentfunc_flex=BTDTL_SEARCH_parentfunc_flex&labelheadername='+$('#BTDTL_SEARCH_div_msg').text();
         });
     });
 </script>
@@ -2937,7 +2940,7 @@ require_once('application/libraries/EI_HDR.php');
                 <div id='BDTL_INPUT_div_carpark' hidden>
                         <div class="form-group">
                             <label class="col-sm-2">CAR NO<em>*</em></label>
-                            <div class="col-sm-2"><input style="width:95px" type="text" name="BDTL_INPUT_tb_exp_carno" id="BDTL_INPUT_tb_exp_carno" maxlength='9' class='alphanumeric BDTL_INPUT_class_save_valid form-control' placeholder="Car No"/></div>
+                            <div class="col-sm-2"><input style="width:110px" type="text" name="BDTL_INPUT_tb_exp_carno" id="BDTL_INPUT_tb_exp_carno" maxlength='9' class='alphanumeric BDTL_INPUT_class_save_valid form-control' placeholder="Car No"/></div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-2">COMMENTS</label>
@@ -2955,7 +2958,7 @@ require_once('application/libraries/EI_HDR.php');
                         </div>
                         <div class="form-group">
                             <label class="col-sm-2">DIGITAL VOICE NO<em>*</em></label>
-                            <div class="col-sm-2"><input style="width:85px" type="text" name="BDTL_INPUT_tb_exp_digivoiceno" id="BDTL_INPUT_tb_exp_digivoiceno" class="numbersonly BDTL_INPUT_class_save_valid form-control" placeholder="Digital Voice No" maxlength="8"/></div>
+                            <div class="col-sm-2"><input style="width:95px" type="text" name="BDTL_INPUT_tb_exp_digivoiceno" id="BDTL_INPUT_tb_exp_digivoiceno" class="numbersonly BDTL_INPUT_class_save_valid form-control" placeholder="Digital Voice No" maxlength="8"/></div>
                         </div>
                         <div class="form-group">
                              <label class="col-sm-2">DIGITAL ACCOUNT NO<em>*</em></label>

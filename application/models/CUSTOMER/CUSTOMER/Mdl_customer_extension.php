@@ -264,7 +264,6 @@ class Mdl_Customer_Extension extends CI_Model{
 
       //FUNCTION TO SAVE CUSTOMER DETAILS
       function CEXTN_SaveDetails($UserStamp){
-          set_time_limit(0);
           try
           {
               $CEXTN_formname="EXTENSION";
@@ -775,7 +774,6 @@ class Mdl_Customer_Extension extends CI_Model{
               }
           $this->CEXTN_DropTempTables($CEXTN_finalarr[1]);
           $this->db->trans_commit();
-//              $CEXTN_finalarr[2]='null';
           return [$CEXTN_saveflag,$CEXTN_finalarr[2],$cal_flag];
     }
       catch(Exception $err)

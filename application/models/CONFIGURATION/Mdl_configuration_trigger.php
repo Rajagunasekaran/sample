@@ -2,7 +2,6 @@
 error_reporting(0);
 require_once 'google/appengine/api/mail/Message.php';
 use google\appengine\api\mail\Message;
-//require_once 'PHPMailer-master/PHPMailerAutoload.php';
 class Mdl_configuration_trigger extends CI_Model {
     public function getCSVfileRecords($UserStamp)
     {
@@ -64,6 +63,7 @@ class Mdl_configuration_trigger extends CI_Model {
             }
         }
         $CSVcount=count($CSV_File_comparisionRecords);
+//        return $CSVcount;
         /***************************END OF CSV FILE RECORDS***************************************/
         /****************************ARRAY COMPARISION ******************************************/
         $REF_id=array();
@@ -88,6 +88,7 @@ class Mdl_configuration_trigger extends CI_Model {
         $CSV_Old_Records=array_unique($CSV_Old_Records);
         $Old_rcordsCount=count($CSV_Old_Records);
         $updationdata=array();
+//        return $CSV_Old_RecordsBC.'/'.$DBcount;
         if($Old_rcordsCount==$DBcount)
         {
             for($k=0;$k<count($CSV_Old_Records);$k++)
@@ -430,6 +431,8 @@ class Mdl_configuration_trigger extends CI_Model {
     }
     public function getMonthlyPaymentReminder($UserStamp)
     {
+        $currentmonth=date("Ymd");
+        $current_month=strtoupper(date('F Y', strtotime($currentmonth)));
         $this->load->model('EILIB/Mdl_eilib_common_function');
         $PAYMENT_reminderdisplayname=$this->Mdl_eilib_common_function->Get_MailDisplayName("MONTHLY_PAYMENT_REMINDER");
         $Reminder_emailtempquery="SELECT *FROM EMAIL_TEMPLATE_DETAILS WHERE ET_ID=11";
@@ -441,38 +444,36 @@ class Mdl_configuration_trigger extends CI_Model {
         }
         $PAYMENT_reminderquery="SELECT DISTINCT CUSTOMERNAME,PAYMENT,CPD_EMAIL,UNIT_NO FROM VW_PAYMENT_CURRENT_ACTIVE_CUSTOMER WHERE CLP_ENDDATE>CURDATE() AND CLP_STARTDATE<=CURDATE()AND(CLP_PRETERMINATE_DATE IS NULL OR CLP_PRETERMINATE_DATE>CURDATE())";
         $resultset=$this->db->query($PAYMENT_reminderquery);
-        $this->load->model('CONFIGURATION/Mdl_configuration_trigger');
-        $data = $this->Mdl_configuration_trigger->getMonthlyPaymentReminder();
-        $PAYMENT_reminderdisplayname = $data[0];
-        $EmailSubject = $data[1];
-        $EmailBody = $data[2];
+        $PaymentRemainder=array();
         foreach ($resultset->result_array() as $key=>$val)
         {
             $customer=$val['CUSTOMERNAME'];
             $payment=$val['PAYMENT'];
             $email=$val['CPD_EMAIL'];
             $unit=$val['UNIT_NO'];
-            $EmailSubject = str_replace('[CURRENT_MONTH]', '', $EmailSubject);
-            $EmailBody = str_replace('[CUSTOMER_NAME]', $customer, $EmailBody);
+            $EmailSubject = str_replace('[CURRENT_MONTH]',$current_month, $Emailsubject);
+            $EmailBody = str_replace("'[CUSTOMER_NAME]'", $customer, $Emailbody);
             $EmailBody = str_replace('[UNIT-NO]', $unit, $EmailBody);
             $EmailBody = str_replace('[RENTAL_AMOUNT]', $payment, $EmailBody);
+            $EmailBody = str_replace('[CURRENT MONTH]', $current_month, $EmailBody);
+            array_push($PaymentRemainder,$EmailSubject,$EmailBody);
             $this->Remindermailpart($EmailSubject,$EmailBody,$PAYMENT_reminderdisplayname,$UserStamp,$email);
         }
-        return 'success';
     }
     public function Remindermailpart($mailsub,$mailbody,$EmailDisplayname,$UserStamp,$Mailid)
     {
         $message1 = new Message();
-        $message1->setSender($EmailDisplayname . '<' . $UserStamp . '>');
+        $message1->setSender($EmailDisplayname.'<'.$UserStamp.'>');
         $message1->addTo($Mailid);
         $message1->setSubject($mailsub);
         $message1->setHtmlBody($mailbody);
         $message1->send();
-        return 'success';
     }
 
-    public function getNonPaymentReminder()
+    public function getNonPaymentReminder($UserStamp)
     {
+        $currentmonth=date("Ymd");
+        $CURRENT_MONTH=date('F-Y', strtotime($currentmonth));
         $this->load->model('EILIB/Mdl_eilib_common_function');
         $PAYMENT_reminderdisplayname=$this->Mdl_eilib_common_function->Get_MailDisplayName("NON PAYMENT REMINDER");
         $Reminder_emailtempquery="SELECT *FROM EMAIL_TEMPLATE_DETAILS WHERE ET_ID=1";
@@ -482,9 +483,96 @@ class Mdl_configuration_trigger extends CI_Model {
             $Emailsubject=$val['ETD_EMAIL_SUBJECT'];
             $Emailbody=$val['ETD_EMAIL_BODY'];
         }
-        $PAYMENT_reminderquery="SELECT DISTINCT CUSTOMERNAME,CUSTOMER_ID,CPD_EMAIL,UNIT_NO,CED_REC_VER,CLP_STARTDATE,PAYMENT FROM VW_PAYMENT_CURRENT_ACTIVE_CUSTOMER WHERE CLP_ENDDATE>CURDATE() AND CLP_STARTDATE<=CURDATE()AND(CLP_PRETERMINATE_DATE IS NULL OR CLP_PRETERMINATE_DATE>CURDATE())";
+        $PAYMENT_reminderquery="SELECT DISTINCT CUSTOMERNAME,CUSTOMER_ID,CPD_EMAIL,UNIT_NO,CED_REC_VER,CLP_STARTDATE,PAYMENT,DATE_FORMAT(CLP_STARTDATE,'%M-%Y') AS STARTDATE FROM VW_PAYMENT_CURRENT_ACTIVE_CUSTOMER WHERE CLP_ENDDATE>CURDATE() AND CLP_STARTDATE<=CURDATE()AND(CLP_PRETERMINATE_DATE IS NULL OR CLP_PRETERMINATE_DATE>CURDATE()) AND UNIT_NO=1118";
         $resultset=$this->db->query($PAYMENT_reminderquery);
+        $nonpayment=array();
+        $curr_monthpaid=array();
+        foreach ($resultset->result_array() as $key=>$val)
+        {
+            $Paid_Forperiod="";
+            $PAYMENT_remindercustomername=$val['CUSTOMERNAME'];
+            $PAYMENT_remindercustomermailid=$val['CPD_EMAIL'];
+            $PAYMENT_remindercustomerid=$val['CUSTOMER_ID'];
+            $PAYMENT_remindercustomerrent=$val['PAYMENT'];
+            $PAYMENT_remindercustomerrecver=$val['CED_REC_VER'];
+            $PAYMENT_remindercustomerunit=$val['UNIT_NO'];
+            $PAYMENT_remindercustomerstartdate=$val['CLP_STARTDATE'];
+            $Customerstartdate=$val['STARTDATE'];
+            $subject1=$Emailsubject;
+            $customername=str_replace('[CUSTOMER_NAME]',$PAYMENT_remindercustomername,$Emailbody);
+            $unitno=str_replace('[UNIT-NO]',$PAYMENT_remindercustomerunit,$customername);
+            $unitno=str_replace('[RENTAL_AMOUNT]',$PAYMENT_remindercustomerrent,$unitno);
+            $message = '<body><br><h> '.$unitno.'</h><br><br><table border="1" width="300" hieght="20"><tr  bgcolor="#6495ed" style="color:white"  align="center" ><td width=25%><h3>FORPERIOD</h3></td></tr></table></body>';
+            $PAYMENT_Paidquery="SELECT PD_FOR_PERIOD,DATE_FORMAT(PD_FOR_PERIOD,'%M-%Y') AS PD_FORPERIOD FROM PAYMENT_DETAILS WHERE CUSTOMER_ID='$PAYMENT_remindercustomerid' AND PP_ID=1 AND CED_REC_VER='$PAYMENT_remindercustomerrecver' ORDER BY PD_FOR_PERIOD DESC LIMIT 1";
+            $PAYMENT_Paidresult=$this->db->query($PAYMENT_Paidquery);
+            $numrows=$this->db->affected_rows();
+            if($numrows!=0)
+            {
+                foreach ($PAYMENT_Paidresult->result_array() as $key => $value)
+                 {
+                    $lastforperiod = $value['PD_FOR_PERIOD'];
+                    $Paid_Forperiod = $value['PD_FORPERIOD'];
+                 }
+            }
+            else
+            {
+                $Paid_Forperiod="";
+            }
+            if($CURRENT_MONTH==$Paid_Forperiod)
+            {
+                array_push($nonpayment,$Paid_Forperiod);
+            }
+            else
+            {
+//                if($Paid_Forperiod=='' || $Paid_Forperiod==null)
+//                {
+                    $message .= '<body><table border="1"width="300" hieght="20" color="white" ><tr align="center"  ><td width=25%>'.$Paid_Forperiod.'</td></tr></table></body>';
+                    Remindermailpart($subject1,$message,$PAYMENT_reminderdisplayname,$UserStamp,$PAYMENT_remindercustomerid);
+//                 }
+//                array_push($curr_monthpaid,$Paid_Forperiod);
+            }
+        }
+//        print_r($nonpayment);
+        print_r($curr_monthpaid);
+        exit;
     }
-
-
+    public function getPurgeDocument()
+    {
+        $durationquery = "SELECT TC_DATA FROM TRIGGER_CONFIGURATION WHERE CGN_ID=74";
+        $durationresult = $this->db->query($durationquery);
+        foreach ($durationresult->result_array() as $key => $val) {
+            $No_of_days = $val['TC_DATA'];
+        }
+        $fileprofileQuery = "SELECT FP_FOLDER_ID FROM FILE_PROFILE WHERE FP_ID=6";
+        $fileprofileresult = $this->db->query($fileprofileQuery);
+        $fileid_array = array();
+        foreach ($fileprofileresult->result_array() as $key => $val) {
+            array_push($fileid_array, $val['FP_FOLDER_ID']);
+        }
+        $this->load->model('EILIB/Mdl_eilib_common_function');
+        $service = $this->Mdl_eilib_common_function->get_service_document();
+        for ($i = 0; $i< count($fileid_array); $i++)
+        {
+            $children1 = $service->children->listChildren($fileid_array[$i]);
+            $filearray1=$children1->getItems();
+            foreach ($filearray1 as $child1)
+            {
+                $fileid=$service->files->get($child1->getId())->id;
+                $filename=$service->files->get($child1->getId())->title;
+                $data = $service->files->get($fileid);
+                $date1 = date("Y-m-d");
+                $docdate=$data->createdDate;
+                $date2=substr($docdate,0,10);
+                $date1 = date_create($date1);
+                $date2 = date_create($date2);
+                $diff = date_diff($date1,$date2);
+                $DIFF=$diff->format("%a");
+                if($DIFF <= $No_of_days)
+                {
+                  $this->Mdl_eilib_common_function->DeleteFile($service, $fileid);
+                }
+            }
+            return 1;
+      }
+    }
 }

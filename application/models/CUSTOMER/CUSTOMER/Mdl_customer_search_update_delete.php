@@ -197,9 +197,9 @@ class Mdl_customer_search_update_delete extends CI_Model
         $this->db->query('DROP TABLE IF EXISTS '.$csrc_tablename);
         return $resultset->result();
     }
-    public function SelectCustomerResults($customerid,$leaseperiod)
+    public function SelectCustomerResults($customerid,$leaseperiod,$UserStamp)
     {
-        $temptablequery="CALL SP_CUSTOMER_SEARCH_TEMP_FEE_DETAIL('$customerid','kumar.r@ssomens.com',@CUSTOMER_SEARCH_FEE_TEMPTBLNAME)";
+        $temptablequery="CALL SP_CUSTOMER_SEARCH_TEMP_FEE_DETAIL('$customerid','$UserStamp',@CUSTOMER_SEARCH_FEE_TEMPTBLNAME)";
         $this->db->query($temptablequery);
         $outparm_query = 'SELECT @CUSTOMER_SEARCH_FEE_TEMPTBLNAME AS TEMP_TABLE';
         $outparm_result = $this->db->query($outparm_query);
@@ -242,9 +242,9 @@ class Mdl_customer_search_update_delete extends CI_Model
         $query = $this->db->get();
         return $query->result();
     }
-    public function getSearchRecverdetails($unit,$customerid,$LP)
+    public function getSearchRecverdetails($unit,$customerid,$LP,$UserStamp)
     {
-        $temptablequery="CALL SP_CUSTOMER_SEARCH_PREVIOUS_RECVER_START_ENADATE('$customerid','$LP','$unit','kumar.r@ssomens.com',@CUSTOMER_SEARCH_PREVIOUS_RECVER_TMPTBL)";
+        $temptablequery="CALL SP_CUSTOMER_SEARCH_PREVIOUS_RECVER_START_ENADATE('$customerid','$LP','$unit','$UserStamp',@CUSTOMER_SEARCH_PREVIOUS_RECVER_TMPTBL)";
         $this->db->query($temptablequery);
         $outparm_query = 'SELECT @CUSTOMER_SEARCH_PREVIOUS_RECVER_TMPTBL AS TEMP_TABLE';
         $outparm_result = $this->db->query($outparm_query);

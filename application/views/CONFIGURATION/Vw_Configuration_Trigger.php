@@ -51,11 +51,9 @@
                     url: controller_url+"CSV_Updation",
                     success: function (data) {
                         var returnvalue = JSON.parse(data);
-//                        $('section').html(returnvalue);
                         show_msgbox("CSV UPDATION",'CSV RECORDS UPDATED AND MAIL SEND TO CORRESPONDING MAIL ID'  , "success", false);
                         $('.preloader').hide();
-                        var value_array = JSON.parse(data);
-                    },
+                     },
                     error: function (data) {
                         alert('error in getting' + JSON.stringify(data));
                         $('.preloader').hide();
@@ -69,12 +67,9 @@
                     data: {Triggernameid: Tirgger},
                     url: controller_url+"Monthlypaymentreminder",
                     success: function (data) {
-                        alert(data);
                         $('.preloader').hide();
                         var returnvalue = JSON.parse(data);
-                        show_msgbox("MONTHLY PAYMENT REMINDER", returnvalue, "success", false);
-                        $('.preloader').hide();
-                        var value_array = JSON.parse(data);
+                        show_msgbox("MONTHLY PAYMENT REMINDER", "MONTHLY REMINDER SEND TO ALL ACTIVE CUSTOMER", "success", false);
                     },
                     error: function (data) {
                         alert('error in getting' + JSON.stringify(data));
@@ -89,10 +84,33 @@
                     data: {Triggernameid: Tirgger},
                     url: controller_url+"Nonpaymentreminder",
                     success: function (data) {
-                        alert(data);
                         $('.preloader').hide();
                         var returnvalue = JSON.parse(data);
-                        show_msgbox("MONTHLY PAYMENT REMINDER", returnvalue, "success", false);
+                        show_msgbox("MONTHLY PAYMENT REMINDER", "NON PAYMENT REMINDER SEND TO ALL ACTIVE CUSTOMER", "success", false);
+                    },
+                    error: function (data) {
+                        alert('error in getting' + JSON.stringify(data));
+                        $('.preloader').hide();
+                    }
+                });
+            }
+            if(Tirgger==6)
+            {
+                $.ajax({
+                    type: "POST",
+                    data: {Triggernameid: Tirgger},
+                    url: controller_url+"Purge_Document",
+                    success: function (data) {
+                        $('.preloader').hide();
+                        var returnvalue = JSON.parse(data);
+                        if(returnvalue==1)
+                        {
+                            show_msgbox("PURGE DOCUMENT", "OLD DOCUMENT DELETED SUCCESSFULLY", "success", false);
+                        }
+                        else
+                        {
+                            show_msgbox("PURGE DOCUMENT", returnvalue, "success", false);
+                        }
                         $('.preloader').hide();
                         var value_array = JSON.parse(data);
                     },

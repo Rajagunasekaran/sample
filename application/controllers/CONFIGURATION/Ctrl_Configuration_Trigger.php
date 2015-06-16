@@ -17,7 +17,7 @@ Class Ctrl_Configuration_Trigger extends CI_Controller
     }
     public function CSV_Updation()
     {
-        $UserStamp=$this->Mdl_eilib_common_function->getSessionUserStamp($UserStamp);
+        $UserStamp=$this->Mdl_eilib_common_function->getSessionUserStamp();
         $this->load->library('Google');
         $CSV_Records=$this->Mdl_configuration_trigger->getCSVfileRecords();
         echo json_encode($CSV_Records);
@@ -28,7 +28,7 @@ Class Ctrl_Configuration_Trigger extends CI_Controller
             $UserStamp=$this->Mdl_eilib_common_function->getSessionUserStamp();
             $this->load->model('CONFIGURATION/Mdl_configuration_trigger');
             $data = $this->Mdl_configuration_trigger->getMonthlyPaymentReminder($UserStamp);
-            echo json_encode('SUCCESS');
+            echo json_encode($data);
         }
         catch (Exception $e)
         {
@@ -38,7 +38,16 @@ Class Ctrl_Configuration_Trigger extends CI_Controller
     }
     public function Nonpaymentreminder()
     {
-        $data = $this->Mdl_configuration_trigger->getNonPaymentReminder();
+        $UserStamp=$this->Mdl_eilib_common_function->getSessionUserStamp();
+        $data = $this->Mdl_configuration_trigger->getNonPaymentReminder($UserStamp);
+        echo 1;
+    }
+    public function Purge_Document()
+    {
+        $this->load->library('Google');
+        $UserStamp=$this->Mdl_eilib_common_function->getSessionUserStamp();
+        $data = $this->Mdl_configuration_trigger->getPurgeDocument();
+        echo 1;
     }
 
 }

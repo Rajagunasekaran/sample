@@ -100,11 +100,12 @@ Class Ctrl_Customer_Search_Update_Delete extends CI_Controller
     }
     public function SelectCustomerResults()
     {
+        $UserStamp=$this->Mdl_eilib_common_function->getSessionUserStamp();
         $customerid=$_POST['customerid'];
         $leaseperiod=$_POST['LP'];
         $unit=$_POST['Unit'];
-        $RecverDetails=$this->Mdl_customer_search_update_delete->getSearchRecverdetails($unit,$customerid,$leaseperiod);
-        $Resultset=$this->Mdl_customer_search_update_delete->SelectCustomerResults($customerid,$leaseperiod);
+        $RecverDetails=$this->Mdl_customer_search_update_delete->getSearchRecverdetails($unit,$customerid,$leaseperiod,$UserStamp);
+        $Resultset=$this->Mdl_customer_search_update_delete->SelectCustomerResults($customerid,$leaseperiod,$UserStamp);
         $RoomType=$this->Mdl_eilib_common_function->getUnitRoomType($unit);
         $UnitDates=$this->Mdl_eilib_common_function->getUnit_Start_EndDate($unit);
         $unit = $this->Mdl_eilib_common_function->getAllActiveUnits();

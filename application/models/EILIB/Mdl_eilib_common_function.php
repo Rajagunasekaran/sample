@@ -745,20 +745,21 @@ $date = new DateTime();
 return date_format($date, 'd-m-Y H:i:s');
 }
 //Lease Period Calculation
-public function getLeasePeriod($Startdate,$Enddate)
-{
-$datetime1 = new DateTime($Startdate);
-$datetime2 = new DateTime($Enddate);
-$difference = $datetime1->diff($datetime2);
-if($difference->y==0 && $difference->m==0 ){$Leaseperiod=$difference->d.' Days';}
-elseif($difference->y==0){$Leaseperiod=$difference->m.'Months '.$difference->d.' Days';}
-elseif($difference->y==0 && $difference->d==0 ){$Leaseperiod=$difference->m.' Months';}
-elseif($difference->m==0 && $difference->d==0 ){$Leaseperiod=$difference->y.' Years';}
-elseif($difference->d==0 ){$Leaseperiod=$difference->y.' Years '.$difference->m.' Months';}
-elseif($difference->m==0 ){$Leaseperiod=$difference->y.' Years '.$difference->d.' Days';}
-else{$Leaseperiod=$difference->y.' Years '.$difference->m.' Months '.$difference->d.' Days';}
-return $Leaseperiod;
-}
+    public function getLeasePeriod($Startdate,$Enddate)
+    {
+        $datetime1 = new DateTime($Startdate);
+        $datetime2 = new DateTime($Enddate);
+        $difference = $datetime1->diff($datetime2);
+        if($difference->y==0 && $difference->m==0 ){$Leaseperiod=$difference->d.' Days';}
+        elseif($difference->y==0){$Leaseperiod=$difference->m.'Months '.$difference->d.' Days';}
+        elseif($difference->y==0 && $difference->d==0 ){$Leaseperiod=$difference->m.' Months';}
+        elseif($difference->m==0 && $difference->d==0 ){$Leaseperiod=$difference->y.' Years';}
+        elseif($difference->d==0 ){$Leaseperiod=$difference->y.' Years '.$difference->m.' Months';}
+        elseif($difference->m==0 ){$Leaseperiod=$difference->y.' Years '.$difference->d.' Days';}
+        else{$Leaseperiod=$difference->y.' Years '.$difference->m.' Months '.$difference->d.' Days';}
+        if($difference->y==0 && $difference->m==0 && intval($datetime1->format('d'))==1 && date("Y-m-d",strtotime($Enddate)) ==date("Y-m-t",strtotime($Enddate)) ){$Leaseperiod='1 Month';}
+        return $Leaseperiod;
+    }
 //FUNCTION TO CHK PRORATED OR NOT 14
 public function CUST_chkProrated($db_chkindate,$db_chkoutdate)
 {
@@ -1231,5 +1232,18 @@ public function getActive_Customer_Recver_Dates($unit,$customer,$Recever)
         catch (Exception $e) {
             print "An error occurred: " . $e->getMessage();
         }
+    }
+    /***********GET INSTANCE AND SCHEMA*****************/
+    public function getSchemaName()
+    {
+        $CI =& get_instance();
+        $CI->load->database();
+        return $CI->db->database;
+    }
+    public  function getInstanceName()
+    {
+        $CI =& get_instance();
+        $CI->load->database();
+        return $CI->db->hostname;
     }
 }

@@ -6,7 +6,6 @@ use google\appengine\api\mail\Message;
 class Mdl_configuration_trigger extends CI_Model {
     public function getCSVfileRecords($UserStamp)
     {
-        set_time_limit(0);
         $this->db->select("OCN_DATA");
         $this->db->from('OCBC_CONFIGURATION');
         $this->db->where('CGN_ID=29');
@@ -65,7 +64,6 @@ class Mdl_configuration_trigger extends CI_Model {
             }
         }
         $CSVcount=count($CSV_File_comparisionRecords);
-//        return $CSVcount;
         /***************************END OF CSV FILE RECORDS***************************************/
         /****************************ARRAY COMPARISION ******************************************/
         $REF_id=array();
@@ -90,7 +88,6 @@ class Mdl_configuration_trigger extends CI_Model {
         $CSV_Old_Records=array_unique($CSV_Old_Records);
         $Old_rcordsCount=count($CSV_Old_Records);
         $updationdata=array();
-//        return $CSV_Old_RecordsBC.'/'.$DBcount;
         if($Old_rcordsCount==$DBcount)
         {
             for($k=0;$k<count($CSV_Old_Records);$k++)

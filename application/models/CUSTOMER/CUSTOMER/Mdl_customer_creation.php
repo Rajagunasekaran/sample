@@ -7,7 +7,6 @@ class Mdl_customer_creation extends CI_Model
     public function Customer_Creation_Save($UserStamp,$Leaseperiod,$Quoters)
     {
         try {
-            set_time_limit(0);
             $FirstName = $_POST['CCRE_FirstName'];
             $Lastname = $_POST['CCRE_LastName'];
             $CompanyName = $_POST['CCRE_CompanyName'];

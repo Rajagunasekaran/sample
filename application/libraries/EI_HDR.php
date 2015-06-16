@@ -59,6 +59,9 @@
         .dropdown-menu{
             font-size: 8px;
         }
+        tr.row_selected td{
+            background-color:#C4C4C4 !important;
+        }
     </style>
     <script type="text/javascript">
         // function for graphics chart

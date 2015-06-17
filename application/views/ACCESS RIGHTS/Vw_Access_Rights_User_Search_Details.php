@@ -85,8 +85,6 @@ require_once('application/libraries/EI_HDR.php');
                         });
                         sorting();
                                         $('#tablecontainer').show();
-
-
                     }
                     else
                     {
@@ -135,18 +133,18 @@ require_once('application/libraries/EI_HDR.php');
 <body>
 <div class="container">
     <div class="preloader"><span class="Centerer"></span><img class="preloaderimg"/> </div>
-    <div class="title text-center"><h4><b>USER SEARCH DETAILS</b></h4></div>
-        <div class="panel-body">
+    <div class="row title text-center"><h4><b>USER SEARCH DETAILS</b></h4></div>
             <form id="USD_SRC_SRC_form_user" name="USD_SRC_SRC_form_user" class="form-horizontal content" role="form">
+                <div class="panel-body">
                 <div><label id="URSRC_lbl_title" name="URSRC_lbl_title" class="srctitle"></label></div>
                 <div><input type="button" id='URSRC_btn_pdf' class="btnpdf" value="PDF"></div><br>
                 <div class="table-responsive" id="tablecontainer" hidden >
                     <section>
                     </section>
                 </div>
+                </div>
                 <div><label id="URSRC_lbl_norole_err" name="URSRC_lbl_norole_err" class="errormsg"></label></div>
             </form>
-        </div>
     </div>
 </body>
 <!--BODY TAG END-->

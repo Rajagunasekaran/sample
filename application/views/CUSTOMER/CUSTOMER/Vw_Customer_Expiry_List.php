@@ -12,16 +12,11 @@ require_once('application/libraries/EI_HDR.php');
 <html>
 <!--HEAD TAG START-->
 <head>
-
-<style>
-    div.container {
-        width: 80%;
-    }
-</style>
 <script>
 
 //<!----------READY FUNCTION------------->
 $(document).ready(function(){
+
     var CEXP_max_date_array;
     var from_date;
     var to_date;
@@ -67,6 +62,7 @@ $(document).ready(function(){
     }
    //------------EXPIRY LIST BUTTON CHANGE---------------//
     $('#CEXP_radio_Expirylist').change(function(){
+//        $("html, body").animate({ scrollTop: $(document).height() }, "slow");
         $('#CEXP_tble_expiry_list').show();
         $('#CEXP_tble_Weekly_expiry_list').hide();
         $('#CWEXP_btn_submit').attr('disabled','disabled');
@@ -84,13 +80,17 @@ $(document).ready(function(){
         $('#CEXP_tbl_htmltable tr').remove();
         $('#CEXP_div_htmltable').hide();
         $('#CEXP_db_selected_equal_date').show();
+        $('#CEXP_span_selected_equal_date').show();
         $('#CEXP_db_selected_from_date').hide().val("");
+        $('#CEXP_span_selected_from_date').hide();
         $('#CEXP_db_selected_to_date').hide().val("");
+        $('#CEXP_span_selected_to_date').hide();
         $('#CEXP_lbl_fromdate').hide();
         $('#CEXP_lbl_todate').hide();
         $('#CEXP_lbl_beforedate').hide();
         $('#CWEXP_pdf').hide();
         $('#CEXP_db_selected_before_date').hide().val("");
+        $('#CEXP_span_selected_before_date').hide();
         $('#CEXP_db_selected_equal_date').datepicker({
             dateFormat:"dd-mm-yy",
             changeYear: true,
@@ -120,13 +120,17 @@ $(document).ready(function(){
         $('#CEXP_div_htmltable').hide();
         $('#CEXP_lbl_equalto').hide();
         $('#CEXP_db_selected_equal_date').hide().val("");
+        $('#CEXP_span_selected_equal_date').hide();
         $('#CEXP_db_selected_from_date').hide().val("");
+        $('#CEXP_span_selected_from_date').hide();
         $('#CEXP_db_selected_to_date').hide().val("");
+        $('#CEXP_span_selected_to_date').hide();
         $('#CEXP_lbl_fromdate').hide();
         $('#CEXP_lbl_todate').hide();
         $('#CWEXP_pdf').hide();
         $('#CEXP_lbl_beforedate').show();
         $('#CEXP_db_selected_before_date').show();
+        $('#CEXP_span_selected_before_date').show();
         $('#CEXP_db_selected_before_date').datepicker({
             dateFormat:"dd-mm-yy",
             changeYear: true,
@@ -155,10 +159,14 @@ $(document).ready(function(){
         $('#CEXP_lbl_msg').hide();
         $('#CEXP_tbl_htmltable tr').remove();
         $('#CEXP_db_selected_equal_date').hide().val("");
+        $('#CEXP_span_selected_equal_date').hide();
         $('#CEXP_lbl_beforedate').hide();
         $('#CEXP_db_selected_before_date').hide().val("");
+        $('#CEXP_span_selected_before_date').hide();
         $('#CEXP_db_selected_from_date').show();
+        $('#CEXP_span_selected_from_date').show();
         $('#CEXP_db_selected_to_date').hide();
+        $('#CEXP_span_selected_to_date').hide();
         $('#CEXP_lbl_fromdate').show();
         $('#CEXP_lbl_todate').hide();
         $('#CWEXP_pdf').hide();
@@ -194,9 +202,13 @@ $(document).ready(function(){
         $('#CEXP_btn_submit').attr('disabled','disabled');
         $("input[name=CEXP_radiobotton]:checked").attr('checked',false);
         $('#CEXP_db_selected_from_date').hide().val("");
+        $('#CEXP_span_selected_from_date').hide();
         $('#CEXP_db_selected_to_date').hide().val("");
+        $('#CEXP_span_selected_to_date').hide();
         $('#CEXP_db_selected_before_date').hide().val("");
+        $('#CEXP_span_selected_before_date').hide();
         $('#CEXP_db_selected_equal_date').hide().val("");
+        $('#CEXP_span_selected_equal_date').hide();
         $('#CEXP_div_htmltable').hide();
         $('#CEXP_lbl_msg').hide();
         $('#CEXP_lbl_fromdate').hide();
@@ -232,6 +244,8 @@ $(document).ready(function(){
         }
         else{
             $("#CEXP_db_selected_to_date").show();
+            $('#CEXP_span_selected_to_date').show();
+
             $('#CEXP_lbl_todate').show();
         }
         if($("#CEXP_db_selected_from_date").val()!=''&&$("#CEXP_db_selected_to_date").val()!='')
@@ -551,11 +565,10 @@ $(document).ready(function(){
 <!--BODY TAG START-->
 <body>
 <div class="container">
-
     <div class="preloader"><span class="Centerer"></span><img class="preloaderimg"/> </div>
-    <div class="title text-center"><h4><b>CUSTOMER EXPIRY LIST</b></h4></div>
-    <form action="" id="CEXP_form_expirylist_weeklyexpiryform" name="CEXP_form_expirylist_weeklyexpiryform" class='content form-horizontal'>
-        <div class="panel-body">
+    <div class="row title text-center"><h4><b>CUSTOMER EXPIRY LIST</b></h4></div>
+    <form class="content form-horizontal" name="CEXP_form_expirylist_weeklyexpiryform" id="CEXP_form_expirylist_weeklyexpiryform" >
+         <div class="panel-body">
             <div style="padding-bottom: 15px" id="CEXP_tble_main" hidden>
                 <div class="radio">
                     <label >
@@ -571,88 +584,104 @@ $(document).ready(function(){
                 </div>
             </div>
             <div id="CEXP_tble_expiry_list"  hidden>
-               <div><label id="CCAN_lbl_title" class="srctitle" style="text-align:CENTER;width:400px">CUSTOMER EXPIRY LIST</label></div>
+                   <div><label id="CCAN_lbl_title" class="srctitle" style="text-align:CENTER;width:400px">CUSTOMER EXPIRY LIST</label></div>
                    <div class="form-group" style="padding-left: 15px">
-                          <div class="radio">
-                     <label >
-                       <input type="radio" name="CEXP_radiobotton" id="CEXP_radio_equal" value="EQUAL" >
-                      EQUAL DATES
-                     </label>
+                      <div class="radio" style="padding-bottom:10px;">
+                         <label >
+                           <input type="radio" name="CEXP_radiobotton" id="CEXP_radio_equal" value="EQUAL" >
+                          EQUAL DATES
+                         </label>
                       </div>
-                        <div >
-                <label name='CEXP_equalto' id='CEXP_lbl_equalto' class="col-sm-3"  hidden>ENTER EQUAL TO  DATE <em>*</em></label>
-                    <div class="col-sm-2" ><input type="text" name="selected_equal_date" id="CEXP_db_selected_equal_date" style="width:110px;display: none" class="datemandtry form-control" hidden  ></div>
+                      <div class="form-group" >
+                         <label name='CEXP_equalto' id='CEXP_lbl_equalto' class="col-sm-3"  hidden>ENTER EQUAL TO  DATE <em>*</em></label>
+                         <div class="col-sm-2" id="CEXP_span_selected_equal_date" hidden>
+                             <div class="input-group addon">
+                                 <input type="text" name="selected_equal_date" id="CEXP_db_selected_equal_date" style="width:110px;display: none" class="datemandtry form-control" placeholder="Date" hidden  >
+                                 <label for="CEXP_db_selected_equal_date" class="input-group-addon" ><span class="glyphicon glyphicon-calendar" ></span></label>
+                             </div>
+                         </div>
+                      </div>
                    </div>
-                      </div>
-                <div class="form-group" style="padding-left: 15px">
-               <div class="radio">
-                   <label >
-                       <input type="radio" name="CEXP_radiobotton" id="CEXP_radio_before" value="BEFORE" >
-                       BEFORE DATES
-                   </label>
-               </div>
-               <div >
-                  <label name='CEXP_beforedate' id='CEXP_lbl_beforedate' class="col-sm-2"  hidden>ENTER A BEFORE  DATE <em>*</em></label>
-                  <div class="col-sm-2" ><input type="text" name="selected_before_date" id="CEXP_db_selected_before_date" style="width:110px;display: none" class="datemandtry form-control"  ></div>
-
-               </div>
-                    </div>
-                <div class="form-group" style="padding-left: 15px">
-               <div class="radio">
-                   <label >
-                       <input type="radio" name="CEXP_radiobotton" id="CEXP_radio_between" value="BETWEEN" >
-                       BETWEEN DATES
-                   </label>
-               </div>
-               <div>
-                    <label name='CEXP_fromdate' id='CEXP_lbl_fromdate' class="col-sm-3"  hidden >ENTER A FROM  DATE <em>*</em></label>
-                        <div class="col-sm-9" ><input type="text" name="selected_from_date" id="CEXP_db_selected_from_date" style="width:110px;display: none" class="datemandtry form-control" hidden ></div>
-
-               </div>
-               <div>
-                  <label name='CEXP_todate' id='CEXP_lbl_todate' class="col-sm-3"  hidden>ENTER A  TO DATE <em>*</em> </label>
-                      <div class="col-sm-2" ><input type="text" name="selected_to_date" id="CEXP_db_selected_to_date" style="width:110px;display: none" class="datemandtry form-control" hidden ></div>
-
-               </div>
-                    </div>
-               <div class="form-group" style="position:relative;left:12px;"><input class="maxbtn" type="button" name="submit" value="SHOW LIST" id="CEXP_btn_submit"   disabled/></div>
+                   <div class="form-group" style="padding-left: 15px">
+                        <div class="radio" style="padding-bottom:10px;">
+                            <label >
+                                 <input type="radio" name="CEXP_radiobotton" id="CEXP_radio_before" value="BEFORE" >BEFORE DATES
+                            </label>
+                        </div>
+                        <div class="form-group">
+                           <label name='CEXP_beforedate' id='CEXP_lbl_beforedate' class="col-sm-3"  hidden>ENTER A BEFORE  DATE <em>*</em></label>
+                           <div class="col-sm-2" id="CEXP_span_selected_before_date" hidden >
+                               <div class="input-group addon">
+                                   <input type="text" name="selected_before_date" id="CEXP_db_selected_before_date" style="width:110px;display: none" class="datemandtry form-control" placeholder="Date"  >
+                                   <label for="CEXP_db_selected_before_date" class="input-group-addon" ><span class="glyphicon glyphicon-calendar"></span></label>
+                               </div>
+                          </div>
+                        </div>
+                   </div>
+                   <div class="form-group" style="padding-left: 15px">
+                         <div class="radio" style="padding-bottom:10px;">
+                              <label >
+                                   <input type="radio" name="CEXP_radiobotton" id="CEXP_radio_between" value="BETWEEN" >BETWEEN DATES
+                              </label>
+                         </div>
+                         <div class="form-group">
+                              <label name='CEXP_fromdate' id='CEXP_lbl_fromdate' class="col-sm-3"  hidden >ENTER A FROM  DATE <em>*</em></label>
+                              <div class="col-sm-9" id="CEXP_span_selected_from_date" hidden >
+                                  <div class="input-group addon" style="padding-bottom:15px;">
+                                      <input type="text" name="selected_from_date" id="CEXP_db_selected_from_date" style="width:110px;display: none" class="datemandtry form-control" hidden placeholder="Date">
+                                      <label for="CEXP_db_selected_from_date" class="input-group-addon" ><span class="glyphicon glyphicon-calendar"></span></label>
+                                  </div>
+                              </div>
+                         </div>
+                         <div class="form-group">
+                             <label name='CEXP_todate' id='CEXP_lbl_todate' class="col-sm-3"  hidden>ENTER A  TO DATE <em>*</em> </label>
+                             <div class="col-sm-2" id="CEXP_span_selected_to_date" hidden >
+                                 <div class="input-group addon"  >
+                                     <input type="text" name="selected_to_date" id="CEXP_db_selected_to_date" style="width:110px;display: none" class="datemandtry form-control" hidden placeholder="Date">
+                                     <label for="CEXP_db_selected_to_date" class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></label>
+                                 </div>
+                             </div>
+                         </div>
+                   </div>
+                   <div class="form-group" style="position:relative;left:12px;"><input class="maxbtn" type="button" name="submit" value="SHOW LIST" id="CEXP_btn_submit"   disabled/></div>
             </div>
             <div id="CEXP_tble_Weekly_expiry_list" hidden>
                 <div><label class="srctitle" style="text-align:CENTER;width:400px">WEEKLY CUSTOMER EXPIRY LIST</label></div>
-
-            <div class="form-group">
-                <label class="col-sm-4" >ENTER THE WEEK AHEAD GOING TO EXPIRE<em>*</em></label>
-                   <div class="col-sm-2" ><input type='text' name="CWEXP_TB_weekBefore" id="CWEXP_TB_weekBefore"  style="width:17px" class='numonly submitvalidate'  /></div>
-            </div>
-
+                <div class="form-group">
+                      <label class="col-sm-4" >ENTER THE WEEK AHEAD GOING TO EXPIRE<em>*</em></label>
+                      <div class="col-sm-2" >
+                          <input type='text' name="CWEXP_TB_weekBefore" id="CWEXP_TB_weekBefore"  style="width:17px" class='numonly submitvalidate'  />
+                      </div>
+                </div>
                 <div class="form-group">
                     <label class="col-sm-4">SELECT THE EMAIL ID<em>*</em></label>
-                    <div class="col-sm-4"> <select name="CWEXP_email" id="CWEXP_lb_selectemail" title="EMAIL ADDRESS" class="form-control submitvalidate ">
+                    <div class="col-sm-4">
+                        <select name="CWEXP_email" id="CWEXP_lb_selectemail" title="EMAIL ADDRESS" class="form-control submitvalidate ">
                             <option value='SELECT' selected="selected"> SELECT</option>
-                    </select></div>
+                        </select>
+                    </div>
                 </div>
-
-        </div>
+            </div>
             <div class="form-group" id="CWEXP_tble_buttontable">
                 <div class="col-sm-offset-1 col-sm-3">
-
-                <input class="btn" type="button" name="submit" value="SEND" id="CWEXP_btn_submit"  disabled/>
-                <input class="btn" type="button" name="reset" value="RESET" id="CWEXP_btn_reset"  />
+                    <input class="btn" type="button" name="submit" value="SEND" id="CWEXP_btn_submit"  disabled/>
+                    <input class="btn" type="button" name="reset" value="RESET" id="CWEXP_btn_reset"  />
+                </div>
+            </div>
+            <div>
+                <label name="CEXP_msg" id="CEXP_lbl_msg" class="srctitle errormsg"   visible="false"/>
+                <label name="CWEXP_msg" id="CWEXP_lbl_msg" class="srctitle errormsg"   visible="false"/>
+            </div>
+            <div id='CWEXP_pdf' hidden>
+                <div>
+                    <input type="button" id='CEXP_btn_pdf' class="btnpdf" value="PDF">
+                </div>
+            </div><br>
+            <div    class="table-responsive" id ="CEXP_div_htmltable" >
+                <section>
+                </section>
             </div>
         </div>
-        <div>
-            <label name="CEXP_msg" id="CEXP_lbl_msg" class="srctitle errormsg"   visible="false"/>
-            <label name="CWEXP_msg" id="CWEXP_lbl_msg" class="srctitle errormsg"   visible="false"/>
-
-        </div>
-            <div id='CWEXP_pdf' hidden>
-            <div><input type="button" id='CEXP_btn_pdf' class="btnpdf" value="PDF"></div>
-                </div><br>
-        <div    class="table-responsive" id ="CEXP_div_htmltable" >
-            <section>
-            </section>
-        </div>
-                </div>
     </form>
 </div>
 </body>

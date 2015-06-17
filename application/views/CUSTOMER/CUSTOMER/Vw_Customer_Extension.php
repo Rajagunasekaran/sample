@@ -1262,6 +1262,7 @@ require_once('application/libraries/EI_HDR.php');
                 success: function(data){
                     var value_array=JSON.parse(data);
                     CEXTN_getCustomerdtls_result(value_array)
+                    $("html, body").animate({ scrollTop: 1500 }, "slow");
 
                 },
                 error: function(data){
@@ -1690,7 +1691,7 @@ require_once('application/libraries/EI_HDR.php');
             var xmlhttp = new XMLHttpRequest();
             xmlhttp.onreadystatechange = function () {
                 if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-//                    alert(xmlhttp.responseText);
+                    alert(xmlhttp.responseText);
                     var saveresult = JSON.parse(xmlhttp.responseText);
                     $('.preloader').hide();
                     CEXTN_SaveDetails_result(saveresult)
@@ -1734,6 +1735,7 @@ require_once('application/libraries/EI_HDR.php');
         function CEXTN_clearForm(){
             var  newPos= adjustPosition($('#CEXTN_lb_unitno').position(),100,150);
             resetPreloader(newPos);
+            $('#CEXTN_ta_comments').height(116);
             $(".preloader").show();
             CEXTN_clearerrmsg();
             $('#CEXTN_lbl_custname').hide();
@@ -1760,7 +1762,7 @@ require_once('application/libraries/EI_HDR.php');
         //RESET FORM FIELDS
         $("#CEXTN_btn_reset").click(function(){
             CEXTN_clearForm();
-            // $('#CEXTN_ta_comments').height(20);
+            $('#CEXTN_ta_comments').height(116);
         });
         $(document).on('change', '.CEXTN_fileextensionchk', function () {
             var filename = $('#CEXTN_fileupload').val();
@@ -1896,7 +1898,7 @@ require_once('application/libraries/EI_HDR.php');
                     <div class="form-group">
                         <label class="col-sm-3" id="passportnumber">PASSPORT NUMBER</label>
                         <div class="col-sm-3">
-                            <input type="text" name="CEXTN_tb_passno" id="CEXTN_tb_passno" style="max-width:170px;" maxlength="15" class="alnumonlyzero CEXTN_btn_validate_class form-control" />
+                            <input type="text" name="CEXTN_tb_passno" id="CEXTN_tb_passno" style="max-width:170px;" maxlength="15" class="alnumonlyzero CEXTN_btn_validate_class form-control" placeholder="Passport No" />
                         </div>
                         <div class="col-sm-4"><p id="CEXTN_passno_err" class="errormsg"></p></div>
                     </div>
@@ -1904,7 +1906,7 @@ require_once('application/libraries/EI_HDR.php');
                         <label class="col-sm-3" id="passportdate">PASSPORT EXPIRY DATE</label>
                         <div class="col-sm-2">
                             <div class="input-group addon">
-                                <input type="text" name="CEXTN_db_passdate" id="CEXTN_db_passdate"  maxlength="10" style="width:110px;" class="datenonmandtry CEXTN_btn_validate_class form-control"/><label for="CEXTN_db_passdate" class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></label>
+                                <input type="text" name="CEXTN_db_passdate" id="CEXTN_db_passdate"  maxlength="10" style="width:110px;" class="datenonmandtry CEXTN_btn_validate_class form-control" placeholder="Passport Date"/><label for="CEXTN_db_passdate" class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></label>
                             </div>
                         </div>
                         <div class="col-sm-4"><p id="CEXTN_passdate_err" class="errormsg" ></p></div>
@@ -1912,7 +1914,7 @@ require_once('application/libraries/EI_HDR.php');
                     <div class="form-group">
                         <label class="col-sm-3" id="epnumber">EP NUMBER</label>
                         <div class="col-sm-3">
-                            <input type="text" name="CEXTN_tb_epno" id="CEXTN_tb_epno"  style="max-width:170px;" maxlength="15" class="alnumonlynozero CEXTN_btn_validate_class form-control" />
+                            <input type="text" name="CEXTN_tb_epno" id="CEXTN_tb_epno"  style="max-width:170px;" maxlength="15" class="alnumonlynozero CEXTN_btn_validate_class form-control" placeholder="EP No" />
                         </div>
                         <div class="col-sm-4"><p id="CEXTN_epno_err" class="errormsg"></div>
                     </div>
@@ -1920,7 +1922,7 @@ require_once('application/libraries/EI_HDR.php');
                         <label class="col-sm-3" id="EPdate">EP EXPIRY DATE</label>
                         <div class="col-sm-2">
                             <div class="input-group addon">
-                                <input type="text" name="CEXTN_db_epdate" id="CEXTN_db_epdate"  maxlength="10" style="width:110px;" class="datenonmandtry CEXTN_btn_validate_class form-control"/><label for="CEXTN_db_epdate" class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></label>
+                                <input type="text" name="CEXTN_db_epdate" id="CEXTN_db_epdate"  maxlength="10" style="width:110px;" class="datenonmandtry CEXTN_btn_validate_class form-control" placeholder="EP Date" /><label for="CEXTN_db_epdate" class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></label>
                             </div>
                         </div>
                         <div class="col-sm-4"><p id="CEXTN_epdate_err" class="errormsg" ></p></div>
@@ -2068,7 +2070,7 @@ require_once('application/libraries/EI_HDR.php');
                         <div class="col-sm-offset-3 " style="padding-left: 15px">
                             <div class="row form-group">
                                 <div class="col-md-4">
-                                    <div class="radio " style="padding-bottom: 15px">
+                                    <div class="radio " style="padding-bottom: 20px">
                                         <label >
                                             <input type="radio" name="CEXTN_radio_airconfee" id="CEXTN_radio_quartairconfee" value="CEXTN_radio_quartairconfee" class="CEXTN_btn_validate_class"/>
                                             QUARTERLY SERVICE FEE
@@ -2083,7 +2085,7 @@ require_once('application/libraries/EI_HDR.php');
                         <div class="col-sm-offset-3 " style="padding-left: 15px">
                             <div class="row form-group">
                                 <div class="col-md-4">
-                                    <div class="radio " style="padding-bottom: 15px">
+                                    <div class="radio " style="padding-bottom: 20px">
                                         <label >
                                             <input type="radio" name="CEXTN_radio_airconfee" id="CEXTN_radio_fixedairconfee" value="CEXTN_radio_fixedairconfee" class="CEXTN_btn_validate_class " />
                                             FIXED AIRCON FEE
@@ -2109,20 +2111,20 @@ require_once('application/libraries/EI_HDR.php');
                                     <div class="form-group">
                                         <label class="col-sm-3" id="CEXTN_lbl_sameamtdep">DEPOSIT</label>
                                         <div class="col-sm-2">
-                                            <input type="text" name="CEXTN_tb_sameamtdep" id="CEXTN_tb_sameamtdep" style="width:77px;" class="rdonly" readonly />
+                                            <input type="text" name="CEXTN_tb_sameamtdep" id="CEXTN_tb_sameamtdep" style="width:77px;height: 34px" class="rdonly" readonly />
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label  class="col-sm-3" id="CEXTN_lbl_sameamtrent">RENT</label>
                                         <div class="col-sm-3">
-                                            <input type="text" name="CEXTN_tb_sameamtrent" id="CEXTN_tb_sameamtrent" style="width:77px;" class="rdonly" readonly />
+                                            <input type="text" name="CEXTN_tb_sameamtrent" id="CEXTN_tb_sameamtrent" style="width:77px;height: 34px" class="rdonly" readonly />
                                             <input type="checkbox" name="CEXTN_cb_sameamtprorated" id="CEXTN_cb_sameamtprorated" disabled /><label id="CEXTN_lbl_sameamtprorated"></label><input type="hidden" name="CEXTN_hidden_sameamtprorated" id="CEXTN_hidden_sameamtprorated" />
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-sm-3" id="CEXTN_lbl_sameamtprocost">PROCESSING COST</label>
                                         <div class="col-sm-3">
-                                            <input type="text" name="CEXTN_tb_sameamtprocost" id="CEXTN_tb_sameamtprocost" style="width:77px;" class="rdonly" readonly />
+                                            <input type="text" name="CEXTN_tb_sameamtprocost" id="CEXTN_tb_sameamtprocost" style="width:77px;height: 34px" class="rdonly" readonly />
                                             <input type="checkbox" name="CEXTN_cb_sameamtwaived" id="CEXTN_cb_sameamtwaived" class="CEXTN_btn_validate_class" disabled /><label id="CEXTN_lbl_sameamtwaived"></label><input type="hidden" id="CEXTN_hidden_sameamtwaived" name="CEXTN_hidden_sameamtwaived"/>
                                         </div>
                                     </div>
@@ -2142,14 +2144,15 @@ require_once('application/libraries/EI_HDR.php');
                                             <p id="CEXTN_diffamtdeposit_err" class="errormsg"></p>
                                         </div>
                                     </div>
-                                    <div class=" row form-group">
+
+                                    <div class="form-group">
                                         <label class="col-sm-3" id="CEXTN_lbl_diffamtrent">RENT<em>*</em></label>
                                         <div class="col-sm-6">
                                             <div class="row form-group">
                                                 <div class="col-md-3">
                                                     <input type="text" name="CEXTN_tb_diffamtrent" id="CEXTN_tb_diffamtrent" style="width:85px;" class="CEXTN_class_prowaiv 5digitdollaronly CEXTN_btn_validate_class form-control" placeholder="0.00"/>
                                                 </div>
-                                                <div class="col-md-1">
+                                                <div class="col-md-1" style="padding-right:0px;width:10px">
                                                     <input type="checkbox" name="CEXTN_cb_diffamtprorated" id="CEXTN_cb_diffamtprorated"  class="CEXTN_btn_validate_class" disabled/>
                                                 </div>
                                                 <div class="col-md-1"><label id="CEXTN_lbl_diffamtprorated"></label><input type="hidden" name="CEXTN_hidden_diffamtprorated" id="CEXTN_hidden_diffamtprorated" /></div>
@@ -2164,11 +2167,11 @@ require_once('application/libraries/EI_HDR.php');
                                                 <div class="col-md-3">
                                                     <input type="text" name="CEXTN_tb_diffamtprocost" id="CEXTN_tb_diffamtprocost" style="width:77px;" maxlength="7" class="CEXTN_class_prowaiv CEXTN_btn_validate_class form-control" placeholder="0.00"/>
                                                 </div>
-                                                <div class="col-md-1">
+                                                <div class="col-md-1" style="padding-right:0px;width:10px">
                                                     <input type="checkbox" name="CEXTN_cb_diffamtwaived" id="CEXTN_cb_diffamtwaived" class="CEXTN_class_prowaiv CEXTN_btn_validate_class" disabled />
                                                 </div>
                                                 <div class="col-md-1"><label id="CEXTN_lbl_diffamtwaived"></label><input type="hidden" id="CEXTN_hidden_diffamtwaived" name="CEXTN_hidden_diffamtwaived"/></div>
-                                                <div class="col-md-6"><p id="CEXTN_diffamtprofee_err" class="errormsg"></p></div>
+                                                <div class="col-md-6" style="padding-right:10px"><p id="CEXTN_diffamtprofee_err" class="errormsg"></p></div>
                                             </div>
                                         </div>
                                     </div>

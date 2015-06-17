@@ -141,5 +141,12 @@ Class Ctrl_Customer_Search_Update_Delete extends CI_Controller
         $Prorated=$this->Mdl_eilib_common_function->CUST_chkProrated($Startdate,$Enddate);
         echo $Prorated;
     }
+    public function CustomerRrecordDelete()
+    {
+        $UserStamp=$this->Mdl_eilib_common_function->getSessionUserStamp();
+        $customerid=$_POST['customerid'];
+        $CustomerdelResponse=$this->Mdl_customer_search_update_delete->getCustomerRecordDelete($customerid,$UserStamp);
+        echo $CustomerdelResponse;
+    }
 
 }

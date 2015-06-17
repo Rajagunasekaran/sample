@@ -1735,7 +1735,7 @@ require_once('application/libraries/EI_HDR.php');
                         if(BTDTL_SEARCH_expensetypes==16){
                             if($('#BTDTL_SEARCH_lb_searchoptions').val()==100)
                             {
-                                BTDTL_SEARCH_tr ='<table class="srcresult" id="BTDTL_SEARCH_tble_flex"><thead><tr><th style="width:20px">DELTE</th><th style="width:300px">AIRCON SERVICED BY</th><th style="width:250px">USERSTAMP</th><th style="width:180px" class="uk-timestp-column">TIMESTAMP</th></tr></thead><tbody>'
+                                BTDTL_SEARCH_tr ='<table class="srcresult" id="BTDTL_SEARCH_tble_flex"><thead><tr><th style="width:300px">AIRCON SERVICED BY</th><th style="width:250px">USERSTAMP</th><th style="width:180px" class="uk-timestp-column">TIMESTAMP</th></tr></thead><tbody>'
                             }
                             else
                             {
@@ -1914,7 +1914,7 @@ require_once('application/libraries/EI_HDR.php');
                         {
                                 if($('#BTDTL_SEARCH_lb_searchoptions').val()==100)
                                 {
-                                BTDTL_SEARCH_tr +='<tr><td style="width:20px; !important"><div class="col-sm-1"><span  class="glyphicon glyphicon-trash  classdelete"  id="aircondelete_'+BTDTL_SEARCH_id[j]+'"></span></div></td><td id=servicby_'+BTDTL_SEARCH_id[j]+' class="airconserviceedit">'+BTDTL_SEARCH_response[j][0]+'</td><td>'+BTDTL_SEARCH_response[j][1]+'</td><td>'+BTDTL_SEARCH_response[j][2]+'</td></tr>';
+                                BTDTL_SEARCH_tr +='<tr><td id=servicby_'+BTDTL_SEARCH_id[j]+' class="airconserviceedit">'+BTDTL_SEARCH_response[j][0]+'</td><td>'+BTDTL_SEARCH_response[j][1]+'</td><td>'+BTDTL_SEARCH_response[j][2]+'</td></tr>';
                                 }
                                 else
                                 {
@@ -1932,7 +1932,7 @@ require_once('application/libraries/EI_HDR.php');
                                 show_msgbox("BIZ EXPENSE DETAIL ENTRY/SEARCH/UPDATE/DELETE",BTDTL_SEARCH_errordelete_replace,"success",false);
                             }
                             else if(BTDTL_SEARCH_parentfunction==0){
-                                show_msgbox("BIZ EXPENSE DETAIL ENTRY/SEARCH/UPDATE/DELETE",BTDTL_SEARCH_errorarr[5].EMC_DATA,"success",false);
+                                show_msgbox("BIZ EXPENSE DETAIL ENTRY/SEARCH/UPDATE/DELETE",BTDTL_SEARCH_errorarr[6].EMC_DATA,"success",false);
                             }
                             else if(BTDTL_SEARCH_parentfunction=='BTDTL_SEARCH_flag_notupdate'){
                                 show_msgbox("BIZ EXPENSE DETAIL ENTRY/SEARCH/UPDATE/DELETE",BTDTL_SEARCH_errorarr[62].EMC_DATA,"success",false);
@@ -2886,22 +2886,50 @@ require_once('application/libraries/EI_HDR.php');
             var pdfurl=document.location.href='<?php echo site_url("EXPENSE/BIZEXPENSE/Ctrl_Pdf/pdfexportbizdetailexpense") ?>?Expensetype='+Expensetype+'&BTDTL_SEARCH_lb_searchoptions='+$("#BTDTL_SEARCH_lb_searchoptions").val()+'&searchvalue='+searchvalue+'&startdate='+startdate+'&BTDTL_SEARCH_parentfunc_flex=BTDTL_SEARCH_parentfunc_flex&labelheadername='+$('#BTDTL_SEARCH_div_msg').text();
         });
    // DELTE FUNCTION
+        var rowid;
+        var unit_id;
+        var unitsdate;
+        var unitedate;
         $(document).on('click','.classdelete', function (){
             $('.preloader').show();
             var id=this.id;
             var unitno = $(this).closest("tr").children("td:nth-child(2)").html();
             var splitid=id.split('_');
-            var rowid='';
+
             if(splitid[0]=='aircondelete' || splitid[0]=="carparkdelete" || splitid[0]=="digitaldelete" || splitid[0]=="electricitydelete")
             {
                 rowid=splitid[1];
+                unit_id=splitid[2];
             }
             else {
                 rowid = splitid[0].split('^')[1];
+                unit_id=splitid[1];
+                unitsdate=splitid[2];
+                unitedate=splitid[3];
             }
-            var unit_id=splitid[1];
-            var unitsdate=splitid[2];
-            var unitedate=splitid[3];
+            if($('#BTDTL_SEARCH_lb_expense_type').val()==14) {
+                var cid = $(this).attr('id');
+                var SplittedData = cid.split('^');
+                var Rowid = SplittedData[1];
+                var tds = $('#' + Rowid).children('td');
+                BTDTL_SEARCH_obj = {
+                    "unitno": $(tds[1]).html(),
+                    "BTDTL_invoiceto": $(tds[2]).html(),
+                    "BTDTL_acctno": $(tds[3]).html(),
+                    "BTDTL_appldate": $(tds[4]).html(),
+                    "BTDTL_cablestartdate": $(tds[5]).html(),
+                    "BTDTL_cableenddate": $(tds[6]).html(),
+                    "BTDTL_internetsd": $(tds[7]).html(),
+                    "BTDTL_interneted": $(tds[8]).html(),
+                    "BTDTL_ssid": $(tds[9]).html(),
+                    "BTDTL_pwd": $(tds[10]).html(),
+                    "BTDTL_cablebox": $(tds[11]).html(),
+                    "BTDTL_modem": $(tds[12]).html(),
+                    "BTDTL_basicgroup": $(tds[13]).html(),
+                    "BTDTL_addchhnl": $(tds[14]).html(),
+                    "BTDTL_comments": $(tds[15]).html()
+                }
+            }
             $.ajax({
                 type: "POST",
                 url: controller_url + "checktransaction",
@@ -2909,26 +2937,17 @@ require_once('application/libraries/EI_HDR.php');
                 success: function (data) {
                     $('.preloader').hide();
                     var result=JSON.parse(data);
-                    if(result[0]==1)
+                    var checktransflag=result[0];
+                    var recversion=result[1];
+                    if(checktransflag==0)
                     {
-                        if($('#BTDTL_SEARCH_lb_searchoptions').val()==100)
-                        {
-                            alert(BDTL_INPUT_errorarr[65].EMC_DATA)
-                            show_msgbox("BIZ EXPENSE DETAIL ENTRY/SEARCH/UPDATE/DELETE",BDTL_INPUT_errorarr[65].EMC_DATA,"success",false);
-                        }
-                        else
-                        {
-                            var BDTL_INPUT_errormsg_replace = BDTL_INPUT_errorarr[64].EMC_DATA.replace("[UNITNO]",unitno);
-                            alert(BDTL_INPUT_errormsg_replace)
-                            BDTL_INPUT_errormsg_replace=BDTL_INPUT_errormsg_replace.replace("[LP]",result[1]);
-                            alert(BDTL_INPUT_errormsg_replace)
+                            var BDTL_INPUT_errormsg_replace = BTDTL_SEARCH_errorarr[64].EMC_DATA.replace("[UNITNO]",unitno);
+                            BDTL_INPUT_errormsg_replace=BDTL_INPUT_errormsg_replace.replace("[LP]",recversion);
                             show_msgbox("BIZ EXPENSE DETAIL ENTRY/SEARCH/UPDATE/DELETE",BDTL_INPUT_errormsg_replace,"success",false);
-                        }
                     }
-                    else
+                    else if(checktransflag==1)
                     {
-                        alert(BDTL_INPUT_errorarr[59].EMC_DATA)
-                        show_msgbox("BIZ EXPENSE DAILY ENTRY/SEARCH/UPDATE/DELETE",BDTL_INPUT_errorarr[59].EMC_DATA,"success","delete");
+                        show_msgbox("BIZ EXPENSE DETAIL ENTRY/SEARCH/UPDATE/DELETE",BTDTL_SEARCH_errorarr[59].EMC_DATA,"success","delete");
                     }
                 },
                 error: function (data) {
@@ -2938,19 +2957,6 @@ require_once('application/libraries/EI_HDR.php');
         });
         $(document).on('click','.deleteconfirm', function (){
             $('.preloader').show();
-            var id=this.id;
-            var splitid=id.split('_');
-            var rowid='';
-            if(splitid[0]=='aircondelete' || splitid[0]=="carparkdelete" || splitid[0]=="digitaldelete" || splitid[0]=="electricitydelete")
-            {
-                rowid=splitid[1];
-            }
-            else {
-                rowid = splitid[0].split('^')[1];
-            }
-            var unit_id=splitid[1];
-            var unitsdate=splitid[2];
-            var unitedate=splitid[3];
             var Expensetype=$('#BTDTL_SEARCH_lb_expense_type').val();
             if(Expensetype==16)
             {
@@ -3067,18 +3073,12 @@ require_once('application/libraries/EI_HDR.php');
                     var searchvalue=$('#BTDTL_SEARCH_ta_starhubcomments').val();
                 else if($('#BTDTL_SEARCH_lb_searchoptions').val()==191)
                     var searchvalue=$('#BTDTL_SEARCH_lb_starhubunitno').val();
-                var cid = $(this).attr('id');
-                var SplittedData=cid.split('^');
-                var Rowid=SplittedData[1];
-                var tds = $('#'+Rowid).children('td');
-                BTDTL_SEARCH_obj={"unitno":$(tds[1]).html(),"BTDTL_invoiceto":$(tds[2]).html(),"BTDTL_acctno":$(tds[3]).html(),"BTDTL_appldate":$(tds[4]).html(),"BTDTL_cablestartdate":$(tds[5]).html(),"BTDTL_cableenddate":$(tds[6]).html(),"BTDTL_internetsd":$(tds[7]).html(),"BTDTL_interneted":$(tds[8]).html(),"BTDTL_ssid":$(tds[9]).html(),"BTDTL_pwd":$(tds[10]).html(),"BTDTL_cablebox":$(tds[11]).html(),"BTDTL_modem":$(tds[12]).html(),"BTDTL_basicgroup":$(tds[13]).html(),"BTDTL_addchhnl":$(tds[14]).html(),"BTDTL_comments":$(tds[15]).html()}
-            }
+                 }
             $.ajax({
                 type: "POST",
                 url: controller_url + "deletefunction",
                 data: {'rowid':rowid,'unitid':unit_id,'BTDTL_SEARCH_lb_searchoptions': $('#BTDTL_SEARCH_lb_searchoptions').val(),'BTDTL_SEARCH_lb_expense_type': $('#BTDTL_SEARCH_lb_expense_type').val(),'searchvalue': searchvalue,'startdate': startdate,'BTDTL_SEARCH_starhubid':BTDTL_SEARCH_starhubid,'BTDTL_SEARCH_obj':BTDTL_SEARCH_obj},
                 success: function (data) {
-                    alert(data)
                     $('.preloader').hide();
                     var result = JSON.parse(data)
                      BTDTL_SEARCH_success_showflex(result);

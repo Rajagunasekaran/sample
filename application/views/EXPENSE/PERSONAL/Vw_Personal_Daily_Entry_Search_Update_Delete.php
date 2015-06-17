@@ -40,7 +40,6 @@ $(document).ready(function(){
     $(".numonly").doValidation({rule:'numbersonly',prop:{realpart:5}});
     $(".amtonly").doValidation({rule:'numbersonly',prop:{realpart:5,imaginary:2}});
     $(".autosize").doValidation({rule:'general',prop:{autosize:true}});
-    $("input.autosize").autoGrowInput();
     $(".PDLY_INPUT_ta_cmtItem").doValidation({rule:'general',prop:{uppercase:false}});
     $('textarea').autogrow({onInitialize: true});
     var perexptype;
@@ -215,6 +214,7 @@ $(document).ready(function(){
         $("#form_car").find('select').val('SELECT');
         $("#form_carloan").find('input:text, input:password, input:file, textarea').val('');
         $("#form_carloan").find('select').val('SELECT');
+        $('#PDLY_INPUT_btn_bbypsnlsbutton').attr("disabled", "disabled");
         var expensetype=$(this).val();
         if(expensetype==36)
         {
@@ -257,9 +257,8 @@ $(document).ready(function(){
 // FUNCTION FOR MULTIROW
     function PDLY_SEARCH_clear_multirow(){
         $('#PDLY_INPUT_tble_multi').empty();
-        $('<tr><td nowrap><label  id="PDLY_INPUT_lbl_expense" >CATEGORY OF EXPENSE<em>*</em></label></td><td style="max-width: 150px;" nowrap><label  id="PDLY_INPUT_lbl_invdate" >INVOICE DATE<em>*</em></label></td><td style="max-width:200px;" nowrap><label id="PDLY_INPUT_lbl_invamt" >INVOICE AMOUNT<em>*</em></label> </td><td ><label id="PDLY_INPUT_lbl_invitm" >INVOICE ITEMS<em>*</em></label> </td><td ><label id="PDLY_INPUT_lbl_invfrom" >INVOICE FROM<em>*</em></label> </td><td><label id="PDLY_INPUT_lbl_invcmt" >COMMENTS</label></td></tr><tr><td> <select class="submultivalid form-control"   name="PDLY_INPUT_lb_category[]" id="PDLY_INPUT_lb_category1"  ><option >SELECT</option> </select> </td> <td><input class=" form-control date-picker submultivalid datemandtry"   type="text" name ="PDLY_INPUT_db_invdate[]" id="PDLY_INPUT_db_invdate1" style="max-width:100px;" /> </td><td><input   type="text" name ="PDLY_INPUT_tb_incamtrp[]" id="PDLY_INPUT_tb_incamtrp1"  class="form-control amtonly submultivalid" style="max-width:80px;"   /></td><td><textarea class="form-control submultivalid PDLY_INPUT_ta_cmtItem"   name="PDLY_INPUT_ta_invitem[]" id="PDLY_INPUT_ta_invitem1"   ></textarea></td><td><input class="form-control submultivalid autosize autocompinc"  type="text" name ="PDLY_INPUT_tb_invfrom[]" id="PDLY_INPUT_tb_invfrom1" /></td><td><textarea  class=" form-control submultivalid PDLY_INPUT_ta_cmtItem" name ="PDLY_INPUT_tb_comments[]" id="PDLY_INPUT_tb_comments1" ></textarea></td><td><input enabled type="button" disabled value="+" class="addbttn" alt="Add Row" style="max-height: 30px; max-width:30px;" name ="PDLY_INPUT_btn_addbtn" id="PDLY_INPUT_btn_addbtn1" disabled/></td><td><input  type="button" value="-" class="deletebttn" alt="delete Row" style="max-height: 30px; max-width:30px;" name ="PDLY_INPUT_btn_delbtn" id="PDLY_INPUT_btn_delbtn1"  disabled /></td></tr>').appendTo($('#PDLY_INPUT_tble_multi'));
+        $('<tr><td nowrap><label  id="PDLY_INPUT_lbl_expense" >CATEGORY OF EXPENSE<em>*</em></label></td><td style="max-width: 150px;" nowrap><label  id="PDLY_INPUT_lbl_invdate" >INVOICE DATE<em>*</em></label></td><td style="max-width:200px;" nowrap><label id="PDLY_INPUT_lbl_invamt" >INVOICE AMOUNT<em>*</em></label> </td><td ><label id="PDLY_INPUT_lbl_invitm" >INVOICE ITEMS<em>*</em></label> </td><td ><label id="PDLY_INPUT_lbl_invfrom" >INVOICE FROM<em>*</em></label> </td><td><label id="PDLY_INPUT_lbl_invcmt" >COMMENTS</label></td></tr><tr><td> <select class="submultivalid form-control"   name="PDLY_INPUT_lb_category[]" id="PDLY_INPUT_lb_category1"  ><option >SELECT</option> </select> </td> <td><input class=" form-control date-picker submultivalid datemandtry"   type="text" name ="PDLY_INPUT_db_invdate[]" id="PDLY_INPUT_db_invdate1" style="max-width:100px;" /> </td><td><input   type="text" name ="PDLY_INPUT_tb_incamtrp[]" id="PDLY_INPUT_tb_incamtrp1"  class="form-control amtonly submultivalid" style="max-width:80px;"   /></td><td><textarea class="form-control submultivalid PDLY_INPUT_ta_cmtItem"   name="PDLY_INPUT_ta_invitem[]" id="PDLY_INPUT_ta_invitem1"   ></textarea></td><td><input class="form-control submultivalid autosize autocompinc"  type="text" name ="PDLY_INPUT_tb_invfrom[]" id="PDLY_INPUT_tb_invfrom1" maxlength="200" /></td><td><textarea  class=" form-control submultivalid PDLY_INPUT_ta_cmtItem" name ="PDLY_INPUT_tb_comments[]" id="PDLY_INPUT_tb_comments1" ></textarea></td><td><input enabled type="button" disabled value="+" class="addbttn" alt="Add Row" style="max-height: 30px; max-width:30px;" name ="PDLY_INPUT_btn_addbtn" id="PDLY_INPUT_btn_addbtn1" disabled/></td><td><input  type="button" value="-" class="deletebttn" alt="delete Row" style="max-height: 30px; max-width:30px;" name ="PDLY_INPUT_btn_delbtn" id="PDLY_INPUT_btn_delbtn1"  disabled /></td></tr>').appendTo($('#PDLY_INPUT_tble_multi'));
         $(".autosize").doValidation({rule:'general',prop:{autosize:true}});
-        $("input.autosize").autoGrowInput();
         $(".amtonly").doValidation({rule:'numbersonly',prop:{realpart:5,imaginary:2}});
         $(".date-picker").datepicker({dateFormat:'dd-mm-yy', changeYear: true, changeMonth: true});
         $('.date-picker').datepicker("option","maxDate",new Date());
@@ -302,10 +301,9 @@ $(document).ready(function(){
         $(".amtonlyinc").doValidation({rule:'numbersonly',prop:{realpart:5,imaginary:2}});
         fCell.innerHTML ="<td><textarea class='submultivalid form-control PDLY_INPUT_ta_cmtItem'  type='text' name='PDLY_INPUT_ta_invitem[]' id='"+"PDLY_INPUT_ta_invitem"+incid+"'></textarea></td>"
         fCell = newRow.insertCell(4);
-        fCell.innerHTML ="<td><input  class='submultivalid form-control autosize autocompinc' type='text' name ='PDLY_INPUT_tb_invfrom[]' id='"+"PDLY_INPUT_tb_invfrom"+incid+"' /></td>"
+        fCell.innerHTML ="<td><input  class='submultivalid form-control autosize autocompinc' type='text' name ='PDLY_INPUT_tb_invfrom[]' id='"+"PDLY_INPUT_tb_invfrom"+incid+"' maxlength='200'/></td>"
         fCell = newRow.insertCell(5);
         $(".autosize").doValidation({rule:'general',prop:{autosize:true}});
-        $("input.autosize").autoGrowInput();
         fCell.innerHTML = "<td><textarea  class='submultivalid form-control PDLY_INPUT_ta_cmtItem' type='text' name ='PDLY_INPUT_tb_comments[]' id='"+"PDLY_INPUT_tb_comments"+incid+"'></textarea></td>"
         fCell = newRow.insertCell(6);
         fCell.innerHTML ="<td><input type='button' value='+' class='addbttn' alt='Add Row' style='max-height: 30px; max-width:30px;' name ='PDLY_INPUT_btn_addbtn' id='"+"PDLY_INPUT_btn_addbtn"+incid+"'/></td>";
@@ -572,7 +570,7 @@ $(document).ready(function(){
                 }
                 else
                 {
-                    show_msgbox("PERSONAL EXPENSE ENTRY/SEARCH/UPDATE/DELETE",error_message[1].EMC_DATA,"success",false)
+                    show_msgbox("PERSONAL EXPENSE ENTRY/SEARCH/UPDATE/DELETE",error_message[2].EMC_DATA,"success",false)
                     carexpenseclear();
                 }
             }
@@ -605,7 +603,7 @@ $(document).ready(function(){
                 }
                 else
                 {
-                    show_msgbox("PERSONAL EXPENSE ENTRY/SEARCH/UPDATE/DELETE",error_message[1].EMC_DATA,"success",false)
+                    show_msgbox("PERSONAL EXPENSE ENTRY/SEARCH/UPDATE/DELETE",error_message[2].EMC_DATA,"success",false)
                     carloaneclear();
                 }
             }
@@ -655,7 +653,7 @@ $(document).ready(function(){
                 }
                 else
                 {
-                    show_msgbox("PERSONAL EXPENSE ENTRY/SEARCH/UPDATE/DELETE",error_message[1].EMC_DATA,"success",false)
+                    show_msgbox("PERSONAL EXPENSE ENTRY/SEARCH/UPDATE/DELETE",error_message[2].EMC_DATA,"success",false)
                     PDLY_SEARCH_clear_multirow();
                     var expensetype=$('#PE_lb_expensetype').find('option:selected').val();
                     if(expensetype==36)
@@ -2159,7 +2157,6 @@ $(document).ready(function(){
         {
             $('#'+cid).replaceWith("<td  class='new' id='"+previous_id+"'><input type='text' id='Eb_invfrom' name='Eb_invfrom'  class='babyupdate form-control autosize autocompinc' style='width: 150px' value='"+cval+"'></td>");
             $(".autosize").doValidation({rule:'general',prop:{autosize:true}});
-            $("input.autosize").autoGrowInput();
         }
         if(ifcondition=='ebinvitem')
         {
@@ -2298,7 +2295,6 @@ $(document).ready(function(){
         {
             $('#'+cid).replaceWith("<td  class='new' id='"+carprevious_id+"'><input type='text' id='Ec_invfrom' name='Ec_invfrom'  class='carupdate form-control autosize autocompinc' style='width: 150px' value='"+carcval+"'></td>");
             $(".autosize").doValidation({rule:'general',prop:{autosize:true}});
-            $("input.autosize").autoGrowInput();
 
         }
         if(carifcondition=='ecinvitem')
@@ -2436,7 +2432,6 @@ $(document).ready(function(){
         {
             $('#'+cid).replaceWith("<td  class='new' id='"+personalprevious_id+"'><input type='text' id='Ep_invfrom' name='Ep_invfrom'  class='personalupdate form-control autosize autocompinc' style='width: 200px' value='"+personalcval+"'></td>");
             $(".autosize").doValidation({rule:'general',prop:{autosize:true}});
-            $("input.autosize").autoGrowInput();
         }
         if(personalifcondition=='epinvitem')
         {
@@ -2802,7 +2797,7 @@ $(document).ready(function(){
                     <td><input class="form-control submultivalid date-picker datemandtry"   type="text" name ="PDLY_INPUT_db_invdate[]" id="PDLY_INPUT_db_invdate1" style="max-width:100px;" /> </td>
                     <td><input   type="text" name ="PDLY_INPUT_tb_incamtrp[]" id="PDLY_INPUT_tb_incamtrp1"  class="submultivalid form-control amtonly" style="max-width:80px;"   /></td>
                     <td><textarea class="submultivalid form-control"   name="PDLY_INPUT_ta_invitem[]" id="PDLY_INPUT_ta_invitem1"></textarea></td>
-                    <td><input class="submultivalid form-control autosize autocompinc"  type="text" name ="PDLY_INPUT_tb_invfrom[]" id="PDLY_INPUT_tb_invfrom1" /></td>
+                    <td><input class="submultivalid form-control autosize autocompinc"  type="text" name ="PDLY_INPUT_tb_invfrom[]" id="PDLY_INPUT_tb_invfrom1" maxlength="200"/></td>
                     <td><textarea  class="submultivalid form-control" name ="PDLY_INPUT_tb_comments[]" id="PDLY_INPUT_tb_comments1"></textarea></td>
                     <td><input enabled type='button'disabled value='+' class='addbttn' alt='Add Row' style="max-height: 30px; max-width:30px;" name ='PDLY_INPUT_btn_addbtn' id='PDLY_INPUT_btn_addbtn1'  disabled/></td>
                     <td><input  type='button' value='-' class='deletebttn' alt='delete Row' style="max-height: 30px; max-width:30px;" name ='PDLY_INPUT_btn_delbtn' id='PDLY_INPUT_btn_delbtn1'  disabled /></td>

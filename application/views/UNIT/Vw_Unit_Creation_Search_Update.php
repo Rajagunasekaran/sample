@@ -988,7 +988,7 @@ require_once('application/libraries/EI_HDR.php');
                 });
             });
         // SUCCESS FUNCTION FOR FLEX TABLE
-            var table;
+            var table; var previous_id;var tdvalue;var rid;
             function USU_success_flex(USU_response_flex){
                 $(".preloader").hide();
                 var sucssvar=USU_response_flex.USU_parentfunc_obj;
@@ -1097,7 +1097,7 @@ require_once('application/libraries/EI_HDR.php');
                                             else
                                             {
                                                 if(i==1)
-                                                    USU_tr += '<td class="data" id="'+(j+1)+'_'+USU_flex_arr[j][0]+'">' + USU_null + '</td>';
+                                                    USU_tr += '<td class="data" id="'+j+'_'+USU_flex_arr[j][0]+'">' + USU_null + '</td>';
                                                 else{
                                                     if(i==3){
                                                         USU_tr += '<td style="text-align: center">' + USU_null + '</td>';
@@ -1136,6 +1136,14 @@ require_once('application/libraries/EI_HDR.php');
                                     "aoColumnDefs" : [
                                         { "aTargets" : ["uk-date-column"] , "sType" : "uk_date"}, { "aTargets" : ["uk-timestp-column"] , "sType" : "uk_timestp"} ]
                                 });
+                                // remove row hightlight and replace inline edit as td
+                                table.on('page.dt', function(){
+                                    $('#USU_tble_htmltable tr').removeClass('row_selected');
+                                    $('#USU_div_updateform').hide();
+                                    if(previous_id!=undefined){
+                                        $('#'+previous_id).replaceWith("<td class='data' id='"+rid+'_'+previous_id+"' >"+tdvalue+"</td>");
+                                    }
+                                });
                                 sorting();
                                 $('#USU_div_htmltable').show();
                                 var USU_stamp_unitdetails=USU_response_flex.USU_obj_stamp_rowarray_val[0];
@@ -1147,8 +1155,14 @@ require_once('application/libraries/EI_HDR.php');
                                         for(var s=k;s<k+11;s++){
                                             if(USU_stamp_unitdetails[s]==null)
                                                 USU_tr_stampunit +='<td></td>';
-                                            else
-                                                USU_tr_stampunit +='<td>'+USU_stamp_unitdetails[s]+'</td>';
+                                            else{
+                                                if(((s%11)>=0 && (s%11)<=7) || (s%11)==10){
+                                                    USU_tr_stampunit +='<td style="text-align: center">'+USU_stamp_unitdetails[s]+'</td>';
+                                                }
+                                                else{
+                                                    USU_tr_stampunit +='<td>'+USU_stamp_unitdetails[s]+'</td>';
+                                                }
+                                            }
                                         }
                                         k=k+11;
                                         q=q+25;
@@ -1528,14 +1542,6 @@ require_once('application/libraries/EI_HDR.php');
                 }
             });
         // CLICK EVENT FOR INLINE EDIT FOR STAMP TYPE AND ROOM TYPE
-            var previous_id;var tdvalue;var rid;
-            $(document).on('click','.paginate_button',function(){
-                $('#USU_tble_htmltable tr').removeClass('row_selected');
-                $('#USU_div_updateform').hide();
-                if(previous_id!=undefined){
-                    $('#'+previous_id).replaceWith("<td class='data' id='"+rid+'_'+previous_id+"' >"+tdvalue+"</td>");
-                }
-            });
             $(document).on('click','.data',function(){
                 if(previous_id!=undefined){
                     $('#'+previous_id).replaceWith("<td class='data' id='"+rid+'_'+previous_id+"' >"+tdvalue+"</td>");
@@ -1548,10 +1554,8 @@ require_once('application/libraries/EI_HDR.php');
                 previous_id=primcid;
                 editrowid=primcid;
                 tdvalue=$(this).text();
-                $('#USU_tble_htmltable tr:eq('+rowcid+')').each(function () {
-                    var $tds = $(this).find('td');
-                    USU_obj_rowvalue={"USU_tr_first":$tds.eq(0).text(),"USU_tr_second":$tds.eq(1).text(),"USU_tr_third":$tds.eq(2).text(),"USU_tr_four":$tds.eq(3).text(),"USU_tr_five":$tds.eq(4).text(),"USU_tr_six":$tds.eq(5).text(),"USU_tr_seven":$tds.eq(6).text(),"USU_tr_eight":$tds.eq(7).text(),"USU_tr_nine":$tds.eq(8).text(),"USU_tr_ten":$tds.eq(9).text(),"USU_tr_eleven":$tds.eq(10).text(),"USU_tr_twelve":$tds.eq(11).text(),"USU_tr_thirteen":$tds.eq(12).text()};
-                });
+                var tds = table.row(rowcid).data();
+                USU_obj_rowvalue={"USU_tr_first":tds[0],"USU_tr_second":tds[1],"USU_tr_third":tds[2],"USU_tr_four":tds[3],"USU_tr_five":tds[4],"USU_tr_six":tds[5],"USU_tr_seven":tds[6],"USU_tr_eight":tds[7],"USU_tr_nine":tds[8],"USU_tr_ten":tds[9],"USU_tr_eleven":tds[10],"USU_tr_twelve":tds[11],"USU_tr_thirteen":tds[12]};
                 if($('#USU_lb_searchby').val()==5)//ROOM TYPE
                 {
                     $('#'+cid).replaceWith('<td class="new" id="'+previous_id+'"><input id ="USU_tb_sep_roomtype" type="text" name="USU_tb_sep_roomtype" maxlength=30 class="form-control general USU_class_sep_type USU_class_updvalidation" value="'+tdvalue+'">');

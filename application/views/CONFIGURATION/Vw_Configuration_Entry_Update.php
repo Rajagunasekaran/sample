@@ -408,9 +408,8 @@ $(document).on('click','.data', function (){
 var dataupdte;
 var subdatamount_value;
 var CONFIG_SEARCH_subtype;
-$(document).on('change blur','.dataupdate', function (){
+$(document).on('change','.dataupdate', function (){
 //    $('.dataupdate').change(function(){
-$('.preloader').show();
     updateflag=0;
     sub_type=$('#'+subtype_val).val();
     subdatamount_value=$('#'+subtype_val).val();
@@ -430,6 +429,7 @@ $('.preloader').show();
         var subdatamount_value=subdatamount_value;
     }
     if((dataupdte!=tdvalue && dataupdte!=sub_type) ||(dataupdte!=tdvalue)){
+//        $('.preloader').show();
         $.ajax({
             type: "POST",
             'url':CONFIG_ENTRY_controller_url+"dataupd_exists",
@@ -463,8 +463,7 @@ $('.preloader').show();
                     }
                     if(updateflag==0)
                     {
-                    updation()
-//                            $("#nameupd").removeClass('invalid');
+                    updation()//                            $("#nameupd").removeClass('invalid');
                     }
                 }
             },
@@ -473,20 +472,20 @@ $('.preloader').show();
             }
         });
     }
-    $('.preloader').hide();
 });
 //UPDATE SUCCESS PART
 function updation(){
-    $('.preloader').show();
     var module=$('#CONFIG_ENTRY_lb_module').val();
     var type=$('#CONFIG_ENTRY_lb_type').val();
-$.ajax({
+    var CONFSRC_UPD_DEL_lb_Type = $('#CONFIG_ENTRY_lb_type').find('option:selected').text();
+    if(dataupdte!=''){
+    $('.preloader').show();
+    $.ajax({
     type: "POST",
     'url':CONFIG_ENTRY_controller_url+"dataupdate",
-    data:{'rowid':combineid,'module':module,'type':type,'data':dataupdte,'CONFIG_SEARCH_subdata':CONFIG_SEARCH_subtype,'subdatamount_value':subdatamount_value},
+    data:{'rowid':combineid,'module':module,'type':type,'data':dataupdte,'CONFIG_SEARCH_subdata':CONFIG_SEARCH_subtype,'subdatamount_value':subdatamount_value,'typeText':CONFSRC_UPD_DEL_lb_Type,'olddata':tdvalue},
     success: function(data) {
         $('.preloader').hide();
-
         var resultflag=data;
         if(resultflag=='true')
         {
@@ -500,7 +499,7 @@ $.ajax({
             show_msgbox("CONFIGURATION ENTRY/SEARCH/UPDATE/DELETE",value_err_array[12].EMC_DATA,"error",false)
         }
     }
-});
+});}
 }
 //CLICK EVENT FOR BUTTON
 $(document).on('click','#CONFIG_ENTRY_btn_save',function(){

@@ -39,7 +39,7 @@ class Ctrl_Configuration_Entry_Update extends CI_Controller{
     public function dataupdate()
     {
         $USERSTAMP=$this->Mdl_eilib_common_function->getSessionUserStamp();
-        $result = $this->Mdl_configuration_entry_update->dataupdate($USERSTAMP,$this->input->post('rowid'),$this->input->post('module'),$this->input->post('type'),$this->input->post('data'),$this->input->post('CONFIG_SEARCH_subdata'),$this->input->post('subdatamount_value')) ;
+        $result = $this->Mdl_configuration_entry_update->dataupdate($USERSTAMP,$this->input->post('rowid'),$this->input->post('module'),$this->input->post('type'),$this->input->post('data'),$this->input->post('CONFIG_SEARCH_subdata'),$this->input->post('subdatamount_value'),$this->input->post('typeText'),$this->input->post('olddata')) ;
         echo JSON_encode($result);
     }
     //DELETE OPTION

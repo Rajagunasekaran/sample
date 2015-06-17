@@ -510,10 +510,10 @@ class Mdl_eilib_invoice_contract extends CI_Model{
             {
                 $noticeSt=" ";
             }
-            if ($webloginfetch!='null')
+            if ($webloginfetch!='')
             {
-                strpos($webloginfetch,"T1")==false?$indext1=-1:$indext1=strpos($webloginfetch,"T1");
-                strpos($webloginfetch,"T2")==false?$indext2=-1:$indext2=strpos($webloginfetch,"YT2ar");
+                (strpos($webloginfetch,"T1")===false)?$indext1=-1:$indext1=strpos($webloginfetch,"T1");
+                (strpos($webloginfetch,"T2")===false)?$indext2=-1:$indext2=strpos($webloginfetch,"YT2ar");
             }
             if(($indext1>=0)||($indext2>=0))
             {
@@ -619,10 +619,10 @@ class Mdl_eilib_invoice_contract extends CI_Model{
             $prlbl2  =str_replace("prochkout",$LastMonthformat,$prlbl1) ;
 //CHECK LESS THAN A MONTH OR GREATER THAN A MONTH
             $rent_check=$rent_check;
-            strpos($lp,"Year")==false?$yearchk=-1:$yearchk=strpos($lp,"Year");
-            strpos($lp,"Months")==false?$monthschk=-1:$monthschk=strpos($lp,"Months");
-            strpos($lp,"Month")==false?$monthchk=-1:$monthchk=strpos($lp,"Month");
-            strpos($lp,"Day")==false?$daychk=-1:$daychk=strpos($lp,"Day");
+            strpos($lp,"Year")===false?$yearchk=-1:$yearchk=strpos($lp,"Year");
+            strpos($lp,"Months")===false?$monthschk=-1:$monthschk=strpos($lp,"Months");
+            strpos($lp,"Month")===false?$monthchk=-1:$monthchk=strpos($lp,"Month");
+            strpos($lp,"Day")===false?$daychk=-1:$daychk=strpos($lp,"Day");
             if($formname=="EXTENSION")
             {
                 if((($yearchk>0)||($monthschk>0)||(($monthchk>0)&&($daychk>0)))&&($rent_check=='true'))//greater than a month,prorated
@@ -727,6 +727,8 @@ class Mdl_eilib_invoice_contract extends CI_Model{
             curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
             curl_setopt($ch, CURLOPT_ENCODING, "gzip,deflate");
             $response = curl_exec($ch);
+            if($response=="SCRIPT ERROR")
+                return [0];
             curl_close($ch);
             $file = new Google_Service_Drive_DriveFile();
             $parent = new Google_Service_Drive_ParentReference();
@@ -734,13 +736,13 @@ class Mdl_eilib_invoice_contract extends CI_Model{
             $file->setParents(array($parent));
             $service->files->patch($response, $file);
             $file = $service->files->get($response);
-            return [1,$response,$file->embedLink];
+            $this->CUST_SetDocOwner($service,$response,$docowner,$sendmailid);
+            return [1,$response,$file->alternateLink];
         } catch (Exception $ex) {
             return $ex->getMessage();
             return [0,$response];
         }
-        $this->CUST_SetDocOwner($service,$response,$docowner,$sendmailid);
-        return $response;    }
+    }
 //GET INVOICE ID ,CONTRACT ID ,SERIAL NO,INVOIC DATE
     public function CUST_invoice_contractreplacetext()
     {
@@ -839,10 +841,10 @@ class Mdl_eilib_invoice_contract extends CI_Model{
             $curr_year = intval(date("Y", $check_in_dated_minus));
             $cdate1="";
             $cdate2="";
-            strpos($lease_fetch,"Year")==false?$yearchk=-1:$yearchk=strpos($lease_fetch,"Year");
-            strpos($lease_fetch,"Months")==false?$monthschk=-1:$monthschk=strpos($lease_fetch,"Months");
-            strpos($lease_fetch,"Month")==false?$monthchk=-1:$monthchk=strpos($lease_fetch,"Month");
-            strpos($lease_fetch,"Day")==false?$daychk=-1:$daychk=strpos($lease_fetch,"Day");
+            strpos($lease_fetch,"Year")===false?$yearchk=-1:$yearchk=strpos($lease_fetch,"Year");
+            strpos($lease_fetch,"Months")===false?$monthschk=-1:$monthschk=strpos($lease_fetch,"Months");
+            strpos($lease_fetch,"Month")===false?$monthchk=-1:$monthchk=strpos($lease_fetch,"Month");
+            strpos($lease_fetch,"Day")===false?$daychk=-1:$daychk=strpos($lease_fetch,"Day");
             $check_in_dated_lastmonth = strtotime ("+1 month",$dateStringCheckin);
             $LastMonth= date("Y-m-d",$check_in_dated_lastmonth);
             $rent_check=$rentcheck;
@@ -1047,6 +1049,8 @@ class Mdl_eilib_invoice_contract extends CI_Model{
             curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
             curl_setopt($ch, CURLOPT_ENCODING, "gzip,deflate");
             $response = curl_exec($ch);
+            if($response=="SCRIPT ERROR")
+                return [0];
             curl_close($ch);
             $file = new Google_Service_Drive_DriveFile();
             $parent = new Google_Service_Drive_ParentReference();
@@ -1055,7 +1059,7 @@ class Mdl_eilib_invoice_contract extends CI_Model{
             $service->files->patch($response, $file);
             $file = $service->files->get($response);
             $this->CUST_SetDocOwner($service,$response,$docowner,$sendmailid);
-            return [1,$response,$file->embedLink,"INV".$todaysDate.$Slno];
+            return [1,$response,$file->alternateLink,"INV".$todaysDate.$Slno];
         }
         catch(Exception $e) {
             return [0,$response];

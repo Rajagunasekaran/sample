@@ -379,4 +379,30 @@ class Ctrl_Biz_Expense_Detail_Entry_Search_Update_Delete extends CI_Controller{
         $result = $this->Mdl_biz_expense_detail_entry_search_update_delete->starhubupdate($primaryid,$unitid,$unitno,$appldate,$acctno,$invoiceto,$cablestartdte,$cableenddate,$internetstartdte,$internetenddate,$ssid,$pwd,$cablebox,$modemno,$basicgroup,$addchnnl,$comments,$USERSTAMP,$timeZoneFormat,$BTDTL_SEARCH_lb_searchoptions,$BTDTL_SEARCH_lb_expense_type,$searchvalue,$startdate,$BTDTL_SEARCH_starhubid,$calid) ;
         echo JSON_encode($result);
     }
+    public function checktransaction()
+    {
+        $timeZoneFormat= $this->Mdl_eilib_common_function->getTimezone();
+        $USERSTAMP= $this->Mdl_eilib_common_function->getSessionUserStamp();
+        $primaryid=$this->input->post('rowid');
+        $unitid=$this->input->post('unitid');
+        $BTDTL_SEARCH_lb_searchoptions=$this->input->post('BTDTL_SEARCH_lb_searchoptions');
+        $BTDTL_SEARCH_lb_expense_type=$this->input->post('BTDTL_SEARCH_lb_expense_type');
+        $result = $this->Mdl_biz_expense_detail_entry_search_update_delete->checktransaction($primaryid,$unitid,$USERSTAMP,$timeZoneFormat,$BTDTL_SEARCH_lb_searchoptions,$BTDTL_SEARCH_lb_expense_type) ;
+        echo json_encode($result);
+    }
+    public function deletefunction(){
+        $timeZoneFormat= $this->Mdl_eilib_common_function->getTimezone();
+        $USERSTAMP= $this->Mdl_eilib_common_function->getSessionUserStamp();
+        $primaryid=$this->input->post('rowid');
+        $unitid=$this->input->post('unitid');
+        $BTDTL_SEARCH_lb_searchoptions=$this->input->post('BTDTL_SEARCH_lb_searchoptions');
+        $BTDTL_SEARCH_lb_expense_type=$this->input->post('BTDTL_SEARCH_lb_expense_type');
+        $searchvalue=$this->input->post('searchvalue');
+        $startdate=$this->input->post('startdate');
+        $BTDTL_SEARCH_starhubid=$this->input->post('BTDTL_SEARCH_starhubid');
+        $BTDTL_SEARCH_obj=$this->input->post('BTDTL_SEARCH_obj');
+        $calid=$this->Cal_service();
+        $result = $this->Mdl_biz_expense_detail_entry_search_update_delete->deletefunction($primaryid,$unitid,$USERSTAMP,$timeZoneFormat,$BTDTL_SEARCH_lb_searchoptions,$BTDTL_SEARCH_lb_expense_type,$searchvalue,$startdate,$BTDTL_SEARCH_starhubid,$calid,$BTDTL_SEARCH_obj) ;
+        echo json_encode($result);
+    }
 }

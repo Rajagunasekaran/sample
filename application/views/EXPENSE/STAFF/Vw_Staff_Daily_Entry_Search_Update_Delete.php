@@ -15,6 +15,10 @@ require_once('application/libraries/EI_HDR.php');
     td, th {
         padding: 8px;
     }
+    textarea{
+        resize: none;
+        overflow: hidden;
+    }
 </style>
 <script type="text/javascript">
 // document ready function
@@ -469,72 +473,120 @@ $(document).ready(function(){
     $('.PE_rd_selectform').click(function(){
         $(".preloader").show();
         listboxoption=$(this).val();
-        $('#ET_ENTRY_ta_subject').val('');
-        $('#CONFIG_SRCH_UPD_div_htmltable').hide();
-        $('#CONFIG_SRCH_UPD_div_header').hide();
-        $("#STDTL_INPUT_lb_employeename").hide();
-        $("#STDTL_INPUT_lbl_employeename").hide();
-        $("#CONFIG_ENTRY_tr_type").hide();
-        $("#CONFIG_ENTRY_tr_data").hide();
-        $("#CONFIG_ENTRY_tr_btn").hide();
-        $('#STDTL_INPUT_noform').hide();
-//                $('#ET_SRC_UPD_DEL_div_headernodata').text(value_err_array[2].EMC_DATA).hide();
+//        $('#ET_ENTRY_ta_subject').val('');
+//        $('#CONFIG_SRCH_UPD_div_htmltable').hide();
+//        $('#CONFIG_SRCH_UPD_div_header').hide();
+//        $("#STDTL_INPUT_lb_employeename").hide();
+//        $("#STDTL_INPUT_lbl_employeename").hide();
+//        $("#CONFIG_ENTRY_tr_type").hide();
+//        $("#CONFIG_ENTRY_tr_data").hide();
+//        $("#CONFIG_ENTRY_tr_btn").hide();
+//        $('#STDTL_INPUT_noform').hide();
+        $('#staffdly_lb_type').html('');
         if(listboxoption=='STAFF ENTRY')
         {
-            $(".preloader").hide();
             $('#staffdly_lb_type').show();
             $('#staffdly_lbl_type').show();
-            $('#STDTL_SEARCH_div_headernodata').hide();
-            $('#searchfrm').hide();
-            $('#STDTL_SEARCH_lbl_searchoptionheader').hide();
-            $('#STDTL_SEARCH_tble_amt_option').hide();
-            $('#STDLY_SEARCH_lb_typelist').hide();
-            $('#STDLY_SEARCH_lbl_type').hide();
-            $('#STDLY_SEARCH_lb_salarysearchoption').hide();
-            $('#STDLY_SEARCH_lbl_salarysearchoption').hide();
-            $('#STDLY_SEARCH_lbl_startdate').hide();
-            $('#STDLY_SEARCH_db_startdate').hide();
-            $('#STDLY_SEARCH_lbl_enddate').hide();
-            $('#STDLY_SEARCH_db_enddate').hide();
-            $('#STDLY_SEARCH_tble_agenttable').hide();
-            $('#STDLY_SEARCH_lb_searchoption').hide();
-            $('#STDLY_SEARCH_lb_searchoption').hide();
-            $('#STDLY_SEARCH_lbl_byagentcomments').hide();
-            $('#STDLY_SEARCH_tb_fromamount').hide();
-            $('#STDLY_SEARCH_tb_toamount').hide();
-            $('#STDLY_SEARCH_lbl_fromamount').hide();
-            $('#STDLY_SEARCH_lbl_toamount').hide();
-            $('#STDLY_SEARCH_btn_agentsbutton').hide();
-            $('#STDLY_SEARCH_btn_salarybutton').hide();
-            $('#STDLY_SEARCH_btn_staffbutton').hide();
-            $('#STDLY_SEARCH_lbl_searchoption').hide();
+//            $('#STDTL_SEARCH_div_headernodata').hide();
+//            $('#searchfrm').hide();
+//            $('#STDTL_SEARCH_lbl_searchoptionheader').hide();
+//            $('#STDTL_SEARCH_tble_amt_option').hide();
+//            $('#STDLY_SEARCH_lb_typelist').hide();
+//            $('#STDLY_SEARCH_lbl_type').hide();
+//            $('#STDLY_SEARCH_lb_salarysearchoption').hide();
+//            $('#STDLY_SEARCH_lbl_salarysearchoption').hide();
+//            $('#STDLY_SEARCH_lbl_startdate').hide();
+//            $('#STDLY_SEARCH_db_startdate').hide();
+//            $('#STDLY_SEARCH_lbl_enddate').hide();
+//            $('#STDLY_SEARCH_db_enddate').hide();
+//            $('#STDLY_SEARCH_tble_agenttable').hide();
+//            $('#STDLY_SEARCH_lb_searchoption').hide();
+//            $('#STDLY_SEARCH_lb_searchoption').hide();
+//            $('#STDLY_SEARCH_lbl_byagentcomments').hide();
+//            $('#STDLY_SEARCH_tb_fromamount').hide();
+//            $('#STDLY_SEARCH_tb_toamount').hide();
+//            $('#STDLY_SEARCH_lbl_fromamount').hide();
+//            $('#STDLY_SEARCH_lbl_toamount').hide();
+//            $('#STDLY_SEARCH_btn_agentsbutton').hide();
+//            $('#STDLY_SEARCH_btn_salarybutton').hide();
+//            $('#STDLY_SEARCH_btn_staffbutton').hide();
+//            $('#STDLY_SEARCH_lbl_searchoption').hide();
+            $.ajax({
+                type: "POST",
+                'url':STDLY_SEARCH_controller_url+"Initialdata",
+                data:{'ErrorList':'337,169,105,400,45,106,107,127,128,129,130,131,132,133,134,135,136,137,138,139,140,141,142,143,144,145,146,147,148,149,150,151,152,169,170,315,377,378,379,401'},
+                success: function(data){
+                    $('.preloader').hide();
+                    var value_array=JSON.parse(data);
+                    expencetype=value_array[0];
+                    checktable=value_array[1];
+                    employeename=value_array[2];
+                    errormsg=value_array[3];
+                    if(expencetype!=''){
+                        $('#staffdly_lb_type').append($('<option> SELECT </option>'));
+
+                        for(var i=0;i<expencetype.length;i++)
+                        {
+                            if( i>=5 && i<=7)
+                            {
+                                var expid=expencetype[i].ECN_ID;
+                                var expdata=expencetype[i].ECN_DATA;
+                                $('#staffdly_lb_type').append($('<option>').text(expdata).attr('value', expid));
+                            }
+                            if( i>=0 && i<=4)
+                            {
+                                catid=expencetype[i].ECN_ID;
+                                catdata=expencetype[i].ECN_DATA;
+                                $('#STDLY_INPUT_lb_category1').append($('<option>').text(catdata).attr('value', catid));
+                            }
+                        }
+                    }
+                    if(checktable!=''){
+                        $('#staffdly_lb_employee').append($('<option> SELECT </option>'));
+                        var staffdly_employeename=[];
+                        for(var i=0;i<checktable.length;i++)
+                        {
+                            staffdly_employeename.push(checktable[i].EMPLOYEE_NAME);
+                        }
+                        var staffdly_unique_employee=staffdly_unique(staffdly_employeename);
+                        staffdly_unique_employee=staffdly_unique_employee.sort();
+                        if(checktable.length!=0){
+                            for(var j=0;j<staffdly_unique_employee.length;j++)
+                            {
+                                var listdata=staffdly_unique_employee[j];
+                                $('#staffdly_lb_employee').append($('<option>').text(listdata).attr('value', listdata));
+                            }
+                        }
+                    }
+                }
+            });
         }
         else if(listboxoption=='STAFF SEARCH/UPDATE')
         {
-            $('#staffdly_lb_type').hide();
-            $('#STDLY_SEARCH_lb_salarysearchoption').hide();
-            $('#staffdly_lbl_type').hide();
-            $("#STDLY_SEARCH_lb_typelist").val('SELECT').show();
-            $("#STDLY_SEARCH_lbl_type").show();
-            $('#agent_searchdiv').show();
-            $('#STDLY_SEARCH_lb_searchoption').hide();
-            $('#STDTL_SEARCH_lb_cpfnumber_listbox').hide();
-            $("#STDTL_SEARCH_lb_employeename_listbox").hide();
-            $("#staffdly_invdate").hide();
-            $("#staffdly_invdt").hide();
-            $("#staffdly_comisnamt").hide();
-            $("#staffdly_agentcomments").hide();
-            $("#staffdly_employee").hide();
-            $("#staffdly_cpf").hide();
-            $("#staffdly_paiddt").hide();
-            $("#staffdly_fromdt").hide();
-            $("#STDLY_INPUT_btn_sbutton").hide();
-            $("#staffdly_resetbutton").hide();
-            $("#staffdly_todt").hide();
-            $("#staffdly_salaryamt").hide();
-            $("#staffdly_ta_salarycomments").hide();
-//            $("#STDTL_INPUT_lbl_comments").hide();
-            $("#STDLY_SEARCH_tblSTDLY_SEARCH_tb_searchcommentse_multi").hide();
+//            $('#staffdly_lb_type').hide();
+//            $('#STDLY_SEARCH_lb_salarysearchoption').hide();
+//            $('#staffdly_lbl_type').hide();
+//            $("#STDLY_SEARCH_lb_typelist").val('SELECT').show();
+//            $("#STDLY_SEARCH_lbl_type").show();
+//            $('#agent_searchdiv').show();
+//            $('#STDLY_SEARCH_lb_searchoption').hide();
+//            $('#STDTL_SEARCH_lb_cpfnumber_listbox').hide();
+//            $("#STDTL_SEARCH_lb_employeename_listbox").hide();
+//            $("#staffdly_invdate").hide();
+//            $("#staffdly_invdt").hide();
+//            $("#staffdly_comisnamt").hide();
+//            $("#staffdly_agentcomments").hide();
+//            $("#staffdly_employee").hide();
+//            $("#staffdly_cpf").hide();
+//            $("#staffdly_paiddt").hide();
+//            $("#staffdly_fromdt").hide();
+//            $("#STDLY_INPUT_btn_sbutton").hide();
+//            $("#staffdly_resetbutton").hide();
+//            $("#staffdly_todt").hide();
+//            $("#staffdly_salaryamt").hide();
+//            $("#staffdly_ta_salarycomments").hide();
+////            $("#STDTL_INPUT_lbl_comments").hide();
+//            $("#STDLY_SEARCH_tblSTDLY_SEARCH_tb_searchcommentse_multi").hide();
             $.ajax({
                 type: "POST",
                 'url':STDLY_SEARCH_controller_url+"STDLY_SEARCH_searchbyagentcommission",
@@ -624,6 +676,7 @@ $(document).ready(function(){
     $('#staffdly_tb_newcpfamt').hide();
     $('#staffdly_tb_curlevyamt').hide();
     $('#staffdly_tb_newlevyamt').hide();
+    $('#STDLY_INPUT_tb_hidelevy').hide();
 // initial data
     $('#spacewidth').height('0%');
     $('#agent_comisndiv,#salary_entrydiv,#staffdiv,#buttons,#staff_errordiv').hide();
@@ -638,55 +691,7 @@ $(document).ready(function(){
     var errormsg;
     var catdata=[];
     var catid=[];
-    $.ajax({
-        type: "POST",
-        'url':STDLY_SEARCH_controller_url+"Initialdata",
-        data:{'ErrorList':'337,169,105,400,45,106,107,127,128,129,130,131,132,133,134,135,136,137,138,139,140,141,142,143,144,145,146,147,148,149,150,151,152,169,170,315,377,378,379,401'},
-        success: function(data){
-            $('.preloader').hide();
-            var value_array=JSON.parse(data);
-            expencetype=value_array[0];
-            checktable=value_array[1];
-            employeename=value_array[2];
-            errormsg=value_array[3];
-            if(expencetype!=''){
-                $('#staffdly_lb_type').append($('<option> SELECT </option>'));
 
-                for(var i=0;i<expencetype.length;i++)
-                {
-                    if( i>=5 && i<=7)
-                    {
-                        var expid=expencetype[i].ECN_ID;
-                        var expdata=expencetype[i].ECN_DATA;
-                        $('#staffdly_lb_type').append($('<option>').text(expdata).attr('value', expid));
-                    }
-                    if( i>=0 && i<=4)
-                    {
-                        catid=expencetype[i].ECN_ID;
-                        catdata=expencetype[i].ECN_DATA;
-                        $('#STDLY_INPUT_lb_category1').append($('<option>').text(catdata).attr('value', catid));
-                    }
-                }
-            }
-            if(checktable!=''){
-                $('#staffdly_lb_employee').append($('<option> SELECT </option>'));
-                var staffdly_employeename=[];
-                for(var i=0;i<checktable.length;i++)
-                {
-                    staffdly_employeename.push(checktable[i].EMPLOYEE_NAME);
-                }
-                var staffdly_unique_employee=staffdly_unique(staffdly_employeename);
-                staffdly_unique_employee=staffdly_unique_employee.sort();
-                if(checktable.length!=0){
-                    for(var j=0;j<staffdly_unique_employee.length;j++)
-                    {
-                        var listdata=staffdly_unique_employee[j];
-                        $('#staffdly_lb_employee').append($('<option>').text(listdata).attr('value', listdata));
-                    }
-                }
-            }
-        }
-    });
     function staffdly_unique(a) {
         var result = [];
         $.each(a, function(i, e) {
@@ -697,19 +702,17 @@ $(document).ready(function(){
 // change event for expense
     $(document).on('change','#staffdly_lb_type',function(){
 //        $("html, body").animate({ scrollTop: '100' }, "slow");
-        $('#staffdlyentry_form').find('input:text, textarea').val('');
-        $('#staffdlyentry_form').find('input:radio').removeAttr('checked');
-        $('#salary_entrydiv,#staffdiv').find('select').val('SELECT');
+        $('#STDLY_INPUT_btn_sbutton').attr('disabled','disabled');
         var expensetype =$(this).val();
         if(expensetype=='SELECT'){
             $('#agent_comisndiv,#salary_entrydiv,#staffdiv,#buttons').hide();
-            $("#staffdlyentry_form").find('input:text, textarea').val('');
-            $("#staffdlyentry_form").find('select').val('SELECT');
-            $('#staffdlyentry_form').find('input:radio').removeAttr('checked');
-        }
+         }
         if(expensetype==39){
             $('#agent_comisndiv,#buttons').show();
             $('#salary_entrydiv,#staffdiv,#staff_errordiv').hide();
+            $('#staffdly_invdate').datepicker("option","maxDate",new Date());
+            $('#STDLY_INPUT_btn_sbutton').attr('disabled','disabled').show();
+            $('#staffdly_resetbutton').show();
         }
         if(expensetype==40){
             if((checktable.length==0)||(employeename.length==0))
@@ -734,7 +737,30 @@ $(document).ready(function(){
             else{
                 $('#salary_entrydiv,#buttons').show();
                 $('#agent_comisndiv,#staffdiv,#staff_errordiv').hide();
+                $('#staffdly_paiddate').datepicker("option","maxDate",new Date());
+                $('#staffdly_rd_curlevyamt').removeAttr("disabled");
+                $('#staffdly_rd_cursalary').removeAttr("disabled");
+                $('#staffdly_rd_newsalary').removeAttr("disabled");
+                $('#staffdly_rd_curcpfamt').removeAttr("disabled");
+                $('#staffdly_rd_newcpfamt').removeAttr("disabled");
+                $('#staffdly_rd_newlevyamt').removeAttr("disabled");
+                $('input[name="salarysalaryopt"]').prop('checked', false);
+                $('input[name="salarycpfamtopt"]').prop('checked', false);
+                $('input[name="salarylevyamtopt"]').prop('checked', false);
+                $('#STDLY_INPUT_btn_sbutton').attr('disabled','disabled').show();
+                $('#staffdly_resetbutton').show();
             }
+            $('#staffdly_tb_cursalary').hide();
+            $('#staffdly_tb_newsalary').hide();
+            $('#staffdly_tb_curcpfamt').hide();
+            $('#staffdly_tb_newcpfamt').hide();
+            $('#staffdly_tb_curlevyamt').hide();
+            $('#staffdly_tb_newlevyamt').hide();
+            $('#staffdly_lb_employee').prop('selectedIndex',0);
+            $('#staffdly_paiddate').val('');
+            $('#staffdly_fromdate').val('');
+            $('#staffdly_todate').val('');
+            $('#staffdly_tb_cpf').val('');
         }
         if(expensetype==41){
             $('#staffdiv').show();
@@ -745,14 +771,59 @@ $(document).ready(function(){
     });
 // botton reset
     $(document).on('click','#staffdly_resetbutton',function(){
-        $('#staffdlyentry_form').find('input:text, textarea').val('');
-        $('#staffdlyentry_form').find('input:radio').removeAttr('checked');
-        $('#salary_entrydiv,#staffdiv').find('select').val('SELECT');
-        $('#STDLY_INPUT_btn_sbutton').attr("disabled", "disabled");
-        $('#STDLY_INPUT_tble_multipleemployee').empty();
-        $('#staffdly_fromdate') .datepicker( "option", "maxDate", new Date());
-        $('#staffdly_todate') .datepicker( "option", "maxDate", new Date());
-        $('#staffdly_todate') .datepicker( "option", "minDate",null );
+        var STDLY_INPUT_listvalue=$('#staffdly_lb_type').val();
+        if(STDLY_INPUT_listvalue==39)
+        {
+            $('#staffdly_invdate').val('');
+            $('#staffdly_tb_comisnamt').val('');
+            $('#staffdly_ta_agentcomments').val('');
+            $('#STDLY_INPUT_btn_sbutton').attr("disabled", "disabled");
+        }
+        if(STDLY_INPUT_listvalue==40)
+        {
+            $('#staffdly_tb_cursalary').val('');
+            $('#staffdly_tb_newsalary').val('');
+            $('#staffdly_tb_curcpfamt').val('');
+            $('#staffdly_tb_newcpfamt').val('');
+            $('#staffdly_tb_curlevyamt').val('');
+            $('#staffdly_tb_newlevyamt').val('');
+            $('#staffdly_tb_cursalary').hide();
+            $('#staffdly_tb_newsalary').hide();
+            $('#staffdly_tb_curcpfamt').hide();
+            $('#staffdly_tb_newcpfamt').hide();
+            $('#staffdly_tb_curlevyamt').hide();
+            $('#staffdly_tb_newlevyamt').hide();
+            $("select#staffdly_lb_employee")[0].selectedIndex = 0;
+            $('#staffdly_fromdate').val('');
+            $('#staffdly_todate').val('');
+            $('#staffdly_paiddate').val('');
+            $('#staffdly_tb_cpf').val('');
+            $('#STDLY_INPUT_btn_staffsbutton').hide();
+            $('#STDLY_INPUT_ta_salarycommentsbox').val('');
+            $('input[name="salarysalaryopt"]').prop('checked', false);
+            $('input[name="salarycpfamtopt"]').prop('checked', false);
+            $('input[name="salarylevyamtopt"]').prop('checked', false);
+            $('#STDLY_INPUT_btn_sbutton').attr("disabled", "disabled");
+            $('#STDLY_INPUT_tble_multipleemployee').empty();
+            $('#staffdly_fromdate') .datepicker( "option", "maxDate", new Date());
+            $('#staffdly_todate') .datepicker( "option", "maxDate", new Date());
+            $('#staffdly_todate') .datepicker( "option", "minDate",null );
+        }
+        if(STDLY_INPUT_listvalue==41)
+        {
+            $('#STDLY_INPUT_lb_category1').val('');
+            $('#STDLY_INPUT_db_invdate1').val('');
+            $('#STDLY_INPUT_lb_incamtrp1').val('');
+            $('#STDLY_INPUT_ta_invitem1').val('');
+            $('#STDLY_INPUT_tb_invfrom1').val('');
+            $('#STDLY_INPUT_tb_comments1').val('');
+            $('#STDLY_INPUT_tb_hidesal1').val('');
+            $('#STDLY_INPUT_tb_hidecpf1').val('');
+            $('#STDLY_INPUT_btn_addbtn1').attr("disabled", "disabled");
+            $('#STDLY_INPUT_btn_staffsbutton').attr("disabled", "disabled");
+        }
+        $('#STDLY_INPUT_ta_comment,#STDLY_INPUT_ta_salarycommentsbox,#STDLY_INPUT_tb_comments1,#STDLY_INPUT_ta_invitem1').height(20);
+
     });
 // CHANGE THE EMPLOYEE NAME
     function STAFFDLY_func_salaryentryclear(){
@@ -787,7 +858,7 @@ $(document).ready(function(){
         if(staffdly_listvalue=="SELECT")
         {
             STAFFDLY_func_salaryentryclear();
-//            $('#STDLY_INPUT_btn_sbutton').attr("disabled", "disabled");
+            $('#STDLY_INPUT_btn_sbutton').attr("disabled", "disabled");
             $('#staffdly_tb_cpf').val('');
             $('#STDLY_INPUT_tble_multipleemployee').empty();
         }
@@ -913,6 +984,7 @@ $(document).ready(function(){
         $('#staffdly_tb_curlevyamt').hide();
         $('#staffdly_tb_newlevyamt').val('').show();
     });
+
 // DATE PICKER FOR THE SALARY ENTRY
     $("#staffdly_paiddate").datepicker({
         dateFormat:"dd-mm-yy",
@@ -936,7 +1008,7 @@ $(document).ready(function(){
             }
             if(($("#staffdly_lb_employee").val()=="SELECT")||($("#staffdly_paiddate").val()=="")||($("#staffdly_fromdate").val()=="")||($("#staffdly_todate").val()=="")||(staffdly_radio_radiovalue !="data"))
             {
-//                $('#STDLY_INPUT_btn_sbutton').attr("disabled", "disabled");
+                $('#STDLY_INPUT_btn_sbutton').attr("disabled", "disabled");
             }
             else
             {
@@ -972,7 +1044,7 @@ $(document).ready(function(){
             }
             if(($("#staffdly_lb_employee").val()=="SELECT")||($("#staffdly_paiddate").val()=="")||($("#staffdly_fromdate").val()=="")||($("#staffdly_todate").val()=="")||(staffdly_radio_radiovalue !="data"))
             {
-//                $('#STDLY_INPUT_btn_sbutton').attr("disabled", "disabled");
+                $('#STDLY_INPUT_btn_sbutton').attr("disabled", "disabled");
             }
             else
             {
@@ -1008,7 +1080,7 @@ $(document).ready(function(){
             }
             if(($("#staffdly_lb_employee").val()=="SELECT")||($("#staffdly_paiddate").val()=="")||($("#staffdly_fromdate").val()=="")||($("#staffdly_todate").val()=="")||(staffdly_radio_radiovalue !="data"))
             {
-//                $('#STDLY_INPUT_btn_sbutton').attr("disabled", "disabled");
+                $('#STDLY_INPUT_btn_sbutton').attr("disabled", "disabled");
             }
             else
             {
@@ -1031,7 +1103,7 @@ $(document).ready(function(){
         }
         else
         {
-//            $('#STDLY_INPUT_btn_sbutton').attr('disabled','disabled');
+            $('#STDLY_INPUT_btn_sbutton').attr('disabled','disabled');
         }
         if( $('#staffdly_rd_cursalary').is(":checked")==true)
         {
@@ -1043,7 +1115,7 @@ $(document).ready(function(){
         }
         if(($("#staffdly_lb_employee").val()=="SELECT")||($("#staffdly_paiddate").val()=="")||($("#staffdly_fromdate").val()=="")||($("#staffdly_todate").val()=="")||(staffdly_radio_radiovalue !="data"))
         {
-//            $('#STDLY_INPUT_btn_sbutton').attr("disabled", "disabled");
+            $('#STDLY_INPUT_btn_sbutton').attr("disabled", "disabled");
         }
         else
         {
@@ -1094,7 +1166,7 @@ $(document).ready(function(){
         }
         if(($("#staffdly_lb_employee").val()=="SELECT")||($("#staffdly_paiddate").val()=="")||($("#staffdly_fromdate").val()=="")||($("#staffdly_todate").val()=="")||(staffdly_radio_radiovalue !="data"))
         {
-//            $('#STDLY_INPUT_btn_sbutton').attr("disabled", "disabled");
+            $('#STDLY_INPUT_btn_sbutton').attr("disabled", "disabled");
         }
         else
         {
@@ -1113,7 +1185,7 @@ $(document).ready(function(){
         }
         if(($("#staffdly_lb_employee").val()=="SELECT")||($("#staffdly_paiddate").val()=="")||($("#staffdly_fromdate").val()=="")||($("#staffdly_todate").val()=="")||(staffdly_radio_radiovalue !="data"))
         {
-//            $('#STDLY_INPUT_btn_sbutton').attr("disabled", "disabled");
+            $('#STDLY_INPUT_btn_sbutton').attr("disabled", "disabled");
         }
         else
         {
@@ -1127,7 +1199,7 @@ $(document).ready(function(){
         {
             if(($("#staffdly_invdate").val()=="")||($("#staffdly_tb_comisnamt").val()==""))
             {
-//                $('#STDLY_INPUT_btn_sbutton').attr("disabled", "disabled");
+                $('#STDLY_INPUT_btn_sbutton').attr("disabled", "disabled");
             }
             else
             {
@@ -1137,88 +1209,88 @@ $(document).ready(function(){
     });
 //SUBMIT VALIDATION FOR SUBMIT BUTTON..............................................
     $(document).on('blur','.submitval',function() {
-        var STDLY_SEARCH_typrval=$("#STDLY_SEARCH_lb_typelist").val()
+        var STDLY_SEARCH_typrval=$("#staffdly_lb_type").val()
         if(STDLY_SEARCH_typrval==39)
         {
-            if(($("#STDLY_SEARCH_db_selectdate").val()=="")||($("#STDLY_SEARCH_tb_amount").val()=="")||(parseInt($("#STDLY_SEARCH_tb_amount").val())==0))
+            if(($("#staffdly_invdate").val()=="")||($("#staffdly_tb_comisnamt").val()=="")||(parseInt($("#staffdly_tb_comisnamt").val())==0))
             {
-                $('#STDLY_SEARCH_btn_sbutton').attr("disabled", "disabled");
+                $('#STDLY_INPUT_btn_sbutton').attr("disabled", "disabled");
             }
             else
             {
-                $('#STDLY_SEARCH_btn_sbutton').removeAttr("disabled");
+                $('#STDLY_INPUT_btn_sbutton').removeAttr("disabled");
             }
         }
         if(STDLY_SEARCH_typrval==40)
         {
             var flag=0;
-            if( $('#STDLY_SEARCH_radio_currentslr').is(":checked")==true)
+            if( $('#staffdly_rd_cursalary').is(":checked")==true)
             {
                 var STDLY_SEARCH_radio_radiovalue="data";
             }
-            else if(( $('#STDLY_SEARCH_radio_newslr').is(":checked")==true)&&($("#STDLY_SEARCH_tb_hidesal1").val()!="")&&(parseInt($("#STDLY_SEARCH_tb_hidesal1").val())!=0))
+            else if(( $('#staffdly_rd_newsalary').is(":checked")==true)&&($("#staffdly_tb_newsalary").val()!="")&&(parseInt($("#staffdly_tb_newsalary").val())!=0))
             {
                 var STDLY_SEARCH_radio_radiovalue="data";
             }
-            if(($("#STDLY_SEARCH_lb_namelist").val()=="SELECT")||($("#STDLY_SEARCH_db_paiddate").val()=="")||($("#STDLY_SEARCH_db_fromdate").val()=="")||($("#STDLY_SEARCH_db_todate").val()=="")||(STDLY_SEARCH_radio_radiovalue !="data")||(( $('#STDLY_SEARCH_radio_newcpfamt').is(":checked")==true)&&($("#STDLY_SEARCH_tb_hidecpf1").val()==""))||(( $('#STDLY_SEARCH_radio_newlevyamt').is(":checked")==true)&&($("#STDLY_SEARCH_tb_hidelevy1").val()=="")))
+            if(($("#staffdly_lb_employee").val()=="SELECT")||($("#staffdly_paiddate").val()=="")||($("#staffdly_fromdate").val()=="")||($("#staffdly_todate").val()=="")||(STDLY_SEARCH_radio_radiovalue !="data")||(( $('#staffdly_rd_newcpfamt').is(":checked")==true)&&($("#staffdly_tb_newcpfamt").val()==""))||(( $('#staffdly_rd_newlevyamt').is(":checked")==true)&&($("#staffdly_tb_newlevyamt").val()=="")))
             {
                 flag=1;
             }
             if(flag=="1")
             {
-                $('#STDLY_SEARCH_btn_sbutton').attr("disabled", "disabled");
+                $('#STDLY_INPUT_btn_sbutton').attr("disabled", "disabled");
             }
             else
             {
-                $('#STDLY_SEARCH_btn_sbutton').removeAttr("disabled");
+                $('#STDLY_INPUT_btn_sbutton').removeAttr("disabled");
             }
         }
     });
     $(".radiosubmitval").click(function(){
         var flag=0;
-        if( $('#STDLY_SEARCH_radio_currentslr').is(":checked")==true)
+        if( $('#staffdly_rd_cursalary').is(":checked")==true)
         {
             var STDLY_SEARCH_radio_radiovalue="data";
         }
-        else if(( $('#STDLY_SEARCH_radio_newslr').is(":checked")==true)&&($("#STDLY_SEARCH_tb_hidesal1").val()!="")&&(parseInt($("#STDLY_SEARCH_tb_hidesal1").val())!=0))
+        else if(( $('#staffdly_rd_newsalary').is(":checked")==true)&&($("#staffdly_tb_newsalary").val()!="")&&(parseInt($("#staffdly_tb_newsalary").val())!=0))
         {
             var STDLY_SEARCH_radio_radiovalue="data";
         }
-        if(($("#STDLY_SEARCH_lb_namelist").val()=="SELECT")||($("#STDLY_SEARCH_db_paiddate").val()=="")||($("#STDLY_SEARCH_db_fromdate").val()=="")||($("#STDLY_SEARCH_db_todate").val()=="")||(STDLY_SEARCH_radio_radiovalue !="data")||(( $('#STDLY_SEARCH_radio_newcpfamt').is(":checked")==true)&&($("#STDLY_SEARCH_tb_hidecpf1").val()==""))||(( $('#STDLY_SEARCH_radio_newlevyamt').is(":checked")==true)&&($("#STDLY_SEARCH_tb_hidelevy1").val()=="")))
+        if(($("#staffdly_lb_employee").val()=="SELECT")||($("#staffdly_paiddate").val()=="")||($("#staffdly_fromdate").val()=="")||($("#staffdly_todate").val()=="")||(STDLY_SEARCH_radio_radiovalue !="data")||(( $('#staffdly_rd_newcpfamt').is(":checked")==true)&&($("#staffdly_tb_newcpfamt").val()==""))||(( $('#staffdly_rd_newlevyamt').is(":checked")==true)&&($("#staffdly_tb_newlevyamt").val()=="")))
         {
             flag=1;
         }
         if(flag=="1")
         {
-            $('#STDLY_SEARCH_btn_sbutton').attr("disabled", "disabled");
+            $('#STDLY_INPUT_btn_sbutton').attr("disabled", "disabled");
         }
         else
         {
-            $('#STDLY_SEARCH_btn_sbutton').removeAttr("disabled");
+            $('#STDLY_INPUT_btn_sbutton').removeAttr("disabled");
         }
     });
 //RADIO AMOUNT TEXTBOX VALIDATION.............................
     $(".radiotextboxsubmitval").change(function(){
         var flag=0;
-        if( $('#STDLY_SEARCH_radio_currentslr').is(":checked")==true)
+        if( $('#staffdly_rd_cursalary').is(":checked")==true)
         {
             var STDLY_SEARCH_radio_radiovalue="data";
         }
-        else if(( $('#STDLY_SEARCH_radio_newslr').is(":checked")==true)&&($("#STDLY_SEARCH_tb_hidesal1").val()!="")&&(parseInt($("#STDLY_SEARCH_tb_hidesal1").val())!=0))
+        else if(( $('#staffdly_rd_newsalary').is(":checked")==true)&&($("staffdly_tb_newsalary").val()!="")&&(parseInt($("#staffdly_tb_newsalary").val())!=0))
         {
             var STDLY_SEARCH_radio_radiovalue="data";
         }
-        if(($("#STDLY_SEARCH_lb_namelist").val()=="SELECT")||($("#STDLY_SEARCH_db_paiddate").val()=="")||($("#STDLY_SEARCH_db_fromdate").val()=="")||($("#STDLY_SEARCH_db_todate").val()=="")||(STDLY_SEARCH_radio_radiovalue !="data")||(( $('#STDLY_SEARCH_radio_newcpfamt').is(":checked")==true)&&($("#STDLY_SEARCH_tb_hidecpf1").val()==""))||(( $('#STDLY_SEARCH_radio_newlevyamt').is(":checked")==true)&&($("#STDLY_SEARCH_tb_hidelevy1").val()=="")))
+        if(($("#staffdly_lb_employee").val()=="SELECT")||($("#staffdly_paiddate").val()=="")||($("#staffdly_fromdate").val()=="")||($("#staffdly_todate").val()=="")||(STDLY_SEARCH_radio_radiovalue !="data")||(( $('#staffdly_rd_newcpfamt').is(":checked")==true)&&($("#staffdly_tb_newcpfamt").val()==""))||(( $('#staffdly_rd_newlevyamt').is(":checked")==true)&&($("#staffdly_tb_newlevyamt").val()=="")))
         {
             flag=1;
         }
         if(flag=="1")
         {
-            $('#STDLY_SEARCH_btn_sbutton').attr("disabled", "disabled");
+            $('#STDLY_INPUT_btn_sbutton').attr("disabled", "disabled");
         }
         else
         {
-            $('#STDLY_SEARCH_btn_sbutton').removeAttr("disabled");
+            $('#STDLY_INPUT_btn_sbutton').removeAttr("disabled");
         }
     });
     //STAFF DATEBOX//
@@ -1226,11 +1298,11 @@ $(document).ready(function(){
         onSelect: function(){
             if(($("#STDLY_SEARCH_lb_category1").val()=="SELECT")||($("#STDLY_SEARCH_db_invdate1").val()=="")||($("#STDLY_SEARCH_lb_incamtrp1").val()=="")||($("#STDLY_SEARCH_ta_invitem1").val()=="")||($("#STDLY_SEARCH_tb_invfrom1").val()==""))
             {
-                $('#STDLY_SEARCH_btn_sbutton').attr("disabled", "disabled");
+                $('#STDLY_INPUT_btn_sbutton').attr("disabled", "disabled");
             }
             else
             {
-                $('#STDLY_SEARCH_btn_sbutton').removeAttr("disabled");
+                $('#STDLY_INPUT_btn_sbutton').removeAttr("disabled");
             }
         }
     });
@@ -1338,8 +1410,6 @@ $(document).ready(function(){
     }
     //SAVE  AND GET CONFORM MESSAGE FROM TABLE FOR FLEX TABLE.....................
     $('#STDLY_INPUT_btn_sbutton').click(function(){
-        var  newPos= adjustPosition($(this).position(),100,230);
-        resetPreloader(newPos);
         $(".preloader").show();
         STDLY_INPUT_showconformmsg()
     });
@@ -1354,6 +1424,7 @@ $(document).ready(function(){
             data: $('#staffdlyentry_form').serialize(),
             'url':STDLY_SEARCH_controller_url+"STDLY_INPUT_savedata",
             success: function(data){
+                alert(data)
                 $('.preloader').hide();
 
                 PDLY_INPUT_expensetype=$('#staffdly_lb_type').val();
@@ -1425,23 +1496,23 @@ $(document).ready(function(){
         $('#STDLY_INPUT_btn_delbtn'+STDLY_INPUT_deladdrem).hide();
         var newRow = STDLY_INPUT_table.insertRow(STDLY_INPUT_rowCount);
         var fCell = newRow.insertCell(0);
-        fCell.innerHTML ="<td> <select  class='submultivalid' name='STDLY_INPUT_lb_category[]' id='"+"STDLY_INPUT_lb_category"+incid+"' ><option >SELECT</option></select> </td> "
+        fCell.innerHTML ="<td> <select  class='submultivalid form-control' name='STDLY_INPUT_lb_category[]' id='"+"STDLY_INPUT_lb_category"+incid+"' ><option >SELECT</option></select> </td> "
         fCell = newRow.insertCell(1);
-        fCell.innerHTML ="<td><input  class='datepickinc submultivalid datemandtry' type='text' name ='STDLY_INPUT_db_invdate[]' id='"+"STDLY_INPUT_db_invdate"+incid+"' style='width:80px;' /> </td>"
+        fCell.innerHTML ="<td><input  class='datepickinc submultivalid datemandtry form-control' type='text' name ='STDLY_INPUT_db_invdate[]' id='"+"STDLY_INPUT_db_invdate"+incid+"' style='width:100px;' /> </td>"
         $(".datepickinc").datepicker({dateFormat:'dd-mm-yy',
             changeYear: true,
             changeMonth: true});
         $('#STDLY_INPUT_db_invdate'+incid).datepicker("option","maxDate",new Date());
         fCell = newRow.insertCell(2);
-        fCell.innerHTML ="<td><input  class='amtonly submultivalid' type='text'  name ='STDLY_INPUT_lb_incamtrp[]' id='"+"STDLY_INPUT_lb_incamtrp"+incid+"' style='width:40px;'/></td>"
+        fCell.innerHTML ="<td><input  class='amtonly submultivalid form-control' type='text'  name ='STDLY_INPUT_lb_incamtrp[]' id='"+"STDLY_INPUT_lb_incamtrp"+incid+"' style='width:80px;'/></td>"
         $(".amtonly").doValidation({rule:'numbersonly',prop:{realpart:3,imaginary:2}});
         fCell = newRow.insertCell(3);
-        fCell.innerHTML ="<td><textarea class='submultivalid' name='STDLY_INPUT_ta_invitem[]' id='"+"STDLY_INPUT_ta_invitem"+incid+"'></textarea></td>"
+        fCell.innerHTML ="<td><textarea class='submultivalid form-control' name='STDLY_INPUT_ta_invitem[]' id='"+"STDLY_INPUT_ta_invitem"+incid+"'></textarea></td>"
         fCell = newRow.insertCell(4);
-        fCell.innerHTML ="<td><input  class='autosize submultivalid' name ='STDLY_INPUT_tb_invfrom[]' id='"+"STDLY_INPUT_tb_invfrom"+incid+"' /></td>"
+        fCell.innerHTML ="<td><input  class='autosize submultivalid form-control' name ='STDLY_INPUT_tb_invfrom[]' id='"+"STDLY_INPUT_tb_invfrom"+incid+"' /></td>"
         $(".autosize").doValidation({rule:'general',prop:{uppercase:true,autosize:true}});
         fCell = newRow.insertCell(5);
-        fCell.innerHTML = "<td><textarea   type='text' name ='STDLY_INPUT_tb_comments' id='"+"STDLY_INPUT_tb_comments"+incid+"'></textarea></td>"
+        fCell.innerHTML = "<td><textarea  class='form-control' name ='STDLY_INPUT_tb_comments[]' id='"+"STDLY_INPUT_tb_comments"+incid+"'></textarea></td>"
         fCell = newRow.insertCell(6);
         fCell.innerHTML ="<td><input type='button' value='+' class='addbttn' alt='Add Row' height='30' width='30' name ='STDLY_INPUT_btn_addbtn' id='"+"STDLY_INPUT_btn_addbtn"+incid+"'/></td>";
         fCell = newRow.insertCell(7);
@@ -1518,11 +1589,48 @@ $(document).ready(function(){
             $('#STDLY_INPUT_btn_delbtn').attr("disabled", "disabled");
         }
     });
+    /LOAD THE CATEGORY TYPE IN THE LISTBOX...................
+        function STDLY_INPUT_categorytyperesult()
+    {$(".preloader").hide();
+//STDLY_INPUT_categorytypearray=STDLY_INPUT_categorytype;
+        var options =' ';
+        for (var i = 0; i < STDLY_SEARCH_liststaffvaluesarray.length; i++) {
+            if( i>=0 && i<=4)
+            {options += '<option value="' + STDLY_SEARCH_liststaffidvaluesarray[i] + '">' + STDLY_SEARCH_liststaffvaluesarray[i] + '</option>';
+            }}
+        $('#STDLY_INPUT_tble_multi').show();
+        $('#STDLY_INPUT_lb_category1').html(options);
+        STDLY_INPUT_Sortit('STDLY_INPUT_lb_category1')
+        $('#STDLY_INPUT_lb_category1').show();
+        $('#STDLY_INPUT_lbl_expense').show();
+        $('#STDLY_INPUT_btn_staffsbutton').show();
+        $('#STDLY_INPUT_tble_multi').show();
+        $('#STDLY_INPUT_lbl_expense').show();
+        $('#STDLY_INPUT_lbl_invdate').show();
+        $('#STDLY_INPUT_lbl_invamt').show();
+        $('#STDLY_INPUT_lbl_invitm').show();
+        $('#STDLY_INPUT_lbl_invfrom').show();
+        $('#STDLY_INPUT_lbl_invcmt').show();
+        $('#STDLY_INPUT_lbl_add').show();
+        $('#STDLY_INPUT_lbl_del').show();
+        $('#STDLY_INPUT_db_invdate1').datepicker("option","maxDate",new Date());
+        $('#STDLY_INPUT_db_invdate1').show();
+        $('#STDLY_INPUT_lb_incamtrp1').show();
+        $('#STDLY_INPUT_ta_invitem1').show();
+        $('#STDLY_INPUT_tb_invfrom1').show();
+        $('#STDLY_INPUT_tb_comments1').show();
+        $('#STDLY_INPUT_btn_addbtn1').show();
+        $('#STDLY_INPUT_btn_delbtn1').show();
+        $('#STDLY_INPUT_btn_addbtn1').attr("disabled", "disabled");
+        $('#STDLY_INPUT_btn_delbtn1').attr("disabled", "disabled");
+        $('#STDLY_INPUT_btn_staffsbutton').attr("disabled", "disabled");
+        $('input[name="STDLY_INPUT_radio_slramt"]').prop('checked', false);
+        $('input[name="STDLY_INPUT_radio_cpfamt"]').prop('checked', false);
+        $('input[name="STDLY_INPUT_radio_levyamt"]').prop('checked', false);
+    }
 //SAVE  AND GET CONFORM MESSAGE FROM TABLE......................
     $('#STDLY_INPUT_btn_staffsbutton').click(function(){
-        var  newPos= adjustPosition($(this).position(),100,280);
-        resetPreloader(newPos);
-//        $(".preloader").show();
+        $(".preloader").show();
         STDLY_INPUT_savestaff()
     });
     var STDLY_INPUT_response;
@@ -1534,6 +1642,7 @@ $(document).ready(function(){
             data: $('#staffdlyentry_form').serialize(),
             'url':STDLY_SEARCH_controller_url+"STDLY_INPUT_savestaff",
             success: function(data){
+                alert(data)
                 $('.preloader').hide();
                 STDLY_INPUT_response=JSON.parse(data)
                 salary_entry_response=STDLY_INPUT_response[0].FLAGINSERT
@@ -1543,7 +1652,7 @@ $(document).ready(function(){
                     var STDLY_INPUT_CONFSAVEMSG = errormsg[1].EMC_DATA.replace('[TYPE]', PDLY_INPUT_expensetype);
                     show_msgbox("STAFF EXPENSE DAILY ENTRY/SEARCH/UPDATE/DELETE",STDLY_INPUT_CONFSAVEMSG,"error",false)
                     $('#STDLY_INPUT_tble_multi').empty();
-                    $('<tr><td style="width:240"><label id="STDLY_INPUT_lbl_expense" >CATEGORY OF EXPENSE<em>*</em></label> </td><td style="width:150"><label  id="STDLY_INPUT_lbl_invdate" >INVOICE DATE<em>*</em></label></td><td style="width:125" ><label id="STDLY_INPUT_lbl_invamt" >INVOICE AMOUNT<em>*</em></label> </td><td style="width:150" ><label id="STDLY_INPUT_lbl_invitm" >INVOICE ITEMS<em>*</em></label> </td><td style="width:150" ><label id="STDLY_INPUT_lbl_invfrom" >INVOICE FROM<em>*</em></label> </td><td style="width:150"><label id="STDLY_INPUT_lbl_invcmt">COMMENTS</label></td></tr><tr><td> <select class="submultivalid"   name="STDLY_INPUT_lb_category" id="STDLY_INPUT_lb_category1"  ><option >SELECT</option></select> </td> <td><input class="submultivalid datemandtry"   type="text" name ="STDLY_INPUT_db_invdate" id="STDLY_INPUT_db_invdate1" style="width:80px;"  /> </td><td><input   type="text" name ="STDLY_INPUT_lb_incamtrp" id="STDLY_INPUT_lb_incamtrp1"  class="amtonly submultivalid" style="width:40px;"  /></td> <td><textarea class="submultivalid"  type="text" name="STDLY_INPUT_ta_invitem" id="STDLY_INPUT_ta_invitem1"   ></textarea></td><td><input class="submultivalid autosize"  type="text" name ="STDLY_INPUT_tb_invfrom" id="STDLY_INPUT_tb_invfrom1"  /></td><td><textarea   type="text" name ="STDLY_INPUT_tb_comments" id="STDLY_INPUT_tb_comments1"  ></textarea></td><td><input enabled type="button" disabled value="+" class="addbttn" alt="Add Row" height="30" width="30" name ="STDLY_INPUT_btn_addbtn" id="STDLY_INPUT_btn_addbtn1"  disabled/></td><td><input  type="button" value="-" class="deletebttn" alt="delete Row" height="30" width="30" name ="STDLY_INPUT_btn_delbtn" id="STDLY_INPUT_btn_delbtn1" disabled /></td></tr>').appendTo($('#STDLY_INPUT_tble_multi'))
+                    $('<tr><td style="width:240px"><label id="STDLY_INPUT_lbl_expense" >CATEGORY OF EXPENSE<em>*</em></label> </td><td style="width:150"><label  id="STDLY_INPUT_lbl_invdate" >INVOICE DATE<em>*</em></label></td><td style="width:125" ><label id="STDLY_INPUT_lbl_invamt" >INVOICE AMOUNT<em>*</em></label> </td><td style="width:150" ><label id="STDLY_INPUT_lbl_invitm" >INVOICE ITEMS<em>*</em></label> </td><td style="width:150" ><label id="STDLY_INPUT_lbl_invfrom" >INVOICE FROM<em>*</em></label> </td><td style="width:150"><label id="STDLY_INPUT_lbl_invcmt">COMMENTS</label></td></tr><tr><td> <select class="submultivalid form-control"   name="STDLY_INPUT_lb_category[]" id="STDLY_INPUT_lb_category1"  ><option >SELECT</option></select> </td> <td><input class="submultivalid datemandtry form-control"   type="text" name ="STDLY_INPUT_db_invdate[]" id="STDLY_INPUT_db_invdate1" style="width:100px;"  /> </td><td><input   type="text" name ="STDLY_INPUT_lb_incamtrp[]" id="STDLY_INPUT_lb_incamtrp1"  class="amtonly submultivalid form-control"  style="width:80px;"  /></td> <td><textarea class="submultivalid form-control"  name="STDLY_INPUT_ta_invitem[]" id="STDLY_INPUT_ta_invitem1"   ></textarea></td><td><input class="submultivalid autosize form-control"  type="text" name ="STDLY_INPUT_tb_invfrom[]" id="STDLY_INPUT_tb_invfrom1"  /></td><td><textarea  class="form-control" name ="STDLY_INPUT_tb_comments[]" id="STDLY_INPUT_tb_comments1"  ></textarea></td><td><input enabled type="button" disabled value="+" class="addbttn" alt="Add Row" height="30" width="30" name ="STDLY_INPUT_btn_addbtn" id="STDLY_INPUT_btn_addbtn1"  disabled/></td><td><input  type="button" value="-" class="deletebttn" alt="delete Row" height="30" width="30" name ="STDLY_INPUT_btn_delbtn" id="STDLY_INPUT_btn_delbtn1" disabled /></td></tr>').appendTo($('#STDLY_INPUT_tble_multi'))
                     $(".autosize").doValidation({rule:'general',prop:{autosize:true}});
                     $(".amtonly").doValidation({rule:'numbersonly',prop:{realpart:3,imaginary:2}});
                     $("#STDLY_INPUT_db_invdate1").datepicker({dateFormat:'dd-mm-yy',
@@ -2091,7 +2200,6 @@ $(document).ready(function(){
                         var STDLY_SEARCH_CONFSAVEMSGs = STDLY_SEARCH_conformsg.replace('[SDATE]',":"+ STDLY_SEARCH_sdate);
                         var STDLY_SEARCH_CONFSAVEMSG = STDLY_SEARCH_CONFSAVEMSGs.replace('[EDATE]', STDLY_SEARCH_edate);
                     }
-                    alert('sdf')
                     $('#STDLY_SEARCH_lbl_headermesg').text(STDLY_SEARCH_CONFSAVEMSG);
                     $('#STDLY_SEARCH_lbl_headermesg').show();
                     var STDLY_SEARCH_table_value='<table id="STDLY_SEARCH_tbl_htmltable" border="1"  cellspacing="0" class="srcresult"  ><thead  bgcolor="#6495ed" style="color:white"><tr><th>DELETE</th><th class="uk-date-column" style="width:75px">AGENT DATE</th><th style="width:60px">COMMISSION AMOUNT</th><th style="width:300px;">COMMENTS</th><th style="width:200px;">USERSTAMP</th><th style="width:100px;" >TIMESTAMP</th></tr></thead><tbody>'
@@ -4688,6 +4796,7 @@ $(document).ready(function(){
         <label><input type="radio" name="optradio" value="STAFF SEARCH/UPDATE" class="PE_rd_selectform">SEARCH/UPDATE/DELETE</label>
     </div>
 </div>
+<div id="staffdailyentry">
 <div class="form-group" id="staffdly_type">
     <label class="col-sm-3" id="staffdly_lbl_type">TYPE OF EXPENSE</label>
     <div class="col-sm-3"> <select name="staffdly_lb_type" id="staffdly_lb_type" class="form-control staffdly_entryform" ></select></div>
@@ -4705,7 +4814,7 @@ $(document).ready(function(){
     </div>
     <div class="form-group" id="staffdly_comisnamt">
         <label class="col-sm-3">COMMISSION AMOUNT <em>*</em></label>
-        <div class="col-sm-2"><input type="text" name="staffdly_tb_comisnamt" style="width:75px" id="staffdly_tb_comisnamt" placeholder="Amount" class="staffdly_erntryform submitvalamt form-control"/></div>
+        <div class="col-sm-2"><input type="text" name="staffdly_tb_comisnamt" style="width:80px" id="staffdly_tb_comisnamt" placeholder="Amount" class="staffdly_erntryform submitvalamt form-control"/></div>
     </div>
     <div class="form-group" id="staffdly_agentcomments">
         <label class="col-sm-3">COMMENTS</label>
@@ -4755,7 +4864,7 @@ $(document).ready(function(){
         <label class="col-sm-3">SALARY AMOUNT <em>*</em></label>
         <div class="col-sm-9">
             <div class="row form-group">
-                <div class="col-md-2">
+                <div class="col-md-5">
                     <div class="radio">
                         <label><input type="radio" class="radiosubmitval" name="salarysalaryopt" id="staffdly_rd_cursalary">CURRENT SALARY</label>
                     </div>
@@ -4765,7 +4874,7 @@ $(document).ready(function(){
                 </div>
             </div>
             <div class="row form-group">
-                <div class="col-md-2">
+                <div class="col-md-5">
                     <div class="radio">
                         <label><input type="radio" class="radiosubmitval" name="salarysalaryopt" id="staffdly_rd_newsalary">NEW SALARY</label>
                     </div>
@@ -4797,11 +4906,11 @@ $(document).ready(function(){
             <div class="row form-group">
                 <div class="col-md-5">
                     <div class="radio">
-                        <label><input type="radio" class="submitval" name="STDLY_INPUT_radio_levyamt" id="STDLY_INPUT_radio_currentlevyamt">CURRENT LEVY AMOUNT</label>
+                        <label><input type="radio" class="submitval" name="salarylevyamtopt" id="staffdly_rd_curlevyamt">CURRENT LEVY AMOUNT</label>
                     </div>
                 </div>
                 <div class="col-md-2">
-                    <input type="text" class="form-control " name="STDLY_INPUT_tb_hidelevy" id="STDLY_INPUT_tb_hidelevy" readonly/>
+                    <input type="text" class="form-control staffdly_erntryform submitval amtonlysalary" name="staffdly_tb_curlevyamt" id="staffdly_tb_curlevyamt" readonly/>
                 </div>
             </div>
             <div class="row form-group">
@@ -4824,7 +4933,7 @@ $(document).ready(function(){
 </div>
 <div class="form-group" id="buttons">
     <div class="col-sm-offset-1 col-sm-3">
-        <input class="btn btn-info" type="button" id="STDLY_INPUT_btn_sbutton" name="SAVE" value="SAVE" />
+        <input class="btn btn-info" type="button" id="STDLY_INPUT_btn_sbutton" name="SAVE" value="SAVE" disabled/>
         <input class="btn btn-info" type="button" id="staffdly_resetbutton" name="RESET" value="RESET"/>
     </div>
 </div>
@@ -4866,6 +4975,7 @@ $(document).ready(function(){
         <label id='staffdly_lbl_edtlerromsg' class="errormsg" hidden></label>
     </div>
 </div>
+ </div>
 <div id="agent_searchdiv" hidden>
 <div class="form-group">
     <label class=" col-sm-3" id='STDLY_SEARCH_lbl_type'hidden>TYPE OF EXPENSE<em>*</em></label>

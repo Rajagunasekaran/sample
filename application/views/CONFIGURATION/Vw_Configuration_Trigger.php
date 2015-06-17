@@ -120,6 +120,24 @@
                     }
                 });
             }
+            if(Tirgger==3)
+            {
+                $.ajax({
+                    type: "POST",
+                    data: {Triggernameid: Tirgger},
+                    url: controller_url+"CUSTOMEREXPIRYXWEEK",
+                    success: function (data) {
+                        $('.preloader').hide();
+                        var returnvalue = JSON.parse(data);
+                        if(returnvalue==1)
+                            show_msgbox("CUSTOMER EXPIRY X WEEK", 'EXPIRY LIST SENT', "success", false);
+                    },
+                    error: function (data) {
+                        alert('error in getting' + JSON.stringify(data));
+                        $('.preloader').hide();
+                    }
+                });
+            }
         });
     });
     </script>

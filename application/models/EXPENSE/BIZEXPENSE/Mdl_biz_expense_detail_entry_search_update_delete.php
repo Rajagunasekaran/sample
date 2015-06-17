@@ -360,7 +360,7 @@ Class Mdl_biz_expense_detail_entry_search_update_delete extends CI_Model {
             }
         }
         $this->load->model('EILIB/Mdl_eilib_common_function');
-        $BTDTL_SEARCH_errormsg_array=$this->Mdl_eilib_common_function->GetErrorMessageList('1,2,224,174,18,176,236,184,180,182,179,185,197,199,195,191,201,200,203,202,178,193,189,187,292,293,294,295,296,297,298,299,300,301,302,303,304,305,306,107,106,170,175,177,181,183,186,188,190,192,194,196,198,103,315,204,205,206,207,208,335,369,401,458');
+        $BTDTL_SEARCH_errormsg_array=$this->Mdl_eilib_common_function->GetErrorMessageList('1,2,224,174,18,176,236,184,180,182,179,185,197,199,195,191,201,200,203,202,178,193,189,187,292,293,294,295,296,297,298,299,300,301,302,303,304,305,306,107,106,170,175,177,181,183,186,188,190,192,194,196,198,103,315,204,205,206,207,208,335,369,401,458,577,578');
         $BTDTL_SEARCH_notable_flag=false;
         $BTDTL_SEARCH_notable_select = "SELECT UNIT_ID FROM EXPENSE_DETAIL_STARHUB UNION SELECT UNIT_ID FROM  EXPENSE_DETAIL_ELECTRICITY UNION SELECT UNIT_ID FROM EXPENSE_DETAIL_DIGITAL_VOICE UNION SELECT UNIT_ID FROM EXPENSE_DETAIL_AIRCON_SERVICE UNION SELECT UNIT_ID FROM EXPENSE_DETAIL_CARPARK";
         $BTDTL_SEARCH_notable_rs = $this->db->query($BTDTL_SEARCH_notable_select);
@@ -1211,17 +1211,17 @@ Class Mdl_biz_expense_detail_entry_search_update_delete extends CI_Model {
 
             $this->load->model('EILIB/Mdl_eilib_common_function');
             $this->load->model('EILIB/Mdl_eilib_calender');
-            if(($BTDTL_SEARCH_starhub_cablestartdate_shtime!='')&&($BTDTL_SEARCH_starhub_cableenddate_shtime!='')&&($BTDTL_SEARCH_starhub_cablestartdate_shtime!=null)&&($BTDTL_SEARCH_starhub_cableenddate_shtime!=null)){
-               $this->Mdl_eilib_calender->StarHubUnit_CreateCalEvent($calid,$BTDTL_SEARCH_starhub_cablestartdate_shtime,$BTDTL_SEARCH_sh_starttime,$BTDTL_SEARCH_sh_endtime,$BTDTL_SEARCH_starhub_cableenddate_shtime,$BTDTL_SEARCH_sh_starttime,$BTDTL_SEARCH_sh_endtime,'STARHUB',$unitno,$acctno,'CABLE START DATE','CABLE END DATE','','');
-            }
             if(($BTDTL_SEARCH_cablesdate!='')&&($BTDTL_SEARCH_cableedate!='')&&($BTDTL_SEARCH_cablesdate!=null)&&($BTDTL_SEARCH_cableedate!=null)){
                 $this->Mdl_eilib_calender->StarHubUnit_DeleteCalEvent($calid,$unitno,$BTDTL_SEARCH_cablesdate,$BTDTL_SEARCH_sh_starttime,$BTDTL_SEARCH_sh_endtime,$BTDTL_SEARCH_cableedate,$BTDTL_SEARCH_sh_starttime,$BTDTL_SEARCH_sh_endtime,'CABLE');
             }
-            if(($BTDTL_SEARCH_starhub_internetstartdate_shtime!='')&&($BTDTL_SEARCH_starhub_internetenddate_shtime!='')&&($BTDTL_SEARCH_starhub_internetstartdate_shtime!=null)&&($BTDTL_SEARCH_starhub_internetenddate_shtime!=null)){
-                $this->Mdl_eilib_calender->StarHubUnit_CreateCalEvent($calid, $BTDTL_SEARCH_starhub_internetstartdate_shtime, $BTDTL_SEARCH_sh_starttime, $BTDTL_SEARCH_sh_endtime, $BTDTL_SEARCH_starhub_internetenddate_shtime, $BTDTL_SEARCH_sh_starttime, $BTDTL_SEARCH_sh_endtime, 'STARHUB', $unitno, $acctno, 'INTERNET START DATE', 'INTERNET END DATE', '', '');
+            if(($BTDTL_SEARCH_starhub_cablestartdate_shtime!='')&&($BTDTL_SEARCH_starhub_cableenddate_shtime!='')&&($BTDTL_SEARCH_starhub_cablestartdate_shtime!=null)&&($BTDTL_SEARCH_starhub_cableenddate_shtime!=null)){
+                $this->Mdl_eilib_calender->StarHubUnit_CreateCalEvent($calid,$BTDTL_SEARCH_starhub_cablestartdate_shtime,$BTDTL_SEARCH_sh_starttime,$BTDTL_SEARCH_sh_endtime,$BTDTL_SEARCH_starhub_cableenddate_shtime,$BTDTL_SEARCH_sh_starttime,$BTDTL_SEARCH_sh_endtime,'STARHUB',$unitno,$acctno,'CABLE START DATE','CABLE END DATE','','');
             }
             if(($BTDTL_SEARCH_internetsdate!='')&&($BTDTL_SEARCH_internetedate!='')&&($BTDTL_SEARCH_internetsdate!=null)&&($BTDTL_SEARCH_internetedate!=null)) {
                 $this->Mdl_eilib_calender->StarHubUnit_DeleteCalEvent($calid,$unitno,$BTDTL_SEARCH_internetsdate,$BTDTL_SEARCH_sh_starttime,$BTDTL_SEARCH_sh_endtime,$BTDTL_SEARCH_internetedate,$BTDTL_SEARCH_sh_starttime,$BTDTL_SEARCH_sh_endtime,'INTERNET');
+            }
+            if(($BTDTL_SEARCH_starhub_internetstartdate_shtime!='')&&($BTDTL_SEARCH_starhub_internetenddate_shtime!='')&&($BTDTL_SEARCH_starhub_internetstartdate_shtime!=null)&&($BTDTL_SEARCH_starhub_internetenddate_shtime!=null)){
+                $this->Mdl_eilib_calender->StarHubUnit_CreateCalEvent($calid, $BTDTL_SEARCH_starhub_internetstartdate_shtime, $BTDTL_SEARCH_sh_starttime, $BTDTL_SEARCH_sh_endtime, $BTDTL_SEARCH_starhub_internetenddate_shtime, $BTDTL_SEARCH_sh_starttime, $BTDTL_SEARCH_sh_endtime, 'STARHUB', $unitno, $acctno, 'INTERNET START DATE', 'INTERNET END DATE', '', '');
             }
         }
         if ($this->db->trans_status() === FALSE){
@@ -1254,5 +1254,118 @@ Class Mdl_biz_expense_detail_entry_search_update_delete extends CI_Model {
         if((count($BTDTL_SEARCH_refresh->BTDTL_SEARCH_id)==0) &&($BTDTL_SEARCH_lb_searchoptions!=101)&&($BTDTL_SEARCH_lb_searchoptions!=103)&&($BTDTL_SEARCH_lb_searchoptions!=108)&&($BTDTL_SEARCH_lb_searchoptions!=104)&&($BTDTL_SEARCH_lb_searchoptions!=110)&&($BTDTL_SEARCH_lb_searchoptions!=112)&&($BTDTL_SEARCH_lb_searchoptions!=122))
         $BTDTL_SEARCH_refresh=$this->BTDTL_SEARCH_expense_searchby($BTDTL_SEARCH_lb_searchoptions,$BTDTL_SEARCH_lb_expense_type,'BTDTL_SEARCH_update_listbox',$timeZoneFormat);
         return $BTDTL_SEARCH_refresh;
+    }
+    public function checktransaction($primaryid,$unitid,$USERSTAMP,$timeZoneFormat,$BTDTL_SEARCH_lb_searchoptions,$BTDTL_SEARCH_lb_expense_type) {
+        $BTDTL_SEARCH_id=$primaryid;
+        if($BTDTL_SEARCH_lb_searchoptions==100)
+            $BTDTL_SEARCH_id=$BTDTL_SEARCH_lb_searchoptions;
+        $BTDTL_SEARCH_tableid=$this->BTDTL_SEARCH_func_twodimen($BTDTL_SEARCH_lb_expense_type);
+        $this->load->model('EILIB/Mdl_eilib_common_function');
+        $BTDTL_SEARCH_flag_delete=$this->Mdl_eilib_common_function->ChkTransactionBeforeDelete($BTDTL_SEARCH_tableid[2],$BTDTL_SEARCH_id);
+        $Checktransactionflag=$BTDTL_SEARCH_flag_delete[0]['DELETION_FLAG'];
+        // REC VER
+        $recverion='';
+        $BTDTL_SEARCH_postid=$this->BTDTL_SEARCH_func_twodimen($BTDTL_SEARCH_lb_expense_type);
+        if($BTDTL_SEARCH_lb_expense_type==14)
+            $selectedrecver=$this->db->query("SELECT $BTDTL_SEARCH_postid[3] FROM $BTDTL_SEARCH_postid[1] WHERE $BTDTL_SEARCH_postid[0]=$primaryid");
+        elseif($BTDTL_SEARCH_lb_expense_type==15)
+            $selectedrecver=$this->db->query("SELECT $BTDTL_SEARCH_postid[3] FROM $BTDTL_SEARCH_postid[1] WHERE $BTDTL_SEARCH_postid[0]=$primaryid");
+        elseif($BTDTL_SEARCH_lb_expense_type==16)
+            $selectedrecver=$this->db->query("SELECT $BTDTL_SEARCH_postid[3] FROM $BTDTL_SEARCH_postid[1] WHERE $BTDTL_SEARCH_postid[0]=$primaryid");
+        elseif($BTDTL_SEARCH_lb_expense_type==17)
+            $selectedrecver=$this->db->query("SELECT $BTDTL_SEARCH_postid[3] FROM $BTDTL_SEARCH_postid[1] WHERE $BTDTL_SEARCH_postid[0]=$primaryid");
+        elseif($BTDTL_SEARCH_lb_expense_type==13)
+            $selectedrecver=$this->db->query("SELECT $BTDTL_SEARCH_postid[3] FROM $BTDTL_SEARCH_postid[1] WHERE $BTDTL_SEARCH_postid[0]=$primaryid");
+        elseif($BTDTL_SEARCH_lb_searchoptions==100)
+            $selectedrecver=$this->db->query("SELECT $BTDTL_SEARCH_postid[3] FROM $BTDTL_SEARCH_postid[1] WHERE $BTDTL_SEARCH_postid[0]=$primaryid");
+        foreach($selectedrecver->result_array() as $row) {
+            $recverion = $row[$BTDTL_SEARCH_postid[3]];
+        }
+        return [$Checktransactionflag,$recverion];
+    }
+    public function  deletefunction($primaryid,$unitid,$USERSTAMP,$timeZoneFormat,$BTDTL_SEARCH_lb_searchoptions,$BTDTL_SEARCH_lb_expense_type,$searchvalue,$startdate,$BTDTL_SEARCH_starhubid,$calid,$BTDTL_SEARCH_obj)
+    {
+            $BTDTL_SEARCH_flag_cal=0;
+            $BTDTL_SEARCH_expenseid=$primaryid;
+            if($BTDTL_SEARCH_lb_expense_type==14){
+                $BTDTL_SEARCH_select_recordversion = "SELECT EDSH_REC_VER FROM EXPENSE_DETAIL_STARHUB WHERE EDSH_ID='$BTDTL_SEARCH_expenseid'  AND EDSH_REC_VER=(SELECT MAX(EDSH_REC_VER) FROM EXPENSE_DETAIL_STARHUB WHERE UNIT_ID='$unitid')";
+                $BTDTL_SEARCH_recordversion_rs = $this->db->query($BTDTL_SEARCH_select_recordversion);
+                foreach($BTDTL_SEARCH_recordversion_rs->result_array() as $row)
+                {
+                    $BTDTL_SEARCH_flag_cal=1;
+                }
+             }
+            $BTDTL_SEARCH_flag_delete=true;
+          if($BTDTL_SEARCH_lb_searchoptions==100)
+            $BTDTL_SEARCH_arryid=$BTDTL_SEARCH_lb_searchoptions;
+          $BTDTL_SEARCH_postid=$this->BTDTL_SEARCH_func_twodimen($BTDTL_SEARCH_lb_expense_type);
+          if($BTDTL_SEARCH_lb_expense_type==14){
+              $BTDTL_SEARCH_deleteflag=0;
+              $this->db->trans_strict(FALSE);
+              $this->db->trans_begin();
+              $this->db->query("CALL SP_BIZ_DETAIL_STARHUB_DELETION('$BTDTL_SEARCH_postid[2]','$BTDTL_SEARCH_expenseid','$USERSTAMP')");
+            $BTDTL_SEARCH_deleteflag=1;
+          }
+          else {
+              $this->load->model('EILIB/Mdl_eilib_common_function');
+              $BTDTL_SEARCH_deleteflag = $this->Mdl_eilib_common_function->DeleteRecord($BTDTL_SEARCH_postid[2], $BTDTL_SEARCH_expenseid, $USERSTAMP);
+          }
+          if($BTDTL_SEARCH_deleteflag==1)
+            $BTDTL_SEARCH_flag_del='BTDTL_SEARCH_flag_delete';
+          else
+            $BTDTL_SEARCH_flag_del=0;
+          $BTDTL_SEARCH_flag_cable=0;$BTDTL_SEARCH_flag_starhub=0;
+            $this->load->model('EILIB/Mdl_eilib_calender');
+          if ($this->db->trans_status() === TRUE) {
+              if ($BTDTL_SEARCH_flag_cal == 1) {
+                  if (($BTDTL_SEARCH_obj['BTDTL_cablestartdate'] != '') && ($BTDTL_SEARCH_obj['BTDTL_cableenddate'] != '')) {
+                      $BTDTL_SEARCH_flag_cable = 0;
+                      $this->Mdl_eilib_calender->StarHubUnit_DeleteCalEvent($calid,$BTDTL_SEARCH_obj['unitno'], $BTDTL_SEARCH_obj['BTDTL_cablestartdate'], $BTDTL_SEARCH_starhubid[0], $BTDTL_SEARCH_starhubid[1], $BTDTL_SEARCH_obj['BTDTL_cableenddate'], $BTDTL_SEARCH_starhubid[0], $BTDTL_SEARCH_starhubid[1], 'CABLE');
+                      $BTDTL_SEARCH_flag_cable = 1;
+                  }
+                  if (($BTDTL_SEARCH_obj['BTDTL_internetsd'] != '') && ($BTDTL_SEARCH_obj['BTDTL_interneted'] != '')) {
+                      $BTDTL_SEARCH_flag_starhub = 0;
+                      $this->Mdl_eilib_calender->StarHubUnit_DeleteCalEvent($calid,$BTDTL_SEARCH_obj['unitno'], $BTDTL_SEARCH_obj['BTDTL_internetsd'], $BTDTL_SEARCH_starhubid[0], $BTDTL_SEARCH_starhubid[1], $BTDTL_SEARCH_obj['BTDTL_interneted'], $BTDTL_SEARCH_starhubid[0], $BTDTL_SEARCH_starhubid[1], 'STARHUB');
+                      $BTDTL_SEARCH_flag_starhub = 1;
+                  }
+              }
+              $this->db->trans_commit();
+          }
+          else
+          {
+                if($BTDTL_SEARCH_flag_cal==1){
+                    if(($BTDTL_SEARCH_obj['BTDTL_cablestartdate']!='')&&($BTDTL_SEARCH_obj['BTDTL_cableenddate']!='')&&($BTDTL_SEARCH_flag_cable==1))
+                    {
+                        $this->Mdl_eilib_calender->StarHubUnit_CreateCalEvent($calid,$BTDTL_SEARCH_obj['BTDTL_cablestartdate'],$BTDTL_SEARCH_starhubid[0],$BTDTL_SEARCH_starhubid[1],$BTDTL_SEARCH_obj['BTDTL_cableenddate'],$BTDTL_SEARCH_starhubid[0],$BTDTL_SEARCH_starhubid[1],'STARHUB',$BTDTL_SEARCH_obj['unitno'],$BTDTL_SEARCH_obj['BTDTL_acctno'],'CABLE START DATE','CABLE END DATE','','');
+                    }
+                    if(($BTDTL_SEARCH_obj['BTDTL_internetsd']!='')&&($BTDTL_SEARCH_obj['BTDTL_interneted']!='')&&($BTDTL_SEARCH_flag_starhub==1))
+                    {
+                        $this->Mdl_eilib_calender->StarHubUnit_CreateCalEvent($calid,$BTDTL_SEARCH_obj['BTDTL_internetsd'],$BTDTL_SEARCH_starhubid[0],$BTDTL_SEARCH_starhubid[1],$BTDTL_SEARCH_obj['BTDTL_interneted'],$BTDTL_SEARCH_starhubid[0],$BTDTL_SEARCH_starhubid[1],'STARHUB',$BTDTL_SEARCH_obj['unitno'],$BTDTL_SEARCH_obj['BTDTL_acctno'],'INTERNET START DATE','INTERNET END DATE','','');
+                    }
+                }
+              $this->db->trans_rollback();
+            }
+        $BTDTL_SEARCH_refresh=[];
+          if($BTDTL_SEARCH_lb_expense_type==16){
+              if($BTDTL_SEARCH_lb_searchoptions==100)
+              $BTDTL_SEARCH_refresh=$this->BTDTL_SEARCH_expense_searchby($BTDTL_SEARCH_lb_searchoptions,$BTDTL_SEARCH_lb_expense_type,$BTDTL_SEARCH_flag_del,$timeZoneFormat);
+            else
+              $BTDTL_SEARCH_refresh=$this->BTDTL_SEARCH_flex_aircon($searchvalue,$BTDTL_SEARCH_lb_searchoptions,$BTDTL_SEARCH_flag_del,$timeZoneFormat);
+          }
+          else if($BTDTL_SEARCH_lb_expense_type==17)
+            $BTDTL_SEARCH_refresh= $this->BTDTL_SEARCH_show_carpark($searchvalue,$BTDTL_SEARCH_lb_searchoptions,$BTDTL_SEARCH_flag_del,$timeZoneFormat);
+          else if($BTDTL_SEARCH_lb_expense_type==13)
+            $BTDTL_SEARCH_refresh= $this->BTDTL_SEARCH_show_electricity($searchvalue,$BTDTL_SEARCH_lb_searchoptions,$BTDTL_SEARCH_flag_del,$timeZoneFormat);
+          else if($BTDTL_SEARCH_lb_expense_type==15)
+            $BTDTL_SEARCH_refresh= $this->BTDTL_SEARCH_show_digital($searchvalue,$BTDTL_SEARCH_lb_searchoptions,$BTDTL_SEARCH_flag_del,$timeZoneFormat);
+          else if($BTDTL_SEARCH_lb_expense_type==14)
+            $BTDTL_SEARCH_refresh = $this->BTDTL_SEARCH_show_starhub($startdate,$searchvalue,$BTDTL_SEARCH_lb_searchoptions,$BTDTL_SEARCH_flag_del,$timeZoneFormat);
+            if((count($BTDTL_SEARCH_refresh->BTDTL_SEARCH_id)==0)&&($BTDTL_SEARCH_lb_searchoptions!=101)&&($BTDTL_SEARCH_lb_searchoptions!=103)&&($BTDTL_SEARCH_lb_searchoptions!=108)&&($BTDTL_SEARCH_lb_searchoptions!=104)&&($BTDTL_SEARCH_lb_searchoptions!=110)&&($BTDTL_SEARCH_lb_searchoptions!=112)&&($BTDTL_SEARCH_lb_searchoptions!=122))
+            {
+                $BTDTL_SEARCH_refresh= $this->BTDTL_SEARCH_expense_searchby($BTDTL_SEARCH_lb_searchoptions,$BTDTL_SEARCH_lb_expense_type,'BTDTL_SEARCH_flag_delete',$timeZoneFormat);
+            }
+        return $BTDTL_SEARCH_refresh;
+
+
     }
 }

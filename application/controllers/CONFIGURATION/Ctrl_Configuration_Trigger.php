@@ -49,5 +49,13 @@ Class Ctrl_Configuration_Trigger extends CI_Controller
         $data = $this->Mdl_configuration_trigger->getPurgeDocument();
         echo 1;
     }
+    public function CUSTOMEREXPIRYXWEEK(){
+
+        $UserStamp=$this->Mdl_eilib_common_function->getSessionUserStamp();
+
+        $data = $this->Mdl_configuration_trigger->getCustomerExpiryXWeek($UserStamp);
+
+        echo $data;
+    }
 
 }

@@ -1063,17 +1063,17 @@ td, th {
                         alert('error in getting' + JSON.stringify(data));
                     }
                 });
-                show_msgbox("BIZ EXPENSE DAILY ENTRY/SEARCH/UPDATE/DELETE",sucessmsg,"success",false);
+                show_msgbox("CUSTOMER TERMINATION",sucessmsg,"success",false);
             }
             else if(ctermresult==0)
             {
                 $(".preloader").hide();
-                show_msgbox("BIZ EXPENSE DAILY ENTRY/SEARCH/UPDATE/DELETE",CTERM_errmsgs[6].EMC_DATA,"success",false);
+                show_msgbox("CUSTOMER TERMINATION",CTERM_errmsgs[6].EMC_DATA,"success",false);
             }
             else
             {
                 $(".preloader").hide();
-                show_msgbox("BIZ EXPENSE DAILY ENTRY/SEARCH/UPDATE/DELETE",ctermresult,"success",false);
+                show_msgbox("CUSTOMER TERMINATION",ctermresult,"success",false);
             }
         }
     });

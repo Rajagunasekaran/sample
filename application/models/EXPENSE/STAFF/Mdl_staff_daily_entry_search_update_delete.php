@@ -51,7 +51,6 @@ class Mdl_staff_daily_entry_search_update_delete extends CI_Model{
         }
        else if($STDLY_INPUT_lbtypeofexpense==40)
         {
-//            echo 'jlj';
             $STDLY_INPUT_paid_date=$_POST['staffdly_paiddate'];
             $STDLY_INPUT_paid_date = date('Y-m-d',strtotime($STDLY_INPUT_paid_date));
             $STDLY_INPUT_from_period=$_POST['staffdly_fromdate'];
@@ -59,46 +58,60 @@ class Mdl_staff_daily_entry_search_update_delete extends CI_Model{
             $STDLY_INPUT_to_period=$_POST['staffdly_todate'];
             $STDLY_INPUT_to_period = date('Y-m-d',strtotime($STDLY_INPUT_to_period));
             $STDLY_INPUT_cpfamount = $_POST['staffdly_tb_newcpfamt'];
-//            $STDLY_INPUT_levyradio = $_POST['salarylevyamtopt'];
+            $salarycpfamtoptradio=(isset($_POST['salarycpfamtopt']));
+            $salarysalaryoptradio=(isset($_POST['salarysalaryopt']));
             $STDLY_INPUT_levyradio =(isset($_POST["salarylevyamtopt"]));
             $STDLY_INPUT_hidencpfamount= $_POST['staffdly_tb_curcpfamt'];
-            if($STDLY_INPUT_cpfamount=='undefined' || $STDLY_INPUT_cpfamount=='')
+
+            if($salarycpfamtoptradio==true)
             {
-                $STDLY_INPUT_cpfamount=null;
-            }
-            if($STDLY_INPUT_cpfamount=='on')
-            {
-                if(($STDLY_INPUT_cpfamount=='undefined')||($STDLY_INPUT_cpfamount==''))
+                if($STDLY_INPUT_cpfamount=='')
                 {
-                    $STDLY_INPUT_cpfamount=$STDLY_INPUT_hidencpfamount;
+                    $STDLY_INPUT_cpfamount="'$STDLY_INPUT_cpfamount'";
+                }
+                else
+                {
+                    $STDLY_INPUT_cpfamount="'$STDLY_INPUT_hidencpfamount'";
                 }
             }
+            else
+            {
+                $STDLY_INPUT_cpfamount='null';
+            }
+
             $STDLY_INPUT_levyamount = $_POST['staffdly_tb_newlevyamt'];
             $STDLY_INPUT_hidenlevyamount = $_POST['staffdly_tb_curlevyamt'];
 
-            if($STDLY_INPUT_levyamount=='undefined' || $STDLY_INPUT_levyamount=='' )
+            if($STDLY_INPUT_levyradio==true)
             {
-                $STDLY_INPUT_levyamount='null';
-            }
-            if($STDLY_INPUT_levyradio=='undefined')
-            {
-                $STDLY_INPUT_levyamount='null';
-            }
-            else{
-                if(($STDLY_INPUT_levyamount=='undefined')||($STDLY_INPUT_levyamount==''))
+                if($STDLY_INPUT_levyamount!='' )
+                {
+                    $STDLY_INPUT_levyamount="'$STDLY_INPUT_levyamount'";
+                }
+                else
                 {
                     $STDLY_INPUT_levyamount="'$STDLY_INPUT_hidenlevyamount'";
                 }
             }
+            else
+            {
+                $STDLY_INPUT_levyamount='null';
+            }
             $STDLY_INPUT_salaryamount = $_POST['staffdly_tb_newsalary'];
             $STDLY_INPUT_hidensalaryamount = $_POST['staffdly_tb_cursalary'];
-            if($STDLY_INPUT_salaryamount=='undefined' || $STDLY_INPUT_salaryamount=='')
+
+            if($salarysalaryoptradio==true) {
+                if($STDLY_INPUT_salaryamount!='')
+                {
+                    $STDLY_INPUT_salaryamount="'$STDLY_INPUT_salaryamount'";
+                }
+                else {
+                    $STDLY_INPUT_salaryamount = "'$STDLY_INPUT_hidensalaryamount'";
+                }
+            }
+            else
             {
                 $STDLY_INPUT_salaryamount='null';
-            }
-            if(($STDLY_INPUT_salaryamount=='undefined')||($STDLY_INPUT_salaryamount==''))
-            {
-                $STDLY_INPUT_salaryamount="'$STDLY_INPUT_hidensalaryamount'";
             }
             $STDLY_INPUT_comments=$_POST['staffdly_ta_salarycomments'];
             if($STDLY_INPUT_comments==''){
@@ -108,8 +121,6 @@ class Mdl_staff_daily_entry_search_update_delete extends CI_Model{
                 $STDLY_INPUT_comments="'$STDLY_INPUT_comments'";
             }
             $STDLY_INPUT_radio_employee=(isset($_POST["staffdly_rd_employee"]));
-//echo $STDLY_INPUT_radio_employee;
-//           exit;
             if($STDLY_INPUT_radio_employee=='' || $STDLY_INPUT_radio_employee=='undefined')
             {
                 $STDLY_INPUT_edssid=$_POST['staffdly_hidden_edssid'];
@@ -117,7 +128,7 @@ class Mdl_staff_daily_entry_search_update_delete extends CI_Model{
             else{
                 $STDLY_INPUT_edssid=$STDLY_INPUT_radio_employee;
             }
-      $insertquery = "CALL SP_STAFFDLY_STAFF_SALARY_INSERT('$STDLY_INPUT_edssid','$STDLY_INPUT_paid_date','$STDLY_INPUT_from_period','$STDLY_INPUT_to_period','$STDLY_INPUT_cpfamount',$STDLY_INPUT_levyamount,$STDLY_INPUT_salaryamount,$STDLY_INPUT_comments,'$USERSTAMP',@SUCCESS_MSG)";
+           $insertquery = "CALL SP_STAFFDLY_STAFF_SALARY_INSERT('$STDLY_INPUT_edssid','$STDLY_INPUT_paid_date','$STDLY_INPUT_from_period','$STDLY_INPUT_to_period','$STDLY_INPUT_cpfamount',$STDLY_INPUT_levyamount,$STDLY_INPUT_salaryamount,$STDLY_INPUT_comments,'$USERSTAMP',@SUCCESS_MSG)";
            $query = $this->db->query($insertquery);
            $this->db->select('@SUCCESS_MSG as SUCCESSMSG', FALSE);
            $result = $this->db->get()->result_array();
@@ -128,7 +139,6 @@ class Mdl_staff_daily_entry_search_update_delete extends CI_Model{
     //FUNCTION FOR SAVE staff PART
     public function STDLY_INPUT_insertstaff($USERSTAMP){
         $STDLY_INPUT_expenselist=$_POST['STDLY_INPUT_lb_category'];
-
         $STDLY_INPUT_invoiceDate=$_POST['STDLY_INPUT_db_invdate'];
         $STDLY_INPUT_in_items=$_POST['STDLY_INPUT_ta_invitem'];
         $STDLY_INPUT_invoiceAmount=$_POST['STDLY_INPUT_lb_incamtrp'];
@@ -139,38 +149,37 @@ class Mdl_staff_daily_entry_search_update_delete extends CI_Model{
         $STDLY_INPUT_ctrylist=''; $STDLY_INPUT_amountsplit='';$STDLY_INPUT_datesplit='';
         if((is_array($PDLY_INPUT_inv_from))==true){
             for($i=0;$i<count($PDLY_INPUT_inv_from);$i++)
-      {
-          if($STDLY_INPUT_comments[$i]==''){
-          if($i==0)
-              $STDLY_INPUT_comments_split .=' ';
-            else
-                $STDLY_INPUT_comments_split .='^^'.' ';
-          }
-        else{
-          if($i==0){
-              $STDLY_INPUT_comments_split.=$this->db->escape_like_str($STDLY_INPUT_comments[$i]);
-          }
-          else{
-              $STDLY_INPUT_comments_split.='^^'.$this->db->escape_like_str($STDLY_INPUT_comments[$i]);
-          }
+              {
+                  if($STDLY_INPUT_comments[$i] == ' '){
+                  if($i==0)
+                      $STDLY_INPUT_comments_split .=' ';
+                    else
+                        $STDLY_INPUT_comments_split .='^^'.' ';
+                  }
+                  else{
+                  if($i==0){
+                      $STDLY_INPUT_comments_split.=$this->db->escape_like_str($STDLY_INPUT_comments[$i]);
+                  }
+                  else{
+                      $STDLY_INPUT_comments_split.='^^'.$this->db->escape_like_str($STDLY_INPUT_comments[$i]);
+                  }
+                  }
+                if($i==0){
+                    $STDLY_INPUT_invitem_split.=$this->db->escape_like_str($STDLY_INPUT_in_items[$i]);
+                    $STDLY_INPUT_invfrom_split.=$this->db->escape_like_str($PDLY_INPUT_inv_from[$i]);
+                    $STDLY_INPUT_datesplit=date('Y-m-d',strtotime($STDLY_INPUT_invoiceDate[$i]));
+                    $STDLY_INPUT_ctrylist=$STDLY_INPUT_expenselist[$i];
+                    $STDLY_INPUT_amountsplit=$STDLY_INPUT_invoiceAmount[$i];
+                }
+                else {
+                    $STDLY_INPUT_invitem_split .= '^^' . $this->db->escape_like_str($STDLY_INPUT_in_items[$i]);
+                    $STDLY_INPUT_invfrom_split .= '^^' . $this->db->escape_like_str($PDLY_INPUT_inv_from[$i]);
+                    $STDLY_INPUT_datesplit .= "," . date('Y-m-d', strtotime($STDLY_INPUT_invoiceDate[$i]));
+                    $STDLY_INPUT_ctrylist .= "," . $STDLY_INPUT_expenselist[$i];
+                    $STDLY_INPUT_amountsplit .= "," . $STDLY_INPUT_invoiceAmount[$i];
+                }
         }
-        if($i==0){
-            $STDLY_INPUT_invitem_split.=$this->db->escape_like_str($STDLY_INPUT_in_items[$i]);
-            $STDLY_INPUT_invfrom_split.=$this->db->escape_like_str($PDLY_INPUT_inv_from[$i]);
-            $STDLY_INPUT_datesplit=date('Y-m-d',strtotime($STDLY_INPUT_invoiceDate[$i]));
-            $STDLY_INPUT_ctrylist=$STDLY_INPUT_expenselist[$i];
-            $STDLY_INPUT_amountsplit=$STDLY_INPUT_invoiceAmount[$i];
         }
-        else {
-            $STDLY_INPUT_invitem_split .= '^^' . $this->db->escape_like_str($STDLY_INPUT_in_items[$i]);
-            $STDLY_INPUT_invfrom_split .= '^^' . $this->db->escape_like_str($PDLY_INPUT_inv_from[$i]);
-            $STDLY_INPUT_datesplit .= "," . date('Y-m-d', strtotime($STDLY_INPUT_invoiceDate[$i]));
-            $STDLY_INPUT_ctrylist .= "," . $STDLY_INPUT_expenselist[$i];
-            $STDLY_INPUT_amountsplit .= "," . $STDLY_INPUT_invoiceAmount[$i];
-        }
-
-
-      }}
         else
         {
             if($STDLY_INPUT_comments==''){

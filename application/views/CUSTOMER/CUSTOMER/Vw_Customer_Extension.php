@@ -1027,25 +1027,29 @@ require_once('application/libraries/EI_HDR.php');
                 var ppdateappenddata='<div id="passportdate"><div class="col-md-3"><label>PASSPORT EXPIRY DATE<span class="labelrequired"><em>*</em></span></label></div></div>';
                 $('#passportdate').replaceWith(ppdateappenddata);
                 if (CEXTN_db_passdate != "" && CEXTN_tb_passno != ""){ CEXTN_passnoflag=0;}
-                else{CEXTN_passnoflag=1;CEXTN_validinput=0;}
+                else{CEXTN_passnoflag=0;CEXTN_validinput=0;}
             }
             else if(CEXTN_db_passdate == "" && CEXTN_tb_passno == ""){
-                CEXTN_passnoflag=1;
+                CEXTN_passnoflag=0;
                 var ppnoappenddata1='<div id="passportnumber"><div class="col-md-3" ><label >PASSPORT NUMBER</label></div></div>';
                 $('#passportnumber').replaceWith(ppnoappenddata1);
                 var ppdateappenddata1='<div id="passportdate"><div class="col-md-3"><label>PASSPORT EXPIRY DATE</label></div></div>';
                 $('#passportdate').replaceWith(ppdateappenddata1);
             }
+//            else if(CEXTN_tb_passno == ""){
+//                CEXTN_passnoflag=0;
+//
+//            }
             if (CEXTN_db_epdate!= "" || CEXTN_tb_epno!= ""){
                 var EPnoappenddata='<div id="epnumber"><div class="col-md-3" ><label >EP NUMBER<span class="labelrequired"><em>*</em></span></label></div></div>';
                 $('#epnumber').replaceWith(EPnoappenddata);
                 var EPdateappenddata='<div id="EPdate"><div class="col-md-3"><label>EP EXPIRY DATE<span class="labelrequired"><em>*</em></span></label></div></div>';
                 $('#EPdate').replaceWith(EPdateappenddata);
                 if (CEXTN_db_epdate != "" && CEXTN_tb_epno != ""){ CEXTN_epnoflag=0;}
-                else{CEXTN_epnoflag=1;CEXTN_validinput=0;}
+                else{CEXTN_epnoflag=0;CEXTN_validinput=0;}
             }
             else if(CEXTN_db_epdate == "" && CEXTN_tb_epno == ""){
-                CEXTN_epnoflag=1;
+                CEXTN_epnoflag=0;
                 var EPnoappenddata='<div id="epnumber"><div class="col-md-3" ><label >EP NUMBER</label></div></div>';
                 $('#epnumber').replaceWith(EPnoappenddata);
                 var EPdateappenddata='<div id="EPdate"><div class="col-md-3"><label>EP EXPIRY DATE</label></div></div>';
@@ -1709,8 +1713,8 @@ require_once('application/libraries/EI_HDR.php');
                 CEXTN_clearForm();
                 CEXTN_successmsg=CEXTN_successmsg.replace('[FIRST NAME]',CEXTN_tb_firstname)
                 CEXTN_successmsg=CEXTN_successmsg.replace('[LAST NAME]',CEXTN_tb_lastname)
-                if(paymentchkmsg!='null'){
-                    show_msgbox("CUSTOMER EXTENSION",CEXTN_successmsg+"<br>"+paymentchkmsg,"success",false);
+                if(paymentchkmsg!=null){
+                    show_msgbox("CUSTOMER EXTENSION",CEXTN_successmsg+" "+paymentchkmsg,"success",false);
                 }
                 else {
                     show_msgbox("CUSTOMER EXTENSION",CEXTN_successmsg,"success",false);
@@ -1758,14 +1762,14 @@ require_once('application/libraries/EI_HDR.php');
             CEXTN_clearForm();
             // $('#CEXTN_ta_comments').height(20);
         });
-        $(document).on('change', '.fileextensionchk', function () {
+        $(document).on('change', '.CEXTN_fileextensionchk', function () {
             var filename = $('#CEXTN_fileupload').val();
             var valid_extensions = /(\.pdf)$/i;
             if (valid_extensions.test(filename)) {
             }
             else {
                 show_msgbox("CUSTOMER EXTENSION", 'UPLOAD ONLY PDF FILES', "success", false);
-                $('#CC_fileupload').val('');
+                $('#CEXTN_fileupload').val('');
             }
         });
         //FUNCTION TO CLEAR ERR MSG
@@ -2199,7 +2203,7 @@ require_once('application/libraries/EI_HDR.php');
                                 <label>FILE UPLOAD</label>
                             </div>
                             <div class="col-md-3">
-                                <input type="file" id="CEXTN_fileupload" name="CEXTN_fileupload" class="form-control fileextensionchk" />
+                                <input type="file" id="CEXTN_fileupload" name="CEXTN_fileupload" class="form-control CEXTN_fileextensionchk" />
                             </div>
                         </div>
 

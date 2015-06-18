@@ -498,7 +498,7 @@ class Mdl_eilib_invoice_contract extends CI_Model{
             $datecheckedin = intval(date("d", $check_out_dated_lastmonth));
 //            $lastMonthString= strtotime ("+1 month",$check_in_dated_lastmonth);
 //            $LastMonth = date("Y-m-d",$lastMonthString);
-            $LastMonthformat=date("d-M-Y",$check_in_dated_lastmonth);
+            $LastMonthformat=date("t-M-Y",$check_in_dated_lastmonth);
 //end
             if( $noticedate!="")
             {            $dateStringNotice=strtotime($noticedate);
@@ -708,6 +708,12 @@ class Mdl_eilib_invoice_contract extends CI_Model{
             $response='';
             $title= "CONTRACT"."-"." ".$unitno." ". "-". " ".$customername;
             $newfile= $this->printFile($service,$cust_config_array[10],$parentId,$title);
+            $file = new Google_Service_Drive_DriveFile();
+            $parent = new Google_Service_Drive_ParentReference();
+            $parent->setId($parentId);
+            $file->setParents(array($parent));
+            $service->files->patch($newfile, $file);
+            $file = $service->files->get($newfile);
             $data = array('flagProratedRentCkout'=>$flagProratedRentCkout,'pro_rated_lineno'=>$pro_rated_lineno,'prlbl1'=>$prlbl1,'prlbl2'=>$prlbl2,'LastMonthformat'=>$LastMonthformat,'DEPOSITEword'=>$DEPOSITEword,'ntc_date1'=>$ntc_date1,'todaydat'=>$todaydat,'todaydatestring'=>$todaydatestring,'finalep_pass'=>$finalep_pass,
                 'LastMonthformat'=>$LastMonthformat,'flag_paraAlign'=>$flag_paraAlign,'flag_paraAlign_sec'=>$flag_paraAlign_sec,'flag_paraAlign_thrd'=>$flag_paraAlign_thrd,'flag_paraAlign_four'=>$flag_paraAlign_four,'flag_paraAlign_five'=>$flag_paraAlign_five,
                 'cexdd'=>$cexdd,'check_in_dated'=>$check_in_dated,'noticeSt'=>$noticeSt,'address1value'=>$address1value,'cardno'=>$cardno,'fixedstmtfetch'=>$fixedstmtfetch,'noepcontlineno'=>$noepcontlineno,'elec_fetch'=>$elec_fetch,'dryclean_fetch'=>$dryclean_fetch,
@@ -727,19 +733,14 @@ class Mdl_eilib_invoice_contract extends CI_Model{
             curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
             curl_setopt($ch, CURLOPT_ENCODING, "gzip,deflate");
             $response = curl_exec($ch);
-            if($response=="SCRIPT ERROR")
-                return [0];
             curl_close($ch);
-            $file = new Google_Service_Drive_DriveFile();
-            $parent = new Google_Service_Drive_ParentReference();
-            $parent->setId($parentId);
-            $file->setParents(array($parent));
-            $service->files->patch($response, $file);
-            $file = $service->files->get($response);
-            $this->CUST_SetDocOwner($service,$response,$docowner,$sendmailid);
-            return [1,$response,$file->alternateLink];
+            if(strpos($response,"SCRIPT ERROR")===false){
+                $this->CUST_SetDocOwner($service,$response,$docowner,$sendmailid);
+                return [1,$response,$file->alternateLink];}
+            else{
+                return [0,$newfile,$file->alternateLink,$response];
+            }
         } catch (Exception $ex) {
-            return $ex->getMessage();
             return [0,$response];
         }
     }
@@ -1030,6 +1031,12 @@ class Mdl_eilib_invoice_contract extends CI_Model{
             }
             $title="INVOICE"."   -"." ".$unit." ". "-". " ".$tenant_fetch."_INV".$todaysDate.''.$Slno;
             $newfile= $this->printFile($service,$invoiceid,$parentId,$title);
+            $file = new Google_Service_Drive_DriveFile();
+            $parent = new Google_Service_Drive_ParentReference();
+            $parent->setId($parentId);
+            $file->setParents(array($parent));
+            $service->files->patch($newfile, $file);
+            $file = $service->files->get($newfile);
             $data = array(
                 'arrCheckDateAmtConcate'=>$arrCheckDateAmtConcate,'singlemonth'=>$singlemonth,'reminingmonths'=>$reminingmonths, 'companyTemp'=>$companyTemp, 'replaceSum'=>$replaceSum, 'todaydat'=>$todaydat,'todaydatestring'=>$todaydatestring,'A3'=>$A3,'A4'=>$A4,'das'=>$das,'pc'=>$pc,'A5'=>$A5,'sum'=>$sum,'cdate1'=>$cdate1,'cdate2'=>$cdate2,'todaysDate'=>$todaysDate,'Slno'=>$Slno,'tenant_fetch' => $tenant_fetch,'length'=>$length,'proratedrentflag'=>$proratedrentflag,
                 'nonPror_monthCal'=>$nonPror_monthCal,'flag'=>2,'prorated_monthCal' => $prorated_monthCal, 'proratedrent' => $proratedrent, 'proratedsmonth' => $proratedsmonth,'proratedemonth'=>$proratedemonth,
@@ -1049,17 +1056,13 @@ class Mdl_eilib_invoice_contract extends CI_Model{
             curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
             curl_setopt($ch, CURLOPT_ENCODING, "gzip,deflate");
             $response = curl_exec($ch);
-            if($response=="SCRIPT ERROR")
-                return [0];
             curl_close($ch);
-            $file = new Google_Service_Drive_DriveFile();
-            $parent = new Google_Service_Drive_ParentReference();
-            $parent->setId($parentId);
-            $file->setParents(array($parent));
-            $service->files->patch($response, $file);
-            $file = $service->files->get($response);
-            $this->CUST_SetDocOwner($service,$response,$docowner,$sendmailid);
-            return [1,$response,$file->alternateLink,"INV".$todaysDate.$Slno];
+            if(strpos($response,"SCRIPT ERROR")===false){
+                $this->CUST_SetDocOwner($service,$response,$docowner,$sendmailid);
+                return [1,$response,$file->alternateLink,"INV".$todaysDate.$Slno];}
+            else{
+                return [0,$newfile,$file->alternateLink,$response];
+            }
         }
         catch(Exception $e) {
             return [0,$response];

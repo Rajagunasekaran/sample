@@ -1,0 +1,57 @@
+/***VER 0.1 DONE BY SARADA****/
+/**CONTRACT**/
+function CUST_contract(flagProratedRentCkout,pro_rated_lineno,prlbl1,prlbl2,LastMonthformat,DEPOSITEword,ntc_date1,todaydat,todaydatestring,finalep_pass,LastMonthformat,flag_paraAlign,flag_paraAlign_sec,flag_paraAlign_thrd,flag_paraAlign_four,flag_paraAlign_five,cexdd,check_in_dated,noticeSt,address1value,cardno,fixedstmtfetch,noepcontlineno,elec_fetch,dryclean_fetch,checkoutfee_fetch,PROCESSno,DEPOSITno,webloginfetch1,contractidcode,RENTword,PROCESSword,DEPOSITword,proratedrent,proratedsmonth,proratedemonth,unitno,checkindate,checkoutdate,companyname,customername,noticeperiod,passportno,passportdate,epno,epdate,noticedate,lp,cardno,rent,airquartfee,airfixedfee,electcap,dryclean,chkoutfee,procfee,deposit,waived,roomtype,rent_check,formname,targetFolderId)
+{ try{
+    var docId1 = DocumentApp.openById(contractidcode);
+    var para1 =docId1.getParagraphs();
+    var docIdbody1 = docId1.getActiveSection();
+    var arrDoc=["NOTICESTATEMENT","UNITADDRESS","Waived","ACES","AIRCONSTATEMENT","NOTI","nname","eepno","expep","ppass","passda","roomtype","unitno" ,"checkin","checkout","prochkout","RENTALAMOUNT","RRENT","cusss","uunni","ECP","PRWORD","PCO","DEPPOSI","DDEE","DRI","NoticStDate","TDAYDATE","TYMPERIOD","epnoandpassno","CKCLE"];
+    var arrREplace=[noticeSt,address1value,waived,cardno,fixedstmtfetch,noticeperiod,customername,epno,epdate,passportno,passportdate,roomtype,unitno,check_in_dated,cexdd,LastMonthformat,RENTword,rent,customername,unitno,elec_fetch,PROCESSword,PROCESSno,DEPOSITEword,DEPOSITno,dryclean_fetch,ntc_date1,todaydat,lp,finalep_pass,checkoutfee_fetch];
+    for(var p=0;p<arrDoc.length;p++)  {
+        docIdbody1.replaceText(arrDoc[p],arrREplace[p]);
+        if(noepcontlineno!=''  && p==4)
+            para1[noepcontlineno].removeFromParent();}
+    if(flagProratedRentCkout==1)  {
+        para1[pro_rated_lineno].removeFromParent();}
+    else if(flagProratedRentCkout!=0 && flagProratedRentCkout!=""){
+        docIdbody1.replaceText("PRORATED",'$'+flagProratedRentCkout.split('^~^')[0]).replaceText("prochkout",flagProratedRentCkout.split('^~^')[1]);}
+    docId1.saveAndClose();
+    return contractidcode;}
+catch(err){
+    return "SCRIPT ERROR:"+err;
+}}
+/**INVOICE**/
+function CUST_invoice(arrCheckDateAmtConcate,singlemonth,reminingmonths,companyTemp,replaceSum,todaydat,todaydatestring,A3,A4,das,pc,A5,sum,cdate1,cdate2, todaysDate,Slno,tenant_fetch,length,proratedrentflag,nonPror_monthCal,prorated_monthCal,proratedrent,proratedsmonth,proratedemonth,unit,customername,company_fetch,invoiceid,invoicesno,invoicedate,rent,process,deposit,sdate,edate,roomtype,Leaseperiod,mailid,Folderid,rentcheck,docowner,formname,waived,custid){
+    try{ var doc = DocumentApp.openById(invoiceid);
+        var arrDoc=[companyTemp,"name","custid","Todaydate","customerdate","deposite","proces","sum","roM","unit","checkin","CUST_NAME","UNIT_NO","final",'Rent CHECKIN to FINAL','AMOUNT',"$",'TOTAL',singlemonth,"$"]
+        var arrReplace=[company_fetch,tenant_fetch,custid,todaydat,todaydatestring,A3,A4,reminingmonths,roomtype,unit,cdate1,tenant_fetch,unit,cdate2]
+        var arrCheckDateAmtSplit=arrCheckDateAmtConcate.split('^~^');
+        var docIdbody1 = doc.getActiveSection();
+        var table = doc.getBody().getTables();
+        for(var i=0; i<length; i++){
+            var tr = table[0].appendTableRow();
+            for(var t=0;t<3;t++)
+                var td = tr.appendTableCell(arrDoc[14+t]);
+            if(proratedrentflag==0){
+                docIdbody1.replaceText("CHECKIN",cdate1).replaceText("FINAL",cdate2).replaceText("AMOUNT",A5).replaceText("sum",replaceSum);
+            }else{
+                docIdbody1.replaceText("CHECKIN",arrCheckDateAmtSplit[i].split('^^')[1]).replaceText("FINAL",arrCheckDateAmtSplit[i].split('^^')[2]).replaceText("AMOUNT",arrCheckDateAmtSplit[i].split('^^')[0]); }
+            if(i==0 && length!=1){
+                var tr = table[0].appendTableRow();
+                for(var y=0;y<3;y++)
+                    var td = tr.appendTableCell(arrDoc[17+y]);   }}
+        for(var k=0;k<table[0].getNumRows();k++){
+            doc.getBody().editAsText().setFontFamily(DocumentApp.FontFamily.TIMES_NEW_ROMAN);
+            table[0].getRow(k).getCell(1).getChild(0).asParagraph().setAlignment(DocumentApp.HorizontalAlignment.RIGHT); }
+        if(length>1) {
+            table[0].getRow(3).editAsText().setBold(true);
+            for(var j=0;j<3;j++)
+                table[0].getRow(3).getCell(j).setBackgroundColor("#efefef")}//make bold
+        docIdbody1.replaceText("todayssll",todaysDate+Slno);
+        for(var u=0;u<=arrReplace.length;u++){
+            docIdbody1.replaceText(arrDoc[u],arrReplace[u]); }
+        doc.saveAndClose();
+        return invoiceid;
+    }catch(err){
+        return "SCRIPT ERROR:"+err;
+    }}

@@ -53,7 +53,7 @@ class Mdl_eilib_invoice_contract extends CI_Model{
             } catch (Exception $e) {
             }
         }
-        $this->SetDocOwnerGivenId($service,$docid,$docowner);
+       $this->SetDocOwnerGivenId($service,$docid,$docowner);
     }
 //SET THE DOC OWNER
     public   function CUST_SetDocOwner($service,$docid,$docowner,$semailid)
@@ -77,7 +77,7 @@ class Mdl_eilib_invoice_contract extends CI_Model{
             } catch (Exception $e) {
             }
         }
-        $this-> SetDocOwnerGivenId($service,$docid,$docowner);
+       $this-> SetDocOwnerGivenId($service,$docid,$docowner);
     }
 //FUNCTION TO REMOVE EDITORS IF SESSION ID NOT OWNER OR EDITOR
     public function RemoveEditors($service,$docid,$email_fetch,$docowner,$UserStamp)
@@ -135,7 +135,7 @@ class Mdl_eilib_invoice_contract extends CI_Model{
         return $this->db->get()->row()->FP_FOLDER_ID;
     }
 //FUNCTION TO CALCULATE PRORATED RENT
-    public function proratedmonthcalculation($startDate, $endDate)
+  public function proratedmonthcalculation($startDate, $endDate)
     {
         $return =[];
         $end =[];
@@ -619,7 +619,7 @@ class Mdl_eilib_invoice_contract extends CI_Model{
             $prlbl2  =str_replace("prochkout",$LastMonthformat,$prlbl1) ;
 //CHECK LESS THAN A MONTH OR GREATER THAN A MONTH
             $rent_check=$rent_check;
-            strpos($lp,"Year")===false?$yearchk=-1:$yearchk=strpos($lp,"Year");
+           strpos($lp,"Year")===false?$yearchk=-1:$yearchk=strpos($lp,"Year");
             strpos($lp,"Months")===false?$monthschk=-1:$monthschk=strpos($lp,"Months");
             strpos($lp,"Month")===false?$monthchk=-1:$monthchk=strpos($lp,"Month");
             strpos($lp,"Day")===false?$daychk=-1:$daychk=strpos($lp,"Day");
@@ -648,7 +648,7 @@ class Mdl_eilib_invoice_contract extends CI_Model{
                         $proratedrent=$this->Mdl_eilib_prorated_calc->wMonthProratedCalc($check_in_date,$check_out_date,$rent);
                         if($proratedrent!='0.00')
                         {
-                            $flagProratedRentCkout=$proratedrent.'^~^'.$cexdd;
+                            $flagProratedRentCkout=$proratedrent.'^~^'.$cexdd;$LastMonthformat=$cexdd;
                         }
                         else
                         {
@@ -705,8 +705,8 @@ class Mdl_eilib_invoice_contract extends CI_Model{
                         }
                 }}
             $url= $this->Mdl_eilib_common_function->getUrlAccessGasScript();
-            $response='';
-            $title= "CONTRACT"."-"." ".$unitno." ". "-". " ".$customername;
+            $response='';$newfile='';
+          $title= "CONTRACT"."-"." ".$unitno." ". "-". " ".$customername;
             $newfile= $this->printFile($service,$cust_config_array[10],$parentId,$title);
             $file = new Google_Service_Drive_DriveFile();
             $parent = new Google_Service_Drive_ParentReference();
@@ -736,14 +736,14 @@ class Mdl_eilib_invoice_contract extends CI_Model{
             curl_close($ch);
             if(strpos($response,"SCRIPT ERROR")===false){
                 $this->CUST_SetDocOwner($service,$response,$docowner,$sendmailid);
-                return [1,$response,$file->alternateLink];}
+                return [1,$newfile,$file->alternateLink];}
             else{
                 return [0,$newfile,$file->alternateLink,$response];
             }
         } catch (Exception $ex) {
-            return [0,$response];
+            return [0,$newfile];
         }
-    }
+      }
 //GET INVOICE ID ,CONTRACT ID ,SERIAL NO,INVOIC DATE
     public function CUST_invoice_contractreplacetext()
     {
@@ -1028,7 +1028,7 @@ class Mdl_eilib_invoice_contract extends CI_Model{
             else
             {
                 $companyTemp="company";
-            }
+            }$newfile='';
             $title="INVOICE"."   -"." ".$unit." ". "-". " ".$tenant_fetch."_INV".$todaysDate.''.$Slno;
             $newfile= $this->printFile($service,$invoiceid,$parentId,$title);
             $file = new Google_Service_Drive_DriveFile();
@@ -1059,13 +1059,13 @@ class Mdl_eilib_invoice_contract extends CI_Model{
             curl_close($ch);
             if(strpos($response,"SCRIPT ERROR")===false){
                 $this->CUST_SetDocOwner($service,$response,$docowner,$sendmailid);
-                return [1,$response,$file->alternateLink,"INV".$todaysDate.$Slno];}
+                return [1,$newfile,$file->alternateLink,"INV".$todaysDate.$Slno];}
             else{
                 return [0,$newfile,$file->alternateLink,$response];
             }
         }
         catch(Exception $e) {
-            return [0,$response];
+            return [0,$newfile];
         }
     }
 //MAIL PART FOR CONTRACT AND INVOICE

@@ -261,8 +261,8 @@ require_once('application/libraries/EI_HDR.php');
                 if(success=='DDC_flag_nosheet'){
                     show_msgbox("DEPOSIT DEDUCTION EXTRACTS",DDE_errorAarray[11].EMC_DATA,'error',false);
                 }
-                if(success=='mailnotsent'){
-                    show_msgbox("DEPOSIT DEDUCTION EXTRACTS",'DEPOSIT DEDUCTION EXTRACTS MAIL CANNOT SENT','error',false);
+                else if(success=='Get_access'){
+                    show_msgbox("DEPOSIT DEDUCTION EXTRACTS",DDE_errorAarray[13].EMC_DATA,'error',false);
                 }
                 else{
                     $('#em').hide();

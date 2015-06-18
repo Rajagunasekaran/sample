@@ -78,7 +78,7 @@ require_once('application/libraries/EI_HDR.php');
                     show_msgbox("DEPOSIT DEDUCTION CALCULATIONS",DDC_errorAarray_ss,'error',false);
                 }
                 else if(DDC_conformationmsgvalue[0]=='Get_access'){
-                    show_msgbox("DEPOSIT DEDUCTION CALCULATIONS",DDC_errorAarray[18],'error',false);
+                    show_msgbox("DEPOSIT DEDUCTION CALCULATIONS",DDC_errorAarray[18].EMC_DATA,'error',false);
                 }
                 else{
                     if((DDC_conformationmsgvalue[0]==0)){

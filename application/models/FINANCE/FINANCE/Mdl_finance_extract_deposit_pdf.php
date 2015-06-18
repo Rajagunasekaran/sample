@@ -142,10 +142,10 @@ class Mdl_finance_extract_deposit_pdf extends CI_Model{
         $body = str_replace('[MAILID_USERNAME]',$eusername,$body);
         $data5=array('DDE_flag'=>6,'shturl'=>$shturl,'selectedunit'=>$selectedunit,'customername'=>$customername,'checkarray'=>$check_array,
             'selectedsheet'=>$selectedsheet,'customeridname'=>$customeridname);
-        $submitarray=array();
+        $submit_array=array();$submitarray=[];
         $this->load->model('EILIB/Mdl_eilib_common_function');
-        $submitarray=$this->Mdl_eilib_common_function->Func_curl($data5);
-        $submitarray=json_decode($submitarray,true);
+        $submit_array=$this->Mdl_eilib_common_function->Func_curl($data5);
+        $submitarray=json_decode($submit_array,true);
         $EmailDisplayname=$this->Mdl_eilib_common_function->Get_MailDisplayName('DEPOSIT_DEDUCTION');
         $pdfheader=$selectedunit.'-'.$customername;
         try {
@@ -158,12 +158,8 @@ class Mdl_finance_extract_deposit_pdf extends CI_Model{
                 $data = implode(array_map("chr", $submitarray[$i]));
                 $message->addAttachment($pdfheader . '.pdf', $data);
             }
-            if(!$message->send()){
-                return 'mailnotsent';
-            }
-            else{
-                return 'DDC_flag_extract';
-            }
+            $message->send();
+            return 'DDC_flag_extract';
         }
         catch (InvalidArgumentException $e) {
             return $e->getMessage();

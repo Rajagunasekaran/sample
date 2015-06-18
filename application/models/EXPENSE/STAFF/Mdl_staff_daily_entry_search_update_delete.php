@@ -220,7 +220,10 @@ class Mdl_staff_daily_entry_search_update_delete extends CI_Model{
         $this->db->order_by('EDSS_CPF_NUMBER');
         $query = $this->db->get();
         $result3 = $query->result();
-        return $result[]=array($result1,$result2,$result3);
+        $this->load->model('EILIB/Mdl_eilib_common_function');
+        $Errormessagelist=$this->Mdl_eilib_common_function->getErrorMessageList('45,106,107,127,128,129,130,131,132,133,134,135,136,137,138,139,140,141,142,143,144,145,146,147,148,149,150,151,152,169,170,315,377,378,379,401');
+
+        return $result[]=array($result1,$result2,$result3,$Errormessagelist);
     }
     public function fetch_data()
     {
@@ -275,6 +278,7 @@ class Mdl_staff_daily_entry_search_update_delete extends CI_Model{
         $STDTL_SEARCH_autocomplete=[];
         if($STDLY_SEARCH_sec_searchoption==77)
         {
+            $this->db->distinct();
             $this->db->select("EA_COMMENTS");
             $this->db->from("EXPENSE_AGENT");
             $this->db->where("EA_DATE BETWEEN '$STDLY_SEARCH_startdate' AND '$STDLY_SEARCH_enddate' AND EA_COMMENTS IS NOT NULL ");
@@ -287,6 +291,7 @@ class Mdl_staff_daily_entry_search_update_delete extends CI_Model{
         }
        elseif($STDLY_SEARCH_sec_searchoption==85)
         {
+            $this->db->distinct();
             $this->db->select("ESS_SALARY_COMMENTS");
             $this->db->from("EXPENSE_STAFF_SALARY");
             $this->db->where("ESS_INVOICE_DATE BETWEEN '$STDLY_SEARCH_startdate' AND '$STDLY_SEARCH_enddate' AND ESS_SALARY_COMMENTS IS NOT NULL");
@@ -299,6 +304,7 @@ class Mdl_staff_daily_entry_search_update_delete extends CI_Model{
         }
         elseif($STDLY_SEARCH_sec_searchoption==82)//INVOICE FORM -STAFF
         {
+            $this->db->distinct();
             $this->db->select("ES_INVOICE_FROM");
             $this->db->from("EXPENSE_STAFF");
             $this->db->where("ES_INVOICE_DATE BETWEEN '$STDLY_SEARCH_startdate' AND '$STDLY_SEARCH_enddate' AND ES_INVOICE_FROM IS NOT NULL");
@@ -311,6 +317,7 @@ class Mdl_staff_daily_entry_search_update_delete extends CI_Model{
         }
         elseif($STDLY_SEARCH_sec_searchoption==83)//INVOICE FORM -STAFF
         {
+            $this->db->distinct();
             $this->db->select("ES_INVOICE_ITEMS");
             $this->db->from("EXPENSE_STAFF");
             $this->db->where("ES_INVOICE_DATE BETWEEN '$STDLY_SEARCH_startdate' AND '$STDLY_SEARCH_enddate' AND ES_INVOICE_ITEMS IS NOT NULL");
@@ -323,6 +330,7 @@ class Mdl_staff_daily_entry_search_update_delete extends CI_Model{
         }
         elseif($STDLY_SEARCH_sec_searchoption==79)//INVOICE FORM -COMMENTS
         {
+            $this->db->distinct();
             $this->db->select("ES_COMMENTS");
             $this->db->from("EXPENSE_STAFF");
             $this->db->where("ES_INVOICE_DATE BETWEEN '$STDLY_SEARCH_startdate' AND '$STDLY_SEARCH_enddate' AND ES_COMMENTS IS NOT NULL");
@@ -430,6 +438,22 @@ class Mdl_staff_daily_entry_search_update_delete extends CI_Model{
             $this->db->where("ULD.ULD_ID=ESS.ULD_ID AND (EMPDTL.EMP_ID=EDSS.EMP_ID) AND (EDSS.EDSS_ID=ESS.EDSS_ID) AND (EDSS.EDSS_CPF_NUMBER ='$STDLY_SEARCH_selectedcpfno')");
             $this->db->order_by("ESS.ESS_INVOICE_DATE", "ASC");
             $query = $this->db->get();
+            return $query->result();
+        }
+        else if($STDLY_SEARCH_searchoptio==85)//CPF NUMBER
+        {
+            $STDLY_SEARCH_searchcomments=$this->db->escape_like_str($_POST['STDLY_SEARCH_searchcomments']);
+            $query = $this->db->query("SELECT ESS.ESS_ID,EDSS.EDSS_CPF_AMOUNT AS CPF,EDSS.EDSS_LEVY_AMOUNT AS LEVY,EDSS.EDSS_SALARY_AMOUNT AS SALARY,EMPDTL.EMP_FIRST_NAME AS FIRST,EMPDTL.EMP_LAST_NAME AS LAST,EDSS.EDSS_CPF_NUMBER  AS CPFNO,DATE_FORMAT(ESS.ESS_INVOICE_DATE,'%d-%m-%Y')  AS INVOICE,DATE_FORMAT(ESS.ESS_TO_PERIOD,'%d-%m-%Y') AS TOPERIOD,DATE_FORMAT(ESS.ESS_FROM_PERIOD,'%d-%m-%Y') AS FROMPERIOD,ESS.ESS_CPF_AMOUNT AS CPFESS,ESS.ESS_LEVY_AMOUNT AS LEVYESS,ESS.ESS_SALARY_AMOUNT AS SALARYESS,ESS.ESS_SALARY_COMMENTS AS COMMENTS,ULD.ULD_LOGINID AS USERSTAMP,DATE_FORMAT(CONVERT_TZ(ESS.ESS_TIMESTAMP,'+00:00','+05:30'),'%d-%m-%Y %T') AS timestamp FROM EMPLOYEE_DETAILS EMPDTL,EXPENSE_DETAIL_STAFF_SALARY EDSS,EXPENSE_STAFF_SALARY ESS ,USER_LOGIN_DETAILS ULD WHERE ULD.ULD_ID=ESS.ULD_ID AND (EMPDTL.EMP_ID=EDSS.EMP_ID) AND (EDSS.EDSS_ID=ESS.EDSS_ID) AND (ESS.ESS_SALARY_COMMENTS='$STDLY_SEARCH_searchcomments') ORDER BY ESS.ESS_INVOICE_DATE ASC");
+
+            return $query->result();
+        }
+        else if($STDLY_SEARCH_searchoptio==90)
+        {
+            $STDLY_SEARCH_splitempname = explode('_',$_POST['STDLY_SEARCH_selectedemployee']);
+            $STDLY_SEARCH_firstname = $STDLY_SEARCH_splitempname[0];
+            $STDLY_SEARCH_lastname = $STDLY_SEARCH_splitempname[1];
+            $query = $this->db->query("SELECT ESS.ESS_ID,EDSS.EDSS_CPF_AMOUNT AS CPF,EDSS.EDSS_LEVY_AMOUNT AS LEVY,EDSS.EDSS_SALARY_AMOUNT AS SALARY,EMPDTL.EMP_FIRST_NAME AS FIRST,EMPDTL.EMP_LAST_NAME AS LAST,EDSS.EDSS_CPF_NUMBER  AS CPFNO,DATE_FORMAT(ESS.ESS_INVOICE_DATE,'%d-%m-%Y')  AS INVOICE,DATE_FORMAT(ESS.ESS_TO_PERIOD,'%d-%m-%Y') AS TOPERIOD,DATE_FORMAT(ESS.ESS_FROM_PERIOD,'%d-%m-%Y') AS FROMPERIOD,ESS.ESS_CPF_AMOUNT AS CPFESS,ESS.ESS_LEVY_AMOUNT AS LEVYESS,ESS.ESS_SALARY_AMOUNT AS SALARYESS,ESS.ESS_SALARY_COMMENTS AS COMMENTS,ULD.ULD_LOGINID AS USERSTAMP,DATE_FORMAT(CONVERT_TZ(ESS.ESS_TIMESTAMP,'+00:00','+05:30'),'%d-%m-%Y %T') AS timestamp FROM EMPLOYEE_DETAILS EMPDTL,EXPENSE_DETAIL_STAFF_SALARY EDSS,EXPENSE_STAFF_SALARY ESS ,USER_LOGIN_DETAILS ULD WHERE ULD.ULD_ID=ESS.ULD_ID AND (EMPDTL.EMP_ID=EDSS.EMP_ID) AND (EDSS.EDSS_ID=ESS.EDSS_ID) AND (EMPDTL.EMP_FIRST_NAME='$STDLY_SEARCH_firstname' AND EMPDTL.EMP_LAST_NAME ='$STDLY_SEARCH_lastname') ORDER BY ESS.ESS_INVOICE_DATE ASC");
+
             return $query->result();
         }
     }
@@ -565,28 +589,40 @@ class Mdl_staff_daily_entry_search_update_delete extends CI_Model{
            $query = $this->db->get();
            return $query->result();
        }
-       else if($STDLY_SEARCH_searchoptio==79)
-       {
-           $STDLY_SEARCH_searchcomments=$_POST['STDLY_SEARCH_searchcomments'];
-           $this->db->select("ES.ES_ID,EXPCONFIG.ECN_DATA AS STDLY_SEARCH_type,DATE_FORMAT(ES.ES_INVOICE_DATE,'%d-%m-%Y') AS STDLY_SEARCH_date,ES.ES_INVOICE_AMOUNT AS STDLY_SEARCH_amount,ES.ES_INVOICE_ITEMS AS STDLY_SEARCH_items,ES.ES_INVOICE_FROM AS STDLY_SEARCH_from,ES.ES_COMMENTS AS COMMENTS,ULD.ULD_LOGINID AS USERSTAMP,DATE_FORMAT(CONVERT_TZ(ES.ES_TIMESTAMP,'+00:00','+05:30'), '%d-%m-%Y %T') AS timestamp");
-           $this->db->from('EXPENSE_STAFF ES,EXPENSE_CONFIGURATION EXPCONFIG ,USER_LOGIN_DETAILS ULD');
-           $this->db->where("ULD.ULD_ID=ES.ULD_ID  AND (EXPCONFIG.ECN_ID=ES.ECN_ID) AND (ES.ES_COMMENTS='$STDLY_SEARCH_searchcomments') ");
-           $this->db->order_by("ES.ES_INVOICE_DATE", "ASC");
-           $query = $this->db->get();
-           return $query->result();
-       }
+
     }
     Public function STDLY_SEARCH_getempcpfno()
     {
+        $searchoption=$_POST['searchoption'];
+        if($searchoption==93) {
             $this->db->distinct();
-            $this->db->select('EDSS_CPF_NUMBER',FALSE);
+            $this->db->select('EDSS_CPF_NUMBER', FALSE);
             $this->db->from('EXPENSE_DETAIL_STAFF_SALARY EDSS,EXPENSE_STAFF_SALARY ESS');
             $this->db->where("(ESS.EDSS_ID=EDSS.EDSS_ID) AND EDSS_CPF_NUMBER IS NOT NULL");
             $this->db->order_by("EDSS_CPF_NUMBER", "ASC");
             $query = $this->db->get();
             $result1 = $query->result();
-            $resultset=array($result1);
+            $resultset = array($result1);
             return $result1;
+        }
+        elseif($searchoption==90)
+        {
+            $STDLY_SEARCH_employeeNameArray = [];
+            $STDLY_SEARCH_employee_Name_List=[];
+            $STDLY_SEARCH_employee_Name_List1=[];
+            $STDLY_SEARCH_emp_fname='';$STDLY_SEARCH_epm_lname='';
+            $STDLY_SEARCH_selectEmployeeName = "SELECT ED.EMP_FIRST_NAME,ED.EMP_LAST_NAME FROM EMPLOYEE_DETAILS ED WHERE ED.EMP_ID IN (SELECT EMP_ID FROM EXPENSE_DETAIL_STAFF_SALARY) ORDER BY ED.EMP_FIRST_NAME ASC";
+            $STDLY_SEARCH_employeeName = $this->db->query($STDLY_SEARCH_selectEmployeeName);
+            foreach($STDLY_SEARCH_employeeName->result_array() as $row)
+            {
+                $STDLY_SEARCH_emp_fname = $row["EMP_FIRST_NAME"];
+                $STDLY_SEARCH_epm_lname = $row["EMP_LAST_NAME"];
+                $STDLY_SEARCH_employee_Name_List[]=$STDLY_SEARCH_emp_fname.'_'.$STDLY_SEARCH_epm_lname;
+                $STDLY_SEARCH_employee_Name_List1[]= $STDLY_SEARCH_emp_fname.' '.$STDLY_SEARCH_epm_lname;
+            }
+            return [$STDLY_SEARCH_employee_Name_List,$STDLY_SEARCH_employee_Name_List1];
+        }
+
     }
     //SINGLE ROW DELETION PROCESS CALLING EILIB  FUNCTION
     public function DeleteRecord($USERSTAMP,$rowid)

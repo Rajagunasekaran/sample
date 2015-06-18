@@ -2,7 +2,6 @@
 error_reporting(0);
 require_once 'google/appengine/api/mail/Message.php';
 use google\appengine\api\mail\Message;
-//require_once 'PHPMailer-master/PHPMailerAutoload.php';
 class Mdl_customer_search_update_delete extends CI_Model
 {
     public function getSearchOption()
@@ -234,6 +233,33 @@ class Mdl_customer_search_update_delete extends CI_Model
         $resultset=$this->db->query($CSRC_customerflextable_query);
         $this->db->query('DROP TABLE IF EXISTS '.$csrc_tablename);
         return $resultset->result();
+    }
+    public function getUploadfileDetails($Unit,$Customerid)
+    {
+        $Customerfolderselect="SELECT  CUFD_CUSTOMER_FOLDER_ID FROM CUSTOMER_FILE_DIRECTORY CFD,UNIT_FOLDER_DIRECTORY UFD WHERE CFD.CUSTOMER_ID='$Customerid' AND UFD.UNIT_ID=(SELECT UNIT_ID FROM UNIT WHERE UNIT_NO='$Unit')AND CFD.UFD_ID=UFD.UFD_ID";
+        $outparm_result = $this->db->query($Customerfolderselect);
+        $customerfolderid=$outparm_result->row()->CUFD_CUSTOMER_FOLDER_ID;
+        $customernameselectquery="SELECT CONCAT(CUSTOMER_FIRST_NAME,' ',CUSTOMER_LAST_NAME) AS CUSTOMERNAME FROM CUSTOMER WHERE CUSTOMER_ID=597";
+        $customername_result = $this->db->query($customernameselectquery);
+        $customerfilename=$customername_result->row()->CUSTOMERNAME;
+        $customeruploadfilename=$Unit.'-'.$Customerid.'-'.$customerfilename;
+        $service = $this->Mdl_eilib_common_function->get_service_document();
+        $children1 = $service->children->listChildren($customerfolderid);
+        $filearray1=$children1->getItems();
+        $filenameandlink=array();
+        foreach ($filearray1 as $child1)
+        {
+            $fileid=$service->files->get($child1->getId())->id;
+            $filename=$service->files->get($child1->getId())->title;
+            $filename=$service->files->get($child1->getId())->title;
+            $url=$service->files->get($child1->getId())->alternateLink;
+            $data=$url."######".$fileid;
+            if($customeruploadfilename==$filename)
+            {
+                array_push($filenameandlink,$data);
+            }
+        }
+        return $filenameandlink;
     }
     public function getRoomtypeData($roomtypeid,$lp)
     {
@@ -484,7 +510,7 @@ class Mdl_customer_search_update_delete extends CI_Model
             exit;
         }
      }
-       public function CustomerUpdatemailpart($Confirm_Meessage,$Emailsub,$Messagebody,$Displayname,$Docowner,$UserStamp)
+    public function CustomerUpdatemailpart($Confirm_Meessage,$Emailsub,$Messagebody,$Displayname,$Docowner,$UserStamp)
     {
         $message1 = new Message();
         $message1->setSender($Displayname.'<'.$UserStamp.'>');

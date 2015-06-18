@@ -7,6 +7,7 @@ class Mdl_customer_creation extends CI_Model
     public function Customer_Creation_Save($UserStamp,$Leaseperiod,$Quoters)
     {
         try {
+            $this->db->trans_start();
             $FirstName = $_POST['CCRE_FirstName'];
             $Lastname = $_POST['CCRE_LastName'];
             $CompanyName = $_POST['CCRE_CompanyName'];
@@ -126,7 +127,6 @@ class Mdl_customer_creation extends CI_Model
             $outparm_query = 'SELECT @CUSTOMER_CREATION_TEMPTBLNAME AS TEMP_TABLE';
             $outparm_result = $this->db->query($outparm_query);
             $temptable = $outparm_result->row()->TEMP_TABLE;
-            $this->db->query('DROP TABLE IF EXISTS ' . $temptable);
             $Confirm_query = 'SELECT @CUSTOMER_SUCCESSFLAG AS CONFIRM';
             $Confirm_result = $this->db->query($Confirm_query);
             $Confirm_Meessage =$Confirm_result->row()->CONFIRM;
@@ -140,6 +140,8 @@ class Mdl_customer_creation extends CI_Model
             $this->load->model('EILIB/Mdl_eilib_common_function');
             $service = $this->Mdl_eilib_common_function->get_service_document();
             $Fileupload='';
+            $UnitFolderrollback='';
+            $CustomerFolderback='';
             if (($filetempname != '' && $Confirm_Meessage==1) || $CCoption!=3)
             {
                 $Targetfolderid=$this->Mdl_eilib_common_function->CUST_TargetFolderId();
@@ -148,14 +150,15 @@ class Mdl_customer_creation extends CI_Model
                 if($unitcount==0)
                 {
                     $UnitFolder=$this->Mdl_eilib_common_function->Customer_FolderCreation($service, $Uint, 'PersonalDetails', $Targetfolderid);
+                    $UnitFolderrollback= $UnitFolder;
                 }
                 else{$UnitFolder=$UnitFolderid[0];}
                 if($UnitFolder!='')
                 {
                     $customerfoldername=$Customerid . '-' . $FirstName . ' ' . $Lastname;
                     $CustomerFolder=$this->Mdl_eilib_common_function->Customer_FolderCreation($service, $customerfoldername, 'PersonalDetails', $UnitFolder);
+                    $CustomerFolderback=$CustomerFolder;
                 }
-
                 $Fileidinsertquery="CALL SP_INSERT_UPDATE_CUSTOMER_FILE_DIRECTORY($Uint,'$UnitFolder',$Customerid,'$CustomerFolder','$UserStamp',@SUCCESS_MESSAGE)";
                 $result=$this->db->query($Fileidinsertquery);
                 if($filetempname!='')
@@ -167,8 +170,11 @@ class Mdl_customer_creation extends CI_Model
             {
                 $this->load->model('EILIB/Mdl_eilib_calender');
                 $cal = $this->Mdl_eilib_calender->createCalendarService();
+                $cal_startevents=$StartDate.','.$S_starttime.','.$S_endtime;
+                $cal_endevents=$EndDate.','.$E_starttime.','.$E_endtime;
+                $cal_arry=array();
+                array_push($cal_arry,$cal_startevents,$cal_endevents);
                 $calresponse=$this->Mdl_eilib_calender->CUST_customercalendercreation($cal, $Customerid, $StartDate, $S_starttime, $S_endtime, $EndDate, $E_starttime, $E_endtime, $FirstName, $Lastname, $Mobile, $IntlMobile, $Officeno, $Emailid, $Uint, $RoomType, '');
-
                 if (($CCoption == 4 || $CCoption == 5 || $CCoption == 6)&& $calresponse==1 )
                 {
                     $Invoiceandcontractid = $this->Mdl_eilib_common_function->CUST_invoice_contractreplacetext();
@@ -186,8 +192,13 @@ class Mdl_customer_creation extends CI_Model
                         }
                         else
                         {
-                            $this->CustomerRollback($InvoiceId[1],'',$Fileupload);
-                            return $InvoiceId[0];
+                            $this->db->trans_rollback();
+                            $this->db->query('DROP TABLE IF EXISTS ' . $temptable);
+                            $returnmessage=$this->Mdl_eilib_calender->CUST_CREATION_customercalenderdeletion($cal,$Customerid,$cal_arry);
+                            if($UnitFolderrollback!=''){$this->Mdl_eilib_invoice_contract->CUST_UNSHARE_FILE($service, $UnitFolderrollback);}
+                            if($CustomerFolderback!=''){$this->Mdl_eilib_invoice_contract->CUST_UNSHARE_FILE($service, $CustomerFolderback);}
+                            echo 0;
+                            exit;
                         }
                     }
                     else if($CCoption == 5)
@@ -199,8 +210,13 @@ class Mdl_customer_creation extends CI_Model
                         }
                         else
                         {
-                            $this->CustomerRollback('',$ContractId[1],$Fileupload);
-                            return $ContractId[0];
+                            $this->db->trans_rollback();
+                            $this->db->query('DROP TABLE IF EXISTS ' . $temptable);
+                            $returnmessage=$this->Mdl_eilib_calender->CUST_CREATION_customercalenderdeletion($cal,$Customerid,$cal_arry);
+                            if($UnitFolderrollback!=''){$this->Mdl_eilib_invoice_contract->CUST_UNSHARE_FILE($service, $UnitFolderrollback);}
+                            if($CustomerFolderback!=''){$this->Mdl_eilib_invoice_contract->CUST_UNSHARE_FILE($service, $CustomerFolderback);}
+                            echo 0;
+                            exit;
                         }
                     }
                     else if ($CCoption == 6)
@@ -213,11 +229,15 @@ class Mdl_customer_creation extends CI_Model
                         }
                         else
                         {
-                            $this->CustomerRollback($InvoiceId[0],$ContractId[1],$Fileupload);
-                            return $ContractId[0];
+                            $this->db->trans_rollback();
+                            $this->db->query('DROP TABLE IF EXISTS ' . $temptable);
+                            $returnmessage=$this->Mdl_eilib_calender->CUST_CREATION_customercalenderdeletion($cal,$Customerid,$cal_arry);
+                            if($UnitFolderrollback!=''){$this->Mdl_eilib_invoice_contract->CUST_UNSHARE_FILE($service, $UnitFolderrollback);}
+                            if($CustomerFolderback!=''){$this->Mdl_eilib_invoice_contract->CUST_UNSHARE_FILE($service, $CustomerFolderback);}
+                            echo 0;
+                            exit;
                         }
-                    }
-                    $this->db->trans_commit();
+                      }
                 }
                 else
                 {
@@ -230,6 +250,8 @@ class Mdl_customer_creation extends CI_Model
                     else
                     {
                         $this->db->trans_rollback();
+                        $this->db->query('DROP TABLE IF EXISTS ' . $temptable);
+                        $returnmessage=$this->Mdl_eilib_calender->CUST_CREATION_customercalenderdeletion($cal,$Customerid,$cal_arry);
                         echo $Confirm_Meessage;
                         exit;
                     }
@@ -260,14 +282,6 @@ class Mdl_customer_creation extends CI_Model
         $this->db->trans_commit();
         echo $Confirm_Meessage;
         exit;
-    }
-      public function CustomerRollback($InvoiceId,$Contractid,$Fileuploadid)
-    {
-        $this->load->model('EILIB/Mdl_eilib_common_function');
-        $service = $this->Mdl_eilib_common_function->get_service_document();
-        if($InvoiceId!=''){$this->Mdl_eilib_common_function->DeleteFile($service, $InvoiceId);}
-        if($Contractid!=''){$this->Mdl_eilib_common_function->DeleteFile($service, $Contractid);}
-        if($Fileuploadid!=''){$this->Mdl_eilib_common_function->DeleteFile($service, $Fileuploadid);}
     }
     public function InvoiceCreation($InvoiceId,$Emailtemplate,$Username,$Confirm_Meessage,$Uint,$Name,$Docowner,$UserStamp)
     {

@@ -248,7 +248,7 @@ class Mdl_configuration_trigger extends CI_Model {
                 {
                     $csv_oldbal=$CSV_array[10];
                 }
-                $OCBC_CSV_insertquery="INSERT INTO OCBC_BANK_RECORDS(OBR_ACCOUNT_NUMBER,OBR_CURRENCY,OBR_PREVIOUS_BALANCE,OBR_OPENING_BALANCE,OBR_CLOSING_BALANCE,OBR_LAST_BALANCE,OBR_NO_OF_CREDITS,OBR_TRANS_DATE,OBR_NO_OF_DEBITS,OBR_OLD_BALANCE,OBR_D_AMOUNT,OBR_POST_DATE,OBR_VALUE_DATE,OBR_DEBIT_AMOUNT,OBR_CREDIT_AMOUNT,OCN_ID,OBR_CLIENT_REFERENCE,OBR_TRANSACTION_DESC_DETAILS,OBR_BANK_REFERENCE,OBR_TRX_TYPE,OBR_REF_ID,ULD_ID,OBR_TIMESTAMP) VALUES( (SELECT OCN_ID FROM OCBC_CONFIGURATION WHERE OCN_DATA= '$CSV_array[1]'),(SELECT OCN_ID FROM OCBC_CONFIGURATION WHERE OCN_DATA= '$CSV_array[2]' ),'$CSV_array[3]', '$CSV_array[4]', '$CSV_array[5]', '$CSV_array[6]', '$CSV_array[7]','$transdate', '$CSV_array[9]', '$csv_oldbal', '$CSV_array[11]', '$postdate', '$valuedate','$debitamt', '$creditamt',(SELECT OCN_ID FROM OCBC_CONFIGURATION WHERE OCN_DATA='$CSV_array[16]'), '$bankreff','$transaction_details','$bankreference','$CSV_array[20]','$CSV_array[0]',(SELECT ULD_ID FROM USER_LOGIN_DETAILS WHERE ULD_LOGINID='kumar.r@ssomens.com'),'$csv_timstamp')";
+                $OCBC_CSV_insertquery="INSERT INTO OCBC_BANK_RECORDS(OBR_ACCOUNT_NUMBER,OBR_CURRENCY,OBR_PREVIOUS_BALANCE,OBR_OPENING_BALANCE,OBR_CLOSING_BALANCE,OBR_LAST_BALANCE,OBR_NO_OF_CREDITS,OBR_TRANS_DATE,OBR_NO_OF_DEBITS,OBR_OLD_BALANCE,OBR_D_AMOUNT,OBR_POST_DATE,OBR_VALUE_DATE,OBR_DEBIT_AMOUNT,OBR_CREDIT_AMOUNT,OCN_ID,OBR_CLIENT_REFERENCE,OBR_TRANSACTION_DESC_DETAILS,OBR_BANK_REFERENCE,OBR_TRX_TYPE,OBR_REF_ID,ULD_ID,OBR_TIMESTAMP) VALUES( (SELECT OCN_ID FROM OCBC_CONFIGURATION WHERE OCN_DATA= '$CSV_array[1]'),(SELECT OCN_ID FROM OCBC_CONFIGURATION WHERE OCN_DATA= '$CSV_array[2]' ),'$CSV_array[3]', '$CSV_array[4]', '$CSV_array[5]', '$CSV_array[6]', '$CSV_array[7]','$transdate', '$CSV_array[9]', '$csv_oldbal', '$CSV_array[11]', '$postdate', '$valuedate','$debitamt', '$creditamt',(SELECT OCN_ID FROM OCBC_CONFIGURATION WHERE OCN_DATA='$CSV_array[16]'), '$bankreff','$transaction_details','$bankreference','$CSV_array[20]','$CSV_array[0]',(SELECT ULD_ID FROM USER_LOGIN_DETAILS WHERE ULD_LOGINID='$UserStamp'),'$csv_timstamp')";
                 $this->db->query($OCBC_CSV_insertquery);
             }
 //            return $newdatearray;
@@ -527,7 +527,7 @@ class Mdl_configuration_trigger extends CI_Model {
 //                if($Paid_Forperiod=='' || $Paid_Forperiod==null)
 //                {
                     $message .= '<body><table border="1"width="300" hieght="20" color="white" ><tr align="center"  ><td width=25%>'.$Paid_Forperiod.'</td></tr></table></body>';
-                    Remindermailpart($subject1,$message,$PAYMENT_reminderdisplayname,$UserStamp,$PAYMENT_remindercustomerid);
+//                    Remindermailpart($subject1,$message,$PAYMENT_reminderdisplayname,$UserStamp,$PAYMENT_remindercustomerid)
 //                 }
 //                array_push($curr_monthpaid,$Paid_Forperiod);
             }
@@ -575,79 +575,4 @@ class Mdl_configuration_trigger extends CI_Model {
             return 1;
       }
     }
-
-    public function getCustomerExpiryXWeek($UserStamp){
-
-//        try
-//        {
-        $this->load->model('EILIB/Mdl_eilib_common_function');
-        $CWEXP_weekBefore=1;
-        $CWEXP_select_emaildata="SELECT * from EMAIL_TEMPLATE_DETAILS WHERE ET_ID=10";
-        $CWEXP_emaildata_rs=$this->db->query($CWEXP_select_emaildata);
-        foreach($CWEXP_emaildata_rs->result_array() as $row){
-            $CWEXP_subject_db=$row["ETD_EMAIL_SUBJECT"];
-            $CWEXP_message_db=$row["ETD_EMAIL_BODY"];
-        }
-        $CWEXP_select_emaildata="SELECT * from EMAIL_TEMPLATE_DETAILS WHERE ET_ID=12";
-        $CWEXP_emaildata_rs=$this->db->query($CWEXP_select_emaildata);
-        foreach($CWEXP_emaildata_rs->result_array() as $row){
-            $CWEXP_subject_db1=$row["ETD_EMAIL_SUBJECT"];
-            $CWEXP_message_db1=$row["ETD_EMAIL_BODY"];
-        }
-        $CWEXP_check_week_flag=0;
-//           $CWEXP_check_weekly_expiry_list;
-        $CEXP_temptable_query=("CALL SP_CUSTOMER_WEEKLY_EXPIRY_ONE_WEEK('".$UserStamp."',@CEXP_WEEKLYFEETMPTBLNAM)");
-        $this->db->query($CEXP_temptable_query);
-        $CEXP_beforefeetemptbl_query="SELECT @CEXP_WEEKLYFEETMPTBLNAM AS TEMP_TABLE";
-        $CEXP_beforefeetemptblres=$this->db->query($CEXP_beforefeetemptbl_query);
-        $CEXP_weeklytemptblname=$CEXP_beforefeetemptblres->row()->TEMP_TABLE;
-        $CEXP_select_customerdetails="SELECT * FROM ".$CEXP_weeklytemptblname;
-        $CWEXP_customerdetails_result=$this->db->query($CEXP_select_customerdetails);
-        foreach($CWEXP_customerdetails_result->result_array() as $row){
-            $CWEXP_unitno = $row["UNITNO"];
-            $CWEXP_firstname = $row["CUSTOMERFIRSTNAME"];
-            $CWEXP_lastname = $row["CUSTOMERLASTNAME"];
-            $CWEXP_rental = $row["PAYMENT"];
-            $CWEXP_emailid=$row["EMAILID"];
-            $CWEXP_mail_username=explode('@',$CWEXP_emailid);
-            $CWEXP_cust_name=$CWEXP_firstname.' '.$CWEXP_lastname;
-            $CWEXP_enddate = $row["ENDDATE"];
-            $CWEXP_ptddate=$row["PRETERMINATEDATE"];
-            $unitcustomer=$CWEXP_unitno."-".$CWEXP_cust_name;
-            $subjectdb=str_replace('[UNIT NO - CUSTOMER NAME]', $unitcustomer,$CWEXP_subject_db1);
-            $subjectmail=str_replace('X',$CWEXP_weekBefore,$subjectdb);
-            if($CWEXP_ptddate==null){
-                $CWEXP_newdate=date('d-m-Y',strtotime($CWEXP_enddate));
-            }
-            else{
-                $CWEXP_newdate=date('d-m-Y',strtotime($CWEXP_ptddate));
-            }
-            $CWEXP_subject=str_replace("'X'",$CWEXP_weekBefore,$CWEXP_subject_db);
-            $message=str_replace("[MAILID_USERNAME]",strtoupper($CWEXP_mail_username[0]),$CWEXP_message_db1);
-            $message1=str_replace('[CHECK_OUT_DATE]', $CWEXP_newdate,$message);
-            $CWEXP_check_week_flag=1;
-            $CWEXP_emailmessage = '<body><br><h>'.$message1.'</h><br><br><table border="1" style="color:white" width="700"><tr  bgcolor="#498af3" align="center"><td width=25% ><h3>UNIT</h3></td><td width=25%><h3>CUSTOMER NAME</h3></td><td width=25%><h3>END DATE</h3></td><td width=25%><h3>RENT</h3></td></tr></table></body>';
-            $CWEXP_emailmessage .= '<body><table border="1" width="700" ><tr align="center"><td width=25%>'.$CWEXP_unitno.'</td><td width=25%>'.$CWEXP_cust_name.'</td><td width=25%>'.$CWEXP_newdate.'</td><td width=25%>'.$CWEXP_rental.'</td></tr></table></body>';
-            $displayname=$this->Mdl_eilib_common_function->Get_MailDisplayName("CUSTOMER_EXPIRY");
-            $this->Expirymailpart($CWEXP_emailid,$subjectdb,$CWEXP_emailmessage,$displayname,$UserStamp);
-        }
-        $drop_query = "DROP TABLE ".$CEXP_weeklytemptblname;
-        $this->db->query($drop_query);
-        return 1;
-
-    }
-
-
-    public function Expirymailpart($CWEXP_emailid,$CWEXP_subject,$CWEXP_emailmessage,$displayname,$UserStamp)
-    {
-        $message1 = new Message();
-        $message1->setSender($displayname.'<'.$UserStamp.'>');
-        $message1->addTo($CWEXP_emailid);
-        $message1->setSubject($CWEXP_subject);
-        $message1->setHtmlBody($CWEXP_emailmessage);
-        $message1->send();
-
-    }
-
-
 }

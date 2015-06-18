@@ -483,7 +483,8 @@
                     }
                 });
             }
-            else {
+            else
+            {
                 AccesscarddivClear();
             }
         });
@@ -705,7 +706,8 @@
             CCRE_cardslbl_array = card[1];
             var appenddata = '';
             if (CCRE_cardArray.length != 0) {
-                for (var i = 0; i < CCRE_cardArray.length; i++) {
+                for (var i = 0; i < CCRE_cardArray.length; i++)
+                {
                     var listid = 'CCRE_cb_cardlistselect' + i;
                     appenddata += '<div class="row form-group">';
                     appenddata += '<div class="col-md-3">';
@@ -1226,7 +1228,7 @@
                             </div>
                         </div>
                         <div class="col-md-3">
-                             <input type="text" class="form-control passportdatevalidation datenonmandtry ppvalidation" name="CCRE_PassportDate" id="CCRE_PassportDate"  placeholder="PassprotDate">
+                             <input type="text" class="form-control passportdatevalidation datenonmandtry ppvalidation" style="max-width:120px;" name="CCRE_PassportDate" id="CCRE_PassportDate"  placeholder="PassportDate">
                         </div>
                         <div>
                             <label id="CCRE_lbl_passportdateerrormsg" class="errormsg" hidden></label>
@@ -1250,7 +1252,7 @@
                             </div>
                         </div>
                         <div class="col-md-3">
-                           <input type="text" class="form-control epdatevalidation datenonmandtry" name="CCRE_EPDate" id="CCRE_EPDate"  placeholder="EP Date">
+                           <input type="text" class="form-control epdatevalidation datenonmandtry" name="CCRE_EPDate" id="CCRE_EPDate" style="max-width:120px;" placeholder="EP Date">
                         </div>
                         <div>
                             <label id="CCRE_lbl_ep_dateerrormsg" class="errormsg" hidden></label>
@@ -1437,16 +1439,16 @@
                         <div class="col-md-3">
                             <label>RENT<span class="labelrequired"><em>*</em></span></label>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-9">
                             <div class="row form-group">
-                                <div class="col-md-3">
+                                <div class="col-md-3" >
                                     <input class="form-control CCRE_amtonlyvalidationmaxdigit proratedcheck" name="CCRE_Rent" maxlength="7"  style="max-width:100px;" id="CCRE_Rent" placeholder="0.00">
                                 </div>
-                                <div class="col-md-1">
+                                <div class="col-md-1" style="padding-right: 0px;width:12px;">
                                     <input id="CCRE_Rent_Prorated" type="checkbox" name="CCRE_Rent_Prorated">
                                 </div>
                                 <div class="col-md-1"><label id="CCRE_lbl_prorated"></label></div>
-                                <div class="col-md-7"><label id="CCRE_lbl_renterrormsg" class="errormsg" hidden></label></div>
+                                <div class="col-md-4"><label id="CCRE_lbl_renterrormsg" class="errormsg" hidden></label></div>
                             </div>
                         </div>
 
@@ -1455,19 +1457,18 @@
                         <div class="col-md-3">
                             <label>PROCESSING COST</label>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-9">
                             <div class="row form-group">
                                 <div class="col-md-3">
                                     <input class="form-control CCRE_processamtonlyvalidationmaxdigit" name="CCRE_ProcessingFee"  style="max-width:100px;" id="CCRE_ProcessingFee" placeholder="0.00">
                                 </div>
-                                <div class="col-md-1">
+                                <div class="col-md-1" style="padding-right: 0px;width:12px;">
                                     <input type="checkbox" name="CCRE_process_waived" id="CCRE_process_waived" disabled>
                                 </div>
                                 <div class="col-md-1"><label style="vertical-align: middle" id="CCRE_lbl_waived"></label></div>
-                                <div class="col-md-6"><label id="CCRE_lbl_processerrormsg" class="errormsg" hidden></label></div>
+                                <div class="col-md-4"><label id="CCRE_lbl_processerrormsg" class="errormsg" hidden></label></div>
                             </div>
                         </div>
-
                     </div>
                     <div class="row form-group">
                         <div class="col-md-3">

@@ -100,6 +100,8 @@ Class Ctrl_Customer_Search_Update_Delete extends CI_Controller
     }
     public function SelectCustomerResults()
     {
+        set_time_limit(0);
+        $this->load->library('Google');
         $UserStamp=$this->Mdl_eilib_common_function->getSessionUserStamp();
         $customerid=$_POST['customerid'];
         $leaseperiod=$_POST['LP'];
@@ -108,9 +110,10 @@ Class Ctrl_Customer_Search_Update_Delete extends CI_Controller
         $Resultset=$this->Mdl_customer_search_update_delete->SelectCustomerResults($customerid,$leaseperiod,$UserStamp);
         $RoomType=$this->Mdl_eilib_common_function->getUnitRoomType($unit);
         $UnitDates=$this->Mdl_eilib_common_function->getUnit_Start_EndDate($unit);
-        $unit = $this->Mdl_eilib_common_function->getAllActiveUnits();
+        $unitnos = $this->Mdl_eilib_common_function->getAllActiveUnits();
         $CustomerStartDate=$this->Mdl_eilib_common_function->getCustomerStartDate();
-        $ReturnValues=array($Resultset,$RoomType,$RecverDetails,$UnitDates,$unit,$CustomerStartDate);
+        $uploadfilesarray=$this->Mdl_customer_search_update_delete->getUploadfileDetails($unit,$customerid);
+        $ReturnValues=array($Resultset,$RoomType,$RecverDetails,$UnitDates,$unitnos,$CustomerStartDate,$uploadfilesarray);
         echo json_encode($ReturnValues);
     }
     public function CustomerRoomTypeLoad()
@@ -147,6 +150,14 @@ Class Ctrl_Customer_Search_Update_Delete extends CI_Controller
         $customerid=$_POST['customerid'];
         $CustomerdelResponse=$this->Mdl_customer_search_update_delete->getCustomerRecordDelete($customerid,$UserStamp);
         echo $CustomerdelResponse;
+    }
+    public function customerfiledelete()
+    {
+     $fileid=$_POST['fileid'];
+     $this->load->library('Google');
+     $service = $this->Mdl_eilib_common_function->get_service_document();
+     $conform_message=$this->Mdl_eilib_common_function->DeleteFile($service, $fileid);
+     echo $conform_message;
     }
 
 }

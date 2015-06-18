@@ -1164,6 +1164,7 @@
             success: function(data){
             var value_array=JSON.parse(data);
                 Recverdetails=value_array[2];
+                var fileurls=value_array[6];
                 var Unit_StartDate=value_array[3][0].UD_START_DATE;
                 var Unit_EndDate=value_array[3][0].UD_END_DATE;
                 var PreRecver_ED=Recverdetails[0].PRE_RECVER_ENDDATE;
@@ -1188,6 +1189,7 @@
                 $("#CCRE_SRC_Fixedaircon_fee").hide().val('');
                 $('#CCRE_Quaterlyfee').prop('checked',false);
                 $('#CCRE_Airconfee').prop('checked',false);
+                var filename=value_array[0][0].UNIT_NO+'-'+value_array[0][0].CUSTOMER_ID+'-'+value_array[0][0].CUSTOMER_FIRST_NAME+'-'+value_array[0][0].CUSTOMER_LAST_NAME;
                 $('#CCRE_SRC_customerid').val(value_array[0][0].CUSTOMER_ID);
                 $('#CCRE_SRC_Recver').val(value_array[0][0].CED_REC_VER);
                 $('#CCRE_SRC_FirstName').val(value_array[0][0].CUSTOMER_FIRST_NAME);
@@ -1472,14 +1474,65 @@
                 $('#RoomtypeDiv').show();
                 $('#startdatetotime').show();
                 $('#endatedateto').show();
+                var appenddata='';
+                if(fileurls.length!=0)
+                {
+                    for (var k = 0; k < fileurls.length; k++)
+                    {
+                        var data = fileurls[k].split('######');
+                        var rowid=k+1;
+                        var buttonid=data[1]+'/'+rowid;
+                        var file_name=rowid+' . '+filename;
+                            appenddata += '<div id='+rowid+'>';
+                            appenddata += '<div class="row form-group">';
+                            appenddata += '<div class="col-md-3">';
+                            appenddata += '<label></label>';
+                            appenddata += '</div>';
+                            appenddata += '<div class="col-md-3">';
+                            appenddata += '<a href=' + data[0] + ' target="_blank" class="uploadtag">' + file_name + '</a>';
+                            appenddata += '</div>';
+                            appenddata += '<div class="col-md-2">';
+                            appenddata += '<input type="button" class="btn" id=' + buttonid + ' class="filedelete" value="REMOVE">';
+                            appenddata += '</div>';
+                            appenddata += '</div></div>';
+                    }
+                }
+                $('#uploadedfilesview').html(appenddata);
                 $('#CSRC_updation_form').show();
                 $('.preloader').hide();
                 $("html, body").animate({ scrollTop: $(document).height() }, "slow");
             },
             error: function(data){
                 alert('error in getting'+JSON.stringify(data));
+                $('.preloader').hide();
             }
         });
+     });
+     $(document).on('click','.filedelete',function(){
+         var fileid=this.id;
+         var splitfileid=fileid.split('/');
+         $('.preloader').show();
+         $.ajax({
+             type: "POST",
+             url: controller_url+"customerfiledelete",
+             data: {fileid: splitfileid[0]},
+             success: function (data) {
+                 if(data==1)
+                 {
+                     $('#'+ splitfileid[1]).hide();
+                     show_msgbox("CUSTOMER SEARCH/UPDATE","FILE REMOVED FROM DRIVE","success",false);
+                 }
+                 else
+                 {
+                     show_msgbox("CUSTOMER SEARCH/UPDATE","FILE NOT REMOVED","success",false);
+                 }
+                 $('.preloader').hide();
+             },
+             error: function (data) {
+                 alert('error in getting' + JSON.stringify(data));
+             }
+         });
+
      });
       //START DATE CHANGES
      $(document).on('change','.startdatevalidate',function(){
@@ -2438,6 +2491,10 @@
                                         <textarea class="form-control autogrowcomments" name="CCRE_SRC_Comments"  id="CCRE_SRC_Comments"></textarea>
                                     </div>
                                 </div>
+                                <div id="uploadedfilesview">
+
+                                </div>
+
                                 <div class="row form-group">
                                     <div class="col-md-3">
                                         <label>FILE UPLOAD</label>

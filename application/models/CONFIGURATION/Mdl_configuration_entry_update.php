@@ -109,7 +109,6 @@ class Mdl_configuration_entry_update extends CI_Model
     public function dataupdate($USERSTAMP, $rowid, $module, $type, $data, $CONFIG_SEARCH_subdata, $subdatamount_value,$CONFSRC_UPD_DEL_lbType,$olddata)
     {
         $CONFIG_SRCH_UPD_arr = $this->CONF_ENTRY_twodimdata($module);
-        print_r( $CONFIG_SRCH_UPD_arr);
         $this->db->trans_start();
         if ($module == 42) {
             $updatequery = "UPDATE DEPOSIT_DEDUCTION_CONFIGURATION SET DDC_DATA='$subdatamount_value',DDC_SUB_DATA='$data',ULD_ID=(SELECT ULD_ID FROM USER_LOGIN_DETAILS WHERE ULD_LOGINID='$USERSTAMP') WHERE DDC_ID='$rowid'";
@@ -124,7 +123,6 @@ class Mdl_configuration_entry_update extends CI_Model
             $this->load->model('EILIB/Mdl_eilib_common_function');
         $this->load->library('Google');
         $service = $this->Mdl_eilib_common_function->get_service_document();
-
         $this->load->model('EILIB/Mdl_eilib_invoice_contract');
             $this->load->model('EILIB/Mdl_eilib_calender');
                 $new_data=$data;
@@ -175,16 +173,17 @@ class Mdl_configuration_entry_update extends CI_Model
                 }
             }
             $this->db->trans_complete();
+                return true;
             }catch(Exception $e){
                 $this->db->rollback();
                 return false;
             }
-        if ($this->db->affected_rows() > 0) {
-            return true;
-        }
-        else {
-            return false;
-        }
+//        if ($this->db->affected_rows() > 0) {
+//            return true;
+//        }
+//        else {
+//            return false;
+//        }
     }
     public function deleteoption($USERSTAMP,$rowid,$module,$type,$data)
     {

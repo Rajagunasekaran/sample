@@ -744,22 +744,54 @@ date_default_timezone_set('Asia/Singapore');
 $date = new DateTime();
 return date_format($date, 'd-m-Y H:i:s');
 }
-//Lease Period Calculation
-    public function getLeasePeriod($Startdate,$Enddate)
-    {
-        $datetime1 = new DateTime($Startdate);
-        $datetime2 = new DateTime($Enddate);
-        $difference = $datetime1->diff($datetime2);
-        if($difference->y==0 && $difference->m==0 ){$Leaseperiod=$difference->d.' Days';}
-        elseif($difference->y==0){$Leaseperiod=$difference->m.'Months '.$difference->d.' Days';}
-        elseif($difference->y==0 && $difference->d==0 ){$Leaseperiod=$difference->m.' Months';}
-        elseif($difference->m==0 && $difference->d==0 ){$Leaseperiod=$difference->y.' Years';}
-        elseif($difference->d==0 ){$Leaseperiod=$difference->y.' Years '.$difference->m.' Months';}
-        elseif($difference->m==0 ){$Leaseperiod=$difference->y.' Years '.$difference->d.' Days';}
-        else{$Leaseperiod=$difference->y.' Years '.$difference->m.' Months '.$difference->d.' Days';}
-        if($difference->y==0 && $difference->m==0 && intval($datetime1->format('d'))==1 && date("Y-m-d",strtotime($Enddate)) ==date("Y-m-t",strtotime($Enddate)) ){$Leaseperiod='1 Month';}
-        return $Leaseperiod;
+    //Lease Period Calculation
+    public  function getLeasePeriod($startDate, $endDate){
+        $output = '';
+        $endDate=strtotime ("+1 day",strtotime($endDate));
+        $endDate= date('Y-m-d',$endDate);
+        $dateEnd=intval(date('d',strtotime($endDate)));
+        $dateStart=intval(date('d',strtotime($startDate)));
+        $dateEndMon=intval(date('m',strtotime($endDate)));
+        $dateStartMon=intval(date('m',strtotime($startDate)));
+        $dateEndY=intval(date('Y',strtotime($endDate)));
+        $dateStartY=intval(date('Y',strtotime($startDate)));
+        $dateLast=intval(date('t',strtotime($endDate)));
+        $EndStrMonth=strtotime($endDate);
+        $dateLastMinusMonth=intval(date('t',strtotime ("-1 month",$EndStrMonth)));
+        // edate.setDate( edate.getDate()+1);
+        $years=(((($dateEnd-$dateStart)<0 ? -1:0)
+                +(($dateEndMon)-($dateStartMon)))< 0 ? -1 : 0)+($dateEndY- $dateStartY);
+
+        $months=(((($dateEnd-$dateStart)<0 ? -1:0)+(($dateEndMon)-($dateStartMon)))< 0 ?12:0)+(($dateEnd-$dateStart)<0 ? -1:0)+(($dateEndMon)-($dateStartMon));
+        if(date('m',strtotime($endDate))!=1.0)
+        {
+            $days=(($dateEnd-$dateStart)< 0 ?$dateLastMinusMonth:0)+($dateEnd-$dateStart);
+        }
+        else
+        {
+            $days=(($dateEnd-$dateStart)< 0 ?$dateLast:0)+($dateEnd-$dateStart);
+        }
+        $output .= ( $years == 0 ? '' : (', ' . $years . ' Year' . ( $years == 1 ? '' : 's')));
+        $output .= ( $months == 0 ? '' : (', ' .  $months . ' Month' . ( $months == 1 ? '' : 's')));
+        $output .= ( $days == 0 ? '' : (', ' .  $days . ' Day' . ( $days == 1 ? '' : 's')));
+        return $output;
     }
+////Lease Period Calculation
+//    public function getLeasePeriod($Startdate,$Enddate)
+//    {
+//        $datetime1 = new DateTime($Startdate);
+//        $datetime2 = new DateTime($Enddate);
+//        $difference = $datetime1->diff($datetime2);
+//        if($difference->y==0 && $difference->m==0 ){$Leaseperiod=$difference->d.' Days';}
+//        elseif($difference->y==0){$Leaseperiod=$difference->m.'Months '.$difference->d.' Days';}
+//        elseif($difference->y==0 && $difference->d==0 ){$Leaseperiod=$difference->m.' Months';}
+//        elseif($difference->m==0 && $difference->d==0 ){$Leaseperiod=$difference->y.' Years';}
+//        elseif($difference->d==0 ){$Leaseperiod=$difference->y.' Years '.$difference->m.' Months';}
+//        elseif($difference->m==0 ){$Leaseperiod=$difference->y.' Years '.$difference->d.' Days';}
+//        else{$Leaseperiod=$difference->y.' Years '.$difference->m.' Months '.$difference->d.' Days';}
+//        if($difference->y==0 && $difference->m==0 && intval($datetime1->format('d'))==1 && date("Y-m-d",strtotime($Enddate)) ==date("Y-m-t",strtotime($Enddate)) ){$Leaseperiod='1 Month';}
+//        return $Leaseperiod;
+//    }
 //FUNCTION TO CHK PRORATED OR NOT 14
 public function CUST_chkProrated($db_chkindate,$db_chkoutdate)
 {
@@ -1228,9 +1260,10 @@ public function getActive_Customer_Recver_Dates($unit,$customer,$Recever)
     function DeleteFile($service, $fileId) {
         try {
             $service->files->delete($fileId);
+            return 1;
         }
         catch (Exception $e) {
-            print "An error occurred: " . $e->getMessage();
+            return 0;
         }
     }
     /***********GET INSTANCE AND SCHEMA*****************/

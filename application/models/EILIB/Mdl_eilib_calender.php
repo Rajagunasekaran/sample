@@ -260,19 +260,28 @@ class Mdl_eilib_calender  extends CI_Model {
             return $e->getMessage();
         }
     }
-//FUNCTION TO DELETE CC CALENDER EVENTS
-    public function CUST_CREATION_customercalenderdeletion($calPrimary,$customer_id,$calevent_array)
+    //FUNCTION TO DELETE CC CALENDER EVENTS
+    public function CUST_CREATION_customercalenderdeletion($calPrimary,$custid,$calevents)
     {
         $calId=$this->GetEICalendarId();
-        for($c=0;$c<count($calevent_array);$c++)
-        {
-            $eventdetails=$calevent_array[c];
-            $optDate= array('timeMax' => $eventdetails[0].'T'.$eventdetails[1].':00+08:00','timeMin' => $eventdetails[0].'T'.$eventdetails[2].':00+08:00');
-            $eventsCheckOut = $calPrimary->events->listEvents($calId,$optDate);
-            foreach ($eventsCheckOut->getItems() as $event) {
-                if(intval(explode(' ',$event->getDescription())[0])==$customer_id ){
-                    $calPrimary->events->delete($calId, $event->getId());}
+        try{
+            for($k=0;$k<count($calevents);$k++)
+            {
+                $Events = explode(',', $calevents[$k]);
+                $optDate = array('timeMax' => $Events[0] . 'T' . $Events[2] . ':00.000+08:00', 'timeMin' => $Events[0] . 'T' . $Events[1] . ':00.000+08:00');
+                $eventsCheckOut = $calPrimary->events->listEvents($calId, $optDate);
+                foreach ($eventsCheckOut->getItems() as $event)
+                {
+                    if (intval(explode(' ', $event->getDescription())[0]) == $custid)
+                    {
+                        $calPrimary->events->delete($calId, $event->getId());
+                    }
+                }
             }
+            return 1;
+        }
+        catch(Exception $e){
+            return $e->getMessage();
         }
     }
 //FUNCTION TO DELETE CALENDER EVENTS FOR CUSTOMER TERMINATION N EXTENSION

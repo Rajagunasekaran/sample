@@ -20,6 +20,7 @@ var updateflag=0;
 //DOCUMENT READY FUNCTION START
 $(document).ready(function(){
 var CONFIG_ENTRY_controller_url="<?php echo base_url(); ?>" + '/index.php/CONFIGURATION/Ctrl_Configuration_Entry_Update/' ;
+    alert(CONFIG_ENTRY_controller_url)
 $('#spacewidth').height('0%');
 $('.preloader').hide();
 $('#CONFIG_ENTRY_lb_module').hide();
@@ -429,12 +430,15 @@ $(document).on('change','.dataupdate', function (){
         var subdatamount_value=subdatamount_value;
     }
     if((dataupdte!=tdvalue && dataupdte!=sub_type) ||(dataupdte!=tdvalue)){
-//        $('.preloader').show();
+        $('.preloader').show();
         $.ajax({
             type: "POST",
             'url':CONFIG_ENTRY_controller_url+"dataupd_exists",
             data :{'module':module,'type':type,'data':dataupdte,'subdatamount_value':subdatamount_value},
             success: function(data){
+                $('.preloader').hide();
+
+                alert(data)
                 var ET_ENTRY_response=JSON.parse(data.script_name_already_exits_array)//retdata.final_array[0];
                 var CONFIG_ENTRY_values=ET_ENTRY_response;
                 $('.preloader').hide();

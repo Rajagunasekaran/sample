@@ -53,7 +53,7 @@ class Mdl_eilib_invoice_contract extends CI_Model{
             } catch (Exception $e) {
             }
         }
-       $this->SetDocOwnerGivenId($service,$docid,$docowner);
+        $this->SetDocOwnerGivenId($service,$docid,$docowner);
     }
 //SET THE DOC OWNER
     public   function CUST_SetDocOwner($service,$docid,$docowner,$semailid)
@@ -77,7 +77,7 @@ class Mdl_eilib_invoice_contract extends CI_Model{
             } catch (Exception $e) {
             }
         }
-       $this-> SetDocOwnerGivenId($service,$docid,$docowner);
+        $this-> SetDocOwnerGivenId($service,$docid,$docowner);
     }
 //FUNCTION TO REMOVE EDITORS IF SESSION ID NOT OWNER OR EDITOR
     public function RemoveEditors($service,$docid,$email_fetch,$docowner,$UserStamp)
@@ -135,7 +135,7 @@ class Mdl_eilib_invoice_contract extends CI_Model{
         return $this->db->get()->row()->FP_FOLDER_ID;
     }
 //FUNCTION TO CALCULATE PRORATED RENT
-  public function proratedmonthcalculation($startDate, $endDate)
+    public function proratedmonthcalculation($startDate, $endDate)
     {
         $return =[];
         $end =[];
@@ -417,7 +417,7 @@ class Mdl_eilib_invoice_contract extends CI_Model{
     }
 //CUSTOMER CONTRACT
     public   function CUST_contract($service,$unitno,$checkindate,$checkoutdate,$companyname,$customername,$noticeperiod,$passportno,$passportdate,$epno,$epdate,$noticedate,$lp,$cardno,$rent,$airquartfee,$airfixedfee,$electcap,$dryclean,$chkoutfee,$procfee,$deposit,$waived,$roomtype,$rent_check,$formname,$sendmailid,$docowner,$parentId) {
-        try {$ntc_date1='';$DEPOSITword='';
+        try {$ntc_date1='';$DEPOSITword='';            $response='';$newfile='';
             $todaydatestring =  date("d-M-Y");$flagProratedRentCkout=0;
             $flag_paraAlign='';$flag_paraAlign_sec=''; $flag_paraAlign_thrd=''; $flag_paraAlign_four=''; $flag_paraAlign_five='';$noepcontlineno='';
             $this->load->model('EILIB/Mdl_eilib_common_function');
@@ -619,7 +619,7 @@ class Mdl_eilib_invoice_contract extends CI_Model{
             $prlbl2  =str_replace("prochkout",$LastMonthformat,$prlbl1) ;
 //CHECK LESS THAN A MONTH OR GREATER THAN A MONTH
             $rent_check=$rent_check;
-           strpos($lp,"Year")===false?$yearchk=-1:$yearchk=strpos($lp,"Year");
+            strpos($lp,"Year")===false?$yearchk=-1:$yearchk=strpos($lp,"Year");
             strpos($lp,"Months")===false?$monthschk=-1:$monthschk=strpos($lp,"Months");
             strpos($lp,"Month")===false?$monthchk=-1:$monthchk=strpos($lp,"Month");
             strpos($lp,"Day")===false?$daychk=-1:$daychk=strpos($lp,"Day");
@@ -705,8 +705,7 @@ class Mdl_eilib_invoice_contract extends CI_Model{
                         }
                 }}
             $url= $this->Mdl_eilib_common_function->getUrlAccessGasScript();
-            $response='';$newfile='';
-          $title= "CONTRACT"."-"." ".$unitno." ". "-". " ".$customername;
+            $title= "CONTRACT"."-"." ".$unitno." ". "-". " ".$customername;
             $newfile= $this->printFile($service,$cust_config_array[10],$parentId,$title);
             $file = new Google_Service_Drive_DriveFile();
             $parent = new Google_Service_Drive_ParentReference();
@@ -743,7 +742,7 @@ class Mdl_eilib_invoice_contract extends CI_Model{
         } catch (Exception $ex) {
             return [0,$newfile];
         }
-      }
+    }
 //GET INVOICE ID ,CONTRACT ID ,SERIAL NO,INVOIC DATE
     public function CUST_invoice_contractreplacetext()
     {
@@ -778,7 +777,7 @@ class Mdl_eilib_invoice_contract extends CI_Model{
     public  function CUST_invoice($UserStamp,$service,$unit,$customername,$companyname,$invoiceid,$invoicesno,$invoicedate,$rent,$process,$deposit,$sdate,$edate,$roomtype,$Leaseperiod,$rentcheck,$sendmailid,$docowner,$formname,$waived,$custid,$parentId)
     {
         try {
-            $sum='';$proratedrentflag='';$length='';
+            $sum='';$proratedrentflag='';$length='';$newfile='';
             $invoiceidcode=$invoiceid;
             $Slno=intval($invoicesno);
             $Sdate=$invoicedate;
@@ -916,17 +915,18 @@ class Mdl_eilib_invoice_contract extends CI_Model{
                     $proratedrentflag=0;
                     $cdate1= $check_in_date1;
                     $cdate2= $check_out_date1;
-                    if((date("Y", $check_in_dated_minus)==date("Y", $check_out_dated_lastmonth)) &&(date("m", $check_in_dated_minus)==date("m", $check_out_dated_lastmonth)))
+                    if((date("Y", strtotime($checkin_fetch))==date("Y", strtotime($checkout_fetch))) &&(date("m", strtotime($checkin_fetch))==date("m", strtotime($checkout_fetch))))
                     {
                         $proratedrent=$this->Mdl_eilib_prorated_calc->wMonthProratedCalc($check_in_date,$check_out_date,$A5);
                         $sum1 = $das+$pc+floatval($proratedrent);
                         $sum = number_format($sum1,2,'.','');
                     }
-                    else if((date("Y", $check_in_dated_minus)!=date("Y", $check_out_dated_lastmonth)) &&(date("m", $check_in_dated_minus)!=date("m", $check_out_dated_lastmonth)))
+                    else if((date("Y", strtotime($checkin_fetch))!=date("Y", strtotime($checkout_fetch))) ||(date("m", strtotime($checkin_fetch))!=date("m", strtotime($checkout_fetch))))
                     {
                         $proratedsmonth=$this->Mdl_eilib_prorated_calc->sMonthProratedCalc($check_in_date,$A5);
                         $proratedemonth=$this->Mdl_eilib_prorated_calc->eMonthProratedCalc($check_out_date,$A5);
                         $proratedrent = number_format(floatval($proratedsmonth)+floatval($proratedemonth),2,'.','');
+                        $A5=$proratedrent;
                         if($proratedrent!='0.00')
                         {
                             $sum1 = $das+$pc+floatval($proratedrent);
@@ -1028,7 +1028,7 @@ class Mdl_eilib_invoice_contract extends CI_Model{
             else
             {
                 $companyTemp="company";
-            }$newfile='';
+            }
             $title="INVOICE"."   -"." ".$unit." ". "-". " ".$tenant_fetch."_INV".$todaysDate.''.$Slno;
             $newfile= $this->printFile($service,$invoiceid,$parentId,$title);
             $file = new Google_Service_Drive_DriveFile();

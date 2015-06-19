@@ -32,6 +32,24 @@
                 $('.preloader').hide();
             }
         });
+        function FormTable_DateFormat(inputdate){
+            var string = inputdate.split("-");
+            return string[2]+'-'+ string[1]+'-'+string[0];
+        }
+        //FUNCTION FOR SORTING
+        function sorting(){
+
+            jQuery.fn.dataTableExt.oSort['uk_timestp-asc']  = function(a,b) {
+                var x = new Date( Date.parse(FormTable_DateFormat(a.split(' ')[0]))).setHours(a.split(' ')[1].split(':')[0],a.split(' ')[1].split(':')[1],a.split(' ')[1].split(':')[2]);
+                var y = new Date( Date.parse(FormTable_DateFormat(b.split(' ')[0]))).setHours(b.split(' ')[1].split(':')[0],b.split(' ')[1].split(':')[1],b.split(' ')[1].split(':')[2]);
+                return ((x < y) ? -1 : ((x > y) ?  1 : 0));
+            };
+            jQuery.fn.dataTableExt.oSort['uk_timestp-desc'] = function(a,b) {
+                var x = new Date( Date.parse(FormTable_DateFormat(a.split(' ')[0]))).setHours(a.split(' ')[1].split(':')[0],a.split(' ')[1].split(':')[1],a.split(' ')[1].split(':')[2]);
+                var y = new Date( Date.parse(FormTable_DateFormat(b.split(' ')[0]))).setHours(b.split(' ')[1].split(':')[0],b.split(' ')[1].split(':')[1],b.split(' ')[1].split(':')[2]);
+                return ((x < y) ? 1 : ((x > y) ?  -1 : 0));
+            };
+        }
         //*****************Common Function ***************//
         function InitialDataLoad(modeldetails)
         {
@@ -41,7 +59,7 @@
             Model_Tabledata+="<th style='text-align:center;vertical-align: top'>MODEL NAME</th>";
             Model_Tabledata+="<th style='text-align:center;vertical-align: top'>OBSOLETE</th>";
             Model_Tabledata+="<th style='text-align:center;vertical-align: top'>USERSTAMP</th>";
-            Model_Tabledata+="<th style='text-align:center;vertical-align: top'>TIMESTAMP</th>";
+            Model_Tabledata+="<th style='text-align:center;vertical-align: top' class='uk-timestp-column'>TIMESTAMP</th>";
             Model_Tabledata+="</tr></thead><tbody>";
             for(var i=0;i<modeldetails.length;i++)
             {
@@ -61,8 +79,10 @@
             $('#Model_Datatable').DataTable( {
                 "aaSorting": [],
                 "pageLength": 10,
-                "sPaginationType":"full_numbers"
+                "sPaginationType":"full_numbers",
+                "aoColumnDefs" : [{ "aTargets" : ["uk-timestp-column"] , "sType" : "uk_timestp"} ]
             });
+            sorting();
         }
         var combineid;
         var previous_id;
@@ -233,6 +253,10 @@
                 }
             });
         });
+        $(document).on('click','#Model_btn_pdf',function(){
+            var Header="BANK TT MODEL DETAILS";
+            var pdfurl=document.location.href='<?php echo site_url('FINANCE/OCBC/Ctrl_Ocbc_Model_Entry_Search_Update/ModelPdfCreation')?>?Header='+Header;
+        });
     });
 </script>
 <body>
@@ -249,6 +273,7 @@
                 <div id="Model_Search_DataTable" class="table-responsive" hidden>
                     <div><input type="button" class="maxbtn" value="ADD MODEL" id="AddNewModel"></div>
                     <h4 style="color:#498af3;" id="tableheader"></h4>
+                    <input type="button" id="Model_btn_pdf" class="btnpdf" value="PDF">
                     <section>
 
                     </section>

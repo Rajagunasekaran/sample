@@ -13,12 +13,14 @@ Class Ctrl_Ocbc_Ocbc extends CI_Controller
     public function Fin_OCBC_Submit()
     {
         $Period=$_POST['Period'];
+        $this->load->library('Google');
         $unit = $this->Mdl_eilib_common_function->getAllActiveUnits();
         $paymenttype=$this->Mdl_eilib_common_function->getPaymenttype();
         $errorlist=$_REQUEST['ErrorList'];
         $ErrorMessage= $this->Mdl_eilib_common_function->getErrorMessageList($errorlist);
         $SubmittedData=$this->Mdl_ocbc_ocbc->getOCBCData($Period);
-        $values=array($SubmittedData,$unit,$paymenttype,$ErrorMessage);
+        $CSVCOUNT=$this->Mdl_ocbc_ocbc->CSV_FileRecordsCount($Period);
+        $values=array($SubmittedData,$unit,$paymenttype,$ErrorMessage,$CSVCOUNT);
         echo json_encode($values);
     }
     public function ActiveCustomer()
@@ -49,5 +51,18 @@ Class Ctrl_Ocbc_Ocbc extends CI_Controller
         $id=$_POST['ID'];
         $Result = $this->Mdl_ocbc_ocbc->RecordSave($unit,$customerid,$recver,$payment,$amount,$period,$comments,$flag,$id,$UserStamp);
         echo json_encode($Result);
+    }
+    public function OCBCPdfCreation()
+    {
+        $Period=$_GET['Period'];
+        $SubmittedData=$this->Mdl_ocbc_ocbc->OCBC_PDF_Creation($Period);
+        $header='OCBC RECORDS-'.strtoupper($Period);
+        $this->load->library('pdf');
+        $pdf = $this->pdf->load();
+        $pdf=new mPDF('utf-8','A4');
+        $pdf->SetHTMLHeader('<div style="text-align: center; font-weight: bold;">'.$header.'</div>', 'O', true);
+        $pdf->SetHTMLFooter('<div style="text-align: center;">{PAGENO}</div>');
+        $pdf->WriteHTML($SubmittedData);
+        $pdf->Output($header.'.pdf', 'D');
     }
 }

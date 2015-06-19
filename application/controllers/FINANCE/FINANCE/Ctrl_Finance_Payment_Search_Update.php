@@ -54,16 +54,36 @@ Class Ctrl_Finance_Payment_Search_Update extends CI_Controller
     }
     public function PaymentUpdationDetails()
     {
+        $SearchOption=$_POST['Option'];
+        $unit=$_POST['Unit'];
+        $Customer=$_POST['Customer'];
+        $Fromdate=$_POST['FromDate'];
+        $Todate=$_POST['Todate'];
+        $fromamount=$_POST['Fromamount'];
+        $toamount=$_POST['Toamount'];
         $UserStamp=$this->Mdl_eilib_common_function->getSessionUserStamp();
+        $timeZoneFormat= $this->Mdl_eilib_common_function->getTimezone();
         $Create_confirm=$this->Mdl_finance_payments_entry_active_customer->Payment_Updation($UserStamp);
-        print_r($Create_confirm);
+        $searchResults=$this->Mdl_finance_payments_entry_active_customer->getSearchResults($SearchOption,$unit,$Customer,$Fromdate,$Todate,$fromamount,$toamount,$UserStamp,$timeZoneFormat);
+        $return_array=array($Create_confirm,$searchResults);
+        echo json_encode($return_array);
     }
     public function PaymentsDetails()
     {
+        $SearchOption=$_POST['Option'];
+        $unit=$_POST['Unit'];
+        $Customer=$_POST['Customer'];
+        $Fromdate=$_POST['FromDate'];
+        $Todate=$_POST['Todate'];
+        $fromamount=$_POST['Fromamount'];
+        $toamount=$_POST['Toamount'];
         $UserStamp=$this->Mdl_eilib_common_function->getSessionUserStamp();
+        $timeZoneFormat= $this->Mdl_eilib_common_function->getTimezone();
         $Rowid=$_POST['Rowid'];
         $Create_confirm=$this->Mdl_eilib_common_function->DeleteRecord(18,$Rowid,$UserStamp);
-        print_r($Create_confirm);
+        $searchResults=$this->Mdl_finance_payments_entry_active_customer->getSearchResults($SearchOption,$unit,$Customer,$Fromdate,$Todate,$fromamount,$toamount,$UserStamp,$timeZoneFormat);
+        $return_array=array($Create_confirm,$searchResults);
+        echo json_encode($return_array);
     }
     public function PaymentsExtractDetails()
     {
@@ -73,6 +93,25 @@ Class Ctrl_Finance_Payment_Search_Update extends CI_Controller
         $Customer=$_POST['Customer'];
         $searchResults=$this->Mdl_finance_payments_entry_active_customer->payment_extract_details($unit,$Customer,$UserStamp,$timeZoneFormat);
         echo json_encode($searchResults);
-
+    }
+    public function PaymentPdfCreation()
+    {
+        $UserStamp=$this->Mdl_eilib_common_function->getSessionUserStamp();
+        $timeZoneFormat= $this->Mdl_eilib_common_function->getTimezone();
+        $SearchOption=$_GET['SearchOption'];
+        $header=$_GET['header'];
+        $inputone=$_GET['inputone'];
+        $inputwo=$_GET['inputtwo'];
+        $inputthree=$_GET['inputthree'];
+        $inputfour=$_GET['inputfour'];
+        $inputfive=$_GET['inputfive'];
+        $searchpdfResults=$this->Mdl_finance_payments_entry_active_customer->payment_pdf_details($SearchOption,$inputone,$inputwo,$inputthree,$inputfour,$inputfive,$UserStamp,$timeZoneFormat);
+        $this->load->library('pdf');
+        $pdf = $this->pdf->load();
+        $pdf=new mPDF('utf-8','A4');
+        $pdf->SetHTMLHeader('<div style="text-align: center; font-weight: bold;">'.$header.'</div>', 'O', true);
+        $pdf->SetHTMLFooter('<div style="text-align: center;">{PAGENO}</div>');
+        $pdf->WriteHTML($searchpdfResults);
+        $pdf->Output("PAYMENT DETAILS".'.pdf', 'D');
     }
 }

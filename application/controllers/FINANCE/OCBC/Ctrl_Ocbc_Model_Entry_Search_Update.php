@@ -61,4 +61,17 @@ class Ctrl_Ocbc_Model_Entry_Search_Update extends CI_Controller
         $Values=array($Confirm_message,$Allmodels);
         echo json_encode($Values);
     }
+    public function ModelPdfCreation()
+    {
+        $header=$_GET['Header'];
+        $timeZoneFormat= $this->Mdl_eilib_common_function->getTimezone();
+        $AllmodelDetails=$this->Mdl_ocbc_model_entry_search_update->PDF_AllModels_Details($timeZoneFormat);
+        $this->load->library('pdf');
+        $pdf = $this->pdf->load();
+        $pdf=new mPDF('utf-8','A4');
+        $pdf->SetHTMLHeader('<div style="text-align: center; font-weight: bold;">'.$header.'</div>', 'O', true);
+        $pdf->SetHTMLFooter('<div style="text-align: center;">{PAGENO}</div>');
+        $pdf->WriteHTML($AllmodelDetails);
+        $pdf->Output($header.'.pdf', 'D');
+    }
 }

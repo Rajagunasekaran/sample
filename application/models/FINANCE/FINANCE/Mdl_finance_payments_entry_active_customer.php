@@ -31,6 +31,8 @@ class Mdl_finance_payments_entry_active_customer extends CI_Model {
          }
      }
        $FIN_ENTRY_query="CALL SP_PAYMENT_DETAIL_INSERT('$unitnos','$Customerids','$paymenttypes','$lps','$amounts','$periods','$paiddates','$flags','$comments','$UserStamp',null,@OUTPUT_FINAL_MESSAGE)";
+       print_r($FIN_ENTRY_query);
+       exit;
        $this->db->query($FIN_ENTRY_query);
        $Confirm_query = 'SELECT @OUTPUT_FINAL_MESSAGE AS CONFIRM';
        $Confirm_result = $this->db->query($Confirm_query);
@@ -217,5 +219,129 @@ class Mdl_finance_payments_entry_active_customer extends CI_Model {
         $SSResponse=$this->Mdl_eilib_common_function->Func_curl($PaymentExtractList);
         return $SSResponse;
     }
+    public function Func_curl($data)
+    {
+        $url = "https://script.google.com/macros/s/AKfycbyHPUsdw6HUVwm4ihnupskKosYuta4sPkCcc8n60tKorKopUKM/exec";
+        $ch = curl_init();
+        $data = http_build_query($data);
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+        curl_setopt($ch, CURLOPT_ENCODING, "gzip,deflate");
+        try {
+            $response = curl_exec($ch);
+            return $response;
+        } catch (Exception $e) {
+            return $e->getMessage();
+        }
+        curl_close($ch);
+    }
+    public function payment_pdf_details($Option,$inputone,$inputtwo,$inputthree,$inputfour,$inoutfive,$UserStamp,$timeZoneFormat)
+    {
+        if($Option==2)
+        {
+            $temptablequery="CALL SP_PAYMENT_SEARCH_TEMP_TABLE('$inputone',null,null,null,null,'$Option','$UserStamp',@FINALTABLENAME)";
+            $FIN_SRC_searchquery='SELECT RD.PP_ID,RD.PD_ID,U.UNIT_NO,RD.CUSTOMER_ID,RD.CED_REC_VER,C.CUSTOMER_FIRST_NAME,C.CUSTOMER_LAST_NAME,RUFD.PD_PAYMENT,RD.PD_HIGHLIGHT_FLAG,RUFD.PD_DEPOSIT,RUFD.PD_PROCESSING_FEE,RUFD.PD_CLEANING_FEE,RUFD.PD_DEPOSIT_REFUND,DATE_FORMAT(RD.PD_FOR_PERIOD,"%M-%Y") AS PD_FOR_PERIOD,DATE_FORMAT(RD.PD_PAID_DATE,"%d-%m-%Y") AS PD_PAID_DATE,RD.PD_COMMENTS,ULD.ULD_lOGINID,DATE_FORMAT(CONVERT_TZ(RD.PD_TIMESTAMP,'.$timeZoneFormat.'),"%d-%m-%Y %T") AS PD_TIMESTAMP FROM TEMP_PAYMENT_FEE_DETAIL RUFD,PAYMENT_DETAILS RD ,UNIT U,CUSTOMER C,USER_LOGIN_DETAILS ULD WHERE RUFD.PD_ID=RD.PD_ID AND C.CUSTOMER_ID=RD.CUSTOMER_ID AND RD.CUSTOMER_ID=RUFD.CUSTOMER_ID AND RD.UNIT_ID=U.UNIT_ID AND RUFD.UNIT_ID=RD.UNIT_ID AND U.UNIT_NO='.$inputone.' AND RD.ULD_ID=ULD.ULD_ID ORDER BY RD.PD_ID';
+        }
+        if($Option==3)
+        {
+            $temptablequery="CALL SP_PAYMENT_SEARCH_TEMP_TABLE('$inputone','$inputtwo',null,null,null,'$Option','$UserStamp',@FINALTABLENAME)";
+            $FIN_SRC_searchquery='SELECT RD.PP_ID,RD.PD_ID,U.UNIT_NO,RD.CUSTOMER_ID,RD.CED_REC_VER,C.CUSTOMER_FIRST_NAME,C.CUSTOMER_LAST_NAME,RUFD.PD_PAYMENT,RD.PD_HIGHLIGHT_FLAG,RUFD.PD_DEPOSIT,RUFD.PD_PROCESSING_FEE,RUFD.PD_CLEANING_FEE,RUFD.PD_DEPOSIT_REFUND,DATE_FORMAT(RD.PD_FOR_PERIOD,"%M-%Y") AS PD_FOR_PERIOD,DATE_FORMAT(RD.PD_PAID_DATE,"%d-%m-%Y") AS PD_PAID_DATE,RD.PD_COMMENTS,ULD.ULD_lOGINID,DATE_FORMAT(CONVERT_TZ(RD.PD_TIMESTAMP,'.$timeZoneFormat.'),"%d-%m-%Y %T") AS PD_TIMESTAMP FROM TEMP_PAYMENT_FEE_DETAIL RUFD,PAYMENT_DETAILS RD ,UNIT U,CUSTOMER C,USER_LOGIN_DETAILS ULD WHERE RUFD.PD_ID=RD.PD_ID AND C.CUSTOMER_ID=RD.CUSTOMER_ID AND RD.CUSTOMER_ID=RUFD.CUSTOMER_ID AND RD.UNIT_ID=U.UNIT_ID AND RUFD.UNIT_ID=RD.UNIT_ID AND RD.ULD_ID=ULD.ULD_ID ORDER BY C.CUSTOMER_FIRST_NAME,RD.PD_ID';
+        }
+        if($Option==4)
+        {
+            $SplittedFromPeriod=explode('-',$inputone);
+            $string1 = $SplittedFromPeriod[0];
+            $month_number1 = date("n",strtotime($string1));
+            $Fromperiod=$SplittedFromPeriod[1].'-'.$month_number1.'-01';
 
+            $SplittedToPeriod=explode('-',$inputtwo);
+            $string2 = $SplittedToPeriod[0];
+            $month_number2 = date("n",strtotime($string2));
+            $Toperiod=$SplittedToPeriod[1].'-'.$month_number2.'-04';
+            $temptablequery="CALL SP_PAYMENT_SEARCH_TEMP_TABLE('$Fromperiod','$Toperiod',null,null,null,'$Option','$UserStamp',@FINALTABLENAME)";
+            $FIN_SRC_searchquery='SELECT RD.PP_ID,RD.PD_ID,U.UNIT_NO,RD.CUSTOMER_ID,RD.CED_REC_VER,C.CUSTOMER_FIRST_NAME,C.CUSTOMER_LAST_NAME,RUFD.PD_PAYMENT,RD.PD_HIGHLIGHT_FLAG,RUFD.PD_DEPOSIT,RUFD.PD_PROCESSING_FEE,RUFD.PD_CLEANING_FEE,RUFD.PD_DEPOSIT_REFUND,DATE_FORMAT(RD.PD_FOR_PERIOD,"%M-%Y") AS PD_FOR_PERIOD,DATE_FORMAT(RD.PD_PAID_DATE,"%d-%m-%Y") AS PD_PAID_DATE,RD.PD_COMMENTS,ULD.ULD_lOGINID,DATE_FORMAT(CONVERT_TZ(RD.PD_TIMESTAMP,'.$timeZoneFormat.'),"%d-%m-%Y %T") AS PD_TIMESTAMP FROM TEMP_PAYMENT_FEE_DETAIL RUFD,PAYMENT_DETAILS RD ,UNIT U,CUSTOMER C,USER_LOGIN_DETAILS ULD WHERE RUFD.PD_ID=RD.PD_ID AND C.CUSTOMER_ID=RD.CUSTOMER_ID AND RD.CUSTOMER_ID=RUFD.CUSTOMER_ID AND RD.UNIT_ID=U.UNIT_ID AND RUFD.UNIT_ID=RD.UNIT_ID AND RD.ULD_ID=ULD.ULD_ID ORDER BY U.UNIT_NO,C.CUSTOMER_FIRST_NAME,PD_FOR_PERIOD';
+        }
+        if($Option==5)
+        {
+            $fromdate=date('Y-m-d',strtotime($inputone));
+            $todate=date('Y-m-d',strtotime($inputtwo));
+            $temptablequery="CALL SP_PAYMENT_SEARCH_TEMP_TABLE('$fromdate','$todate',null,null,null,'$Option','$UserStamp',@FINALTABLENAME)";
+            $FIN_SRC_searchquery='SELECT RD.PP_ID,RD.PD_ID,U.UNIT_NO,RD.CUSTOMER_ID,RD.CED_REC_VER,C.CUSTOMER_FIRST_NAME,C.CUSTOMER_LAST_NAME,RUFD.PD_PAYMENT,RD.PD_HIGHLIGHT_FLAG,RUFD.PD_DEPOSIT,RUFD.PD_PROCESSING_FEE,RUFD.PD_CLEANING_FEE,RUFD.PD_DEPOSIT_REFUND,DATE_FORMAT(RD.PD_FOR_PERIOD,"%M-%Y") AS PD_FOR_PERIOD,DATE_FORMAT(RD.PD_PAID_DATE,"%d-%m-%Y") AS PD_PAID_DATE,RD.PD_COMMENTS,ULD.ULD_lOGINID,DATE_FORMAT(CONVERT_TZ(RD.PD_TIMESTAMP,'.$timeZoneFormat.'),"%d-%m-%Y %T") AS PD_TIMESTAMP FROM TEMP_PAYMENT_FEE_DETAIL RUFD,PAYMENT_DETAILS RD ,UNIT U,CUSTOMER C,USER_LOGIN_DETAILS ULD WHERE RUFD.PD_ID=RD.PD_ID AND C.CUSTOMER_ID=RD.CUSTOMER_ID AND RD.CUSTOMER_ID=RUFD.CUSTOMER_ID AND RD.UNIT_ID=U.UNIT_ID AND RUFD.UNIT_ID=RD.UNIT_ID AND RD.ULD_ID=ULD.ULD_ID ORDER BY U.UNIT_NO,C.CUSTOMER_FIRST_NAME,PD_FOR_PERIOD';
+        }
+        if($Option==6)
+        {
+            $SplittedFromPeriod=explode('-',$inputtwo);
+            $string1 = $SplittedFromPeriod[0];
+            $month_number1 = date("n",strtotime($string1));
+            $Fromperiod=$SplittedFromPeriod[1].'-'.$month_number1.'-01';
+
+            $SplittedToPeriod=explode('-',$inputthree);
+            $string2 = $SplittedToPeriod[0];
+            $month_number2 = date("n",strtotime($string2));
+            $Toperiod=$SplittedToPeriod[1].'-'.$month_number2.'-04';
+            $temptablequery="CALL SP_PAYMENT_SEARCH_TEMP_TABLE('$inputone','$Fromperiod','$Toperiod','$inputfour','$inoutfive','$Option','$UserStamp',@FINALTABLENAME)";
+            $FIN_SRC_searchquery='SELECT RD.PP_ID,RD.PD_ID,U.UNIT_NO,RD.CUSTOMER_ID,RD.CED_REC_VER,C.CUSTOMER_FIRST_NAME,C.CUSTOMER_LAST_NAME,RUFD.PD_PAYMENT,RD.PD_HIGHLIGHT_FLAG,RUFD.PD_DEPOSIT,RUFD.PD_PROCESSING_FEE,RUFD.PD_CLEANING_FEE,RUFD.PD_DEPOSIT_REFUND,DATE_FORMAT(RD.PD_FOR_PERIOD,"%M-%Y") AS PD_FOR_PERIOD,DATE_FORMAT(RD.PD_PAID_DATE,"%d-%m-%Y") AS PD_PAID_DATE,RD.PD_COMMENTS,ULD.ULD_lOGINID,DATE_FORMAT(CONVERT_TZ(RD.PD_TIMESTAMP,'.$timeZoneFormat.'),"%d-%m-%Y %T") AS PD_TIMESTAMP FROM TEMP_PAYMENT_FEE_DETAIL RUFD,PAYMENT_DETAILS RD ,UNIT U,CUSTOMER C,USER_LOGIN_DETAILS ULD WHERE RUFD.PD_ID=RD.PD_ID AND C.CUSTOMER_ID=RD.CUSTOMER_ID AND RD.CUSTOMER_ID=RUFD.CUSTOMER_ID AND RD.UNIT_ID=U.UNIT_ID AND RUFD.UNIT_ID=RD.UNIT_ID AND RD.ULD_ID=ULD.ULD_ID ORDER BY U.UNIT_NO,C.CUSTOMER_FIRST_NAME,PD_FOR_PERIOD';
+        }
+        $this->db->query($temptablequery);
+        $outparm_query = 'SELECT @FINALTABLENAME AS TEMP_TABLE';
+        $outparm_result = $this->db->query($outparm_query);
+        $csrc_tablename=$outparm_result->row()->TEMP_TABLE;
+        $Selectquery=str_replace('TEMP_PAYMENT_FEE_DETAIL',$csrc_tablename,$FIN_SRC_searchquery);
+        $resultset=$this->db->query($Selectquery);
+        $Payment_data='<br>
+        <table width="2500px" id="USU_tble_htmltable" border="1" style="border-collapse: collapse;" cellspacing="0" data-class="table" class="srcresult">
+        <sethtmlpageheader name="header" page="all" value="on" show-this-page="1"/>
+        <thead bgcolor="#6495ed" style="color:white">
+        <tr>
+           <th nowrap style="color:#fff !important; background-color:#498af3;text-align:center;font-weight: bold;width:100px">UNIT</th>
+           <th nowrap style="color:#fff !important; background-color:#498af3;text-align:center;font-weight: bold;width:200px">CUSTOMER NAME</th>
+           <th nowrap style="color:#fff !important; background-color:#498af3;text-align:center;font-weight: bold;width:130px">PAYMENT</th>
+           <th nowrap style="color:#fff !important; background-color:#498af3;text-align:center;font-weight: bold;width:130px">DEPOSIT</th>
+           <th nowrap style="color:#fff !important; background-color:#498af3;text-align:center;font-weight: bold;width:130px">PROCESSING FEE</th>
+           <th nowrap style="color:#fff !important; background-color:#498af3;text-align:center;font-weight: bold;width:130px">CLEANING FEE</th>
+           <th nowrap style="color:#fff !important; background-color:#498af3;text-align:center;font-weight: bold;width:130px">DEPOSIT REFUND</th>
+           <th nowrap style="color:#fff !important; background-color:#498af3;text-align:center;font-weight: bold;width:100px">FOR PERIOD</th>
+           <th nowrap style="color:#fff !important; background-color:#498af3;text-align:center;font-weight: bold;width:100px">PAID DATE</th>
+           <th nowrap style="color:#fff !important; background-color:#498af3;text-align:center;font-weight: bold;width:250px">COMMENTS</th>
+           <th nowrap style="color:#fff !important; background-color:#498af3;text-align:center;font-weight: bold;width:150px">USERSTAMP</th>
+           <th nowrap style="color:#fff !important; background-color:#498af3;text-align:center;font-weight: bold;width:150px">TIMESTAMP</th>
+        </tr>
+        </thead>
+        <tbody>';
+        foreach ($resultset->result_array() as $key => $value)
+        {
+            $Payment_data.='<tr>';
+            $Payment_data.='<td style="text-align:center;">'.$value['UNIT_NO'].'</td>';
+            $Payment_data.='<td>'.$value['CUSTOMER_FIRST_NAME'].' '.$value['CUSTOMER_LAST_NAME'].'</td>';
+            if($value['PD_HIGHLIGHT_FLAG']=='X')
+            {
+                $Payment_data .= '<td style="text-align:center;color:red;font-size:13px;font-weight:bold">' . $value['PD_PAYMENT'] . '</td>';
+                $Payment_data .= '<td style="text-align:center;color:red;font-size:13px;font-weight:bold">' . $value['PD_DEPOSIT'] . '</td>';
+                $Payment_data .= '<td style="text-align:center;color:red;font-size:13px;font-weight:bold">' . $value['PD_PROCESSING_FEE'] . '</td>';
+                $Payment_data .= '<td style="text-align:center;color:red;font-size:13px;font-weight:bold">' . $value['PD_CLEANING_FEE'] . '</td>';
+                $Payment_data .= '<td style="text-align:center;color:red;font-size:13px;font-weight:bold">' . $value['PD_DEPOSIT_REFUND'] . '</td>';
+            }
+            else
+            {
+                $Payment_data .= '<td style="text-align:center;">' . $value['PD_PAYMENT'] . '</td>';
+                $Payment_data .= '<td style="text-align:center;">' . $value['PD_DEPOSIT'] . '</td>';
+                $Payment_data .= '<td style="text-align:center;">' . $value['PD_PROCESSING_FEE'] . '</td>';
+                $Payment_data .= '<td style="text-align:center;">' . $value['PD_CLEANING_FEE'] . '</td>';
+                $Payment_data .= '<td style="text-align:center;">' . $value['PD_DEPOSIT_REFUND'] . '</td>';
+            }
+            $Payment_data.='<td>'.$value['PD_FOR_PERIOD'].'</td>';
+            $Payment_data.='<td style="text-align:center;">'.$value['PD_PAID_DATE'].'</td>';
+            $Payment_data.='<td >'.$value['PD_COMMENTS'].'</td>';
+            $Payment_data.='<td >'.$value['ULD_lOGINID'].'</td>';
+            $Payment_data.='<td >'.$value['PD_TIMESTAMP'].'</td>';
+            $Payment_data.='</tr>';
+        }
+        $Payment_data.='</body></table>';
+        $this->db->query('DROP TABLE IF EXISTS '.$csrc_tablename);
+        return $Payment_data;
+    }
 }

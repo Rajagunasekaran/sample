@@ -221,11 +221,11 @@
                 appenddata+='</div>';
                 appenddata+='<div class="row form-group" style="padding-left:20px;">';
                 appenddata+='<div class="col-md-2"><label>FROM PERIOD<span class="labelrequired"><em>*</em></span></label></div>';
-                appenddata+='<input type="text" class="form-control AR_btn_validation datemandtry" name="Payment_SRC_AR_fromdate" id="Payment_SRC_AR_fromdate"  placeholder="From Period" style="width:150px"></div>';
+                appenddata+='<div class="col-md-3"><input type="text" class="form-control AR_btn_validation datemandtry" name="Payment_SRC_AR_fromdate" id="Payment_SRC_AR_fromdate"  placeholder="From Period" style="width:150px"></div></div>';
                 appenddata+='</div>';
                 appenddata+='<div class="row form-group" style="padding-left:20px;">';
                 appenddata+='<div class="col-md-2"><label>TO PERIOD<span class="labelrequired"><em>*</em></span></label></div>';
-                appenddata+='<input type="text" class="form-control AR_btn_validation datemandtry" name="Payment_SRC_AR_todate" id="Payment_SRC_AR_todate"  placeholder="To Period" style="width:150px"></div>';
+                appenddata+='<div class="col-md-3"><input type="text" class="form-control AR_btn_validation datemandtry" name="Payment_SRC_AR_todate" id="Payment_SRC_AR_todate"  placeholder="To Period" style="width:150px"></div></div>';
                 appenddata+='</div>';
                 appenddata+='<div class="row form-group" style="padding-left:20px;">';
                 appenddata+='<div class="col-md-2"><label>FROM AMOUNT<span class="labelrequired"><em>*</em></span></label></div>';
@@ -492,10 +492,6 @@
         $(document).on('click','#Payment_src_btn_search',function() {
             $('.preloader').show();
             var searchoption=$('#Payment_SRC_SearchOption').val();
-            $('#tableEmptyerrormessageshow').hide();
-            $('#Payment_Updation_form').hide();
-            $('#Payment_Search_DataTable').hide();
-            $('#tableheader').text('');
             $("#Payment_src_btn_search").attr("disabled", "disabled");
             if(searchoption==2)
             {
@@ -503,7 +499,6 @@
                 var data={Option:2,Unit:unit,Customer:'',FromDate:'',Todate:'',Fromamount:'',Toamount:''};
                 var headervalue="DETAILS OF SELECTED UNIT : "+unit;
                 var EMPTY_headervalue="NO DETAILS OF SELECTED UNIT : "+unit;
-                $('#Payment_SRC_Uintsearch').val('SELECT');
             }
             if(searchoption==3)
             {
@@ -515,9 +510,6 @@
                 customer=customer.replace('_',' ');
                 headervalue="DETAILS OF SELECTED UNIT : "+unit+" AND CUSTOMER NAME : "+customer;
                 var EMPTY_headervalue="NO DETAILS OF SELECTED UNIT : "+unit+" AND CUSTOMER NAME : "+customer;
-                $('#Payment_SRC_unit').val('SELECT');
-                $('#Payment_SRC_Customer').val('SELECT');
-                $('#Payment_SRC_Customer').prop("disabled", true);
             }
             if(searchoption==4)
             {
@@ -526,8 +518,6 @@
                 data={Option:4,Unit:'',Customer:'',FromDate:fromdate,Todate:todate,Fromamount:'',Toamount:''};
                 headervalue="DETAILS OF SELECTED FOR PERIOD DATE RANGE : "+fromdate+" TO : "+todate;
                 var EMPTY_headervalue="NO DETAILS OF SELECTED FOR PERIOD DATE RANGE : "+fromdate+" TO : "+todate;
-                $('#Payment_SRC_FP_fromdate').val('');
-                $('#Payment_SRC_FP_todate').val('');
             }
             if(searchoption==5)
             {
@@ -536,8 +526,6 @@
                 data={Option:5,Unit:'',Customer:'',FromDate:fromdate,Todate:todate,Fromamount:'',Toamount:''};
                 headervalue="DETAILS OF SELECTED PAID DATE RANGE : "+fromdate+" TO : "+todate;
                 EMPTY_headervalue="NO DETAILS OF SELECTED PAID DATE RANGE : "+fromdate+" TO : "+todate;
-                $('#Payment_SRC_PD_fromdate').val('');
-                $('#Payment_SRC_PD_todate').val('');
             }
             if(searchoption==6)
             {
@@ -549,11 +537,6 @@
                 data={Option:6,Unit:unit,Customer:'',FromDate:fromdate,Todate:todate,Fromamount:fromamount,Toamount:toamount};
                 headervalue="DETAILS OF SELECTED UNIT : "+unit+" AND FOR PERIOD : "+fromdate+" TO : "+todate+" AND AMOUNT : "+fromamount+" TO : "+toamount;
                 EMPTY_headervalue="NO DETAILS OF SELECTED UNIT : "+unit+" AND FOR PERIOD : "+fromdate+" TO : "+todate+" AND AMOUNT : "+fromamount+" TO : "+toamount;
-                $('#Payment_SRC_AR_Uint').val('SELECT');
-                $('#Payment_SRC_AR_fromdate').val('');
-                $('#Payment_SRC_AR_todate').val('');
-                $('#Payment_SRC_AR_fromamount').val('');
-                $('#Payment_SRC_AR_toamount').val('');
             }
 
             $('.preloader').show();
@@ -567,134 +550,7 @@
                     if(valuearray.length!=0)
                     {
                         $('#tableheader').text(headervalue);
-                        var Payment_Tabledata = "<table id='Payment_Datatable' border=1 cellspacing='0' data-class='table'  class=' srcresult table' style='width:2000px'>";
-                        Payment_Tabledata += "<thead class='headercolor'><tr class='head' style='text-align:center'>";
-                        Payment_Tabledata += "<th style='text-align:center;vertical-align: top' nowrap>UPDATE / DELETE</th>";
-                        Payment_Tabledata += "<th style='text-align:center;vertical-align: top' nowrap>UNIT</th>";
-                        Payment_Tabledata += "<th style='text-align:center;vertical-align: top' nowrap>CUSTOMER NAME</th>";
-                        Payment_Tabledata += "<th style='text-align:center;vertical-align: top' nowrap>PAYMENT AMOUNT</th>";
-                        Payment_Tabledata += "<th style='text-align:center;vertical-align: top' nowrap>DEPOSIT</th>";
-                        Payment_Tabledata += "<th style='text-align:center;vertical-align: top' nowrap>PROCESSING FEE</th>";
-                        Payment_Tabledata += "<th style='text-align:center;vertical-align: top' nowrap>CLEANING FEE</th>";
-                        Payment_Tabledata += "<th style='text-align:center;vertical-align: top' nowrap>DEPOSIT REFUND</th>";
-                        Payment_Tabledata += "<th style='text-align:center;vertical-align: top' nowrap>FOR PERIOD</th>";
-                        Payment_Tabledata += "<th style='text-align:center;vertical-align: top' nowrap>PAID DATE</th>";
-                        Payment_Tabledata += "<th style='text-align:center;vertical-align: top'>COMMENTS</th>";
-                        Payment_Tabledata += "<th style='text-align:center;vertical-align: top' nowrap>USERSTAMP</th>";
-                        Payment_Tabledata += "<th style='text-align:center;vertical-align: top' nowrap>TIMESTAMP</th>";
-                        Payment_Tabledata += "</tr></thead><tbody>";
-                        for (var i = 0; i < valuearray.length; i++) {
-                            var rowid = valuearray[i].PD_ID;
-                            var EditId = 'Edit_' + rowid + '_' + valuearray[i].CUSTOMER_ID + '_' + valuearray[i].CED_REC_VER + '_' + valuearray[i].UNIT_NO;
-                            var DeleteId = 'Delete_' + rowid;
-                            if (valuearray[i].PD_HIGHLIGHT_FLAG != 'X') {
-                                if (valuearray[i].PD_PAYMENT == null) {
-                                    var payment = ''
-                                } else {
-                                    payment = valuearray[i].PD_PAYMENT
-                                }
-                                if (valuearray[i].PD_DEPOSIT == null) {
-                                    var deposit = ''
-                                } else {
-                                    deposit = valuearray[i].PD_DEPOSIT
-                                }
-                                if (valuearray[i].PD_PROCESSING_FEE == null) {
-                                    var processfee = ''
-                                } else {
-                                    processfee = valuearray[i].PD_PROCESSING_FEE
-                                }
-                                if (valuearray[i].PD_CLEANING_FEE == null) {
-                                    var cleaningfee = ''
-                                } else {
-                                    cleaningfee = valuearray[i].PD_CLEANING_FEE
-                                }
-                                if (valuearray[i].PD_DEPOSIT_REFUND == null) {
-                                    var Depositrefund = ''
-                                } else {
-                                    Depositrefund = valuearray[i].PD_DEPOSIT_REFUND
-                                }
-                                if (valuearray[i].PD_COMMENTS == null) {
-                                    var comments = ''
-                                } else {
-                                    comments = valuearray[i].PD_COMMENTS
-                                }
-                                Payment_Tabledata += '<tr style="text-align: center !important;">' +
-                                "<td style='width:80px !important;vertical-align: middle !important;'><div class='col-lg-1'><span style='display: block;color:green' class='glyphicon glyphicon-edit Payment_editbutton' id=" + EditId + "></div><div class='col-lg-1'><span style='display: block;color:red' class='glyphicon glyphicon-trash Payment_removebutton' id=" + DeleteId + "></div></td>" +
-                                "<td style='width:100px !important;vertical-align: middle'>" + valuearray[i].UNIT_NO + "</td>" +
-                                "<td style='width:250px !important;vertical-align: middle' nowrap>" + valuearray[i].CUSTOMER_FIRST_NAME + " " + valuearray[i].CUSTOMER_LAST_NAME + "</td>" +
-                                "<td style='width:150px !important;vertical-align: middle'>" + payment + "</td>" +
-                                "<td style='width:150px !important;vertical-align: middle'>" + deposit + "</td>" +
-                                "<td style='width:150px !important;vertical-align: middle'>" + processfee + "</td>" +
-                                "<td style='width:150px !important;vertical-align: middle'>" + cleaningfee + "</td>" +
-                                "<td style='width:150px !important;vertical-align: middle'>" + Depositrefund + "</td>" +
-                                "<td style='width:120px !important;vertical-align: middle'>" + valuearray[i].PD_FOR_PERIOD + "</td>" +
-                                "<td style='width:120px !important;vertical-align: middle'>" + valuearray[i].PD_PAID_DATE + "</td>" +
-                                "<td style='width:300px !important;'>" + comments + "</td>" +
-                                "<td style='width:200px !important;vertical-align: middle'>" + valuearray[i].ULD_lOGINID + "</td>" +
-                                "<td style='width:200px !important;vertical-align: middle'>" + valuearray[i].PD_TIMESTAMP + "</td></tr>";
-                            }
-                            else {
-                                if (valuearray[i].PD_PAYMENT == null) {
-                                    var payment = ''
-                                } else {
-                                    payment = valuearray[i].PD_PAYMENT
-                                }
-
-                                if (valuearray[i].PD_DEPOSIT == null) {
-                                    var deposit = ''
-                                } else {
-                                    deposit = valuearray[i].PD_DEPOSIT
-                                }
-
-                                if (valuearray[i].PD_PROCESSING_FEE == null) {
-                                    var processfee = ''
-                                } else {
-                                    processfee = valuearray[i].PD_PROCESSING_FEE
-                                }
-
-                                if (valuearray[i].PD_CLEANING_FEE == null) {
-                                    var cleaningfee = ''
-                                } else {
-                                    cleaningfee = valuearray[i].PD_CLEANING_FEE
-                                }
-
-                                if (valuearray[i].PD_DEPOSIT_REFUND == null) {
-                                    var Depositrefund = ''
-                                } else {
-                                    Depositrefund = valuearray[i].PD_DEPOSIT_REFUND
-                                }
-
-                                if (valuearray[i].PD_COMMENTS == null) {
-                                    var comments = ''
-                                } else {
-                                    comments = valuearray[i].PD_COMMENTS
-                                }
-
-                                Payment_Tabledata += '<tr style="text-align: center !important;vertical-align: middle">' +
-                                "<td style='width:80px !important;vertical-align: middle'><div class='col-lg-1'><span style='display: block;color:green' class='glyphicon glyphicon-edit Payment_editbutton' id=" + EditId + "></div><div class='col-lg-1'><span style='display: block;color:red' class='glyphicon glyphicon-trash Payment_removebutton' id=" + DeleteId + "></div></td>" +
-                                "<td style='width:70px !important;vertical-align: middle'>" + valuearray[i].UNIT_NO + "</td>" +
-                                "<td style='width:200px !important;vertical-align: middle' nowrap>" + valuearray[i].CUSTOMER_FIRST_NAME + " " + valuearray[i].CUSTOMER_LAST_NAME + "</td>" +
-                                "<td style='width:80px !important;color:#FF0000;font-size:13px;font-weight:bold;vertical-align: middle'>" + payment + "</td>" +
-                                "<td style='width:80px !important;color:#FF0000;font-size:13px;font-weight:bold;vertical-align: middle'>" + deposit + "</td>" +
-                                "<td style='width:80px !important;color:#FF0000;font-size:13px;font-weight:bold;vertical-align: middle'>" + processfee + "</td>" +
-                                "<td style='width:80px !important;color:#FF0000;font-size:13px;font-weight:bold;vertical-align: middle'>" + cleaningfee + "</td>" +
-                                "<td style='width:80px !important;color:#FF0000;font-size:13px;font-weight:bold;vertical-align: middle'>" + Depositrefund + "</td>" +
-                                "<td style='width:100px !important;vertical-align: middle' >" + valuearray[i].PD_FOR_PERIOD + "</td>" +
-                                "<td style='width:80px !important;vertical-align: middle'>" + valuearray[i].PD_PAID_DATE + "</td>" +
-                                "<td style='width:200px !important;vertical-align: middle'>" + comments + "</td>" +
-                                "<td style='width:150px !important;vertical-align: middle'>" + valuearray[i].ULD_lOGINID + "</td>" +
-                                "<td style='width:100px !important;vertical-align: middle'>" + valuearray[i].PD_TIMESTAMP + "</td></tr>";
-                            }
-                        }
-                        Payment_Tabledata += "</body>";
-                        $('section').html(Payment_Tabledata);
-                        $('#Payment_Search_DataTable').show();
-                        $('#Payment_Datatable').DataTable({
-                            "pageLength": 10,
-                            "sPaginationType": "full_numbers",
-//                            "aoColumnDefs" : [{ "aTargets" : ["uk-date-column"] , "sType" : "uk_date"}, { "aTargets" : ["uk-timestp-column"] , "sType" : "uk_timestp"} ]
-                        });
-                        sorting();
+                        PaymentDataTable(valuearray);
                         if (searchoption == 3) {
                             $('#Paymeny_Extract_btn').show();
                         }
@@ -708,7 +564,6 @@
                         $('#emptytableheader').text(EMPTY_headervalue);
                         $('#tableEmptyerrormessageshow').show();
                     }
-
                     $('.preloader').hide();
                 },
                 error: function(data){
@@ -717,31 +572,182 @@
                 }
             });
         });
+
+        function PaymentDataTable(valuearray)
+        {
+                var Payment_Tabledata = "<table id='Payment_Datatable' border=1 cellspacing='0' data-class='table'  class=' srcresult table' style='width:2000px'>";
+                Payment_Tabledata += "<thead class='headercolor'><tr class='head' style='text-align:center'>";
+                Payment_Tabledata += "<th style='text-align:center;vertical-align: top' nowrap>UPDATE / DELETE</th>";
+                Payment_Tabledata += "<th style='text-align:center;vertical-align: top' nowrap>UNIT</th>";
+                Payment_Tabledata += "<th style='text-align:center;vertical-align: top' nowrap>CUSTOMER NAME</th>";
+                Payment_Tabledata += "<th style='text-align:center;vertical-align: top' nowrap>PAYMENT AMOUNT</th>";
+                Payment_Tabledata += "<th style='text-align:center;vertical-align: top' nowrap>DEPOSIT</th>";
+                Payment_Tabledata += "<th style='text-align:center;vertical-align: top' nowrap>PROCESSING FEE</th>";
+                Payment_Tabledata += "<th style='text-align:center;vertical-align: top' nowrap>CLEANING FEE</th>";
+                Payment_Tabledata += "<th style='text-align:center;vertical-align: top' nowrap>DEPOSIT REFUND</th>";
+                Payment_Tabledata += "<th style='text-align:center;vertical-align: top' nowrap class='uk-perioddate-column'>FOR PERIOD</th>";
+                Payment_Tabledata += "<th style='text-align:center;vertical-align: top' nowrap class='uk-date-column'>PAID DATE</th>";
+                Payment_Tabledata += "<th style='text-align:center;vertical-align: top'>COMMENTS</th>";
+                Payment_Tabledata += "<th style='text-align:center;vertical-align: top' nowrap>USERSTAMP</th>";
+                Payment_Tabledata += "<th style='text-align:center;vertical-align: top' nowrap class='uk-timestp-column'>TIMESTAMP</th>";
+                Payment_Tabledata += "</tr></thead><tbody>";
+                for (var i = 0; i < valuearray.length; i++) {
+                    var rowid = valuearray[i].PD_ID;
+                    var EditId = 'Edit_' + rowid + '_' + valuearray[i].CUSTOMER_ID + '_' + valuearray[i].CED_REC_VER + '_' + valuearray[i].UNIT_NO;
+                    var DeleteId = 'Delete_' + rowid;
+                    if (valuearray[i].PD_HIGHLIGHT_FLAG != 'X') {
+                        if (valuearray[i].PD_PAYMENT == null) {
+                            var payment = ''
+                        } else {
+                            payment = valuearray[i].PD_PAYMENT
+                        }
+                        if (valuearray[i].PD_DEPOSIT == null) {
+                            var deposit = ''
+                        } else {
+                            deposit = valuearray[i].PD_DEPOSIT
+                        }
+                        if (valuearray[i].PD_PROCESSING_FEE == null) {
+                            var processfee = ''
+                        } else {
+                            processfee = valuearray[i].PD_PROCESSING_FEE
+                        }
+                        if (valuearray[i].PD_CLEANING_FEE == null) {
+                            var cleaningfee = ''
+                        } else {
+                            cleaningfee = valuearray[i].PD_CLEANING_FEE
+                        }
+                        if (valuearray[i].PD_DEPOSIT_REFUND == null) {
+                            var Depositrefund = ''
+                        } else {
+                            Depositrefund = valuearray[i].PD_DEPOSIT_REFUND
+                        }
+                        if (valuearray[i].PD_COMMENTS == null) {
+                            var comments = ''
+                        } else {
+                            comments = valuearray[i].PD_COMMENTS
+                        }
+                        Payment_Tabledata += '<tr style="text-align: center !important;">' +
+                        "<td style='width:80px !important;vertical-align: middle !important;'><div class='col-lg-1'><span style='display: block;color:green' class='glyphicon glyphicon-edit Payment_editbutton' id=" + EditId + "></div><div class='col-lg-1'><span style='display: block;color:red' class='glyphicon glyphicon-trash Payment_removebutton' id=" + DeleteId + "></div></td>" +
+                        "<td style='width:100px !important;vertical-align: middle'>" + valuearray[i].UNIT_NO + "</td>" +
+                        "<td style='width:250px !important;vertical-align: middle' nowrap>" + valuearray[i].CUSTOMER_FIRST_NAME + " " + valuearray[i].CUSTOMER_LAST_NAME + "</td>" +
+                        "<td style='width:150px !important;vertical-align: middle'>" + payment + "</td>" +
+                        "<td style='width:150px !important;vertical-align: middle'>" + deposit + "</td>" +
+                        "<td style='width:150px !important;vertical-align: middle'>" + processfee + "</td>" +
+                        "<td style='width:150px !important;vertical-align: middle'>" + cleaningfee + "</td>" +
+                        "<td style='width:150px !important;vertical-align: middle'>" + Depositrefund + "</td>" +
+                        "<td style='width:120px !important;vertical-align: middle' nowrap>" + valuearray[i].PD_FOR_PERIOD + "</td>" +
+                        "<td style='width:120px !important;vertical-align: middle'>" + valuearray[i].PD_PAID_DATE + "</td>" +
+                        "<td style='width:300px !important;'>" + comments + "</td>" +
+                        "<td style='width:200px !important;vertical-align: middle'>" + valuearray[i].ULD_lOGINID + "</td>" +
+                        "<td style='width:200px !important;vertical-align: middle'>" + valuearray[i].PD_TIMESTAMP + "</td></tr>";
+                    }
+                    else {
+                        if (valuearray[i].PD_PAYMENT == null) {
+                            var payment = ''
+                        } else {
+                            payment = valuearray[i].PD_PAYMENT
+                        }
+
+                        if (valuearray[i].PD_DEPOSIT == null) {
+                            var deposit = ''
+                        } else {
+                            deposit = valuearray[i].PD_DEPOSIT
+                        }
+
+                        if (valuearray[i].PD_PROCESSING_FEE == null) {
+                            var processfee = ''
+                        } else {
+                            processfee = valuearray[i].PD_PROCESSING_FEE
+                        }
+
+                        if (valuearray[i].PD_CLEANING_FEE == null) {
+                            var cleaningfee = ''
+                        } else {
+                            cleaningfee = valuearray[i].PD_CLEANING_FEE
+                        }
+
+                        if (valuearray[i].PD_DEPOSIT_REFUND == null) {
+                            var Depositrefund = ''
+                        } else {
+                            Depositrefund = valuearray[i].PD_DEPOSIT_REFUND
+                        }
+
+                        if (valuearray[i].PD_COMMENTS == null) {
+                            var comments = ''
+                        } else {
+                            comments = valuearray[i].PD_COMMENTS
+                        }
+
+                        Payment_Tabledata += '<tr style="text-align: center !important;vertical-align: middle">' +
+                        "<td style='width:80px !important;vertical-align: middle'><div class='col-lg-1'><span style='display: block;color:green' class='glyphicon glyphicon-edit Payment_editbutton' id=" + EditId + "></div><div class='col-lg-1'><span style='display: block;color:red' class='glyphicon glyphicon-trash Payment_removebutton' id=" + DeleteId + "></div></td>" +
+                        "<td style='width:70px !important;vertical-align: middle'>" + valuearray[i].UNIT_NO + "</td>" +
+                        "<td style='width:200px !important;vertical-align: middle' nowrap>" + valuearray[i].CUSTOMER_FIRST_NAME + " " + valuearray[i].CUSTOMER_LAST_NAME + "</td>" +
+                        "<td style='width:80px !important;color:#FF0000;font-size:13px;font-weight:bold;vertical-align: middle'>" + payment + "</td>" +
+                        "<td style='width:80px !important;color:#FF0000;font-size:13px;font-weight:bold;vertical-align: middle'>" + deposit + "</td>" +
+                        "<td style='width:80px !important;color:#FF0000;font-size:13px;font-weight:bold;vertical-align: middle'>" + processfee + "</td>" +
+                        "<td style='width:80px !important;color:#FF0000;font-size:13px;font-weight:bold;vertical-align: middle'>" + cleaningfee + "</td>" +
+                        "<td style='width:80px !important;color:#FF0000;font-size:13px;font-weight:bold;vertical-align: middle'>" + Depositrefund + "</td>" +
+                        "<td style='width:100px !important;vertical-align: middle' nowrap>" + valuearray[i].PD_FOR_PERIOD + "</td>" +
+                        "<td style='width:80px !important;vertical-align: middle'>" + valuearray[i].PD_PAID_DATE + "</td>" +
+                        "<td style='width:200px !important;vertical-align: middle'>" + comments + "</td>" +
+                        "<td style='width:150px !important;vertical-align: middle'>" + valuearray[i].ULD_lOGINID + "</td>" +
+                        "<td style='width:100px !important;vertical-align: middle' >" + valuearray[i].PD_TIMESTAMP + "</td></tr>";
+                    }
+                }
+                Payment_Tabledata += "</body>";
+                $('section').html(Payment_Tabledata);
+                $('#Payment_Search_DataTable').show();
+                $('#Payment_Datatable').DataTable({
+                "pageLength": 10,
+                "sPaginationType": "full_numbers",
+                "aoColumnDefs" : [{ "aTargets" : ["uk-perioddate-column"] , "sType" : "uk_perioddate"},{ "aTargets" : ["uk-date-column"] , "sType" : "uk_date"}, { "aTargets" : ["uk-timestp-column"] , "sType" : "uk_timestp"} ]
+            });
+            sorting();
+        }
+
         //FUNCTION TO CALL DATE PICKER FORMAT TO SHOW IN FORM ELEMENTS
         function FormTableDateFormat(inputdate){
             var string = inputdate.split("-");
             return string[2]+''+ string[1]+''+string[0];
         }
+        function FormTable_DateFormat(inputdate){
+            var string = inputdate.split("-");
+            return string[2]+'-'+ string[1]+'-'+string[0];
+        }
+        function FormTable_PERIODDateFormat(inputdate){
+            var string = inputdate.split("-");
+            return new Date(Date.parse(string[0] +" 1,"+string[1]));
+        }
         //FUNCTION FOR SORTING
         function sorting(){
             jQuery.fn.dataTableExt.oSort['uk_date-asc']  = function(a,b) {
-                var x = new Date( Date.parse(FormTableDateFormat(a)));
-                var y = new Date( Date.parse(FormTableDateFormat(b)) );
+                var x = new Date( Date.parse(FormTable_DateFormat(a)));
+                var y = new Date( Date.parse(FormTable_DateFormat(b)) );
                 return ((x < y) ? -1 : ((x > y) ?  1 : 0));
             };
             jQuery.fn.dataTableExt.oSort['uk_date-desc'] = function(a,b) {
-                var x = new Date( Date.parse(FormTableDateFormat(a)));
-                var y = new Date( Date.parse(FormTableDateFormat(b)) );
+                var x = new Date( Date.parse(FormTable_DateFormat(a)));
+                var y = new Date( Date.parse(FormTable_DateFormat(b)) );
+                return ((x < y) ? 1 : ((x > y) ?  -1 : 0));
+            };
+            jQuery.fn.dataTableExt.oSort['uk_perioddate-asc']  = function(a,b) {
+                var x = FormTable_PERIODDateFormat(a);
+                var y = FormTable_PERIODDateFormat(b);
+                return ((x < y) ? -1 : ((x > y) ?  1 : 0));
+            };
+            jQuery.fn.dataTableExt.oSort['uk_perioddate-desc'] = function(a,b) {
+                var x = FormTable_PERIODDateFormat(a);
+                var y = FormTable_PERIODDateFormat(b);
                 return ((x < y) ? 1 : ((x > y) ?  -1 : 0));
             };
             jQuery.fn.dataTableExt.oSort['uk_timestp-asc']  = function(a,b) {
-                var x = new Date( Date.parse(FormTableDateFormat(a.split(' ')[0]))).setHours(a.split(' ')[1].split(':')[0],a.split(' ')[1].split(':')[1],a.split(' ')[1].split(':')[2]);
-                var y = new Date( Date.parse(FormTableDateFormat(b.split(' ')[0]))).setHours(b.split(' ')[1].split(':')[0],b.split(' ')[1].split(':')[1],b.split(' ')[1].split(':')[2]);
+                var x = new Date( Date.parse(FormTable_DateFormat(a.split(' ')[0]))).setHours(a.split(' ')[1].split(':')[0],a.split(' ')[1].split(':')[1],a.split(' ')[1].split(':')[2]);
+                var y = new Date( Date.parse(FormTable_DateFormat(b.split(' ')[0]))).setHours(b.split(' ')[1].split(':')[0],b.split(' ')[1].split(':')[1],b.split(' ')[1].split(':')[2]);
                 return ((x < y) ? -1 : ((x > y) ?  1 : 0));
             };
             jQuery.fn.dataTableExt.oSort['uk_timestp-desc'] = function(a,b) {
-                var x = new Date( Date.parse(FormTableDateFormat(a.split(' ')[0]))).setHours(a.split(' ')[1].split(':')[0],a.split(' ')[1].split(':')[1],a.split(' ')[1].split(':')[2]);
-                var y = new Date( Date.parse(FormTableDateFormat(b.split(' ')[0]))).setHours(b.split(' ')[1].split(':')[0],b.split(' ')[1].split(':')[1],b.split(' ')[1].split(':')[2]);
+                var x = new Date( Date.parse(FormTable_DateFormat(a.split(' ')[0]))).setHours(a.split(' ')[1].split(':')[0],a.split(' ')[1].split(':')[1],a.split(' ')[1].split(':')[2]);
+                var y = new Date( Date.parse(FormTable_DateFormat(b.split(' ')[0]))).setHours(b.split(' ')[1].split(':')[0],b.split(' ')[1].split(':')[1],b.split(' ')[1].split(':')[2]);
                 return ((x < y) ? 1 : ((x > y) ?  -1 : 0));
             };
         }
@@ -908,21 +914,80 @@
         $(document).on('click','#UD_Btn_Payment_Updation',function() {
             $('.preloader').show();
             var FormElements=$('#Updation_form').serialize();
+            var searchoption=$('#Payment_SRC_SearchOption').val();
+            $("#Payment_src_btn_search").attr("disabled", "disabled");
+            if(searchoption==2)
+            {
+                var unit=$('#Payment_SRC_Uintsearch').val();
+                var Unit=unit;var Customer='';var FromDate='';var Todate='';var Fromamount='';var Toamount='';
+                var headervalue="DETAILS OF SELECTED UNIT : "+unit;
+                var EMPTY_headervalue="NO DETAILS OF SELECTED UNIT : "+unit;
+            }
+            if(searchoption==3)
+            {
+                var unit=$('#Payment_SRC_unit').val();
+                var customer=$('#Payment_SRC_Customer').val();
+                extractunitno=unit;
+                extractcustomername=customer;
+                var Unit=unit;var Customer=customer;var FromDate='';var Todate='';var Fromamount='';var Toamount='';
+                customer=customer.replace('_',' ');
+                headervalue="DETAILS OF SELECTED UNIT : "+unit+" AND CUSTOMER NAME : "+customer;
+                var EMPTY_headervalue="NO DETAILS OF SELECTED UNIT : "+unit+" AND CUSTOMER NAME : "+customer;
+            }
+            if(searchoption==4)
+            {
+                var fromdate=$('#Payment_SRC_FP_fromdate').val();
+                var todate=$('#Payment_SRC_FP_todate').val();
+                var Unit='';var Customer='';var FromDate=fromdate;var Todate=todate;var Fromamount='';var Toamount='';
+                headervalue="DETAILS OF SELECTED FOR PERIOD DATE RANGE : "+fromdate+" TO : "+todate;
+                var EMPTY_headervalue="NO DETAILS OF SELECTED FOR PERIOD DATE RANGE : "+fromdate+" TO : "+todate;
+            }
+            if(searchoption==5)
+            {
+                var fromdate=$('#Payment_SRC_PD_fromdate').val();
+                var todate=$('#Payment_SRC_PD_todate').val();
+                var Unit='';var Customer='';var FromDate=fromdate;var Todate=todate;var Fromamount='';var Toamount='';
+                headervalue="DETAILS OF SELECTED PAID DATE RANGE : "+fromdate+" TO : "+todate;
+                EMPTY_headervalue="NO DETAILS OF SELECTED PAID DATE RANGE : "+fromdate+" TO : "+todate;
+            }
+            if(searchoption==6)
+            {
+                var unit=$('#Payment_SRC_AR_Uint').val();
+                var fromdate=$('#Payment_SRC_AR_fromdate').val();
+                var todate=$('#Payment_SRC_AR_todate').val();
+                var fromamount=$('#Payment_SRC_AR_fromamount').val();
+                var toamount=$('#Payment_SRC_AR_toamount').val();
+                var Unit=unit;var Customer='';var FromDate=fromdate;var Todate=todate;var Fromamount=fromamount;var Toamount=toamount;
+                headervalue="DETAILS OF SELECTED UNIT : "+unit+" AND FOR PERIOD : "+fromdate+" TO : "+todate+" AND AMOUNT : "+fromamount+" TO : "+toamount;
+                EMPTY_headervalue="NO DETAILS OF SELECTED UNIT : "+unit+" AND FOR PERIOD : "+fromdate+" TO : "+todate+" AND AMOUNT : "+fromamount+" TO : "+toamount;
+            }
             $.ajax({
                 type: "POST",
                 url: controller_url+"PaymentUpdationDetails",
-                data:FormElements,
+                data:FormElements+"&Unit="+unit+"&Customer="+Customer+"&FromDate="+fromdate+"&Todate="+todate+"&Fromamount="+fromamount+"&Toamount="+toamount+"&Option="+searchoption,
                 success: function(data){
-                    if(data=='' || data==null)
+                    var valuearray=JSON.parse(data);
+                    if(valuearray[0]=='' || valuearray[0]==null)
                     {
                         show_msgbox("PAYMENT SEARCH AND UPDATE",Errormsg[3].EMC_DATA,"success",false);
                     }
                     else
                     {
-                        show_msgbox("PAYMENT SEARCH AND UPDATE",returnvalue,"success",false);
+                        show_msgbox("PAYMENT SEARCH AND UPDATE",valuearray[0],"success",false);
+                    }
+                    if(valuearray[1].length!=0)
+                    {
+                        $('#tableheader').text(headervalue);
+                        PaymentDataTable(valuearray[1]);
+                        if (searchoption == 3) {
+                            $('#Paymeny_Extract_btn').show();
+                        }
+                        else {
+                            $('#Paymeny_Extract_btn').hide();
+                        }
+                        $("html, body").animate({scrollTop: $(document).height()}, "slow");
                     }
                     $('#Payment_Updation_form').hide();
-                    $('#Payment_Search_DataTable').hide();
                     $('.preloader').hide();
                 },
                 error: function(data){
@@ -941,12 +1006,60 @@
         });
         $(document).on('click','.deleteconfirm',function(){
             $('.preloader').show();
+            var searchoption=$('#Payment_SRC_SearchOption').val();
+            $("#Payment_src_btn_search").attr("disabled", "disabled");
+            if(searchoption==2)
+            {
+                var unit=$('#Payment_SRC_Uintsearch').val();
+                var Unit=unit;var Customer='';var FromDate='';var Todate='';var Fromamount='';var Toamount='';
+                var headervalue="DETAILS OF SELECTED UNIT : "+unit;
+                var EMPTY_headervalue="NO DETAILS OF SELECTED UNIT : "+unit;
+            }
+            if(searchoption==3)
+            {
+                var unit=$('#Payment_SRC_unit').val();
+                var customer=$('#Payment_SRC_Customer').val();
+                extractunitno=unit;
+                extractcustomername=customer;
+                var Unit=unit;var Customer=customer;var FromDate='';var Todate='';var Fromamount='';var Toamount='';
+                customer=customer.replace('_',' ');
+                headervalue="DETAILS OF SELECTED UNIT : "+unit+" AND CUSTOMER NAME : "+customer;
+                var EMPTY_headervalue="NO DETAILS OF SELECTED UNIT : "+unit+" AND CUSTOMER NAME : "+customer;
+            }
+            if(searchoption==4)
+            {
+                var fromdate=$('#Payment_SRC_FP_fromdate').val();
+                var todate=$('#Payment_SRC_FP_todate').val();
+                var Unit='';var Customer='';var FromDate=fromdate;var Todate=todate;var Fromamount='';var Toamount='';
+                headervalue="DETAILS OF SELECTED FOR PERIOD DATE RANGE : "+fromdate+" TO : "+todate;
+                var EMPTY_headervalue="NO DETAILS OF SELECTED FOR PERIOD DATE RANGE : "+fromdate+" TO : "+todate;
+            }
+            if(searchoption==5)
+            {
+                var fromdate=$('#Payment_SRC_PD_fromdate').val();
+                var todate=$('#Payment_SRC_PD_todate').val();
+                var Unit='';var Customer='';var FromDate=fromdate;var Todate=todate;var Fromamount='';var Toamount='';
+                headervalue="DETAILS OF SELECTED PAID DATE RANGE : "+fromdate+" TO : "+todate;
+                EMPTY_headervalue="NO DETAILS OF SELECTED PAID DATE RANGE : "+fromdate+" TO : "+todate;
+            }
+            if(searchoption==6)
+            {
+                var unit=$('#Payment_SRC_AR_Uint').val();
+                var fromdate=$('#Payment_SRC_AR_fromdate').val();
+                var todate=$('#Payment_SRC_AR_todate').val();
+                var fromamount=$('#Payment_SRC_AR_fromamount').val();
+                var toamount=$('#Payment_SRC_AR_toamount').val();
+                var Unit=unit;var Customer='';var FromDate=fromdate;var Todate=todate;var Fromamount=fromamount;var Toamount=toamount;
+                headervalue="DETAILS OF SELECTED UNIT : "+unit+" AND FOR PERIOD : "+fromdate+" TO : "+todate+" AND AMOUNT : "+fromamount+" TO : "+toamount;
+                EMPTY_headervalue="NO DETAILS OF SELECTED UNIT : "+unit+" AND FOR PERIOD : "+fromdate+" TO : "+todate+" AND AMOUNT : "+fromamount+" TO : "+toamount;
+            }
             $.ajax({
                 type: "POST",
                 url: controller_url+"PaymentsDetails",
-                data:{Rowid:deleterowid},
+                data:"&Rowid="+deleterowid+"&Unit="+unit+"&Customer="+Customer+"&FromDate="+fromdate+"&Todate="+todate+"&Fromamount="+fromamount+"&Toamount="+toamount+"&Option="+searchoption,
                 success: function(data){
-                    if(data==1)
+                    var valuearray=JSON.parse(data);
+                    if(valuearray[0]==1)
                     {
                         show_msgbox("PAYMENT SEARCH AND UPDATE",Errormsg[1].EMC_DATA,"success",false);
                         $('#Payment_Search_DataTable').hide();
@@ -954,6 +1067,18 @@
                     else
                     {
                         show_msgbox("PAYMENT SEARCH AND UPDATE",data,"success",false);
+                    }
+                    if(valuearray[1].length!=0)
+                    {
+                        $('#tableheader').text(headervalue);
+                        PaymentDataTable(valuearray[1]);
+                        if (searchoption == 3) {
+                            $('#Paymeny_Extract_btn').show();
+                        }
+                        else {
+                            $('#Paymeny_Extract_btn').hide();
+                        }
+                        $("html, body").animate({scrollTop: $(document).height()}, "slow");
                     }
                     $('.preloader').hide();
                 },
@@ -991,6 +1116,47 @@
                 }
             });
         });
+        $(document).on('click','#Payment_btn_pdf',function(){
+            var searchoption=$('#Payment_SRC_SearchOption').val();
+            if(searchoption==2)
+            {
+                var inputone=$('#Payment_SRC_Uintsearch').val();
+                var inputtwo='';var inputthree='';var inputfour='';var inputfive='';
+                var headervalue="DETAILS OF SELECTED UNIT : "+inputone;
+            }
+            if(searchoption==3)
+            {
+                var inputone=$('#Payment_SRC_unit').val();
+                var customer=$('#Payment_SRC_Customer').val();
+                var inputtwo=customer;var inputthree='';var inputfour='';var inputfive='';
+                customer=customer.replace('_',' ');
+                headervalue="DETAILS OF SELECTED UNIT : "+inputone+" AND CUSTOMER NAME : "+customer;
+            }
+            if(searchoption==4)
+            {
+                var inputone=$('#Payment_SRC_FP_fromdate').val();
+                var inputtwo=$('#Payment_SRC_FP_todate').val();
+                headervalue="DETAILS OF SELECTED FOR PERIOD DATE RANGE : "+inputone+" TO : "+inputtwo;
+                var inputthree='';var inputfour='';var inputfive='';
+            }
+            if(searchoption==5)
+            {
+                var inputone=$('#Payment_SRC_PD_fromdate').val();
+                var inputtwo=$('#Payment_SRC_PD_todate').val();
+                headervalue="DETAILS OF SELECTED PAID DATE RANGE : "+inputone+" TO : "+inputtwo;
+                var inputthree='';var inputfour='';var inputfive='';
+            }
+            if(searchoption==6)
+            {
+                var inputone=$('#Payment_SRC_AR_Uint').val();
+                var inputtwo=$('#Payment_SRC_AR_fromdate').val();
+                var inputthree=$('#Payment_SRC_AR_todate').val();
+                var inputfour=$('#Payment_SRC_AR_fromamount').val();
+                var inputfive=$('#Payment_SRC_AR_toamount').val();
+                headervalue="DETAILS OF SELECTED UNIT : "+inputone+" AND FOR PERIOD : "+inputtwo+" TO : "+inputthree+" AND AMOUNT : "+inputfour+" TO : "+inputfive;
+            }
+            var pdfurl=document.location.href='<?php echo site_url('FINANCE/FINANCE/Ctrl_Finance_Payment_Search_Update/PaymentPdfCreation')?>?inputone='+inputone+'&inputtwo='+inputtwo+'&inputthree='+inputthree+'&inputfour='+inputfour+'&inputfive='+inputfive+'&header='+headervalue+'&SearchOption='+searchoption;
+        });
     });
 </script>
 <body>
@@ -1016,6 +1182,7 @@
                 </div>
                 <div id="Payment_Search_DataTable" class="table-responsive" hidden>
                     <h4 style="color:#498af3;" id="tableheader"></h4>
+                    <input type="button" id="Payment_btn_pdf" class="btnpdf" value="PDF">
                     <section>
 
                     </section>

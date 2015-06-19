@@ -64,19 +64,18 @@
             $('.preloader').show();
             $('#emptyheaderdatadiv').hide();
             $('#emptyheaderdata').text('');
-            var appendeddata='<h4 style="color:#498af3" id="headerdata">DETAILS OF SELECTED MONTH : '+Forperiod+'</h4>';
-            $('#headerdata').html(appendeddata);
+
             $("#OCBC_btn_submitbutton").attr("disabled", "disabled");
             $.ajax({
                 type: "POST",
                 url: controller_url+"Fin_OCBC_Submit",
                 data:{Period:Forperiod,ErrorList:'2,3,309'},
                 success: function(data){
-
                     var valuearray = JSON.parse(data);
                     var value_array = valuearray[0];
                     var allacticeunits = valuearray[1];
                     var paymenttype = valuearray[2];
+                    var CSVfileCount= valuearray[4];
                     if(value_array.length!=0)
                     {
                         errormsg = valuearray[3];
@@ -99,12 +98,12 @@
                         ocbc_Tabledata += "<th style='text-align:center;vertical-align: top'>CLOSING BALANCE</th>";
                         ocbc_Tabledata += "<th style='text-align:center;vertical-align: top'>LAST BALANCE</th>";
                         ocbc_Tabledata += "<th style='text-align:center;vertical-align: top'>NO OF CREDITS</th>";
-                        ocbc_Tabledata += "<th style='text-align:center;vertical-align: top'>TRANS DATE</th>";
+                        ocbc_Tabledata += "<th style='text-align:center;vertical-align: top' class='uk-date-column'>TRANS DATE</th>";
                         ocbc_Tabledata += "<th style='text-align:center;vertical-align: top'>NO OF DEBITS</th>";
                         ocbc_Tabledata += "<th style='text-align:center;vertical-align: top'>OLD BALANCE</th>";
                         ocbc_Tabledata += "<th style='text-align:center;vertical-align: top'>D.AMOUNT</th>";
-                        ocbc_Tabledata += "<th style='text-align:center;vertical-align: top'>POST DATE</th>";
-                        ocbc_Tabledata += "<th style='text-align:center;vertical-align: top'>VALUE DATE</th>";
+                        ocbc_Tabledata += "<th style='text-align:center;vertical-align: top' class='uk-date-column'>POST DATE</th>";
+                        ocbc_Tabledata += "<th style='text-align:center;vertical-align: top' class='uk-date-column'>VALUE DATE</th>";
                         ocbc_Tabledata += "<th style='text-align:center;vertical-align: top'>DEBIT AMOUNT</th>";
                         ocbc_Tabledata += "<th style='text-align:center;vertical-align: top'>CREDIT AMOUNT</th>";
                         ocbc_Tabledata += "<th style='text-align:center;vertical-align: top'>TRX CODE</th>";
@@ -179,7 +178,7 @@
                                 "<td style='width:200px;text-align:left;' nowrap>" + value_array[i].OBR_TRANSACTION_DESC_DETAILS + "</td>" +
                                 "<td style='width:150px !important;vertical-align: middle' nowrap>" + value_array[i].OBR_BANK_REFERENCE + "</td>" +
                                 "<td style='width:90px !important;vertical-align: middle' nowrap>" + trxtype + "</td>" +
-                                "<td style='width:250px !important;vertical-align: middle' nowrap><SELECT class='form-control UnitChange OCBC_submitcheck' style='width:150px' id=" + unitid + "></SELECT></td>" +
+                                "<td style='width:120px !important;vertical-align: middle' nowrap><SELECT class='form-control UnitChange OCBC_submitcheck' style='width:150px' id=" + unitid + "></SELECT></td>" +
                                 "<td style='width:200px !important;vertical-align: middle' nowrap><SELECT class='form-control CustomerChange OCBC_submitcheck' style='width:250px' disabled id=" + Customerid + "><OPTION>SELECT</OPTION></SELECT></td>" +
                                 "<td style='width:150px !important;vertical-align: middle' nowrap><SELECT class='form-control LPChange OCBC_submitcheck'disabled id=" + leaseperiodid + "><OPTION>SELECT</OPTION></SELECT></td>" +
                                 "<td style='width:200px !important;vertical-align: middle' nowrap><SELECT class='form-control LPChange OCBC_submitcheck' id=" + paymentid + "></SELECT></td>" +
@@ -224,6 +223,16 @@
                         }
                         ocbc_Tabledata += "</body>";
                         $('#ocbc_records').html(ocbc_Tabledata);
+                        var forperiod=(Forperiod+' = '+Ocbcid_Array.length).toUpperCase();
+                        if((CSVfileCount==Ocbcid_Array.length)|| CSVfileCount=='')
+                        {
+                            var appendeddata = '<h4 style="color:#498af3" id="headerdata">TOTAL RECORDS IN ' + forperiod + '</h4>';
+                        }
+                        if((CSVfileCount!=Ocbcid_Array.length)&& CSVfileCount!='')
+                        {
+                            appendeddata = '<h4 style="color:red" id="headerdata">TOTAL RECORDS IN ' + forperiod + '</h4>';
+                        }
+                        $('#headerdata').html(appendeddata);
                         for (var k = 0; k < Ocbcid_Array.length; k++) {
                             $('#OCBCUnitNo_' + Ocbcid_Array[k]).html(unitoptions)
                             $('#OCBCPaymenttype_' + Ocbcid_Array[k]).html(paymentoptions)
@@ -258,9 +267,10 @@
                             "aaSorting": [],
                             "pageLength": 10,
                             "responsive": true,
-                            "sPaginationType": "full_numbers"
+                            "sPaginationType": "full_numbers",
+                            "aoColumnDefs" : [{ "aTargets" : ["uk-date-column"] , "sType" : "uk_date"} ]
                         });
-
+                        sorting();
                         $('#FIN_OCBC_DataTable').show();
                         $('.preloader').hide();
                         $('#emptyheaderdatadiv').hide();
@@ -279,6 +289,23 @@
                 }
             });
         });
+        function FormTableDateFormat(inputdate){
+            var string = inputdate.split("-");
+            return string[2]+'-'+ string[1]+'-'+string[0];
+        }
+        //FUNCTION FOR SORTING
+        function sorting(){
+            jQuery.fn.dataTableExt.oSort['uk_date-asc']  = function(a,b) {
+                var x = new Date( Date.parse(FormTableDateFormat(a)));
+                var y = new Date( Date.parse(FormTableDateFormat(b)) );
+                return ((x < y) ? -1 : ((x > y) ?  1 : 0));
+            };
+            jQuery.fn.dataTableExt.oSort['uk_date-desc'] = function(a,b) {
+                var x = new Date( Date.parse(FormTableDateFormat(a)));
+                var y = new Date( Date.parse(FormTableDateFormat(b)) );
+                return ((x < y) ? 1 : ((x > y) ?  -1 : 0));
+            };
+        }
         $(document).on('change','.UnitChange',function() {
             var id=this.id;
             var splittedid=id.split('_');
@@ -503,6 +530,10 @@
                 }
             });
         });
+        $(document).on('click','#OCBC_btn_pdf',function(){
+            var Forperiod=$("#Fin_OCBC_Forperiod").val();
+            var pdfurl=document.location.href='<?php echo site_url('FINANCE/OCBC/Ctrl_Ocbc_Ocbc/OCBCPdfCreation')?>?Period='+Forperiod;
+        });
     });
 </script>
 <body>
@@ -517,22 +548,19 @@
                     <div class="col-md-2">
                         <label>SELECT THE MONTH<span class="labelrequired"><em>*</em></span></label>
                     </div>
-                    <div class="col-md-9">
-                        <div class="col-sm-3" style="padding-left: 0px;">
-                            <div class="input-group addon">
-                                <input type="text" class="form-control datemandtry" name="Fin_OCBC_Forperiod" id="Fin_OCBC_Forperiod"  placeholder="For Period"><label  class="input-group-addon" for=Fin_OCBC_Forperiod><span class="glyphicon glyphicon-calendar"></span></label>
-                            </div>
-                        </div>
+                    <div class="col-md-2">
+                        <input type="text" class="form-control datemandtry" name="Fin_OCBC_Forperiod" id="Fin_OCBC_Forperiod"  placeholder="For Period">
                     </div>
                 </div>
                 <div class="row form-group">
                     <div class="col-lg-offset-2 col-lg-3">
-                        <input type="button" id="OCBC_btn_submitbutton" class="btn" value="SUBMIT" disabled>         <input type="button" id="OCBC_btn_Reset" class="btn" value="RESET">
+                        <input type="button" id="OCBC_btn_submitbutton" class="btn" value="SUBMIT" disabled>    <input type="button" id="OCBC_btn_Reset" class="btn" value="RESET">
                     </div>
                 </div>
                 <br>
                 <div id="FIN_OCBC_DataTable" class="table-responsive" hidden>
                     <div id="headerdata"></div><h3 style="color:#498af3" id="headerdata"></h3>
+                    <input type="button" id="OCBC_btn_pdf" class="btnpdf" value="PDF">
                     <section id="ocbc_records">
                     </section>
                 </div>

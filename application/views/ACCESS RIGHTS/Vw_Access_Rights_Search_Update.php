@@ -469,11 +469,11 @@ $(document).ready(function(){
                         var idsubmenu=k+j
                         if(URSRC_sub_menu1[count].length!=0)
                         {
-                            URSRC_submenu = '<div ><ul style="list-style: none;"><li style="list-style: none;" ><tr ><td>&nbsp;&nbsp;&nbsp;<input value="+" type="button"  id='+URSRC_submenu_button_id+' height="1" width="1" class="exp1" /><input type="checkbox" name="Sub_menu[]" id='+submenuids+' value='+sub_menu_id+'&&'+' level="child" class="tree submenucheck URSRC_submit_validate Child"  />' + sub_menu_values[0] + '</td></tr>';
+                            URSRC_submenu = '<div ><ul style="list-style: none;"><li style="list-style: none;" ><tr ><td>&nbsp;&nbsp;&nbsp;<input value="+" type="button"  id='+URSRC_submenu_button_id+' height="1" width="1" class="exp1" /><input type="checkbox" name="Sub_menu[]" id='+submenuids+' value='+sub_menu_id+'&&'+' level="child" class="tree submenucheck  Child"  />' + sub_menu_values[0] + '</td></tr>';
                         }
                         else
                         {
-                            URSRC_submenu = '<div ><ul style="list-style: none;"><li style="list-style: none;" ><tr ><td>&nbsp;&nbsp;&nbsp;<input type="checkbox" name="Sub_menu[]" id='+submenuids+' value='+sub_menu_id+' class="tree submenucheck URSRC_submit_validate" level="child" />' + sub_menu_values[0] + '</td><td><input type="hidden" value='+sub_menu_fp_id+' id='+fp_id+'></tr>';
+                            URSRC_submenu = '<div ><ul style="list-style: none;"><li style="list-style: none;" ><tr ><td>&nbsp;&nbsp;&nbsp;<input type="checkbox" name="Sub_menu[]" id='+submenuids+' value='+sub_menu_id+' class="tree submenucheck" level="child" />' + sub_menu_values[0] + '</td><td><input type="hidden" value='+sub_menu_fp_id+' id='+fp_id+'></tr>';
                         }
                         URSRC_submenu+='<div id='+URSRC_submenu1_div_id+'  ><tr><td><table id='+URSRC_submenu1_table_id+' hidden ></table></tr></div></li></ul></div>';
                         $('#'+"URSRC_tble_submenu"+i).append(URSRC_submenu);
@@ -495,7 +495,7 @@ $(document).ready(function(){
                             var idsubmenu1=count+m+'s1'
                             var subsubmenuid='USR_SITE_submenuchk-'+mainmenuid+'-'+submenulength+'-'+k+'-'+sub_menu_id+'-'+m+'-'+subsubmenucount;//+'-'+sub_menu1_id;
                             var fp_id='fp_id'+sub_menu1_id
-                            URSRC_submenu1 = '<div ><ul style="list-style: none;"><li style="list-style: none;" ><tr ><td>&nbsp;&nbsp;&nbsp;<input type="checkbox" name="Sub_menu1[]" id='+subsubmenuid+' value='+sub_menu1_id+' class="tree subsubmenuchk URSRC_submit_validate" level="child1" />' +sub_menu1_values[0] + '</td><td><input type="hidden" value='+sub_menu1_fp_id+' id='+fp_id+'></tr></li></ul></div>';
+                            URSRC_submenu1 = '<div ><ul style="list-style: none;"><li style="list-style: none;" ><tr ><td>&nbsp;&nbsp;&nbsp;<input type="checkbox" name="Sub_menu1[]" id='+subsubmenuid+' value='+sub_menu1_id+' class="tree subsubmenuchk " level="child1" />' +sub_menu1_values[0] + '</td><td><input type="hidden" value='+sub_menu1_fp_id+' id='+fp_id+'></tr></li></ul></div>';
                             $('#'+"URSRC_tble_submenu1"+k+j).append(URSRC_submenu1);
                             for(var m1=0;m1<menus.length;m1++){
                                 if(sub_menu1_id==menus[m1]){
@@ -511,6 +511,7 @@ $(document).ready(function(){
         $('#URSRC_btn_submitbutton').show()
     }
     ///////////////////////////
+    var check_flag=0;
     $(document).on('change','.submenucheck',function(){
         var URSRC_checkbox_id=$(this).attr("id");
         var URSRC_checkbox_id_split=URSRC_checkbox_id.split('-');
@@ -527,7 +528,8 @@ $(document).ready(function(){
         if(count!=0)
         {
             $('#'+URSRC_checkbox_id_split[1]+'m').prop('checked',true);
-//            URSRC_submit_validate()
+            check_flag=1;
+            URSRC_submit_validate()
         }
         else
         {
@@ -568,13 +570,15 @@ $(document).ready(function(){
         if(submenucount!=0)
         {
             $('#'+URSRC_checkbox_id_idsplit[1]+'m').prop('checked',true);
-//            URSRC_submit_validate()
+            check_flag=1;
+            URSRC_submit_validate()
         }
         else
         {
             $('#'+URSRC_checkbox_id_idsplit[1]+'m').prop('checked',false);
         }
     });
+
     $(document).on("click",'.exp,.collapse2', function (){
         var button_id=$(this).attr("id")
         var btnid=button_id.split("_");
@@ -693,6 +697,7 @@ $(document).ready(function(){
         var URSRC_folder1='<tr><td><label>FOLDER</label></tr>'
         $('#URSRC_tble_folder').append(URSRC_folder1);
         var URSRC_main_folder=URSRC_folder_array[0];
+
         var URSRC_sub_files=URSRC_folder_array[1]
         var URSRC_folder;
         for (var i = 0; i < URSRC_main_folder.length; i++) {
@@ -742,24 +747,26 @@ $(document).ready(function(){
         $('#URSRC_btn_submitbutton').show()
     }
     var URSRC_mainmenu_value;
+
     $(document).on("change",'.tree ', function (){
-        var val = $(this).attr("checked");
-        URSRC_mainmenu_value=$(this).val()
-        $(this).parent().find("input:checkbox").each(function() {
-            var flag=0;
-            if (val) {
-                $(this).attr("checked", "checked");
-            }
-            else
-            {
-                $(this).removeAttr("checked");
-                $(this).parents('ul').each(function(){
-                    $(this).prev('input:checkbox').removeAttr("checked");
-                });
-            }
-        });
-        URSRC_submit_validate();
+
+            var val = $(this).attr("checked");
+            URSRC_mainmenu_value = $(this).val()
+            $(this).parent().find("input:checkbox").each(function () {
+
+                if (val) {
+                    $(this).attr("checked", "checked");
+                }
+                else {
+                    $(this).removeAttr("checked");
+                    $(this).parents('ul').each(function () {
+                        $(this).prev('input:checkbox').removeAttr("checked");
+                    });
+                }
+            });
+            URSRC_submit_validate();
     });
+
     function URSRC_submit_validate(){
         var submenu_values=[];
         $('input[name="Sub_menu[]"]:checked').each(function() {
@@ -788,11 +795,12 @@ $(document).ready(function(){
             }
             for(var a=0;a<menu_values.length;a++){
                 for(var i=0;i<submenu_values.length;i++){
-                    if(menu_values[a]=="REPORT"|| URSRC_mainmenu_value=="REPORT"||URSRC_mainmenu_value==3){
-                        if(submenu_values[i]==3)
+                    if(menu_values[a]=="REPORT"|| URSRC_mainmenu_value=="REPORT"||URSRC_mainmenu_value==3 ){
+                        if(submenu_values[i]==3 )
                         {
                             var URSRC_report_id=$('#fp_id3').val();
                             var URSRC_report_id=URSRC_report_id.split(',')
+
                             for(var k=0;k<URSRC_report_id.length;k++){
                                 $('#'+URSRC_report_id[k]+'fol').prop("checked", true);
                             }
@@ -800,6 +808,37 @@ $(document).ready(function(){
                         }
                         else{
                             var URSRC_report_id=$('#fp_id3').val();
+                            var URSRC_report_id=URSRC_report_id.split(',')
+
+                            for(var k=0;k<URSRC_report_id.length;k++){
+                                $('#'+URSRC_report_id[k]+'fol').prop("checked", false);
+                            }
+                        }
+                        if(($('#1fol').is(":checked")==true)){
+                            $('#1f').prop("checked", true);
+                        }
+                        else{
+                            $('#1f').prop("checked", false);
+                        }
+                    }
+                }
+            }
+            for(var a=0;a<menu_values.length;a++){
+                for(var i=0;i<submenu_values.length;i++){
+                    if(menu_values[a]=="CONFIGURATION"|| URSRC_mainmenu_value=="CONFIGURATION"|| URSRC_mainmenu_value==2){
+                        if( submenu_values[i]==2)
+                        {
+
+                            var URSRC_report_id=$('#fp_id2').val();
+                            var URSRC_report_id=URSRC_report_id.split(',')
+                            for(var k=0;k<URSRC_report_id.length;k++){
+                                $('#'+URSRC_report_id[k]+'fol').prop("checked", true);
+                            }
+                            break;
+                        }
+                        else{
+
+                            var URSRC_report_id=$('#fp_id2').val();
                             var URSRC_report_id=URSRC_report_id.split(',')
                             for(var k=0;k<URSRC_report_id.length;k++){
                                 $('#'+URSRC_report_id[k]+'fol').prop("checked", false);
@@ -840,7 +879,7 @@ $(document).ready(function(){
                             if((submenu1_values[h]==14))
                                 var URSRC_customer_file_id=$('#fp_id14').val();
                             if((submenu1_values[h]==19))
-                                var URSRC_customer_file_id=$('#fp_id24').val();
+                                var URSRC_customer_file_id=$('#fp_id19').val();
                             var URSRC_customer_file_id1=URSRC_customer_file_id.split(',')
                             var  URSRC_customer_file_id1_length=URSRC_customer_file_id1.length
                             for(var i=0;i<URSRC_customer_file_id1.length;i++){
@@ -889,12 +928,13 @@ $(document).ready(function(){
                 else{
                     $('#1f').prop("checked", false);
                 }
-                var URSRC_finance_file_id=$('#fp_id35').val();
+
+                var URSRC_finance_file_id=$('#fp_id30').val();
                 var URSRC_finance_file_id=URSRC_finance_file_id.split(',')
                 for(var i=0;i<URSRC_finance_file_id.length;i++){
                     $('#'+URSRC_finance_file_id[i]+'fol').prop("checked", false);
                 }
-                var URSRC_finance_file_id=$('#fp_id30').val();
+                var URSRC_finance_file_id=$('#fp_id36').val();
                 var URSRC_finance_file_id=URSRC_finance_file_id.split(',')
                 for(var i=0;i<URSRC_finance_file_id.length;i++){
                     $('#'+URSRC_finance_file_id[i]+'fol').prop("checked", false);
@@ -905,45 +945,30 @@ $(document).ready(function(){
                     $('#'+URSRC_finance_file_id[i]+'fol').prop("checked", false);
                 }
             }
-            //FOR FINANCE
+            //    FINANCE
             for(var a=0;a<menu_values.length;a++){
-                if(menu_values[a]=="FINANCE"||(URSRC_mainmenu_value=="FINANCE")||URSRC_mainmenu_value==35||URSRC_mainmenu_value==30||URSRC_mainmenu_value==26){
+                if(menu_values[a]=="FINANCE"||(URSRC_mainmenu_value=="FINANCE")||URSRC_mainmenu_value==36||URSRC_mainmenu_value==30||URSRC_mainmenu_value==35){
                     var fin_flag=0
                     var fin_flag1=0
                     var fin_flag2=0
-                    var fin_flag3=0
                     for(var h=0;h<submenu1_values.length;h++){
-                        if((submenu1_values[h]==35)){
+                        if((submenu1_values[h]==36)){
                             fin_flag=1
-                            var URSRC_finance_file_id=$('#fp_id35').val();
+                            var URSRC_finance_file_id=$('#fp_id36').val();
                             var URSRC_finance_file_id=URSRC_finance_file_id.split(',')
                             for(var i=0;i<URSRC_finance_file_id.length;i++){
                                 $('#'+URSRC_finance_file_id[i]+'fol').prop("checked", true);
                             }
                         }
-                        else if((submenu1_values[h]==35)&& fin_flag==0){
-                                var URSRC_finance_file_id=$('#fp_id35').val();
+                        else{
+                            if(fin_flag==0){
+                                var URSRC_finance_file_id=$('#fp_id36').val();
                                 var URSRC_finance_file_id=URSRC_finance_file_id.split(',')
                                 for(var i=0;i<URSRC_finance_file_id.length;i++){
                                     $('#'+URSRC_finance_file_id[i]+'fol').prop("checked", false);
                                 }
                             }
-                        if((submenu1_values[h]==36)){
-                            fin_flag3=1
-                            var URSRC_finance_file_id=$('#fp_id36').val();
-                            var URSRC_finance_file_id=URSRC_finance_file_id.split(',')
-                            for(var i=0;i<URSRC_finance_file_id.length;i++){
-                                $('#'+URSRC_finance_file_id[i]+'fol').prop("checked", true);
-                            }
                         }
-                        else if((submenu1_values[h]==36)&& fin_flag3==0){
-                            var URSRC_finance_file_id=$('#fp_id36').val();
-                            var URSRC_finance_file_id=URSRC_finance_file_id.split(',')
-                            for(var i=0;i<URSRC_finance_file_id.length;i++){
-                                $('#'+URSRC_finance_file_id[i]+'fol').prop("checked", false);
-                            }
-                        }
-
                         if((submenu1_values[h]==30)){
                             fin_flag1=1
                             var URSRC_finance_file_id=$('#fp_id30').val();
@@ -952,20 +977,20 @@ $(document).ready(function(){
                                 $('#'+URSRC_finance_file_id[i]+'fol').prop("checked", true);
                             }
                         }
-                        else if(fin_flag1==0 && submenu1_values[h]==30){
+                        else{
+                            if(fin_flag1==0){
                                 var URSRC_finance_file_id=$('#fp_id30').val();
                                 var URSRC_finance_file_id=URSRC_finance_file_id.split(',')
                                 for(var i=0;i<URSRC_finance_file_id.length;i++){
                                     $('#'+URSRC_finance_file_id[i]+'fol').prop("checked", false);
                                 }
                             }
-
-                        else if((submenu1_values[h]==26)||(submenu1_values[h]==27))
+                        }
+                        if((submenu1_values[h]==26)||(submenu1_values[h]==27))
                         {
                             fin_flag2=1
-                            if((submenu1_values[h]==26)){
+                            if((submenu1_values[h]==26))
                                 var URSRC_finance_file_id=$('#fp_id26').val();
-                            }
                             if((submenu1_values[h]==27))
                                 var URSRC_finance_file_id=$('#fp_id27').val();
                             var URSRC_finance_file_id=URSRC_finance_file_id.split(',')
@@ -973,11 +998,11 @@ $(document).ready(function(){
                                 $('#'+URSRC_finance_file_id[i]+'fol').prop("checked", true);
                             }
                         }
-                        else if(((submenu1_values[h]==26)||(submenu1_values[h]==27))&& fin_flag2==0 )
+                        else
                         {
-                            if((submenu1_values[h]==26))
+                            if((submenu1_values[h]!=26))
                                 var URSRC_finance_file_id=$('#fp_id26').val();
-                            if((submenu1_values[h]==27))
+                            if((submenu1_values[h]!=27))
                                 var URSRC_finance_file_id=$('#fp_id27').val();
                             var URSRC_finance_file_id=URSRC_finance_file_id.split(',');
                             if(fin_flag2==0){
@@ -986,7 +1011,6 @@ $(document).ready(function(){
                                 }
                             }
                         }
-
                         if(($('#1fol').is(":checked")==true)){
                             $('#1f').prop("checked", true);
                         }

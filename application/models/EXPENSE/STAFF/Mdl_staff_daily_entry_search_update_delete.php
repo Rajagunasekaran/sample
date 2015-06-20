@@ -617,74 +617,77 @@ class Mdl_staff_daily_entry_search_update_delete extends CI_Model{
     //FUNCTION FOR SAVE staff PART
     public function STDLY_salaryupdate($USERSTAMP){
         $STDLY_SEARCH_id=$_POST['id'];
-        $STDLY_SEARCH_comments=$_POST['STDLY_SEARCH_comments'];
-        $STDLY_SEARCH_paiddate=$_POST['STDLY_SEARCH_paiddate'];
-        $STDLY_SEARCH_paiddate = date('Y-m-d',strtotime($STDLY_SEARCH_paiddate));
-        $STDLY_SEARCH_cpfradio=$_POST['STDLY_SEARCH_cpfradio'];
-        $STDLY_SEARCH_levyradio=$_POST['STDLY_SEARCH_levyradio'];
-        $STDLY_SEARCH_fromperiod = $_POST['STDLY_SEARCH_fromperiod'];
-        $STDLY_SEARCH_fromperiod = date('Y-m-d',strtotime($STDLY_SEARCH_fromperiod));
-        $STDLY_SEARCH_toperiod= $_POST['STDLY_SEARCH_toperiod'];
-        $STDLY_SEARCH_toperiod = date('Y-m-d',strtotime($STDLY_SEARCH_toperiod));
-        $STDLY_SEARCH_hidenlevyamount= $_POST['STDLY_SEARCH_hidenlevyamount'];
-        $STDLY_SEARCH_hidensalaryamount= $_POST['STDLY_SEARCH_hidensalaryamount'];
-        $STDLY_SEARCH_hidencpfamount= $_POST['STDLY_SEARCH_hidencpfamount'];
-        $STDLY_SEARCH_cpfamount= $_POST['STDLY_SEARCH_cpfamount'];
+        $STDLY_SEARCH_empname =$_POST['STDLY_SEARCH_lb_namelist'];
+        $STDLY_SEARCH_comments = $_POST['STDLY_SEARCH_ta_salarycommentsbox'];
+        $STDLY_SEARCH_paiddate =date('Y-m-d',strtotime($_POST['STDLY_SEARCH_db_paiddate']));
+        $STDLY_SEARCH_cpfradio= (isset($_POST['STDLY_SEARCH_radio_cpfamt']));
+        $STDLY_SEARCH_levyradio= (isset($_POST['STDLY_SEARCH_radio_levyamt']));
+        $STDLY_SEARCH_salaryradio=(isset($_POST['STDLY_SEARCH_radio_slramt']));
+        $STDLY_SEARCH_fromperiod =date('Y-m-d',strtotime($_POST['STDLY_SEARCH_db_fromdate']));
+        $STDLY_SEARCH_toperiod = date('Y-m-d',strtotime($_POST['STDLY_SEARCH_db_todate']));
+        $STDLY_SEARCH_hidenlevyamount = $_POST['STDLY_SEARCH_tb_gethiddenelevy'];
+        $STDLY_SEARCH_hidensalaryamount = $_POST['STDLY_SEARCH_tb_gethiddenesal'];
+        $STDLY_SEARCH_hidencpfamount = $_POST['STDLY_SEARCH_tb_gethiddenecpf'];
+        $STDLY_SEARCH_cpfamount = $_POST['STDLY_SEARCH_tb_hidecpf1'];
+        $STDLY_SEARCH_searchoption=$_POST['STDLY_SEARCH_lb_salarysearchoption'];
+        $STDLY_SEARCH_lb_salarysearchoption=$_POST['STDLY_SEARCH_lb_salarysearchoption'];
 
         if($STDLY_SEARCH_comments=="")//COMMENTS
         {  $STDLY_SEARCH_comments='null';}else{
-            $STDLY_SEARCH_comments="'$STDLY_SEARCH_comments'";
-        }
-        if($STDLY_SEARCH_cpfamount=='undefined' || $STDLY_SEARCH_cpfamount=="")
-        {
-            $STDLY_SEARCH_cpfamount='null';
-        }
-
-        if($STDLY_SEARCH_cpfradio=='current')
+            $STDLY_SEARCH_comments=$this->db->escape_like_str($STDLY_SEARCH_comments);
+            $STDLY_SEARCH_comments="'$STDLY_SEARCH_comments'";}
+        if($STDLY_SEARCH_cpfradio==true)
         {
             if(($STDLY_SEARCH_cpfamount=='undefined')||($STDLY_SEARCH_cpfamount==""))
             {
-                $STDLY_SEARCH_cpfamount=$STDLY_SEARCH_hidencpfamount;
+                $STDLY_SEARCH_cpfamount="'$STDLY_SEARCH_hidencpfamount'";
+            }
+            else{
+                $STDLY_SEARCH_cpfamount="'$STDLY_SEARCH_cpfamount'";
             }
         }
-
-        if($STDLY_SEARCH_cpfradio=='undefined')
+        else
         {
             $STDLY_SEARCH_cpfamount='null';
         }
-
-        $STDLY_SEARCH_levyamount =$_POST['STDLY_SEARCH_tb_hidelevy1'];
-        if($STDLY_SEARCH_levyamount=='undefined')
-        {
-            $STDLY_SEARCH_levyamount='null';
-        }
-        if($STDLY_SEARCH_levyradio=='current')
+        $STDLY_SEARCH_levyamount = $_POST['STDLY_SEARCH_tb_hidelevy1'];
+        if($STDLY_SEARCH_levyradio==true)
         {
             if(($STDLY_SEARCH_levyamount=='undefined')||($STDLY_SEARCH_levyamount==""))
             {
-                $STDLY_SEARCH_levyamount=$STDLY_SEARCH_hidenlevyamount;
+                $STDLY_SEARCH_levyamount="'$STDLY_SEARCH_hidenlevyamount'";
             }
-        }
+            else{
+                $STDLY_SEARCH_levyamount="'$STDLY_SEARCH_levyamount'";
+            }
 
-        if($STDLY_SEARCH_levyradio=='undefined')
+        }
+        else
         {
             $STDLY_SEARCH_levyamount='null';
         }
-
-         $STDLY_SEARCH_salaryamount = $_POST['STDLY_SEARCH_tb_hidesal1'];
-        if($STDLY_SEARCH_salaryamount=='undefined')
+        $STDLY_SEARCH_salaryamount = $_POST['STDLY_SEARCH_tb_hidesal1'];
+        if($STDLY_SEARCH_salaryradio==true)
         {
+            if(($STDLY_SEARCH_salaryamount=='undefined')||($STDLY_SEARCH_salaryamount=="")) {
+                $STDLY_SEARCH_salaryamount = "'$STDLY_SEARCH_hidensalaryamount'";
+            }
+            else{
+                $STDLY_SEARCH_salaryamount="'$STDLY_SEARCH_salaryamount'";
+            }
+        }
+        else{
             $STDLY_SEARCH_salaryamount='null';
         }
-
-        if(($STDLY_SEARCH_salaryamount=='undefined')||($STDLY_SEARCH_salaryamount==""))
-        {
-            $STDLY_SEARCH_salaryamount=$STDLY_SEARCH_hidensalaryamount;
-        }
-        $insertquery = "CALL SP_STAFFDLY_STAFF_SALARY_UPDATE('$STDLY_SEARCH_id','$STDLY_SEARCH_paiddate','$STDLY_SEARCH_fromperiod','$STDLY_SEARCH_toperiod','$STDLY_SEARCH_cpfamount','$STDLY_SEARCH_levyamount','$STDLY_SEARCH_salaryamount',$STDLY_SEARCH_comments,'$USERSTAMP',@SUCCESS_MSG)";
+        $insertquery = "CALL SP_STAFFDLY_STAFF_SALARY_UPDATE('$STDLY_SEARCH_id','$STDLY_SEARCH_paiddate','$STDLY_SEARCH_fromperiod','$STDLY_SEARCH_toperiod',$STDLY_SEARCH_cpfamount,$STDLY_SEARCH_levyamount,$STDLY_SEARCH_salaryamount,$STDLY_SEARCH_comments,'$USERSTAMP',@SUCCESS_MSG)";
         $query = $this->db->query($insertquery);
         $FLAG= $this->db->query('SELECT @SUCCESS_MSG as SUCCESSMSG');
         $finalFLAG = $FLAG->row()->SUCCESSMSG;
-        return  $finalFLAG;
+        $STDLY_SEARCH_db_startdate=$_POST['STDLY_SEARCH_db_startdate'];
+        $STDLY_SEARCH_db_enddate=$_POST['STDLY_SEARCH_db_enddate'];
+        $STDLY_INPUT_arr_comments=[];
+        if(($STDLY_SEARCH_lb_salarysearchoption==77)||($STDLY_SEARCH_lb_salarysearchoption==85)||($STDLY_SEARCH_lb_salarysearchoption==79)||($STDLY_SEARCH_lb_salarysearchoption==82)||($STDLY_SEARCH_lb_salarysearchoption==83))
+            $STDLY_INPUT_arr_comments=$this->STDLY_SEARCH_comments($USERSTAMP,$STDLY_SEARCH_lb_salarysearchoption,$STDLY_SEARCH_db_startdate,$STDLY_SEARCH_db_enddate);
+        return [$STDLY_INPUT_arr_comments,$finalFLAG];
     }
 }

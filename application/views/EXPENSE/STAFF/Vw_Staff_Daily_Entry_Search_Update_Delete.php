@@ -2425,6 +2425,12 @@ $(document).ready(function(){
     var rowid='';
     $(document).on('click','.deletebutton',function(){
         rowid = $(this).attr('id');
+        if($('#STDLY_SEARCH_lb_typelist').val()==40)
+        {
+            id = $(this).attr('id').split('_');
+            rowid=id[1];
+        }
+        alert(rowid)
         show_msgbox("STAFF EXPENSE DAILY ENTRY/SEARCH/UPDATE/DELETE",STDLY_SEARCH_errorArray[31].EMC_DATA,"success","delete");
     });
     //CLICK FUNCTION FOR OK BUTTON IN DELETE MESSAGE BOX
@@ -3246,11 +3252,11 @@ $(document).ready(function(){
     }
     //SEARCHING THE SALARY  SEARCH OPTION FROM THE  TABLES......................
     $('#STDLY_SEARCH_btn_salarybutton').click(function(){
-      $('.preloader').show()
         STDLY_SEARCH_salaryfunction();
     });
     function STDLY_SEARCH_salaryfunction()
     {
+        $('.preloader').show()
         var STDLY_SEARCH_salaryoptionvalmatch=$("#STDLY_SEARCH_lb_salarysearchoption").val();
         if(STDLY_SEARCH_salaryoptionvalmatch==86)
         {
@@ -3628,6 +3634,8 @@ $(document).ready(function(){
     //CLICK EVENT FUCNTION FOR edit SEARCH
     $(document).on('click','#STDLY_SEARCH_tbl_salaryhtmltable tr td .staffsalary_editbutton',function(){
         $('textarea').height('116')
+        $('#STDLY_SEARCH_tbl_salaryhtmltable tr').removeClass('row_selected');
+        $(this).closest('tr').addClass('row_selected');
         currentid = $(this).attr('id');
         var rowid=currentid.split('_')[0];
         primaryid=currentid.split('_')[1];
@@ -4060,74 +4068,54 @@ $(document).ready(function(){
     $('#STDLY_SEARCH_btn_sbutton').click(function()
     {
         $(".preloader").show();
-        var STDLY_SEARCH_typelist=$('#STDLY_SEARCH_lb_typelist').val();
-        var STDLY_SEARCH_empname=$('#STDLY_SEARCH_lb_namelist').val();
-        var STDLY_SEARCH_comments=$('#STDLY_SEARCH_ta_salarycommentsbox').val();
-        var STDLY_SEARCH_paiddate=$('#STDLY_SEARCH_db_paiddate').val();
-        var STDLY_SEARCH_cpfradio=$("input[name=STDLY_SEARCH_radio_cpfamt]:checked").val();
-        var STDLY_SEARCH_levyradio=$("input[name=STDLY_SEARCH_radio_levyamt]:checked").val();
-        var STDLY_SEARCH_fromperiod=$('#STDLY_SEARCH_db_fromdate').val();
-        var STDLY_SEARCH_toperiod=$('#STDLY_SEARCH_db_todate').val();
-        var STDLY_SEARCH_hidenlevyamount=$('#STDLY_SEARCH_tb_gethiddenelevy').val();
-        var STDLY_SEARCH_hidensalaryamount=$('#STDLY_SEARCH_tb_gethiddenesal').val();
-        var STDLY_SEARCH_hidencpfamount=$('#STDLY_SEARCH_tb_gethiddenecpf').val();
-        var STDLY_SEARCH_cpfamount=$('#STDLY_SEARCH_tb_hidecpf1').val();
-        var STDLY_SEARCH_searchoption=$('#STDLY_SEARCH_lb_salarysearchoption').val();
-        var STDLY_SEARCH_tb_hidelevy1=$('#STDLY_SEARCH_tb_hidelevy1').val();
-        var STDLY_SEARCH_tb_hidesal1=$('#STDLY_SEARCH_tb_hidesal1').val();
-        $.ajax({
-            type: "POST",
-            'url':STDLY_SEARCH_controller_url+"STDLY_salaryupdate",
-            data:{'id':primaryid,'STDLY_SEARCH_typelist':STDLY_SEARCH_typelist,'STDLY_SEARCH_comments':STDLY_SEARCH_comments,'STDLY_SEARCH_paiddate':STDLY_SEARCH_paiddate,'STDLY_SEARCH_cpfradio':STDLY_SEARCH_cpfradio,'STDLY_SEARCH_levyradio':STDLY_SEARCH_levyradio,'STDLY_SEARCH_fromperiod':STDLY_SEARCH_fromperiod,'STDLY_SEARCH_toperiod':STDLY_SEARCH_toperiod,'STDLY_SEARCH_hidenlevyamount':STDLY_SEARCH_hidenlevyamount,'STDLY_SEARCH_hidensalaryamount':STDLY_SEARCH_hidensalaryamount,'STDLY_SEARCH_hidencpfamount':STDLY_SEARCH_hidencpfamount,'STDLY_SEARCH_cpfamount':STDLY_SEARCH_cpfamount,'STDLY_SEARCH_searchoption':STDLY_SEARCH_searchoption,'STDLY_SEARCH_tb_hidelevy1':STDLY_SEARCH_tb_hidelevy1,'STDLY_SEARCH_tb_hidesal1':STDLY_SEARCH_tb_hidesal1},
-            success: function(data) {
-                alert(data)
-                $(".preloader").hide();
-            }
-        });
-//        STDLY_SEARCH_btn_sbuttonresult()
+        STDLY_SEARCH_btn_sbuttonresult()
     });
     var STDLY_INPUT_response;
     function STDLY_SEARCH_btn_sbuttonresult()
     {
-        var STDLY_SEARCH_typelist=$('#STDLY_SEARCH_lb_typelist').val();
-        var STDLY_SEARCH_empname=$('#STDLY_SEARCH_lb_namelist').val();
-        var STDLY_SEARCH_comments=$('#STDLY_SEARCH_ta_salarycommentsbox').val();
-        var STDLY_SEARCH_paiddate=$('#STDLY_SEARCH_db_paiddate').val();
-//        var STDLY_SEARCH_cpfradio=$('#STDLY_SEARCH_radio_cpfamt').val();
-        var STDLY_SEARCH_cpfradio=$("input[name=STDLY_SEARCH_radio_cpfamt]:checked").val();
-//        var STDLY_SEARCH_levyradio=$('#STDLY_SEARCH_radio_levyamt').val();
-        var STDLY_SEARCH_levyradio=$("input[name=STDLY_SEARCH_radio_levyamt]:checked").val();
-        var STDLY_SEARCH_fromperiod=$('#STDLY_SEARCH_db_fromdate').val();
-        var STDLY_SEARCH_toperiod=$('#STDLY_SEARCH_db_todate').val();
-        var STDLY_SEARCH_hidenlevyamount=$('#STDLY_SEARCH_tb_gethiddenelevy').val();
-        var STDLY_SEARCH_hidensalaryamount=$('#STDLY_SEARCH_tb_gethiddenesal').val();
-        var STDLY_SEARCH_hidencpfamount=$('#STDLY_SEARCH_tb_gethiddenecpf').val();
-        var STDLY_SEARCH_cpfamount=$('#STDLY_SEARCH_tb_hidecpf1').val();
-        var STDLY_SEARCH_searchoption=$('#STDLY_SEARCH_lb_salarysearchoption').val();
-        var STDLY_SEARCH_tb_hidelevy1=$('#STDLY_SEARCH_tb_hidelevy1').val();
-        var STDLY_SEARCH_tb_hidesal1=$('#STDLY_SEARCH_tb_hidesal1').val();
         $.ajax({
             type: "POST",
-            'url':STDLY_SEARCH_controller_url+"updatefunction_staffentry",
-            data:{'id':currentid,'STDLY_SEARCH_typelist':STDLY_SEARCH_typelist,'STDLY_SEARCH_comments':STDLY_SEARCH_comments,'STDLY_SEARCH_paiddate':STDLY_SEARCH_paiddate,'STDLY_SEARCH_cpfradio':STDLY_SEARCH_cpfradio,'STDLY_SEARCH_levyradio':STDLY_SEARCH_levyradio,'STDLY_SEARCH_fromperiod':STDLY_SEARCH_fromperiod,'STDLY_SEARCH_toperiod':STDLY_SEARCH_toperiod,'STDLY_SEARCH_hidenlevyamount':STDLY_SEARCH_hidenlevyamount,'STDLY_SEARCH_hidensalaryamount':STDLY_SEARCH_hidensalaryamount,'STDLY_SEARCH_hidencpfamount':STDLY_SEARCH_hidencpfamount,'STDLY_SEARCH_cpfamount':STDLY_SEARCH_cpfamount,'STDLY_SEARCH_searchoption':STDLY_SEARCH_searchoption,'STDLY_SEARCH_tb_hidelevy1':STDLY_SEARCH_tb_hidelevy1,'STDLY_SEARCH_tb_hidesal1':STDLY_SEARCH_tb_hidesal1},
+            'url':STDLY_SEARCH_controller_url+"STDLY_salaryupdate",
+            data:$('#staffdlyentry_form').serialize()+'&id='+primaryid,
             success: function(data) {
                 $(".preloader").hide();
-                STDLY_INPUT_response=JSON.parse(data)
-                salary_entry_response=STDLY_INPUT_response.SUCCESSMSG
-                if(salary_entry_response==1)
+                var STDLY_SEARCH_upd_res=JSON.parse(data);
+                var successflag=STDLY_SEARCH_upd_res[1];
+                if(successflag==1)
                 {
-                    var replacetype=$('#STDLY_SEARCH_lb_typelist').find('option:selected').text();
-                    var STDLY_INPUT_CONFSAVEMSG = errormsg[2].EMC_DATA.replace('[TYPE]', replacetype);
-                    show_msgbox("STAFF EXPENSE DAILY ENTRY/SEARCH/UPDATE/DELETE",STDLY_INPUT_CONFSAVEMSG,"success",false)
-                    STDLY_SEARCH_salaryfunction()
+                    var replacetype=STDLY_SEARCH_errorArray[1].EMC_DATA.replace('[TYPE]', $('#STDLY_SEARCH_lb_typelist').find('option:selected').text());
+                    show_msgbox("STAFF EXPENSE DAILY ENTRY/SEARCH/UPDATE/DELETE",replacetype,"success",false)
+                }
+                else if(successflag==0)
+                {
+                    show_msgbox("STAFF EXPENSE DAILY ENTRY/SEARCH/UPDATE/DELETE",STDLY_SEARCH_errorArray[35].EMC_DATA,"success",false)
                 }
                 else
                 {
-                    show_msgbox("STAFF EXPENSE DAILY ENTRY/SEARCH/UPDATE/DELETE",STDLY_INPUT_response,"error",false)
+                    show_msgbox("STAFF EXPENSE DAILY ENTRY/SEARCH/UPDATE/DELETE",successflag,"success",false)
                 }
+                $('#STDLY_SEARCH_ta_salarycommentsbox').hide();
+                $('#STDLY_SEARCH_lbl_salarycomments').hide();
+                $('#STDLY_SEARCH_btn_sbutton').hide();
+                $('#STDLY_SEARCH_btn_rbutton').hide();
+                $('#STDLY_SEARCH_tble_multi').hide();
+                $('#STDLY_SEARCH_tble_agentupdateform').hide();
+                $('#STDLY_SEARCH_lbl_nodataerrormsg').hide();
+                $('#STDLY_SEARCH_tble_agentupdateform').hide();
+                $('#STDLY_SEARCH_tbl_salaryupdatetable').hide();
+                var STDLY_SEARCH_listoption=$('#STDLY_SEARCH_lb_typelist').val();
+                alert(STDLY_SEARCH_upd_res[0])
+                if((STDLY_SEARCH_listoption==40)&&($('#STDLY_SEARCH_lb_salarysearchoption').val()==85))
+                {
+                    if(STDLY_SEARCH_upd_res[0].length>0)
+                        STDLY_SEARCH_arr_salcomments=STDLY_SEARCH_upd_res[0];
+                }
+                STDLY_SEARCH_salaryfunction();
             }
         });
+
     }
+
     //RESET ALL THE FORM ELEMENTS..................
     $('.resetsubmit').click(function(){
         $(".preloader").show();
@@ -5083,7 +5071,7 @@ $(document).ready(function(){
                     $('#STDLY_SEARCH_lbl_headermesg').text(STDLY_SEARCH_CONFSAVEMSG);
                     $('#STDLY_SEARCH_lbl_headermesg').show();
                     $('#STDLY_SEARCH_btn_staffbutton').attr("disabled", "disabled");
-                    var STDLY_SEARCH_table_value='<table id="STDLY_SEARCH_tbl_salaryhtmltable" border="1"  cellspacing="0" class="srcresult" width="1500" ><thead  bgcolor="#6495ed" style="color:white"><tr><th>DELETE</th><th style="width:170px;">STAFF EXPENSE</th><th class="uk-date-column" style="width:105px;">INVOICE DATE</th><th style="width:65px;">INVOICE AMOUNT</th><th style="width:150px;">INVOICE ITEMS</th><th style="width:150px;">INVOICE FROM</th><th style="width:200px;">COMMENTS</th><th style="width:150px;">USERSTAMP</th><th style="width:160px;" class="uk-timestp-column">TIMESTAMP</th></tr></thead><tbody>'
+                    var STDLY_SEARCH_table_value='<table id="STDLY_SEARCH_tbl_staffhtmltable" border="1"  cellspacing="0" class="srcresult" width="1500" ><thead  bgcolor="#6495ed" style="color:white"><tr><th>DELETE</th><th style="width:170px;">STAFF EXPENSE</th><th class="uk-date-column" style="width:105px;">INVOICE DATE</th><th style="width:65px;">INVOICE AMOUNT</th><th style="width:150px;">INVOICE ITEMS</th><th style="width:150px;">INVOICE FROM</th><th style="width:200px;">COMMENTS</th><th style="width:150px;">USERSTAMP</th><th style="width:160px;" class="uk-timestp-column">TIMESTAMP</th></tr></thead><tbody>'
                     for(var j=0;j<values_array.length;j++){
                         var STDLY_SEARCH_values=values_array[j];
                         id=values_array[j].ES_ID;
@@ -5099,7 +5087,7 @@ $(document).ready(function(){
                     }
                     STDLY_SEARCH_table_value+='</tbody></table>';
                     $('#STDLY_SEARCH_sec_salryentry').html(STDLY_SEARCH_table_value);
-                    $('#STDLY_SEARCH_tbl_salaryhtmltable').DataTable({
+                    $('#STDLY_SEARCH_tbl_staffhtmltable').DataTable({
                         "aaSorting": [],
                         "pageLength": 10,
                         "sPaginationType":"full_numbers",
@@ -5109,7 +5097,6 @@ $(document).ready(function(){
                     });
                     $('#STDLY_SEARCH_div_salaryhtmltable').show();
                 }
-
             }
         });
         sorting()
@@ -5137,46 +5124,39 @@ $(document).ready(function(){
         var id=cid.split('_');
         combineid=id[1];
         tdvalue=$(this).text();
-        if(id[0]=='staffamountlist' && tdvalue!=''){
-            staff_staffamountlist='staff_amount_list_'+id[1];
-            $('#staffamountlist_'+id[1]).replaceWith("<td class='new' id='"+previous_id+"'><input type='text' id='"+staff_staffamountlist+"' name='data'  class='staffdlyupdate amountonly'   value='"+tdvalue+"'>");
+        if(id[0]=='staffamountlist'){
+            $('#'+cid).replaceWith("<td class='new' id='"+previous_id+"'><input type='text' id='staffamount' name='data'  class='staffdlyupdate amountonly form-control'  style='width:90px;' svalue='"+tdvalue+"'>");
             $(".amountonly").doValidation({rule:'numbersonly',prop:{realpart:5,imaginary:2}});
         }
         else if(id[0]=='staffinvoiceitem'){
-            staff_invoice_item='staff_invoiceitem_'+id[1];
-            $('#staffinvoiceitem_'+id[1]).replaceWith("<td class='new' id='"+previous_id+"'><textarea id='"+staff_invoice_item+"' name='data'  class='staffdlyupdate' style='width: 200px'>"+tdvalue+"</textarea></td>");
+            $('#'+cid).replaceWith("<td class='new' id='"+previous_id+"'><textarea id='staffinvoiceitem' name='data'  class='staffdlyupdate form-control' style='width: 200px'>"+tdvalue+"</textarea></td>");
         }
         else if(id[0]=='staffcategory'){
-            staff_category_id='staff_invoiceitem_'+id[1];
-//             $('#staffcategory_'+id[1]).replaceWith("<td class='new' id='"+previous_id+"'><input type='text' id='"+staff_category_list+"' name='data'  class='staffdlyupdate amountonly'   value='"+tdvalue+"'>");
-            $('#staffcategory_'+id[1]).replaceWith("<td  class='new' id='"+previous_id+"'><select class='form-control staffdlyupdate' id='"+staff_category_id+"' style='width: 250px;'></select></td>");
+            $('#'+cid).replaceWith("<td  class='new' id='"+previous_id+"'><select class='form-control staffdlyupdate' id='category' style='width: 250px;'></select></td>");
             var staffcategory='<option value="SELECT">SELECT</option>';
             for (var i = 0; i < STDLY_SEARCH_expensestaff.length; i++) {
                 if( i>=0 && i<=4)
                 {
                     var STDLY_SEARCH_expenseArrayallid=STDLY_SEARCH_expensestaff[i].ECN_ID;
                     var STDLY_SEARCH_expenseArray=STDLY_SEARCH_expensestaff[i].ECN_DATA;
-                    if(STDLY_SEARCH_expensestaff[i].ECN_DATA==id[0])
+                        if(STDLY_SEARCH_expenseArray==tdvalue)
                     {
                         var categorysindex=i;
                     }
                     staffcategory += '<option value="' + STDLY_SEARCH_expensestaff[i].ECN_ID + '">' + STDLY_SEARCH_expensestaff[i].ECN_DATA + '</option>';
                 }
             }
-            $('#'+staff_category_id).html(staffcategory)
-            $('#'+staff_category_id).prop('selectedIndex',categorysindex);
+            $('#category').html(staffcategory)
+            $('#category').prop('selectedIndex',categorysindex+1);
         }
         else if(id[0]=='staffinvoicefrom'){
-            staff_invoice_from='staff_invoice_from'+id[1];
-            $('#staffinvoicefrom_'+id[1]).replaceWith("<td class='new' id='"+previous_id+"'><input type='text' id='"+staff_invoice_from+"' name='data'  class='staffdlyupdate amountonly'   value='"+tdvalue+"'>");
+            $('#'+cid).replaceWith("<td class='new' id='"+previous_id+"'><input type='text' id='staffinvoicefrom' name='data'  class='staffdlyupdate amountonly form-control'  style='width: 150px'> value='"+tdvalue+"'>");
         }
         else if(id[0]=='comments'){
-            comments_id='commentsid'+id[1];
-            $('#comments_'+id[1]).replaceWith("<td class='new' id='"+previous_id+"'><textarea id='"+comments_id+"' name='data'  class='staffdlyupdate' style='width: 200px'>"+tdvalue+"</textarea></td>");
+            $('#'+cid).replaceWith("<td class='new' id='"+previous_id+"'><textarea id='staffcomments' name='data'  class='staffdlyupdate form-control' style='width: 200px'>"+tdvalue+"</textarea></td>");
         }
         else if(id[0]=='staffdate'){
-            staffdate_id='staffdateid'+id[1];
-            $('#staffdate_'+id[1]).replaceWith("<td  class='new' id='"+staffdate_id+"'><input type='text' id='staff_date' name='data'  class='staffdlyupdate form-control date-picker'  style='width: 110px' value='"+tdvalue+"'></td>");
+            $('#'+cid).replaceWith("<td  class='new' id='"+previous_id+"'><input type='text' id='staff_date' name='data'  class='staffdlyupdate form-control date-picker'  style='width: 110px' value='"+tdvalue+"'></td>");
         }
         $(".date-picker").datepicker({dateFormat:'dd-mm-yy',
             changeYear: true,
@@ -5576,13 +5556,19 @@ $(document).ready(function(){
 <div class="form-group" id="startdate">
     <label  id='STDLY_SEARCH_lbl_startdate' class="col-sm-3" hidden> START DATE <em>*</em></label>
     <div class="col-sm-3">
+        <div class="input-group addon">
         <input  type="text" class="datebox submitvalagent STDLY_SEARCH_class_validcomments datemandtry form-control"  name="STDLY_SEARCH_db_startdate" id="STDLY_SEARCH_db_startdate" style="width:100px;" hidden />
+            <label for="STDLY_SEARCH_db_startdate" class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></label>
+        </div>
     </div>
 </div>
 <div class="form-group" id="enddate">
     <label id='STDLY_SEARCH_lbl_enddate' class="col-sm-3" hidden> END DATE <em>*</em></label>
     <div class="col-sm-3">
+        <div class="input-group addon">
         <input  type="text" class="datebox submitvalagent STDLY_SEARCH_class_validcomments datemandtry form-control" name="STDLY_SEARCH_db_enddate" id="STDLY_SEARCH_db_enddate" style="width:100px;" hidden />
+            <label for="STDLY_SEARCH_db_enddate" class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></label>
+            </div>
     </div>
 </div>
 <div class="form-group" id="fromamount">

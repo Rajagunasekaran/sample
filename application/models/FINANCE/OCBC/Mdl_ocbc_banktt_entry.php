@@ -253,4 +253,113 @@ class Mdl_ocbc_banktt_entry extends CI_Model {
         $this->db->query("COMMIT");
         return $returnvalues;
     }
+    public function Banktt_PDF_SearchResults($Option,$UserStamp,$timeZoneFormat,$unit,$customer)
+    {
+        if($Option==1)
+        {
+            $BANKTT_TEMPTABLEQUERY="CALL SP_TEMP_TABLE_BANKTT('$unit',null,'$Option','$UserStamp',@BANKTT_SEARCH_TEMPTBLNAME,@BANKTT_TEMP_TABLE_NAME)";
+            $BANKTT_SRC_QUERY="SELECT BT.BT_ID,TBST.BANK_TRANSFER_TYPE,TBST.TRANSACTION_STATUS,TBST.BANK_TRANSFER_CHARGES_TO,TBST.BANK_TRANSFER_CREATED_BY,U.UNIT_NO,CONCAT(C.CUSTOMER_FIRST_NAME,' ',CUSTOMER_LAST_NAME)AS CUSTOMERNAME,DATE_FORMAT(CONVERT_TZ(BT.BT_DATE,".$timeZoneFormat."),'%d-%m-%Y') AS BT_DATE,BT.BT_AMOUNT,BT.BT_ACC_NAME,BT.BT_ACC_NO,BT.BT_BANK_CODE,BT.BT_BRANCH_CODE,BT.BT_BANK_ADDRESS,BT.BT_SWIFT_CODE,BT.BT_CUST_REF,BT.BT_INV_DETAILS,DATE_FORMAT(CONVERT_TZ(BT.BT_DEBITED_ON,".$timeZoneFormat."),'%d-%m-%Y') AS BT_DEBITED_ON,BT.BT_COMMENTS,ULD.ULD_LOGINID,DATE_FORMAT(CONVERT_TZ(BT.BT_TIMESTAMP,".$timeZoneFormat."),'%d-%m-%Y %T') AS BT_TIME_STAMP FROM BANK_TRANSFER BT,BANK_TRANSFER_DETAIL BTD,UNIT U,CUSTOMER C,TEMP_BANKTTSEARCHTABLE TBST,USER_LOGIN_DETAILS ULD WHERE BT.BT_ID=BTD.BT_ID AND U.UNIT_ID=BTD.UNIT_ID AND C.CUSTOMER_ID=BTD.CUSTOMER_ID AND TBST.BT_ID=BTD.BT_ID AND ULD.ULD_ID=BT.ULD_ID";
+        }
+        if($Option==2)
+        {
+            $BANKTT_TEMPTABLEQUERY="CALL SP_TEMP_TABLE_BANKTT('$unit','$customer','$Option','$UserStamp',@BANKTT_SEARCH_TEMPTBLNAME,@BANKTT_TEMP_TABLE_NAME)";
+            $BANKTT_SRC_QUERY="SELECT BT.BT_ID,TBST.BANK_TRANSFER_TYPE,TBST.TRANSACTION_STATUS,TBST.BANK_TRANSFER_CHARGES_TO,TBST.BANK_TRANSFER_CREATED_BY,U.UNIT_NO,CONCAT(C.CUSTOMER_FIRST_NAME,' ',CUSTOMER_LAST_NAME)AS CUSTOMERNAME,DATE_FORMAT(CONVERT_TZ(BT.BT_DATE,".$timeZoneFormat."),'%d-%m-%Y') AS BT_DATE,BT.BT_AMOUNT,BT.BT_ACC_NAME,BT.BT_ACC_NO,BT.BT_BANK_CODE,BT.BT_BRANCH_CODE,BT.BT_BANK_ADDRESS,BT.BT_SWIFT_CODE,BT.BT_CUST_REF,BT.BT_INV_DETAILS,DATE_FORMAT(CONVERT_TZ(BT.BT_DEBITED_ON,".$timeZoneFormat."),'%d-%m-%Y') AS BT_DEBITED_ON,BT.BT_COMMENTS,ULD.ULD_LOGINID,DATE_FORMAT(CONVERT_TZ(BT.BT_TIMESTAMP,".$timeZoneFormat."),'%d-%m-%Y %T') AS BT_TIME_STAMP FROM BANK_TRANSFER BT,BANK_TRANSFER_DETAIL BTD,UNIT U,CUSTOMER C,TEMP_BANKTTSEARCHTABLE TBST,USER_LOGIN_DETAILS ULD WHERE BT.BT_ID=BTD.BT_ID AND U.UNIT_ID=BTD.UNIT_ID AND C.CUSTOMER_ID=BTD.CUSTOMER_ID AND TBST.BT_ID=BTD.BT_ID AND ULD.ULD_ID=BT.ULD_ID";
+        }
+        if($Option==3)
+        {
+            $fromdate=date('Y-m-d',strtotime($unit));
+            $todate=date('Y-m-d',strtotime($customer));
+            $BANKTT_TEMPTABLEQUERY="CALL SP_TEMP_TABLE_BANKTT('$fromdate','$todate','$Option','$UserStamp',@BANKTT_SEARCH_TEMPTBLNAME,@BANKTT_TEMP_TABLE_NAME)";
+            $BANKTT_SRC_QUERY="SELECT BT_ID,BANK_TRANSFER_TYPE,DATE_FORMAT(CONVERT_TZ(BT_DATE,".$timeZoneFormat."),'%d-%m-%Y') AS BT_DATE,UNIT_NO,CUSTOMERNAME,BT_ACC_NO,BT_ACC_NAME,BT_AMOUNT,TRANSACTION_STATUS,DATE_FORMAT(CONVERT_TZ(BT_DEBITED_ON,".$timeZoneFormat."),'%d-%m-%Y') AS BT_DEBITED_ON,BT_BANK_CODE,BT_BRANCH_CODE,BT_BANK_ADDRESS,BT_SWIFT_CODE,BANK_TRANSFER_CHARGES_TO,BT_CUST_REF,BT_INV_DETAILS,BANK_TRANSFER_CREATED_BY,BT_COMMENTS,ULD_LOGINID,DATE_FORMAT(CONVERT_TZ(BT_TIMESTAMP,".$timeZoneFormat."),'%d-%m-%Y %T') AS BT_TIME_STAMP FROM BANKTT_SEARCH_TABLE ORDER BY BT_DATE ASC";
+        }
+        if($Option==4)
+        {
+            $BANKTT_TEMPTABLEQUERY="CALL SP_TEMP_TABLE_BANKTT('$unit',null,'$Option','$UserStamp',@BANKTT_SEARCH_TEMPTBLNAME,@BANKTT_TEMP_TABLE_NAME)";
+            $BANKTT_SRC_QUERY="SELECT BT.BT_ID,TBST.BANK_TRANSFER_TYPE,TBST.TRANSACTION_STATUS,TBST.BANK_TRANSFER_CHARGES_TO,TBST.BANK_TRANSFER_CREATED_BY,U.UNIT_NO,CONCAT(C.CUSTOMER_FIRST_NAME,' ',CUSTOMER_LAST_NAME)AS CUSTOMERNAME,DATE_FORMAT(CONVERT_TZ(BT.BT_DATE,".$timeZoneFormat."),'%d-%m-%Y') AS BT_DATE,BT.BT_AMOUNT,BT.BT_ACC_NAME,BT.BT_ACC_NO,BT.BT_BANK_CODE,BT.BT_BRANCH_CODE,BT.BT_BANK_ADDRESS,BT.BT_SWIFT_CODE,BT.BT_CUST_REF,BT.BT_INV_DETAILS,DATE_FORMAT(CONVERT_TZ(BT.BT_DEBITED_ON,".$timeZoneFormat."),'%d-%m-%Y') AS BT_DEBITED_ON,BT.BT_COMMENTS,ULD.ULD_LOGINID,DATE_FORMAT(CONVERT_TZ(BT.BT_TIMESTAMP,".$timeZoneFormat."),'%d-%m-%Y %T') AS BT_TIME_STAMP FROM BANK_TRANSFER BT,BANK_TRANSFER_DETAIL BTD,UNIT U,CUSTOMER C,TEMP_BANKTTSEARCHTABLE TBST,USER_LOGIN_DETAILS ULD WHERE BT.BT_ID=BTD.BT_ID AND U.UNIT_ID=BTD.UNIT_ID AND C.CUSTOMER_ID=BTD.CUSTOMER_ID AND TBST.BT_ID=BTD.BT_ID AND ULD.ULD_ID=BT.ULD_ID";
+        }
+        if($Option==5)
+        {
+            $BANKTT_TEMPTABLEQUERY="CALL SP_TEMP_TABLE_BANKTT('$unit','$customer','$Option','$UserStamp',@BANKTT_SEARCH_TEMPTBLNAME,@BANKTT_TEMP_TABLE_NAME)";
+            $BANKTT_SRC_QUERY="SELECT BT_ID,BANK_TRANSFER_TYPE,DATE_FORMAT(CONVERT_TZ(BT_DATE,".$timeZoneFormat."),'%d-%m-%Y') AS BT_DATE,UNIT_NO,CUSTOMERNAME,BT_ACC_NO,BT_ACC_NAME,BT_AMOUNT,TRANSACTION_STATUS,DATE_FORMAT(CONVERT_TZ(BT_DEBITED_ON,".$timeZoneFormat."),'%d-%m-%Y') AS BT_DEBITED_ON,BT_BANK_CODE,BT_BRANCH_CODE,BT_BANK_ADDRESS,BT_SWIFT_CODE,BANK_TRANSFER_CHARGES_TO,BT_CUST_REF,BT_INV_DETAILS,BANK_TRANSFER_CREATED_BY,BT_COMMENTS,ULD_LOGINID,DATE_FORMAT(CONVERT_TZ(BT_TIMESTAMP,".$timeZoneFormat."),'%d-%m-%Y %T') AS BT_TIME_STAMP FROM BANKTT_SEARCH_TABLE ORDER BY BT_DATE ASC";
+        }
+        if($Option==6)
+        {
+            $BANKTT_SRC_QUERY="SELECT BT_ID,BANK_TRANSFER_TYPE,DATE_FORMAT(CONVERT_TZ(BT_DATE,".$timeZoneFormat."),'%d-%m-%Y') AS BT_DATE,UNIT_NO,CUSTOMERNAME,BT_ACC_NO,BT_ACC_NAME,BT_AMOUNT,TRANSACTION_STATUS,DATE_FORMAT(CONVERT_TZ(BT_DEBITED_ON,".$timeZoneFormat."),'%d-%m-%Y') AS BT_DEBITED_ON,BT_BANK_CODE,BT_BRANCH_CODE,BT_BANK_ADDRESS,BT_SWIFT_CODE,BANK_TRANSFER_CHARGES_TO,BT_CUST_REF,BT_INV_DETAILS,BANK_TRANSFER_CREATED_BY,BT_COMMENTS,ULD_LOGINID,DATE_FORMAT(CONVERT_TZ(BT_TIMESTAMP,".$timeZoneFormat."),'%d-%m-%Y %T') AS BT_TIME_STAMP FROM BANKTT_SEARCH_TABLE ORDER BY BT_DATE ASC";
+            $BANKTT_TEMPTABLEQUERY="CALL SP_TEMP_TABLE_BANKTT('$unit',null,'$Option','$UserStamp',@BANKTT_SEARCH_TEMPTBLNAME,@BANKTT_TEMP_TABLE_NAME)";
+        }
+        $this->db->query($BANKTT_TEMPTABLEQUERY);
+        if($Option==3 || $Option==5 || $Option==6)
+        {
+            $outparm_query = 'SELECT @BANKTT_TEMP_TABLE_NAME AS TEMP_TABLE';
+            $outparm_result = $this->db->query($outparm_query);
+            $csrc_tablename=$outparm_result->row()->TEMP_TABLE;
+            $BANKTT_SRC_QUERY=str_replace('BANKTT_SEARCH_TABLE',$csrc_tablename,$BANKTT_SRC_QUERY);
+        }
+        else
+        {
+            $outparm_query = 'SELECT @BANKTT_SEARCH_TEMPTBLNAME AS TEMP_TABLE';
+            $outparm_result = $this->db->query($outparm_query);
+            $csrc_tablename=$outparm_result->row()->TEMP_TABLE;
+            $BANKTT_SRC_QUERY=str_replace('TEMP_BANKTTSEARCHTABLE',$csrc_tablename,$BANKTT_SRC_QUERY);
+        }
+        $resultset=$this->db->query($BANKTT_SRC_QUERY);
+        $this->db->query('DROP TABLE IF EXISTS '.$csrc_tablename);
+        $BankTT_data='<br>
+        <table width="2500px" id="USU_tble_htmltable" border="1" style="border-collapse: collapse;" cellspacing="0" data-class="table" class="srcresult">
+        <sethtmlpageheader name="header" page="all" value="on" show-this-page="1"/>
+        <thead bgcolor="#6495ed" style="color:white">
+        <tr>
+           <th nowrap style="color:#fff !important; background-color:#498af3;text-align:center;font-weight: bold;width:100px">TRANSACTION TYPE</th>
+           <th nowrap style="color:#fff !important; background-color:#498af3;text-align:center;font-weight: bold;width:200px">DATE</th>
+           <th nowrap style="color:#fff !important; background-color:#498af3;text-align:center;font-weight: bold;width:130px">ACCOUNT NAME</th>
+           <th nowrap style="color:#fff !important; background-color:#498af3;text-align:center;font-weight: bold;width:130px">ACCOUNT NO</th>
+           <th nowrap style="color:#fff !important; background-color:#498af3;text-align:center;font-weight: bold;width:130px">AMOUNT</th>
+           <th nowrap style="color:#fff !important; background-color:#498af3;text-align:center;font-weight: bold;width:130px">UNIT</th>
+           <th nowrap style="color:#fff !important; background-color:#498af3;text-align:center;font-weight: bold;width:130px">CUSTOMER</th>
+           <th nowrap style="color:#fff !important; background-color:#498af3;text-align:center;font-weight: bold;width:100px">STATUS</th>
+           <th nowrap style="color:#fff !important; background-color:#498af3;text-align:center;font-weight: bold;width:100px">DEBITED / REJECTED DATE</th>
+           <th nowrap style="color:#fff !important; background-color:#498af3;text-align:center;font-weight: bold;width:150px">BANK CODE</th>
+
+           <th nowrap style="color:#fff !important; background-color:#498af3;text-align:center;font-weight: bold;width:150px">BRANCH CODE</th>
+           <th nowrap style="color:#fff !important; background-color:#498af3;text-align:center;font-weight: bold;width:130px">BANK ADDRESS</th>
+           <th nowrap style="color:#fff !important; background-color:#498af3;text-align:center;font-weight: bold;width:130px">SWIFT CODE</th>
+           <th nowrap style="color:#fff !important; background-color:#498af3;text-align:center;font-weight: bold;width:130px">CHARGES TO</th>
+           <th nowrap style="color:#fff !important; background-color:#498af3;text-align:center;font-weight: bold;width:130px">CUST REF</th>
+           <th nowrap style="color:#fff !important; background-color:#498af3;text-align:center;font-weight: bold;width:100px">INV DETAILSS</th>
+           <th nowrap style="color:#fff !important; background-color:#498af3;text-align:center;font-weight: bold;width:100px">COMMENTS</th>
+           <th nowrap style="color:#fff !important; background-color:#498af3;text-align:center;font-weight: bold;width:150px">CREATED BY</th>
+           <th nowrap style="color:#fff !important; background-color:#498af3;text-align:center;font-weight: bold;width:150px">USERSTAMP</th>
+           <th nowrap style="color:#fff !important; background-color:#498af3;text-align:center;font-weight: bold;width:150px">TIMESTAMP</th>
+        </tr>
+        </thead>
+        <tbody>';
+        foreach ($resultset->result_array() as $key => $value)
+        {
+            $BankTT_data.='<tr>';
+            $BankTT_data.='<td style="text-align:center;">'.$value['BANK_TRANSFER_TYPE'].'</td>';
+            $BankTT_data.='<td  style="text-align:center;">'.$value['BT_DATE'].'</td>';
+            $BankTT_data.='<td>' . $value['BT_ACC_NAME'] . '</td>';
+            $BankTT_data.='<td>' . $value['BT_ACC_NO'] . '</td>';
+            $BankTT_data.='<td style="text-align:center;">' . $value['BT_AMOUNT'] . '</td>';
+            $BankTT_data.='<td>' . $value['UNIT_NO'] . '</td>';
+            $BankTT_data.='<td>' . $value['CUSTOMERNAME'] . '</td>';
+            $BankTT_data.='<td style="text-align:center;">' . $value['TRANSACTION_STATUS'] . '</td>';
+            $BankTT_data.='<td  style="text-align:center;">'.$value['BT_DEBITED_ON'].'</td>';
+            $BankTT_data.='<td  style="text-align:center;">'.$value['BT_BANK_CODE'].'</td>';
+            $BankTT_data.='<td  style="text-align:center;">'.$value['BT_BRANCH_CODE'].'</td>';
+
+            $BankTT_data.='<td>'.$value['BT_BANK_ADDRESS'].'</td>';
+            $BankTT_data.='<td style="text-align:center;">'.$value['BT_SWIFT_CODE'].'</td>';
+            $BankTT_data.='<td  style="text-align:center;">'.$value['BANK_TRANSFER_CHARGES_TO'].'</td>';
+            $BankTT_data.='<td>' . $value['BT_CUST_REF'] . '</td>';
+            $BankTT_data.='<td>' . $value['BT_INV_DETAILS'] .'</td>';
+            $BankTT_data.='<td>' . $value['BT_COMMENTS'] . '</td>';
+            $BankTT_data.='<td style="text-align:center;">' . $value['CREATED_BY'] . '</td>';
+            $BankTT_data.='<td style="text-align:center;">' . $value['ULD_LOGINID'] . '</td>';
+            $BankTT_data.='<td  style="text-align:center;">'.$value['BT_TIME_STAMP'].'</td>';
+            $BankTT_data.='</tr>';
+        }
+        $BankTT_data.='</body></table>';
+        return $BankTT_data;
+    }
 }

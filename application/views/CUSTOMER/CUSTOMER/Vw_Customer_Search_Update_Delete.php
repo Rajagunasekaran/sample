@@ -83,6 +83,8 @@
      $(document).on('change','#CC_SRC_SearchOption',function() {
          $('#CSRC_updation_form').hide();
          $('.preloader').show();
+         $('#CC_SEARCH_DataTable').hide();
+         $('#CC_SEARCH_acDataTable').hide();
          var searchoption=$('#CC_SRC_SearchOption').val();
          if(searchoption==21)
          {
@@ -795,6 +797,8 @@
          $('#CSRC_updation_form').hide();
          var searchoption=$('#CC_SRC_SearchOption').val();
          $('.preloader').show();
+         $('#CC_SEARCH_DataTable').hide();
+         $('#CC_SEARCH_acDataTable').hide();
          $("#CC_src_btn_search").attr("disabled", "disabled");
          if(searchoption==18)
          {
@@ -911,25 +915,24 @@
              data:data,
              success: function(data){
                  var value_array=JSON.parse(data);
-                 var CustpmerPersonal_Tabledata="<table id='Customer_Personal_Datatable' border=1 cellspacing='0' data-class='table'  class=' srcresult table' style='width:3000px'>";
-                 CustpmerPersonal_Tabledata+="<thead class='headercolor'><tr class='head' style='text-align:center'>";
-                 CustpmerPersonal_Tabledata+="<th style='text-align:center;vertical-align: top'>CUSTOMER ID</th>";
-                 CustpmerPersonal_Tabledata+="<th style='text-align:center;vertical-align: top'>CUSTOMER FIRSTNAME</th>";
-                 CustpmerPersonal_Tabledata+="<th style='text-align:center;vertical-align: top'>CUSTOMER LASTNAME</th>";
-                 CustpmerPersonal_Tabledata+="<th style='text-align:center;vertical-align: top'>COMPANYNAME</th>";
-                 CustpmerPersonal_Tabledata+="<th style='text-align:center;vertical-align: top'>COMPANY ADDRESS</th>";
-                 CustpmerPersonal_Tabledata+="<th style='text-align:center;vertical-align: top'>POSTAL CODE</th>";
-                 CustpmerPersonal_Tabledata+="<th style='text-align:center;vertical-align: top'>EMAIL</th>";
-                 CustpmerPersonal_Tabledata+="<th style='text-align:center;vertical-align: top'>MOBILE</th>";
-                 CustpmerPersonal_Tabledata+="<th style='text-align:center;vertical-align: top'>INT'L MOBILE</th>";
-                 CustpmerPersonal_Tabledata+="<th style='text-align:center;vertical-align: top'>OFFICE</th>";
-                 CustpmerPersonal_Tabledata+="<th style='text-align:center;vertical-align: top'>DOB</th>";
-                 CustpmerPersonal_Tabledata+="<th style='text-align:center;vertical-align: top'>NATIONALITY</th>";
-                 CustpmerPersonal_Tabledata+="<th style='text-align:center;vertical-align: top'>PASSPORTNO</th>";
-                 CustpmerPersonal_Tabledata+="<th style='text-align:center;vertical-align: top'>PASSPORTDATE</th>";
-                 CustpmerPersonal_Tabledata+="<th style='text-align:center;vertical-align: top'>EPNO</th>";
-                 CustpmerPersonal_Tabledata+="<th style='text-align:center;vertical-align: top'>EPDATE</th>";
-                 CustpmerPersonal_Tabledata+="<th style='text-align:center;vertical-align: top'>COMMENTS</th>";
+                 var CustpmerPersonal_Tabledata='<table style="width: 3500px" id="Customer_Personal_Datatable" border="1" cellspacing="0" data-class="table" class="srcresult"><thead bgcolor="#6495ed" style="color:white"><tr>';
+                 CustpmerPersonal_Tabledata+="<th style='text-align:center;vertical-align: top;width:100px;'>CUSTOMER ID</th>";
+                 CustpmerPersonal_Tabledata+="<th style='text-align:center;vertical-align: top;width:200px;'>CUSTOMER FIRSTNAME</th>";
+                 CustpmerPersonal_Tabledata+="<th style='text-align:center;vertical-align: top;width:200px;'>CUSTOMER LASTNAME</th>";
+                 CustpmerPersonal_Tabledata+="<th style='text-align:center;vertical-align: top;width:200px;'>COMPANYNAME</th>";
+                 CustpmerPersonal_Tabledata+="<th style='text-align:center;vertical-align: top;width:200px;'>COMPANY ADDRESS</th>";
+                 CustpmerPersonal_Tabledata+="<th style='text-align:center;vertical-align: top;width:100px;'>POSTAL CODE</th>";
+                 CustpmerPersonal_Tabledata+="<th style='text-align:center;vertical-align: top;width:200px;'>EMAIL</th>";
+                 CustpmerPersonal_Tabledata+="<th style='text-align:center;vertical-align: top;width:100px;'>MOBILE</th>";
+                 CustpmerPersonal_Tabledata+="<th style='text-align:center;vertical-align: top;width:150px;'>INT'L MOBILE</th>";
+                 CustpmerPersonal_Tabledata+="<th style='text-align:center;vertical-align: top;width:100px;'>OFFICE</th>";
+                 CustpmerPersonal_Tabledata+="<th style='text-align:center;vertical-align: top;width:100px;'>DOB</th>";
+                 CustpmerPersonal_Tabledata+="<th style='text-align:center;vertical-align: top;width:150px;'>NATIONALITY</th>";
+                 CustpmerPersonal_Tabledata+="<th style='text-align:center;vertical-align: top;width:100px;'>PASSPORTNO</th>";
+                 CustpmerPersonal_Tabledata+="<th style='text-align:center;vertical-align: top;width:100px;'>PASSPORTDATE</th>";
+                 CustpmerPersonal_Tabledata+="<th style='text-align:center;vertical-align: top;width:100px;'>EPNO</th>";
+                 CustpmerPersonal_Tabledata+="<th style='text-align:center;vertical-align: top;width:100px;'>EPDATE</th>";
+                 CustpmerPersonal_Tabledata+="<th style='text-align:center;vertical-align: top;width:800px;'>COMMENTS</th>";
                  CustpmerPersonal_Tabledata+="</tr></thead><tbody>";
                 var CustomerPersonalDetailsarray=[];
                  for(var i=0;i<value_array.length;i++)
@@ -954,34 +957,29 @@
                  {
                      var custid=CustomerPersonalDetailsarray[i][0];
                      CustpmerPersonal_Tabledata+='<tr style="text-align: center !important;">' +
-                         '<td style="width:70px !important;">'+custid+'</td>' +
-                         '<td style="width:150px !important;">'+CustomerPersonalDetailsarray[i][1]+'</td>' +
-                         '<td style="width:150px !important;">'+CustomerPersonalDetailsarray[i][2]+'</td>' +
-                         '<td style="width:200px !important;">'+CustomerPersonalDetailsarray[i][3]+'</td>' +
-                         '<td style="width:200px !important;">'+CustomerPersonalDetailsarray[i][4]+'</td>' +
-                         '<td style="width:100px !important;">'+CustomerPersonalDetailsarray[i][5]+'</td>' +
-                         '<td style="width:200px !important;">'+CustomerPersonalDetailsarray[i][6]+'</td>' +
-                         "<td style='width:100px !important;'>"+CustomerPersonalDetailsarray[i][7]+"</td>" +
-                         "<td style='width:130px !important;'>"+CustomerPersonalDetailsarray[i][8]+"</td>" +
-                         "<td style='width:100px !important;'>"+CustomerPersonalDetailsarray[i][9]+"</td>" +
-                         "<td style='width:100px !important;'>"+CustomerPersonalDetailsarray[i][10]+"</td>" +
-                         "<td style='width:200px !important;'>"+CustomerPersonalDetailsarray[i][11]+"</td>" +
-                         "<td style='width:120px !important;'>"+CustomerPersonalDetailsarray[i][12]+"</td>" +
-                         "<td style='width:100px !important;'>"+CustomerPersonalDetailsarray[i][13]+"</td>" +
-                         "<td style='width:120px !important;'>"+CustomerPersonalDetailsarray[i][14]+"</td>" +
-                         "<td style='width:100px !important;'>"+CustomerPersonalDetailsarray[i][15]+"</td>" +
-                         "<td style='width:500px !important;'>"+CustomerPersonalDetailsarray[i][16]+"</td></tr>";
+                         '<td >'+custid+'</td>' +
+                         '<td >'+CustomerPersonalDetailsarray[i][1]+'</td>' +
+                         '<td >'+CustomerPersonalDetailsarray[i][2]+'</td>' +
+                         '<td >'+CustomerPersonalDetailsarray[i][3]+'</td>' +
+                         '<td >'+CustomerPersonalDetailsarray[i][4]+'</td>' +
+                         '<td >'+CustomerPersonalDetailsarray[i][5]+'</td>' +
+                         '<td >'+CustomerPersonalDetailsarray[i][6]+'</td>' +
+                         "<td >"+CustomerPersonalDetailsarray[i][7]+"</td>" +
+                         "<td >"+CustomerPersonalDetailsarray[i][8]+"</td>" +
+                         "<td >"+CustomerPersonalDetailsarray[i][9]+"</td>" +
+                         "<td >"+CustomerPersonalDetailsarray[i][10]+"</td>" +
+                         "<td >"+CustomerPersonalDetailsarray[i][11]+"</td>" +
+                         "<td >"+CustomerPersonalDetailsarray[i][12]+"</td>" +
+                         "<td >"+CustomerPersonalDetailsarray[i][13]+"</td>" +
+                         "<td >"+CustomerPersonalDetailsarray[i][14]+"</td>" +
+                         "<td >"+CustomerPersonalDetailsarray[i][15]+"</td>" +
+                         "<td >"+CustomerPersonalDetailsarray[i][16]+"</td></tr>";
                  }
                  CustpmerPersonal_Tabledata+="</body>";
                  $('#Customer_Personal_Table').html(CustpmerPersonal_Tabledata);
                  $('#Customer_Personal_Datatable').DataTable( {
-                     "aaSorting": [],
-                     "pageLength": 10,
-                     "responsive": true,
-                     "sPaginationType":"full_numbers"
                  });
-                 var CustpmerAccount_Tabledata="<table id='Customer_Account_Datatable' border=1 cellspacing='0' data-class='table'  class=' srcresult table' style='width:3500px'>";
-                 CustpmerAccount_Tabledata+="<thead class='headercolor'><tr class='head' style='text-align:center'>";
+                 var CustpmerAccount_Tabledata='<table style="width: 3500px" id="Customer_Account_Datatable" border="1" cellspacing="0" data-class="table" class="srcresult"><thead bgcolor="#6495ed" style="color:white"><tr>';
                  CustpmerAccount_Tabledata+="<th style='text-align:center;vertical-align: top'>UPDATE / DELETE</th>";
                  CustpmerAccount_Tabledata+="<th style='text-align:center;vertical-align: top'>CUSTOMER ID</th>";
                  CustpmerAccount_Tabledata+="<th style='text-align:center;vertical-align: top'>UNIT NUMBER</th>";
@@ -1122,10 +1120,10 @@
                  $('#Customer_Account_Datatable').DataTable( {
                      "aaSorting": [],
                      "pageLength": 10,
-                     "responsive": true,
                      "sPaginationType":"full_numbers"
                  });
                  $('#CC_SEARCH_DataTable').show();
+                 $('#CC_SEARCH_acDataTable').show();
                  $('.preloader').hide();
                  $("html, body").animate({ scrollTop: $(document).height() }, "slow");
              },
@@ -1165,6 +1163,7 @@
             var value_array=JSON.parse(data);
                 Recverdetails=value_array[2];
                 var fileurls=value_array[6];
+
                 var Unit_StartDate=value_array[3][0].UD_START_DATE;
                 var Unit_EndDate=value_array[3][0].UD_END_DATE;
                 var PreRecver_ED=Recverdetails[0].PRE_RECVER_ENDDATE;
@@ -1482,7 +1481,7 @@
                         var data = fileurls[k].split('######');
                         var rowid=k+1;
                         var buttonid=data[1]+'/'+rowid;
-                        var file_name=rowid+' . '+filename;
+                        var file_name=rowid+' . '+data[2];
                             appenddata += '<div id='+rowid+'>';
                             appenddata += '<div class="row form-group">';
                             appenddata += '<div class="col-md-3">';
@@ -1511,6 +1510,7 @@
      $(document).on('click','.filedelete',function(){
          var fileid=this.id;
          var splitfileid=fileid.split('/');
+         alert(splitfileid[0]);
          $('.preloader').show();
          $.ajax({
              type: "POST",
@@ -2113,6 +2113,8 @@
                          <section id="Customer_Personal_Table">
 
                          </section>
+                     </div>
+                     <div id="CC_SEARCH_acDataTable" class="table-responsive" hidden>
                         <h3 style="color:#498af3">CUSTOMER ACCOUNT DETAILS</h3><br>
                         <section id="AccessCard_table">
 

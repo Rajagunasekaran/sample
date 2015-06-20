@@ -95,4 +95,62 @@ class Mdl_ocbc_cheque_entry_search_update extends CI_Model
        $ReturnValues=array($Confirm_Meessage,$UserStamp,$Timestamp);
         return $ReturnValues;
     }
+    public function ChequePDFCreation($Option,$Data1,$Data2,$timeZoneFormat)
+    {
+        if($Option==1)
+        {
+            $query=$this->db->query("SELECT CED.CHEQUE_ID,DATE_FORMAT(CONVERT_TZ(CED.CHEQUE_DATE,".$timeZoneFormat."), '%d-%m-%Y')AS CHEQUE_DATE,CED.CHEQUE_NO,CED.CHEQUE_TO,CED.CHEQUE_FOR,CED.CHEQUE_AMOUNT,CED.CHEQUE_UNIT_NO,BC.BCN_DATA,DATE_FORMAT(CONVERT_TZ(CED.CHEQUE_DEBITED_RETURNED_DATE,".$timeZoneFormat."), '%d-%m-%Y')AS CHEQUE_DEBITED_RETURNED_DATE,CED.CHEQUE_COMMENTS,ULD.ULD_LOGINID,DATE_FORMAT(CONVERT_TZ(CED.CHEQUE_TIMESTAMP,".$timeZoneFormat."),'%d-%m-%Y %T') AS CED_TIME_STAMP FROM CHEQUE_ENTRY_DETAILS CED,BANKTT_CONFIGURATION BC,USER_LOGIN_DETAILS ULD WHERE CED.BCN_ID=BC.BCN_ID AND CED.CHEQUE_AMOUNT BETWEEN '$Data1' AND '$Data2' AND ULD.ULD_ID=CED.ULD_ID ORDER BY CHEQUE_NO ASC");
+        }
+        if($Option==2)
+        {
+            $query=$this->db->query("SELECT CED.CHEQUE_ID,DATE_FORMAT(CONVERT_TZ(CED.CHEQUE_DATE,".$timeZoneFormat."), '%d-%m-%Y')AS CHEQUE_DATE,CED.CHEQUE_NO,CED.CHEQUE_TO,CED.CHEQUE_FOR,CED.CHEQUE_AMOUNT,CED.CHEQUE_UNIT_NO,BC.BCN_DATA,DATE_FORMAT(CONVERT_TZ(CED.CHEQUE_DEBITED_RETURNED_DATE,".$timeZoneFormat."), '%d-%m-%Y')AS CHEQUE_DEBITED_RETURNED_DATE,CED.CHEQUE_COMMENTS,ULD.ULD_LOGINID,DATE_FORMAT(CONVERT_TZ(CED.CHEQUE_TIMESTAMP,".$timeZoneFormat."),'%d-%m-%Y %T') AS CED_TIME_STAMP FROM CHEQUE_ENTRY_DETAILS CED,BANKTT_CONFIGURATION BC,USER_LOGIN_DETAILS ULD WHERE CED.BCN_ID=BC.BCN_ID AND CED.CHEQUE_NO ='$Data1' AND ULD.ULD_ID=CED.ULD_ID ORDER BY CHEQUE_NO ASC");
+        }
+        if($Option==3)
+        {
+            $fromdate=date('Y-m-d',strtotime($Data1));
+            $todate=date('Y-m-d',strtotime($Data2));
+            $query=$this->db->query("SELECT CED.CHEQUE_ID,DATE_FORMAT(CONVERT_TZ(CED.CHEQUE_DATE,".$timeZoneFormat."), '%d-%m-%Y')AS CHEQUE_DATE,CED.CHEQUE_NO,CED.CHEQUE_TO,CED.CHEQUE_FOR,CED.CHEQUE_AMOUNT,CED.CHEQUE_UNIT_NO,BC.BCN_DATA,DATE_FORMAT(CONVERT_TZ(CED.CHEQUE_DEBITED_RETURNED_DATE,".$timeZoneFormat."), '%d-%m-%Y')AS CHEQUE_DEBITED_RETURNED_DATE,CED.CHEQUE_COMMENTS,ULD.ULD_LOGINID,DATE_FORMAT(CONVERT_TZ(CED.CHEQUE_TIMESTAMP,".$timeZoneFormat."),'%d-%m-%Y %T') AS CED_TIME_STAMP FROM CHEQUE_ENTRY_DETAILS CED,BANKTT_CONFIGURATION BC,USER_LOGIN_DETAILS ULD WHERE CED.BCN_ID=BC.BCN_ID AND CED.CHEQUE_DATE BETWEEN '$fromdate' AND '$todate' AND ULD.ULD_ID=CED.ULD_ID ORDER BY CHEQUE_DATE ASC");
+        }
+        if($Option==4)
+        {
+            $query=$this->db->query("SELECT CED.CHEQUE_ID,DATE_FORMAT(CONVERT_TZ(CED.CHEQUE_DATE,".$timeZoneFormat."), '%d-%m-%Y')AS CHEQUE_DATE,CED.CHEQUE_NO,CED.CHEQUE_TO,CED.CHEQUE_FOR,CED.CHEQUE_AMOUNT,CED.CHEQUE_UNIT_NO,BC.BCN_DATA,DATE_FORMAT(CONVERT_TZ(CED.CHEQUE_DEBITED_RETURNED_DATE,".$timeZoneFormat."), '%d-%m-%Y')AS CHEQUE_DEBITED_RETURNED_DATE,CED.CHEQUE_COMMENTS,ULD.ULD_LOGINID,DATE_FORMAT(CONVERT_TZ(CED.CHEQUE_TIMESTAMP,".$timeZoneFormat."),'%d-%m-%Y %T') AS CED_TIME_STAMP FROM CHEQUE_ENTRY_DETAILS CED,BANKTT_CONFIGURATION BC,USER_LOGIN_DETAILS ULD WHERE CED.BCN_ID=BC.BCN_ID AND CED.CHEQUE_UNIT_NO ='$Data1' AND ULD.ULD_ID=CED.ULD_ID ORDER BY CHEQUE_UNIT_NO ASC");
+        }
+        $Cheque_data='<br>
+        <table width="2500px" id="USU_tble_htmltable" border="1" style="border-collapse: collapse;" cellspacing="0" data-class="table" class="srcresult">
+        <sethtmlpageheader name="header" page="all" value="on" show-this-page="1"/>
+        <thead bgcolor="#6495ed" style="color:white">
+        <tr>
+           <th nowrap style="color:#fff !important; background-color:#498af3;text-align:center;font-weight: bold;width:100px">CHEQUE DATE</th>
+           <th nowrap style="color:#fff !important; background-color:#498af3;text-align:center;font-weight: bold;width:100px">CHEQUE NO</th>
+           <th nowrap style="color:#fff !important; background-color:#498af3;text-align:center;font-weight: bold;width:150px">CHEQUE TO</th>
+           <th nowrap style="color:#fff !important; background-color:#498af3;text-align:center;font-weight: bold;width:150px">CHEQUE FOR</th>
+           <th nowrap style="color:#fff !important; background-color:#498af3;text-align:center;font-weight: bold;width:100px">CHEQUE AMOUNT</th>
+           <th nowrap style="color:#fff !important; background-color:#498af3;text-align:center;font-weight: bold;width:100px">UNIT</th>
+           <th nowrap style="color:#fff !important; background-color:#498af3;text-align:center;font-weight: bold;width:100px">STATUS</th>
+           <th nowrap style="color:#fff !important; background-color:#498af3;text-align:center;font-weight: bold;width:100px">DEBITED / REJECTED DATE</th>
+           <th nowrap style="color:#fff !important; background-color:#498af3;text-align:center;font-weight: bold;width:200px">COMMENTS</th>
+           <th nowrap style="color:#fff !important; background-color:#498af3;text-align:center;font-weight: bold;width:150px">USERSTAMP</th>
+           <th nowrap style="color:#fff !important; background-color:#498af3;text-align:center;font-weight: bold;width:150px">TIMESTAMP</th>
+        </tr>
+        </thead>
+        <tbody>';
+        foreach ($query->result_array() as $key => $value)
+        {
+            $Cheque_data.='<tr>';
+            $Cheque_data.='<td style="text-align:center;">'.$value['CHEQUE_DATE'].'</td>';
+            $Cheque_data.='<td  style="text-align:center;">'.$value['CHEQUE_NO'].'</td>';
+            $Cheque_data .= '<td>' . $value['CHEQUE_TO'] . '</td>';
+            $Cheque_data .= '<td>' . $value['CHEQUE_FOR'] . '</td>';
+            $Cheque_data .= '<td style="text-align:center;">' . $value['CHEQUE_AMOUNT'] . '</td>';
+            $Cheque_data .= '<td style="text-align:center;">' . $value['CHEQUE_UNIT_NO'] . '</td>';
+            $Cheque_data .= '<td style="text-align:center;">' . $value['BCN_DATA'] . '</td>';
+            $Cheque_data.='<td  style="text-align:center;">'.$value['CHEQUE_DEBITED_RETURNED_DATE'].'</td>';
+            $Cheque_data.='<td>'.$value['CHEQUE_COMMENTS'].'</td>';
+            $Cheque_data.='<td >'.$value['ULD_LOGINID'].'</td>';
+            $Cheque_data.='<td >'.$value['CED_TIME_STAMP'].'</td>';
+            $Cheque_data.='</tr>';
+        }
+        $Cheque_data.='</body></table>';
+        return $Cheque_data;
+    }
 }

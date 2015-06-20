@@ -575,8 +575,7 @@
 
         function PaymentDataTable(valuearray)
         {
-                var Payment_Tabledata = "<table id='Payment_Datatable' border=1 cellspacing='0' data-class='table'  class=' srcresult table' style='width:2000px'>";
-                Payment_Tabledata += "<thead class='headercolor'><tr class='head' style='text-align:center'>";
+                var Payment_Tabledata = '<table style="width:2500px" id="Payment_Datatable" border="1" cellspacing="0" data-class="table" class="srcresult"><thead bgcolor="#6495ed" style="color:white"><tr>';
                 Payment_Tabledata += "<th style='text-align:center;vertical-align: top' nowrap>UPDATE / DELETE</th>";
                 Payment_Tabledata += "<th style='text-align:center;vertical-align: top' nowrap>UNIT</th>";
                 Payment_Tabledata += "<th style='text-align:center;vertical-align: top' nowrap>CUSTOMER NAME</th>";
@@ -627,7 +626,7 @@
                             comments = valuearray[i].PD_COMMENTS
                         }
                         Payment_Tabledata += '<tr style="text-align: center !important;">' +
-                        "<td style='width:80px !important;vertical-align: middle !important;'><div class='col-lg-1'><span style='display: block;color:green' class='glyphicon glyphicon-edit Payment_editbutton' id=" + EditId + "></div><div class='col-lg-1'><span style='display: block;color:red' class='glyphicon glyphicon-trash Payment_removebutton' id=" + DeleteId + "></div></td>" +
+                        "<td style='width:50px !important;vertical-align: middle !important;'><div class='col-lg-1'><span style='display: block;color:green' class='glyphicon glyphicon-edit Payment_editbutton' id=" + EditId + "></div><div class='col-lg-1'><span style='display: block;color:red' class='glyphicon glyphicon-trash Payment_removebutton' id=" + DeleteId + "></div></td>" +
                         "<td style='width:100px !important;vertical-align: middle'>" + valuearray[i].UNIT_NO + "</td>" +
                         "<td style='width:250px !important;vertical-align: middle' nowrap>" + valuearray[i].CUSTOMER_FIRST_NAME + " " + valuearray[i].CUSTOMER_LAST_NAME + "</td>" +
                         "<td style='width:150px !important;vertical-align: middle'>" + payment + "</td>" +
@@ -639,7 +638,7 @@
                         "<td style='width:120px !important;vertical-align: middle'>" + valuearray[i].PD_PAID_DATE + "</td>" +
                         "<td style='width:300px !important;'>" + comments + "</td>" +
                         "<td style='width:200px !important;vertical-align: middle'>" + valuearray[i].ULD_lOGINID + "</td>" +
-                        "<td style='width:200px !important;vertical-align: middle'>" + valuearray[i].PD_TIMESTAMP + "</td></tr>";
+                        "<td style='width:150px !important;vertical-align: middle'>" + valuearray[i].PD_TIMESTAMP + "</td></tr>";
                     }
                     else {
                         if (valuearray[i].PD_PAYMENT == null) {
@@ -679,7 +678,7 @@
                         }
 
                         Payment_Tabledata += '<tr style="text-align: center !important;vertical-align: middle">' +
-                        "<td style='width:80px !important;vertical-align: middle'><div class='col-lg-1'><span style='display: block;color:green' class='glyphicon glyphicon-edit Payment_editbutton' id=" + EditId + "></div><div class='col-lg-1'><span style='display: block;color:red' class='glyphicon glyphicon-trash Payment_removebutton' id=" + DeleteId + "></div></td>" +
+                        "<td style='width:50px !important;vertical-align: middle'><div class='col-lg-1'><span style='display: block;color:green' class='glyphicon glyphicon-edit Payment_editbutton' id=" + EditId + "></div><div class='col-lg-1'><span style='display: block;color:red' class='glyphicon glyphicon-trash Payment_removebutton' id=" + DeleteId + "></div></td>" +
                         "<td style='width:70px !important;vertical-align: middle'>" + valuearray[i].UNIT_NO + "</td>" +
                         "<td style='width:200px !important;vertical-align: middle' nowrap>" + valuearray[i].CUSTOMER_FIRST_NAME + " " + valuearray[i].CUSTOMER_LAST_NAME + "</td>" +
                         "<td style='width:80px !important;color:#FF0000;font-size:13px;font-weight:bold;vertical-align: middle'>" + payment + "</td>" +
@@ -691,7 +690,7 @@
                         "<td style='width:80px !important;vertical-align: middle'>" + valuearray[i].PD_PAID_DATE + "</td>" +
                         "<td style='width:200px !important;vertical-align: middle'>" + comments + "</td>" +
                         "<td style='width:150px !important;vertical-align: middle'>" + valuearray[i].ULD_lOGINID + "</td>" +
-                        "<td style='width:100px !important;vertical-align: middle' >" + valuearray[i].PD_TIMESTAMP + "</td></tr>";
+                        "<td style='width:150px !important;vertical-align: middle' >" + valuearray[i].PD_TIMESTAMP + "</td></tr>";
                     }
                 }
                 Payment_Tabledata += "</body>";

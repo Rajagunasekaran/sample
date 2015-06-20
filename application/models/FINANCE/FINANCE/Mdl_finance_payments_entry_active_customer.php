@@ -31,8 +31,6 @@ class Mdl_finance_payments_entry_active_customer extends CI_Model {
          }
      }
        $FIN_ENTRY_query="CALL SP_PAYMENT_DETAIL_INSERT('$unitnos','$Customerids','$paymenttypes','$lps','$amounts','$periods','$paiddates','$flags','$comments','$UserStamp',null,@OUTPUT_FINAL_MESSAGE)";
-       print_r($FIN_ENTRY_query);
-       exit;
        $this->db->query($FIN_ENTRY_query);
        $Confirm_query = 'SELECT @OUTPUT_FINAL_MESSAGE AS CONFIRM';
        $Confirm_result = $this->db->query($Confirm_query);

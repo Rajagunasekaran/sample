@@ -56,7 +56,7 @@ Class Ctrl_Ocbc_Ocbc extends CI_Controller
     {
         $Period=$_GET['Period'];
         $SubmittedData=$this->Mdl_ocbc_ocbc->OCBC_PDF_Creation($Period);
-        $header='OCBC BANK RECORDS-'.strtoupper($Period);
+        $header='OCBC RECORDS-'.strtoupper($Period);
         $this->load->library('pdf');
         $pdf = $this->pdf->load();
         $pdf=new mPDF('utf-8','A4');

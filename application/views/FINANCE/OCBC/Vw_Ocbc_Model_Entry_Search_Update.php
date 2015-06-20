@@ -53,8 +53,7 @@
         //*****************Common Function ***************//
         function InitialDataLoad(modeldetails)
         {
-            var Model_Tabledata="<table id='Model_Datatable' border=1 cellspacing='0' data-class='table'  class=' srcresult table' style='width:1080px'>";
-            Model_Tabledata+="<thead class='headercolor'><tr class='head' style='text-align:center'>";
+            var Model_Tabledata='<table style="width:1200px" id="Model_Datatable" border="1" cellspacing="0" data-class="table" class="srcresult"><thead bgcolor="#6495ed" style="color:white"><tr>';
             Model_Tabledata+="<th style='text-align:center;vertical-align: top'>UPDATE / DELETE</th>";
             Model_Tabledata+="<th style='text-align:center;vertical-align: top'>MODEL NAME</th>";
             Model_Tabledata+="<th style='text-align:center;vertical-align: top'>OBSOLETE</th>";
@@ -68,7 +67,7 @@
                 if(modeldetails[i].BTM_OBSOLETE==null){var obsolete=''}else{obsolete=modeldetails[i].BTM_OBSOLETE};
                 Model_Tabledata+='<tr style="text-align: center !important;vertical-align: middle">' +
                 "<td style='width:100px !important;'><div class='col-lg-1'><div class='col-lg-1'><span style='display: block;color:red' class='glyphicon glyphicon-trash Model_removebutton' id="+DeleteId+"></div></td>" +
-                "<td style='width:500px !important;text-align: left !important' class='ModelEdit' id=Modelname_"+rowid+">"+modeldetails[i].BTM_DATA+"</td>" +
+                "<td style='width:300px !important;text-align: left !important' class='ModelEdit' id=Modelname_"+rowid+">"+modeldetails[i].BTM_DATA+"</td>" +
                 "<td style='width:100px !important;text-align: left !important' class='ModelEdit' id=Obsoletechk_"+rowid+">"+obsolete+"</td>" +
                 "<td style='width:250px !important;text-align: left !important'>"+modeldetails[i].ULD_LOGINID+"</td>" +
                 "<td style='width:150px !important;vertical-align: middle'>"+modeldetails[i].BTM_TIME_STAMP+"</td></tr>";

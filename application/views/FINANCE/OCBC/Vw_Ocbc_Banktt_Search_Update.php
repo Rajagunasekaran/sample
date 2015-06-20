@@ -89,6 +89,8 @@ require_once('application/libraries/EI_HDR.php');
         $(document).on('change','#Banktt_SRC_SearchOption',function() {
             $('#Banktt_Search_DataTable').hide();
             $('#BankTT_Updation_Form').hide();
+            $('#tableheader').text('');
+            $('#emptytableheader').text('');
             var searchoption=$('#Banktt_SRC_SearchOption').val();
             if(searchoption==1)
             {
@@ -158,6 +160,7 @@ require_once('application/libraries/EI_HDR.php');
                 var changedmonth=new Date(CCRE_d.setFullYear(2009));
                 $('#Banktt_SRC_fromdate').datepicker("option","minDate",changedmonth);
                 $('#Banktt_SRC_fromdate').datepicker("option","maxDate",changeyear);
+                $("#Banktt_SRC_fromdate").focus();
                 $('.preloader').hide();
             }
             if(searchoption==5)
@@ -176,6 +179,7 @@ require_once('application/libraries/EI_HDR.php');
                 $('#Banktt_SearchformDiv').html(appenddata);
                 $(".amountonly").doValidation({rule:'numbersonly',prop:{realpart:5,imaginary:2}});
                 $('#Banktt_SRC_lbl_amounterrormsg').text(SRC_ErrorMsg[4].EMC_DATA);
+                $("#Banktt_SRC_FromAmount").focus();
                 $('.preloader').hide();
             }
             if(searchoption==6)
@@ -222,6 +226,7 @@ require_once('application/libraries/EI_HDR.php');
                             AllaccnameArray.push(data);
                         }
                         $('#autocompleteerrormsg').text(SRC_ErrorMsg[6].EMC_DATA);
+                        $("#Banktt_SRC_accname").focus();
                         $('.preloader').hide();
                     },
                     error: function(data){
@@ -246,6 +251,9 @@ require_once('application/libraries/EI_HDR.php');
             $('#Banktt_src_btn_search').removeAttr("disabled");
         }
         $(document).on('change','.contactnoautovalidate',function(){
+            $('#tableheader').text('');
+            $('#emptytableheader').text('');
+            $('#Banktt_Search_DataTable').hide();
             if(Banktt_chequeflag==1){
                 $('#autocompleteerrormsg').hide();
             }
@@ -326,6 +334,9 @@ require_once('application/libraries/EI_HDR.php');
         }
         //MODEL NAME SEARCH BUTTON VALIDATION
         $(document).on('change','#Banktt_SRC_Modelsearch',function() {
+            $('#tableheader').text('');
+            $('#emptytableheader').text('');
+            $('#Banktt_Search_DataTable').hide();
             if($('#Banktt_SRC_Modelsearch').val()!='SELECT')
             {
                 $('#Banktt_src_btn_search').removeAttr("disabled");
@@ -337,6 +348,9 @@ require_once('application/libraries/EI_HDR.php');
         });
         //UNIT SEARCH BUTTON VALIDATION
         $(document).on('change','#Banktt_SRC_Uintsearch',function() {
+            $('#tableheader').text('');
+            $('#emptytableheader').text('');
+            $('#Banktt_Search_DataTable').hide();
             if($('#Banktt_SRC_Uintsearch').val()!='SELECT')
             {
                 $('#Banktt_src_btn_search').removeAttr("disabled");
@@ -348,6 +362,9 @@ require_once('application/libraries/EI_HDR.php');
         });
         //CUSTOMER SEARCH BUTTON VALIDATION
         $(document).on('change','.customer_btn_validation',function() {
+            $('#tableheader').text('');
+            $('#emptytableheader').text('');
+            $('#Banktt_Search_DataTable').hide();
             if($('#Banktt_SRC_unit').val()!='SELECT' && $('#Banktt_SRC_Customer').val()!='SELECT' && $('#Banktt_SRC_Customer').val()!=undefined && $('#Banktt_SRC_Customer').val()!='')
             {
                 $('#Banktt_src_btn_search').removeAttr("disabled");
@@ -359,6 +376,9 @@ require_once('application/libraries/EI_HDR.php');
         });
         //DATE SEARCH BUTTON VALIDATION
         $(document).on('change','.Date_btn_validation',function() {
+            $('#tableheader').text('');
+            $('#emptytableheader').text('');
+            $('#Banktt_Search_DataTable').hide();
             if($('#Banktt_SRC_fromdate').val()!='' && $('#Banktt_SRC_todate').val()!='')
             {
                 $('#Banktt_src_btn_search').removeAttr("disabled");
@@ -369,6 +389,9 @@ require_once('application/libraries/EI_HDR.php');
             }
         });
         $(document).on('change','.Amount_btn_validation',function() {
+            $('#tableheader').text('');
+            $('#emptytableheader').text('');
+            $('#Banktt_Search_DataTable').hide();
             var Banktt_SRC_fromamt=$('#Banktt_SRC_FromAmount').val();
             var Banktt_SRC_toamt=$('#Banktt_SRC_ToAmount').val();
             if(Banktt_SRC_fromamt!='' && Banktt_SRC_toamt!='')
@@ -395,13 +418,15 @@ require_once('application/libraries/EI_HDR.php');
             $('#BankTT_Updation_Form').hide();
             var searchoption=$('#Banktt_SRC_SearchOption').val();
             $("#Banktt_src_btn_search").attr("disabled", "disabled");
+            $('#tableheader').text('');
+            $('#emptytableheader').text('');
             $('.preloader').show();
             if(searchoption==1)
             {
                 var unit=$('#Banktt_SRC_Uintsearch').val();
                 var inputdata={"Option":1,"Unit":unit,"Customer":''};
                 var header="DETAILS OF SELECTED UNIT : "+unit;
-                $('#Banktt_SRC_Uintsearch').val('SELECT');
+                var emptyheader="NO DETAILS OF SELECTED UNIT : "+unit;
             }
             if(searchoption==2)
             {
@@ -409,127 +434,196 @@ require_once('application/libraries/EI_HDR.php');
                 var customer=$('#Banktt_SRC_Customer').val()
                 var inputdata={"Option":2,"Unit":unit,Customer:customer};
                 var header="DETAILS OF SELECTED UNIT : "+unit +" AND CUSTOMER "+customer;
-                $('#Banktt_SRC_unit').val('SELECT');
-                $('#Banktt_SRC_Customer').val('SELECT');
-                $('#Banktt_SRC_Customer').prop("disabled", true);
+                var emptyheader="NO DETAILS OF SELECTED UNIT : "+unit +" AND CUSTOMER "+customer;
             }
             if(searchoption==4)
             {
                 var accname=$('#Banktt_SRC_accname').val();
                 var inputdata={"Option":4,"Unit":accname,Customer:''};
                 var header="DETAILS OF SELECTED ACC NAME : "+accname;
-                $('#Banktt_SRC_accname').val('');
+                var emptyheader="NO DETAILS OF SELECTED ACC NAME : "+accname;
             }
             if(searchoption==3)
             {
                 var fromdate=$('#Banktt_SRC_fromdate').val();
                 var todate=$('#Banktt_SRC_todate').val();
                 var inputdata={"Option":3,"Unit":fromdate,Customer:todate};
-                var header="DETAILS OF SELECTED DATE RANGE : "+fromdate+" TO "+todate
-                $('#Banktt_SRC_fromdate').val('');
-                $('#Banktt_SRC_todate').val('');
+                var header="DETAILS OF SELECTED DATE RANGE : "+fromdate+" TO "+todate;
+                var emptyheader="NO DETAILS OF SELECTED DATE RANGE : "+fromdate+" TO "+todate;
             }
             if(searchoption==5)
             {
                 var Banktt_SRC_fromamt=$('#Banktt_SRC_FromAmount').val();
                 var Banktt_SRC_toamt=$('#Banktt_SRC_ToAmount').val();
                 var inputdata={"Option":5,"Unit":Banktt_SRC_fromamt,Customer:Banktt_SRC_toamt};
-                var header="DETAILS OF SELECTED AMOUNT RANGE : "+Banktt_SRC_fromamt+" TO "+Banktt_SRC_toamt
-                $('#Banktt_SRC_FromAmount').val('');
-                $('#Banktt_SRC_ToAmount').val('');
+                var header="DETAILS OF SELECTED AMOUNT RANGE : "+Banktt_SRC_fromamt+" TO "+Banktt_SRC_toamt;
+                var emptyheader="NO DETAILS OF SELECTED AMOUNT RANGE : "+Banktt_SRC_fromamt+" TO "+Banktt_SRC_toamt;
             }
             if(searchoption==6)
             {
                 var modelname=$('#Banktt_SRC_Modelsearch').val();
                 var inputdata={"Option":6,"Unit":modelname,Customer:''};
-                var header="DETAILS OF SELECTED MODEL : "+modelname
-                $('#Banktt_SRC_Modelsearch').val('SELECT');
+                var header="DETAILS OF SELECTED MODEL : "+modelname;
+                var emptyheader="NO DETAILS OF SELECTED MODEL : "+modelname;
             }
             $.ajax({
                 type: "POST",
                 url: controller_url+"Banktt_Search_Details",
                 data:inputdata,
                 success: function(data){
-                    var valuearray=JSON.parse(data);
-                    var tabledata="<table id='Banktt_Datatable' border=1 cellspacing='0' data-class='table'  class='srcresult table' style='width:2500px'>";
-                    tabledata+="<thead class='headercolor'><tr class='head' style='text-align:center'>";
-                    tabledata+="<th style='width:80px !important;'>EDIT/UPDATE</th>";
-                    tabledata+="<th style='width:130px !important;'>TRANSACTION TYPE<span class='labelrequired'><em>*</em></span></th>";
-                    tabledata+="<th style='width:100px !important;'>DATE<span class='labelrequired'><em>*</em></span></th>";
-                    tabledata+="<th style='width:200px !important;'>ACCOUNT NAME<span class='labelrequired'><em>*</em></span></th>";
-                    tabledata+="<th style='width:200px !important;'>ACCOUNT NO<span class='labelrequired'><em>*</em></span></th>";
-                    tabledata+="<th style='width:120px !important;'>AMOUNT<span class='labelrequired'><em>*</em></span></th>";
-                    tabledata+="<th style='width:100px !important;'>UNIT</th>";
-                    tabledata+="<th style='width:200px !important;'>CUSTOMER<span class='labelrequired'><em>*</em></span></th>";
-                    tabledata+="<th style='width:100px !important;'>STATUS<span class='labelrequired'><em>*</em></span></th>";
-                    tabledata+="<th style='width:150px !important;'>DEBITED / REJECTED DATE<span class='labelrequired'><em>*</em></span></th>";
-                    tabledata+="<th style='width:120px !important;'>BANK CODE</th>";
-                    tabledata+="<th style='width:120px !important;'>BRANCH CODE</th>";
-                    tabledata+="<th style='width:200px !important;'>BANK ADDRESS</th>";
-                    tabledata+="<th style='width:150px !important;'>SWIFT CODE</th>";
-                    tabledata+="<th style='width:150px !important;'>CHARGES TO</th>";
-                    tabledata+="<th style='width:200px !important;'>CUST REF</th>";
-                    tabledata+="<th style='width:200px !important;'>INV DETAILSS</th>";
-                    tabledata+="<th style='width:200px !important;'>COMMENTS</th>";
-                    tabledata+="<th style='width:150px !important;'>CREATED BY</th>";
-                    tabledata+="<th style='width:150px !important;'>USERSTAMP</th>";
-                    tabledata+="<th style='width:150px !important;'>TIMESTAMP</th>";
-                    tabledata+="</tr></thead><tbody>";
-                    for(var i=0;i<valuearray.length;i++)
-                    {
-                        var Ermid=valuearray[i].BT_ID;
-                        BT_id.push(Ermid)
-                        var edit="Editid_"+valuearray[i].BT_ID;
-                        var del="Deleteid_"+valuearray[i].BT_ID;
-                        if(valuearray[i].BT_ACC_NAME==null){var accname='';}else{accname=valuearray[i].BT_ACC_NAME;}
-                        if(valuearray[i].BT_ACC_NO==null){var accno='';}else{accno=valuearray[i].BT_ACC_NO;}
-                        if(valuearray[i].UNIT_NO==null){var unit='';}else{unit=valuearray[i].UNIT_NO;}
-                        if(valuearray[i].CUSTOMERNAME==null){var customer='';}else{customer=valuearray[i].CUSTOMERNAME;}
-                        if(valuearray[i].TRANSACTION_STATUS==null){var status='';}else{status=valuearray[i].TRANSACTION_STATUS;}
-                        if(valuearray[i].BT_DEBITED_ON==null){var debitedon='';}else{debitedon=valuearray[i].BT_DEBITED_ON;}
-                        if(valuearray[i].BT_BANK_CODE==null){var bankcode='';}else{bankcode=valuearray[i].BT_BANK_CODE;}
-                        if(valuearray[i].BT_BRANCH_CODE==null){var branchcode='';}else{branchcode=valuearray[i].BT_BRANCH_CODE;}
-                        if(valuearray[i].BT_BANK_ADDRESS==null){var bankaddress='';}else{bankaddress=valuearray[i].BT_BANK_ADDRESS;}
-                        if(valuearray[i].BT_SWIFT_CODE==null){var swiftcode='';}else{swiftcode=valuearray[i].BT_SWIFT_CODE;}
-                        if(valuearray[i].BANK_TRANSFER_CHARGES_TO==null){var chargesto='';}else{chargesto=valuearray[i].BANK_TRANSFER_CHARGES_TO;}
-                        if(valuearray[i].BT_CUST_REF==null){var custoref='';}else{custoref=valuearray[i].BT_CUST_REF;}
-                        if(valuearray[i].BT_INV_DETAILS==null){var invdetails='';}else{invdetails=valuearray[i].BT_INV_DETAILS;}
-                        if(valuearray[i].BT_COMMENTS==null){var comments='';}else{comments=valuearray[i].BT_COMMENTS;}
-                        if(valuearray[i].BANK_TRANSFER_CREATED_BY==null){var createdby='';}else{createdby=valuearray[i].BANK_TRANSFER_CREATED_BY;}
-                        tabledata+='<tr id='+valuearray[i].BT_ID+'>' +
-                        "<td style='width:80px !important;'><div class='col-lg-2'><span style='display: block;color:green' title='Edit' class='glyphicon glyphicon-edit Banktt_editbutton' id="+edit+"></div></td>" +
-                        "<td style='width:130px !important;text-align: center' nowrap>"+valuearray[i].BANK_TRANSFER_TYPE+"</td>" +
-                        "<td style='width:100px !important;text-align: center'nowrap >"+valuearray[i].BT_DATE+"</td>" +
-                        "<td style='width:200px !important;' nowrap>"+accname+"</td>" +
-                        "<td style='width:150px !important;' nowrap>"+accno+"</td>" +
-                        "<td style='width:120px !important;text-align: center' nowrap>"+valuearray[i].BT_AMOUNT+"</td>" +
-                        "<td style='width:100px !important;text-align: center' nowrap>"+unit+"</td>" +
-                        "<td style='width:200px !important;text-align: center' nowrap>"+customer+"</td>" +
-                        "<td style='width:100px !important;text-align: center' nowrap>"+status+"</td>" +
-                        "<td style='width:150px !important;' nowrap>"+debitedon+"</td>" +
-                        "<td style='width:120px !important;' nowrap>"+bankcode+"</td>" +
-                        "<td style='width:120px !important;' nowrap>"+branchcode+"</td>" +
-                        "<td nowrap>"+bankaddress+"</td>" +
-                        "<td style='width:150px !important;' nowrap>"+swiftcode+"</td>" +
-                        "<td style='width:150px !important;' nowrap>"+chargesto+"</td>" +
-                        "<td style='width:200px !important;' nowrap>"+custoref+"</td>" +
-                        "<td nowrap>"+invdetails+"</td>" +
-                        "<td nowrap>"+comments+"</td>" +
-                        "<td style='width:150px !important;' nowrap>"+createdby+"</td>" +
-                        "<td style='width:150px !important;' nowrap>"+valuearray[i].ULD_LOGINID+"</td>" +
-                        "<td style='width:150px !important;' nowrap>"+valuearray[i].BT_TIME_STAMP+"</td>" +
-                        "</tr>";
+
+                        var valuearray = JSON.parse(data);
+                       if(valuearray.length!=0) {
+                        var tabledata = '<table style="width:3500px" id="Banktt_Datatable" border="1" cellspacing="0" data-class="table" class="srcresult"><thead bgcolor="#6495ed" style="color:white"><tr>';
+                        tabledata += "<th style='width:80px !important;text-align: center'>EDIT/UPDATE</th>";
+                        tabledata += "<th style='width:130px !important;text-align: center'>TRANSACTION TYPE<span class='labelrequired'><em>*</em></span></th>";
+                        tabledata += "<th style='width:100px !important;text-align: center' class='uk-date-column'>DATE<span class='labelrequired'><em>*</em></span></th>";
+                        tabledata += "<th style='width:150px !important;text-align: center'>ACCOUNT NAME<span class='labelrequired'><em>*</em></span></th>";
+                        tabledata += "<th style='width:150px !important;text-align: center'>ACCOUNT NO<span class='labelrequired'><em>*</em></span></th>";
+                        tabledata += "<th style='width:120px !important;text-align: center'>AMOUNT<span class='labelrequired'><em>*</em></span></th>";
+                        tabledata += "<th style='width:100px !important;text-align: center'>UNIT</th>";
+                        tabledata += "<th style='width:150px !important;text-align: center'>CUSTOMER<span class='labelrequired'><em>*</em></span></th>";
+                        tabledata += "<th style='width:100px !important;text-align: center'>STATUS<span class='labelrequired'><em>*</em></span></th>";
+                        tabledata += "<th style='width:150px !important;text-align: center' class='uk-date-column'>DEBITED / REJECTED DATE<span class='labelrequired'><em>*</em></span></th>";
+                        tabledata += "<th style='width:120px !important;text-align: center'>BANK CODE</th>";
+                        tabledata += "<th style='width:120px !important;text-align: center'>BRANCH CODE</th>";
+                        tabledata += "<th style='width:200px !important;text-align: center'>BANK ADDRESS</th>";
+                        tabledata += "<th style='width:150px !important;text-align: center'>SWIFT CODE</th>";
+                        tabledata += "<th style='width:150px !important;text-align: center'>CHARGES TO</th>";
+                        tabledata += "<th style='width:200px !important;text-align: center'>CUST REF</th>";
+                        tabledata += "<th style='width:200px !important;text-align: center'>INV DETAILSS</th>";
+                        tabledata += "<th style='width:200px !important;text-align: center'>COMMENTS</th>";
+                        tabledata += "<th style='width:150px !important;text-align: center'>CREATED BY</th>";
+                        tabledata += "<th style='width:150px !important;text-align: center'>USERSTAMP</th>";
+                        tabledata += "<th style='width:150px !important;text-align: center' class='uk-timestp-column'>TIMESTAMP</th>";
+                        tabledata += "</tr></thead><tbody>";
+                        for (var i = 0; i < valuearray.length; i++) {
+                            var Ermid = valuearray[i].BT_ID;
+                            BT_id.push(Ermid)
+                            var edit = "Editid_" + valuearray[i].BT_ID;
+                            var del = "Deleteid_" + valuearray[i].BT_ID;
+                            if (valuearray[i].BT_ACC_NAME == null) {
+                                var accname = '';
+                            } else {
+                                accname = valuearray[i].BT_ACC_NAME;
+                            }
+                            if (valuearray[i].BT_ACC_NO == null) {
+                                var accno = '';
+                            } else {
+                                accno = valuearray[i].BT_ACC_NO;
+                            }
+                            if (valuearray[i].UNIT_NO == null) {
+                                var unit = '';
+                            } else {
+                                unit = valuearray[i].UNIT_NO;
+                            }
+                            if (valuearray[i].CUSTOMERNAME == null) {
+                                var customer = '';
+                            } else {
+                                customer = valuearray[i].CUSTOMERNAME;
+                            }
+                            if (valuearray[i].TRANSACTION_STATUS == null) {
+                                var status = '';
+                            } else {
+                                status = valuearray[i].TRANSACTION_STATUS;
+                            }
+                            if (valuearray[i].BT_DEBITED_ON == null) {
+                                var debitedon = '';
+                            } else {
+                                debitedon = valuearray[i].BT_DEBITED_ON;
+                            }
+                            if (valuearray[i].BT_BANK_CODE == null) {
+                                var bankcode = '';
+                            } else {
+                                bankcode = valuearray[i].BT_BANK_CODE;
+                            }
+                            if (valuearray[i].BT_BRANCH_CODE == null) {
+                                var branchcode = '';
+                            } else {
+                                branchcode = valuearray[i].BT_BRANCH_CODE;
+                            }
+                            if (valuearray[i].BT_BANK_ADDRESS == null) {
+                                var bankaddress = '';
+                            } else {
+                                bankaddress = valuearray[i].BT_BANK_ADDRESS;
+                            }
+                            if (valuearray[i].BT_SWIFT_CODE == null) {
+                                var swiftcode = '';
+                            } else {
+                                swiftcode = valuearray[i].BT_SWIFT_CODE;
+                            }
+                            if (valuearray[i].BANK_TRANSFER_CHARGES_TO == null) {
+                                var chargesto = '';
+                            } else {
+                                chargesto = valuearray[i].BANK_TRANSFER_CHARGES_TO;
+                            }
+                            if (valuearray[i].BT_CUST_REF == null) {
+                                var custoref = '';
+                            } else {
+                                custoref = valuearray[i].BT_CUST_REF;
+                            }
+                            if (valuearray[i].BT_INV_DETAILS == null) {
+                                var invdetails = '';
+                            } else {
+                                invdetails = valuearray[i].BT_INV_DETAILS;
+                            }
+                            if (valuearray[i].BT_COMMENTS == null) {
+                                var comments = '';
+                            } else {
+                                comments = valuearray[i].BT_COMMENTS;
+                            }
+                            if (valuearray[i].BANK_TRANSFER_CREATED_BY == null) {
+                                var createdby = '';
+                            } else {
+                                createdby = valuearray[i].BANK_TRANSFER_CREATED_BY;
+                            }
+                            tabledata += '<tr id=' + valuearray[i].BT_ID + '>' +
+                            "<td ><div class='col-lg-2'><span style='display: block;color:green' title='Edit' class='glyphicon glyphicon-edit Banktt_editbutton' id=" + edit + "></div></td>" +
+                            "<td >" + valuearray[i].BANK_TRANSFER_TYPE + "</td>" +
+                            "<td  >" + valuearray[i].BT_DATE + "</td>" +
+                            "<td>" + accname + "</td>" +
+                            "<td>" + accno + "</td>" +
+                            "<td>" + valuearray[i].BT_AMOUNT + "</td>" +
+                            "<td>" + unit + "</td>" +
+                            "<td>" + customer + "</td>" +
+                            "<td>" + status + "</td>" +
+                            "<td>" + debitedon + "</td>" +
+                            "<td>" + bankcode + "</td>" +
+                            "<td>" + branchcode + "</td>" +
+                            "<td>" + bankaddress + "</td>" +
+                            "<td>" + swiftcode + "</td>" +
+                            "<td>" + chargesto + "</td>" +
+                            "<td>" + custoref + "</td>" +
+                            "<td>" + invdetails + "</td>" +
+                            "<td>" + comments + "</td>" +
+                            "<td>" + createdby + "</td>" +
+                            "<td>" + valuearray[i].ULD_LOGINID + "</td>" +
+                            "<td>" + valuearray[i].BT_TIME_STAMP + "</td>" +
+                            "</tr>";
+                        }
+                        tabledata += "</body>";
+                        $('#tableheader').text(header);
+                        $('section').html(tabledata);
+                        $('.preloader').hide();
+                        $('#Banktt_Search_DataTable').show();
+                        $('#Banktt_Datatable').DataTable({
+                            "aaSorting": [],
+                            "pageLength": 10,
+                            "sPaginationType": "full_numbers",
+                            "aoColumnDefs": [{
+                                "aTargets": ["uk-date-column"],
+                                "sType": "uk_date"
+                            }, {"aTargets": ["uk-timestp-column"], "sType": "uk_timestp"}]
+                        });
+                        sorting();
                     }
-                    tabledata+="</body>";
-                    $('#tableheader').text(header);
-                    $('section').html(tabledata);
+                    else
+                    {
+                        $('#Banktt_Search_DataTable').hide();
+                        $('#tableheader').text('');
+                        $('#emptytableheader').text(emptyheader);
+                    }
                     $('.preloader').hide();
-                    $('#Banktt_Search_DataTable').show();
-                    $('#Banktt_Datatable').DataTable( {
-                        "aaSorting": [],
-                        "pageLength": 10,
-                        "sPaginationType":"full_numbers"
-                    });
                 },
                 error: function(data){
                     alert('error in getting'+JSON.stringify(data));
@@ -537,6 +631,33 @@ require_once('application/libraries/EI_HDR.php');
                 }
             });
         });
+        function DTFormTable_DateFormat(inputdate){
+            var string = inputdate.split("-");
+            return string[2]+'-'+ string[1]+'-'+string[0];
+        }
+        //FUNCTION FOR SORTING
+        function sorting(){
+            jQuery.fn.dataTableExt.oSort['uk_date-asc']  = function(a,b) {
+                var x = new Date( Date.parse(DTFormTable_DateFormat(a)));
+                var y = new Date( Date.parse(DTFormTable_DateFormat(b)) );
+                return ((x < y) ? -1 : ((x > y) ?  1 : 0));
+            };
+            jQuery.fn.dataTableExt.oSort['uk_date-desc'] = function(a,b) {
+                var x = new Date( Date.parse(DTFormTable_DateFormat(a)));
+                var y = new Date( Date.parse(DTFormTable_DateFormat(b)) );
+                return ((x < y) ? 1 : ((x > y) ?  -1 : 0));
+            };
+            jQuery.fn.dataTableExt.oSort['uk_timestp-asc']  = function(a,b) {
+                var x = new Date( Date.parse(DTFormTable_DateFormat(a.split(' ')[0]))).setHours(a.split(' ')[1].split(':')[0],a.split(' ')[1].split(':')[1],a.split(' ')[1].split(':')[2]);
+                var y = new Date( Date.parse(DTFormTable_DateFormat(b.split(' ')[0]))).setHours(b.split(' ')[1].split(':')[0],b.split(' ')[1].split(':')[1],b.split(' ')[1].split(':')[2]);
+                return ((x < y) ? -1 : ((x > y) ?  1 : 0));
+            };
+            jQuery.fn.dataTableExt.oSort['uk_timestp-desc'] = function(a,b) {
+                var x = new Date( Date.parse(DTFormTable_DateFormat(a.split(' ')[0]))).setHours(a.split(' ')[1].split(':')[0],a.split(' ')[1].split(':')[1],a.split(' ')[1].split(':')[2]);
+                var y = new Date( Date.parse(DTFormTable_DateFormat(b.split(' ')[0]))).setHours(b.split(' ')[1].split(':')[0],b.split(' ')[1].split(':')[1],b.split(' ')[1].split(':')[2]);
+                return ((x < y) ? 1 : ((x > y) ?  -1 : 0));
+            };
+        }
         $(document).on('click','.Banktt_editbutton',function() {
             var cid = $(this).attr('id');
             var SplittedData=cid.split('_');
@@ -760,6 +881,46 @@ require_once('application/libraries/EI_HDR.php');
                 }
             });
         });
+        $(document).on('click','#Banktt_btn_pdf',function(){
+            var searchoption=$('#Banktt_SRC_SearchOption').val();
+            if(searchoption==1)
+            {
+                var Frominput=$('#Banktt_SRC_Uintsearch').val();
+                var Toinput='';
+                var header="DETAILS OF SELECTED UNIT : "+Frominput;
+            }
+            if(searchoption==2)
+            {
+                var Frominput=$('#Banktt_SRC_unit').val();
+                var Toinput=$('#Banktt_SRC_Customer').val()
+                var header="DETAILS OF SELECTED UNIT : "+Frominput +" AND CUSTOMER "+Toinput;
+            }
+            if(searchoption==4)
+            {
+                var Frominput=$('#Banktt_SRC_accname').val();
+                var Toinput='';
+                var header="DETAILS OF SELECTED ACC NAME : "+Frominput;
+            }
+            if(searchoption==3)
+            {
+                var Frominput=$('#Banktt_SRC_fromdate').val();
+                var Toinput=$('#Banktt_SRC_todate').val();
+                var header="DETAILS OF SELECTED DATE RANGE : "+Frominput+" TO "+Toinput
+            }
+            if(searchoption==5)
+            {
+                var Frominput=$('#Banktt_SRC_FromAmount').val();
+                var Toinput=$('#Banktt_SRC_ToAmount').val();
+                var header="DETAILS OF SELECTED AMOUNT RANGE : "+Frominput+" TO "+Toinput
+            }
+            if(searchoption==6)
+            {
+                var Frominput=$('#Banktt_SRC_Modelsearch').val();
+                var Toinput='';
+                var header="DETAILS OF SELECTED MODEL : "+Frominput;
+            }
+            var pdfurl=document.location.href='<?php echo site_url('FINANCE/OCBC/Ctrl_Ocbc_Banktt_Search_Update/BankttPdfCreation')?>?Searchoption='+searchoption+'&Frominput='+Frominput+'&Todate='+Toinput+'&Header='+header;
+        });
     });
 </script>
 <body>
@@ -784,9 +945,13 @@ require_once('application/libraries/EI_HDR.php');
                 </div>
                 <div id="Banktt_Search_DataTable" class="table-responsive" hidden>
                     <h4 style="color:#498af3;" id="tableheader"></h4>
+                    <input type="button" id="Banktt_btn_pdf" class="btnpdf" value="PDF">
                     <section>
 
                     </section>
+                </div>
+                <div>
+                    <h4 class="errormsg" id="emptytableheader"></h4>
                 </div>
                 <form id="BankTT_Updation_Form" style="padding-left:20px;"><br>
                     <h4 style="color:#498af3;">BANK TT UPDATION</h4><br>

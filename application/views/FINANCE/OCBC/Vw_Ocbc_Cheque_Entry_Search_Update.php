@@ -32,6 +32,8 @@
             $('#SearchformDiv').html('');
             $('section').html('');
             $('#Tableheader').text('');
+            $('#CHEQUE_SEARCH_DataTable').hide();
+            $('#EmptyTableheader').text('');
             if(value=='Cheque_entryform')
             {
                 $('#Cheque_Entry_Form').show();
@@ -48,6 +50,7 @@
                         Entry_errormsg=value_array;
                         $('#CHEQUE_ENTRY_tb_chequeno').prop('title',Entry_errormsg[0].EMC_DATA);
                         $('#CHEQUE_ENTRY_tb_amount').prop('title',Entry_errormsg[0].EMC_DATA);
+                        $("#CHEQUE_ENTRY_db_date").focus();
                         $('.preloader').hide();
                     },
                     error: function(data){
@@ -129,6 +132,8 @@
             $('#SearchformDiv').html('');
             $('section').html('');
             $('#Tableheader').text('');
+            $('#CHEQUE_SEARCH_DataTable').hide();
+            $('#EmptyTableheader').text('');
             $('.preloader').show();
             var searchoption=$('#CHEQUE_SRC_SearchOption').val();
             if(searchoption==1)
@@ -147,6 +152,7 @@
                 $('#SearchformDiv').html(appenddata);
                 $(".amountonly").doValidation({rule:'numbersonly',prop:{realpart:5,imaginary:2}});
                 $('#CQ_SRC_lbl_amounterrormsg').text(SRC_errormsg[3].EMC_DATA);
+                $("#CQ_SRC_FromAmount").focus();
                 $('.preloader').hide();
             }
             else if(searchoption==3)
@@ -177,6 +183,7 @@
                 var CCRE_d = new Date();
                 $('#CQ_SRC_ToDate').datepicker("option","minDate",changedmonth);
                 $('#CQ_SRC_ToDate').datepicker("option","maxDate",new Date());
+                $("#CQ_SRC_FromDate").focus();
                 $('.preloader').hide();
             }
             else if(searchoption==2)
@@ -203,6 +210,7 @@
                             AllchequenoArray.push(data);
                         }
                         $('#autocompleteerrormsg').text(SRC_errormsg[5].EMC_DATA);
+                        $("#CQ_SRC_Chequeno").focus();
                         $('.preloader').hide();
                     },
                     error: function(data){
@@ -238,6 +246,7 @@
                             }
                         }
                         $('#autocompleteerrormsg').text(SRC_errormsg[5].EMC_DATA);
+                        $("#CQ_SRC_Chequeunit").focus();
                         $('.preloader').hide();
                     },
                     error: function(data){
@@ -300,6 +309,7 @@
                     .appendTo( ul );
             };}
         $(document).on('change','#CQ_SRC_FromDate',function() {
+            $('#EmptyTableheader').text('');
             var startdate=$('#CQ_SRC_FromDate').val()
             var currentdate=new Date( Date.parse( FormTableDateFormat(startdate)) )
             var date1 = $('#CQ_SRC_FromDate').datepicker('getDate');
@@ -312,6 +322,7 @@
         });
         //**************DATE RANGE SEARCH SUBMIT BUTTON VALIDATION ****************//
         $(document).on('change','.Daterange_btn_validation',function() {
+            $('#EmptyTableheader').text('');
             if(($("#CQ_SRC_FromDate").val()!="")&&($("#CQ_SRC_ToDate").val()!=""))
             {
                 $("#CQ_src_btn_search").removeAttr("disabled");
@@ -322,6 +333,7 @@
             }
         });
         $(document).on('change','.Amount_btn_validation',function() {
+            $('#EmptyTableheader').text('');
             var CQ_SRC_fromamt=$('#CQ_SRC_FromAmount').val();
             var CQ_SRC_toamt=$('#CQ_SRC_ToAmount').val();
             if(CQ_SRC_fromamt!='' && CQ_SRC_toamt!='')
@@ -346,89 +358,114 @@
         var Cheque_id=[];
         $(document).on('click','#CQ_src_btn_search',function() {
             $('.preloader').show();
+            $('#EmptyTableheader').text('');
             var searchoption=$('#CHEQUE_SRC_SearchOption').val();
             if(searchoption==1)
             {
                 var FromAmount=$('#CQ_SRC_FromAmount').val();
                 var ToAmount=$('#CQ_SRC_ToAmount').val();
                 var data={'Option':searchoption,'Data1':FromAmount,'Data2':ToAmount};
-                $('#CQ_SRC_FromAmount').val('');
-                $('#CQ_SRC_ToAmount').val('');
                 var title="DETAILS OF SELECTED AMOUNT RANGE : "+FromAmount+" TO "+ToAmount;
+                var Emptytitle="NO DETAILS OF SELECTED AMOUNT RANGE : "+FromAmount+" TO "+ToAmount;
             }
             if(searchoption==2)
             {
                 var chequeno=$("#CQ_SRC_Chequeno").val();
                 var data={'Option':searchoption,'Data1':chequeno,'Data2':''};
-                $('#CQ_SRC_Chequeno').val('');
                 var title="DETAILS OF SELECTED CHEQUE NO : "+chequeno;
+                var Emptytitle="NO DETAILS OF SELECTED CHEQUE NO : "+chequeno;
             }
             if(searchoption==3)
             {
                 var fromdate=$("#CQ_SRC_FromDate").val();
                 var todate=$("#CQ_SRC_ToDate").val();
                 var data={'Option':searchoption,'Data1':fromdate,'Data2':todate};
-                $('#CQ_SRC_FromDate').val('');
-                $('#CQ_SRC_ToDate').val('');
                 var title="DETAILS OF SELECTED DATE RANGE : "+fromdate+" TO "+todate;
+                var Emptytitle="NO DETAILS OF SELECTED DATE RANGE : "+fromdate+" TO "+todate;
             }
             if(searchoption==4)
             {
                 var chequeunit=$("#CQ_SRC_Chequeunit").val();
                 var data={'Option':searchoption,'Data1':chequeunit,'Data2':''};
-                $('#CQ_SRC_Chequeunit').val('');
                 var title="DETAILS OF SELECTED UNIT : "+chequeunit;
+                var Emptytitle="NO DETAILS OF SELECTED UNIT : "+chequeunit;
             }
             $("#CQ_src_btn_search").attr("disabled", "disabled");
-            $('#Tableheader').text(title);
+
             $.ajax({
                 type: "POST",
                 url: controller_url+"Cheque_SearchOption",
                 data:data,
                 success: function(data){
                     var value_array=JSON.parse(data);
-                    var tabledata="<table id='CHEQUE_Datatable' border=1 cellspacing='0' data-class='table'  class='srcresult table' style='width:2200px;' >";
-                    tabledata+="<thead class='headercolor'><tr class='head' style='text-align:center'>";
-                    tabledata+="<th style='text-align:center;vertical-align: top'>EDIT/UPDATE</th>";
-                    tabledata+="<th style='text-align:center;vertical-align: top'>CHEQUE DATE<span class='labelrequired'><em>*</em></span></th>";
-                    tabledata+="<th style='text-align:center;vertical-align: top''>CHEQUE NO<span class='labelrequired'><em>*</em></span></th>";
-                    tabledata+="<th style='text-align:center;vertical-align: top''>CHEQUE TO<span class='labelrequired'><em>*</em></span></th>";
-                    tabledata+="<th style='text-align:center;vertical-align: top''>CHEQUE FOR<span class='labelrequired'><em>*</em></span></th>";
-                    tabledata+="<th style='text-align:center;vertical-align: top''>CHEQUE AMOUNT<span class='labelrequired'><em>*</em></span></th>";
-                    tabledata+="<th style='text-align:center;vertical-align: top''>UNIT</th>";
-                    tabledata+="<th style='text-align:center;vertical-align: top''>STATUS<span class='labelrequired'><em>*</em></span></th>";
-                    tabledata+="<th style='text-align:center;vertical-align: top''>DEBITED / REJECTED DATE<span class='labelrequired'><em>*</em></span></th>";
-                    tabledata+="<th style='text-align:center;vertical-align: top''>COMMENTS</th>";
-                    tabledata+="<th style='text-align:center;vertical-align: top''>USERSTAMP</th>";
-                    tabledata+="<th style='text-align:center;vertical-align: top''>TIMESTAMP</th>";
-                    tabledata+="</tr></thead><tbody>";
-                    for(var i=0;i<value_array.length;i++)
-                    {
-                        var Ermid=value_array[i].CHEQUE_ID;
-                        Cheque_id.push(Ermid)
-                        var edit="Editid_"+value_array[i].CHEQUE_ID;
-                        var del="Deleteid_"+value_array[i].CHEQUE_ID;
-                        if(value_array[i].CHEQUE_UNIT_NO==null){var unit='';}else{unit=value_array[i].CHEQUE_UNIT_NO;}
-                        if(value_array[i].CHEQUE_COMMENTS==null){var comments='';}else{comments=value_array[i].CHEQUE_COMMENTS;}
-                        if(value_array[i].CHEQUE_DEBITED_RETURNED_DATE==null){var date='';}else{date=value_array[i].CHEQUE_DEBITED_RETURNED_DATE;}
-                        tabledata+='<tr id='+value_array[i].CHEQUE_ID+'>' +
-                        "<td style='width:80px !important;vertical-align: middle' nowrap><div class='col-lg-2'><span style='display: block;color:green' title='Edit' class='glyphicon glyphicon-edit Cheque_editbutton' disabled id="+edit+"></div></td>" +
-                        "<td style='width:100px !important;vertical-align: middle;text-align: center' nowrap>"+value_array[i].CHEQUE_DATE+"</td>" +
-                        "<td style='width:100px !important;vertical-align: middle;text-align: center' nowrap>"+value_array[i].CHEQUE_NO+"</td>" +
-                        "<td style='width:250px !important;vertical-align: middle' >"+value_array[i].CHEQUE_TO+"</td>" +
-                        "<td style='width:250px !important;vertical-align: middle' >"+value_array[i].CHEQUE_FOR+"</td>" +
-                        "<td style='width:120px !important;vertical-align: middle;text-align: center' nowrap>"+value_array[i].CHEQUE_AMOUNT+"</td>" +
-                        "<td style='width:150px !important;vertical-align: middle;text-align: center'nowrap>"+unit+"</td>" +
-                        "<td style='width:100px !important;vertical-align: middle;text-align: center' nowrap>"+value_array[i].BCN_DATA+"</td>" +
-                        "<td style='width:100px !important;vertical-align: middle;text-align: center' nowrap>"+date+"</td>" +
-                        "<td style='width:250px !important;vertical-align: middle'>"+comments+"</td>" +
-                        "<td style='width:200px !important;vertical-align: middle' nowrap>"+value_array[i].ULD_LOGINID+"</td>" +
-                        "<td style='width:150px !important;vertical-align: middle' nowrap>"+value_array[i].CED_TIME_STAMP+"</td></tr>";
+                    if(value_array.length!=0) {
+                        $('#Tableheader').text(title);
+                        var tabledata = '<table style="width:2500px" id="CHEQUE_Datatable" border="1" cellspacing="0" data-class="table" class="srcresult"><thead bgcolor="#6495ed" style="color:white"><tr>';
+                        tabledata += "<th style='text-align:center;vertical-align: top'>EDIT/UPDATE</th>";
+                        tabledata += "<th style='text-align:center;vertical-align: top' class='uk-date-column'>CHEQUE DATE<span class='labelrequired'><em>*</em></span></th>";
+                        tabledata += "<th style='text-align:center;vertical-align: top''>CHEQUE NO<span class='labelrequired'><em>*</em></span></th>";
+                        tabledata += "<th style='text-align:center;vertical-align: top''>CHEQUE TO<span class='labelrequired'><em>*</em></span></th>";
+                        tabledata += "<th style='text-align:center;vertical-align: top''>CHEQUE FOR<span class='labelrequired'><em>*</em></span></th>";
+                        tabledata += "<th style='text-align:center;vertical-align: top''>CHEQUE AMOUNT<span class='labelrequired'><em>*</em></span></th>";
+                        tabledata += "<th style='text-align:center;vertical-align: top''>UNIT</th>";
+                        tabledata += "<th style='text-align:center;vertical-align: top''>STATUS<span class='labelrequired'><em>*</em></span></th>";
+                        tabledata += "<th style='text-align:center;vertical-align: top' class='uk-date-column'>DEBITED / REJECTED DATE<span class='labelrequired'><em>*</em></span></th>";
+                        tabledata += "<th style='text-align:center;vertical-align: top''>COMMENTS</th>";
+                        tabledata += "<th style='text-align:center;vertical-align: top''>USERSTAMP</th>";
+                        tabledata += "<th style='text-align:center;vertical-align: top'class='uk-timestp-column'>TIMESTAMP</th>";
+                        tabledata += "</tr></thead><tbody>";
+                        for (var i = 0; i < value_array.length; i++) {
+                            var Ermid = value_array[i].CHEQUE_ID;
+                            Cheque_id.push(Ermid)
+                            var edit = "Editid_" + value_array[i].CHEQUE_ID;
+                            var del = "Deleteid_" + value_array[i].CHEQUE_ID;
+                            if (value_array[i].CHEQUE_UNIT_NO == null) {
+                                var unit = '';
+                            } else {
+                                unit = value_array[i].CHEQUE_UNIT_NO;
+                            }
+                            if (value_array[i].CHEQUE_COMMENTS == null) {
+                                var comments = '';
+                            } else {
+                                comments = value_array[i].CHEQUE_COMMENTS;
+                            }
+                            if (value_array[i].CHEQUE_DEBITED_RETURNED_DATE == null) {
+                                var date = '';
+                            } else {
+                                date = value_array[i].CHEQUE_DEBITED_RETURNED_DATE;
+                            }
+                            tabledata += '<tr id=' + value_array[i].CHEQUE_ID + '>' +
+                            "<td style='width:80px !important;vertical-align: middle' nowrap><div class='col-lg-2'><span style='display: block;color:green' title='Edit' class='glyphicon glyphicon-edit Cheque_editbutton' disabled id=" + edit + "></div></td>" +
+                            "<td style='width:100px !important;vertical-align: middle;text-align: center' nowrap>" + value_array[i].CHEQUE_DATE + "</td>" +
+                            "<td style='width:100px !important;vertical-align: middle;text-align: center' nowrap>" + value_array[i].CHEQUE_NO + "</td>" +
+                            "<td style='width:250px !important;vertical-align: middle' >" + value_array[i].CHEQUE_TO + "</td>" +
+                            "<td style='width:250px !important;vertical-align: middle' >" + value_array[i].CHEQUE_FOR + "</td>" +
+                            "<td style='width:120px !important;vertical-align: middle;text-align: center' nowrap>" + value_array[i].CHEQUE_AMOUNT + "</td>" +
+                            "<td style='width:150px !important;vertical-align: middle;text-align: center'nowrap>" + unit + "</td>" +
+                            "<td style='width:100px !important;vertical-align: middle;text-align: center' nowrap>" + value_array[i].BCN_DATA + "</td>" +
+                            "<td style='width:100px !important;vertical-align: middle;text-align: center' nowrap>" + date + "</td>" +
+                            "<td style='width:250px !important;vertical-align: middle'>" + comments + "</td>" +
+                            "<td style='width:200px !important;vertical-align: middle' nowrap>" + value_array[i].ULD_LOGINID + "</td>" +
+                            "<td style='width:150px !important;vertical-align: middle' nowrap>" + value_array[i].CED_TIME_STAMP + "</td></tr>";
+                        }
+                        tabledata += "</body>";
+                        $('section').html(tabledata);
+                        $('#CHEQUE_SEARCH_DataTable').show();
+                        var table = $('#CHEQUE_Datatable').DataTable({
+                            "pageLength": 10,
+                            "sPaginationType": "full_numbers",
+                            "aoColumnDefs": [{
+                                "aTargets": ["uk-date-column"],
+                                "sType": "uk_date"
+                            }, {"aTargets": ["uk-timestp-column"], "sType": "uk_timestp"}]
+                        });
+                        sorting();
                     }
-                    tabledata+="</body>";
-                    $('section').html(tabledata);
-                    $('#CHEQUE_SEARCH_DataTable').show();
-                    var table = $('#CHEQUE_Datatable').DataTable();
+                    else
+                    {
+                        $('#CHEQUE_SEARCH_DataTable').hide();
+                        $('#EmptyTableheader').text(Emptytitle);
+                    }
                     $('.preloader').hide();
                 },
                 error: function(data){
@@ -437,6 +474,33 @@
                 }
             });
         });
+        function DTFormTable_DateFormat(inputdate){
+            var string = inputdate.split("-");
+            return string[2]+'-'+ string[1]+'-'+string[0];
+        }
+        //FUNCTION FOR SORTING
+        function sorting(){
+            jQuery.fn.dataTableExt.oSort['uk_date-asc']  = function(a,b) {
+                var x = new Date( Date.parse(DTFormTable_DateFormat(a)));
+                var y = new Date( Date.parse(DTFormTable_DateFormat(b)) );
+                return ((x < y) ? -1 : ((x > y) ?  1 : 0));
+            };
+            jQuery.fn.dataTableExt.oSort['uk_date-desc'] = function(a,b) {
+                var x = new Date( Date.parse(DTFormTable_DateFormat(a)));
+                var y = new Date( Date.parse(DTFormTable_DateFormat(b)) );
+                return ((x < y) ? 1 : ((x > y) ?  -1 : 0));
+            };
+            jQuery.fn.dataTableExt.oSort['uk_timestp-asc']  = function(a,b) {
+                var x = new Date( Date.parse(DTFormTable_DateFormat(a.split(' ')[0]))).setHours(a.split(' ')[1].split(':')[0],a.split(' ')[1].split(':')[1],a.split(' ')[1].split(':')[2]);
+                var y = new Date( Date.parse(DTFormTable_DateFormat(b.split(' ')[0]))).setHours(b.split(' ')[1].split(':')[0],b.split(' ')[1].split(':')[1],b.split(' ')[1].split(':')[2]);
+                return ((x < y) ? -1 : ((x > y) ?  1 : 0));
+            };
+            jQuery.fn.dataTableExt.oSort['uk_timestp-desc'] = function(a,b) {
+                var x = new Date( Date.parse(DTFormTable_DateFormat(a.split(' ')[0]))).setHours(a.split(' ')[1].split(':')[0],a.split(' ')[1].split(':')[1],a.split(' ')[1].split(':')[2]);
+                var y = new Date( Date.parse(DTFormTable_DateFormat(b.split(' ')[0]))).setHours(b.split(' ')[1].split(':')[0],b.split(' ')[1].split(':')[1],b.split(' ')[1].split(':')[2]);
+                return ((x < y) ? 1 : ((x > y) ?  -1 : 0));
+            };
+        }
         var selectedrowid;
         var pre_tds;
         $(document).on('click','.Cheque_editbutton', function (){
@@ -618,6 +682,34 @@
                 }
             });
         });
+        $(document).on('click','#Cheque_btn_pdf',function(){
+            var searchoption=$('#CHEQUE_SRC_SearchOption').val();
+            if(searchoption==1)
+            {
+                var FromAmount=$('#CQ_SRC_FromAmount').val();
+                var ToAmount=$('#CQ_SRC_ToAmount').val();
+                var title="DETAILS OF SELECTED AMOUNT RANGE : "+FromAmount+" TO "+ToAmount;
+            }
+            if(searchoption==2)
+            {
+                var FromAmount=$("#CQ_SRC_Chequeno").val();
+                var ToAmount='';
+                var title="DETAILS OF SELECTED CHEQUE NO : "+FromAmount;
+            }
+            if(searchoption==3)
+            {
+                var FromAmount=$("#CQ_SRC_FromDate").val();
+                var ToAmount=$("#CQ_SRC_ToDate").val();
+                var title="DETAILS OF SELECTED DATE RANGE : "+FromAmount+" TO "+ToAmount;
+            }
+            if(searchoption==4)
+            {
+                var FromAmount=$("#CQ_SRC_Chequeunit").val();
+                var ToAmount='';
+                var title="DETAILS OF SELECTED UNIT : "+FromAmount;
+            }
+            var pdfurl=document.location.href='<?php echo site_url('FINANCE/OCBC/Ctrl_Ocbc_Cheque_Entry_Search_Update/ChequePdfCreation')?>?Searchoption='+searchoption+'&Frominput='+FromAmount+'&Todate='+ToAmount+'&Header='+title;
+        });
     });
 </script>
 <body>
@@ -637,7 +729,7 @@
                 </div>
                 <div id="Cheque_Entry_Form" hidden>
                     <form id="Form_Cheque_entry" class="form-horizontal" role="form">
-                        <h4 style="color:#498af3;"><U>CHEQUE ENTRY FORM</U></h4>
+                        <h4 style="color:#498af3;">CHEQUE ENTRY FORM</h4>
                         <br>
                         <div class="row form-group">
                             <div class="col-md-3">
@@ -726,9 +818,13 @@
                         </div>
                         <div id="CHEQUE_SEARCH_DataTable" class="table-responsive" hidden>
                             <h4 style="color:#498af3;" id="Tableheader"></h4>
+                            <input type="button" id="Cheque_btn_pdf" class="btnpdf" value="PDF">
                             <section>
 
                             </section>
+                        </div>
+                        <div>
+                            <h4 class="errormsg" id="EmptyTableheader"></h4>
                         </div>
                     </form>
                 </div>

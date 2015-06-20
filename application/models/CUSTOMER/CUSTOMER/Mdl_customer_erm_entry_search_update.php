@@ -144,4 +144,74 @@ class Mdl_customer_erm_entry_search_update extends CI_Model
         $Return_values=array($Confirm_Meessage,$Timestamp,$UserStamp,$message);
         return $Return_values;
     }
+    public function getpdfdetails($Option,$Data1,$Data2,$timeZoneFormat)
+    {
+        if($Option==6)
+        {
+            $query=$this->db->query('SELECT ERM.ERM_ID,NC.NC_DATA,ERM.ERM_CUST_NAME,ERM.ERM_RENT,DATE_FORMAT(CONVERT_TZ(ERM.ERM_MOVING_DATE,'.$timeZoneFormat.'),"%d-%m-%Y") AS MOVING_DATE,ERM.ERM_MIN_STAY,EOD.ERMO_DATA,ERM.ERM_NO_OF_GUESTS,ERM.ERM_AGE,ERM.ERM_CONTACT_NO,ERM.ERM_EMAIL_ID,ERM.ERM_COMMENTS,ULD.ULD_LOGINID,DATE_FORMAT(CONVERT_TZ(ERM.ERM_TIMESTAMP,'.$timeZoneFormat.'),"%d-%m-%Y %T") AS ERM_TIME_STAMP FROM ERM_ENTRY_DETAILS ERM left join NATIONALITY_CONFIGURATION NC ON ERM.NC_ID=NC.NC_ID left join ERM_OCCUPATION_DETAILS EOD ON ERM.ERMO_ID=EOD.ERMO_ID left join USER_LOGIN_DETAILS ULD on ERM.ULD_ID=ULD.ULD_ID WHERE ULD.ULD_LOGINID="'.$Data1.'" ORDER BY ERM.ERM_MOVING_DATE,ERM.ERM_CUST_NAME');
+        }
+        elseif($Option==5)
+        {
+            $fromdate=date('Y-m-d',strtotime($Data1));
+            $todate=date('Y-m-d',strtotime($Data2));
+            $query=$this->db->query('SELECT ERM.ERM_ID,NC.NC_DATA,ERM.ERM_CUST_NAME,ERM.ERM_RENT,DATE_FORMAT(CONVERT_TZ(ERM.ERM_MOVING_DATE,'.$timeZoneFormat.'),"%d-%m-%Y") AS MOVING_DATE,ERM.ERM_MIN_STAY,EOD.ERMO_DATA,ERM.ERM_NO_OF_GUESTS,ERM.ERM_AGE,ERM.ERM_CONTACT_NO,ERM.ERM_EMAIL_ID,ERM.ERM_COMMENTS,ULD.ULD_LOGINID,DATE_FORMAT(CONVERT_TZ(ERM.ERM_TIMESTAMP,'.$timeZoneFormat.'),"%d-%m-%Y %T") AS ERM_TIME_STAMP FROM ERM_ENTRY_DETAILS ERM left join NATIONALITY_CONFIGURATION NC ON ERM.NC_ID=NC.NC_ID left join ERM_OCCUPATION_DETAILS EOD ON ERM.ERMO_ID=EOD.ERMO_ID left join USER_LOGIN_DETAILS ULD on ERM.ULD_ID=ULD.ULD_ID WHERE ERM.ERM_TIMESTAMP BETWEEN "'.$fromdate.'" AND "'.$todate.'" ORDER BY ERM.ERM_TIMESTAMP,ERM.ERM_CUST_NAME');
+        }
+        elseif($Option==4)
+        {
+            $query=$this->db->query('SELECT ERM.ERM_ID,NC.NC_DATA,ERM.ERM_CUST_NAME,ERM.ERM_RENT,DATE_FORMAT(CONVERT_TZ(ERM.ERM_MOVING_DATE,'.$timeZoneFormat.'),"%d-%m-%Y") AS MOVING_DATE,ERM.ERM_MIN_STAY,EOD.ERMO_DATA,ERM.ERM_NO_OF_GUESTS,ERM.ERM_AGE,ERM.ERM_CONTACT_NO,ERM.ERM_EMAIL_ID,ERM.ERM_COMMENTS,ULD.ULD_LOGINID,DATE_FORMAT(CONVERT_TZ(ERM.ERM_TIMESTAMP,'.$timeZoneFormat.'),"%d-%m-%Y %T") AS ERM_TIME_STAMP FROM ERM_ENTRY_DETAILS ERM left join NATIONALITY_CONFIGURATION NC ON ERM.NC_ID=NC.NC_ID left join ERM_OCCUPATION_DETAILS EOD ON ERM.ERMO_ID=EOD.ERMO_ID left join USER_LOGIN_DETAILS ULD on ERM.ULD_ID=ULD.ULD_ID WHERE NC_DATA="'.$Data1.'" ORDER BY ERM.ERM_MOVING_DATE,ERM.ERM_CUST_NAME');
+        }
+        elseif($Option==3)
+        {
+            $query=$this->db->query('SELECT ERM.ERM_ID,NC.NC_DATA,ERM.ERM_CUST_NAME,ERM.ERM_RENT,DATE_FORMAT(CONVERT_TZ(ERM.ERM_MOVING_DATE,'.$timeZoneFormat.'),"%d-%m-%Y") AS MOVING_DATE,ERM.ERM_MIN_STAY,EOD.ERMO_DATA,ERM.ERM_NO_OF_GUESTS,ERM.ERM_AGE,ERM.ERM_CONTACT_NO,ERM.ERM_EMAIL_ID,ERM.ERM_COMMENTS,ULD.ULD_LOGINID,DATE_FORMAT(CONVERT_TZ(ERM.ERM_TIMESTAMP,'.$timeZoneFormat.'),"%d-%m-%Y %T") AS ERM_TIME_STAMP FROM ERM_ENTRY_DETAILS ERM left join NATIONALITY_CONFIGURATION NC ON ERM.NC_ID=NC.NC_ID left join ERM_OCCUPATION_DETAILS EOD ON ERM.ERMO_ID=EOD.ERMO_ID left join USER_LOGIN_DETAILS ULD on ERM.ULD_ID=ULD.ULD_ID WHERE ERM.ERM_CONTACT_NO="'.$Data1.'" ORDER BY ERM.ERM_MOVING_DATE,ERM.ERM_CUST_NAME');
+        }
+        elseif($Option==2)
+        {
+            $query=$this->db->query('SELECT ERM.ERM_ID,NC.NC_DATA,ERM.ERM_CUST_NAME,ERM.ERM_RENT,DATE_FORMAT(CONVERT_TZ(ERM.ERM_MOVING_DATE,'.$timeZoneFormat.'),"%d-%m-%Y") AS MOVING_DATE,ERM.ERM_MIN_STAY,EOD.ERMO_DATA,ERM.ERM_NO_OF_GUESTS,ERM.ERM_AGE,ERM.ERM_CONTACT_NO,ERM.ERM_EMAIL_ID,ERM.ERM_COMMENTS,ULD.ULD_LOGINID,DATE_FORMAT(CONVERT_TZ(ERM.ERM_TIMESTAMP,'.$timeZoneFormat.'),"%d-%m-%Y %T") AS ERM_TIME_STAMP FROM ERM_ENTRY_DETAILS ERM left join NATIONALITY_CONFIGURATION NC ON ERM.NC_ID=NC.NC_ID left join ERM_OCCUPATION_DETAILS EOD ON ERM.ERMO_ID=EOD.ERMO_ID left join USER_LOGIN_DETAILS ULD on ERM.ULD_ID=ULD.ULD_ID WHERE ERM.ERM_CUST_NAME="'.$Data1.'" ORDER BY ERM.ERM_MOVING_DATE ASC');
+        }
+        elseif($Option==1)
+        {
+            $query=$this->db->query('SELECT ERM.ERM_ID,NC.NC_DATA,ERM.ERM_CUST_NAME,ERM.ERM_RENT,DATE_FORMAT(CONVERT_TZ(ERM.ERM_MOVING_DATE,'.$timeZoneFormat.'),"%d-%m-%Y") AS MOVING_DATE,ERM.ERM_MIN_STAY,EOD.ERMO_DATA,ERM.ERM_NO_OF_GUESTS,ERM.ERM_AGE,ERM.ERM_CONTACT_NO,ERM.ERM_EMAIL_ID,ERM.ERM_COMMENTS,ULD.ULD_LOGINID,DATE_FORMAT(CONVERT_TZ(ERM.ERM_TIMESTAMP,'.$timeZoneFormat.'),"%d-%m-%Y %T") AS ERM_TIME_STAMP FROM ERM_ENTRY_DETAILS ERM left join NATIONALITY_CONFIGURATION NC ON ERM.NC_ID=NC.NC_ID left join ERM_OCCUPATION_DETAILS EOD ON ERM.ERMO_ID=EOD.ERMO_ID left join USER_LOGIN_DETAILS ULD on ERM.ULD_ID=ULD.ULD_ID WHERE ERM.ERM_RENT BETWEEN '.$Data1.' AND '.$Data2.' ORDER BY ERM.ERM_MOVING_DATE,ERM.ERM_CUST_NAME');
+        }
+        $ERM_data='<br>
+        <table width="2500px" id="USU_tble_htmltable" border="1" style="border-collapse: collapse;" cellspacing="0" data-class="table" class="srcresult">
+        <sethtmlpageheader name="header" page="all" value="on" show-this-page="1"/>
+        <thead bgcolor="#6495ed" style="color:white">
+        <tr>
+           <th nowrap style="color:#fff !important; background-color:#498af3;text-align:center;font-weight: bold;width:100px">CUSTOMER NAME</th>
+           <th nowrap style="color:#fff !important; background-color:#498af3;text-align:center;font-weight: bold;width:200px">RENT</th>
+           <th nowrap style="color:#fff !important; background-color:#498af3;text-align:center;font-weight: bold;width:130px">MOVING DATE</th>
+           <th nowrap style="color:#fff !important; background-color:#498af3;text-align:center;font-weight: bold;width:130px">MINIMUM STAY</th>
+           <th nowrap style="color:#fff !important; background-color:#498af3;text-align:center;font-weight: bold;width:130px">OCCUPATION</th>
+           <th nowrap style="color:#fff !important; background-color:#498af3;text-align:center;font-weight: bold;width:130px">NATIONALITY</th>
+           <th nowrap style="color:#fff !important; background-color:#498af3;text-align:center;font-weight: bold;width:130px">NO OF GUESTS</th>
+           <th nowrap style="color:#fff !important; background-color:#498af3;text-align:center;font-weight: bold;width:100px">AGE</th>
+           <th nowrap style="color:#fff !important; background-color:#498af3;text-align:center;font-weight: bold;width:100px">CONTACT NO</th>
+           <th nowrap style="color:#fff !important; background-color:#498af3;text-align:center;font-weight: bold;width:100px">EMAIL ID</th>
+           <th nowrap style="color:#fff !important; background-color:#498af3;text-align:center;font-weight: bold;width:100px">COMMENTS</th>
+           <th nowrap style="color:#fff !important; background-color:#498af3;text-align:center;font-weight: bold;width:150px">USERSTAMP</th>
+           <th nowrap style="color:#fff !important; background-color:#498af3;text-align:center;font-weight: bold;width:150px">TIMESTAMP</th>
+        </tr>
+        </thead>
+        <tbody>';
+        foreach ($query->result_array() as $key => $value)
+        {
+            $ERM_data.='<tr>';
+            $ERM_data.='<td style="text-align:center;">'.$value['ERM_CUST_NAME'].'</td>';
+            $ERM_data.='<td  style="text-align:center;">'.$value['ERM_RENT'].'</td>';
+            $ERM_data .= '<td  style="text-align:center;">' . $value['MOVING_DATE'] . '</td>';
+            $ERM_data .= '<td  style="text-align:center;">' . $value['ERM_MIN_STAY'] . '</td>';
+            $ERM_data .= '<td>' . $value['ERMO_DATA'] . '</td>';
+            $ERM_data .= '<td>' . $value['NC_DATA'] . '</td>';
+            $ERM_data .= '<td style="text-align:center;">' . $value['ERM_NO_OF_GUESTS'] . '</td>';
+            $ERM_data.='<td  style="text-align:center;">'.$value['ERM_AGE'].'</td>';
+            $ERM_data.='<td  style="text-align:center;">'.$value['ERM_CONTACT_NO'].'</td>';
+            $ERM_data.='<td >'.$value['ERM_EMAIL_ID'].'</td>';
+            $ERM_data.='<td>'.$value['ERM_COMMENTS'].'</td>';
+            $ERM_data.='<td >'.$value['ULD_LOGINID'].'</td>';
+            $ERM_data.='<td >'.$value['ERM_TIME_STAMP'].'</td>';
+            $ERM_data.='</tr>';
+        }
+        $ERM_data.='</body></table>';
+        return $ERM_data;
+    }
 }

@@ -59,4 +59,21 @@ class Ctrl_Ocbc_Banktt_Search_Update extends CI_Controller
         }
         echo json_encode($Confirm_message[0]);
     }
+    public function BankttPdfCreation()
+    {
+        $UserStamp=$this->Mdl_eilib_common_function->getSessionUserStamp();
+        $timeZoneFormat= $this->Mdl_eilib_common_function->getTimezone();
+        $option=$_GET['Searchoption'];
+        $unit=$_GET['Frominput'];
+        $customer=$_GET['Todate'];
+        $header=$_GET['Header'];
+        $SearchResults=$this->Mdl_ocbc_banktt_entry->Banktt_PDF_SearchResults($option,$UserStamp,$timeZoneFormat,$unit,$customer);
+        $this->load->library('pdf');
+        $pdf = $this->pdf->load();
+        $pdf=new mPDF('utf-8','A4');
+        $pdf->SetHTMLHeader('<div style="text-align: center; font-weight: bold;">'.$header.'</div>', 'O', true);
+        $pdf->SetHTMLFooter('<div style="text-align: center;">{PAGENO}</div>');
+        $pdf->WriteHTML($SearchResults);
+        $pdf->Output('BANK TT DETAILS.pdf', 'D');
+    }
 }

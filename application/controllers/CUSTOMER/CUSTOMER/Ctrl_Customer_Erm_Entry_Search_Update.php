@@ -133,5 +133,21 @@ Class Ctrl_Customer_Erm_Entry_Search_Update extends CI_Controller
         }
         echo json_encode($Returnvalues);
     }
+    public function ERMPdfCreation()
+    {
+        $timeZoneFormat= $this->Mdl_eilib_common_function->getTimezone();
+        $Option=$_GET['Searchoption'];
+        $Data1=$_GET['Frominput'];
+        $Data2=$_GET['Toinput'];
+        $header=$_GET['Header'];
+        $PDFDetails=$this->Mdl_customer_erm_entry_search_update->getpdfdetails($Option,$Data1,$Data2,$timeZoneFormat);
+        $this->load->library('pdf');
+        $pdf = $this->pdf->load();
+        $pdf=new mPDF('utf-8','A4');
+        $pdf->SetHTMLHeader('<div style="text-align: center; font-weight: bold;">'.$header.'</div>', 'O', true);
+        $pdf->SetHTMLFooter('<div style="text-align: center;">{PAGENO}</div>');
+        $pdf->WriteHTML($PDFDetails);
+        $pdf->Output('ERM LEEDS.pdf', 'D');
+    }
 
 }

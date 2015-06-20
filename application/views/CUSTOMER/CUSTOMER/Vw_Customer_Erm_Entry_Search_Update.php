@@ -3,7 +3,6 @@
     <?php require_once('application/libraries/EI_HDR.php'); ?>
 </head>
 <script>
-    var ErrorControl ={AmountCompare:'InValid'}
     $(document).ready(function() {
         $('.preloader').hide();
         //****************Form Option Selection*********************//
@@ -38,12 +37,13 @@
         }
         var AllcustomerArray=[];
         var AllcontactnoArray=[];
-        var SRC_errormsg;
         var SRC_nationality;
         var occupationvalue;
         var SRC_errormsg;
         $(document).on('click','.BE_rd_selectform',function() {
             var value=$("input[name='optradio']:checked").val();
+            $('#emptytableheader').text('');
+            $('#ERM_SEARCH_DataTable').hide();
             $('.preloader').show();
             if(value=='ERM_entryform')
             {
@@ -70,10 +70,11 @@
                             var data=value_array[2][i];
                             $('#ERM_Entry_Occupation').append($('<option>').text(data.ERMO_DATA).attr('value', data.ERMO_DATA));
                         }
-                        $('#ERM_Entry_Customername').prop('title',errormsg[0].EMC_DATA)
-                        $('#ERM_Entry_Rent').prop('title',errormsg[1].EMC_DATA);
-                        $('#ERM_Entry_Contactno').prop('title',errormsg[1].EMC_DATA);
-                        $('#CERM_ENTRY_lbl_emailiderrormsg').text(errormsg[4].EMC_DATA);
+                        $('#ERM_Entry_Customername').prop('title',SRC_errormsg[0].EMC_DATA)
+                        $('#ERM_Entry_Rent').prop('title',SRC_errormsg[1].EMC_DATA);
+                        $('#ERM_Entry_Contactno').prop('title',SRC_errormsg[1].EMC_DATA);
+                        $('#CERM_ENTRY_lbl_emailiderrormsg').text(SRC_errormsg[4].EMC_DATA);
+                        $("#ERM_Entry_Customername").focus();
                         $('.preloader').hide();
                     },
                     error: function(data){
@@ -89,6 +90,7 @@
                 $('#SearchformDiv').html('');
                 $('section').html('');
                 $('#ERM_SRC_SearchOption').val('SELECT');
+                $('#ERM_SEARCH_DataTable').hide();
                 $.ajax({
                     type: "POST",
                     url: controller_url+"ERM_SRC_InitialDataLoad",
@@ -215,7 +217,9 @@
         //*******************ERM ENTRY FORM DETAILS END ************************//
         $('#ERM_SRC_SearchOption').change(function(){
             $('#SearchformDiv').html('');
+            $('#emptytableheader').text('');
             $('section').html('');
+            $('#ERM_SEARCH_DataTable').hide();
             var searchoption=$('#ERM_SRC_SearchOption').val();
             if(searchoption==4)
             {
@@ -259,8 +263,8 @@
                             var data=value_array[i].ERM_CUST_NAME;
                             AllcustomerArray.push(data);
                         }
-                        $('#customernameautocompleteerrormsg').text(errormsg[11].EMC_DATA);
-
+                        $('#customernameautocompleteerrormsg').text(SRC_errormsg[11].EMC_DATA);
+                        $("#ERM_SRC_CustomerNameSearch").focus();
                     },
                     error: function(data){
                         alert('error in getting'+JSON.stringify(data));
@@ -292,8 +296,8 @@
                                 AllcontactnoArray.push(data);
                             }
                         }
-                        $('#contactautocompleteerrormsg').text(errormsg[11].EMC_DATA);
-
+                        $('#contactautocompleteerrormsg').text(SRC_errormsg[11].EMC_DATA);
+                        $("#ERM_SRC_ContactNo").focus();
                     },
                     error: function(data){
                         alert('error in getting'+JSON.stringify(data));
@@ -347,6 +351,7 @@
                 $('#SearchformDiv').html(appenddata);
                 $(".amountonly").doValidation({rule:'numbersonly',prop:{realpart:5,imaginary:2}});
                 $('#ERM_SRC_lbl_amounterrormsg').text(errormsg[6].EMC_DATA);
+                $("#ERM_SRC_FromAmount").focus();
             }
             else if(searchoption==5)
             {
@@ -377,12 +382,14 @@
                 var CCRE_d = new Date();
                 $('#ERM_SRC_ToDate').datepicker("option","minDate",changedmonth);
                 $('#ERM_SRC_ToDate').datepicker("option","maxDate",new Date());
+                $("#ERM_SRC_FromDate").focus();
             }
             else if(searchoption=='SELECT')
             {
                 $('#SearchformDiv').html('');
                 $('section').html('');
             }
+            $("html, body").animate({ scrollTop: $(document).height() }, "slow");
         });
         //****************VALIDATION************************//
         $(document).on('change','.timestamp_btn_validation',function() {
@@ -515,46 +522,51 @@
         var ERM_id=[];
         $(document).on('click','#ERM_src_btn_search',function() {
             $('.preloader').show();
+            $('#emptytableheader').text('');
             var searchoption=$('#ERM_SRC_SearchOption').val();
             if(searchoption==6)
             {
                 var Userstamp=$('#ERM_SRC_UserStamp').val();
                 var data={'Option':searchoption,'Data1':Userstamp,'Data2':''};
-                $('#ERM_SRC_UserStamp').val('SELECT');
+                var header="DETAILS OF SELECTED USERSTAMP : "+Userstamp;
+                var EMPTYheader="NO DETAILS OF SELECTED USERSTAMP : "+Userstamp;
             }
             else if(searchoption==1)
             {
                 var FromAmount=$('#ERM_SRC_FromAmount').val();
                 var ToAmount=$('#ERM_SRC_ToAmount').val();
                 data={'Option':searchoption,'Data1':FromAmount,'Data2':ToAmount};
-                $('#ERM_SRC_FromAmount').val('');
-                $('#ERM_SRC_ToAmount').val('');
+                var header="DETAILS OF SELECTED AMOUNT RANGE : "+FromAmount+ " TO "+ToAmount;
+                var EMPTYheader="NO DETAILS OF SELECTED AMOUNT RANGE : "+FromAmount+ " TO "+ToAmount;
             }
             else if(searchoption==5)
             {
                 var FromDate=$('#ERM_SRC_FromDate').val();
                 var ToDate=$('#ERM_SRC_ToDate').val();
                 data={'Option':searchoption,'Data1':FromDate,'Data2':ToDate};
-                $('#ERM_SRC_FromDate').val('');
-                $('#ERM_SRC_ToDate').val('');
+                var header="DETAILS OF SELECTED DATE RANGE : "+FromDate+ " TO "+ToDate;
+                var EMPTYheader="NO DETAILS OF SELECTED DATE RANGE : "+FromDate+ " TO "+ToDate;
             }
             else if(searchoption==2)
             {
                 var CustomerName=$('#ERM_SRC_CustomerNameSearch').val();
                 data={'Option':searchoption,'Data1':CustomerName,'Data2':''};
-                $('#ERM_SRC_CustomerNameSearch').val('');
+                var header="DETAILS OF SELECTED CUSTOMERNAME : "+CustomerName;
+                var EMPTYheader="NO DETAILS OF SELECTED CUSTOMERNAME : "+CustomerName;
             }
             else if(searchoption==3)
             {
                 var ContactNo=$('#ERM_SRC_ContactNo').val();
                 data={'Option':searchoption,'Data1':ContactNo,'Data2':''};
-                $('#ERM_SRC_ContactNo').val('');
+                var header="DETAILS OF SELECTED CONTACT NO : "+ContactNo;
+                var EMPTYheader="NO DETAILS OF SELECTED CONTACT NO : "+ContactNo;
             }
             else if(searchoption==4)
             {
                 var Nationality=$('#ERM_SRC_NationalitySearch').val();
                 data={'Option':searchoption,'Data1':Nationality,'Data2':''};
-                $('#ERM_SRC_NationalitySearch').val('SELECT');
+                var header="DETAILS OF SELECTED NATIONALITY : "+Nationality;
+                var EMPTYheader="NO DETAILS OF SELECTED NATIONALITY : "+Nationality;
             }
             $("#ERM_src_btn_search").attr("disabled", "disabled");
             $.ajax({
@@ -563,63 +575,86 @@
                 data:data,
                 success: function(data){
                     var value_array=JSON.parse(data);
-                    var tabledata="<table id='ERM_Datatable' border=1 cellspacing='0' data-class='table'  class='srcresult table' style='width:2500px;' >";
-                    tabledata+="<thead class='headercolor'><tr class='head' style='text-align:center'>";
-                    tabledata+="<th style='width:80px !important;text-align:center;vertical-align: top'>EDIT/DELETE</th>";
-                    tabledata+="<th style='width:200px !important;text-align:center;vertical-align: top'>CUSTOMERNAME<span class='labelrequired'><em>*</em></span></th>";
-                    tabledata+="<th style='width:100px !important;text-align:center;vertical-align: top''>RENT<span class='labelrequired'><em>*</em></span></th>";
-                    tabledata+="<th style='width:100px !important;text-align:center;vertical-align: top''>MOVING DATE<span class='labelrequired'><em>*</em></span></th>";
-                    tabledata+="<th style='width:100px !important;text-align:center;vertical-align: top''>MINIMUM STAY<span class='labelrequired'><em>*</em></span></th>";
-                    tabledata+="<th style='width:200px !important;text-align:center;vertical-align: top''>OCCUPATION<span class='labelrequired'><em>*</em></span></th>";
-                    tabledata+="<th style='width:200px !important;text-align:center;vertical-align: top''>NATIONALITY</th>";
-                    tabledata+="<th style='width:100px !important;text-align:center;vertical-align: top''>NO OF GUESTS</th>";
-                    tabledata+="<th style='width:100px !important;text-align:center;vertical-align: top''>AGE</th>";
-                    tabledata+="<th style='width:100px !important;text-align:center;vertical-align: top''>CONTACT NO</th>";
-                    tabledata+="<th style='width:150px !important;text-align:center;vertical-align: top''>EMAIL ID</th>";
-                    tabledata+="<th style='width:200px !important;text-align:center;vertical-align: top''>COMMENTS<span class='labelrequired'><em>*</em></span></th>";
-                    tabledata+="<th style='width:150px !important;text-align:center;vertical-align: top''>USERSTAMP</th>";
-                    tabledata+="<th style='width:150px !important;text-align:center;vertical-align: top''>TIMESTAMP</th>";
-                    tabledata+="</tr></thead><tbody>";
-                    for(var i=0;i<value_array.length;i++)
-                    {
-                        var Ermid=value_array[i].ERM_ID;
-                        ERM_id.push(Ermid)
-                        var edit="Editid_"+value_array[i].ERM_ID;
-                        var del="Deleteid_"+value_array[i].ERM_ID;
-                        if(value_array[i].NC_DATA==null){var nationality='';}else{nationality=value_array[i].NC_DATA;}
-                        if(value_array[i].ERM_NO_OF_GUESTS==null || value_array[i].ERM_NO_OF_GUESTS=='null'){var guest='';}else{guest=value_array[i].ERM_NO_OF_GUESTS;}
-                        if(value_array[i].ERM_AGE==null){var age='';}else{age=value_array[i].ERM_AGE;}
-                        if(value_array[i].ERM_CONTACT_NO==null){var contact='';}else{contact=value_array[i].ERM_CONTACT_NO;}
-                        if(value_array[i].ERM_EMAIL_ID==null){var mail='';}else{mail=value_array[i].ERM_EMAIL_ID;}
-                        tabledata+='<tr id='+value_array[i].ERM_ID+'>' +
-                        "<td style='width:80px !important;vertical-align: middle'><div class='col-lg-1'><span style='display: block;color:green' title='Edit' class='glyphicon glyphicon-edit ERM_editbutton' disabled id="+edit+"></div><div class='col-lg-1'><span style='display: block;color:red' title='Delete' class='glyphicon glyphicon-trash ERM_removebutton' disabled id="+del+"></div></td>" +
-                        "<td class='ERMEdit' style='width:200px !important;vertical-align: middle' id=Name_"+Ermid+">"+value_array[i].ERM_CUST_NAME+"</td>" +
-                        "<td style='width:100px !important;vertical-align: middle' >"+value_array[i].ERM_RENT+"</td>" +
-                        "<td style='width:100px !important;vertical-align: middle'>"+value_array[i].MOVING_DATE+"</td>" +
-                        "<td style='width:100px !important;vertical-align: middle'>"+value_array[i].ERM_MIN_STAY+"</td>" +
-                        "<td style='width:200px !important;vertical-align: middle'>"+value_array[i].ERMO_DATA+"</td>" +
-                        "<td style='width:200px !important;vertical-align: middle'>"+nationality+"</td>" +
-                        "<td style='width:100px !important;vertical-align: middle'>"+guest+"</td>" +
-                        "<td style='width:100px !important;vertical-align: middle'>"+age+"</td>" +
-                        "<td style='width:100px !important;vertical-align: middle'>"+contact+"</td>" +
-                        "<td style='width:150px !important;vertical-align: middle'>"+mail+"</td>" +
-                        "<td style='width:200px !important;vertical-align: middle'>"+value_array[i].ERM_COMMENTS+"</td>" +
-                        "<td style='width:150px !important;vertical-align: middle'>"+value_array[i].ULD_LOGINID+"</td>" +
-                        "<td style='width:150px !important;vertical-align: middle'>"+value_array[i].ERM_TIME_STAMP+"</td></tr>";
+                    if(value_array.length!=0) {
+                        $('#tableheader').text(header);
+                        var tabledata = '<table style="width:3000px" id="ERM_Datatable" border="1" cellspacing="0" data-class="table" class="srcresult"><thead bgcolor="#6495ed" style="color:white"><tr>';
+                        tabledata += "<th style='width:80px !important;text-align:center;vertical-align: top'>EDIT/DELETE</th>";
+                        tabledata += "<th style='width:200px !important;text-align:center;vertical-align: top'>CUSTOMERNAME<span class='labelrequired'><em>*</em></span></th>";
+                        tabledata += "<th style='width:100px !important;text-align:center;vertical-align: top''>RENT<span class='labelrequired'><em>*</em></span></th>";
+                        tabledata += "<th style='width:100px !important;text-align:center;vertical-align: top' class='uk-date-column'>MOVING DATE<span class='labelrequired'><em>*</em></span></th>";
+                        tabledata += "<th style='width:100px !important;text-align:center;vertical-align: top''>MINIMUM STAY<span class='labelrequired'><em>*</em></span></th>";
+                        tabledata += "<th style='width:200px !important;text-align:center;vertical-align: top''>OCCUPATION<span class='labelrequired'><em>*</em></span></th>";
+                        tabledata += "<th style='width:200px !important;text-align:center;vertical-align: top''>NATIONALITY</th>";
+                        tabledata += "<th style='width:100px !important;text-align:center;vertical-align: top''>NO OF GUESTS</th>";
+                        tabledata += "<th style='width:100px !important;text-align:center;vertical-align: top''>AGE</th>";
+                        tabledata += "<th style='width:100px !important;text-align:center;vertical-align: top''>CONTACT NO</th>";
+                        tabledata += "<th style='width:150px !important;text-align:center;vertical-align: top''>EMAIL ID</th>";
+                        tabledata += "<th style='width:200px !important;text-align:center;vertical-align: top''>COMMENTS<span class='labelrequired'><em>*</em></span></th>";
+                        tabledata += "<th style='width:150px !important;text-align:center;vertical-align: top''>USERSTAMP</th>";
+                        tabledata += "<th style='width:150px !important;text-align:center;vertical-align: top' class='uk-timestp-column'>TIMESTAMP</th>";
+                        tabledata += "</tr></thead><tbody>";
+                        for (var i = 0; i < value_array.length; i++) {
+                            var Ermid = value_array[i].ERM_ID;
+                            ERM_id.push(Ermid)
+                            var edit = "Editid_" + value_array[i].ERM_ID;
+                            var del = "Deleteid_" + value_array[i].ERM_ID;
+                            if (value_array[i].NC_DATA == null) {
+                                var nationality = '';
+                            } else {
+                                nationality = value_array[i].NC_DATA;
+                            }
+                            if (value_array[i].ERM_NO_OF_GUESTS == null || value_array[i].ERM_NO_OF_GUESTS == 'null') {
+                                var guest = '';
+                            } else {
+                                guest = value_array[i].ERM_NO_OF_GUESTS;
+                            }
+                            if (value_array[i].ERM_AGE == null) {
+                                var age = '';
+                            } else {
+                                age = value_array[i].ERM_AGE;
+                            }
+                            if (value_array[i].ERM_CONTACT_NO == null) {
+                                var contact = '';
+                            } else {
+                                contact = value_array[i].ERM_CONTACT_NO;
+                            }
+                            if (value_array[i].ERM_EMAIL_ID == null) {
+                                var mail = '';
+                            } else {
+                                mail = value_array[i].ERM_EMAIL_ID;
+                            }
+                            tabledata += '<tr id=' + value_array[i].ERM_ID + '>' +
+                            "<td style='width:80px !important;vertical-align: middle'><div class='col-lg-1'><span style='display: block;color:green' title='Edit' class='glyphicon glyphicon-edit ERM_editbutton' disabled id=" + edit + "></div><div class='col-lg-1'><span style='display: block;color:red' title='Delete' class='glyphicon glyphicon-trash ERM_removebutton' disabled id=" + del + "></div></td>" +
+                            "<td class='ERMEdit' style='width:200px !important;vertical-align: middle' id=Name_" + Ermid + ">" + value_array[i].ERM_CUST_NAME + "</td>" +
+                            "<td style='width:100px !important;text-align: middle' >" + value_array[i].ERM_RENT + "</td>" +
+                            "<td style='width:100px !important;text-align: middle'>" + value_array[i].MOVING_DATE + "</td>" +
+                            "<td style='width:100px !important;text-align: middle'>" + value_array[i].ERM_MIN_STAY + "</td>" +
+                            "<td style='width:150px !important;vertical-align: middle'>" + value_array[i].ERMO_DATA + "</td>" +
+                            "<td style='width:150px !important;vertical-align: middle'>" + nationality + "</td>" +
+                            "<td style='width:100px !important;text-align: middle'>" + guest + "</td>" +
+                            "<td style='width:100px !important;text-align: middle'>" + age + "</td>" +
+                            "<td style='width:100px !important;text-align: middle'>" + contact + "</td>" +
+                            "<td style='width:150px !important;vertical-align: middle'>" + mail + "</td>" +
+                            "<td style='width:200px !important;vertical-align: middle'>" + value_array[i].ERM_COMMENTS + "</td>" +
+                            "<td style='width:150px !important;vertical-align: middle'>" + value_array[i].ULD_LOGINID + "</td>" +
+                            "<td style='width:150px !important;vertical-align: middle'>" + value_array[i].ERM_TIME_STAMP + "</td></tr>";
+                        }
+                        tabledata += "</body>";
+                        $('section').html(tabledata);
+                        $('#ERM_SEARCH_DataTable').show();
+                        var table = $('#ERM_Datatable').DataTable({
+                            "aoColumnDefs": [{
+                                "aTargets": ["uk-date-column"],
+                                "sType": "uk_date"
+                            }, {"aTargets": ["uk-timestp-column"], "sType": "uk_timestp"}]
+                        });
+                        sorting();
                     }
-                    tabledata+="</body>";
-                    $('section').html(tabledata);
-                    $('#ERM_SEARCH_DataTable').show();
-                    var table = $('#ERM_Datatable').DataTable({
-
-                    });
-//                 var table = $('#ERM_Datatable').DataTable( {
-//                     "scrollY": "300px",
-//                     "scrollX": "100%",
-//                     "scrollCollapse": true,
-//                     "paging": false
-//                 } );
-//                 new $.fn.dataTable.FixedColumns( table );
+                    else
+                    {
+                        $('#ERM_SEARCH_DataTable').hide();
+                        $('#emptytableheader').text(EMPTYheader);
+                    }
                     $("#ERM_src_btn_search").attr("disabled", "disabled");
                     $('.preloader').hide();
                 },
@@ -629,6 +664,33 @@
                 }
             });
         });
+        function FormTable_DateFormat(inputdate){
+            var string = inputdate.split("-");
+            return string[2]+'-'+ string[1]+'-'+string[0];
+        }
+        //FUNCTION FOR SORTING
+        function sorting(){
+            jQuery.fn.dataTableExt.oSort['uk_date-asc']  = function(a,b) {
+                var x = new Date( Date.parse(FormTable_DateFormat(a)));
+                var y = new Date( Date.parse(FormTable_DateFormat(b)) );
+                return ((x < y) ? -1 : ((x > y) ?  1 : 0));
+            };
+            jQuery.fn.dataTableExt.oSort['uk_date-desc'] = function(a,b) {
+                var x = new Date( Date.parse(FormTable_DateFormat(a)));
+                var y = new Date( Date.parse(FormTable_DateFormat(b)) );
+                return ((x < y) ? 1 : ((x > y) ?  -1 : 0));
+            };
+            jQuery.fn.dataTableExt.oSort['uk_timestp-asc']  = function(a,b) {
+                var x = new Date( Date.parse(FormTable_DateFormat(a.split(' ')[0]))).setHours(a.split(' ')[1].split(':')[0],a.split(' ')[1].split(':')[1],a.split(' ')[1].split(':')[2]);
+                var y = new Date( Date.parse(FormTable_DateFormat(b.split(' ')[0]))).setHours(b.split(' ')[1].split(':')[0],b.split(' ')[1].split(':')[1],b.split(' ')[1].split(':')[2]);
+                return ((x < y) ? -1 : ((x > y) ?  1 : 0));
+            };
+            jQuery.fn.dataTableExt.oSort['uk_timestp-desc'] = function(a,b) {
+                var x = new Date( Date.parse(FormTable_DateFormat(a.split(' ')[0]))).setHours(a.split(' ')[1].split(':')[0],a.split(' ')[1].split(':')[1],a.split(' ')[1].split(':')[2]);
+                var y = new Date( Date.parse(FormTable_DateFormat(b.split(' ')[0]))).setHours(b.split(' ')[1].split(':')[0],b.split(' ')[1].split(':')[1],b.split(' ')[1].split(':')[2]);
+                return ((x < y) ? 1 : ((x > y) ?  -1 : 0));
+            };
+        }
         // *******************ERM DELETE ROW RECORDS FUNCTION START***************//
         var deleterowid;
         $(document).on('click','.ERM_removebutton', function (){
@@ -839,6 +901,46 @@
                 }
             });
         });
+        $(document).on('click','#Erm_btn_pdf',function(){
+            var searchoption=$('#ERM_SRC_SearchOption').val();
+            if(searchoption==6)
+            {
+                var Frominput=$('#ERM_SRC_UserStamp').val();
+                var Toinput='';
+                var title="DETAILS OF SELECTED USERSTAMP = "+Frominput;
+            }
+            else if(searchoption==1)
+            {
+                var Frominput=$('#ERM_SRC_FromAmount').val();
+                var Toinput=$('#ERM_SRC_ToAmount').val();
+                title="DETAILS OF SELECTED AMOUNT RANGE  "+Frominput+" TO "+Toinput;
+            }
+            else if(searchoption==5)
+            {
+                var Frominput=$('#ERM_SRC_FromDate').val();
+                var Toinput=$('#ERM_SRC_ToDate').val();
+                title="DETAILS OF SELECTED DATE RANGE  "+Frominput+" TO "+Toinput;
+            }
+            else if(searchoption==2)
+            {
+                var Frominput=$('#ERM_SRC_CustomerNameSearch').val();
+                var Toinput='';
+                title="DETAILS OF SELECTED CUSTOMER  "+Frominput
+            }
+            else if(searchoption==3)
+            {
+                var Frominput=$('#ERM_SRC_ContactNo').val();
+                var Toinput='';
+                title="DETAILS OF SELECTED CONTACT NO  "+Frominput
+            }
+            else if(searchoption==4)
+            {
+                var Frominput=$('#ERM_SRC_NationalitySearch').val();
+                var Toinput='';
+                title="DETAILS OF SELECTED NATIONALITY  "+Frominput;
+            }
+            var pdfurl=document.location.href='<?php echo site_url('CUSTOMER/CUSTOMER/Ctrl_Customer_Erm_Entry_Search_Update/ERMPdfCreation')?>?Searchoption='+searchoption+'&Frominput='+Frominput+'&Toinput='+Toinput+'&Header='+title;
+        });
     });
 </script>
 <body>
@@ -989,9 +1091,14 @@
 
                         </div>
                         <div id="ERM_SEARCH_DataTable" class="table-responsive" hidden>
+                            <h4 style="color:#498af3;" id="tableheader"></h4>
+                            <input type="button" id="Erm_btn_pdf" class="btnpdf" value="PDF">
                             <section>
 
                             </section>
+                        </div>
+                        <div>
+                            <h4 class="errormsg" id="emptytableheader"></h4>
                         </div>
                     </form>
                     <div id="Formcontents" hidden>

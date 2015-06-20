@@ -69,4 +69,20 @@ Class Ctrl_Ocbc_Cheque_Entry_Search_Update extends CI_Controller
         $confirmmessage=$this->Mdl_ocbc_cheque_entry_search_update->getUpdation_Details($Rowid,$chequedate,$chequeno,$chequeto,$chequefor,$checkamount,$checkunit,$checkstatus,$checquedebiteddate,$comments,$UserStamp,$timeZoneFormat);
         echo json_encode($confirmmessage);
     }
+    public function ChequePdfCreation()
+    {
+        $timeZoneFormat= $this->Mdl_eilib_common_function->getTimezone();
+        $Option=$_GET['Searchoption'];
+        $Data1=$_GET['Frominput'];
+        $Data2=$_GET['Todate'];
+        $header=$_GET['Header'];
+        $Allrecords=$this->Mdl_ocbc_cheque_entry_search_update->ChequePDFCreation($Option,$Data1,$Data2,$timeZoneFormat);
+        $this->load->library('pdf');
+        $pdf = $this->pdf->load();
+        $pdf=new mPDF('utf-8','A4');
+        $pdf->SetHTMLHeader('<div style="text-align: center; font-weight: bold;">'.$header.'</div>', 'O', true);
+        $pdf->SetHTMLFooter('<div style="text-align: center;">{PAGENO}</div>');
+        $pdf->WriteHTML($Allrecords);
+        $pdf->Output('CHEQUE DETAILS.pdf', 'D');
+    }
 }

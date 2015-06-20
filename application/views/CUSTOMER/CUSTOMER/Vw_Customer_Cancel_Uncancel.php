@@ -1,7 +1,7 @@
 <!--//*******************************************FILE DESCRIPTION*********************************************//
 //************************************CUSTOMER CANCEL***********************************************//
 //DONE BY:SAFI
-
+VER 0.02- SD:20/06/2015 ED:20/06/2015-remove duplicate cust radio option.
 VER 0.01 - INITIAL VERSION-SD:22/05/2015 ED:26/05/2015
 //*********************************************************************************************************//
 -->
@@ -66,7 +66,6 @@ $(document).ready(function(){
                 CCAN_loadUnitNo(response_unit)  ;
             },
             error:function(data){
-
                show_msgbox("CUSTOMER CANCELLATION",JSON.stringify(data),"error",false);
             }
         });
@@ -177,24 +176,7 @@ $(document).ready(function(){
                 }
             }
             CCAN_name_id_array=CCAN_name_id_array.sort();
-            if(CCAN_name_id_array.length!=1){
-                $(".preloader").hide();
-                $('#CCAN_tble_personaldetails').hide();
-                $('#CCAN_tble_third').hide();
-                $('#CCAN_div_buttons').hide();
-                $('#CCAN_div_uncancelbuttons').hide();
-                $('#CCAN_tble_feedetails').hide();
-                $('#CCAN_tble_id').show();
-                var CCAN_myarray=CCAN_name.split('_');
-                var CCAN_custname=CCAN_myarray[0]+' '+CCAN_myarray[1];
-                var CCAN_custid_radio='';
-                for (var i = 0; i < CCAN_name_id_array.length; i++) {
-                    var final=CCAN_custname+' '+CCAN_name_id_array[i]
-                    CCAN_custid_radio = '<div class="col-sm-offset-3" style="padding-left:15px"><div class="radio"><label><input type="radio" name="custid" id='+CCAN_name_id_array[i]+' value='+CCAN_name_id_array[i]+' class="CCAN_class_custid" />' + final + '</label></div></div>';
-                    $('#CCAN_tble_id').append(CCAN_custid_radio);
-                }
-            }
-            else{
+
                 for(var k=0;k<CCAN_all_result.length;k++){
                     if(CCAN_all_result[k].customerid==CCAN_name_id_array[0]){
                         CCAN_name_recver=(CCAN_all_result[k].recver);
@@ -216,7 +198,7 @@ $(document).ready(function(){
                     }
                 });
                 $('#CCAN_tble_id > div').remove();
-            }
+//            }
         }
     });
     $('.clear').click(function(){
@@ -283,39 +265,7 @@ $(document).ready(function(){
     }
     //FUNCTION TO CALL RADIO BUTTON CLICK
     var cust_id;
-    $(document).on("change",'.CCAN_class_custid', function (){
-        $(".preloader").show();
-        var CCAN_customer_id=$("input[name=custid]:checked").val();
-        cust_id=CCAN_customer_id;
-        for(var k=0;k<CCAN_all_result.length;k++){
-            if(CCAN_all_result[k].customerid==CCAN_customer_id){
-                CCAN_name_recver=(CCAN_all_result[k].recver);
-            }
-        }
-        $('#CCAN_tble_personaldetails').hide();
-        $('#CCAN_tble_feedetails').hide();
-        $('#CCAN_lbl_error').hide();
-        $('#CCAN_div_buttons').hide();
-        $('#CCAN_div_uncancelbuttons').hide();
-        $('#CCAN_tble_comment').hide();
-        $('#CCAN_tble_guest_cardno > div').remove();
-        $('input:radio[name=CCAN_selectcard]').attr('checked',false);
-        //HANDLER TO GET CUSTOMER DETAIL'S
-        var CCAN_select_type = $('input:radio[name=CCAN_mainradiobutton]:checked').val();
-        $.ajax({
-            type:'POST',
-            url:controller_url+"CCAN_get_customervalues",
-            data:{'CCAN_select_type':CCAN_select_type,'CCAN_name_recver':CCAN_name_recver,'cust_id':CCAN_customer_id},
-            success:function(data){
-                var response_unit=JSON.parse(data);
-                CCAN_load_customerdetails(response_unit)  ;
-            },
-            error:function(data){
-                    show_msgbox("CUSTOMER CANCELLATION",JSON.stringify(data),"error",false);
-            }
 
-        })
-    });
     ///////////////************ FUNCTION TO LOAD CUSTOMER DETAILS***********////////////////////
     function CCAN_load_customerdetails(data){
         $(".preloader").hide();
@@ -502,11 +452,9 @@ $(document).ready(function(){
         else{
             if(CCAN_select_type=="CANCEL CUSTOMER"){
                 show_msgbox("CUSTOMER CANCELLATION",response,"success",false);
-//                $(document).doValidation({rule:'messagebox',prop:{msgtitle:"CUSTOMER CANCELLATION",msgcontent:response,position:{top:150,left:500}}});
             }
             else{
                 show_msgbox("CUSTOMER CANCELLATION",response,"success",false);
-//                $(document).doValidation({rule:'messagebox',prop:{msgtitle:"CUSTOMER CANCELLATION",msgcontent:response,position:{top:150,left:500}}});
             }
             $('#CCAN_lbl_unitno').show();
             $('#CCAN_lb_selectunit').prop('selectedIndex',0).show();
@@ -600,9 +548,6 @@ $(document).ready(function(){
                     <label class="col-sm-3">CUSTOMER NAME <em>*</em></label>
                     <div class="col-sm-3"><select name="CCAN_name" id="CCAN_lb_selectname" class="CCAN_formvalidation form-control"></select></div>
                 </div>
-                <div class="form-group" id="CCAN_tble_id" hidden>
-                </div>
-
                 <div id="CCAN_div_cancelform" hidden>
                     <div id='CCAN_tble_personaldetails'>
                         <div class="form-group">
@@ -623,39 +568,39 @@ $(document).ready(function(){
                         </div>
                         <div class="form-group">
                             <label class="col-sm-3">MOBILE NO</label>
-                            <div class="col-sm-2"> <input type="text" name="CCAN_tb_mobileno" id="CCAN_tb_mobileno"  maxlength="6" class="form-control CCAN_formvalidation"  readonly/></div>
+                            <div class="col-sm-2"> <input type="text" name="CCAN_tb_mobileno" id="CCAN_tb_mobileno"  maxlength="6" style="width:90px;" class="form-control CCAN_formvalidation"  readonly/></div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-3">INT'L MOBILE NO</label>
-                            <div class="col-sm-2"> <input type="text" name="CCAN_tb_intmobileno" id="CCAN_tb_intmobileno"  maxlength="15" class="form-control CCAN_formvalidation"  readonly/></div>
+                            <div class="col-sm-2"> <input type="text" name="CCAN_tb_intmobileno" id="CCAN_tb_intmobileno"  maxlength="15" style="max-width:200px;" class="form-control CCAN_formvalidation"  readonly/></div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-3">OFFICE NO</label>
-                            <div class="col-sm-2"> <input type="text" name="CCAN_tb_officeno" id="CCAN_tb_officeno"  maxlength="8" class="form-control CCAN_formvalidation"  readonly/></div>
+                            <div class="col-sm-2"> <input type="text" name="CCAN_tb_officeno" id="CCAN_tb_officeno"  maxlength="8"  style="width:90px;" class="form-control CCAN_formvalidation"  readonly/></div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-3">DATE OF BIRTH</label>
-                            <div class="col-sm-2"> <input type="text" name="CCAN_tb_dob" id="CCAN_tb_dob"  maxlength="50" class="form-control CCAN_formvalidation" readonly/></div>
+                            <div class="col-sm-2"> <input type="text" name="CCAN_tb_dob" id="CCAN_tb_dob"  maxlength="50" style="width:110px;" class="form-control CCAN_formvalidation" readonly/></div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-3">NATIONALITY</label>
-                            <div class="col-sm-3"> <input type="text" name="CCAN_tb_nation" id="CCAN_tb_nation"  maxlength="50" class="form-control CCAN_formvalidation"  readonly/></div>
+                            <div class="col-sm-3"> <input type="text" name="CCAN_tb_nation" id="CCAN_tb_nation"  maxlength="50"  class="form-control CCAN_formvalidation"  readonly/></div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-3">PASSPORT NUMBER</label>
-                            <div class="col-sm-3"> <input type="text" name="CCAN_tb_passno" id="CCAN_tb_passno"  maxlength="15" class="form-control CCAN_formvalidation"  readonly/></div>
+                            <div class="col-sm-3"> <input type="text" name="CCAN_tb_passno" id="CCAN_tb_passno"  maxlength="15" style="max-width:170px;" class="form-control CCAN_formvalidation"  readonly/></div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-3">PASSPORT EXPIRY DATE</label>
-                            <div class="col-sm-2"> <input type="text" name="CCAN_tb_passdate" id="CCAN_tb_passdate"  maxlength="50" class="form-control CCAN_formvalidation"  readonly/></div>
+                            <div class="col-sm-2"> <input type="text" name="CCAN_tb_passdate" id="CCAN_tb_passdate"  style="width:110px;" maxlength="50" class="form-control CCAN_formvalidation"  readonly/></div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-3">EP NUMBER</label>
-                            <div class="col-sm-2"> <input type="text" name="CCAN_tb_epno" id="CCAN_tb_epno"  maxlength="15" class="form-control CCAN_formvalidation"  readonly/></div>
+                            <div class="col-sm-2"> <input type="text" name="CCAN_tb_epno" id="CCAN_tb_epno"  maxlength="15" style="max-width:170px;" class="form-control CCAN_formvalidation"  readonly/></div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-3">EP EXPIRY DATE</label>
-                            <div class="col-sm-2"> <input type="text" name="CCAN_tb_epdate" id="CCAN_tb_epdate" class="form-control CCAN_formvalidation"  readonly/></div>
+                            <div class="col-sm-2"> <input type="text" name="CCAN_tb_epdate" id="CCAN_tb_epdate" style="width:110px;" class="form-control CCAN_formvalidation"  readonly/></div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-3">ROOM TYPE</label>
@@ -670,47 +615,47 @@ $(document).ready(function(){
                     <div id="CCAN_tble_feedetails">
                         <div class="form-group">
                             <label class="col-sm-3">CHECK IN DATE</label>
-                            <div class="col-sm-2"> <input type="text" name="CCAN_tb_startdate" id="CCAN_tb_startdate" class="form-control CCAN_formvalidation"  readonly/></div>
+                            <div class="col-sm-2"> <input type="text" name="CCAN_tb_startdate" id="CCAN_tb_startdate" style="width:110px;" class="form-control CCAN_formvalidation"  readonly/></div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-3">CHECK OUT DATE</label>
-                            <div class="col-sm-2"> <input type="text" name="CCAN_tb_enddate" id="CCAN_tb_enddate" class="form-control CCAN_formvalidation"  readonly/></div>
+                            <div class="col-sm-2"> <input type="text" name="CCAN_tb_enddate" id="CCAN_tb_enddate" style="width:110px;" class="form-control CCAN_formvalidation"  readonly/></div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-3">NOTICE PERIOD</label>
-                            <div class="col-sm-2"> <input type="text" name="CCAN_tb_noticeperiod" id="CCAN_tb_noticeperiod" class="form-control CCAN_formvalidation"  readonly/></div>
+                            <div class="col-sm-2"> <input type="text" name="CCAN_tb_noticeperiod" id="CCAN_tb_noticeperiod" style="width:45px;" class="form-control CCAN_formvalidation"  readonly/></div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-3">NOTICE DATE</label>
-                            <div class="col-sm-2"> <input type="text" name="CCAN_tb_noticedate" id="CCAN_tb_noticedate" class="form-control CCAN_formvalidation"  readonly/></div>
+                            <div class="col-sm-2"> <input type="text" name="CCAN_tb_noticedate" id="CCAN_tb_noticedate" style="width:110px;" class="form-control CCAN_formvalidation"  readonly/></div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-3">ELECTRICITY CAPPED</label>
-                            <div class="col-sm-2"> <input type="text" name="CCAN_tb_elect" id="CCAN_tb_elect" class="form-control CCAN_formvalidation"  readonly/></div>
+                            <div class="col-sm-2"> <input type="text" name="CCAN_tb_elect" id="CCAN_tb_elect" style="width:77px;"class="form-control CCAN_formvalidation"  readonly/></div>
                         </div>
                         <div class="form-group">
                             <label id="CCAN_lbl_fixedfee" class="col-sm-3">AIRCON FIXED FEE</label>
-                            <div class="col-sm-2"> <input type="text" name="CCAN_tb_fixed" id="CCAN_tb_fixed" class="form-control CCAN_formvalidation"  readonly/></div>
+                            <div class="col-sm-2"> <input type="text" name="CCAN_tb_fixed" id="CCAN_tb_fixed" style="width:77px;" class="form-control CCAN_formvalidation"  readonly/></div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-3">CURTAIN DRY CLEANING FEE</label>
-                            <div class="col-sm-2"> <input type="text" name="CCAN_tb_drycleanfee" id="CCAN_tb_drycleanfee"  maxlength="50" class="form-control CCAN_formvalidation"  readonly/></div>
+                            <div class="col-sm-2"> <input type="text" name="CCAN_tb_drycleanfee" id="CCAN_tb_drycleanfee"  style="width:77px;" maxlength="50" class="form-control CCAN_formvalidation"  readonly/></div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-3">CHECKOUT CLEANING FEE</label>
-                            <div class="col-sm-2"> <input type="text" name="CCAN_tb_checkoutcleaningfee" id="CCAN_tb_checkoutcleaningfee"  maxlength="50" class="form-control CCAN_formvalidation"  readonly/></div>
+                            <div class="col-sm-2"> <input type="text" name="CCAN_tb_checkoutcleaningfee" style="width:77px;" id="CCAN_tb_checkoutcleaningfee"  maxlength="50" class="form-control CCAN_formvalidation"  readonly/></div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-3">DEPOSIT</label>
-                            <div class="col-sm-2"> <input type="text" name="CCAN_tb_deposit" id="CCAN_tb_deposit"  maxlength="50" class="form-control CCAN_formvalidation"  readonly/></div>
+                            <div class="col-sm-2"> <input type="text" name="CCAN_tb_deposit" id="CCAN_tb_deposit" style="width:77px; " maxlength="50" class="form-control CCAN_formvalidation"  readonly/></div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-3">RENT</label>
-                            <div class="col-sm-2"> <input type="text" name="CCAN_tb_rent" id="CCAN_tb_rent"  maxlength="50" class="form-control CCAN_formvalidation"  readonly/></div>
+                            <div class="col-sm-2"> <input type="text" name="CCAN_tb_rent" id="CCAN_tb_rent" style="width:77px;" maxlength="50" class="form-control CCAN_formvalidation"  readonly/></div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-3">PROCESSING COST</label>
-                            <div class="col-sm-2"> <input type="text" name="CCAN_tb_processingfee" id="CCAN_tb_processingfee" maxlength="50" class="form-control CCAN_formvalidation"  readonly/></div>
+                            <div class="col-sm-2"> <input type="text" name="CCAN_tb_processingfee" style="width:77px;" id="CCAN_tb_processingfee" maxlength="50" class="form-control CCAN_formvalidation"  readonly/></div>
                         </div>
                     </div>
                     <div id='CCAN_tble_comment'>

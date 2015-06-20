@@ -98,6 +98,7 @@ $(document).ready(function(){
         });
         var date = new Date( Date.parse( CEXP_max_date_array ));
         $('#CEXP_db_selected_equal_date').datepicker("option","maxDate",date);
+        $("#CEXP_db_selected_equal_date").focus();
     });
     //-------------------EQUAL DATEPICKER CHANGE---------------//
     $('#CEXP_db_selected_equal_date').change(function(){
@@ -138,6 +139,7 @@ $(document).ready(function(){
         });
         var date = new Date( Date.parse( CEXP_max_date_array ));
         $('#CEXP_db_selected_before_date').datepicker("option","maxDate",date);
+        $("#CEXP_db_selected_before_date").focus();
     });
     //-------------------BEFORE DATEPICKER CHANGE---------------//
     $('#CEXP_db_selected_before_date').change(function(){
@@ -184,6 +186,7 @@ $(document).ready(function(){
         var date = new Date( Date.parse( CEXP_max_date_array ));
         $('#CEXP_db_selected_to_date').datepicker("option","maxDate",date);
         $('#CEXP_db_selected_from_date').datepicker("option","maxDate",date);
+        $("#CEXP_db_selected_from_date").focus();
     });
     //-----------------WEEKLY-EXPIRY LIST BUTTON CHANGE--------------//
     $('#CEXP_radio_WeeklyExpirylist').change(function(){
@@ -259,6 +262,7 @@ $(document).ready(function(){
         $('#CEXP_lbl_msg').hide();
         $('#CEXP_div_htmltable').hide();
         $('#CWEXP_pdf').hide();
+//        $("#CEXP_db_selected_to_date").focus();
     });
     //--------------FUNCTION TO GET VALUES FROM DATABASE----------------------//
 
@@ -436,7 +440,7 @@ $(document).ready(function(){
             }
         }
         else{
-            var CEXP_table_value='<table id="CEXP_tbl_htmltable" border="1"  cellspacing="0" class="srcresult" style="width:3500px" ><thead><tr><th style="width:80px" nowrap>UNIT NO</th><th style="width:150px" nowrap>FIRST NAME</th><th style="width:150px" nowrap>LAST NAME</th><th style="width:100px" nowrap class="uk-timestp-column">START DATE</th><th style="width:100px" nowrap class="uk-timestp-column">END DATE</th><th style="width:100px" nowrap class="uk-timestp-column">PRETERMINATE DATE</th><th style="width:130px" nowrap>ROOM TYPE</th><th style="width:40px" nowrap>EXTENSION</th><th style="width:40px" nowrap>RE CHECKIN</th><th style="width:100px">RENT</th><th style="width:100px">DEPOSIT</th><th style="width:800px">COMMENTS</th><th style="width:200px" nowrap>USERSTAMP</th><th style="width:180px" nowrap class="uk-timestp-column">TIMESTAMP</th></tr></thead><tbody>';
+            var CEXP_table_value='<table id="CEXP_tbl_htmltable" border="1"  cellspacing="0" class="srcresult" style="width:2500px" ><thead><tr><th style="width:40px" nowrap>UNIT NO</th><th style="width:150px" nowrap>FIRST NAME</th><th style="width:150px" nowrap>LAST NAME</th><th style="width:60px" nowrap class="uk-date-column">START DATE</th><th style="width:70px" nowrap class="uk-date-column">END DATE</th><th style="width:100px"  class="uk-date-column">PRETERMINATE DATE</th><th style="width:130px" nowrap>ROOM TYPE</th><th style="width:40px" nowrap>EXTENSION</th><th style="width:40px" nowrap>RE CHECKIN</th><th style="width:45px">RENT</th><th style="width:45px">DEPOSIT</th><th style="width:800px">COMMENTS</th><th style="width:210px" nowrap>USERSTAMP</th><th style="width:120px" nowrap class="uk-timestp-column">TIMESTAMP</th></tr></thead><tbody>';
             for(var i=0;i<CEXP_result_array.length;i++)
             {
                 var CEXP_values=CEXP_result_array[i]
@@ -448,7 +452,7 @@ $(document).ready(function(){
                 if(CEXP_preterminatedate!=""){
                     CEXP_preterminatedate=FormTableDateFormat(CEXP_preterminatedate)
                 }
-                CEXP_table_value+='<tr ><td nowarp style="width:80px" >'+CEXP_values.unitno+'</td><td style="width:150px"  >'+CEXP_values.firstname+'</td><td  style="width:150px" >'+CEXP_values.lastname+'</td><td style="width:100px" >'+CEXP_startdate+'</td><td style="width:100px"  >'+CEXP_enddate+'</td><td style="width:100px"  >'+CEXP_preterminatedate+'</td><td style="width:130px" nowrap >'+CEXP_values.roomtype+'</td><td style="width:40px">'+CEXP_values.extension+'</td><td style="width:40px">'+CEXP_values.rechecking+'</td><td style="width:100px">'+CEXP_values.rental+'</td><td style="width:100px">'+CEXP_values.deposit+'</td><td style="width:800px" >'+CEXP_values.comments+'</td><td style="width:200px">'+CEXP_values.userstamp+'</td><td style="width:180px" nowrap>'+CEXP_values.timestamp+'</td></tr>';
+                CEXP_table_value+='<tr ><td nowarp style="width:40px" >'+CEXP_values.unitno+'</td><td style="width:150px"  >'+CEXP_values.firstname+'</td><td  style="width:150px" >'+CEXP_values.lastname+'</td><td style="width:100px" >'+CEXP_startdate+'</td><td style="width:100px"  >'+CEXP_enddate+'</td><td style="width:100px"  >'+CEXP_preterminatedate+'</td><td style="width:130px" nowrap >'+CEXP_values.roomtype+'</td><td style="width:40px">'+CEXP_values.extension+'</td><td style="width:40px">'+CEXP_values.rechecking+'</td><td style="width:45px">'+CEXP_values.rental+'</td><td style="width:45px">'+CEXP_values.deposit+'</td><td style="width:800px" >'+CEXP_values.comments+'</td><td style="width:200px">'+CEXP_values.userstamp+'</td><td style="width:120px" nowrap>'+CEXP_values.timestamp+'</td></tr>';
 //                $('#CEXP_tbl_htmltable').append(CEXP_table_value);
             }
              CEXP_table_value+='</tbody></table>';
@@ -458,17 +462,15 @@ $(document).ready(function(){
                 "pageLength": 10,
                 "sPaginationType":"full_numbers",
 //
-                "scrollY": "300px",
-                "scrollX": "100%",
+//                "scrollY": "300px",
+//                "scrollX": "100%",
                      "scrollCollapse": true,
 //                     "paging": false,
                 "aoColumnDefs" : [
                     { "aTargets" : ["uk-date-column"] , "sType" : "uk_date"}, { "aTargets" : ["uk-timestp-column"] , "sType" : "uk_timestp"} ]
             });
-//             new $.fn.dataTable.FixedColumns( table );
-//             new $.fn.dataTable.FixedHeader( table );
+
             sorting();
-//            $('#CEXP_tbl_htmltable').show();
             $('#CEXP_div_htmltable').show();
              $('#CWEXP_pdf').show();
             $('#CEXP_btn_submit').attr('disabled','disabled');

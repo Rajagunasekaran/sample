@@ -1,6 +1,7 @@
 <!--//*******************************************FILE DESCRIPTION*********************************************//
 /**********************************************CUSTOMER EXTENSION******************************************/
 //DONE BY:SAFI
+//VER 0.02-SD:20/06/2015 ED:20/06/2015 -removed duplicate cust radio
 //VER 0.01-INITIAL VERSION SD:01/06/2014 ED:12/06/2015
 //*********************************************************************************************************//
 -->
@@ -255,7 +256,6 @@ require_once('application/libraries/EI_HDR.php');
                         var CEXTN_lb_custname=$('#CEXTN_lb_custname').show();
                         $(".preloader").hide();
                         $("html, body").animate({ scrollTop: $(document).height() }, "slow");
-
                     },
                     error: function(data){
                         show_msgbox("CUSTOMER EXTENSION",JSON.stringify(data),"error",false);
@@ -300,7 +300,7 @@ require_once('application/libraries/EI_HDR.php');
                                 $(".preloader").hide();
                                 var value_array=JSON.parse(data);
                                 CEXTN_getCustomerdtls_result(value_array)
-                                $("html, body").animate({ scrollTop:1500 }, "slow");
+                                $("html, body").animate({ scrollTop:1800 }, "slow");
                             },
                             error: function(data){
                                 show_msgbox("CUSTOMER EXTENSION",JSON.stringify(data),"error",false);
@@ -308,17 +308,6 @@ require_once('application/libraries/EI_HDR.php');
                             }
                         });
                         $('#CEXTN_div_custid').hide();
-                    }
-                    else{
-                        //get table rows lengh
-                        var tablelen=$('#CEXTN_tble_custid > div').length;
-                        $('#CEXTN_tble_custid > div').remove();
-                        for(var i=0;i<CEXTN_name_id_array.length;i++){
-                            var CEXTN_result = '<div class="col-sm-offset-3" style="padding-left:15px"><div class="radio"><label><input type="radio" name="CEXTN_radiocustid" id='+CEXTN_name_id_array[i]+' value='+CEXTN_name_id_array[i]+' class="CEXTN_class_custid" />'+CEXTN_custname[0]+" "+CEXTN_custname[1]+' '+CEXTN_name_id_array[i]+'</label></div></div>';
-                            $('#CEXTN_tble_custid').append(CEXTN_result);
-                        }
-                        $('#CEXTN_div_custid').show();
-                        $(".preloader").hide();
                     }
                 }
             }
@@ -1239,38 +1228,38 @@ require_once('application/libraries/EI_HDR.php');
                 $("#CEXTN_btn_save").removeAttr("disabled");
             }
         }
-        //FUNCTION FOR ON CLICK OF CUST ID
-        $(document).on("change",'.CEXTN_class_custid', function ()
-        {
-            var  newPos= adjustPosition($(this).position(),100,150);
-            resetPreloader(newPos);
-            $(".preloader").show();
-            CEXTN_Show_ExtensionForm()
-        });
-        //GET DETAILS OF SELECTED CUSTOMER ID
-        function CEXTN_Show_ExtensionForm()
-        {
-            CEXTN_setselectIndex();
-            $('#CEXTN_div_seconform').hide();
-            var CEXTN_lb_unitno=$('#CEXTN_lb_unitno').val();
-            var CEXTN_id=$("input[name=CEXTN_radiocustid]:checked").val();
-            $('#CEXTN_hidden_custid').val(CEXTN_id);
-            $.ajax({
-                type: "POST",
-                url: controller_url+"CEXTN_getCustomerdtls_result",
-                data:{"unitno":CEXTN_lb_unitno,"customerId":CEXTN_id},
-                success: function(data){
-                    var value_array=JSON.parse(data);
-                    CEXTN_getCustomerdtls_result(value_array)
-                    $("html, body").animate({ scrollTop: 1500 }, "slow");
-
-                },
-                error: function(data){
-                    show_msgbox("CUSTOMER EXTENSION",JSON.stringify(data),"error",false);
-
-                }
-            });
-        }
+//        //FUNCTION FOR ON CLICK OF CUST ID
+//        $(document).on("change",'.CEXTN_class_custid', function ()
+//        {
+//            var  newPos= adjustPosition($(this).position(),100,150);
+//            resetPreloader(newPos);
+//            $(".preloader").show();
+//            CEXTN_Show_ExtensionForm()
+//        });
+//        //GET DETAILS OF SELECTED CUSTOMER ID
+//        function CEXTN_Show_ExtensionForm()
+//        {
+//            CEXTN_setselectIndex();
+//            $('#CEXTN_div_seconform').hide();
+//            var CEXTN_lb_unitno=$('#CEXTN_lb_unitno').val();
+//            var CEXTN_id=$("input[name=CEXTN_radiocustid]:checked").val();
+//            $('#CEXTN_hidden_custid').val(CEXTN_id);
+//            $.ajax({
+//                type: "POST",
+//                url: controller_url+"CEXTN_getCustomerdtls_result",
+//                data:{"unitno":CEXTN_lb_unitno,"customerId":CEXTN_id},
+//                success: function(data){
+//                    var value_array=JSON.parse(data);
+//                    CEXTN_getCustomerdtls_result(value_array)
+//                    $("html, body").animate({ scrollTop: 1500 }, "slow");
+//
+//                },
+//                error: function(data){
+//                    show_msgbox("CUSTOMER EXTENSION",JSON.stringify(data),"error",false);
+//
+//                }
+//            });
+//        }
         //SET VALUES OF THE CUST DETAILS RESULT
         function CEXTN_getCustomerdtls_result(CEXTN_custdtls1)
         {
@@ -1492,6 +1481,7 @@ require_once('application/libraries/EI_HDR.php');
                 $("#CEXTN_lb_chkouttotime").hide();
                 $('#CEXTN_lbl_chkoutto').hide();
                 $('#CEXTN_db_chkoutdate').val("");
+
                 //SET PRORATED WAIVED CHECK BOX
                 if(CEXTN_custdtls.cust_prorated!="")
                 {
@@ -1547,7 +1537,9 @@ require_once('application/libraries/EI_HDR.php');
             {
                 $('#CEXTN_div_nocusterr').text(CEXTN_errmsgs[8].EMC_DATA.replace('[CNAME]',$('#CEXTN_lb_custname').val().split("_")[0]+" "+$('#CEXTN_lb_custname').val().split("_")[1]));
             }
+            $('#CEXTN_db_chkoutdate').focus();
             $(".preloader").hide();
+
         }
         //FUNCTION TO SET MIN N MAX DATE FOR CHECK OUT DATE
         function CEXTN_SetMinMaxCheckoutDate(CEXTNunitsdate,CEXTNunitedate,CEXTN_currentcheckoutdate){
@@ -1828,9 +1820,9 @@ require_once('application/libraries/EI_HDR.php');
                     <label class="col-sm-3" name="CEXTN_lbl_custname" id="CEXTN_lbl_custname" hidden>CUSTOMER NAME <em>*</em></label>
                     <div class="col-sm-4"> <select id="CEXTN_lb_custname" name="CEXTN_lb_custname"  class="CEXTN_btn_validate_class form-control " style=" display:none" ></select></div>
                 </div>
-                <div id="CEXTN_div_custid">
-                    <div id="CEXTN_tble_custid"></div>
-                </div>
+<!--                <div id="CEXTN_div_custid">-->
+<!--                    <div id="CEXTN_tble_custid"></div>-->
+<!--                </div>-->
             </div>
             <div id="CEXTN_div_nocusterr" class="errormsg"></div>
             <div id="CEXTN_div_seconform" hidden>
@@ -1979,8 +1971,8 @@ require_once('application/libraries/EI_HDR.php');
                                     <label class="col-sm-3" id="CEXTN_lbl_diffunituno">UNIT NUMBER<em>*</em></label>
                                     <div class="col-sm-3"><select id="CEXTN_lb_diffunituno" name="CEXTN_lb_diffunituno" class="CEXTN_btn_validate_class form-control">
                                         </select>
-                                        <div id="CEXTN_div_normtypeerr" class="errormsg"></div>
                                     </div>
+                                    <div id="CEXTN_div_normtypeerr" class="errormsg"></div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-sm-3" id="CEXTN_lbl_diffunitrmtype" hidden>ROOM TYPE<em>*</em></label>
@@ -2139,7 +2131,10 @@ require_once('application/libraries/EI_HDR.php');
                                 <div id="CEXTN_tble_diffamt" class="col-sm-offset-3" style="padding-left: 15px">
                                     <div class="form-group">
                                         <label class="col-sm-3" id="CEXTN_lbl_diffamtdep">DEPOSIT</label>
-                                        <div class="col-sm-2"><input type="text" name="CEXTN_tb_diffamtdep" id="CEXTN_tb_diffamtdep" style="width:85px;" class="5digitdollaronly CEXTN_btn_validate_class form-control" placeholder="0.00"/>
+                                        <div class="col-sm-2">
+                                            <input type="text" name="CEXTN_tb_diffamtdep" id="CEXTN_tb_diffamtdep" style="width:85px;" class="5digitdollaronly CEXTN_btn_validate_class form-control" placeholder="0.00"/>
+                                         </div>
+                                        <<div class="col-sm-4">
                                             <p id="CEXTN_diffamtdeposit_err" class="errormsg"></p>
                                         </div>
                                     </div>
@@ -2154,7 +2149,7 @@ require_once('application/libraries/EI_HDR.php');
                                                 <div class="col-md-1" style="padding-right:0px;width:10px">
                                                     <input type="checkbox" name="CEXTN_cb_diffamtprorated" id="CEXTN_cb_diffamtprorated"  class="CEXTN_btn_validate_class" disabled/>
                                                 </div>
-                                                <div class="col-md-1"><label id="CEXTN_lbl_diffamtprorated"></label><input type="hidden" name="CEXTN_hidden_diffamtprorated" id="CEXTN_hidden_diffamtprorated" /></div>
+                                                <div class="col-md-3"><label id="CEXTN_lbl_diffamtprorated"></label><input type="hidden" name="CEXTN_hidden_diffamtprorated" id="CEXTN_hidden_diffamtprorated" /></div>
                                                 <div class="col-md-6"><p id="CEXTN_diffamtrent_err" class="errormsg"></p></div>
                                             </div>
                                         </div>
@@ -2169,8 +2164,8 @@ require_once('application/libraries/EI_HDR.php');
                                                 <div class="col-md-1" style="padding-right:0px;width:10px">
                                                     <input type="checkbox" name="CEXTN_cb_diffamtwaived" id="CEXTN_cb_diffamtwaived" class="CEXTN_class_prowaiv CEXTN_btn_validate_class" disabled />
                                                 </div>
-                                                <div class="col-md-1"><label id="CEXTN_lbl_diffamtwaived"></label><input type="hidden" id="CEXTN_hidden_diffamtwaived" name="CEXTN_hidden_diffamtwaived"/></div>
-                                                <div class="col-md-6" style="padding-right:10px"><p id="CEXTN_diffamtprofee_err" class="errormsg"></p></div>
+                                                <div class="col-md-3"><label id="CEXTN_lbl_diffamtwaived"></label><input type="hidden" id="CEXTN_hidden_diffamtwaived" name="CEXTN_hidden_diffamtwaived"/></div>
+                                                <div class="col-md-8" style="padding-right:10px"><p id="CEXTN_diffamtprofee_err" class="errormsg"></p></div>
                                             </div>
                                         </div>
                                     </div>

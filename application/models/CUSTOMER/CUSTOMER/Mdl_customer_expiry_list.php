@@ -37,7 +37,6 @@ class Mdl_customer_expiry_list extends CI_Model{
     }
     //FUNCTION TO GET CUSTOMER DATA'S FROM DATABASE---------------------
     public function CEXP_get_customer_details($fromdate,$todate,$radiovalue,$UserStamp,$timeZoneFormat){
-//        set_time_limit(0);
         $CEXP_fromdate=date('Y-m-d',strtotime($fromdate));
         $CEXP_todate=date('Y-m-d',strtotime($todate));
         $CEXP_check_radio_value=$radiovalue;
@@ -150,10 +149,10 @@ class Mdl_customer_expiry_list extends CI_Model{
             $CWEXP_enddate = $row["ENDDATE"];
             $CWEXP_ptddate=$row["PRETERMINATEDATE"];
             if($CWEXP_ptddate==null){
-                $CWEXP_newdate=date('Y-m-d',strtotime($CWEXP_enddate));
+                $CWEXP_newdate=date('d-m-Y',strtotime($CWEXP_enddate));
             }
             else{
-                $CWEXP_newdate=date('Y-m-d',strtotime($CWEXP_ptddate));
+                $CWEXP_newdate=date('d-m-Y',strtotime($CWEXP_ptddate));
             }
             $CWEXP_check_week_flag=1;
             $CWEXP_emailmessage .= '<body><table border="1" width="700" ><tr align="center"><td width=25%>'.$CWEXP_unitno.'</td>'.'<td width=25%>'.$CWEXP_cust_name.'</td><td width=25%>'.$CWEXP_newdate.'</td><td width=25%>'.$CWEXP_rental.'</td>'.'</tr>'.'</table>'.'</body>';

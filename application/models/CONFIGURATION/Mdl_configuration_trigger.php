@@ -607,42 +607,43 @@ class Mdl_configuration_trigger extends CI_Model {
         $CEXP_select_customerdetails="SELECT * FROM ".$CEXP_weeklytemptblname;
         $CWEXP_customerdetails_result=$this->db->query($CEXP_select_customerdetails);
         $count_rows= $CWEXP_customerdetails_result->num_rows();
-        foreach($CWEXP_customerdetails_result->result_array() as $row){
-            $CWEXP_unitno = $row["UNITNO"];
-            $CWEXP_firstname = $row["CUSTOMERFIRSTNAME"];
-            $CWEXP_lastname = $row["CUSTOMERLASTNAME"];
-            $CWEXP_rental = $row["PAYMENT"];
-            $CWEXP_emailid=$row["EMAILID"];
-            $CWEXP_mail_username=explode('@',$CWEXP_emailid);
-            $CWEXP_cust_name=$CWEXP_firstname.' '.$CWEXP_lastname;
-            $CWEXP_enddate = $row["ENDDATE"];
-            $CWEXP_ptddate=$row["PRETERMINATEDATE"];
-            $unitcustomer=$CWEXP_unitno."-".$CWEXP_cust_name;
-            $subjectdb=str_replace('[UNIT NO - CUSTOMER NAME]', $unitcustomer,$CWEXP_subject_db1);
-            $subjectmail=str_replace('X',$CWEXP_weekBefore,$subjectdb);
-            if($CWEXP_ptddate==null){
-                $CWEXP_newdate=date('d-m-Y',strtotime($CWEXP_enddate));
-            }
-            else{
-                $CWEXP_newdate=date('d-m-Y',strtotime($CWEXP_ptddate));
-            }
-            $CWEXP_subject=str_replace("'X'",$CWEXP_weekBefore,$CWEXP_subject_db);
-            $message=str_replace("[MAILID_USERNAME]",strtoupper($CWEXP_mail_username[0]),$CWEXP_message_db1);
-            $message1=str_replace('[CHECK_OUT_DATE]', $CWEXP_newdate,$message);
-            $CWEXP_check_week_flag=1;
-            $CWEXP_emailmessage = '<body><br><h>'.$message1.'</h><br><br><table border="1" style="color:white" width="700"><tr  bgcolor="#498af3" align="center"><td width=25% ><h3>UNIT</h3></td><td width=25%><h3>CUSTOMER NAME</h3></td><td width=25%><h3>END DATE</h3></td><td width=25%><h3>RENT</h3></td></tr></table></body>';
-            $CWEXP_emailmessage .= '<body><table border="1" width="700" ><tr align="center"><td width=25%>'.$CWEXP_unitno.'</td><td width=25%>'.$CWEXP_cust_name.'</td><td width=25%>'.$CWEXP_newdate.'</td><td width=25%>'.$CWEXP_rental.'</td></tr></table></body>';
-            $displayname=$this->Mdl_eilib_common_function->Get_MailDisplayName("CUSTOMER_EXPIRY");
-            $this->Expirymailpart($CWEXP_emailid,$subjectdb,$CWEXP_emailmessage,$displayname,$UserStamp);
-        }
-        $drop_query = "DROP TABLE ".$CEXP_weeklytemptblname;
-        $this->db->query($drop_query);
         if($count_rows>0) {
+            foreach ($CWEXP_customerdetails_result->result_array() as $row) {
+                $CWEXP_unitno = $row["UNITNO"];
+                $CWEXP_firstname = $row["CUSTOMERFIRSTNAME"];
+                $CWEXP_lastname = $row["CUSTOMERLASTNAME"];
+                $CWEXP_rental = $row["PAYMENT"];
+                $CWEXP_emailid = $row["EMAILID"];
+                $CWEXP_mail_username = explode('@', $CWEXP_emailid);
+                $CWEXP_cust_name = $CWEXP_firstname . ' ' . $CWEXP_lastname;
+                $CWEXP_enddate = $row["ENDDATE"];
+                $CWEXP_ptddate = $row["PRETERMINATEDATE"];
+                $unitcustomer = $CWEXP_unitno . "-" . $CWEXP_cust_name;
+                $subjectdb = str_replace('[UNIT NO - CUSTOMER NAME]', $unitcustomer, $CWEXP_subject_db1);
+                $subjectmail = str_replace('X', $CWEXP_weekBefore, $subjectdb);
+                if ($CWEXP_ptddate == null) {
+                    $CWEXP_newdate = date('d-m-Y', strtotime($CWEXP_enddate));
+                } else {
+                    $CWEXP_newdate = date('d-m-Y', strtotime($CWEXP_ptddate));
+                }
+                $CWEXP_subject = str_replace("'X'", $CWEXP_weekBefore, $CWEXP_subject_db);
+                $message = str_replace("[MAILID_USERNAME]", strtoupper($CWEXP_mail_username[0]), $CWEXP_message_db1);
+                $message1 = str_replace('[CHECK_OUT_DATE]', $CWEXP_newdate, $message);
+                $CWEXP_check_week_flag = 1;
+                $CWEXP_emailmessage = '<body><br><h>' . $message1 . '</h><br><br><table border="1" style="color:white" width="700"><tr  bgcolor="#498af3" align="center"><td width=25% ><h3>UNIT</h3></td><td width=25%><h3>CUSTOMER NAME</h3></td><td width=25%><h3>END DATE</h3></td><td width=25%><h3>RENT</h3></td></tr></table></body>';
+                $CWEXP_emailmessage .= '<body><table border="1" width="700" ><tr align="center"><td width=25%>' . $CWEXP_unitno . '</td><td width=25%>' . $CWEXP_cust_name . '</td><td width=25%>' . $CWEXP_newdate . '</td><td width=25%>' . $CWEXP_rental . '</td></tr></table></body>';
+                $displayname = $this->Mdl_eilib_common_function->Get_MailDisplayName("CUSTOMER_EXPIRY");
+                $this->Expirymailpart($CWEXP_emailid, $subjectdb, $CWEXP_emailmessage, $displayname, $UserStamp);
+            }
+            $drop_query = "DROP TABLE " . $CEXP_weeklytemptblname;
+            $this->db->query($drop_query);
             return 1;
+
         }
         else{
             return 0;
         }
+
 
     }
     public function Expirymailpart($CWEXP_emailid,$CWEXP_subject,$CWEXP_emailmessage,$displayname,$UserStamp)

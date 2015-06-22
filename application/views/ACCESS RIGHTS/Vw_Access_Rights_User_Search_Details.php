@@ -67,7 +67,7 @@ require_once('application/libraries/EI_HDR.php');
                         USU_table_header+='</tbody></table>';
                         $('section').html(USU_table_header);
                         $('#USD_SRC_SRC_tble_htmltable').DataTable( {
-                            dom: 'T<"clear">lfrtip',
+                            dom: "Rlfrtip",
                             tableTools: {"aButtons": [
                                 {
                                     "sExtends": "pdf",

@@ -129,8 +129,12 @@
                     success: function (data) {
                         $('.preloader').hide();
                         var returnvalue = JSON.parse(data);
-                        if(returnvalue==1)
-                            show_msgbox("CUSTOMER EXPIRY X WEEK", 'EXPIRY LIST SENT', "success", false);
+                        if(returnvalue==1) {
+                            show_msgbox("CUSTOMER EXPIRY X WEEK", 'CUSTOMER EXPIRY LIST SENT', "success", false);
+                        }
+                        else{
+                            show_msgbox("CUSTOMER EXPIRY X WEEK", 'NO CUSTOMER AVAILABLE', "success", false);
+                        }
                     },
                     error: function (data) {
                         alert('error in getting' + JSON.stringify(data));

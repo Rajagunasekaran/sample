@@ -608,6 +608,7 @@ require_once('application/libraries/EI_HDR.php');
                         $('#Banktt_Search_DataTable').show();
                         $('#Banktt_Datatable').DataTable({
                             "aaSorting": [],
+                            "sDom": 'Rlfrtip',
                             "pageLength": 10,
                             "sPaginationType": "full_numbers",
                             "aoColumnDefs": [{

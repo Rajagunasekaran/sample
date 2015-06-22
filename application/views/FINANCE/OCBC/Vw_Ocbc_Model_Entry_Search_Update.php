@@ -77,6 +77,7 @@
             $('#Model_Search_DataTable').show();
             $('#Model_Datatable').DataTable( {
                 "aaSorting": [],
+                "sDom": 'Rlfrtip',
                 "pageLength": 10,
                 "sPaginationType":"full_numbers",
                 "aoColumnDefs" : [{ "aTargets" : ["uk-timestp-column"] , "sType" : "uk_timestp"} ]

@@ -19,7 +19,7 @@ Class Ctrl_Configuration_Trigger extends CI_Controller
     {
         $UserStamp=$this->Mdl_eilib_common_function->getSessionUserStamp();
         $this->load->library('Google');
-        $CSV_Records=$this->Mdl_configuration_trigger->getCSVfileRecords();
+        $CSV_Records=$this->Mdl_configuration_trigger->getCSVfileRecords($UserStamp);
         echo json_encode($CSV_Records);
     }
     public function Monthlypaymentreminder()

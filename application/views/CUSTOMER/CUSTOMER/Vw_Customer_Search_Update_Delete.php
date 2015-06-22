@@ -914,6 +914,7 @@
              url: controller_url+"SearchDataResults",
              data:data,
              success: function(data){
+                 alert(data)
                  var value_array=JSON.parse(data);
                  var CustpmerPersonal_Tabledata='<table style="width: 3500px" id="Customer_Personal_Datatable" border="1" cellspacing="0" data-class="table" class="srcresult"><thead bgcolor="#6495ed" style="color:white"><tr>';
                  CustpmerPersonal_Tabledata+="<th style='text-align:center;vertical-align: top;width:100px;'>CUSTOMER ID</th>";
@@ -926,12 +927,12 @@
                  CustpmerPersonal_Tabledata+="<th style='text-align:center;vertical-align: top;width:100px;'>MOBILE</th>";
                  CustpmerPersonal_Tabledata+="<th style='text-align:center;vertical-align: top;width:150px;'>INT'L MOBILE</th>";
                  CustpmerPersonal_Tabledata+="<th style='text-align:center;vertical-align: top;width:100px;'>OFFICE</th>";
-                 CustpmerPersonal_Tabledata+="<th style='text-align:center;vertical-align: top;width:100px;'>DOB</th>";
+                 CustpmerPersonal_Tabledata+="<th style='text-align:center;vertical-align: top;width:100px;' class='uk-date-column'>DOB</th>";
                  CustpmerPersonal_Tabledata+="<th style='text-align:center;vertical-align: top;width:150px;'>NATIONALITY</th>";
                  CustpmerPersonal_Tabledata+="<th style='text-align:center;vertical-align: top;width:100px;'>PASSPORTNO</th>";
-                 CustpmerPersonal_Tabledata+="<th style='text-align:center;vertical-align: top;width:100px;'>PASSPORTDATE</th>";
+                 CustpmerPersonal_Tabledata+="<th style='text-align:center;vertical-align: top;width:100px;' class='uk-date-column'>PASSPORTDATE</th>";
                  CustpmerPersonal_Tabledata+="<th style='text-align:center;vertical-align: top;width:100px;'>EPNO</th>";
-                 CustpmerPersonal_Tabledata+="<th style='text-align:center;vertical-align: top;width:100px;'>EPDATE</th>";
+                 CustpmerPersonal_Tabledata+="<th style='text-align:center;vertical-align: top;width:100px;' class='uk-date-column'>EPDATE</th>";
                  CustpmerPersonal_Tabledata+="<th style='text-align:center;vertical-align: top;width:800px;'>COMMENTS</th>";
                  CustpmerPersonal_Tabledata+="</tr></thead><tbody>";
                 var CustomerPersonalDetailsarray=[];
@@ -978,15 +979,17 @@
                  CustpmerPersonal_Tabledata+="</body>";
                  $('#Customer_Personal_Table').html(CustpmerPersonal_Tabledata);
                  $('#Customer_Personal_Datatable').DataTable( {
+                     "sDom": 'Rlfrtip',
+                     "aoColumnDefs": [{"aTargets": ["uk-date-column"],"sType": "uk_date"}, {"aTargets": ["uk-timestp-column"], "sType": "uk_timestp"}]
                  });
                  var CustpmerAccount_Tabledata='<table style="width: 3500px" id="Customer_Account_Datatable" border="1" cellspacing="0" data-class="table" class="srcresult"><thead bgcolor="#6495ed" style="color:white"><tr>';
                  CustpmerAccount_Tabledata+="<th style='text-align:center;vertical-align: top'>UPDATE / DELETE</th>";
                  CustpmerAccount_Tabledata+="<th style='text-align:center;vertical-align: top'>CUSTOMER ID</th>";
                  CustpmerAccount_Tabledata+="<th style='text-align:center;vertical-align: top'>UNIT NUMBER</th>";
-                 CustpmerAccount_Tabledata+="<th style='text-align:center;vertical-align: top'>STARTDATE</th>";
-                 CustpmerAccount_Tabledata+="<th style='text-align:center;vertical-align: top'>ENDDATE</th>";
-                 CustpmerAccount_Tabledata+="<th style='text-align:center;vertical-align: top'>PRETERMINATE DATE</th>";
-                 CustpmerAccount_Tabledata+="<th style='text-align:center;vertical-align: top'>CANCELDATE</th>";
+                 CustpmerAccount_Tabledata+="<th style='text-align:center;vertical-align: top' class='uk-date-column'>STARTDATE</th>";
+                 CustpmerAccount_Tabledata+="<th style='text-align:center;vertical-align: top' class='uk-date-column'>ENDDATE</th>";
+                 CustpmerAccount_Tabledata+="<th style='text-align:center;vertical-align: top' class='uk-date-column'>PRETERMINATE DATE</th>";
+                 CustpmerAccount_Tabledata+="<th style='text-align:center;vertical-align: top' class='uk-date-column'>CANCELDATE</th>";
                  CustpmerAccount_Tabledata+="<th style='text-align:center;vertical-align: top'>LEASE PERIOD</th>";
                  CustpmerAccount_Tabledata+="<th style='text-align:center;vertical-align: top'>ROOM TYPE</th>";
                  CustpmerAccount_Tabledata+="<th style='text-align:center;vertical-align: top'>CARD NO</th>";
@@ -998,7 +1001,7 @@
                  CustpmerAccount_Tabledata+="<th style='text-align:center;vertical-align: top'>LEASE PERIOD DURATION</th>";
                  CustpmerAccount_Tabledata+="<th style='text-align:center;vertical-align: top'>QUARTERS</th>";
                  CustpmerAccount_Tabledata+="<th style='text-align:center;vertical-align: top'>NOTICE PERIOD</th>";
-                 CustpmerAccount_Tabledata+="<th style='text-align:center;vertical-align: top'>NOTICE PERIOD DATE</th>";
+                 CustpmerAccount_Tabledata+="<th style='text-align:center;vertical-align: top' class='uk-date-column'>NOTICE PERIOD DATE</th>";
                  CustpmerAccount_Tabledata+="<th style='text-align:center;vertical-align: top'>DEPOSIT</th>";
                  CustpmerAccount_Tabledata+="<th style='text-align:center;vertical-align: top'>RENT</th>";
                  CustpmerAccount_Tabledata+="<th style='text-align:center;vertical-align: top'>PRORATED</th>";
@@ -1010,7 +1013,7 @@
                  CustpmerAccount_Tabledata+="<th style='text-align:center;vertical-align: top'>CURTAIN DRYCLEANING FEE</th>";
                  CustpmerAccount_Tabledata+="<th style='text-align:center;vertical-align: top'>CHECKOUT CLEANING FEE</th>";
                  CustpmerAccount_Tabledata+="<th style='text-align:center;vertical-align: top'>USERSTAMP</th>";
-                 CustpmerAccount_Tabledata+="<th style='text-align:center;vertical-align: top'>TIMESTAMP</th>";
+                 CustpmerAccount_Tabledata+="<th style='text-align:center;vertical-align: top' class='uk-timestp-column'>TIMESTAMP</th>";
                  CustpmerAccount_Tabledata+="</tr></thead><tbody>";
                  for(var i=0;i<value_array.length;i++)
                  {
@@ -1118,10 +1121,13 @@
                  CustpmerAccount_Tabledata+="</body>";
                  $('#AccessCard_table').html(CustpmerAccount_Tabledata);
                  $('#Customer_Account_Datatable').DataTable( {
+                     "sDom": 'Rlfrtip',
                      "aaSorting": [],
                      "pageLength": 10,
-                     "sPaginationType":"full_numbers"
+                     "sPaginationType":"full_numbers",
+                     "aoColumnDefs": [{"aTargets": ["uk-date-column"],"sType": "uk_date"}, {"aTargets": ["uk-timestp-column"], "sType": "uk_timestp"}]
                  });
+                 sorting();
                  $('#CC_SEARCH_DataTable').show();
                  $('#CC_SEARCH_acDataTable').show();
                  $('.preloader').hide();
@@ -1134,6 +1140,33 @@
          });
 
      });
+     function DTFormTable_DateFormat(inputdate){
+         var string = inputdate.split("-");
+         return string[2]+'-'+ string[1]+'-'+string[0];
+     }
+     //FUNCTION FOR SORTING
+     function sorting(){
+         jQuery.fn.dataTableExt.oSort['uk_date-asc']  = function(a,b) {
+             var x = new Date( Date.parse(DTFormTable_DateFormat(a)));
+             var y = new Date( Date.parse(DTFormTable_DateFormat(b)) );
+             return ((x < y) ? -1 : ((x > y) ?  1 : 0));
+         };
+         jQuery.fn.dataTableExt.oSort['uk_date-desc'] = function(a,b) {
+             var x = new Date( Date.parse(DTFormTable_DateFormat(a)));
+             var y = new Date( Date.parse(DTFormTable_DateFormat(b)) );
+             return ((x < y) ? 1 : ((x > y) ?  -1 : 0));
+         };
+         jQuery.fn.dataTableExt.oSort['uk_timestp-asc']  = function(a,b) {
+             var x = new Date( Date.parse(DTFormTable_DateFormat(a.split(' ')[0]))).setHours(a.split(' ')[1].split(':')[0],a.split(' ')[1].split(':')[1],a.split(' ')[1].split(':')[2]);
+             var y = new Date( Date.parse(DTFormTable_DateFormat(b.split(' ')[0]))).setHours(b.split(' ')[1].split(':')[0],b.split(' ')[1].split(':')[1],b.split(' ')[1].split(':')[2]);
+             return ((x < y) ? -1 : ((x > y) ?  1 : 0));
+         };
+         jQuery.fn.dataTableExt.oSort['uk_timestp-desc'] = function(a,b) {
+             var x = new Date( Date.parse(DTFormTable_DateFormat(a.split(' ')[0]))).setHours(a.split(' ')[1].split(':')[0],a.split(' ')[1].split(':')[1],a.split(' ')[1].split(':')[2]);
+             var y = new Date( Date.parse(DTFormTable_DateFormat(b.split(' ')[0]))).setHours(b.split(' ')[1].split(':')[0],b.split(' ')[1].split(':')[1],b.split(' ')[1].split(':')[2]);
+             return ((x < y) ? 1 : ((x > y) ?  -1 : 0));
+         };
+     }
      $(document).on('click','.paginate_button',function(){
          $('#Customer_Account_Datatable tr').removeClass('row_selected');
          $('#CSRC_updation_form').hide();

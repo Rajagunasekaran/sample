@@ -268,6 +268,7 @@
                         $('#OCBC_Datatable').DataTable({
                             "aaSorting": [],
                             "pageLength": 10,
+                            "sDom": 'Rlfrtip',
                             "sPaginationType": "full_numbers",
                             "aoColumnDefs" : [{ "aTargets" : ["uk-date-column"] , "sType" : "uk_date"} ]
                         });

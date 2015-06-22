@@ -697,6 +697,7 @@
                 $('section').html(Payment_Tabledata);
                 $('#Payment_Search_DataTable').show();
                 $('#Payment_Datatable').DataTable({
+                "sDom": 'Rlfrtip',
                 "pageLength": 10,
                 "sPaginationType": "full_numbers",
                 "aoColumnDefs" : [{ "aTargets" : ["uk-perioddate-column"] , "sType" : "uk_perioddate"},{ "aTargets" : ["uk-date-column"] , "sType" : "uk_date"}, { "aTargets" : ["uk-timestp-column"] , "sType" : "uk_timestp"} ]

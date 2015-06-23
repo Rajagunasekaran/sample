@@ -62,6 +62,9 @@ function doPost(e) {
         var result=Extract_submit(e.parameter.shturl,e.parameter.selectedunit,e.parameter.customername,e.parameter.checkarray,e.parameter.selectedsheet,e.parameter.customeridname);
         return ContentService.createTextOutput(JSON.stringify(result)).setMimeType(ContentService.MimeType.JSON);
     }
+    else if(e.parameter.DDE_flag==7){
+        var result=deleteTemporarySheet();
+    }
     if(e.parameter.ACtiveflag==10)
     {
         var result=Active_Customer_List(e.parameter);

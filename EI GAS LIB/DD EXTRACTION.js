@@ -135,7 +135,7 @@ function uniqueObj(array){
 }
 // extrac all data for selected recver
 function Extract_submit(shturl,selectedunit,customername,checkarray,selectedsheet,customeridname){
-    try{
+    try{var leaseperiod=checkarray;
         var ss = ssopen_byid(shturl);
         var deductionsheet =ss.getSheetByName(selectedsheet);
         var start_end_date= deductionsheet.getRange(1,2,deductionsheet.getLastRow(),1).getValues();
@@ -207,6 +207,8 @@ function Extract_submit(shturl,selectedunit,customername,checkarray,selectedshee
             var mailsheet = ss.getSheetByName('TEMPLATE');
             mailsheet.copyTo(newSpreadsheet);
             var DDE_getTemplateSheet = newSpreadsheet.getSheetByName('Copy of TEMPLATE');
+            DDE_getTemplateSheet.getRange(2,1).setValue(leaseperiod);
+            DDE_getTemplateSheet.clearNotes();
             var DDE_row=parseInt(DDE_location)+parseInt(2);
             DDE_getTemplateSheet.getRange(1,1,DDE_row,4).clear();
             DDE_getTemplateSheet.deleteRows(1,DDE_row);
@@ -214,19 +216,23 @@ function Extract_submit(shturl,selectedunit,customername,checkarray,selectedshee
             var DDC_newspread_ssid=newSpreadsheet.getId();
             newSpreadsheet.deleteActiveSheet();
             var contents = DriveApp.getFileById(newSpreadsheet.getId()).getAs('application/pdf').getBytes();
-//      var getattachfile={name:selectedunit+'-'+customername+".pdf", data:contents,'content_id':''};
             advancedArgs.push(contents);
-        }
+      }
+        return advancedArgs;
+    }
+    catch(err){Logger.log(err)
+        return err;
+    }
+}
+function deleteTemporarySheet(){
+    try{
         var DDE_files = DriveApp.getFiles();
         while (DDE_files.hasNext()) {
             var DDE_file = DDE_files.next();
             if(DDE_file.getName()=="TEMPORARY SHEET"){
                 DDE_file.setTrashed(true)
             }
-        }
-        return advancedArgs;
-    }
-    catch(err){
+        }return 1;
+    }catch(err){
         return err;
-    }
-}
+    }}

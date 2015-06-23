@@ -122,15 +122,52 @@ class Mdl_finance_extract_deposit_pdf extends CI_Model{
     }
     public function DDE_Dep_Exctsubmit($shturl,$selectedunit,$customername,$checkarray,$selectedsheet,$customermail,$customeridname,$UserStamp){
         $check_array='';
-        for($k=0;$k<count($checkarray);$k++){
-            if($k==0){
-                $check_array=$checkarray[$k];
-            }
-            else{
-                $check_array=$check_array.'^^'.$checkarray[$k];
-            }
-        }
-        $sub_exequery ="SELECT ETD .ETD_EMAIL_SUBJECT,ETD. ETD_EMAIL_BODY FROM  EMAIL_TEMPLATE_DETAILS ETD ,EMAIL_TEMPLATE ET WHERE (ET .ET_ID=ETD .ET_ID) AND ET_EMAIL_SCRIPT='DEPOSIT DEDUCTION'";
+        // for($k=0;$k<count($checkarray);$k++){
+        //     if($k==0){
+        //         $check_array=$checkarray[$k];
+        //     }
+        //     else{
+        //         $check_array=$check_array.'^^'.$checkarray[$k];
+        //     }
+        // }
+        // $sub_exequery ="SELECT ETD .ETD_EMAIL_SUBJECT,ETD. ETD_EMAIL_BODY FROM  EMAIL_TEMPLATE_DETAILS ETD ,EMAIL_TEMPLATE ET WHERE (ET .ET_ID=ETD .ET_ID) AND ET_EMAIL_SCRIPT='DEPOSIT DEDUCTION'";
+        // $sub_rs = $this->db->query($sub_exequery);
+        //     $subject_db=$sub_rs->row()->ETD_EMAIL_SUBJECT;
+        //     $message_db=$sub_rs->row()->ETD_EMAIL_BODY;
+        // $rcontent = $customername." - ".$selectedunit;
+        // $subject =str_replace('[UNIT_NO - CUSTOMER_NAME]',$rcontent,$subject_db);
+        // $body =str_replace('[UNIT_NO-  CUSTOMER_NAME]',$rcontent,$message_db);
+        // $emailindex = strstr($customermail,'@',true);
+        // $eusername = strtoupper($emailindex);
+        // $body = str_replace('[MAILID_USERNAME]',$eusername,$body);
+        // $data5=array('DDE_flag'=>6,'shturl'=>$shturl,'selectedunit'=>$selectedunit,'customername'=>$customername,'checkarray'=>$check_array,
+        //     'selectedsheet'=>$selectedsheet,'customeridname'=>$customeridname);
+        // $submit_array=array();$submitarray=[];
+        // $this->load->model('EILIB/Mdl_eilib_common_function');
+        // $submit_array=$this->Mdl_eilib_common_function->Func_curl($data5);
+        // $submitarray=json_decode($submit_array,true);
+        // $EmailDisplayname=$this->Mdl_eilib_common_function->Get_MailDisplayName('DEPOSIT_DEDUCTION');
+        // $pdfheader=$selectedunit.'-'.$customername;
+        // try {
+        //     $message = new Message();
+        //     $message->setSender($EmailDisplayname.'<'.$UserStamp.'>');
+        //     $message->addTo($customermail);
+        //     $message->setSubject($subject);
+        //     $message->setTextBody($body);
+        //     for ($i = 0; $i < count($submitarray); $i++) {
+        //         $data = implode(array_map("chr", $submitarray[$i]));
+        //         $message->addAttachment($pdfheader . '.pdf', $data);
+        //     }
+        //     $message->send();
+        //    return $submitarray;
+        //     return 'DDC_flag_extract';
+        // }
+        // catch (InvalidArgumentException $e) {
+        //     return $e->getMessage();
+        // }
+         $test=array();
+         $submit_array=array();$submitarray=array();
+  $sub_exequery ="SELECT ETD .ETD_EMAIL_SUBJECT,ETD. ETD_EMAIL_BODY FROM  EMAIL_TEMPLATE_DETAILS ETD ,EMAIL_TEMPLATE ET WHERE (ET .ET_ID=ETD .ET_ID) AND ET_EMAIL_SCRIPT='DEPOSIT DEDUCTION'";
         $sub_rs = $this->db->query($sub_exequery);
             $subject_db=$sub_rs->row()->ETD_EMAIL_SUBJECT;
             $message_db=$sub_rs->row()->ETD_EMAIL_BODY;
@@ -140,26 +177,43 @@ class Mdl_finance_extract_deposit_pdf extends CI_Model{
         $emailindex = strstr($customermail,'@',true);
         $eusername = strtoupper($emailindex);
         $body = str_replace('[MAILID_USERNAME]',$eusername,$body);
-        $data5=array('DDE_flag'=>6,'shturl'=>$shturl,'selectedunit'=>$selectedunit,'customername'=>$customername,'checkarray'=>$check_array,
-            'selectedsheet'=>$selectedsheet,'customeridname'=>$customeridname);
-        $submit_array=array();$submitarray=[];
+            $data5=array('DDE_flag'=>6,'shturl'=>$shturl,'selectedunit'=>$selectedunit,'customername'=>$customername,'checkarray'=>$checkarray,
+                'selectedsheet'=>$selectedsheet,'customeridname'=>$customeridname);
+
         $this->load->model('EILIB/Mdl_eilib_common_function');
-        $submit_array=$this->Mdl_eilib_common_function->Func_curl($data5);
-        $submitarray=json_decode($submit_array,true);
+
+
         $EmailDisplayname=$this->Mdl_eilib_common_function->Get_MailDisplayName('DEPOSIT_DEDUCTION');
         $pdfheader=$selectedunit.'-'.$customername;
+         
+ 
+           
+        for($k=0;$k<count($checkarray);$k++){
+            $data5=array('DDE_flag'=>6,'shturl'=>$shturl,'selectedunit'=>$selectedunit,'customername'=>$customername,'checkarray'=>$checkarray[$k],
+                'selectedsheet'=>$selectedsheet,'customeridname'=>$customeridname);
+
+            $submit_array=$this->Mdl_eilib_common_function->Func_curl($data5);
+            $submitarray[]=json_decode($submit_array,true);
+                      
+
+        }
         try {
             $message = new Message();
-            $message->setSender($EmailDisplayname.'<'.$UserStamp.'>');
-            $message->addTo($customermail);
-            $message->setSubject($subject);
-            $message->setTextBody($body);
-            for ($i = 0; $i < count($submitarray); $i++) {
-                $data = implode(array_map("chr", $submitarray[$i]));
-                $message->addAttachment($pdfheader . '.pdf', $data);
-            }
-            $message->send();
-            return 'DDC_flag_extract';
+           $message->setSender($EmailDisplayname.'<'.$UserStamp.'>');
+           $message->addTo($customermail);
+           $message->setSubject($subject);
+           $message->setTextBody($body);
+for ($i = 0; $i < count($submitarray); $i++) {
+                        $test[]=$i+1;
+               $data = implode(array_map("chr", $submitarray[$i][0]));
+               $message->addAttachment($pdfheader . '.pdf', $data);
+           }
+
+          $message->send();
+                 $data5=array('DDE_flag'=>7);
+           $response=$this->Mdl_eilib_common_function->Func_curl($data5);
+            return  $submitarray;
+
         }
         catch (InvalidArgumentException $e) {
             return $e->getMessage();

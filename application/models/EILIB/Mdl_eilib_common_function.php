@@ -774,7 +774,11 @@ return date_format($date, 'd-m-Y H:i:s');
         $output .= ( $years == 0 ? '' : (', ' . $years . ' Year' . ( $years == 1 ? '' : 's')));
         $output .= ( $months == 0 ? '' : (', ' .  $months . ' Month' . ( $months == 1 ? '' : 's')));
         $output .= ( $days == 0 ? '' : (', ' .  $days . ' Day' . ( $days == 1 ? '' : 's')));
-        return $output;
+        if(strpos($output,",")===false)
+            return $output;
+        else{
+            $countLP=explode(',',$output);
+            ($countLP[0]=='')?$output=preg_replace('/,/', "", $output, 1):$output=$output; return $output;}
     }
 ////Lease Period Calculation
 //    public function getLeasePeriod($Startdate,$Enddate)

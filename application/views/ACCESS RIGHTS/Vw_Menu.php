@@ -1,21 +1,63 @@
 <!--//*******************************************FILE DESCRIPTION*********************************************//
 //*******************************************MENU*********************************************//
 //DONE BY:LALITHA
-//VER 0.02-SD:06-06-2015 ED:06-06-2015 REMOVED USERSTAMP AND MOVED THE FILE TO SPECIFIC DIRECTORY
 //VER 0.01-INITIAL VERSION, SD:21/01/2015 ED:21/01/2015
-//*********************************************************************************************************//-->
+//*********************************************************************************************************//-- >
 <?php
 require_once('application/libraries/EI_HDR.php');
+
 ?>
 <html>
 <head>
+    <link rel="stylesheet" href="<?php echo base_url().'menu/CSS/one.css'?>">
+    <link rel="stylesheet" href="<?php echo base_url().'menu/CSS/two.css'?>">
+    <link rel="stylesheet" href="<?php echo base_url().'menu/CSS/thr.css'?>">
+    <link rel="stylesheet" href="<?php echo base_url().'menu/CSS/four.css'?>">
+    <link rel="stylesheet" href="<?php echo base_url().'menu/CSS/five.css'?>">
+    <link rel="stylesheet" href="<?php echo base_url().'menu/CSS/six.css'?>">
+
+
+    <script src="<?php echo base_url().'menu/JS/one.js'?>" ></script>
+    <script src="<?php echo base_url().'menu/JS/two.js'?>" ></script>
+    <script src="<?php echo base_url().'menu/JS/thr.js'?>" ></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js" defer></script>
+    <script src="<?php echo base_url().'menu/JS/four.js'?>" ></script>
     <style>
-        .navbar-default .navbar-nav>.active>a, .navbar-default .navbar-nav>.open>a {
-            background-color: rgba(0,0,0,0) !important;
-            background-image: none;
+        .navbar-default .navbar-nav > .open > a, .navbar-default .navbar-nav > .active > a {
+            background-image: linear-gradient(to bottom, #498af3 0%, #498af3 100%);
+            background-repeat: repeat-x;
+            box-shadow: 0px 3px 9px #498af3 inset;
         }
     </style>
     <script>
+        function callFuncAfterMenu(){
+            'use strict';
+            $(function() {
+                $('#scroll_top').on('click', function() {
+                    this.disabled = true;
+                    $('body, html').animate({
+                        scrollTop: 0
+                    }, 800, function() {
+                        this.disabled = false;
+                    }.bind(this));
+                    this.blur();
+                });
+
+                // Dropdown fix
+                $('.dropdown > a[tabindex]').on('keydown', function(event) {
+                    // 13: Return
+                    if (event.keyCode == 13) {
+                        $(this).dropdown('toggle');
+                    }
+                });
+                // Предотвращаем закрытие при клике на неактивный элемент списка
+                $('.dropdown-menu > .disabled, .dropdown-header').on('click.bs.dropdown.data-api', function(event) {
+                    event.stopPropagation();
+                });
+                $('.dropdown-submenu > a').submenupicker();
+                hljs.initHighlighting();
+            });
+        }
         var userstamp;
         var all_menu_array=[];
         var MenuPage=1;
@@ -30,6 +72,7 @@ require_once('application/libraries/EI_HDR.php');
             $("#clock").html(currentTime);
         }
         $(document).ready(function(){
+            var CONFIG_ENTRY_controller_url="<?php echo base_url(); ?>" + '/index.php/ACCESSRIGHTS/Ctrl_Menu/' ;
             setInterval('updateClock()', 1000);
             $('#calendarTitle').hide();
             $("#calendarTitle").text('');
@@ -40,7 +83,7 @@ require_once('application/libraries/EI_HDR.php');
             // INITIAL DATA LODING
             $.ajax({
                 type: "POST",
-                'url': "<?php echo base_url(); ?>" + "index.php/ACCESSRIGHTS/Ctrl_Menu/Initaildatas",
+                'url':CONFIG_ENTRY_controller_url+"Initaildatas",
                 data:{"Formname":'Menu',"ErrorList":'456'},
                 success: function(data){
                     $("#calendarTitle").text('');
@@ -62,7 +105,6 @@ require_once('application/libraries/EI_HDR.php');
             $(document).on('click','.menuconfirm',function(){
                 if(Page_url!='Ctrl_Error_Page'){
                     $(".preloader").show();
-                    $('.preloaderimg').attr('src','images/Loading.gif');
                     $('#menu_frame').load("<?php echo site_url(); ?>" + "/"+Page_url+"/index");
                 }
                 else
@@ -79,7 +121,7 @@ require_once('application/libraries/EI_HDR.php');
             var iframe;
             $.ajax({
                 type: "POST",
-                'url': "<?php echo base_url(); ?>" + "index.php/ACCESSRIGHTS/Ctrl_Menu/fetchdata",
+                'url':CONFIG_ENTRY_controller_url+"fetchdata",
                 success: function(data){
                     var value_array=JSON.parse(data);
                     all_menu_array= value_array;
@@ -134,11 +176,11 @@ require_once('application/libraries/EI_HDR.php');
                     var filename=filelist[count]+'.php';
                     if(ARCMENU_first_submenu[i].length==0)
                     {
-                        mainmenuItem='<li><a class="btnclass" page="'+filename+'" href="#"  id="'+ACRMENU_mainmenu[i]+'" >'+ACRMENU_mainmenu[i]+'</a></li>'
+                        mainmenuItem='<li><a class="btnclass" tabindex="0"  page="'+filename+'" href="#"  id="'+ACRMENU_mainmenu[i]+'">'+ACRMENU_mainmenu[i]+'</a></li>'
                     }
                     else
                     {
-                        mainmenuItem='<li class="dropdown"><a tabindex="0" href="#" data-toggle="dropdown">'+ACRMENU_mainmenu[i]+'<b class="caret"></b></a><ul class="dropdown-menu fa-ul '+submen+'">'
+                        mainmenuItem='<li class="dropdown"><a tabindex="0" data-toggle="dropdown">'+ACRMENU_mainmenu[i]+'<span class="caret"></span></a><ul class="dropdown-menu '+submen+'" role="menu">'
                     }
                     $("#ACRMENU_ulclass_mainmenu").append(mainmenuItem);
                     for(var j=0;j<ARCMENU_first_submenu.length;j++)
@@ -157,11 +199,12 @@ require_once('application/libraries/EI_HDR.php');
 
                                         var file_name='ACCESSRIGHTS/Ctrl_Error_Page';
                                     }
-                                    submenuItem='<li class=""><a class="btnclass" page="'+file_name+'" href="#"   id="'+ACRMENU_mainmenu[i]+'" >'+ARCMENU_first_submenu[j][k]+'</a></li></ul>'
+                                    submenuItem='<li><a tabindex="0" page="'+file_name+'" href="#" class="btnclass"  id="'+ACRMENU_mainmenu[i]+'" >'+ARCMENU_first_submenu[j][k]+'</a></li>'
                                 }
                                 else
                                 {
-                                    submenuItem='<li class="dropdown-submenu"><a href="#" class="dropdown-toggle" data-toggle="dropdown">'+ARCMENU_first_submenu[j][k]+'</a><ul class="dropdown-menu '+sub_submenu+'" role="menu">'
+
+                                    submenuItem='<li class="dropdown-submenu">  <a tabindex="0" data-toggle="dropdown">'+ARCMENU_first_submenu[j][k]+'</a><ul class="dropdown-menu '+sub_submenu+'" >'
                                 }
                                 $("."+submen).append(submenuItem);
                                 for(var m=0;m<ARCMENU_second_submenu[count].length;m++)//add submenu2
@@ -173,7 +216,7 @@ require_once('application/libraries/EI_HDR.php');
 
                                         var file_name='ACCESSRIGHTS/Ctrl_Error_Page';
                                     }
-                                    sub_submenuItem='<li class=""><a class="btnclass" page="'+file_name+'" href="#"   id="'+ARCMENU_first_submenu[j][k]+'" >'+ARCMENU_second_submenu[count][m]+'</a></li>'
+                                    sub_submenuItem='<li ><a tabindex="0" page="'+file_name+'" href="#" class="btnclass"  id="'+ARCMENU_first_submenu[j][k]+'" >'+ARCMENU_second_submenu[count][m]+'</a></li>'
                                     $("."+sub_submenu).append(sub_submenuItem);
                                 }
                                 count++;
@@ -183,6 +226,7 @@ require_once('application/libraries/EI_HDR.php');
                     }
                     $("#ACRMENU_ulclass_mainmenu").append('</li>');
                 }
+                callFuncAfterMenu();
             }
         });
     </script>
@@ -203,7 +247,7 @@ require_once('application/libraries/EI_HDR.php');
 </div>
 <iframe src="" style="border: 0" width="1350" height="600" frameborder="0" scrolling="no"></iframe>
 <div class="wrapper">
-    <div class="preloader" hidden><span class="Centerer"></span><img class="preloaderimg"/> </div>
+    <div class="preloader"><span class="Centerer"></span><img class="preloaderimg"/> </div>
     <nav class="navbar navbar-default" id="menu_nav">
         <div class="navbar-header">
             <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".navbar-collapse">
@@ -213,14 +257,17 @@ require_once('application/libraries/EI_HDR.php');
                 <span class="icon-bar"></span>
             </button>
         </div>
+
         <div class="collapse navbar-collapse" id="menu" >
             <ul class="nav navbar-nav" id="ACRMENU_ulclass_mainmenu">
             </ul>
         </div>
     </nav>
+
     <br><label id="ACRMENU_lbl_errormsg" class="errormsg" hidden ></label>
     <div id="menu_frame" name="iframe_a" ></div>
     <div style="height:100%" id="spacewidth"></div>
 </div>
 </div>
+
 </body>

@@ -435,10 +435,8 @@ $(document).on('change','.dataupdate', function (){
             type: "POST",
             'url':CONFIG_ENTRY_controller_url+"dataupd_exists",
             data :{'module':module,'type':type,'data':dataupdte,'subdatamount_value':subdatamount_value},
-            success: function(data){
-                $('.preloader').hide();
+            success: function(data){                $('.preloader').hide();
 
-                alert(data)
                 var ET_ENTRY_response=JSON.parse(data.script_name_already_exits_array)//retdata.final_array[0];
                 var CONFIG_ENTRY_values=ET_ENTRY_response;
                 $('.preloader').hide();

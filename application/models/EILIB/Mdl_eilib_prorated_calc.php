@@ -15,10 +15,7 @@ class Mdl_eilib_prorated_calc extends CI_Model {
     public function sMonthProratedCalc($check_in_date,$rentPerMonth)
     {
         $rentPerMonth=floatval($rentPerMonth);
-        $check_in_date=strtotime($check_in_date);
-        $Checkindate = intval(date("d", $check_in_date));
-        $timestamp = strtotime ("+1 month",$check_in_date);
-        $nextMonth  =  date("Y-m-d",$timestamp);
+        $Checkindate = intval(date("d",strtotime($check_in_date)));
         $LastMonth =date("Y-m-t", strtotime($check_in_date));
         if($Checkindate >1)
         {
@@ -45,10 +42,7 @@ class Mdl_eilib_prorated_calc extends CI_Model {
     public   function eMonthProratedCalc($check_out_date,$rentPerMonth)
     {
         $rentPerMonth=floatval($rentPerMonth);
-        $check_out_date=strtotime($check_out_date);
-        $CheckOutdate = intval(date("d", $check_out_date));
-        $timestamp = strtotime ("+1 month",$check_out_date);
-        $nextMonthCheckout  =  date("Y-m-d",$timestamp);
+        $CheckOutdate = intval(date("d", strtotime($check_out_date)));
         $LastMonth =date("Y-m-t", strtotime($check_out_date));
         if($CheckOutdate >1)
         {
@@ -77,8 +71,6 @@ class Mdl_eilib_prorated_calc extends CI_Model {
         $rentPerMonth=floatval($rentPerMonth);
         $CheckIndate = intval(date("d", strtotime($check_in_date)));
         $CheckOutdate = intval(date("d", strtotime($check_out_date)));
-//$timestamp = strtotime ("+1 month",strtotime($check_out_date));
-//$nextMonthCheckout  =  date("Y-m-d",$timestamp);
         $LastMonth =date("Y-m-t", strtotime(strtotime($check_out_date)));
         $Tdays = intval(date("d",strtotime($LastMonth)));
         $Proratedfull1 = (($CheckOutdate - $CheckIndate) * 12/365 * $rentPerMonth);

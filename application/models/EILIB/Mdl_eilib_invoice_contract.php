@@ -659,7 +659,7 @@ class Mdl_eilib_invoice_contract extends CI_Model{
                     {
                         $proratedsmonth=$this->Mdl_eilib_prorated_calc->sMonthProratedCalc($check_in_date,$rent);
                         $proratedemonth=$this->Mdl_eilib_prorated_calc->eMonthProratedCalc($check_out_date,$rent);
-                        $proratedrent=sprintf("%01.2f", (floatval($proratedsmonth)+floatval($proratedemonth)));
+                        $proratedrent= number_format((floatval($proratedsmonth)+floatval($proratedemonth)),2,'.','');
                         if($proratedrent!='0.00')
                         {
                             $flagProratedRentCkout=$proratedrent.'^~^'.$cexdd;

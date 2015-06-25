@@ -32,27 +32,14 @@
     <!--Message box-->
     <link rel="stylesheet" href ="<?php echo base_url().'msgbox/jquery-confirm.css'?>"  />
     <script src="<?php echo base_url().'msgbox/jquery-confirm.js'?>"></script>
-    <!--MENU PART-->
-    <link rel="stylesheet" href ="<?php echo base_url().'menu/bootstrap-submenu.min.css'?>"  />
-    <link rel="stylesheet" href ="<?php echo base_url().'menu/docs.min.css'?>"  />
-    <script src="<?php echo base_url().'menu/bootstrap-submenu.min.js'?>"></script>
-    <script src="<?php echo base_url().'JS/SetCase%20.js'?>"></script>
-    <script src="<?php echo base_url().'menu/docs.js'?>"></script>
-    <link rel="stylesheet" href ="<?php echo base_url().'menu/bootstrap-submenu.min.css'?>"  />
-    <link rel="stylesheet" href ="<?php echo base_url().'menu/docs.min.css'?>"  />
-    <script src="<?php echo base_url().'menu/bootstrap-submenu.min.js'?>"></script>
-    <script src="<?php echo base_url().'JS/SetCase%20.js'?>"></script>
-    <script src="<?php echo base_url().'menu/docs.js'?>"></script>
+
     <link rel="stylesheet" href ="<?php echo base_url().'CSS/StyleSheet.css'?>"  />
 
     <link rel="stylesheet" href="<?= base_url();?>Data_table/media/css/jquery.dataTables.css">
     <link rel="stylesheet" href="<?= base_url();?>Data_table/media/css/jquery.dataTables.min.css">
     <script type="text/javascript" src="<?= base_url();?>Data_table/media/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="<?= base_url();?>Data_table/media/js/jquery.dataTables.js"></script>
-<!--    <link rel="stylesheet" href="--><?//= base_url();?><!--Data_table-10.6/media/css/jquery.dataTables.css">-->
-<!--    <link rel="stylesheet" href="--><?//= base_url();?><!--Data_table-10.6/media/css/jquery.dataTables.min.css">-->
-<!--    <script type="text/javascript" src="--><?//= base_url();?><!--Data_table-10.6/media/js/jquery.dataTables.min.js"></script>-->
-<!--    <script type="text/javascript" src="--><?//= base_url();?><!--Data_table-10.6/media/js/jquery.dataTables.js"></script>-->
+
     <script type="text/javascript" src="https://www.google.com/jsapi"></script>
     <link rel="shortcut icon" type="image/ico" href ="<?php echo base_url().'images/eifevicon.ico'?>"  />
     <meta name="viewport" content="initial-scale=1.0, maximum-scale=2.0">

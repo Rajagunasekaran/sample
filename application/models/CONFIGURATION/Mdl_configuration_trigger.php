@@ -5,7 +5,6 @@ use google\appengine\api\mail\Message;
 class Mdl_configuration_trigger extends CI_Model {
     public function getCSVfileRecords($UserStamp)
     {
-        set_time_limit(0);
         $this->db->select("OCN_DATA");
         $this->db->from('OCBC_CONFIGURATION');
         $this->db->where('CGN_ID=29');
@@ -33,6 +32,8 @@ class Mdl_configuration_trigger extends CI_Model {
         $year=substr($monthname[0],0,4);
         $month=substr($monthname[0],4,2);
         $selectedmonthcsv=$monthname[0].'%';
+        $month_name=date('M', strtotime($month . '01'));
+        $CSVMonthname=$month_name.'-'.$year;
         /************************OCBC TABLE RECORDS************************************/
         $updatedrecordquery="SELECT OBR_TRANSACTION_DESC_DETAILS,OBR_CLIENT_REFERENCE,OBR_REF_ID,OBR_BANK_REFERENCE,OBR_POST_DATE FROM OCBC_BANK_RECORDS WHERE OBR_REF_ID LIKE '$selectedmonthcsv' ORDER BY OBR_REF_ID ASC";
         $resultset=$this->db->query($updatedrecordquery);
@@ -64,7 +65,6 @@ class Mdl_configuration_trigger extends CI_Model {
             }
         }
         $CSVcount=count($CSV_File_comparisionRecords);
-//        return $CSVcount;
         /***************************END OF CSV FILE RECORDS***************************************/
         /****************************ARRAY COMPARISION ******************************************/
         $REF_id=array();
@@ -89,7 +89,6 @@ class Mdl_configuration_trigger extends CI_Model {
         $CSV_Old_Records=array_unique($CSV_Old_Records);
         $Old_rcordsCount=count($CSV_Old_Records);
         $updationdata=array();
-//        return $CSV_Old_RecordsBC.'/'.$DBcount;
         if($Old_rcordsCount==$DBcount)
         {
             for($k=0;$k<count($CSV_Old_Records);$k++)
@@ -124,58 +123,59 @@ class Mdl_configuration_trigger extends CI_Model {
         }
         else
         {
-//            if($Old_rcordsCount!=$DBcount)
-//            {
-            $dups = array();
-            foreach(array_count_values($CSV_File_comparisionRecords) as $val => $c)
-                if($c > 1) $dups[] = $val;
-            $duplicateRecords=count($dups);
-            $csverrorbodymessage="The Following CSV Records Duplicates in CSV File     ";
-            $duplicaterows=array();
-            for($b=0;$b<count($dups);$b++)
+            if($Old_rcordsCount!=$DBcount)
             {
-                for ($a = 0; $a < count($CSV_Files_Records); $a++)
+                $dups = array();
+                foreach(array_count_values($CSV_File_comparisionRecords) as $val => $c)
+                    if($c > 1) $dups[] = $val;
+                $duplicateRecords=count($dups);
+                $csverrorbodymessage="The Following CSV Records Duplicates in CSV File     ";
+                $duplicaterows=array();
+                for($b=0;$b<count($dups);$b++)
                 {
-                    $CSV_array = explode(',',$CSV_Files_Records[$a]);
-                    $csv_compdate = $CSV_array[11] . '_' . $CSV_array[16] . '_' . $CSV_array[17] . '_' . $CSV_array[18];
-                    if ($csv_compdate == $dups[$b])
+                    for ($a = 0; $a < count($CSV_Files_Records); $a++)
                     {
-                        $csverrorbodymessage=$csverrorbodymessage.'  \n\n'.$CSV_Files_Records[$a];
+                        $CSV_array = explode(',',$CSV_Files_Records[$a]);
+                        $csv_compdate = $CSV_array[11] . '_' . $CSV_array[16] . '_' . $CSV_array[17] . '_' . $CSV_array[18];
+                        if ($csv_compdate == $dups[$b])
+                        {
+                            $csverrorbodymessage=$csverrorbodymessage.'<br><br>'.$CSV_Files_Records[$a];
+                        }
                     }
                 }
             }
+            if($Old_rcordsCount<$DBcount)
+            {
+                $Missedrefid='';
+                $csvmissedrecord=array_diff($CSV_DB_Records,$CSV_dup_oldRecords);
+                $keyvalue=array_keys($csvmissedrecord);
+                for($h=0;$h<count($keyvalue);$h++)
+                {
+                    $datasplit=explode('!~',$csvmissedrecord[$keyvalue[$h]]);
+                    if($h==0)
+                    {
+                        $Missedrefid="'".$datasplit[0]."'";
+                    }
+                    else
+                    {$Missedrefid=$Missedrefid.",'".$datasplit[0]."'";}
+                }
+                $errquery= "SELECT OCB.OCN_DATA AS ACCOUNT,OCA.OCN_DATA AS CURRENCY,OBR.OBR_OPENING_BALANCE,OBR.OBR_CLOSING_BALANCE,OBR.OBR_PREVIOUS_BALANCE,OBR.OBR_LAST_BALANCE,OBR.OBR_NO_OF_CREDITS,OBR.OBR_TRANS_DATE,OBR.OBR_NO_OF_DEBITS,OBR.OBR_OLD_BALANCE,OBR.OBR_D_AMOUNT,OBR.OBR_POST_DATE,OBR.OBR_VALUE_DATE,OBR.OBR_DEBIT_AMOUNT,OBR.OBR_CREDIT_AMOUNT,OCN.OCN_DATA,OBR.OBR_CLIENT_REFERENCE,OBR.OBR_TRANSACTION_DESC_DETAILS,OBR.OBR_BANK_REFERENCE,OBR.OBR_TRX_TYPE FROM OCBC_CONFIGURATION OCN,OCBC_BANK_RECORDS OBR LEFT JOIN OCBC_CONFIGURATION OCA ON OBR.OBR_CURRENCY=OCA.OCN_ID LEFT JOIN OCBC_CONFIGURATION OCB ON OBR.OBR_ACCOUNT_NUMBER=OCB.OCN_ID  WHERE OBR.OCN_ID=OCN.OCN_ID AND  OBR.OBR_REF_ID IN($Missedrefid) ORDER BY OBR.OBR_REF_ID ASC";
+                $resultset=$this->db->query($errquery);
+
+                $missing_csverrorbodymessage="The Following DB CSV Records Wrong or Missing in CSV File Compare to Previous Day CSV File    ";
+                foreach ($resultset-> result_array() as $val)
+                {
+                    $error=$val['ACCOUNT'].','.$val['CURRENCY'].','.$val['OBR_OPENING_BALANCE'].','.$val['OBR_CLOSING_BALANCE'].','.$val['OBR_PREVIOUS_BALANCE'].','.$val['OBR_LAST_BALANCE'].','.$val['OBR_NO_OF_CREDITS'].','.$val['OBR_TRANS_DATE'].','.$val['OBR_NO_OF_DEBITS'].','.$val['OBR_OLD_BALANCE'].','.$val['OBR_D_AMOUNT'].','.$val['OBR_POST_DATE'].','.$val['OBR_VALUE_DATE'].','.$val['OBR_DEBIT_AMOUNT'].','.$val['OBR_CREDIT_AMOUNT'].','.$val['OBR_CLIENT_REFERENCE'].','.$val['OBR_TRANSACTION_DESC_DETAILS'].','.$val['OBR_BANK_REFERENCE'].','.$val['OBR_TRX_TYPE'];
+                    $missing_csverrorbodymessage=$missing_csverrorbodymessage.'<br><br>'.$error;
+                }
+            }
+            if(count($dups)!=0){$mesgbody=$csverrorbodymessage;}
+            else{$mesgbody=$missing_csverrorbodymessage;}
+            $mesg_body='<body><br><h> ' . $mesgbody . '</h><br><br>';
             $Subject="WARNING MESSAGE";
-            $this->Warningmailpart($Subject,$csverrorbodymessage,'CSV',$UserStamp,$maintainmailid);
-            return 'success';
-//            }
-//            if($Old_rcordsCount<$DBcount)
-//            {
-//                $csvmissedrecord=array_diff($CSV_DB_Records,$CSV_dup_oldRecords);
-//                $keyvalue=array_keys($csvmissedrecord);
-//                for($h=0;$h<count($keyvalue);$h++)
-//                {
-//                    $datasplit=explode('!~',$csvmissedrecord[$keyvalue[$h]]);
-//                    if($h==0)
-//                    {
-//                        $Missedrefid="'".$datasplit[0]."'";
-//                    }
-//                    else
-//                    {$Missedrefid=$Missedrefid.",'".$datasplit[0]."'";}
-//                }
-//                $errquery= "SELECT OCB.OCN_DATA AS ACCOUNT,OCA.OCN_DATA AS CURRENCY,OBR.OBR_OPENING_BALANCE,OBR.OBR_CLOSING_BALANCE,OBR.OBR_PREVIOUS_BALANCE,OBR.OBR_LAST_BALANCE,OBR.OBR_NO_OF_CREDITS,OBR.OBR_TRANS_DATE,OBR.OBR_NO_OF_DEBITS,OBR.OBR_OLD_BALANCE,OBR.OBR_D_AMOUNT,OBR.OBR_POST_DATE,OBR.OBR_VALUE_DATE,OBR.OBR_DEBIT_AMOUNT,OBR.OBR_CREDIT_AMOUNT,OCN.OCN_DATA,OBR.OBR_CLIENT_REFERENCE,OBR.OBR_TRANSACTION_DESC_DETAILS,OBR.OBR_BANK_REFERENCE,OBR.OBR_TRX_TYPE FROM OCBC_CONFIGURATION OCN,OCBC_BANK_RECORDS OBR LEFT JOIN OCBC_CONFIGURATION OCA ON OBR.OBR_CURRENCY=OCA.OCN_ID LEFT JOIN OCBC_CONFIGURATION OCB ON OBR.OBR_ACCOUNT_NUMBER=OCB.OCN_ID  WHERE OBR.OCN_ID=OCN.OCN_ID AND  OBR.OBR_REF_ID IN($Missedrefid) ORDER BY OBR.OBR_REF_ID ASC";
-//                $resultset=$this->db->query($errquery);
-//
-//                $csverrorbodymessage="The Following DB CSV Records Wrong or Missing in CSV File Compare to Previous Day CSV File    ";
-//                foreach ($resultset-> result_array() as $val)
-//                {
-//                    $error=$val['ACCOUNT'].','.$val['CURRENCY'].','.$val['OBR_OPENING_BALANCE'].','.$val['OBR_CLOSING_BALANCE'].','.$val['OBR_PREVIOUS_BALANCE'].','.$val['OBR_LAST_BALANCE'].','.$val['OBR_NO_OF_CREDITS'].','.$val['OBR_TRANS_DATE'].','.$val['OBR_NO_OF_DEBITS'].','.$val['OBR_OLD_BALANCE'].','.$val['OBR_D_AMOUNT'].','.$val['OBR_POST_DATE'].','.$val['OBR_VALUE_DATE'].','.$val['OBR_DEBIT_AMOUNT'].','.$val['OBR_CREDIT_AMOUNT'].','.$val['OBR_CLIENT_REFERENCE'].','.$val['OBR_TRANSACTION_DESC_DETAILS'].','.$val['OBR_BANK_REFERENCE'].','.$val['OBR_TRX_TYPE'];
-//                    $csverrorbodymessage=$csverrorbodymessage.'    \n\n  '.$error;
-//                }
-//                echo '2';
-//                return $csverrorbodymessage;
-//                $Subject="WARNING MESSAGE";
-//                $this->Warningmailpart($Subject,$csverrorbodymessage,'CSV',$UserStamp,$maintainmailid);
-//            }
+            $this->Warningmailpart($Subject,$mesg_body,'CSV',$UserStamp,$maintainmailid);
+            echo 'success';
+            exit;
         }
         if(count($newcsvfilerecords)!=0)
         {
@@ -255,9 +255,22 @@ class Mdl_configuration_trigger extends CI_Model {
                 $OCBC_CSV_insertquery="INSERT INTO OCBC_BANK_RECORDS(OBR_ACCOUNT_NUMBER,OBR_CURRENCY,OBR_PREVIOUS_BALANCE,OBR_OPENING_BALANCE,OBR_CLOSING_BALANCE,OBR_LAST_BALANCE,OBR_NO_OF_CREDITS,OBR_TRANS_DATE,OBR_NO_OF_DEBITS,OBR_OLD_BALANCE,OBR_D_AMOUNT,OBR_POST_DATE,OBR_VALUE_DATE,OBR_DEBIT_AMOUNT,OBR_CREDIT_AMOUNT,OCN_ID,OBR_CLIENT_REFERENCE,OBR_TRANSACTION_DESC_DETAILS,OBR_BANK_REFERENCE,OBR_TRX_TYPE,OBR_REF_ID,ULD_ID,OBR_TIMESTAMP) VALUES( (SELECT OCN_ID FROM OCBC_CONFIGURATION WHERE OCN_DATA= '$CSV_array[1]'),(SELECT OCN_ID FROM OCBC_CONFIGURATION WHERE OCN_DATA= '$CSV_array[2]' ),'$CSV_array[3]', '$CSV_array[4]', '$CSV_array[5]', '$CSV_array[6]', '$CSV_array[7]','$transdate', '$CSV_array[9]', '$csv_oldbal', '$CSV_array[11]', '$postdate', '$valuedate','$debitamt', '$creditamt',(SELECT OCN_ID FROM OCBC_CONFIGURATION WHERE OCN_DATA='$CSV_array[16]'), '$bankreff','$transaction_details','$bankreference','$CSV_array[20]','$CSV_array[0]',(SELECT ULD_ID FROM USER_LOGIN_DETAILS WHERE ULD_LOGINID='$UserStamp'),'$csv_timstamp')";
                 $this->db->query($OCBC_CSV_insertquery);
             }
-//            return $newdatearray;
             if($mailflag==1)
             {
+                $CSVcount=count($CSV_Files_Records);
+                $outparm_query = "SELECT CSV_ID FROM CSV_CONFIGURATION WHERE CSV_MONTH='$CSVMonthname'";
+                $outparm_result = $this->db->query($outparm_query);
+                $CSVMONTHID = $outparm_result->row()->CSV_ID;
+                $sortnumrows=$this->db->affected_rows();
+                if($sortnumrows!=1)
+                {
+                    $OCBC_CSV_count_insertquery = "INSERT INTO CSV_CONFIGURATION(CSV_MONTH,CSV_COUNT,ULD_ID) VALUES('$CSVMonthname',$CSVcount,(SELECT ULD_ID FROM USER_LOGIN_DETAILS WHERE ULD_LOGINID='$UserStamp'))";
+                }
+                else
+                {
+                    $OCBC_CSV_count_insertquery = "UPDATE CSV_CONFIGURATION SET CSV_COUNT=$CSVcount,ULD_ID=(SELECT ULD_ID FROM USER_LOGIN_DETAILS WHERE ULD_LOGINID='$UserStamp') WHERE CSV_ID='$CSVMONTHID'";
+                }
+                    $this->db->query($OCBC_CSV_count_insertquery);
                 for($ar=0;$ar<count($newdatearray);$ar++)
                 {
                     $value_date=$this->Dateconversionnewdateformat($newdatearray[$ar]);
@@ -350,14 +363,16 @@ class Mdl_configuration_trigger extends CI_Model {
             $subjectmess='DATABASE UPDATED-['.$Header.']';
             $this->Confirmmailpart($subjectmess,$message,'CSV',$UserStamp,$tomailid,$ccmailid);
             $this->Warningmailpart($subjectmess,$d,'CSV',$UserStamp,$maintainmailid);
-            return 'success';
+            echo 'success';
+            exit;
         }
         else
         {
             $Subject="CONFIRMATION";
             $message="NEW DATA NOT AVAILABLE IN CSV FILE";
             $this->Warningmailpart($Subject,$message,'CSV',$UserStamp,$maintainmailid);
-            return 'success';
+            echo 'success';
+            exit;
         }
     }
     public function Confirmmailpart($Emailsub,$Messagebody,$Displayname,$UserStamp,$tomailid,$ccmailid)
@@ -513,10 +528,10 @@ class Mdl_configuration_trigger extends CI_Model {
             if($numrows!=0)
             {
                 foreach ($PAYMENT_Paidresult->result_array() as $key => $value)
-                {
+                 {
                     $lastforperiod = $value['PD_FOR_PERIOD'];
                     $Paid_Forperiod = $value['PD_FORPERIOD'];
-                }
+                 }
             }
             else
             {
@@ -530,7 +545,7 @@ class Mdl_configuration_trigger extends CI_Model {
             {
 //                if($Paid_Forperiod=='' || $Paid_Forperiod==null)
 //                {
-                $message .= '<body><table border="1"width="300" hieght="20" color="white" ><tr align="center"  ><td width=25%>'.$Paid_Forperiod.'</td></tr></table></body>';
+                    $message .= '<body><table border="1"width="300" hieght="20" color="white" ><tr align="center"  ><td width=25%>'.$Paid_Forperiod.'</td></tr></table></body>';
 //                    Remindermailpart($subject1,$message,$PAYMENT_reminderdisplayname,$UserStamp,$PAYMENT_remindercustomerid)
 //                 }
 //                array_push($curr_monthpaid,$Paid_Forperiod);
@@ -573,11 +588,11 @@ class Mdl_configuration_trigger extends CI_Model {
                 $DIFF=$diff->format("%a");
                 if($DIFF <= $No_of_days)
                 {
-                    $this->Mdl_eilib_common_function->DeleteFile($service, $fileid);
+                  $this->Mdl_eilib_common_function->DeleteFile($service, $fileid);
                 }
             }
             return 1;
-        }
+      }
     }
     public function getCustomerExpiryXWeek($UserStamp){
 
@@ -654,6 +669,5 @@ class Mdl_configuration_trigger extends CI_Model {
         $message1->setSubject($CWEXP_subject);
         $message1->setHtmlBody($CWEXP_emailmessage);
         $message1->send();
-
     }
 }

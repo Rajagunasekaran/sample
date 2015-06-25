@@ -47,14 +47,12 @@ Class Ctrl_Customer_Creation extends CI_Controller
         $this->load->library('Google');
         $Startdate=$_POST['CCRE_Startdate'];
         $Enddate=$_POST['CCRE_Enddate'];
-        $Sendmailid = $_POST['CCRE_MailList'];
-        $CCoption = $_POST['CCRE_Option'];
         $Leaseperiod=$this->Mdl_eilib_common_function->getLeasePeriod($Startdate,$Enddate);
         $Q_Startdate=date('Y-m-d',strtotime($Startdate));
         $Q_Enddate=date('Y-m-d',strtotime($Enddate));
         $Quoters=$this->Mdl_eilib_quarter_calc->quarterCalc(new DateTime($Q_Startdate),new DateTime($Q_Enddate));
         $Create_confirm=$this->Mdl_customer_creation->Customer_Creation_Save($UserStamp,$Leaseperiod,$Quoters);
-        echo $Create_confirm;
+        echo json_encode($Create_confirm);
     }
 
     public function Prorated_check()

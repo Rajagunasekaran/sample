@@ -7,6 +7,16 @@
 <head>
     <?php require_once('application/libraries/EI_HDR.php'); ?>
 </head>
+<link rel="stylesheet" href ="<?php echo base_url().'bootstrap/CSS/colreorder.css'?>"  />
+<script src="<?php echo base_url().'JS/colreorder.js'?>"></script>
+<style>
+    body { font-size: 140%; }
+    th, td { white-space: nowrap; }
+    div.dataTables_wrapper {
+        width: 1100px;
+        margin: 0 auto;
+    }
+</style>
 <script>
     $(document).ready(function() {
         var controller_url="<?php echo base_url(); ?>" + '/index.php/FINANCE/OCBC/Ctrl_Ocbc_Ocbc/' ;
@@ -92,36 +102,38 @@
                             var data = paymenttype[i];
                             paymentoptions += '<option value="' + data.PP_DATA + '">' + data.PP_DATA + '</option>';
                         }
-                        var ocbc_Tabledata = '<table style="width:4000px" id="OCBC_Datatable" border="1" cellspacing="0" data-class="table" class="srcresult"><thead bgcolor="#6495ed" style="color:white"><tr>';
-                        ocbc_Tabledata += "<th style='width:100px;text-align:center;vertical-align: top'>ACCOUNT NUMBER</th>";
-                        ocbc_Tabledata += "<th style='width:100px;text-align:center;vertical-align: top'>CURRENCY</th>";
-                        ocbc_Tabledata += "<th style='width:100px;text-align:center;vertical-align: top'>PREVIOUS BALANCE</th>";
-                        ocbc_Tabledata += "<th style='width:100px;text-align:center;vertical-align: top'>OPENING BALANCE</th>";
-                        ocbc_Tabledata += "<th style='width:100px;text-align:center;vertical-align: top'>CLOSING BALANCE</th>";
-                        ocbc_Tabledata += "<th style='width:100px;text-align:center;vertical-align: top'>LAST BALANCE</th>";
-                        ocbc_Tabledata += "<th style='width:100px;text-align:center;vertical-align: top'>NO OF CREDITS</th>";
-                        ocbc_Tabledata += "<th style='width:100px;text-align:center;vertical-align: top' class='uk-date-column'>TRANS DATE</th>";
-                        ocbc_Tabledata += "<th style='width:100px;text-align:center;vertical-align: top'>NO OF DEBITS</th>";
-                        ocbc_Tabledata += "<th style='width:100px;text-align:center;vertical-align: top'>OLD BALANCE</th>";
-                        ocbc_Tabledata += "<th style='width:100px;text-align:center;vertical-align: top'>D.AMOUNT</th>";
-                        ocbc_Tabledata += "<th style='width:100px;text-align:center;vertical-align: top' class='uk-date-column'>POST DATE</th>";
-                        ocbc_Tabledata += "<th style='width:100px;text-align:center;vertical-align: top' class='uk-date-column'>VALUE DATE</th>";
-                        ocbc_Tabledata += "<th style='width:100px;text-align:center;vertical-align: top'>DEBIT AMOUNT</th>";
-                        ocbc_Tabledata += "<th style='width:100px;text-align:center;vertical-align: top'>CREDIT AMOUNT</th>";
-                        ocbc_Tabledata += "<th style='width:100px;text-align:center;vertical-align: top'>TRX CODE</th>";
-                        ocbc_Tabledata += "<th style='width:200px;text-align:center;vertical-align: top'>CLIENT REFERENCE	</th>";
-                        ocbc_Tabledata += "<th style='width:300px;text-align:left;vertical-align: top'>TRANSACTION DESC DETAILS</th>";
-                        ocbc_Tabledata += "<th style='width:200px;text-align:center;vertical-align: top'>BANK REFERENCE</th>";
-                        ocbc_Tabledata += "<th style='width:100px;text-align:center;vertical-align: top'>TRX TYPE	</th>";
-                        ocbc_Tabledata += "<th style='width:50px;text-align:center;vertical-align: top'>UNIT</th>";
-                        ocbc_Tabledata += "<th style='width:200px;text-align:center;vertical-align: top'>CUSTOMER</th>";
-                        ocbc_Tabledata += "<th style='width:100px;text-align:center;vertical-align: top'>LEASE PERIOD</th>";
-                        ocbc_Tabledata += "<th style='width:150px;text-align:center;vertical-align: top'>PAYMENT TYPE</th>";
-                        ocbc_Tabledata += "<th style='width:150px;text-align:center;vertical-align: top'>AMOUNT</th>";
-                        ocbc_Tabledata += "<th style='width:150px;text-align:center;vertical-align: top'>FOR PERIOD</th>";
-                        ocbc_Tabledata += "<th style='width:300px;text-align:center;vertical-align: top' nowrap>BANKREF COMMENTS</th>";
-                        ocbc_Tabledata += "<th style='text-align:center;vertical-align: top'>SUBMIT</th>";
-                        ocbc_Tabledata += "<th style='text-align:center;vertical-align: top'>DB SAVED</th>";
+                        sorting();
+                        var ocbc_Tabledata = '<table style="width:5000px;" id="OCBC_Datatable" border="1" cellspacing="0" data-class="table" class="srcresult"><thead bgcolor="#6495ed" style="color:white"><tr>';
+                        ocbc_Tabledata += "<th style='width:3%;'>ACCOUNT NUMBER</th>";
+                        ocbc_Tabledata += "<th style='width:3%;'>CURRENCY</th>";
+                        ocbc_Tabledata += "<th style='width:3%;'>PREVIOUS BALANCE</th>";
+                        ocbc_Tabledata += "<th style='width:3%;'>OPENING BALANCE</th>";
+                        ocbc_Tabledata += "<th style='width:3%;'>CLOSING BALANCE</th>";
+                        ocbc_Tabledata += "<th style='width:3%;'>LAST BALANCE</th>";
+                        ocbc_Tabledata += "<th style='width:3%;'>NO OF CREDITS</th>";
+                        ocbc_Tabledata += "<th style='width:3%;' class='uk-date-column'>TRANS DATE</th>";
+                        ocbc_Tabledata += "<th style='width:3%;'>NO OF DEBITS</th>";
+                        ocbc_Tabledata += "<th style='width:3%;'>OLD BALANCE</th>";
+                        ocbc_Tabledata += "<th style='width:3%;'>D.AMOUNT</th>";
+                        ocbc_Tabledata += "<th style='width:3%;' class='uk-date-column'>POST DATE</th>";
+                        ocbc_Tabledata += "<th style='width:3%;' class='uk-date-column'>VALUE DATE</th>";
+                        ocbc_Tabledata += "<th style='width:3%;'>DEBIT AMOUNT</th>";
+                        ocbc_Tabledata += "<th style='width:3%;'>CREDIT AMOUNT</th>";
+                        ocbc_Tabledata += "<th style='width:3%;'>TRX CODE</th>";
+                        ocbc_Tabledata += "<th style='width:4%;'>CLIENT REFERENCE	</th>";
+
+                        ocbc_Tabledata += "<th style='width:6%;'>TRANSACTION DESC DETAILS</th>";
+                        ocbc_Tabledata += "<th style='width:3%;'>BANK REFERENCE</th>";
+                        ocbc_Tabledata += "<th style='width:3%;'>TRX TYPE	</th>";
+                        ocbc_Tabledata += "<th style='width:3%;'>UNIT</th>";
+                        ocbc_Tabledata += "<th style='width:6%;'>CUSTOMER</th>";
+                        ocbc_Tabledata += "<th style='width:3%;'>LEASE PERIOD</th>";
+                        ocbc_Tabledata += "<th style='width:4%;'>PAYMENT TYPE</th>";
+                        ocbc_Tabledata += "<th style='width:3%;'>AMOUNT</th>";
+                        ocbc_Tabledata += "<th style='width:4%;'>FOR PERIOD</th>";
+                        ocbc_Tabledata += "<th style='width:7%;'>BANKREF COMMENTS</th>";
+                        ocbc_Tabledata += "<th style='width:3%;'>SUBMIT</th>";
+                        ocbc_Tabledata += "<th style='width:3%;'>DB SAVED</th>";
                         ocbc_Tabledata += "</tr></thead><tbody>";
                         var Ocbcid_Array = [];
                         for (var i = 0; i < value_array.length; i++) {
@@ -159,68 +171,68 @@
                             var btnid = 'OCBCSave_' + rowid;
                             Ocbcid_Array.push(rowid);
                             if (value_array[i].OBR_REFERENCE != 'X') {
-                                ocbc_Tabledata += '<tr style="text-align: center !important;">' +
-                                "<td style='vertical-align: middle' nowrap>" + value_array[i].ACCOUNT + "</td>" +
-                                "<td style='vertical-align: middle' nowrap>" + value_array[i].CURRENCY + "</td>" +
-                                "<td style='vertical-align: middle' nowrap>" + value_array[i].OBR_PREVIOUS_BALANCE + "</td>" +
-                                "<td style='vertical-align: middle' nowrap>" + value_array[i].OBR_OPENING_BALANCE + "</td>" +
-                                "<td style='vertical-align: middle' nowrap>" + value_array[i].OBR_CLOSING_BALANCE + "</td>" +
-                                "<td style='vertical-align: middle' nowrap>" + value_array[i].OBR_LAST_BALANCE + "</td>" +
-                                "<td style='vertical-align: middle' nowrap>" + value_array[i].OBR_NO_OF_CREDITS + "</td>" +
-                                "<td style='vertical-align: middle' nowrap>" + value_array[i].OBR_TRANS_DATE + "</td>" +
-                                "<td style='vertical-align: middle' nowrap>" + value_array[i].OBR_NO_OF_DEBITS + "</td>" +
-                                "<td style='vertical-align: middle' nowrap>" + value_array[i].OBR_OLD_BALANCE + "</td>" +
-                                "<td style='vertical-align: middle' nowrap>" + value_array[i].OBR_D_AMOUNT + "</td>" +
-                                "<td style='vertical-align: middle' nowrap>" + value_array[i].OBR_POST_DATE + "</td>" +
-                                "<td style='vertical-align: middle' nowrap>" + value_array[i].OBR_VALUE_DATE + "</td>" +
-                                "<td style='vertical-align: middle' nowrap>" + value_array[i].OBR_DEBIT_AMOUNT + "</td>" +
-                                "<td style='vertical-align: middle' nowrap>" + value_array[i].OBR_CREDIT_AMOUNT + "</td>" +
-                                "<td style='vertical-align: middle' nowrap>" + value_array[i].OCN_DATA + "</td>" +
-                                "<td>" + clientref + "</td>" +
-                                "<td>" + value_array[i].OBR_TRANSACTION_DESC_DETAILS + "</td>" +
-                                "<td>" + value_array[i].OBR_BANK_REFERENCE + "</td>" +
-                                "<td style='vertical-align: middle'>" + trxtype + "</td>" +
-                                "<td style='vertical-align: middle' nowrap><SELECT class='form-control UnitChange OCBC_submitcheck' style='width:150px' id=" + unitid + "></SELECT></td>" +
-                                "<td style='vertical-align: middle' nowrap><SELECT class='form-control CustomerChange OCBC_submitcheck' style='width:250px' disabled id=" + Customerid + "><OPTION>SELECT</OPTION></SELECT></td>" +
-                                "<td style='vertical-align: middle' nowrap><SELECT class='form-control LPChange OCBC_submitcheck'disabled id=" + leaseperiodid + "><OPTION>SELECT</OPTION></SELECT></td>" +
-                                "<td style='vertical-align: middle' nowrap><SELECT class='form-control LPChange OCBC_submitcheck' id=" + paymentid + "></SELECT></td>" +
-                                "<td style='vertical-align: middle' nowrap><div class='col-lg-6' id=amountflag_"+rowid+"><div class='input-group'><input type='text' style='width:100px' id=" + amountid + " class='form-control amtonly OCBC_submitcheck' value=" + autofillamount + " ><span class='input-group-addon'><input type='checkbox'  id=" + amountflag + " name=" + amountflag + "></span></div></div>"+
-                                "<td style='vertical-align: middle' nowrap><div class='col-sm-4' id=Forperiodflag_"+rowid+"><div class='input-group addon'><input type='text' style='width:150px' class='form-control datepickperiod OCBC_submitcheck datemandtry' id=" + forperiodid + " ><label  class='input-group-addon' for=" + forperiodid + "><span class='glyphicon glyphicon-calendar'></span></label></div></div>"+
-                                "<td style='vertical-align: middle' nowrap><textarea class='form-control autogrowcomments OCBC_submitcheck' id=" + Commentsid + ">" + ocbc_comments + "</textarea></td>" +
-                                "<td><input type='button' class='btn btn-primary Btn_save' value='SAVE' disabled style='max-width: 90px;text-align: center' id=" + btnid + "></td>" +
-                                "<td style='vertical-align: middle'>" + ref + "</td></tr>";
+                                ocbc_Tabledata += '<tr>' +
+                                "<td style='width:3%;'>" + value_array[i].ACCOUNT + "</td>" +
+                                "<td style='width:3%;'>" + value_array[i].CURRENCY + "</td>" +
+                                "<td style='width:3%;'>" + value_array[i].OBR_PREVIOUS_BALANCE + "</td>" +
+                                "<td style='width:3%;'>" + value_array[i].OBR_OPENING_BALANCE + "</td>" +
+                                "<td style='width:3%;'>" + value_array[i].OBR_CLOSING_BALANCE + "</td>" +
+                                "<td style='width:3%;'>" + value_array[i].OBR_LAST_BALANCE + "</td>" +
+                                "<td style='width:3%;'>" + value_array[i].OBR_NO_OF_CREDITS + "</td>" +
+                                "<td style='width:3%;'>" + value_array[i].OBR_TRANS_DATE + "</td>" +
+                                "<td style='width:3%;'>" + value_array[i].OBR_NO_OF_DEBITS + "</td>" +
+                                "<td style='width:3%;'>" + value_array[i].OBR_OLD_BALANCE + "</td>" +
+                                "<td style='width:3%;'>" + value_array[i].OBR_D_AMOUNT + "</td>" +
+                                "<td style='width:3%;'>" + value_array[i].OBR_POST_DATE + "</td>" +
+                                "<td style='width:3%;'>" + value_array[i].OBR_VALUE_DATE + "</td>" +
+                                "<td style='width:3%;'>" + value_array[i].OBR_DEBIT_AMOUNT + "</td>" +
+                                "<td style='width:3%;'>" + value_array[i].OBR_CREDIT_AMOUNT + "</td>" +
+                                "<td style='width:3%;'>" + value_array[i].OCN_DATA + "</td>" +
+                                "<td style='width:4%;'>" + clientref + "</td>" +
+                                "<td style='width:6%;word-wrap:break-word;table-layout: fixed;'>" + value_array[i].OBR_TRANSACTION_DESC_DETAILS + "</td>" +
+                                "<td style='width:3%;'>" + value_array[i].OBR_BANK_REFERENCE + "</td>" +
+                                "<td style='width:3%;'>" + trxtype + "</td>" +
+                                "<td style='width:3%;'><SELECT class='form-control UnitChange OCBC_submitcheck' id=" + unitid + "></SELECT></td>" +
+                                "<td style='width:6%;'><SELECT class='form-control CustomerChange OCBC_submitcheck' disabled id=" + Customerid + "><OPTION>SELECT</OPTION></SELECT></td>" +
+                                "<td style='width:3%;'><SELECT class='form-control LPChange OCBC_submitcheck'  disabled id=" + leaseperiodid + "><OPTION>SELECT</OPTION></SELECT></td>" +
+                                "<td style='width:4%;'><SELECT class='form-control LPChange OCBC_submitcheck'id=" + paymentid + "></SELECT></td>" +
+                                "<td style='width:3%;'><div class='col-lg-6' id=amountflag_"+rowid+"><div class='input-group'><input type='text' style='width:100px' id=" + amountid + " class='form-control amtonly OCBC_submitcheck' value=" + autofillamount + " ><span class='input-group-addon'><input type='checkbox'  id=" + amountflag + " name=" + amountflag + "></span></div></div>"+
+                                "<td style='width:4%;'><div class='col-sm-4' id=Forperiodflag_"+rowid+"><div class='input-group addon'><input type='text' style='width:150px' class='form-control datepickperiod OCBC_submitcheck datemandtry' id=" + forperiodid + " ><label  class='input-group-addon' for=" + forperiodid + "><span class='glyphicon glyphicon-calendar'></span></label></div></div>"+
+                                "<td style='width:7%;'><textarea class='form-control autogrowcomments OCBC_submitcheck'  id=" + Commentsid + ">" + ocbc_comments + "</textarea></td>" +
+                                "<td style='width:3%;'><input type='button' class='btn btn-primary Btn_save' value='SAVE' disabled  id=" + btnid + "></td>" +
+                                "<td style='width:3%;'>" + ref + "</td></tr>";
                             }
                             else {
-                                ocbc_Tabledata += '<tr style="text-align: center !important;">' +
-                                "<td style='vertical-align: middle' nowrap>" + value_array[i].ACCOUNT + "</td>" +
-                                "<td style='vertical-align: middle' nowrap>" + value_array[i].CURRENCY + "</td>" +
-                                "<td style='vertical-align: middle' nowrap>" + value_array[i].OBR_PREVIOUS_BALANCE + "</td>" +
-                                "<td style='vertical-align: middle' nowrap>" + value_array[i].OBR_OPENING_BALANCE + "</td>" +
-                                "<td style='vertical-align: middle' nowrap>" + value_array[i].OBR_CLOSING_BALANCE + "</td>" +
-                                "<td style='vertical-align: middle' nowrap>" + value_array[i].OBR_LAST_BALANCE + "</td>" +
-                                "<td style='vertical-align: middle' nowrap>" + value_array[i].OBR_NO_OF_CREDITS + "</td>" +
-                                "<td style='vertical-align: middle' nowrap>" + value_array[i].OBR_TRANS_DATE + "</td>" +
-                                "<td style='vertical-align: middle' nowrap>" + value_array[i].OBR_NO_OF_DEBITS + "</td>" +
-                                "<td style='vertical-align: middle' nowrap>" + value_array[i].OBR_OLD_BALANCE + "</td>" +
-                                "<td style='vertical-align: middle' nowrap>" + value_array[i].OBR_D_AMOUNT + "</td>" +
-                                "<td style='vertical-align: middle' nowrap>" + value_array[i].OBR_POST_DATE + "</td>" +
-                                "<td style='vertical-align: middle' nowrap>" + value_array[i].OBR_VALUE_DATE + "</td>" +
-                                "<td style='vertical-align: middle' nowrap>" + value_array[i].OBR_DEBIT_AMOUNT + "</td>" +
-                                "<td style='vertical-align: middle' nowrap>" + value_array[i].OBR_CREDIT_AMOUNT + "</td>" +
-                                "<td style='vertical-align: middle' nowrap>" + value_array[i].OCN_DATA + "</td>" +
-                                "<td>" + clientref + "</td>" +
-                                "<td>" + value_array[i].OBR_TRANSACTION_DESC_DETAILS + "</td>" +
-                                "<td>" + value_array[i].OBR_BANK_REFERENCE + "</td>" +
-                                "<td style='vertical-align: middle' >" + trxtype + "</td>" +
-                                "<td style='vertical-align: middle' nowrap></td>" +
-                                "<td style='vertical-align: middle' nowrap></td>" +
-                                "<td style='vertical-align: middle' nowrap></td>" +
-                                "<td style='vertical-align: middle' nowrap></td>" +
-                                "<td style='vertical-align: middle' nowrap></td>" +
-                                "<td style='vertical-align: middle' nowrap></td>" +
-                                "<td style='vertical-align: middle' nowrap></td>" +
-                                "<td></td>" +
-                                "<td style='vertical-align: middle'>" + ref + "</td></tr>";
+                                ocbc_Tabledata += '<tr>' +
+                                "<td style='width:3%;'>" + value_array[i].ACCOUNT + "</td>" +
+                                "<td style='width:3%;'>" + value_array[i].CURRENCY + "</td>" +
+                                "<td style='width:3%;'>" + value_array[i].OBR_PREVIOUS_BALANCE + "</td>" +
+                                "<td style='width:3%;'>" + value_array[i].OBR_OPENING_BALANCE + "</td>" +
+                                "<td style='width:3%;'>" + value_array[i].OBR_CLOSING_BALANCE + "</td>" +
+                                "<td style='width:3%;'>" + value_array[i].OBR_LAST_BALANCE + "</td>" +
+                                "<td style='width:3%;'>" + value_array[i].OBR_NO_OF_CREDITS + "</td>" +
+                                "<td style='width:3%;'>" + value_array[i].OBR_TRANS_DATE + "</td>" +
+                                "<td style='width:3%;'>" + value_array[i].OBR_NO_OF_DEBITS + "</td>" +
+                                "<td style='width:3%;'>" + value_array[i].OBR_OLD_BALANCE + "</td>" +
+                                "<td style='width:3%;'>" + value_array[i].OBR_D_AMOUNT + "</td>" +
+                                "<td style='width:3%;'>" + value_array[i].OBR_POST_DATE + "</td>" +
+                                "<td style='width:3%;'>" + value_array[i].OBR_VALUE_DATE + "</td>" +
+                                "<td style='width:3%;'>" + value_array[i].OBR_DEBIT_AMOUNT + "</td>" +
+                                "<td style='width:3%;'>" + value_array[i].OBR_CREDIT_AMOUNT + "</td>" +
+                                "<td style='width:3%;'>" + value_array[i].OCN_DATA + "</td>" +
+                                "<td style='width:4%;'>" + clientref + "</td>" +
+                                "<td style='width:6%;word-break:break-all;'>" + value_array[i].OBR_TRANSACTION_DESC_DETAILS + "</td>" +
+                                "<td style='width:3%;'>" + value_array[i].OBR_BANK_REFERENCE + "</td>" +
+                                "<td style='width:3%;'>" + trxtype + "</td>" +
+                                "<td style='width:3%;'></td>" +
+                                "<td style='width:7%;'></td>" +
+                                "<td style='width:3%;'></td>" +
+                                "<td style='width:4%;'></td>" +
+                                "<td style='width:3%;'></td>" +
+                                "<td style='width:4%;'></td>" +
+                                "<td style='width:7%;'></td>" +
+                                "<td style='width:3%;'></td>" +
+                                "<td style='width:3%;'>" + ref + "</td></tr>";
                             }
                         }
                         ocbc_Tabledata += "</body>";
@@ -263,15 +275,18 @@
                                 of: $(this)
                             });
                         });
+                        var pix='300px';
                         $('.autogrowcomments').autogrow({onInitialize: true});
                         $(".amtonly").doValidation({rule: 'numbersonly', prop: {realpart: 5, imaginary: 2}});
-                        $('#OCBC_Datatable').DataTable({
-                            "aaSorting": [],
-                            "pageLength": 10,
+                        var oTable=$('#OCBC_Datatable').DataTable({
+//                            scrollY:        pix,
+//                            scrollX:        true,
                             "sDom": 'Rlfrtip',
-                            "sPaginationType": "full_numbers",
+                            paging:         true,
+                            "bAutoWidth": false,
                             "aoColumnDefs" : [{ "aTargets" : ["uk-date-column"] , "sType" : "uk_date"} ]
                         });
+
                         sorting();
                         $('#FIN_OCBC_DataTable').show();
                         $('.preloader').hide();

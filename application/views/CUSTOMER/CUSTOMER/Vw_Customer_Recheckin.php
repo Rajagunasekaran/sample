@@ -16,6 +16,7 @@ $(document).ready(function() {
     $("#CCRE_IntlMobile").doValidation({rule:'numbersonly',prop:{realpart:15,leadzero:true}});
     $("#CCRE_CompanyPostalCode").doValidation({rule:'numbersonly',prop:{realpart:6,leadzero:true}});
     $('.autogrowcomments').autogrow({onInitialize: true});
+    $(".numonly").doValidation({rule:'numbersonly'});
     //******************CUSTOMER INITIAL DATA LODING***********************//
     $("#CCRE_Quarterly_fee").hide().val('');
     $("#CCRE_Fixedaircon_fee").hide().val('');
@@ -114,6 +115,7 @@ var CustomernameDetails;
         var options ='<option value="">SELECT</option>';
         if(unitno!='SELECT')
         {
+            $('.preloader').show();
             $('#CustomeremptyErrormsg').show();
             $.ajax({
                 type: "POST",
@@ -149,9 +151,11 @@ var CustomernameDetails;
                         $('#CRC_AllCustomers').prop('disabled',true);
                     }
                     $('#CRC_AllCustomers').html(options);
+                    $('.preloader').hide();
                 },
                 error: function(data){
                     alert('error in getting'+JSON.stringify(data));
+                    $('.preloader').hide();
                 }
             });
         }
@@ -209,6 +213,7 @@ var CustomernameDetails;
     var RecheckinSD;
     function GetcustomerOldDetails(customerid,Recver)
     {
+        $('.preloader').show();
         var unitno=$('#CRC_AllUnits').val();
                $.ajax({
                    type: "POST",
@@ -245,9 +250,11 @@ var CustomernameDetails;
                        $('#CCRE_EPDate').val(value_array[0].CPD_EP_DATE);
                        $('#CCRE_Comments').val(value_array[0].CPD_COMMENTS);
                        $('#RecheckinForm').show();
+                       $('.preloader').hide();
                    },
                    error: function(data){
                        alert('error in getting'+JSON.stringify(data));
+                       $('.preloader').hide();
                    }
                });
         }
@@ -474,6 +481,7 @@ var CustomernameDetails;
         AccesscarddivClear();
         if(Unit!='SELECT')
         {
+            $('.preloader').show();
             $.ajax({
                 type: "POST",
                 url: controller_url+"CustomerRoomTypeLoad",
@@ -517,9 +525,11 @@ var CustomernameDetails;
                         $('#CCRE_Startdate').datepicker("option","maxDate",unit_enddate);
                         $('#CCRE_Enddate').datepicker("option","maxDate",unit_enddate);
                     }
+                    $('.preloader').hide();
                 },
                 error: function(data){
                     alert('error in getting'+JSON.stringify(data));
+                    $('.preloader').hide();
                 }
             });
         }
@@ -689,6 +699,7 @@ var CustomernameDetails;
         {
             if(CCRE_CardOptionname=='Cardnumber')
             {
+                $('.preloader').show();
                 var Unit=$('#CCRE_UnitNo').val();
                 $.ajax({
                     type: "POST",
@@ -737,9 +748,11 @@ var CustomernameDetails;
                             $('#startdatetotime').hide();
                             $('#endatedateto').hide();
                         }
+                        $('.preloader').hide();
                     },
                     error: function(data){
                         alert('error in getting'+JSON.stringify(data));
+                        $('.preloader').hide();
                     }
                 });
                 $('#CardNumbersdiv').show();
@@ -1081,15 +1094,15 @@ var CustomernameDetails;
         xmlhttp.onreadystatechange = function () {
             if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
                 $('.preloader').hide();
-                var returnvalue=JSON.parse(xmlhttp.responseText);
+                var returnvalue=xmlhttp.responseText;
 //                var allunits=returnvalue[1];
-//                var options ='<option value="">SELECT</option>';
+                var options ='<option value="">SELECT</option>';
 //                for (var i = 0; i < allunits.length; i++)
 //                {
 //                    var data=allunits[i];
 //                    options += '<option value="' + data.UNIT_NO + '">' + data.UNIT_NO + '</option>';
 //                }
-//                $('#CRC_AllUnits').html(options);
+                $('#CRC_AllUnits').html(options);
                 $('#CRC_AllCustomers').prop('disabled',true);
                 var CUSTOMERoptions ='<option value="">SELECT</option>';
                 $('#CRC_AllCustomers').html(CUSTOMERoptions);
@@ -1098,7 +1111,12 @@ var CustomernameDetails;
                     show_msgbox("CUSTOMER RECHECKIN", errormsg[7].EMC_DATA, "success", false);
                     Reset();
                 }
-                else {
+                else if(returnvalue==0)
+                {
+                    show_msgbox("CUSTOMER RECHECKIN", 'CUSTOMER NOT SAVED', "success", false);
+                }
+                else
+                {
                     $('.preloader').hide();
                     show_msgbox("CUSTOMER RECHECKIN", returnvalue, "success", false);
                 }
@@ -1493,7 +1511,7 @@ var CustomernameDetails;
                         <label>NOTICE PERIOD</label>
                     </div>
                     <div class="col-md-3">
-                        <input class="form-control" name="CCRE_NoticePeriod" maxlength="1" style="max-width:70px;" id="CCRE_NoticePeriod" placeholder="No"/>
+                        <input class="form-control numonly" name="CCRE_NoticePeriod" maxlength="1" style="max-width:70px;" id="CCRE_NoticePeriod" placeholder="No"/>
                     </div>
                 </div>
                 <div class="row form-group">
@@ -1561,44 +1579,36 @@ var CustomernameDetails;
                     </div>
                     <div class="col-md-3"><label id="CCRE_lbl_depositerrormsg" class="errormsg" hidden></label></div>
                 </div>
-                <div class="row form-group">
-                    <div class="col-md-3">
-                        <label>RENT<span class="labelrequired"><em>*</em></span></label>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="row form-group">
-                            <div class="col-md-3">
-                                <input class="form-control CCRE_amtonlyvalidationmaxdigit proratedcheck" name="CCRE_Rent" maxlength="7"  style="max-width:100px;" id="CCRE_Rent" placeholder="0.00">
-                            </div>
-                            <div class="col-md-1">
-                                <input id="CCRE_Rent_Prorated" type="checkbox" name="CCRE_Rent_Prorated">
-                            </div>
-                            <div class="col-md-1">
-                                <label id="CCRE_lbl_prorated"></label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3"><label id="CCRE_lbl_renterrormsg" class="errormsg" hidden></label></div>
-                </div>
-                <div class="row form-group">
-                    <div class="col-md-3">
-                        <label>PROCESSING COST</label>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="row form-group">
-                            <div class="col-md-3">
-                                <input class="form-control CCRE_processamtonlyvalidationmaxdigit" name="CCRE_ProcessingFee"  style="max-width:100px;" id="CCRE_ProcessingFee" placeholder="0.00">
-                            </div>
-                            <div class="col-md-1">
-                                <input type="checkbox" name="CCRE_process_waived" id="CCRE_process_waived" disabled>
-                            </div>
-                            <div class="col-md-1">
-                                <label style="vertical-align: middle" id="CCRE_lbl_waived"></label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3"><label id="CCRE_lbl_processerrormsg" class="errormsg" hidden></label></div>
-                </div>
+                 <div class="form-group">
+                     <label class="col-sm-3">RENT<em>*</em></label>
+                     <div class="col-sm-6">
+                         <div class="row form-group">
+                             <div class="col-md-3">
+                                 <input type="text" name="CCRE_Rent" id="CCRE_Rent" style="width:100px;" class="form-control CCRE_amtonlyvalidationmaxdigit proratedcheck" placeholder="0.00"/>
+                             </div>
+                             <div class="col-md-2" style="padding-right:10px;width:10px">
+                                 <input type="checkbox" name="CCRE_Rent_Prorated" id="CCRE_Rent_Prorated" disabled />
+                             </div>
+                             <div class="col-md-3"><label id="CCRE_lbl_prorated"></label></div>
+                             <div class="col-md-6"><p id="CCRE_lbl_renterrormsg" class="errormsg" hidden></p></div>
+                         </div>
+                     </div>
+                 </div>
+              <div class="form-group">
+              <label class="col-sm-3">PROCESSING COST</label>
+              <div class="col-sm-6">
+                  <div class="row form-group">
+                      <div class="col-md-3">
+                          <input type="text" name="CCRE_ProcessingFee" id="CCRE_ProcessingFee" style="width:100px;" class="form-control CCRE_processamtonlyvalidationmaxdigit" placeholder="0.00"/>
+                      </div>
+                      <div class="col-md-2" style="padding-right:10px;width:10px">
+                          <input type="checkbox" name="CCRE_process_waived" id="CCRE_process_waived" disabled />
+                      </div>
+                      <div class="col-md-3"><label id="CCRE_lbl_waived"></label></div>
+                      <div class="col-md-6"><p id="CCRE_lbl_processerrormsg" class="errormsg" hidden></p></div>
+                  </div>
+              </div>
+          </div>
                 <div class="row form-group">
                     <div class="col-md-3">
                         <label>SELECT THE OPTION<span class="labelrequired"><em>*</em></span></label>

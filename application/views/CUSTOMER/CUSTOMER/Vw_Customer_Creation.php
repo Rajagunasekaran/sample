@@ -21,6 +21,7 @@
         $("#CCRE_IntlMobile").doValidation({rule: 'numbersonly', prop: {realpart: 15, leadzero: true}});
         $("#CCRE_CompanyPostalCode").doValidation({rule: 'numbersonly', prop: {realpart: 6, leadzero: true}});
         $('.autogrowcomments').autogrow({onInitialize: true});
+        $(".numonly").doValidation({rule:'numbersonly'});
         //*************INITIAL FORM HIDDEN FIELDS******************************//
         $("#CCRE_Quarterly_fee").hide().val('');
         $("#CCRE_Fixedaircon_fee").hide().val('');
@@ -912,7 +913,7 @@
             return diff;
         }
 
-        $(document).on('change', '#CCRE_ProcessingFee', function () {
+        $(document).on('change blur', '#CCRE_ProcessingFee', function () {
             if ($('#CCRE_ProcessingFee').val() == "") {
                 $('input:checkbox[name=CCRE_process_waived]').attr("checked", false);
                 $('input:checkbox[name=CCRE_process_waived]').attr("disabled", 'disabled');
@@ -972,7 +973,7 @@
             var xmlhttp = new XMLHttpRequest();
             xmlhttp.onreadystatechange = function () {
                 if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-                    var msg_alert = JSON.parse(xmlhttp.responseText);
+                    var msg_alert = xmlhttp.responseText;
                     $('.preloader').hide();
                     if (msg_alert == 1)
                     {
@@ -1367,7 +1368,7 @@
                             <label>NOTICE PERIOD</label>
                         </div>
                         <div class="col-md-3">
-                            <input class="form-control" name="CCRE_NoticePeriod" maxlength="1" style="max-width:70px;" id="CCRE_NoticePeriod" placeholder="NP"/>
+                            <input class="form-control numonly" name="CCRE_NoticePeriod" maxlength="1" style="max-width:70px;" id="CCRE_NoticePeriod" placeholder="NP"/>
                         </div>
                     </div>
                     <div class="row form-group">
@@ -1435,41 +1436,36 @@
                         </div>
                         <div class="col-md-3"><label id="CCRE_lbl_depositerrormsg" class="errormsg" hidden></label></div>
                     </div>
-                    <div class="row form-group">
-                        <div class="col-md-3">
-                            <label>RENT<span class="labelrequired"><em>*</em></span></label>
-                        </div>
-                        <div class="col-md-9">
-                            <div class="row form-group">
-                                <div class="col-md-3" >
-                                    <input class="form-control CCRE_amtonlyvalidationmaxdigit proratedcheck" name="CCRE_Rent" maxlength="7"  style="max-width:100px;" id="CCRE_Rent" placeholder="0.00">
-                                </div>
-                                <div class="col-md-1" style="padding-right: 0px;width:12px;">
-                                    <input id="CCRE_Rent_Prorated" type="checkbox" name="CCRE_Rent_Prorated">
-                                </div>
-                                <div class="col-md-1"><label id="CCRE_lbl_prorated"></label></div>
-                                <div class="col-md-4"><label id="CCRE_lbl_renterrormsg" class="errormsg" hidden></label></div>
-                            </div>
-                        </div>
-
-                    </div>
-                    <div class="row form-group">
-                        <div class="col-md-3">
-                            <label>PROCESSING COST</label>
-                        </div>
-                        <div class="col-md-9">
+                    <div class="form-group">
+                        <label class="col-sm-3">RENT<em>*</em></label>
+                        <div class="col-sm-6">
                             <div class="row form-group">
                                 <div class="col-md-3">
-                                    <input class="form-control CCRE_processamtonlyvalidationmaxdigit" name="CCRE_ProcessingFee"  style="max-width:100px;" id="CCRE_ProcessingFee" placeholder="0.00">
+                                    <input type="text" name="CCRE_Rent" id="CCRE_Rent" style="width:100px;" class="form-control CCRE_amtonlyvalidationmaxdigit proratedcheck" placeholder="0.00"/>
                                 </div>
-                                <div class="col-md-1" style="padding-right: 0px;width:12px;">
-                                    <input type="checkbox" name="CCRE_process_waived" id="CCRE_process_waived" disabled>
+                                <div class="col-md-2" style="padding-right:10px;width:10px">
+                                    <input type="checkbox" name="CCRE_Rent_Prorated" id="CCRE_Rent_Prorated" disabled />
                                 </div>
-                                <div class="col-md-1"><label style="vertical-align: middle" id="CCRE_lbl_waived"></label></div>
-                                <div class="col-md-4"><label id="CCRE_lbl_processerrormsg" class="errormsg" hidden></label></div>
+                                <div class="col-md-3"><label id="CCRE_lbl_prorated"></label></div>
+                                <div class="col-md-6"><p id="CCRE_lbl_renterrormsg" class="errormsg" hidden></p></div>
                             </div>
                         </div>
                     </div>
+                <div class="form-group">
+                    <label class="col-sm-3">PROCESSING COST</label>
+                    <div class="col-sm-6">
+                        <div class="row form-group">
+                            <div class="col-md-3">
+                                <input type="text" name="CCRE_ProcessingFee" id="CCRE_ProcessingFee" style="width:100px;" class="form-control CCRE_processamtonlyvalidationmaxdigit" placeholder="0.00"/>
+                            </div>
+                            <div class="col-md-2" style="padding-right:10px;width:10px">
+                                <input type="checkbox" name="CCRE_process_waived" id="CCRE_process_waived" disabled />
+                            </div>
+                            <div class="col-md-3"><label id="CCRE_lbl_waived"></label></div>
+                            <div class="col-md-6"><p id="CCRE_lbl_processerrormsg" class="errormsg" hidden></p></div>
+                        </div>
+                    </div>
+                </div>
                     <div class="row form-group">
                         <div class="col-md-3">
                             <label>SELECT THE OPTION<span class="labelrequired"><em>*</em></span></label>
@@ -1506,6 +1502,7 @@
                             <input type="file" id="CC_fileupload" name="CC_fileupload"  class="form-control fileextensionchk file" />
                         </div>
                     </div>
+
                     <div class="row form-group">
                         <div class="col-lg-offset-2 col-lg-3">
                             <input type="button" id="CCRE_btn_savebutton" class="btn" value="CREATE" disabled>         <input type="button" id="CustomerCreation_Reset" class="btn" value="RESET">

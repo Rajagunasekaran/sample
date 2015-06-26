@@ -466,8 +466,8 @@ var BDLY_SRC_flag_autocom='';
         $(".datepickperiod").datepicker({dateFormat:'MM-yy', changeYear: true, changeMonth: true,maxDate:new Date()});
         $('.BDLY_INPUT_class_forperiod').datepicker( {changeMonth: true,  changeYear: true,  showButtonPanel: true,  dateFormat: 'MM-yy',
             maxDate:new Date(),onClose: function(dateText, inst) {
-                var month = $("#ui-datepicker-div .ui-datepicker-month :selected").val();
-                var year = $("#ui-datepicker-div .ui-datepicker-year :selected").val();
+                var month =inst.selectedMonth;
+                var year = inst.selectedYear;
                 $(this).datepicker('setDate', new Date(year, month, 1));
                 $(this).blur();
             } });
@@ -3667,8 +3667,8 @@ var BDLY_SRC_flag_autocom='';
             $('.BDLY_SCR_forperiod').datepicker( {changeMonth: true,  changeYear: true,  showButtonPanel: true,  dateFormat: 'MM-yy',
                 maxDate:new Date(),
                 onClose: function(dateText, inst) {
-                    var month = $("#ui-datepicker-div .ui-datepicker-month :selected").val();
-                    var year = $("#ui-datepicker-div .ui-datepicker-year :selected").val();
+                    var month =inst.selectedMonth;
+                    var year = inst.selectedYear;
                     $(this).datepicker('setDate', new Date(year, month, 1));
                     $(this).blur();
                     if(($(this).attr('id')=='BDLY_SRC_startforperiod')||($(this).attr('id')=='BDLY_SRC_servicedue')){
@@ -5287,8 +5287,8 @@ var BDLY_SRC_flag_autocom='';
                         $(this).find('input').addClass('required');
                     $('.BDLY_SCR_forperiod').datepicker( {changeMonth: true,  changeYear: true,  showButtonPanel: true,  dateFormat: 'MM-yy', maxDate:new Date(),
                         onClose: function(dateText, inst) {
-                            var month = $("#ui-datepicker-div .ui-datepicker-month :selected").val();
-                            var year = $("#ui-datepicker-div .ui-datepicker-year :selected").val();
+                            var month =inst.selectedMonth;
+                            var year = inst.selectedYear;
                             $(this).datepicker('setDate', new Date(year, month, 1));
                             $(this).blur();
                         } });

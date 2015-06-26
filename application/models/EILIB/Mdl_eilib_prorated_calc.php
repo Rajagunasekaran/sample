@@ -71,7 +71,7 @@ class Mdl_eilib_prorated_calc extends CI_Model {
         $rentPerMonth=floatval($rentPerMonth);
         $CheckIndate = intval(date("d", strtotime($check_in_date)));
         $CheckOutdate = intval(date("d", strtotime($check_out_date)));
-        $LastMonth =date("Y-m-t", strtotime(strtotime($check_out_date)));
+        $LastMonth =date("Y-m-t", strtotime($check_out_date));
         $Tdays = intval(date("d",strtotime($LastMonth)));
         $Proratedfull1 = (($CheckOutdate - $CheckIndate) * 12/365 * $rentPerMonth);
         $proratedfixed1 = number_format(floatval($Proratedfull1),2,'.','');

@@ -235,9 +235,8 @@ class Mdl_eilib_invoice_contract extends CI_Model{
                     $minusDay=date('Y-m-d',(strtotime('next month',strtotime($startDate))));
                     $end[]=date('Y-m-d', strtotime($minusDay.'-1'.' days'));
                 }
-                else if(strtotime($endDate)>=strtotime($minusDay) && date('Y-m-d', strtotime($start))==date('Y-m-'.date('d',strtotime($startDate)), strtotime($start))){
+                else if(strtotime($endDate)>=strtotime($minusDay) && date('Y-m-d', strtotime($start))==date('Y-m-'.date('d',strtotime($minusDay)), strtotime($start))){
                     $return []= date('Y-m-d', strtotime($minusDay));
-
                     $minusDay=date('Y-m-d',(strtotime('next month',strtotime($minusDay))));
                     if(strtotime($minusDay)<=strtotime($endDate))
                         $end[]=date('Y-m-d', strtotime($minusDay.'-1'.' days'));
@@ -660,6 +659,7 @@ class Mdl_eilib_invoice_contract extends CI_Model{
                         $proratedsmonth=$this->Mdl_eilib_prorated_calc->sMonthProratedCalc($check_in_date,$rent);
                         $proratedemonth=$this->Mdl_eilib_prorated_calc->eMonthProratedCalc($check_out_date,$rent);
                         $proratedrent= number_format((floatval($proratedsmonth)+floatval($proratedemonth)),2,'.','');
+//                        $proratedrent=sprintf("%01.2f", (floatval($proratedsmonth)+floatval($proratedemonth)));
                         if($proratedrent!='0.00')
                         {
                             $flagProratedRentCkout=$proratedrent.'^~^'.$cexdd;
@@ -777,7 +777,7 @@ class Mdl_eilib_invoice_contract extends CI_Model{
     public  function CUST_invoice($UserStamp,$service,$unit,$customername,$companyname,$invoiceid,$invoicesno,$invoicedate,$rent,$process,$deposit,$sdate,$edate,$roomtype,$Leaseperiod,$rentcheck,$sendmailid,$docowner,$formname,$waived,$custid,$parentId)
     {
         try {
-            $sum='';$proratedrentflag='';$length='';$newfile='';
+            $sum='';$proratedrentflag='';$length='';$newfile='test';
             $invoiceidcode=$invoiceid;
             $Slno=intval($invoicesno);
             $Sdate=$invoicedate;
@@ -908,6 +908,7 @@ class Mdl_eilib_invoice_contract extends CI_Model{
                     $startdate_array= $month_calculation[0];
                     $enddate_array= $month_calculation[1];
                     $length=count($startdate_array);
+                    print_r($month_calculation);
                 }
                 else if(((( $yearchk<0)&&( $monthschk<0)&&( $daychk>0)&&( $monthchk<0))||(( $yearchk<0)&&( $monthschk<0)&&( $daychk<0)&&( $monthchk>0)))&&( $rent_check=='true'))//less than or equal to a month
                 {

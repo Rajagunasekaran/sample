@@ -76,8 +76,8 @@ $(document).ready(function(){
                 changeMonth: true, changeYear: true,showButtonPanel: true,dateFormat: 'MM-yy', minDate: new Date(2005, 0,1), maxDate:  new Date(),
                 onClose: function(dateText, inst) {
                     $("#chart_errmsgdiv,#chart_div,#chart_tablediv").empty();
-                    var month = $("#ui-datepicker-div .ui-datepicker-month :selected").val();
-                    var year = $("#ui-datepicker-div .ui-datepicker-year :selected").val();
+                    var month =inst.selectedMonth;
+                    var year = inst.selectedYear;
                     $(this).datepicker('setDate', new Date(year, month, 1));
                     if($(this).attr('id')=='chart_from'){
                         chart_monthBefore=month;

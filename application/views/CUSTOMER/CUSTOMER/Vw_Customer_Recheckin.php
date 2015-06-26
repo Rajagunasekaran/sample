@@ -1179,6 +1179,8 @@ var CustomernameDetails;
         $('#CC_fileupload').val('');
         $('input:checkbox[name=CCRE_process_waived]').attr("checked", false);
         $('input:checkbox[name=CCRE_Rent_Prorated]').attr("checked", false);
+        $('input:checkbox[name=CCRE_process_waived]').attr("disabled", "disabled");
+        $('input:checkbox[name=CCRE_Rent_Prorated]').attr("disabled", "disabled");
         $('#CCRE_Quarterly_fee').hide();
         $('#CCRE_Fixedaircon_fee').hide();
     }

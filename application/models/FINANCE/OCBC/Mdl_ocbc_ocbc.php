@@ -24,47 +24,19 @@ class Mdl_ocbc_ocbc extends CI_Model
     }
     public function CSV_FileRecordsCount($Period)
     {
-        $this->db->select("OCN_DATA");
-        $this->db->from('OCBC_CONFIGURATION');
-        $this->db->where('CGN_ID=29');
-        $query = $this->db->get()->row()->OCN_DATA;
-        $this->load->model('EILIB/Mdl_eilib_common_function');
-        $service = $this->Mdl_eilib_common_function->get_service_document();
-        $children1 = $service->children->listChildren($query);
-        $filearray1=$children1->getItems();
-        foreach ($filearray1 as $child1)
-        {
-            $fileid=$service->files->get($child1->getId())->id;
-            $filename=$service->files->get($child1->getId())->title;
-            $data = $service->files->get($fileid);
-            $url=$data->downloadUrl;
-            $data=$this->downloadFile($service,$url);
-            $data = array_map("str_getcsv", preg_split('/\r*\n+|\r+/', $data));
-            break;
-        }
         $SplittedPeriod=explode('-',$Period);
         $string = $SplittedPeriod[0];
-        $month_number = date("n",strtotime($string));
-        if($month_number<10)
-        { $month_number='0'.$month_number; }
-        $Forperiod=$SplittedPeriod[1].''.$month_number.'.CSV';
-        if($filename==$Forperiod)
-        {
-            $CSV_Files_Records=array();
-            for($h=0;$h<count($data);$h++)
-            {
-                $CSV_array = $data[$h];
-                if ($CSV_array[0] != '' && $CSV_array[0] != null)
-                {
-                    array_push($CSV_Files_Records,$CSV_array);
-                }
-            }
-            return count($CSV_Files_Records);
+        $result = substr($string, 0, 3);
+        $CSVMonthname=$result.'-'.$SplittedPeriod[1];
+        $outparm_query = "SELECT CSV_COUNT FROM CSV_CONFIGURATION WHERE CSV_MONTH='$CSVMonthname'";
+        $outparm_result = $this->db->query($outparm_query);
+        $sortnumrows=$this->db->affected_rows();
+        if($sortnumrows!=0) {
+            $CSVMONTHcount = $outparm_result->row()->CSV_COUNT;
+            return $CSVMONTHcount;
         }
-        else
-        {
-            $data='';
-          return $data;
+        else{
+            return 0;
         }
     }
     function downloadFile($service, $downloadUrl)

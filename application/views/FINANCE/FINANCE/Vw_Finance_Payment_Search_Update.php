@@ -1137,13 +1137,14 @@
                 url: controller_url+"PaymentsExtractDetails",
                 data:{Unit:extractunitno,Customer:extractcustomername},
                 success: function(data){
-                    if(data=='Success')
+                    var returnvalue=JSON.parse(data);
+                    if(returnvalue=='Success')
                     {
                         show_msgbox("PAYMENT SEARCH AND UPDATE",'SELECTED CUSTOMER DETAILS EXTRACTED IN SPREADSHEET',"success",false);
                     }
                     else
                     {
-                        show_msgbox("PAYMENT SEARCH AND UPDATE",data,"success",false);
+                        show_msgbox("PAYMENT SEARCH AND UPDATE",returnvalue,"success",false);
                     }
                     $('.preloader').hide();
                 },

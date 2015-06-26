@@ -914,7 +914,6 @@
              url: controller_url+"SearchDataResults",
              data:data,
              success: function(data){
-                 alert(data)
                  var value_array=JSON.parse(data);
                  var CustpmerPersonal_Tabledata='<table style="width: 3500px" id="Customer_Personal_Datatable" border="1" cellspacing="0" data-class="table" class="srcresult"><thead bgcolor="#6495ed" style="color:white"><tr>';
                  CustpmerPersonal_Tabledata+="<th style='text-align:center;vertical-align: top;width:100px;'>CUSTOMER ID</th>";

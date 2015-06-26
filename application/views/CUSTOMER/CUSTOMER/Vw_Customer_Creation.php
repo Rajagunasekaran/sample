@@ -67,7 +67,6 @@
                 $('#CCRE_lbl_electcaperrormsg').text(errormsg[17].EMC_DATA)
                 $('#CCRE_lbl_prorated').text(prorated[0].CCN_DATA);
                 $('#CCRE_lbl_waived').text(prorated[1].CCN_DATA);
-//            $('#CCRE_lbl_passporterrormsg').text(errormsg[19].EMC_DATA);
                 $('#CCRE_lbl_epnodateerrormsg').text(errormsg[20].EMC_DATA);
                 $('#CCRE_lbl_passportdateerrormsg').text(errormsg[24].EMC_DATA);
                 $('#CCRE_lbl_ep_dateerrormsg').text(errormsg[23].EMC_DATA);
@@ -431,6 +430,7 @@
             $('#CCRE_Roomtype_error').text('');
             $('#CCRE_Cardnumber').prop('checked', false);
             $('#CCRE_Nullcard').prop('checked', false);
+            AccesscarddivClear();
             if (Unit != 'SELECT') {
                 $('.preloader').show();
                 $.ajax({
@@ -1043,6 +1043,8 @@
             $('#CCRE_Rent').removeClass('invalid');
             $('input:checkbox[name=CCRE_process_waived]').attr("checked", false);
             $('input:checkbox[name=CCRE_Rent_Prorated]').attr("checked", false);
+            $('input:checkbox[name=CCRE_Rent_Prorated]').attr("disabled", 'disabled');
+            $('input:checkbox[name=CCRE_process_waived]').attr("disabled", 'disabled');
             $('#CCRE_Quarterly_fee').hide();
             $('#CCRE_Fixedaircon_fee').hide();
             $('#CC_fileupload').val('');

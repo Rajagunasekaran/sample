@@ -383,22 +383,6 @@ class Mdl_eilib_calender  extends CI_Model {
             return $e->getMessage();
         }
     }
-    //FUNCTION FOR ATTACHMENTS
-    public function addAttachment($calendarService, $driveService, $calendarId, $eventId, $fileId) {
-        $file = $driveService->files->get($fileId);
-        $event = $calendarService->events->get($calendarId, $eventId);
-//        print_r($event);
-        $attachments = $event->attachments;
-        $attachments[] = array(
-            'fileUrl' => $file->alternateLink,
-            'mimeType' => $file->mimeType,
-            'title' => $file->title
-        );
-        $changes = new Google_Service_Calendar_Event(array(
-            'attachments' => $attachments
-        ));
-       return $calendarService->events->patch($calendarId, $eventId);
-    }
     //FUNCTION TO DELETE EXISTING EVENT N CREATE CURRENT CALENDAR EVENT DTS FOR EXTENSION N TERMINATION
     public function CTermExtn_Calevent($calPrimary,$CTermExtn_custid,$CTermExtn_recver,$ctermformname,$successflag)
     {

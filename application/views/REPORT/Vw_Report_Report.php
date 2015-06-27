@@ -15,30 +15,6 @@ include "application/libraries/EI_HDR.php";
 
     <!--SCRIPT TAG START-->
     <script>
-//        //CHECK PRELOADER STATUS N HIDE START
-//        var SubPage=1;
-//        function CheckPageStatus(){
-//            if(MenuPage!=1 && SubPage!=1)
-//                $(".preloader").hide();
-//        }
-//        //CHECK PRELOADER STATUS N HIDE END
-//        //FAILURE FUNCTION START
-//        function onFailure(REP_error) {
-//            $(".preloader").hide();
-//            if(REP_error=="ScriptError: Failed to establish a database connection. Check connection string, username and password.")
-//            {
-//                REP_error="DB USERNAME/PWD WRONG, PLZ CHK UR CONFIG FILE FOR THE CREDENTIALS."
-//                $('#REP_form_report').replaceWith('<center><label class="dberrormsg">'+REP_error+'</label></center>');
-//            }
-//            else
-//            {
-//                if(REP_error=='ScriptError: No item with the given ID could be found, or you do not have permission to access it.')
-//                {
-//                    REP_error=REP_errorMsg_array[3];
-//                }
-//                $(document).doValidation({rule:'messagebox',prop:{msgtitle:"REPORT",msgcontent:REP_error,position:{top:150,left:500}}});
-//            }
-//        }
         //FAILURE FUNCTION END
         //DOCUMENT READY FUNCTION START
         $(document).ready(function(){
@@ -264,8 +240,8 @@ include "application/libraries/EI_HDR.php";
                 maxDate:new Date(),onClose: function(dateText, inst) {
                     $('#REP_lbl_emailid').show();
                     $('#REP_lb_emailid').show();
-                    var month = $("#ui-datepicker-div .ui-datepicker-month :selected").val();
-                    var year = $("#ui-datepicker-div .ui-datepicker-year :selected").val();
+                    var month =inst.selectedMonth;
+                    var year = inst.selectedYear;
                     $(this).datepicker('setDate', new Date(year, month, 1));
                     $(this).blur();
                 }

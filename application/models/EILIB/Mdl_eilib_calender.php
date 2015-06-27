@@ -161,6 +161,79 @@ class Mdl_eilib_calender  extends CI_Model {
         }
         return array($calseventtitle,$calseventdesc,$calseventloc);
     }
+//FUNCTION TO CREATE CALENDAR EVENT FOR CUSTOMER WITH ATTACHMENT
+    public function  CUST_customercalendercreation_attach($fileDoc,$calPrimary,$custid,$startdate,$startdate_starttime,$startdate_endtime,$enddate,$enddate_starttime,$enddate_endtime,$firstname,$lastname,$mobile,$intmobile,$office,$customermailid,$unit,$roomtype,$unitrmtype)
+    {
+        try{
+            $this->load->model('EILIB/Mdl_eilib_common_function');
+            $servicedoc= $this->Mdl_eilib_common_function->get_service_document();
+            $file = $servicedoc->files->get($fileDoc);
+            $attachments[]= array(
+                'fileUrl' => $file->alternateLink,
+                'mimeType' => $file->mimeType,
+                'title' => $file->title
+            );
+            $calId=$this->GetEICalendarId();
+            $initialsdate=$startdate;
+            $initialedate=$enddate;
+            $calendername= $firstname.' '.$lastname;
+            $contactno="";
+            $contactaddr="";
+            if($mobile!=null)
+            {$contactno=$mobile;}
+            else if($intmobile!=null)
+            {$contactno=$intmobile;}
+            else if($office!=null)
+            {$contactno=$office;}
+            if($contactno!=null && $contactno!="")
+            {
+                $contactaddr=$custid." "."EMAIL :".$customermailid.",CONTACT NO :".$contactno;
+            }
+            else
+            {
+                $contactaddr=$custid." "."EMAIL :".$customermailid;
+            }
+            if($unitrmtype!="")
+            {
+                $details =$unit. " " . $calendername . " " .$unitrmtype." ". "CHECKIN";
+            }
+            else
+            {
+                $details =$unit. " " . $calendername . " " . "CHECKIN";
+            }
+            $details1 =$unit. " " .$roomtype ;
+            if($initialsdate!="")
+            {
+                $event = new Google_Service_Calendar_Event();
+                $startevents=$this->CalenderTime_Convertion($startdate, $startdate_starttime, $startdate_endtime);
+                $event->setStart($startevents[0]);
+                $event->setEnd($startevents[1]);
+                $event->setDescription($contactaddr);
+                $event->setLocation($details1);
+                $event->setSummary($details);
+                $event->setAttachments($attachments);
+                $createdEvent = $calPrimary->events->insert($calId, $event,array('supportsAttachments' => TRUE));  // to create a event
+            }
+            $endevents=$this->CalenderTime_Convertion($enddate,$enddate_starttime,$enddate_endtime);
+            $detailsend =$unit. " " . $calendername . " " . "CHECKOUT";
+            $detailsend1 =$unit. " " .$roomtype ;
+            if($initialedate!="")
+            {
+                $event = new Google_Service_Calendar_Event();
+                $event->setStart($endevents[0]);
+                $event->setEnd($endevents[1]);
+                $event->setDescription($contactaddr);
+                $event->setLocation($detailsend1);
+                $event->setSummary($detailsend);
+                $event->setAttachments($attachments);
+                $createdEvent = $calPrimary->events->insert($calId, $event,array('supportsAttachments' => TRUE)); // to create a event
+            }
+            return 1;
+        }
+        catch(Exception $e){
+            return $e->getMessage();
+        }
+    }
 //FUNCTION TO CREATE CALENDAR EVENT FOR CUSTOMER
     public function  CUST_customercalendercreation($calPrimary,$custid,$startdate,$startdate_starttime,$startdate_endtime,$enddate,$enddate_starttime,$enddate_endtime,$firstname,$lastname,$mobile,$intmobile,$office,$customermailid,$unit,$roomtype,$unitrmtype)
     {
@@ -218,7 +291,7 @@ class Mdl_eilib_calender  extends CI_Model {
             $event->setSummary($detailsend);
             $createdEvent = $calPrimary->events->insert($calId, $event); // to create a event
         }
-            return $createdEvent;
+            return 1;
         }
         catch(Exception $e){
             return $e->getMessage();

@@ -20,7 +20,7 @@ require_once('application/libraries/EI_HDR.php');
     var ET_SRC_UPD_DEL_scriptname_id;
     $(document).ready(function() {
         var data=[];
-        var EP_ENTRY_controller_url="<?php echo base_url(); ?>" + '/index.php/CONFIGURATION/EMAIL/Ctrl_Email_Template_Entry_Search_Update/' ;
+        var EP_ENTRY_controller_url="<?php echo base_url(); ?>" + '/index.php/CONFIGURATION/EMAIL/Ctrl_Email_Profile_Entry_Search_Update_Delete/' ;
         $("#EP_ENTRY_btn_reset").hide();
         $("#EP_ENTRY_btn_save").hide();
         $("#EP_ENTRY_lb_profilename").hide();

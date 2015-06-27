@@ -609,7 +609,6 @@ class Mdl_customer_termination extends CI_Model{
                     if($CTERM_rvlpqrts=="")
                     {
                         $CTERM_rvlpqrts=$CTERM_prevrvdtls[$l]['recver'].",&".$CTERM_Leaseperiod.",&".$CTERM_quators;
-
                     }
                     else
                     {
@@ -624,24 +623,32 @@ class Mdl_customer_termination extends CI_Model{
                     $CALEVENTS=$this->Mdl_eilib_common_function->CTermExtn_GetCalevent($CTERM_custid);
                 }
                 $CTERM_activervvalue=intval($Globalrecver);
-                $this->db->query("CALL SP_CUSTOMER_MANUAL_TERMINATION_INSERT('$CTERM_custid','$CTERM_recver','$CTERM_activervvalue','$CTERM_accesscard','$CTERM_guestcard','$CTERM_ptddate','$CTERM_rvlpqrts',$CTERM_ptdsttime,$CTERM_ptdedtime,'$CTERM_ta_comments','$USERSTAMP',@TERMRESULT_FLAG)");
+//                echo "CALL SP_CUSTOMER_MANUAL_TERMINATION_INSERT('$CTERM_custid','$CTERM_recver','$CTERM_activervvalue','$CTERM_accesscard','$CTERM_guestcard','$CTERM_ptddate','$CTERM_rvlpqrts',$CTERM_ptdsttime,$CTERM_ptdedtime,'$CTERM_ta_comments','$USERSTAMP',@TERMRESULT_FLAG,'$CTERM_customerptd')";
+
+                $this->db->query("CALL SP_CUSTOMER_MANUAL_TERMINATION_INSERT('$CTERM_custid','$CTERM_recver','$CTERM_activervvalue','$CTERM_accesscard','$CTERM_guestcard','$CTERM_ptddate','$CTERM_rvlpqrts',$CTERM_ptdsttime,$CTERM_ptdedtime,'$CTERM_ta_comments','$USERSTAMP',@TERMRESULT_FLAG,'$CTERM_customerptd')");
             }
             $CTERM_updateflag=0;
             $CTERM_updateflag_query="SELECT @TERMRESULT_FLAG as TERMRESULT_FLAG";
             $CTERM_updateflag_rs=$this->db->query($CTERM_updateflag_query);
             $CTERM_updateflag=$CTERM_updateflag_rs->row()->TERMRESULT_FLAG;
             $this->load->model('EILIB/Mdl_eilib_calender');
-            $cal_delflag=0;
-            $cal_createflag=0;
+
             if($CTERM_updateflag==1&&($CTERM_radio_termoption=="CTERM_radio_activecust"))
             {
                 if($CTERM_customerptd!="")
                 {
+                    $cal_delflag=0;
+                    $cal_createflag=0;
                     for($ijk=0;$ijk<count($CALEVENTS);$ijk++)
                     {
                         $cal_delflag=$this->Mdl_eilib_calender->CUST_customerTermcalenderdeletion($cal,$CTERM_custid,$CALEVENTS[$ijk]['sddate'],$CALEVENTS[$ijk]['sdtimein'],$CALEVENTS[$ijk]['sdtimeout'],$CALEVENTS[$ijk]['eddate'],$CALEVENTS[$ijk]['edtimein'],$CALEVENTS[$ijk]['edtimeout'],"");
                     }
                     $cal_createflag=$this->Mdl_eilib_calender->CTermExtn_Calevent($cal,$CTERM_custid,$CTERM_recver,"TERMINATION",$CTERM_updateflag);
+                }
+                else{
+                    $cal_delflag=1;
+                    $cal_createflag=1;
+
                 }
                 if($cal_delflag==1 && $cal_createflag==1)
                 {
@@ -658,7 +665,6 @@ class Mdl_customer_termination extends CI_Model{
                     $CTERM_updateflag=0;
                 }
             }
-
             return $CTERM_updateflag;
         }
         catch(Exception $e)

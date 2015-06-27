@@ -8,8 +8,6 @@ VER 0.01 -INITIAL VERSION-SD:26/05/2015 ED:28/05/2015;
 <?php
 require_once('application/libraries/EI_HDR.php');
 ?>
-
-
 <!--HTML TAG START-->
 <html>
 <!--HEAD TAG START-->
@@ -18,7 +16,7 @@ require_once('application/libraries/EI_HDR.php');
 
 //<!----------READY FUNCTION------------->
 $(document).ready(function(){
-
+    $('#spacewidth').height('0%');
     var CEXP_max_date_array;
     var from_date;
     var to_date;
@@ -32,13 +30,11 @@ $(document).ready(function(){
         'url':controller_url+"CEXP_get_initial_values",
          success:function(data){
              $(".preloader").hide();
-
              var initial_value=JSON.parse(data)
              CEXP_load_initial_values(initial_value);
          },
         error:function(data){
             show_msgbox("CUSTOMER EXPIRY LIST",JSON.stringify(data),"error",false);
-
         }
     });
     var CEXP_errorAarray=[];
@@ -64,7 +60,7 @@ $(document).ready(function(){
     }
    //------------EXPIRY LIST BUTTON CHANGE---------------//
     $('#CEXP_radio_Expirylist').change(function(){
-//        $("html, body").animate({ scrollTop: $(document).height() }, "slow");
+        $("html, body").animate({ scrollTop: $(document).height() }, "slow");
         $('#CEXP_tble_expiry_list').show();
         $('#CEXP_tble_Weekly_expiry_list').hide();
         $('#CWEXP_btn_submit').attr('disabled','disabled');
@@ -221,6 +217,8 @@ $(document).ready(function(){
         $('#CEXP_lbl_beforedate').hide();
         $('#CEXP_lbl_equalto').hide();
         $('#CWEXP_pdf').hide();
+        $("html, body").animate({ scrollTop: $(document).height() }, "slow");
+
     });
     //-------------------TO DATEPICKER CHANGE---------------//
     $('#CEXP_db_selected_to_date').change(function(){
@@ -600,7 +598,7 @@ $(document).ready(function(){
                          <label name='CEXP_equalto' id='CEXP_lbl_equalto' class="col-sm-3"  hidden>ENTER EQUAL TO  DATE <em>*</em></label>
                          <div class="col-sm-2" id="CEXP_span_selected_equal_date" hidden>
                              <div class="input-group addon">
-                                 <input type="text" name="selected_equal_date" id="CEXP_db_selected_equal_date" style="width:110px;display: none" class="datemandtry form-control" placeholder="Date" hidden  >
+                                 <input type="text" name="selected_equal_date" id="CEXP_db_selected_equal_date" style="display: none" class="datemandtry form-control" placeholder="Date" hidden  >
                                  <label for="CEXP_db_selected_equal_date" class="input-group-addon" ><span class="glyphicon glyphicon-calendar" ></span></label>
                              </div>
                          </div>
@@ -616,7 +614,7 @@ $(document).ready(function(){
                            <label name='CEXP_beforedate' id='CEXP_lbl_beforedate' class="col-sm-3"  hidden>ENTER A BEFORE  DATE <em>*</em></label>
                            <div class="col-sm-2" id="CEXP_span_selected_before_date" hidden >
                                <div class="input-group addon">
-                                   <input type="text" name="selected_before_date" id="CEXP_db_selected_before_date" style="width:110px;display: none" class="datemandtry form-control" placeholder="Date"  >
+                                   <input type="text" name="selected_before_date" id="CEXP_db_selected_before_date" style="display: none" class="datemandtry form-control" placeholder="Date"  >
                                    <label for="CEXP_db_selected_before_date" class="input-group-addon" ><span class="glyphicon glyphicon-calendar"></span></label>
                                </div>
                           </div>
@@ -630,9 +628,9 @@ $(document).ready(function(){
                          </div>
                          <div class="form-group">
                               <label name='CEXP_fromdate' id='CEXP_lbl_fromdate' class="col-sm-3"  hidden >ENTER A FROM  DATE <em>*</em></label>
-                              <div class="col-sm-9" id="CEXP_span_selected_from_date" hidden >
+                              <div class="col-sm-2" id="CEXP_span_selected_from_date" hidden >
                                   <div class="input-group addon" style="padding-bottom:15px;">
-                                      <input type="text" name="selected_from_date" id="CEXP_db_selected_from_date" style="width:110px;display: none" class="datemandtry form-control" hidden placeholder="Date">
+                                      <input type="text" name="selected_from_date" id="CEXP_db_selected_from_date" style="display: none" class="datemandtry form-control" hidden placeholder="Date">
                                       <label for="CEXP_db_selected_from_date" class="input-group-addon" ><span class="glyphicon glyphicon-calendar"></span></label>
                                   </div>
                               </div>
@@ -641,7 +639,7 @@ $(document).ready(function(){
                              <label name='CEXP_todate' id='CEXP_lbl_todate' class="col-sm-3"  hidden>ENTER A  TO DATE <em>*</em> </label>
                              <div class="col-sm-2" id="CEXP_span_selected_to_date" hidden >
                                  <div class="input-group addon"  >
-                                     <input type="text" name="selected_to_date" id="CEXP_db_selected_to_date" style="width:110px;display: none" class="datemandtry form-control" hidden placeholder="Date">
+                                     <input type="text" name="selected_to_date" id="CEXP_db_selected_to_date" style="display: none" class="datemandtry form-control" hidden placeholder="Date">
                                      <label for="CEXP_db_selected_to_date" class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></label>
                                  </div>
                              </div>

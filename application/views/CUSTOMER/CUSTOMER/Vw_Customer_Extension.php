@@ -14,6 +14,14 @@ require_once('application/libraries/EI_HDR.php');
 <html>
 <!--HEAD TAG START-->
 <head>
+    <style>
+        .colsmhf {
+            width: 11.666%;
+            padding-top: 2px;
+            padding-left: 15px;
+            padding-right: 0px;
+        }
+    </style>
 </head>
 <!--HEAD TAG END-->
 <!--SCRIPT TAG START-->
@@ -85,6 +93,17 @@ require_once('application/libraries/EI_HDR.php');
             dateFormat: "dd-mm-yy" ,
             changeYear: true,
             changeMonth: true
+        });
+        var CEXTN_d = new Date();
+        var CEXTN_year = CEXTN_d.getFullYear() - 18;
+        CEXTN_d.setFullYear(CEXTN_year);
+        //SET DOB DATEPICKER
+        $('#CEXTN_db_dob').datepicker({
+            dateFormat: 'dd-mm-yy',
+            changeYear: true,
+            changeMonth: true,
+            yearRange: '1920:' + CEXTN_year + '',
+            defaultDate: CEXTN_d
         });
         //SET EP N PASSPORT MIN N MAX DATE
         var CEXTN_date = new Date();
@@ -160,9 +179,11 @@ require_once('application/libraries/EI_HDR.php');
             var emailid = [];
             var prowaived = [];
             var unitno = [];
+            var nationality=[];
             calentime = [];
             var CEXTN_allCustExtnUnitno = [];
             CEXTN_allCustExtnUnitno = value_array[0];//get all extn details
+            nationality=value_array[1];
             emailid = value_array[2];
             prowaived = value_array[6];
             CEXTN_errmsgs = value_array[4];
@@ -193,6 +214,11 @@ require_once('application/libraries/EI_HDR.php');
                     CEXTN_unitnosres += '<option value="' + unitno[i] + '">' + unitno[i] + '</option>';
                 }
                 $('#CEXTN_lb_unitno').html(CEXTN_unitnosres);
+                var nationality_list='';
+                for(var i=0;i<nationality.length;i++){
+                    nationality_list+='<option value="' + nationality[i].NC_DATA + '">' + nationality[i].NC_DATA + '</option>';
+                }
+                $('#CEXTN_tb_nation').append(nationality_list);
                 $('#CEXTN_form').show();
                 //PLACE PRORATED WAIVED VALUE
                 $('#CEXTN_lbl_sameamtprorated').text(prowaived[0].CCN_DATA)
@@ -272,6 +298,7 @@ require_once('application/libraries/EI_HDR.php');
             CEXTN_setselectIndex();
             $('#CEXTN_fileupload').val('');
             $('#CEXTN_div_custid').hide();
+            $('#CEXTN_div_sameunitdiffroomerr').text("");
             $('#CEXTN_div_seconform').hide();
             var CEXTN_lb_custname=$('#CEXTN_lb_custname').val();
             var CEXTN_lb_unitno=$('#CEXTN_lb_unitno').val();
@@ -594,6 +621,7 @@ require_once('application/libraries/EI_HDR.php');
         //FUNCTION TO CALL PRORATED CHKING FUNCTION AND VALIDATING WAIVED CHKBOX
         $(".CEXTN_class_prowaiv").change(function(){
             //VALIDATING WAIVED CHKBOX
+
             var CEXTN_tb_diffamtprocost=$("#CEXTN_tb_diffamtprocost").val();
             var CEXTN_tb_diffamtrent=$("#CEXTN_tb_diffamtrent").val();
             var CEXTN_radio_amt =$("input[name='CEXTN_radio_amt']:checked").val()
@@ -608,11 +636,13 @@ require_once('application/libraries/EI_HDR.php');
             var CEXTN_db_chkoutdate=$("#CEXTN_db_chkoutdate").val()
             if(CEXTN_radio_amt=="CEXTN_radio_sameamt"){
                 if(CEXTN_db_chkoutdate!=""){
+                    $('.preloader').show();
                     $.ajax({
                         type: "POST",
                         url: controller_url+"CEXTN_chkProrated",
                         data:{"CEXTN_db_chkindate":CEXTN_db_chkindate,"CEXTN_db_chkoutdate":CEXTN_db_chkoutdate},
                         success:function(data){
+                            $('.preloader').hide();
                             var CEXTN_rmtype=JSON.parse(data);
                             CEXTN_chkProrated_result(CEXTN_rmtype);
                         },
@@ -624,11 +654,13 @@ require_once('application/libraries/EI_HDR.php');
             }
             else{
                 if(CEXTN_db_chkoutdate!=""&&CEXTN_tb_diffamtrent!=""){
+                    $('.preloader').show();
                     $.ajax({
                         type: "POST",
                         url: controller_url+"CEXTN_chkProrated",
                         data:{"CEXTN_db_chkindate":CEXTN_db_chkindate,"CEXTN_db_chkoutdate":CEXTN_db_chkoutdate},
                         success:function(data){
+                            $('.preloader').hide();
                             var CEXTN_rmtype=JSON.parse(data);
                             CEXTN_chkProrated_result(CEXTN_rmtype);
                         },
@@ -1148,6 +1180,12 @@ require_once('application/libraries/EI_HDR.php');
                 $("#CEXTN_tb_intmobileno").removeClass("invalid")
                 $("#CEXTN_intlmobile_err").text("")
             }
+            if($('#CEXTN_tb_firstname').val()=='' || $('#CEXTN_tb_lastname').val()==''){
+                CEXTN_validinput=0;
+            }
+            if($('#CEXTN_tb_nation').val()=="SELECT"){
+                CEXTN_validinput=0;
+            }
             if($("#CEXTN_tb_officeno").val()!=""&&(parseInt($("#CEXTN_tb_officeno").val()).toString().length)<6&&parseInt($("#CEXTN_tb_officeno").val())!=0)
             {
                 CEXTN_validinput=0;
@@ -1339,25 +1377,15 @@ require_once('application/libraries/EI_HDR.php');
                 }
                 if(CEXTN_custdtls.cust_dob=="")
                 {
-                    $('#CEXTN_db_dob').val(CEXTN_custdtls.cust_dob).prop("readonly",false).removeClass("rdonly");
-                    var CEXTN_d = new Date();
-                    var CEXTN_year = CEXTN_d.getFullYear() - 18;
-                    CEXTN_d.setFullYear(CEXTN_year);
-                    //SET DOB DATEPICKER
-                    $('#CEXTN_db_dob').datepicker({
-                        dateFormat: 'dd-mm-yy',
-                        changeYear: true,
-                        changeMonth: true,
-                        yearRange: '1920:' + CEXTN_year + '',
-                        defaultDate: CEXTN_d
-                    });
+                    $('#CEXTN_db_dob').val(CEXTN_custdtls.cust_dob);//.prop("readonly",false).removeClass("rdonly");
+
                 }
                 else
                 {
-                    $('#CEXTN_db_dob').val(FormTableDateFormat(CEXTN_custdtls.cust_dob)).prop("readonly",true).addClass("rdonly");
-                    $('#CEXTN_db_dob').datepicker( "destroy" )
+                    $('#CEXTN_db_dob').val(FormTableDateFormat(CEXTN_custdtls.cust_dob));//.prop("readonly",true).addClass("rdonly");
+//                    $('#CEXTN_db_dob').datepicker( "destroy" )
                 }
-                $('#CEXTN_tb_nation').val(CEXTN_custdtls.cust_nation).attr("size",parseInt(((CEXTN_custdtls.cust_nation).length)+6));
+                $('#CEXTN_tb_nation').val(CEXTN_custdtls.cust_nation);//.attr("size",parseInt(((CEXTN_custdtls.cust_nation).length)+6));
                 if(CEXTN_custdtls.cust_passno!="")
                 {
                     $('#CEXTN_tb_passno').val(CEXTN_custdtls.cust_passno).attr("size",(CEXTN_custdtls.cust_passno).length+3);
@@ -1820,24 +1848,21 @@ require_once('application/libraries/EI_HDR.php');
                     <label class="col-sm-3" name="CEXTN_lbl_custname" id="CEXTN_lbl_custname" hidden>CUSTOMER NAME <em>*</em></label>
                     <div class="col-sm-4"> <select id="CEXTN_lb_custname" name="CEXTN_lb_custname"  class="CEXTN_btn_validate_class form-control " style=" display:none" ></select></div>
                 </div>
-<!--                <div id="CEXTN_div_custid">-->
-<!--                    <div id="CEXTN_tble_custid"></div>-->
-<!--                </div>-->
             </div>
             <div id="CEXTN_div_nocusterr" class="errormsg"></div>
             <div id="CEXTN_div_seconform" hidden>
                 <div id='CEXTN_tble_seconform'>
                     <div class="form-group">
-                        <label class="col-sm-3">FIRST NAME</label>
-                        <div class="col-sm-3"> <input type="text" name="CEXTN_tb_firstname" id="CEXTN_tb_firstname"  class="form-control CCAN_formvalidation" maxlength="50" readonly /><p class="field" ></p><input type="hidden" name="CEXTN_hidden_custid" id="CEXTN_hidden_custid"></div>
+                        <label class="col-sm-3">FIRST NAME<em>*</em></label>
+                        <div class="col-sm-3"> <input type="text" name="CEXTN_tb_firstname" id="CEXTN_tb_firstname"  class="form-control autosize CEXTN_btn_validate_class" maxlength="30" placeholder="Customer First Name" /><p class="field" ></p><input type="hidden" name="CEXTN_hidden_custid" id="CEXTN_hidden_custid"></div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-3">LAST NAME</label>
-                        <div class="col-sm-3"> <input type="text" name="CEXTN_tb_lastname" id="CEXTN_tb_lastname"  maxlength="50" class="form-control CCAN_formvalidation"  readonly/></div>
+                        <label class="col-sm-3">LAST NAME<em>*</em></label>
+                        <div class="col-sm-3"> <input type="text" name="CEXTN_tb_lastname" id="CEXTN_tb_lastname"  maxlength="30" class="form-control autosize CEXTN_btn_validate_class" placeholder="Customer Last Name"  /></div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-3">COMPANY NAME</label>
-                        <div class="col-sm-3"> <input type="text" name="CEXTN_tb_compname" id="CEXTN_tb_compname"  class="form-control autosize" placeholder="Company Name" /></div>
+                        <div class="col-sm-3"> <input type="text" name="CEXTN_tb_compname" id="CEXTN_tb_compname"  maxlength="50" class="form-control autosize" placeholder="Company Name" /></div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-3">COMPANY ADDRESS</label>
@@ -1853,7 +1878,7 @@ require_once('application/libraries/EI_HDR.php');
                     <div class="form-group">
                         <label class="col-sm-3">EMAIL ID</label>
                         <div class="col-sm-3">
-                            <input type="text" name="CEXTN_tb_emailid" id="CEXTN_tb_emailid"  maxlength="40"  class="form-control CEXTN_btn_validate_class"  placeholder="Customer Email Id" readonly/>
+                            <input type="text" name="CEXTN_tb_emailid" id="CEXTN_tb_emailid"  maxlength="40"  class="form-control CEXTN_btn_validate_class"  placeholder="Customer Email Id" />
                         </div>
                         <div class="col-sm-4"><label  id="CEXTN_lbl_emailerrmsg" class="errormsg"></label></div>
                     </div>
@@ -1880,11 +1905,15 @@ require_once('application/libraries/EI_HDR.php');
                     </div>
                     <div class="form-group">
                         <label class="col-sm-3">DATE OF BIRTH</label>
-                        <div class="col-sm-2"> <input type="text" name="CEXTN_db_dob" id="CEXTN_db_dob"  maxlength="10" style="width:110px;" class="datenonmandtry form-control" placeholder="DateOfBirth"/><p class="field" ></div>
+                        <div class="col-sm-2"> <input type="text" name="CEXTN_db_dob" id="CEXTN_db_dob"  maxlength="10"  class="datenonmandtry CEXTN_btn_validate_class form-control" placeholder="DateOfBirth"/><p class="field" ></div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-3">NATIONALITY</label>
-                        <div class="col-sm-3"> <input type="text" name="CEXTN_tb_nation" id="CEXTN_tb_nation" maxlength="50" class="form-control"  readonly/></div>
+                        <label class="col-sm-3">NATIONALITY<em>*</em></label>
+                        <div class="col-md-3">
+                            <SELECT class="form-control CEXTN_btn_validate_class" name="CEXTN_tb_nation" maxlength="8"  id="CEXTN_tb_nation" >
+                                <OPTION>SELECT</OPTION>
+                            </SELECT>
+                        </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-3" id="passportnumber">PASSPORT NUMBER</label>
@@ -1897,7 +1926,7 @@ require_once('application/libraries/EI_HDR.php');
                         <label class="col-sm-3" id="passportdate">PASSPORT EXPIRY DATE</label>
                         <div class="col-sm-2">
                             <div class="input-group addon">
-                                <input type="text" name="CEXTN_db_passdate" id="CEXTN_db_passdate"  maxlength="10" style="width:110px;" class="datenonmandtry CEXTN_btn_validate_class form-control" placeholder="Passport Date"/><label for="CEXTN_db_passdate" class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></label>
+                                <input type="text" name="CEXTN_db_passdate" id="CEXTN_db_passdate"  maxlength="10"  class="datenonmandtry CEXTN_btn_validate_class form-control" placeholder="Passport Date"/><label for="CEXTN_db_passdate" class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></label>
                             </div>
                         </div>
                         <div class="col-sm-4"><p id="CEXTN_passdate_err" class="errormsg" ></p></div>
@@ -1913,7 +1942,7 @@ require_once('application/libraries/EI_HDR.php');
                         <label class="col-sm-3" id="EPdate">EP EXPIRY DATE</label>
                         <div class="col-sm-2">
                             <div class="input-group addon">
-                                <input type="text" name="CEXTN_db_epdate" id="CEXTN_db_epdate"  maxlength="10" style="width:110px;" class="datenonmandtry CEXTN_btn_validate_class form-control" placeholder="EP Date" /><label for="CEXTN_db_epdate" class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></label>
+                                <input type="text" name="CEXTN_db_epdate" id="CEXTN_db_epdate"  maxlength="10"  class="datenonmandtry CEXTN_btn_validate_class form-control" placeholder="EP Date" /><label for="CEXTN_db_epdate" class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></label>
                             </div>
                         </div>
                         <div class="col-sm-4"><p id="CEXTN_epdate_err" class="errormsg" ></p></div>
@@ -2015,7 +2044,7 @@ require_once('application/libraries/EI_HDR.php');
                         <div class="col-sm-2">
                             <input type="text" name="CEXTN_db_chkindate" id="CEXTN_db_chkindate" style="width:110px;" class="rdonly form-control" readonly />
                         </div>
-                        <div class="col-sm-1.5">
+                        <div class="col-sm-2 colsmhf">
                             <select id="CEXTN_lb_chkinfromtime" name="CEXTN_lb_chkinfromtime"  style="width:110px;" class="CEXTN_btn_validate_class form-control col-sm-2" hidden><option>SELECT</option>
                             </select></div>
                         <label  id="CEXTN_lbl_chkinto" style="width:35px;" class="col-sm-2" hidden>TO</label>
@@ -2029,11 +2058,11 @@ require_once('application/libraries/EI_HDR.php');
                         <label class="col-sm-3">NEW CHECK OUT DATE<em>*</em></label>
                         <div class="col-sm-2">
                             <div class="input-group addon">
-                                <input type="text" name="CEXTN_db_chkoutdate" id="CEXTN_db_chkoutdate" maxlength="10" class="CEXTN_class_prowaiv datemandtry CEXTN_btn_validate_class form-control" style="width:110px;" placeholder="CHECK OUT DATE" />
+                                <input type="text" name="CEXTN_db_chkoutdate" id="CEXTN_db_chkoutdate" maxlength="10" class="CEXTN_class_prowaiv datemandtry CEXTN_btn_validate_class form-control"  placeholder="CHECK OUT DATE" />
                                 <label for="CEXTN_db_chkoutdate" class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></label>
                             </div>
                         </div>
-                        <div class="col-sm-1.5">
+                        <div class="col-sm-2 colsmhf">
                             <select id="CEXTN_lb_chkoutfromtime" name="CEXTN_lb_chkoutfromtime" style="width:110px;display:none;" class="CEXTN_btn_validate_class form-control col-sm-2" hidden><option>SELECT</option>
                             </select>
                         </div>
@@ -2146,8 +2175,8 @@ require_once('application/libraries/EI_HDR.php');
                                                 <div class="col-md-3">
                                                     <input type="text" name="CEXTN_tb_diffamtrent" id="CEXTN_tb_diffamtrent" style="width:85px;" class="CEXTN_class_prowaiv 5digitdollaronly CEXTN_btn_validate_class form-control" placeholder="0.00"/>
                                                 </div>
-                                                <div class="col-md-1" style="padding-right:0px;width:10px">
-                                                    <input type="checkbox" name="CEXTN_cb_diffamtprorated" id="CEXTN_cb_diffamtprorated"  class="CEXTN_btn_validate_class" disabled/>
+                                                <div class="col-md-2" style="padding-right:10px;width:10px">
+                                                    <input type="checkbox" name="CEXTN_cb_diffamtprorated" id="CEXTN_cb_diffamtprorated"  class="CEXTN_btn_validate_class" disabled />
                                                 </div>
                                                 <div class="col-md-3"><label id="CEXTN_lbl_diffamtprorated"></label><input type="hidden" name="CEXTN_hidden_diffamtprorated" id="CEXTN_hidden_diffamtprorated" /></div>
                                                 <div class="col-md-6"><p id="CEXTN_diffamtrent_err" class="errormsg"></p></div>
@@ -2161,8 +2190,8 @@ require_once('application/libraries/EI_HDR.php');
                                                 <div class="col-md-3">
                                                     <input type="text" name="CEXTN_tb_diffamtprocost" id="CEXTN_tb_diffamtprocost" style="width:77px;" maxlength="7" class="CEXTN_class_prowaiv CEXTN_btn_validate_class form-control" placeholder="0.00"/>
                                                 </div>
-                                                <div class="col-md-1" style="padding-right:0px;width:10px">
-                                                    <input type="checkbox" name="CEXTN_cb_diffamtwaived" id="CEXTN_cb_diffamtwaived" class="CEXTN_class_prowaiv CEXTN_btn_validate_class" disabled />
+                                                <div class="col-md-1" style="padding-right:10px;width:10px">
+                                                    <input type="checkbox" name="CEXTN_cb_diffamtwaived" id="CEXTN_cb_diffamtwaived" class="CEXTN_class_prowaiv CEXTN_btn_validate_class" disabled  />
                                                 </div>
                                                 <div class="col-md-3"><label id="CEXTN_lbl_diffamtwaived"></label><input type="hidden" id="CEXTN_hidden_diffamtwaived" name="CEXTN_hidden_diffamtwaived"/></div>
                                                 <div class="col-md-8" style="padding-right:10px"><p id="CEXTN_diffamtprofee_err" class="errormsg"></p></div>
@@ -2204,7 +2233,7 @@ require_once('application/libraries/EI_HDR.php');
                             </div>
                         </div>
 
-                        <div style="position:relative;left:105px;" id="CEXTN_div_save">
+                        <div  id="CEXTN_div_save">
                             <div class="row form-group">
                                 <div class="col-lg-offset-2 col-lg-3">
                                     <input  type="button" value="EXTEND" id="CEXTN_btn_save" class="btn" disabled /><input type="button" value="RESET"  id="CEXTN_btn_reset" class="btn"/>

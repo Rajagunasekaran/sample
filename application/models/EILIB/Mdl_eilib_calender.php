@@ -162,7 +162,7 @@ class Mdl_eilib_calender  extends CI_Model {
         return array($calseventtitle,$calseventdesc,$calseventloc);
     }
 //FUNCTION TO CREATE CALENDAR EVENT FOR CUSTOMER WITH ATTACHMENT
-    public function  CUST_customercalendercreation_attach($fileDoc,$calPrimary,$custid,$startdate,$startdate_starttime,$startdate_endtime,$enddate,$enddate_starttime,$enddate_endtime,$firstname,$lastname,$mobile,$intmobile,$office,$customermailid,$unit,$roomtype,$unitrmtype)
+    public function  CUST_customercalendercreation($fileDoc,$calPrimary,$custid,$startdate,$startdate_starttime,$startdate_endtime,$enddate,$enddate_starttime,$enddate_endtime,$firstname,$lastname,$mobile,$intmobile,$office,$customermailid,$unit,$roomtype,$unitrmtype)
     {
         try{
             $this->load->model('EILIB/Mdl_eilib_common_function');
@@ -235,7 +235,7 @@ class Mdl_eilib_calender  extends CI_Model {
         }
     }
 //FUNCTION TO CREATE CALENDAR EVENT FOR CUSTOMER
-    public function  CUST_customercalendercreation($calPrimary,$custid,$startdate,$startdate_starttime,$startdate_endtime,$enddate,$enddate_starttime,$enddate_endtime,$firstname,$lastname,$mobile,$intmobile,$office,$customermailid,$unit,$roomtype,$unitrmtype)
+    public function  CUST_customercalendercreation1($calPrimary,$custid,$startdate,$startdate_starttime,$startdate_endtime,$enddate,$enddate_starttime,$enddate_endtime,$firstname,$lastname,$mobile,$intmobile,$office,$customermailid,$unit,$roomtype,$unitrmtype)
     {
         try{
         $calId=$this->GetEICalendarId();
@@ -384,7 +384,7 @@ class Mdl_eilib_calender  extends CI_Model {
         }
     }
     //FUNCTION TO DELETE EXISTING EVENT N CREATE CURRENT CALENDAR EVENT DTS FOR EXTENSION N TERMINATION
-    public function CTermExtn_Calevent($calPrimary,$CTermExtn_custid,$CTermExtn_recver,$ctermformname,$successflag)
+    public function CTermExtn_Calevent($calPrimary,$CTermExtn_custid,$CTermExtn_recver,$ctermformname,$successflag,$fileDoc)
     {
         try {
             $CTermExtn_custfirstname = "";
@@ -467,11 +467,11 @@ class Mdl_eilib_calender  extends CI_Model {
                         }
                     }
                     if ($CTermExtn_recversion == $CTermExtn_recver) {
-                        $this->CUST_customercalendercreation($calPrimary, $CTermExtn_custid, $CTermExtn_stdate, $CTermExtn_start_time_in, $CTermExtn_start_time_out, $CTermExtn_eddate, $CTermExtn_end_time_in, $CTermExtn_end_time_out, $CTermExtn_custfirstname, $CTermExtn_custlastname, $CTermExtn_mobile, $CTermExtn_intmoblie, $CTermExtn_office, $CTermExtn_emailid, $CTermExtn_unitno, $CTermExtn_roomtype, $CTermExtn_custunittype);
+                        $this->CUST_customercalendercreation($fileDoc,$calPrimary, $CTermExtn_custid, $CTermExtn_stdate, $CTermExtn_start_time_in, $CTermExtn_start_time_out, $CTermExtn_eddate, $CTermExtn_end_time_in, $CTermExtn_end_time_out, $CTermExtn_custfirstname, $CTermExtn_custlastname, $CTermExtn_mobile, $CTermExtn_intmoblie, $CTermExtn_office, $CTermExtn_emailid, $CTermExtn_unitno, $CTermExtn_roomtype, $CTermExtn_custunittype);
                         $CTermExtn_calevntchk_flag = 1;
                     }
                     if ($CTermExtn_calevntchk_flag == 0) {
-                        $this->CUST_customercalendercreation($calPrimary, $CTermExtn_custid, $CTermExtn_stdate, $CTermExtn_start_time_in, $CTermExtn_start_time_out, "", "", "", $CTermExtn_custfirstname, $CTermExtn_custlastname, $CTermExtn_mobile, $CTermExtn_intmoblie, $CTermExtn_office, $CTermExtn_emailid, $CTermExtn_unitno, $CTermExtn_roomtype, $CTermExtn_custunittype);
+                        $this->CUST_customercalendercreation($fileDoc,$calPrimary, $CTermExtn_custid, $CTermExtn_stdate, $CTermExtn_start_time_in, $CTermExtn_start_time_out, "", "", "", $CTermExtn_custfirstname, $CTermExtn_custlastname, $CTermExtn_mobile, $CTermExtn_intmoblie, $CTermExtn_office, $CTermExtn_emailid, $CTermExtn_unitno, $CTermExtn_roomtype, $CTermExtn_custunittype);
                     }
                 }
                 $i = $i + 1;

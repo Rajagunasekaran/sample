@@ -834,6 +834,18 @@ abstract class CI_DB_driver {
 	 *
 	 * @return	bool
 	 */
+    public function trans_savepoint_rollback($text)
+    {
+        $this->simple_query('ROLLBACK TO SAVEPOINT '.$text);
+        $this->simple_query('SET AUTOCOMMIT=1');
+        return TRUE;
+    }
+    public function trans_savepoint_release($text)
+    {
+        $this->simple_query('RELASE SAVEPOINT '.$text);
+        $this->simple_query('SET AUTOCOMMIT=1');
+        return TRUE;
+    }
 	public function trans_complete()
 	{
 		if ( ! $this->trans_enabled)

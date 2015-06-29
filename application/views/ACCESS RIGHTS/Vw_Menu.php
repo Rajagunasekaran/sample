@@ -72,6 +72,8 @@ require_once('application/libraries/EI_HDR.php');
             $("#clock").html(currentTime);
         }
         $(document).ready(function(){
+            $(".preloader").show();
+            $('.preloaderimg').attr('src','https://googledrive.com/host/0B5pkfK_IBDxjU1FrR3hVTXB4a28/Loading.gif');
             var CONFIG_ENTRY_controller_url="<?php echo base_url(); ?>" + '/index.php/ACCESSRIGHTS/Ctrl_Menu/' ;
             setInterval('updateClock()', 1000);
             $('#calendarTitle').hide();
@@ -103,6 +105,7 @@ require_once('application/libraries/EI_HDR.php');
                 return false;
             });
             $(document).on('click','.menuconfirm',function(){
+                $('.preloaderimg').attr('src','https://googledrive.com/host/0B5pkfK_IBDxjU1FrR3hVTXB4a28/Loading.gif');
                 if(Page_url!='Ctrl_Error_Page'){
                     $(".preloader").show();
                     $('#menu_frame').load("<?php echo site_url(); ?>" + "/"+Page_url+"/index");
@@ -123,6 +126,7 @@ require_once('application/libraries/EI_HDR.php');
                 type: "POST",
                 'url':CONFIG_ENTRY_controller_url+"fetchdata",
                 success: function(data){
+                    $(".preloader").hide();
                     var value_array=JSON.parse(data);
                     all_menu_array= value_array;
                     userstamp=all_menu_array[1];
@@ -152,6 +156,7 @@ require_once('application/libraries/EI_HDR.php');
                     }
                 },
                 error: function(data){
+                    $(".preloader").hide();
                     alert('error in getting'+JSON.stringify(data));
                 }
             });

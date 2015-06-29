@@ -43,6 +43,7 @@ class Mdl_eilib_invoice_contract extends CI_Model{
                 try {
                     $this->URSRC_RemoveEditor($service,$docid,$editorfile[$j]);
                 } catch (Exception $e) {
+                    echo  $e->getMessage().'--111';
                 }
             }
         }
@@ -51,9 +52,18 @@ class Mdl_eilib_invoice_contract extends CI_Model{
             try {
                 $this->URSRC_AddEditor($service,$docid,$semailid);
             } catch (Exception $e) {
+                echo  $e->getMessage().'--222';
+
             }
         }
-        $this->SetDocOwnerGivenId($service,$docid,$docowner);
+        try{
+            $this->SetDocOwnerGivenId($service,$docid,$docowner);
+
+        }
+        catch(Exception $e){
+            echo  $e->getMessage().'--333';
+
+        }
     }
 //SET THE DOC OWNER
     public   function CUST_SetDocOwner($service,$docid,$docowner,$semailid)

@@ -43,7 +43,7 @@ class Mdl_eilib_invoice_contract extends CI_Model{
                 try {
                     $this->URSRC_RemoveEditor($service,$docid,$editorfile[$j]);
                 } catch (Exception $e) {
-                    echo  $e->getMessage().'--111';
+                    echo  $e->getMessage();
                 }
             }
         }
@@ -52,7 +52,7 @@ class Mdl_eilib_invoice_contract extends CI_Model{
             try {
                 $this->URSRC_AddEditor($service,$docid,$semailid);
             } catch (Exception $e) {
-                echo  $e->getMessage().'--222';
+                echo  $e->getMessage();
 
             }
         }
@@ -61,7 +61,7 @@ class Mdl_eilib_invoice_contract extends CI_Model{
 
         }
         catch(Exception $e){
-            echo  $e->getMessage().'--333';
+            echo  $e->getMessage();
 
         }
     }
@@ -505,10 +505,7 @@ class Mdl_eilib_invoice_contract extends CI_Model{
             $check_out_date= date("Y-m-d",$check_out_dated_lastmonth);
             $cexdd=date("d-M-Y",$check_out_dated_lastmonth);
             $datecheckedin = intval(date("d", $check_out_dated_lastmonth));
-//            $lastMonthString= strtotime ("+1 month",$check_in_dated_lastmonth);
-//            $LastMonth = date("Y-m-d",$lastMonthString);
             $LastMonthformat=date("t-M-Y",$check_in_dated_lastmonth);
-//end
             if( $noticedate!="")
             {            $dateStringNotice=strtotime($noticedate);
                 $ntc_date1=date("d/m/Y",$dateStringNotice);
@@ -750,7 +747,7 @@ class Mdl_eilib_invoice_contract extends CI_Model{
                 return [0,$newfile,$file->alternateLink,$response];
             }
         } catch (Exception $ex) {
-            return [0,$newfile];
+            return [0,$newfile,"",$ex->getMessage()];
         }
     }
 //GET INVOICE ID ,CONTRACT ID ,SERIAL NO,INVOIC DATE
@@ -1040,6 +1037,10 @@ class Mdl_eilib_invoice_contract extends CI_Model{
             {
                 $companyTemp="company";
             }
+            if($proratedrentflag==0){
+                $arrCheckDateAmtConcate.= $A5.'^^'.$cdate1.'^^'.$cdate2;
+                $reminingmonths=$replaceSum;
+            }
             $title="INVOICE"."   -"." ".$unit." ". "-". " ".$tenant_fetch."_INV".$todaysDate.''.$Slno;
             $newfile= $this->printFile($service,$invoiceid,$parentId,$title);
             $file = new Google_Service_Drive_DriveFile();
@@ -1048,8 +1049,7 @@ class Mdl_eilib_invoice_contract extends CI_Model{
             $file->setParents(array($parent));
             $service->files->patch($newfile, $file);
             $file = $service->files->get($newfile);
-            $data = array(
-                'arrCheckDateAmtConcate'=>$arrCheckDateAmtConcate,'singlemonth'=>$singlemonth,'reminingmonths'=>$reminingmonths, 'companyTemp'=>$companyTemp, 'replaceSum'=>$replaceSum, 'todaydat'=>$todaydat,'todaydatestring'=>$todaydatestring,'A3'=>$A3,'A4'=>$A4,'das'=>$das,'pc'=>$pc,'A5'=>$A5,'sum'=>$sum,'cdate1'=>$cdate1,'cdate2'=>$cdate2,'todaysDate'=>$todaysDate,'Slno'=>$Slno,'tenant_fetch' => $tenant_fetch,'length'=>$length,'proratedrentflag'=>$proratedrentflag,
+            $data = array('arrCheckDateAmtConcate'=>$arrCheckDateAmtConcate,'singlemonth'=>$singlemonth,'reminingmonths'=>$reminingmonths, 'companyTemp'=>$companyTemp, 'replaceSum'=>$replaceSum, 'todaydat'=>$todaydat,'todaydatestring'=>$todaydatestring,'A3'=>$A3,'A4'=>$A4,'das'=>$das,'pc'=>$pc,'A5'=>$A5,'sum'=>$sum,'cdate1'=>$cdate1,'cdate2'=>$cdate2,'todaysDate'=>$todaysDate,'Slno'=>$Slno,'tenant_fetch' => $tenant_fetch,'length'=>$length,'proratedrentflag'=>$proratedrentflag,
                 'nonPror_monthCal'=>$nonPror_monthCal,'flag'=>2,'prorated_monthCal' => $prorated_monthCal, 'proratedrent' => $proratedrent, 'proratedsmonth' => $proratedsmonth,'proratedemonth'=>$proratedemonth,
                 'unit' => $unit, 'customername' => $customername
             , 'companyname' =>$company_fetch, 'invoiceid' => $newfile,'invoicesno' => $invoicesno, 'invoicedate' => $invoicedate,
@@ -1076,7 +1076,7 @@ class Mdl_eilib_invoice_contract extends CI_Model{
             }
         }
         catch(Exception $e) {
-            return [0,$newfile];
+            return [0,$newfile,"",$e->getMessage()];
         }
     }
 //MAIL PART FOR CONTRACT AND INVOICE

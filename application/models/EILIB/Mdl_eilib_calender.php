@@ -166,13 +166,14 @@ class Mdl_eilib_calender  extends CI_Model {
     {
         try{
             $this->load->model('EILIB/Mdl_eilib_common_function');
-            $servicedoc= $this->Mdl_eilib_common_function->get_service_document();
-            $file = $servicedoc->files->get($fileDoc);
-            $attachments[]= array(
-                'fileUrl' => $file->alternateLink,
-                'mimeType' => $file->mimeType,
-                'title' => $file->title
-            );
+            if($fileDoc!=''){
+                $servicedoc= $this->Mdl_eilib_common_function->get_service_document();
+                $file = $servicedoc->files->get($fileDoc);
+                $attachments[]= array(
+                    'fileUrl' => $file->alternateLink,
+                    'mimeType' => $file->mimeType,
+                    'title' => $file->title
+                );}
             $calId=$this->GetEICalendarId();
             $initialsdate=$startdate;
             $initialedate=$enddate;
@@ -211,9 +212,12 @@ class Mdl_eilib_calender  extends CI_Model {
                 $event->setDescription($contactaddr);
                 $event->setLocation($details1);
                 $event->setSummary($details);
-                $event->setAttachments($attachments);
-                $createdEvent = $calPrimary->events->insert($calId, $event,array('supportsAttachments' => TRUE));  // to create a event
-            }
+                if($fileDoc!='') {
+                    $event->setAttachments($attachments);
+                    $createdEvent = $calPrimary->events->insert($calId, $event, array('supportsAttachments' => TRUE));  // to create a event
+                }else{
+                    $createdEvent = $calPrimary->events->insert($calId, $event);
+                }}
             $endevents=$this->CalenderTime_Convertion($enddate,$enddate_starttime,$enddate_endtime);
             $detailsend =$unit. " " . $calendername . " " . "CHECKOUT";
             $detailsend1 =$unit. " " .$roomtype ;
@@ -225,8 +229,12 @@ class Mdl_eilib_calender  extends CI_Model {
                 $event->setDescription($contactaddr);
                 $event->setLocation($detailsend1);
                 $event->setSummary($detailsend);
-                $event->setAttachments($attachments);
-                $createdEvent = $calPrimary->events->insert($calId, $event,array('supportsAttachments' => TRUE)); // to create a event
+                if($fileDoc!='') {
+                    $event->setAttachments($attachments);
+                    $createdEvent = $calPrimary->events->insert($calId, $event,array('supportsAttachments' => TRUE)); // to create a event
+                }else{
+                    $createdEvent = $calPrimary->events->insert($calId, $event);
+                }
             }
             return 1;
         }

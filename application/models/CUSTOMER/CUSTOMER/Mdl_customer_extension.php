@@ -264,7 +264,6 @@ class Mdl_Customer_Extension extends CI_Model{
 
       //FUNCTION TO SAVE CUSTOMER DETAILS
       function CEXTN_SaveDetails($UserStamp){
-//          set_time_limit(0);
           try
           {
               $CEXTN_formname="EXTENSION";
@@ -465,6 +464,7 @@ class Mdl_Customer_Extension extends CI_Model{
               $this->load->model('EILIB/Mdl_eilib_quarter_calc');
               $CEXTN_Leaseperiod=$this->Mdl_eilib_common_function->getLeasePeriod($CEXTN_sdate,$CEXTN_edate);
               $CEXTN_quators=$this->Mdl_eilib_quarter_calc->quarterCalc(new DateTime($CEXTN_sdate), new DateTime($CEXTN_edate));
+
               //SET UNIT NO N ROOM TYPE
               $CEXTN_unitno="";
               $CEXTN_roomtype="";
@@ -620,15 +620,13 @@ class Mdl_Customer_Extension extends CI_Model{
               //CALL SAVE SP
 
                $CEXTN_CALEVENTS=array();
-               //CEXTN_saveconn.setAutoCommit(false);
-//              echo "CALL SP_CUSTOMER_EXTENSION_INSERT($CEXTN_hidden_custid,$CEXTN_tb_compname,$CEXTN_tb_compaddr,$CEXTN_tb_comppostcode,$CEXTN_tb_officeno,'$CEXTN_unitno',$CEXTN_chksameunit,'$CEXTN_roomtype','$CEXTN_lb_chkinfromtime','$CEXTN_lb_chkintotime','$CEXTN_lb_chkoutfromtime','$CEXTN_lb_chkouttotime','$CEXTN_Leaseperiod','$CEXTN_quators','$CEXTN_waivedvalue','$CEXTN_proratedvalue',$CEXTN_tb_noticeperiod,$CEXTN_db_noticeperioddate,'$CEXTN_rentamt',$CEXTN_depositamt,$CEXTN_profeeamt,$CEXTN_tb_fixedairfee,$CEXTN_tb_airquarterfee,$CEXTN_tb_electcapfee,$CEXTN_tb_chkoutcleanfee,$CEXTN_tb_curtaindryfee,'$CEXTN_accesscard','$CEXTN_db_chkindate','$UserStamp','$CEXTN_db_chkindate','$CEXTN_db_chkoutdate','$CEXTN_guestcard','$CEXTN_tb_nation',$CEXTN_tb_mobileno,$CEXTN_tb_intmobileno,'$CEXTN_tb_emailid',$CEXTN_tb_passno,$CEXTN_db_passdate,$CEXTN_db_dob,$CEXTN_tb_epno,$CEXTN_db_epdate,'$CEXTN_ta_comments',$CEXTN_sameamntflag,'$CEXTN_tb_firstname','$CEXTN_tb_lastname',@EXTNFLAG,@TEMP_OUT_EXT_CARNOTBLNAME,@TEMP_OUT_EXTN_CLPDTLSTTBLNAME,@TEMP_OUT_EXTN_FEEDTLTBLNAME,@PAY_CHK_MSG)";
-
-              $CEXTN_save="CALL SP_CUSTOMER_EXTENSION_INSERT($CEXTN_hidden_custid,$CEXTN_tb_compname,$CEXTN_tb_compaddr,$CEXTN_tb_comppostcode,$CEXTN_tb_officeno,'$CEXTN_unitno',$CEXTN_chksameunit,'$CEXTN_roomtype','$CEXTN_lb_chkinfromtime','$CEXTN_lb_chkintotime','$CEXTN_lb_chkoutfromtime','$CEXTN_lb_chkouttotime','$CEXTN_Leaseperiod','$CEXTN_quators','$CEXTN_waivedvalue','$CEXTN_proratedvalue',$CEXTN_tb_noticeperiod,$CEXTN_db_noticeperioddate,'$CEXTN_rentamt',$CEXTN_depositamt,$CEXTN_profeeamt,$CEXTN_tb_fixedairfee,$CEXTN_tb_airquarterfee,$CEXTN_tb_electcapfee,$CEXTN_tb_chkoutcleanfee,$CEXTN_tb_curtaindryfee,'$CEXTN_accesscard','$CEXTN_db_chkindate','$UserStamp','$CEXTN_db_chkindate','$CEXTN_db_chkoutdate','$CEXTN_guestcard','$CEXTN_tb_nation',$CEXTN_tb_mobileno,$CEXTN_tb_intmobileno,'$CEXTN_tb_emailid',$CEXTN_tb_passno,$CEXTN_db_passdate,$CEXTN_db_dob,$CEXTN_tb_epno,$CEXTN_db_epdate,'$CEXTN_ta_comments',$CEXTN_sameamntflag,'$CEXTN_tb_firstname','$CEXTN_tb_lastname',@EXTNFLAG,@TEMP_OUT_EXT_CARNOTBLNAME,@TEMP_OUT_EXTN_CLPDTLSTTBLNAME,@TEMP_OUT_EXTN_FEEDTLTBLNAME,@PAY_CHK_MSG)";
-//              $CEXTN_save="CALL SP_CUSTOMER_EXTENSION_INSERT($CEXTN_hidden_custid,$CEXTN_tb_compname,$CEXTN_tb_compaddr,$CEXTN_tb_comppostcode,$CEXTN_tb_officeno,'$CEXTN_unitno',$CEXTN_chksameunit,'$CEXTN_roomtype','$CEXTN_lb_chkinfromtime','$CEXTN_lb_chkintotime','$CEXTN_lb_chkoutfromtime','$CEXTN_lb_chkouttotime','$CEXTN_Leaseperiod','$CEXTN_quators','$CEXTN_waivedvalue','$CEXTN_proratedvalue',$CEXTN_tb_noticeperiod,$CEXTN_db_noticeperioddate,'$CEXTN_rentamt',$CEXTN_depositamt,$CEXTN_profeeamt,$CEXTN_tb_fixedairfee,$CEXTN_tb_airquarterfee,$CEXTN_tb_electcapfee,$CEXTN_tb_chkoutcleanfee,$CEXTN_tb_curtaindryfee,'$CEXTN_accesscard','$CEXTN_db_chkindate','$UserStamp','$CEXTN_db_chkindate','$CEXTN_db_chkoutdate','$CEXTN_guestcard','$CEXTN_tb_nation',$CEXTN_tb_mobileno,$CEXTN_tb_intmobileno,'$CEXTN_tb_emailid',$CEXTN_tb_passno,$CEXTN_db_passdate,$CEXTN_db_dob,$CEXTN_tb_epno,$CEXTN_db_epdate,'$CEXTN_ta_comments',$CEXTN_sameamntflag,@EXTNFLAG,@TEMP_OUT_EXT_CARNOTBLNAME,@TEMP_OUT_EXTN_CLPDTLSTTBLNAME,@TEMP_OUT_EXTN_FEEDTLTBLNAME,@PAY_CHK_MSG)";
+              $this->db->query('SET AUTOCOMMIT=0');
+              $this->db->query('START TRANSACTION');
+              $CEXTN_save="CALL SP_CUSTOMER_EXTENSION_INSERT($CEXTN_hidden_custid,$CEXTN_tb_compname,$CEXTN_tb_compaddr,$CEXTN_tb_comppostcode,$CEXTN_tb_officeno,'$CEXTN_unitno',$CEXTN_chksameunit,'$CEXTN_roomtype','$CEXTN_lb_chkinfromtime','$CEXTN_lb_chkintotime','$CEXTN_lb_chkoutfromtime','$CEXTN_lb_chkouttotime','$CEXTN_Leaseperiod','$CEXTN_quators','$CEXTN_waivedvalue','$CEXTN_proratedvalue',$CEXTN_tb_noticeperiod,$CEXTN_db_noticeperioddate,'$CEXTN_rentamt',$CEXTN_depositamt,$CEXTN_profeeamt,$CEXTN_tb_fixedairfee,$CEXTN_tb_airquarterfee,$CEXTN_tb_electcapfee,$CEXTN_tb_chkoutcleanfee,$CEXTN_tb_curtaindryfee,'$CEXTN_accesscard','$CEXTN_db_chkindate','$UserStamp','$CEXTN_db_chkindate','$CEXTN_db_chkoutdate','$CEXTN_guestcard','$CEXTN_tb_nation',$CEXTN_tb_mobileno,$CEXTN_tb_intmobileno,'$CEXTN_tb_emailid',$CEXTN_tb_passno,$CEXTN_db_passdate,$CEXTN_db_dob,$CEXTN_tb_epno,$CEXTN_db_epdate,'$CEXTN_ta_comments',$CEXTN_sameamntflag,'$CEXTN_tb_firstname','$CEXTN_tb_lastname',@EXTNFLAG,@TEMP_OUT_EXT_CARNOTBLNAME,@TEMP_OUT_EXTN_CLPDTLSTTBLNAME,@TEMP_OUT_EXTN_FEEDTLTBLNAME,@PAY_CHK_MSG,@SAVE_POINT_NAME)";
               $this->db->query($CEXTN_save);
-              $CEXTN_saveflag=0;
               $CEXTN_finalarr=$this->CEXTN_ReturnFlagGetExtnFormTempTables();
               $CEXTN_saveflag=$CEXTN_finalarr[0];
+              $savepoint=$CEXTN_finalarr[3];
               if($CEXTN_saveflag==1){
                   $fileid='';
                   $filetempname = $_FILES['CEXTN_fileupload']['tmp_name'];
@@ -664,7 +662,7 @@ class Mdl_Customer_Extension extends CI_Model{
                   }
                   if ($filetempname != '')
                   {
-                          $fileid=$this->Mdl_eilib_common_function->Customer_FileUpload($service, $filename, 'PersonalDetails', $CustomerFolder, $mimetype, $filetempname);
+                      $fileid=$this->Mdl_eilib_common_function->Customer_FileUpload($service, $filename, 'PersonalDetails', $CustomerFolder, $mimetype, $filetempname);
 
                   }
                   $this->load->model('EILIB/Mdl_eilib_calender');
@@ -673,7 +671,7 @@ class Mdl_Customer_Extension extends CI_Model{
                   $docowner=$this->Mdl_eilib_common_function->CUST_documentowner($UserStamp);//get doc owner
                   $CEXTN_CALEVENTS=$this->Mdl_eilib_calender->CTermExtn_GetCalevent($CEXTN_hidden_custid);
                   //CALL CALENDAR EVENT FUNCTION FROM EILIB
-                  $cal_flag=$this->Mdl_eilib_calender->CTermExtn_Calevent($cal_service,$CEXTN_hidden_custid,"",$CEXTN_formname,"");
+                  $cal_flag=$this->Mdl_eilib_calender->CTermExtn_Calevent($cal_service,$CEXTN_hidden_custid,"",$CEXTN_formname,"",$fileid);
                   if($cal_flag==1) {
                       $cust_config_array = array();
                       $cust_config_array = $this->Mdl_eilib_common_function->CUST_invoice_contractreplacetext();
@@ -692,14 +690,13 @@ class Mdl_Customer_Extension extends CI_Model{
                       $service = $this->Mdl_eilib_common_function->get_service_document();
                       $this->load->model('EILIB/Mdl_eilib_invoice_contract');
                       if ($CEXTN_radio_amt == "CEXTN_radio_sameamt") {
-//echo "CUST_contract($service, $CEXTN_unitno, $CEXTN_db_chkindate, $CEXTN_db_chkoutdate, $CEXTN_tb_contrcompname, $CEXTN_continvoicecustomename, $CEXTN_contractnoticeperiod, $CEXTN_tb_contrpassno, $CEXTN_tb_contrpassdate, $CEXTN_tb_contrepno, $CEXTN_tb_contrepdate, $CEXTN_tb_contrnoticedate, $CEXTN_Leaseperiod, $CEXTN_customercard, $CEXTN_rentamt, $CEXTN_tb_airquarterfee, $CEXTN_tb_fixedairfee, $CEXTN_tb_electcapfee, $CEXTN_tb_curtaindryfee, $CEXTN_tb_chkoutcleanfee, $CEXTN_profeeamt, $CEXTN_depositamt, $CEXTN_waivedvalue, $CEXTN_roomtype, $CEXTN_rent_check, 'EXTENSION', $CEXTN_lb_emailid, $docowner,$CustomerFolder)";
                           $contract = $this->Mdl_eilib_invoice_contract->CUST_contract($service, $CEXTN_unitno, $CEXTN_db_chkindate, $CEXTN_db_chkoutdate, $CEXTN_tb_contrcompname, $CEXTN_continvoicecustomename, $CEXTN_contractnoticeperiod, $CEXTN_tb_contrpassno, $CEXTN_tb_contrpassdate, $CEXTN_tb_contrepno, $CEXTN_tb_contrepdate, $CEXTN_tb_contrnoticedate, $CEXTN_Leaseperiod, $CEXTN_customercard, $CEXTN_rentamt, $CEXTN_tb_airquarterfee, $CEXTN_tb_fixedairfee, $CEXTN_tb_electcapfee, $CEXTN_tb_curtaindryfee, $CEXTN_tb_chkoutcleanfee, $CEXTN_profeeamt, $CEXTN_depositamt, $CEXTN_waivedvalue, $CEXTN_roomtype, $CEXTN_rent_check, "EXTENSION", $CEXTN_lb_emailid, $docowner,$CustomerFolder);
-//                         print_r($contract);
 
                           if($contract[0]==0){
+
                               if($contract[1]!='undefined')
                                   $res=$this->Mdl_eilib_invoice_contract->CUST_UNSHARE_FILE($service,$contract[1]);
-                              $this->db->trans_rollback();
+                              $this->db->trans_savepoint_rollback($savepoint);
                               for($ijk=0;$ijk<count($CEXTN_CALEVENTS);$ijk++){
                                   $this->Mdl_eilib_calender->CUST_customerTermcalenderdeletion($cal_service,$CEXTN_hidden_custid,$CEXTN_CALEVENTS[$ijk]['sddate'],$CEXTN_CALEVENTS[$ijk]['sdtimein'],$CEXTN_CALEVENTS[$ijk]['sdtimeout'],$CEXTN_CALEVENTS[$ijk]['eddate'],$CEXTN_CALEVENTS[$ijk]['edtimein'],$CEXTN_CALEVENTS[$ijk]['edtimeout'],"");
                               }
@@ -707,9 +704,9 @@ class Mdl_Customer_Extension extends CI_Model{
                               if($fileid!=''){
                                   $res=$this->Mdl_eilib_invoice_contract->CUST_UNSHARE_FILE($service,$fileid);
                               }
-                              if($UnitFolder!=''){$this->Mdl_eilib_invoice_contract->CUST_UNSHARE_FILE($service, $UnitFolder);}
-                              if($CustomerFolder!=''){$this->Mdl_eilib_invoice_contract->CUST_UNSHARE_FILE($service, $CustomerFolder);}
-                              $CEXTN_saveflag=0;
+                              //if($UnitFolder!=''){$this->Mdl_eilib_invoice_contract->CUST_UNSHARE_FILE($service, $UnitFolder);}
+                              //if($CustomerFolder!=''){$this->Mdl_eilib_invoice_contract->CUST_UNSHARE_FILE($service, $CustomerFolder);}
+                              $CEXTN_saveflag=$contract[3];
                           }
                           else{
                               $Messcontent=$CEXTN_unitno.'-'.$CEXTN_continvoicecustomename;
@@ -724,21 +721,15 @@ class Mdl_Customer_Extension extends CI_Model{
                           }
                       }
                       else {
-                         $contract = $this->Mdl_eilib_invoice_contract->CUST_contract($service, $CEXTN_unitno, $CEXTN_db_chkindate, $CEXTN_db_chkoutdate, $CEXTN_tb_contrcompname, $CEXTN_continvoicecustomename, $CEXTN_contractnoticeperiod, $CEXTN_tb_contrpassno, $CEXTN_tb_contrpassdate, $CEXTN_tb_contrepno, $CEXTN_tb_contrepdate, $CEXTN_tb_contrnoticedate, $CEXTN_Leaseperiod, $CEXTN_customercard, $CEXTN_rentamt, $CEXTN_tb_airquarterfee, $CEXTN_tb_fixedairfee, $CEXTN_tb_electcapfee, $CEXTN_tb_curtaindryfee, $CEXTN_tb_chkoutcleanfee, $CEXTN_profeeamt, $CEXTN_depositamt, $CEXTN_waivedvalue, $CEXTN_roomtype, $CEXTN_rent_check, "EXTENSION", $CEXTN_lb_emailid, $docowner,$CustomerFolder);
-
+                          $contract = $this->Mdl_eilib_invoice_contract->CUST_contract($service, $CEXTN_unitno, $CEXTN_db_chkindate, $CEXTN_db_chkoutdate, $CEXTN_tb_contrcompname, $CEXTN_continvoicecustomename, $CEXTN_contractnoticeperiod, $CEXTN_tb_contrpassno, $CEXTN_tb_contrpassdate, $CEXTN_tb_contrepno, $CEXTN_tb_contrepdate, $CEXTN_tb_contrnoticedate, $CEXTN_Leaseperiod, $CEXTN_customercard, $CEXTN_rentamt, $CEXTN_tb_airquarterfee, $CEXTN_tb_fixedairfee, $CEXTN_tb_electcapfee, $CEXTN_tb_curtaindryfee, $CEXTN_tb_chkoutcleanfee, $CEXTN_profeeamt, $CEXTN_depositamt, $CEXTN_waivedvalue, $CEXTN_roomtype, $CEXTN_rent_check, "EXTENSION", $CEXTN_lb_emailid, $docowner,$CustomerFolder);
                           if($contract[0]==1) {
                              if ($CEXTN_depositamt == 'null') {
                                  $CEXTN_depositamt = '';
                              }
-                             if ($CEXTN_profeeamt == 'null') {
+                              if ($CEXTN_profeeamt == 'null') {
                                  $CEXTN_profeeamt = '';
                              }
-//                             echo "CUST_invoice($UserStamp, $service, $CEXTN_unitno, $CEXTN_continvoicecustomename, $CEXTN_tb_contrcompname, $CEXTN_invoiceid, $CEXTN_invoicesno, $CEXTN_invoicedate, $CEXTN_rentamt, $CEXTN_profeeamt, $CEXTN_depositamt, $CEXTN_db_chkindate, $CEXTN_db_chkoutdate, $CEXTN_roomtype, $CEXTN_Leaseperiod, $CEXTN_rent_check, $CEXTN_lb_emailid, $docowner, 'EXTENSION', $CEXTN_waivedvalue, $CEXTN_hidden_custid,$CustomerFolder)";
-                             //                             $CEXTN_Leaseperiod='1 Month';
-//                             echo "CUST_invoice($UserStamp, $service, $CEXTN_unitno, $CEXTN_continvoicecustomename, $CEXTN_tb_contrcompname, $CEXTN_invoiceid, $CEXTN_invoicesno, $CEXTN_invoicedate, $CEXTN_rentamt, $CEXTN_profeeamt, $CEXTN_depositamt, $CEXTN_db_chkindate, $CEXTN_db_chkoutdate, $CEXTN_roomtype, $CEXTN_Leaseperiod, $CEXTN_rent_check, $CEXTN_lb_emailid, $docowner, 'EXTENSION', $CEXTN_waivedvalue, $CEXTN_hidden_custid,$CustomerFolder)";
-//                            exit;
                              $InvoiceId = $this->Mdl_eilib_invoice_contract->CUST_invoice($UserStamp, $service, $CEXTN_unitno, $CEXTN_continvoicecustomename, $CEXTN_tb_contrcompname, $CEXTN_invoiceid, $CEXTN_invoicesno, $CEXTN_invoicedate, $CEXTN_rentamt, $CEXTN_profeeamt, $CEXTN_depositamt, $CEXTN_db_chkindate, $CEXTN_db_chkoutdate, $CEXTN_roomtype, $CEXTN_Leaseperiod, $CEXTN_rent_check, $CEXTN_lb_emailid, $docowner, 'EXTENSION', $CEXTN_waivedvalue, $CEXTN_hidden_custid,$CustomerFolder);
-//print_r($InvoiceId);
                              if($InvoiceId[0]==1) {
                                  $subcontent = $CEXTN_unitno . '-' . $CEXTN_continvoicecustomename . '-' . $InvoiceId[3];
                                  $Messcontent = $CEXTN_unitno . '-' . $CEXTN_continvoicecustomename;
@@ -756,18 +747,20 @@ class Mdl_Customer_Extension extends CI_Model{
 
                                  if($contract[1]!='undefined')
                                  $res=$this->Mdl_eilib_invoice_contract->CUST_UNSHARE_FILE($service,$contract[1]);
-                                 $this->db->trans_rollback();
+                                 if($InvoiceId[1]!='undefined')
+                                     $res=$this->Mdl_eilib_invoice_contract->CUST_UNSHARE_FILE($service,$InvoiceId[1]);
+                                 $this->db->trans_savepoint_rollback($savepoint);
                                  for($ijk=0;$ijk<count($CEXTN_CALEVENTS);$ijk++){
                                      $this->Mdl_eilib_calender->CUST_customerTermcalenderdeletion($cal_service,$CEXTN_hidden_custid,$CEXTN_CALEVENTS[$ijk]['sddate'],$CEXTN_CALEVENTS[$ijk]['sdtimein'],$CEXTN_CALEVENTS[$ijk]['sdtimeout'],$CEXTN_CALEVENTS[$ijk]['eddate'],$CEXTN_CALEVENTS[$ijk]['edtimein'],$CEXTN_CALEVENTS[$ijk]['edtimeout'],"");
                                  }
                                  $cal_flag=$this->Mdl_eilib_calender->CTermExtn_Calevent($cal_service,$CEXTN_hidden_custid,"",$CEXTN_formname,"");
-                                 if($UnitFolder!=''){$this->Mdl_eilib_invoice_contract->CUST_UNSHARE_FILE($service, $UnitFolder);}
-                                 if($CustomerFolder!=''){$this->Mdl_eilib_invoice_contract->CUST_UNSHARE_FILE($service, $CustomerFolder);}
-                                 $CEXTN_saveflag=0;
+//                                 if($UnitFolder!=''){$this->Mdl_eilib_invoice_contract->CUST_UNSHARE_FILE($service, $UnitFolder);}
+//                                 if($CustomerFolder!=''){$this->Mdl_eilib_invoice_contract->CUST_UNSHARE_FILE($service, $CustomerFolder);}
+                                 $CEXTN_saveflag=$InvoiceId[3];
                              }
                          }
                           else{
-                              $this->db->trans_rollback();
+                              $this->db->trans_savepoint_rollback($savepoint);
                               for($ijk=0;$ijk<count($CEXTN_CALEVENTS);$ijk++){
                                   $this->Mdl_eilib_calender->CUST_customerTermcalenderdeletion($cal_service,$CEXTN_hidden_custid,$CEXTN_CALEVENTS[$ijk]['sddate'],$CEXTN_CALEVENTS[$ijk]['sdtimein'],$CEXTN_CALEVENTS[$ijk]['sdtimeout'],$CEXTN_CALEVENTS[$ijk]['eddate'],$CEXTN_CALEVENTS[$ijk]['edtimein'],$CEXTN_CALEVENTS[$ijk]['edtimeout'],"");
                               }
@@ -775,15 +768,12 @@ class Mdl_Customer_Extension extends CI_Model{
                               if($fileid!=''){
                                   $res=$this->Mdl_eilib_invoice_contract->CUST_UNSHARE_FILE($service,$fileid);
                               }
-                              if($UnitFolder!=''){$this->Mdl_eilib_invoice_contract->CUST_UNSHARE_FILE($service, $UnitFolder);}
-                              if($CustomerFolder!=''){$this->Mdl_eilib_invoice_contract->CUST_UNSHARE_FILE($service, $CustomerFolder);}
-
-                              $CEXTN_saveflag=0;
+                              $CEXTN_saveflag=$contract[3];
                           }
                       }
                   }
                   else{
-                      $this->db->trans_rollback();
+                      $this->db->trans_savepoint_rollback($savepoint);
                       for($ijk=0;$ijk<count($CEXTN_CALEVENTS);$ijk++){
                          $sdate= $CEXTN_CALEVENTS[$ijk]['sddate'];
                           $sdtimein=$CEXTN_CALEVENTS[$ijk]['sdtimein'];
@@ -793,21 +783,26 @@ class Mdl_Customer_Extension extends CI_Model{
                           $edtimeout=$CEXTN_CALEVENTS[$ijk]['edtimeout'];
                           $del_flag=$this->Mdl_eilib_calender->CUST_customerTermcalenderdeletion($cal_service,$CEXTN_hidden_custid,$sdate,$sdtimein,$sdtimeout,$eddate,$edtimein,$edtimeout,"");
                       }
-                      $cal_flag=$this->Mdl_eilib_calender->CTermExtn_Calevent($cal_service,$CEXTN_hidden_custid,"",$CEXTN_formname,"");
+                      $cal_flag=$this->Mdl_eilib_calender->CTermExtn_Calevent($cal_service,$CEXTN_hidden_custid,"",$CEXTN_formname,"",'');
                       if($fileid!=''){
                           $res=$this->Mdl_eilib_invoice_contract->CUST_UNSHARE_FILE($service,$fileid);
                       }
-                      if($UnitFolder!=''){$this->Mdl_eilib_invoice_contract->CUST_UNSHARE_FILE($service, $UnitFolder);}
-                      if($CustomerFolder!=''){$this->Mdl_eilib_invoice_contract->CUST_UNSHARE_FILE($service, $CustomerFolder);}
+//                      if($UnitFolder!=''){$this->Mdl_eilib_invoice_contract->CUST_UNSHARE_FILE($service, $UnitFolder);}
+//                      if($CustomerFolder!=''){$this->Mdl_eilib_invoice_contract->CUST_UNSHARE_FILE($service, $CustomerFolder);}
                       $CEXTN_saveflag=0;
                   }
+                 $this->db->trans_savepoint_release($savepoint) ;
               }
+              else{
+                  $this->db->trans_savepoint_rollback($savepoint);
+              }
+
           $this->CEXTN_DropTempTables($CEXTN_finalarr[1]);
-          $this->db->trans_commit();
           return [$CEXTN_saveflag,$CEXTN_finalarr[2],$cal_flag];
     }
       catch(Exception $err)
       {
+          $this->db->trans_savepoint_rollback($savepoint);
 //          Logger.log("SCRIPT EXCEPTION:"+err)
 //      CEXTN_saveconn.rollback();
 //      $CEXTN_finalarr=CEXTN_ReturnFlagGetExtnFormTempTables(CEXTN_saveconn);
@@ -836,7 +831,7 @@ class Mdl_Customer_Extension extends CI_Model{
 //    FUNCTION TO GET FLAG N TEMP TABLES
     function CEXTN_ReturnFlagGetExtnFormTempTables(){
           $CEXTN_Temptablearray=array();
-          $saveflag_query="SELECT @EXTNFLAG as EXTNFLAG,@TEMP_OUT_EXT_CARNOTBLNAME as TEMP_OUT_EXT_CARNOTBLNAME,@TEMP_OUT_EXTN_CLPDTLSTTBLNAME as TEMP_OUT_EXTN_CLPDTLSTTBLNAME,@TEMP_OUT_EXTN_FEEDTLTBLNAME as TEMP_OUT_EXTN_FEEDTLTBLNAME,@PAY_CHK_MSG as PAY_CHK_MSG";
+          $saveflag_query="SELECT @EXTNFLAG as EXTNFLAG,@TEMP_OUT_EXT_CARNOTBLNAME as TEMP_OUT_EXT_CARNOTBLNAME,@TEMP_OUT_EXTN_CLPDTLSTTBLNAME as TEMP_OUT_EXTN_CLPDTLSTTBLNAME,@TEMP_OUT_EXTN_FEEDTLTBLNAME as TEMP_OUT_EXTN_FEEDTLTBLNAME,@PAY_CHK_MSG as PAY_CHK_MSG,@SAVE_POINT_NAME as SAVE_POINT";
           $saveflag_rs=$this->db->query($saveflag_query);
           $CEXTN_saveflag=0;
           $CEXTN_paymsg=null;
@@ -854,7 +849,8 @@ class Mdl_Customer_Extension extends CI_Model{
               $CEXTN_Temptablearray[]=($saveflag_rs->row()->TEMP_OUT_EXTN_FEEDTLTBLNAME);
           }
           $CEXTN_paymsg=$saveflag_rs->row()->PAY_CHK_MSG;
-          $CEXTN_finalflagtemparray=[$CEXTN_saveflag,$CEXTN_Temptablearray,$CEXTN_paymsg];
+        $CEXTN_savepoint=$saveflag_rs->row()->SAVE_POINT;
+          $CEXTN_finalflagtemparray=[$CEXTN_saveflag,$CEXTN_Temptablearray,$CEXTN_paymsg,$CEXTN_savepoint];
           return $CEXTN_finalflagtemparray;
     }
     //    FUNCTION TO DROP TEMP TABLES
@@ -873,26 +869,6 @@ class Mdl_Customer_Extension extends CI_Model{
         $message1->setSubject($mailsub);
         $message1->setHtmlBody($mailbody);
         $message1->send();
-//        $mail = new PHPMailer;
-//        $mail->isSMTP();
-//        $mail->Host = 'smtp.gmail.com';
-//        $mail->SMTPAuth = true;
-//        $mail->Username = 'safiyullah84@gmail.com';
-//        $mail->Password = 'safi984151';
-//        $mail->SMTPSecure = 'tls';
-//        $mail->Port = 587;
-//        $mail->FromName = $Displayname;
-//        $mail->addAddress('safiyullah.mohideen@ssomens.com');
-//        $mail->WordWrap = 50;
-//        $mail->isHTML(true);
-//        $mail->Subject = $mailsub;
-//        $mail->Body = $mailbody;
-//        $mail->Send();
-//        if (!$mail->Send()) {
-//            echo "Message could not be sent";
-//        } else {
-//            echo 'success';
-//
-//        }
+
     }
 }

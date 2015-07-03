@@ -623,16 +623,16 @@ class Mdl_customer_termination extends CI_Model{
                     $CALEVENTS=$this->Mdl_eilib_common_function->CTermExtn_GetCalevent($CTERM_custid);
                 }
                 $CTERM_activervvalue=intval($Globalrecver);
-//                echo "CALL SP_CUSTOMER_MANUAL_TERMINATION_INSERT('$CTERM_custid','$CTERM_recver','$CTERM_activervvalue','$CTERM_accesscard','$CTERM_guestcard','$CTERM_ptddate','$CTERM_rvlpqrts',$CTERM_ptdsttime,$CTERM_ptdedtime,'$CTERM_ta_comments','$USERSTAMP',@TERMRESULT_FLAG,'$CTERM_customerptd')";
-
-                $this->db->query("CALL SP_CUSTOMER_MANUAL_TERMINATION_INSERT('$CTERM_custid','$CTERM_recver','$CTERM_activervvalue','$CTERM_accesscard','$CTERM_guestcard','$CTERM_ptddate','$CTERM_rvlpqrts',$CTERM_ptdsttime,$CTERM_ptdedtime,'$CTERM_ta_comments','$USERSTAMP',@TERMRESULT_FLAG,'$CTERM_customerptd')");
+                $this->db->query('SET AUTOCOMMIT=0');
+                $this->db->query('START TRANSACTION');
+                $this->db->query("CALL SP_CUSTOMER_MANUAL_TERMINATION_INSERT('$CTERM_custid','$CTERM_recver','$CTERM_activervvalue','$CTERM_accesscard','$CTERM_guestcard','$CTERM_ptddate','$CTERM_rvlpqrts',$CTERM_ptdsttime,$CTERM_ptdedtime,'$CTERM_ta_comments','$USERSTAMP',@TERMRESULT_FLAG,'$CTERM_customerptd',@SAVE_POINT)");
             }
             $CTERM_updateflag=0;
-            $CTERM_updateflag_query="SELECT @TERMRESULT_FLAG as TERMRESULT_FLAG";
+            $CTERM_updateflag_query="SELECT @TERMRESULT_FLAG as TERMRESULT_FLAG,@SAVE_POINT as SAVE_POINT ";
             $CTERM_updateflag_rs=$this->db->query($CTERM_updateflag_query);
             $CTERM_updateflag=$CTERM_updateflag_rs->row()->TERMRESULT_FLAG;
+            $savepoint=$CTERM_updateflag_rs->row()->SAVE_POINT;
             $this->load->model('EILIB/Mdl_eilib_calender');
-
             if($CTERM_updateflag==1&&($CTERM_radio_termoption=="CTERM_radio_activecust"))
             {
                 if($CTERM_customerptd!="")
@@ -643,7 +643,7 @@ class Mdl_customer_termination extends CI_Model{
                     {
                         $cal_delflag=$this->Mdl_eilib_calender->CUST_customerTermcalenderdeletion($cal,$CTERM_custid,$CALEVENTS[$ijk]['sddate'],$CALEVENTS[$ijk]['sdtimein'],$CALEVENTS[$ijk]['sdtimeout'],$CALEVENTS[$ijk]['eddate'],$CALEVENTS[$ijk]['edtimein'],$CALEVENTS[$ijk]['edtimeout'],"");
                     }
-                    $cal_createflag=$this->Mdl_eilib_calender->CTermExtn_Calevent($cal,$CTERM_custid,$CTERM_recver,"TERMINATION",$CTERM_updateflag);
+                    $cal_createflag=$this->Mdl_eilib_calender->CTermExtn_Calevent($cal,$CTERM_custid,$CTERM_recver,"TERMINATION",$CTERM_updateflag,'');
                 }
                 else{
                     $cal_delflag=1;
@@ -652,15 +652,15 @@ class Mdl_customer_termination extends CI_Model{
                 }
                 if($cal_delflag==1 && $cal_createflag==1)
                 {
-                    $this->db->trans_commit();
+                    $this->db->trans_savepoint_release($savepoint) ;
                     $CTERM_updateflag=1;
                 }
                 else
                 {
-                    $this->db->trans_rollback();
+                    $this->db->trans_savepoint_rollback($savepoint);
                     if($CTERM_customerptd!=""&&$CTERM_customerptd!='')
                     {
-                        $this->Mdl_eilib_calender->CTermExtn_Calevent($cal,$CTERM_custid,$CTERM_recver,"TERMINATION",0);
+                        $this->Mdl_eilib_calender->CTermExtn_Calevent($cal,$CTERM_custid,$CTERM_recver,"TERMINATION",0,'');
                     }
                     $CTERM_updateflag=0;
                 }
@@ -669,9 +669,10 @@ class Mdl_customer_termination extends CI_Model{
         }
         catch(Exception $e)
         {
+            $this->db->trans_savepoint_rollback($savepoint);
             if($CTERM_customerptd!=""&&$CTERM_customerptd!='')
             {
-                $this->Mdl_eilib_calender->CTermExtn_Calevent($cal,$CTERM_custid,$CTERM_recver,"TERMINATION",0);
+                $this->Mdl_eilib_calender->CTermExtn_Calevent($cal,$CTERM_custid,$CTERM_recver,"TERMINATION",0,'');
             }
             return "SCRIPT EXCEPTION:".$e->getMessage();
         }

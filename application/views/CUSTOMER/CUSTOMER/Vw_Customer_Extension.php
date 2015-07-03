@@ -1,6 +1,7 @@
 <!--//*******************************************FILE DESCRIPTION*********************************************//
 /**********************************************CUSTOMER EXTENSION******************************************/
 //DONE BY:SAFI
+//ver 0.03- updated save point and removed read only
 //VER 0.02-SD:20/06/2015 ED:20/06/2015 -removed duplicate cust radio
 //VER 0.01-INITIAL VERSION SD:01/06/2014 ED:12/06/2015
 //*********************************************************************************************************//
@@ -1714,7 +1715,6 @@ require_once('application/libraries/EI_HDR.php');
                     var saveresult = JSON.parse(xmlhttp.responseText);
                     $('.preloader').hide();
                     CEXTN_SaveDetails_result(saveresult)
-
                 }
             }
             var option = 'SAVE';

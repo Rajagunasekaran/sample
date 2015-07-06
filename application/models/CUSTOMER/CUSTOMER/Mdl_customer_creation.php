@@ -1,12 +1,14 @@
 <?php
 error_reporting(0);
-require_once 'google/appengine/api/mail/Message.php';
-use google\appengine\api\mail\Message;
+//require_once 'google/appengine/api/mail/Message.php';
+//use google\appengine\api\mail\Message;
+require_once 'PHPMailer-master/PHPMailerAutoload.php';
 class Mdl_customer_creation extends CI_Model
 {
     public function Customer_Creation_Save($UserStamp,$Leaseperiod,$Quoters)
     {
         try {
+            set_time_limit(0);
             $FirstName = $_POST['CCRE_FirstName'];
             $Lastname = $_POST['CCRE_LastName'];
             $CompanyName = $_POST['CCRE_CompanyName'];
@@ -156,14 +158,17 @@ class Mdl_customer_creation extends CI_Model
             $CCRE_quators = $Quoters;
             $StartDate = date('Y-m-d', strtotime($Startdate));
             $EndDate = date('Y-m-d', strtotime($Enddate));
-            $CallQuery = "CALL SP_CUSTOMER_CREATION_INSERT(1,null,'$FirstName','$Lastname','$CompanyName','$CompanyAddress','$CompanyPostalCode','$Officeno',$Uint,'$RoomType','$S_starttime','$S_endtime','$E_starttime','$E_endtime','$Leaseperiod',$CCRE_quators,'$processwaived','$Prorated','$NoticePeriod','$NoticePeriodDate',$Rent,'$DepositFee','$ProcessingFee','$Fixedaircon_fee','$Quaterlyfee','$ElectricitycapFee','$CheckOutCleanFee','$Curtain_DrycleanFee','$cardno','$StartDate','$UserStamp','$StartDate','$EndDate','$accesscard','$Nationality','$Mobile','$IntlMobile','$Emailid','$PassportNo','$PassportDate','$DOB','$EpNo','$EPDate','$Comments',@CUSTOMER_CREATION_TEMPTBLNAME,@CUSTOMER_SUCCESSFLAG)";
+            $this->db->query('SET AUTOCOMMIT=0');
+            $this->db->query('START TRANSACTION');
+            $CallQuery = "CALL SP_CUSTOMER_CREATION_INSERT(1,null,'$FirstName','$Lastname','$CompanyName','$CompanyAddress','$CompanyPostalCode','$Officeno',$Uint,'$RoomType','$S_starttime','$S_endtime','$E_starttime','$E_endtime','$Leaseperiod',$CCRE_quators,'$processwaived','$Prorated','$NoticePeriod','$NoticePeriodDate',$Rent,'$DepositFee','$ProcessingFee','$Fixedaircon_fee','$Quaterlyfee','$ElectricitycapFee','$CheckOutCleanFee','$Curtain_DrycleanFee','$cardno','$StartDate','$UserStamp','$StartDate','$EndDate','$accesscard','$Nationality','$Mobile','$IntlMobile','$Emailid','$PassportNo','$PassportDate','$DOB','$EpNo','$EPDate','$Comments',@CUSTOMER_CREATION_TEMPTBLNAME,@CUSTOMER_SUCCESSFLAG,@SAVE_POINT_NAME)";
             $this->db->query($CallQuery);
-            $outparm_query = 'SELECT @CUSTOMER_CREATION_TEMPTBLNAME AS TEMP_TABLE';
-            $outparm_result = $this->db->query($outparm_query);
-            $temptable = $outparm_result->row()->TEMP_TABLE;
-            $Confirm_query = 'SELECT @CUSTOMER_SUCCESSFLAG AS CONFIRM';
-            $Confirm_result = $this->db->query($Confirm_query);
-            $Confirm_Meessage =$Confirm_result->row()->CONFIRM;
+            $outparm_query = $this->db->query('SELECT @CUSTOMER_CREATION_TEMPTBLNAME AS TEMP_TABLE,@CUSTOMER_SUCCESSFLAG AS CONFIRM,@SAVE_POINT_NAME AS SAVEPOINT_NAME');
+            foreach ($outparm_query->result_array() as $key=>$val)
+            {
+                $temptable=$val['TEMP_TABLE'];
+                $Confirm_Meessage=$val['CONFIRM'];
+                $savepoint=$val['SAVEPOINT_NAME'];
+            }
             if ($Confirm_Meessage == 1)
             {
                 $Customerid_query = 'SELECT CUSTOMER_ID FROM CUSTOMER ORDER BY CUSTOMER_ID DESC LIMIT 1';
@@ -175,11 +180,11 @@ class Mdl_customer_creation extends CI_Model
                 $mimetype = 'application/pdf';
                 $this->load->model('EILIB/Mdl_eilib_common_function');
                 $service = $this->Mdl_eilib_common_function->get_service_document();
-
                 $Fileupload = '';
                 $UnitFolderrollback = '';
                 $CustomerFolderback = '';
-                if (($filetempname != '' && $Confirm_Meessage == 1) || ($CCoption != 3 && $Confirm_Meessage == 1)) {
+                if (($filetempname != '' && $Confirm_Meessage == 1) || ($CCoption != 3 && $Confirm_Meessage == 1))
+                {
                     $Targetfolderid = $this->Mdl_eilib_common_function->CUST_TargetFolderId();
                     $UnitFolderid = $this->Mdl_eilib_common_function->getUnitfolderId($Uint, $Customerid);
                     $unitcount = count($UnitFolderid);
@@ -194,7 +199,8 @@ class Mdl_customer_creation extends CI_Model
                         $CustomerFolder = $this->Mdl_eilib_common_function->Customer_FolderCreation($service, $customerfoldername, 'PersonalDetails', $UnitFolder);
                         $CustomerFolderback = $CustomerFolder;
                     }
-                    if ($filetempname != '') {
+                    if ($filetempname != '')
+                    {
                         $Fileupload = $this->Mdl_eilib_common_function->Customer_FileUpload($service, $filename, 'PersonalDetails', $CustomerFolder, $mimetype, $filetempname);
                     }
                     if ($CustomerFolder != '') {
@@ -204,15 +210,17 @@ class Mdl_customer_creation extends CI_Model
                         $Fileresponse = $outparm_result->row()->SUCCESS;
                     }
                 }
-                if ($Confirm_Meessage == 1) {
+                if ($Confirm_Meessage == 1 )
+                {
                     $this->load->model('EILIB/Mdl_eilib_calender');
                     $cal = $this->Mdl_eilib_calender->createCalendarService();
                     $cal_startevents = $StartDate . ',' . $S_starttime . ',' . $S_endtime;
                     $cal_endevents = $EndDate . ',' . $E_starttime . ',' . $E_endtime;
                     $cal_arry = array();
                     array_push($cal_arry, $cal_startevents, $cal_endevents);
-                    $calresponse = $this->Mdl_eilib_calender->CUST_customercalendercreation($cal, $Customerid, $StartDate, $S_starttime, $S_endtime, $EndDate, $E_starttime, $E_endtime, $FirstName, $Lastname, $Mobile, $IntlMobile, $Officeno, $Emailid, $Uint, $RoomType, '');
-                    if (($CCoption == 4 || $CCoption == 5 || $CCoption == 6) && $calresponse == 1) {
+                    $calresponse = $this->Mdl_eilib_calender->CUST_customercalendercreation($Fileupload,$cal, $Customerid, $StartDate, $S_starttime, $S_endtime, $EndDate, $E_starttime, $E_endtime, $FirstName, $Lastname, $Mobile, $IntlMobile, $Officeno, $Emailid, $Uint, $RoomType, '');
+                    if (($CCoption == 4 || $CCoption == 5 || $CCoption == 6) && $calresponse == 1)
+                    {
                         $Invoiceandcontractid = $this->Mdl_eilib_common_function->CUST_invoice_contractreplacetext();
                         $Docowner = $this->Mdl_eilib_common_function->CUST_documentowner($UserStamp);
                         $Emailtemplate = $this->Mdl_eilib_common_function->CUST_emailsubandmessages();
@@ -223,11 +231,11 @@ class Mdl_customer_creation extends CI_Model
                             $InvoiceId = $this->Mdl_eilib_invoice_contract->CUST_invoice($UserStamp, $service, $Uint, $Name, $CompanyName, $Invoiceandcontractid[9], $Invoiceandcontractid[0], $Invoiceandcontractid[1], $Rent, $ProcessingFee, $DepositFee, $StartDate, $EndDate, $RoomType, $Leaseperiod, $Prorated, $Sendmailid, $Docowner, 'CREATION', $processwaived, $Customerid, $CustomerFolder);
                             if ($InvoiceId[0] == 1) {
                                 $this->InvoiceCreation($InvoiceId, $Emailtemplate, $Username, $Confirm_Meessage, $Uint, $Name, $Sendmailid, $UserStamp);
-                                $this->db->trans_commit();
+                                $this->db->trans_savepoint_release($savepoint) ;
                                 echo $InvoiceId[0];
                                 exit;
                             } else {
-                                $this->db->trans_rollback();
+                                $this->db->trans_savepoint_rollback($savepoint);
                                 $this->db->query('DROP TABLE IF EXISTS ' . $temptable);
                                 $returnmessage = $this->Mdl_eilib_calender->CUST_CREATION_customercalenderdeletion($cal, $Customerid, $cal_arry);
                                 if ($UnitFolderrollback != '') {
@@ -241,14 +249,14 @@ class Mdl_customer_creation extends CI_Model
                             }
                         } else if ($CCoption == 5) {
                             $ContractId = $this->Mdl_eilib_invoice_contract->CUST_contract($service, $Uint, $Startdate, $Enddate, $CompanyName, $Name, $NoticePeriod, $PassportNo, $PassportDate, $EpNo, $EPDate, $NoticePeriodDate, $Leaseperiod, $Cont_cardno, $Rent, $InvQuaterlyfee, $InvFixedaircon_fee, $InvElectricitycapFee, $InvCurtain_DrycleanFee, $InvCheckOutCleanFee, $InvProcessingFee, $InvDepositFee, $Invwaived, $RoomType, $InvProrated, 'CREATION', $Sendmailid, $Docowner, $CustomerFolder);
-                            if ($ContractId[0] == 1) {
+                            if ($ContractId[0] == 0) {
 
                                 $this->ContractCreation($ContractId, $Emailtemplate, $Username, $Confirm_Meessage, $Uint, $Name, $Sendmailid, $UserStamp);
-                                $this->db->trans_commit();
+                                $this->db->trans_savepoint_release($savepoint) ;
                                 echo $Confirm_Meessage;
                                 exit;
                             } else {
-                                $this->db->trans_rollback();
+                                $this->db->trans_savepoint_rollback($savepoint);
                                 $this->db->query('DROP TABLE IF EXISTS ' . $temptable);
                                 $returnmessage = $this->Mdl_eilib_calender->CUST_CREATION_customercalenderdeletion($cal, $Customerid, $cal_arry);
                                 if ($UnitFolderrollback != '') {
@@ -257,20 +265,21 @@ class Mdl_customer_creation extends CI_Model
                                 if ($CustomerFolderback != '') {
                                     $this->Mdl_eilib_invoice_contract->CUST_UNSHARE_FILE($service, $CustomerFolderback);
                                 }
-                                echo $Confirm_Meessage;
+                                echo $ContractId[3];
                                 exit;
                             }
 
                         } else if ($CCoption == 6) {
                             $InvoiceId = $this->Mdl_eilib_invoice_contract->CUST_invoice($UserStamp, $service, $Uint, $Name, $CompanyName, $Invoiceandcontractid[9], $Invoiceandcontractid[0], $Invoiceandcontractid[1], $Rent, $ProcessingFee, $DepositFee, $StartDate, $EndDate, $RoomType, $Leaseperiod, $Prorated, $Sendmailid, $Docowner, 'CREATION', $processwaived, $Customerid, $CustomerFolder);
                             $ContractId = $this->Mdl_eilib_invoice_contract->CUST_contract($service, $Uint, $Startdate, $Enddate, $CompanyName, $Name, $NoticePeriod, $PassportNo, $PassportDate, $EpNo, $EPDate, $NoticePeriodDate, $Leaseperiod, $Cont_cardno, $Rent, $InvQuaterlyfee, $InvFixedaircon_fee, $InvElectricitycapFee, $InvCurtain_DrycleanFee, $InvCheckOutCleanFee, $InvProcessingFee, $InvDepositFee, $Invwaived, $RoomType, $InvProrated, 'CREATION', $Sendmailid, $Docowner, $CustomerFolder);
-                            if ($InvoiceId[0] == 1 && $ContractId[0] == 1) {
-                                $this->db->trans_commit();
+                             if ($InvoiceId[0] == 1 && $ContractId[0] == 1) {
+                                 $this->db->trans_savepoint_release($savepoint) ;
                                 $this->InvoiceandContract($InvoiceId, $ContractId, $Emailtemplate, $Username, $Confirm_Meessage, $Uint, $Name, $Sendmailid, $UserStamp);
                                 echo $Confirm_Meessage;
                                 exit;
                             } else {
-                                $this->db->trans_rollback();
+                                 echo $savepoint;
+                                 $this->db->trans_savepoint_rollback($savepoint);
                                 $this->db->query('DROP TABLE IF EXISTS ' . $temptable);
                                 $returnmessage = $this->Mdl_eilib_calender->CUST_CREATION_customercalenderdeletion($cal, $Customerid, $cal_arry);
                                 if ($UnitFolderrollback != '') {
@@ -279,33 +288,40 @@ class Mdl_customer_creation extends CI_Model
                                 if ($CustomerFolderback != '') {
                                     $this->Mdl_eilib_invoice_contract->CUST_UNSHARE_FILE($service, $CustomerFolderback);
                                 }
-                                echo $Confirm_Meessage;
+                                echo 0;
                                 exit;
                             }
                         }
-                    } else {
+                    }
+                    else
+                    {
                         if ($calresponse == 1) {
-                            $this->db->trans_commit();
+                            $this->db->trans_savepoint_release($savepoint) ;
                             echo $Confirm_Meessage;
                             exit;
-                        } else {
-                            $this->db->trans_rollback();
+                        }
+                        else
+                        {
+                            $this->db->trans_savepoint_rollback($savepoint);
                             $this->db->query('DROP TABLE IF EXISTS ' . $temptable);
                             $returnmessage = $this->Mdl_eilib_calender->CUST_CREATION_customercalenderdeletion($cal, $Customerid, $cal_arry);
                             echo $Confirm_Meessage;
                             exit;
                         }
                     }
-                } else {
-                    $this->db->trans_rollback();
+                }
+                else
+                {
+                    $this->db->trans_savepoint_rollback($savepoint);
+                    $this->db->query('DROP TABLE IF EXISTS ' . $temptable);
                     echo $Confirm_Meessage;
                     exit;
                 }
             }
             else
-            {
-                $this->db->trans_rollback();
-                echo $Confirm_Meessage;
+            {   $this->db->trans_savepoint_rollback($savepoint);
+                $this->db->query('DROP TABLE IF EXISTS ' . $temptable);
+                echo 0;
                 exit;
             }
         }
@@ -313,20 +329,48 @@ class Mdl_customer_creation extends CI_Model
         catch (Exception $e)
         {
             $this->db->trans_rollback();
-            echo $Confirm_Meessage;
+            $this->db->query('DROP TABLE IF EXISTS ' . $temptable);
+            $returnmessage = $this->Mdl_eilib_calender->CUST_CREATION_customercalenderdeletion($cal, $Customerid, $cal_arry);
+            if ($UnitFolderrollback != '') {
+                $this->Mdl_eilib_invoice_contract->CUST_UNSHARE_FILE($service, $UnitFolderrollback);
+            }
+            if ($CustomerFolderback != '') {
+                $this->Mdl_eilib_invoice_contract->CUST_UNSHARE_FILE($service, $CustomerFolderback);
+            }
+            echo $e->getMessage();
             exit;
         }
     }
-
     public function Customercreationmailpart($Confirm_Meessage,$Emailsub,$Messagebody,$Displayname,$Sendmailid,$UserStamp)
     {
-        $message1 = new Message();
-        $message1->setSender($Displayname.'<'.$UserStamp.'>');
-        $message1->addTo($Sendmailid);
-        $message1->setSubject($Emailsub);
-        $message1->setHtmlBody($Messagebody);
-        $message1->send();
+        $mail = new PHPMailer;
+        $mail->isSMTP();
+        $mail->Host = 'smtp.gmail.com';
+        $mail->SMTPAuth = true;
+        $mail->Username = 'safiyullah84@gmail.com';
+        $mail->Password = 'safi984151';
+        $mail->SMTPSecure = 'tls';
+        $mail->Port = 587;
+        $mail->FromName = $Displayname;
+        $mail->addAddress($Sendmailid);
+        $mail->WordWrap = 50;
+        $mail->isHTML(true);
+        $mail->Subject = $Emailsub;
+        $mail->Body = $Messagebody;
+        $mail->Send();
     }
+//
+//    public function Customercreationmailpart($Confirm_Meessage,$Emailsub,$Messagebody,$Displayname,$Sendmailid,$UserStamp)
+//    {
+//        $message1 = new Message();
+//        $message1->setSender($Displayname.'<'.$UserStamp.'>');
+//        $message1->addTo($Sendmailid);
+//        $message1->setSubject($Emailsub);
+//        $message1->setHtmlBody($Messagebody);
+//        $message1->send();
+//        $this->db->trans_commit();
+//        return $Confirm_Meessage;
+//    }
     public function InvoiceCreation($InvoiceId,$Emailtemplate,$Username,$Confirm_Meessage,$Uint,$Name,$Docowner,$UserStamp)
     {
         $subcontent = $Uint . '-' . $Name . '-' . $InvoiceId[3];
@@ -391,6 +435,7 @@ class Mdl_customer_creation extends CI_Model
     public function Customer_Recheckin_Save($UserStamp,$Leaseperiod,$Quoters)
     {
         try {
+            set_time_limit(0);
             $Customerid = $_POST['CCRE_CustomerId'];
             $FirstName = $_POST['CCRE_FirstName'];
             $Lastname = $_POST['CCRE_LastName'];
@@ -505,14 +550,17 @@ class Mdl_customer_creation extends CI_Model
             $Emailid = $_POST['CCRE_Emailid'];
             $CCoption = $_POST['CCRE_Option'];
             $Sendmailid = $_POST['CCRE_MailList'];
-            $CallQuery = "CALL SP_CUSTOMER_CREATION_INSERT(2,'$Customerid','$FirstName','$Lastname','$CompanyName','$CompanyAddress','$CompanyPostalCode','$Officeno',$Uint,'$RoomType','$S_starttime','$S_endtime','$E_starttime','$E_endtime','$Leaseperiod',$CCRE_quators,'$processwaived','$Prorated','$NoticePeriod','$NoticePeriodDate',$Rent,'$DepositFee','$ProcessingFee','$Fixedaircon_fee','$Quaterlyfee','$ElectricitycapFee','$CheckOutCleanFee','$Curtain_DrycleanFee','$cardno','$StartDate','$UserStamp','$StartDate','$EndDate','$accesscard','$Nationality','$Mobile','$IntlMobile','$Emailid','$PassportNo','$PassportDate','$DOB','$EpNo','$EPDate','$Comments',@CUSTOMER_RECHECKIN_TEMPTBLNAME,@CUSTOMER_RECHECKIN_FLAG)";
+            $this->db->query('SET AUTOCOMMIT=0');
+            $this->db->query('START TRANSACTION');
+            $CallQuery = "CALL SP_CUSTOMER_CREATION_INSERT(2,'$Customerid','$FirstName','$Lastname','$CompanyName','$CompanyAddress','$CompanyPostalCode','$Officeno',$Uint,'$RoomType','$S_starttime','$S_endtime','$E_starttime','$E_endtime','$Leaseperiod',$CCRE_quators,'$processwaived','$Prorated','$NoticePeriod','$NoticePeriodDate',$Rent,'$DepositFee','$ProcessingFee','$Fixedaircon_fee','$Quaterlyfee','$ElectricitycapFee','$CheckOutCleanFee','$Curtain_DrycleanFee','$cardno','$StartDate','$UserStamp','$StartDate','$EndDate','$accesscard','$Nationality','$Mobile','$IntlMobile','$Emailid','$PassportNo','$PassportDate','$DOB','$EpNo','$EPDate','$Comments',@CUSTOMER_CREATION_TEMPTBLNAME,@CUSTOMER_SUCCESSFLAG,SAVE_POINT_NAME)";
             $this->db->query($CallQuery);
-            $outparm_query = 'SELECT @CUSTOMER_RECHECKIN_TEMPTBLNAME AS TEMP_TABLE';
-            $outparm_result = $this->db->query($outparm_query);
-            $temptable = $outparm_result->row()->TEMP_TABLE;
-            $Confirm_query = 'SELECT @CUSTOMER_RECHECKIN_FLAG AS CONFIRM';
-            $Confirm_result = $this->db->query($Confirm_query);
-            $Confirm_Meessage =$Confirm_result->row()->CONFIRM;
+            $outparm_query = $this->db->query('SELECT @CUSTOMER_CREATION_TEMPTBLNAME AS TEMP_TABLE,@CUSTOMER_SUCCESSFLAG AS CONFIRM,@SAVE_POINT_NAME AS SAVEPOINT_NAME');
+            foreach ($outparm_query->result_array() as $key=>$val)
+            {
+                $temptable=$val['TEMP_TABLE'];
+                $Confirm_Meessage=$val['CONFIRM'];
+                $savepoint=$val['SAVEPOINT_NAME'];
+            }
             if ($Confirm_Meessage == 1) {
                 //FILE UPLOAD
                 $filetempname = $_FILES['CC_fileupload']['tmp_name'];
@@ -557,7 +605,7 @@ class Mdl_customer_creation extends CI_Model
                     $cal_endevents = $EndDate . ',' . $E_starttime . ',' . $E_endtime;
                     $cal_arry = array();
                     array_push($cal_arry, $cal_startevents, $cal_endevents);
-                    $calresponse = $this->Mdl_eilib_calender->CUST_customercalendercreation($cal, $Customerid, $StartDate, $S_starttime, $S_endtime, $EndDate, $E_starttime, $E_endtime, $FirstName, $Lastname, $Mobile, $IntlMobile, $Officeno, $Emailid, $Uint, $RoomType, '');
+                    $calresponse = $this->Mdl_eilib_calender->CUST_customercalendercreation($Fileupload,$cal, $Customerid, $StartDate, $S_starttime, $S_endtime, $EndDate, $E_starttime, $E_endtime, $FirstName, $Lastname, $Mobile, $IntlMobile, $Officeno, $Emailid, $Uint, $RoomType, '');
 
                     if (($CCoption == 4 || $CCoption == 5 || $CCoption == 6) && $calresponse == 1) {
                         $Invoiceandcontractid = $this->Mdl_eilib_common_function->CUST_invoice_contractreplacetext();
@@ -569,11 +617,13 @@ class Mdl_customer_creation extends CI_Model
                         if ($CCoption == 4) {
                             $InvoiceId = $this->Mdl_eilib_invoice_contract->CUST_invoice($UserStamp, $service, $Uint, $Name, $CompanyName, $Invoiceandcontractid[9], $Invoiceandcontractid[0], $Invoiceandcontractid[1], $Rent, $ProcessingFee, $DepositFee, $StartDate, $EndDate, $RoomType, $Leaseperiod, $Prorated, $Sendmailid, $Docowner, 'CREATION', $processwaived, $Customerid, $CustomerFolder);
                             if ($InvoiceId[0] == 1) {
-                                $this->db->trans_commit();
+                                $this->db->trans_savepoint_release($savepoint) ;
+                                $this->db->query('DROP TABLE IF EXISTS ' . $temptable);
                                 $this->InvoiceCreation($InvoiceId, $Emailtemplate, $Username, $Confirm_Meessage, $Uint, $Name, $Sendmailid, $UserStamp);
                                 echo $InvoiceId[0];
                                 exit;
                             } else {
+                                $this->db->trans_savepoint_rollback($savepoint);
                                 $returnmessage = $this->Mdl_eilib_calender->CUST_CREATION_customercalenderdeletion($cal, $Customerid, $cal_arry);
                                 if ($Fileupload != '') {
                                     $this->Mdl_eilib_invoice_contract->CUST_UNSHARE_FILE($service, $Fileupload);
@@ -587,17 +637,20 @@ class Mdl_customer_creation extends CI_Model
                                 if ($InvoiceId[1] != '') {
                                     $this->Mdl_eilib_invoice_contract->CUST_UNSHARE_FILE($service, $InvoiceId[1]);
                                 }
+                                $this->db->query('DROP TABLE IF EXISTS ' . $temptable);
                                 echo $Confirm_Meessage;
                                 exit;
                             }
                         } else if ($CCoption == 5) {
                             $ContractId = $this->Mdl_eilib_invoice_contract->CUST_contract($service, $Uint, $Startdate, $Enddate, $CompanyName, $Name, $NoticePeriod, $PassportNo, $PassportDate, $EpNo, $EPDate, $NoticePeriodDate, $Leaseperiod, $Cont_cardno, $Rent, $InvQuaterlyfee, $InvFixedaircon_fee, $InvElectricitycapFee, $InvCurtain_DrycleanFee, $InvCheckOutCleanFee, $InvProcessingFee, $InvDepositFee, $Invwaived, $RoomType, $InvProrated, 'CREATION', $Sendmailid, $Docowner, $CustomerFolder);
                             if ($ContractId[0] == 1) {
-                                $this->db->trans_commit();
+                                $this->db->trans_savepoint_release($savepoint) ;
+                                $this->db->query('DROP TABLE IF EXISTS ' . $temptable);
                                 $this->ContractCreation($ContractId, $Emailtemplate, $Username, $Confirm_Meessage, $Uint, $Name, $Sendmailid, $UserStamp);
                                 echo $ContractId[0];
                                 exit;
                             } else {
+                                $this->db->trans_savepoint_rollback($savepoint);
                                 $returnmessage = $this->Mdl_eilib_calender->CUST_CREATION_customercalenderdeletion($cal, $Customerid, $cal_arry);
                                 if ($Fileupload != '') {
                                     $this->Mdl_eilib_invoice_contract->CUST_UNSHARE_FILE($service, $Fileupload);
@@ -611,6 +664,7 @@ class Mdl_customer_creation extends CI_Model
                                 if ($ContractId[1] != '') {
                                     $this->Mdl_eilib_invoice_contract->CUST_UNSHARE_FILE($service, $ContractId[1]);
                                 }
+                                $this->db->query('DROP TABLE IF EXISTS ' . $temptable);
                                 echo $Confirm_Meessage;
                                 exit;
                             }
@@ -618,11 +672,13 @@ class Mdl_customer_creation extends CI_Model
                             $InvoiceId = $this->Mdl_eilib_invoice_contract->CUST_invoice($UserStamp, $service, $Uint, $Name, $CompanyName, $Invoiceandcontractid[9], $Invoiceandcontractid[0], $Invoiceandcontractid[1], $Rent, $ProcessingFee, $DepositFee, $StartDate, $EndDate, $RoomType, $Leaseperiod, $Prorated, $Sendmailid, $Docowner, 'CREATION', $processwaived, $Customerid, $CustomerFolder);
                             $ContractId = $this->Mdl_eilib_invoice_contract->CUST_contract($service, $Uint, $Startdate, $Enddate, $CompanyName, $Name, $NoticePeriod, $PassportNo, $PassportDate, $EpNo, $EPDate, $NoticePeriodDate, $Leaseperiod, $Cont_cardno, $Rent, $InvQuaterlyfee, $InvFixedaircon_fee, $InvElectricitycapFee, $InvCurtain_DrycleanFee, $InvCheckOutCleanFee, $InvProcessingFee, $InvDepositFee, $Invwaived, $RoomType, $InvProrated, 'CREATION', $Sendmailid, $Docowner, $CustomerFolder);
                             if ($InvoiceId[0] == 1 && $ContractId[0] == 1) {
-                                $this->db->trans_commit();
+                                $this->db->trans_savepoint_release($savepoint) ;
+                                $this->db->query('DROP TABLE IF EXISTS ' . $temptable);
                                 $this->InvoiceandContract($InvoiceId, $ContractId, $Emailtemplate, $Username, $Confirm_Meessage, $Uint, $Name, $Sendmailid, $UserStamp);
                                 echo $Confirm_Meessage;
                                 exit;
                             } else {
+                                $this->db->trans_savepoint_rollback($savepoint);
                                 $returnmessage = $this->Mdl_eilib_calender->CUST_CREATION_customercalenderdeletion($cal, $Customerid, $cal_arry);
                                 if ($Fileupload != '') {
                                     $this->Mdl_eilib_invoice_contract->CUST_UNSHARE_FILE($service, $Fileupload);
@@ -639,17 +695,20 @@ class Mdl_customer_creation extends CI_Model
                                 if ($InvoiceId[1] != '') {
                                     $this->Mdl_eilib_invoice_contract->CUST_UNSHARE_FILE($service, $InvoiceId[1]);
                                 }
+                                $this->db->query('DROP TABLE IF EXISTS ' . $temptable);
                                 echo $Confirm_Meessage;
                                 exit;
                             }
                         }
                     } else {
                         if ($calresponse == 1) {
-                            $this->db->trans_commit();
+                            $this->db->trans_savepoint_release($savepoint) ;
+                            $this->db->query('DROP TABLE IF EXISTS ' . $temptable);
                             echo $Confirm_Meessage;
                             exit;
                         } else {
-                            $this->db->trans_rollback();
+                            $this->db->trans_savepoint_rollback($savepoint);
+                            $this->db->query('DROP TABLE IF EXISTS ' . $temptable);
                             echo $Confirm_Meessage;
                             exit;
                         }
@@ -657,19 +716,24 @@ class Mdl_customer_creation extends CI_Model
                 }
                 else
                 {
+                    $this->db->trans_savepoint_rollback($savepoint);
+                    $this->db->query('DROP TABLE IF EXISTS ' . $temptable);
                     echo $Confirm_Meessage;
                     exit;
                 }
             }
             else
             {
+                $this->db->trans_savepoint_rollback($savepoint);
+                $this->db->query('DROP TABLE IF EXISTS ' . $temptable);
                 echo $Confirm_Meessage;
                 exit;
             }
         }
         catch (Exception $e)
         {
-            $this->db->trans_rollback();
+            $this->db->query('DROP TABLE IF EXISTS ' . $temptable);
+            $this->db->trans_savepoint_rollback($savepoint);
             echo $e->getMessage();
             exit;
         }

@@ -476,7 +476,6 @@
                 data:{"UNIT":unitarray,"CUSTOMERID":Customerarray,"LP":Leasperiodarray,"PAYMENT":paymenttypearray,"AMOUNT":amountarray,"FORPERIOD":forperiodarray,"PAIDDATE":paiddatearray,"Comments":commentsarray,"FLAG":amountflag},
                 success: function(data){
                     $('.preloader').hide();
-                    alert(data)
                     var value_array=JSON.parse(data);
                     if(value_array=='' || value_array==null)
                     {

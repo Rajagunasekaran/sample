@@ -67,6 +67,7 @@
                 $('#CCRE_lbl_electcaperrormsg').text(errormsg[17].EMC_DATA)
                 $('#CCRE_lbl_prorated').text(prorated[0].CCN_DATA);
                 $('#CCRE_lbl_waived').text(prorated[1].CCN_DATA);
+//            $('#CCRE_lbl_passporterrormsg').text(errormsg[19].EMC_DATA);
                 $('#CCRE_lbl_epnodateerrormsg').text(errormsg[20].EMC_DATA);
                 $('#CCRE_lbl_passportdateerrormsg').text(errormsg[24].EMC_DATA);
                 $('#CCRE_lbl_ep_dateerrormsg').text(errormsg[23].EMC_DATA);
@@ -973,8 +974,8 @@
             var xmlhttp = new XMLHttpRequest();
             xmlhttp.onreadystatechange = function () {
                 if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-                    var msg_alert = xmlhttp.responseText;
                     $('.preloader').hide();
+                    var msg_alert = xmlhttp.responseText;
                     if (msg_alert == 1)
                     {
                         show_msgbox("CUSTOMER CREATION", errormsg[7].EMC_DATA, "success", false);
@@ -1501,13 +1502,12 @@
                             <label>FILE UPLOAD</label>
                         </div>
                         <div class="col-md-3 fileinputs">
-                            <input type="file" id="CC_fileupload" name="CC_fileupload"  class="form-control fileextensionchk file" />
+                            <input type="file" id="CC_fileupload" name="CC_fileupload"  class="form-control fileextensionchk file" accept="application/pdf,application/txt"/>
                         </div>
                     </div>
-
                     <div class="row form-group">
                         <div class="col-lg-offset-2 col-lg-3">
-                            <input type="button" id="CCRE_btn_savebutton" class="btn" value="CREATE" disabled>         <input type="button" id="CustomerCreation_Reset" class="btn" value="RESET">
+                            <input type="button" id="CCRE_btn_savebutton" class="btn" value="CREATE" disabled>    <input type="button" id="CustomerCreation_Reset" class="btn" value="RESET">
                         </div>
                     </div>
                 </div>

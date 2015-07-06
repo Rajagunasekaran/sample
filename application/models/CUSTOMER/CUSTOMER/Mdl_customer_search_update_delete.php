@@ -1,8 +1,8 @@
 <?php
 error_reporting(0);
-require_once 'google/appengine/api/mail/Message.php';
-use google\appengine\api\mail\Message;
-//require_once 'PHPMailer-master/PHPMailerAutoload.php';
+//require_once 'google/appengine/api/mail/Message.php';
+//use google\appengine\api\mail\Message;
+require_once 'PHPMailer-master/PHPMailerAutoload.php';
 class Mdl_customer_search_update_delete extends CI_Model
 {
     public function getSearchOption()
@@ -288,6 +288,7 @@ class Mdl_customer_search_update_delete extends CI_Model
     public function Customer_Search_Update($UserStamp,$Leaseperiod,$Quoters)
     {
         try {
+            set_time_limit(0);
             $FirstName = $_POST['CCRE_SRC_FirstName'];
             $Lastname = $_POST['CCRE_SRC_LastName'];
             $Name=$FirstName.' '.$Lastname;
@@ -379,6 +380,7 @@ class Mdl_customer_search_update_delete extends CI_Model
             $Confirm_query = 'SELECT @SUCCESS_FLAG AS CONFIRM';
             $Confirm_result = $this->db->query($Confirm_query);
             $Confirm_Meessage =$Confirm_result->row()->CONFIRM;
+            $this->db->trans_commit();
             //FILEUPLOAD
             $filetempname = $_FILES['CSRC_fileupload']['tmp_name'];
             $filename = $_FILES['CSRC_fileupload']['name'];
@@ -390,7 +392,7 @@ class Mdl_customer_search_update_delete extends CI_Model
             $this->load->model('EILIB/Mdl_eilib_common_function');
             $service = $this->Mdl_eilib_common_function->get_service_document();
             $Fileupload='';
-            if (($filetempname != '' && $Confirm_Meessage==1) || $CCoption!=3)
+            if (($filetempname != '' && $Confirm_Meessage==1) || ($CCoption!=3 && $Confirm_Meessage==1))
             {
                 $Targetfolderid=$this->Mdl_eilib_common_function->CUST_TargetFolderId();
                 $UnitFolderid=$this->Mdl_eilib_common_function->getUnitfolderId($Uint,$Customerid);
@@ -420,7 +422,8 @@ class Mdl_customer_search_update_delete extends CI_Model
                     $this->Mdl_eilib_common_function->Customer_FileUpload($service, $filename, 'PersonalDetails', $CustomerFolder, $mimetype, $filetempname);
                 }
             }
-            if ($Confirm_Meessage == 1) {
+            if ($Confirm_Meessage == 1)
+            {
                 if($Customerflag==1)
                 {
                     $this->load->model('EILIB/Mdl_eilib_calender');
@@ -457,6 +460,9 @@ class Mdl_customer_search_update_delete extends CI_Model
                             $Messagebody = $Messagebody . '<br><br>INVOICE :' . $InvoiceId[2];
                             $Displayname = $this->Mdl_eilib_common_function->Get_MailDisplayName('INVOICE');
                             $this->CustomerUpdatemailpart($Confirm_Meessage, $Emailsub, $Messagebody, $Displayname, $Sendmailid, $UserStamp);
+                            $this->db->trans_commit();
+                            echo $InvoiceId[0];
+                            exit;
                         }
                         else
                         {
@@ -475,8 +481,12 @@ class Mdl_customer_search_update_delete extends CI_Model
                             $Messagebody = $Messagebody . '<br><br>CONTRACT :' . $ContractId[2];
                             $Displayname = $this->Mdl_eilib_common_function->Get_MailDisplayName('CONTRACT');
                             $this->CustomerUpdatemailpart($Confirm_Meessage, $Emailsub, $Messagebody, $Displayname, $Sendmailid, $UserStamp);
+                            $this->db->trans_commit();
+                            echo $ContractId[0];
+                            exit;
                         }
                     } else if ($CCoption == 6) {
+
                         $InvoiceId = $this->Mdl_eilib_invoice_contract->CUST_invoice($UserStamp, $service, $Uint, $Name, $CompanyName, $Invoiceandcontractid[9], $Invoiceandcontractid[0], $Invoiceandcontractid[1], $Rent, $ProcessingFee, $DepositFee, $Start_date, $End_date, $RoomType, $Leaseperiod, $InvProrated, $Sendmailid, $Docowner, 'CREATION', $Invwaived, $Customerid,$CustomerFolder);
                         $ContractId = $this->Mdl_eilib_invoice_contract->CUST_contract($service, $Uint, $Start_date, $End_date, $CompanyName, $Name, $NoticePeriod, $PassportNo, $PassportDate, $EpNo, $EPDate, $NoticePeriodDate, $Leaseperiod, $Cont_cardno, $Rent, $InvQuaterlyfee, $InvFixedaircon_fee, $InvElectricitycapFee, $InvCurtain_DrycleanFee, $InvCheckOutCleanFee, $InvProcessingFee, $InvDepositFee, $Invwaived, $RoomType, $InvProrated, 'CREATION', $Sendmailid, $Docowner,$CustomerFolder);
                         if($InvoiceId[0]==1 && $ContractId[0]==1)
@@ -492,6 +502,10 @@ class Mdl_customer_search_update_delete extends CI_Model
                             $Messagebody = $Messagebody . '<br><br>CONTRACT :' . $ContractId[2];
                             $Displayname = $this->Mdl_eilib_common_function->Get_MailDisplayName('INVOICE_N_CONTRACT');
                             $this->CustomerUpdatemailpart($Confirm_Meessage, $Emailsub, $Messagebody, $Displayname, $Sendmailid, $UserStamp);
+                            $this->db->trans_commit();
+                            echo $ContractId[0];
+                            echo $InvoiceId[0];
+                            exit;
                         }
                     }
                     $this->db->trans_commit();
@@ -502,7 +516,9 @@ class Mdl_customer_search_update_delete extends CI_Model
                     echo $Confirm_Meessage;
                     exit;
                 }
-            } else {
+            }
+            else
+            {
                 echo $Confirm_Meessage;
                 exit;
             }
@@ -514,15 +530,35 @@ class Mdl_customer_search_update_delete extends CI_Model
             exit;
         }
      }
-    public function CustomerUpdatemailpart($Confirm_Meessage,$Emailsub,$Messagebody,$Displayname,$Docowner,$UserStamp)
+//    public function CustomerUpdatemailpart($Confirm_Meessage,$Emailsub,$Messagebody,$Displayname,$Docowner,$UserStamp)
+//    {
+//        $message1 = new Message();
+//        $message1->setSender($Displayname.'<'.$UserStamp.'>');
+//        $message1->addTo($Docowner);
+//        $message1->setSubject($Emailsub);
+//        $message1->setHtmlBody($Messagebody);
+//        $message1->send();
+//        $this->db->trans_commit();
+//        echo $Confirm_Meessage;
+//        exit;
+//    }
+    public function CustomerUpdatemailpart($Confirm_Meessage,$Emailsub,$Messagebody,$Displayname,$Sendmailid,$UserStamp)
     {
-        $message1 = new Message();
-        $message1->setSender($Displayname.'<'.$UserStamp.'>');
-        $message1->addTo($Docowner);
-        $message1->setSubject($Emailsub);
-        $message1->setHtmlBody($Messagebody);
-        $message1->send();
-        $this->db->trans_commit();
+        $mail = new PHPMailer;
+        $mail->isSMTP();
+        $mail->Host = 'smtp.gmail.com';
+        $mail->SMTPAuth = true;
+        $mail->Username = 'safiyullah84@gmail.com';
+        $mail->Password = 'safi984151';
+        $mail->SMTPSecure = 'tls';
+        $mail->Port = 587;
+        $mail->FromName = $Displayname;
+        $mail->addAddress($Sendmailid);
+        $mail->WordWrap = 50;
+        $mail->isHTML(true);
+        $mail->Subject = $Emailsub;
+        $mail->Body = $Messagebody;
+        $mail->Send();
         echo $Confirm_Meessage;
         exit;
     }

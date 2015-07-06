@@ -82,6 +82,8 @@
      var AllCommentsArray=[];
      $(document).on('change','#CC_SRC_SearchOption',function() {
          $('#CSRC_updation_form').hide();
+         $('#tableempty_message').text('');
+         $('#Accesscardheader').text('');
          $('.preloader').show();
          $('#CC_SEARCH_DataTable').hide();
          $('#CC_SEARCH_acDataTable').hide();
@@ -795,119 +797,157 @@
      //SEARCH DETAILS
      $(document).on('click','#CC_src_btn_search',function(){
          $('#CSRC_updation_form').hide();
+         $('#tableempty_message').text('');
+         $('#Accesscardheader').text('');
          var searchoption=$('#CC_SRC_SearchOption').val();
          $('.preloader').show();
          $('#CC_SEARCH_DataTable').hide();
          $('#CC_SEARCH_acDataTable').hide();
          $("#CC_src_btn_search").attr("disabled", "disabled");
+         var CSRC_customer_acc_detailstitle="CUSTOMER ACCOUNT DETAILS - "
+         var CSRC_customer_acc_detailsemptytitle="RECORDS NOT AVAILABLE FOR SELECTED "
          if(searchoption==18)
          {
              var companyname=$('#CC_SRC_CardNoSearch').val();
              var data={"SearchOption":searchoption,"data1":companyname}
-             $('#CC_SRC_CardNoSearch').val('');
+             var CSRC_customerheader=CSRC_customer_acc_detailstitle+" CARD NO : "+companyname;
+             var CSRC_emptycustomerheader=CSRC_customer_acc_detailsemptytitle+" CARD NO: "+companyname;
+//             $('#CC_SRC_CardNoSearch').val('');
          }
          if(searchoption==19)
          {
              var companyname=$('#CC_SRC_CompanyNameSearch').val();
              var data={"SearchOption":searchoption,"data1":companyname}
-             $('#CC_SRC_CompanyNameSearch').val('');
+             var CSRC_customerheader=CSRC_customer_acc_detailstitle+" COMPANY NAME : "+companyname;
+             var CSRC_emptycustomerheader=CSRC_customer_acc_detailsemptytitle+" COMPANY NAME: "+companyname;
+//             $('#CC_SRC_CompanyNameSearch').val('');
          }
          if(searchoption==21)
          {
               var customer_name=$('#CC_SRC_CustomerNameSearch').val();
               var customername=customer_name.replace('  ','_');
               var data={"SearchOption":searchoption,"data1":customername}
-             $('#CC_SRC_CustomerNameSearch').val('');
+             var CSRC_customerheader=CSRC_customer_acc_detailstitle+" CUSTOMER NAME : "+customer_name;
+             var CSRC_emptycustomerheader=CSRC_customer_acc_detailsemptytitle+" CUSTOMER NAME: "+customer_name;
+//             $('#CC_SRC_CustomerNameSearch').val('');
          }
          if(searchoption==22)
          {
              var CC_SRC_fromamt=$('#CC_SRC_FromAmount').val();
              var CC_SRC_toamt=$('#CC_SRC_ToAmount').val();
              var data={"SearchOption":searchoption,"data1":CC_SRC_fromamt,"data2":CC_SRC_toamt}
-             $('#CC_SRC_FromAmount').val('');
-             $('#CC_SRC_ToAmount').val('');
+             var CSRC_customerheader=CSRC_customer_acc_detailstitle+" DEPOSIT AMOUNT RANGE: "+CC_SRC_fromamt+" To "+CC_SRC_toamt
+             var CSRC_emptycustomerheader=CSRC_customer_acc_detailsemptytitle+" DEPOSIT AMOUNT RANGE: "+CC_SRC_fromamt+" To "+CC_SRC_toamt;
+//             $('#CC_SRC_FromAmount').val('');
+//             $('#CC_SRC_ToAmount').val('');
          }
          if(searchoption==30)
          {
              var CC_SRC_fromamt=$('#CC_SRC_FromAmount').val();
              var CC_SRC_toamt=$('#CC_SRC_ToAmount').val();
              var data={"SearchOption":searchoption,"data1":CC_SRC_fromamt,"data2":CC_SRC_toamt}
-             $('#CC_SRC_FromAmount').val('');
-             $('#CC_SRC_ToAmount').val('');
+             var CSRC_customerheader=CSRC_customer_acc_detailstitle+" RENT AMOUNT RANGE: "+CC_SRC_fromamt+" To "+CC_SRC_toamt
+             var CSRC_emptycustomerheader=CSRC_customer_acc_detailsemptytitle+" RENT AMOUNT RANGE: "+CC_SRC_fromamt+" To "+CC_SRC_toamt;
+//             $('#CC_SRC_FromAmount').val('');
+//             $('#CC_SRC_ToAmount').val('');
          }
          if(searchoption==27)
          {
              var CC_SRC_fromamt=$('#CC_SRC_listsearch').val();
              var data={"SearchOption":searchoption,"data1":CC_SRC_fromamt,"data2":''}
-             $('#CC_SRC_listsearch').val('SELECT');
+             var CSRC_customerheader=CSRC_customer_acc_detailstitle+" NATIONALITY : "+CC_SRC_fromamt;
+             var CSRC_emptycustomerheader=CSRC_customer_acc_detailsemptytitle+" NATIONALITY: "+CC_SRC_fromamt;
+//             $('#CC_SRC_listsearch').val('SELECT');
          }
          if(searchoption==31)
          {
              var Unit=$('#CC_SRC_listsearch').val();
              var data={"SearchOption":searchoption,"data1":Unit,"data2":''}
-             $('#CC_SRC_listsearch').val('SELECT');
+             var CSRC_customerheader=CSRC_customer_acc_detailstitle+" UNIT NO : "+Unit;
+             var CSRC_emptycustomerheader=CSRC_customer_acc_detailsemptytitle+" UNIT NO: "+Unit;
+//             $('#CC_SRC_listsearch').val('SELECT');
          }
          if(searchoption==33)
          {
              var Roomtype=$('#CC_SRC_listsearch').val();
              var data={"SearchOption":searchoption,"data1":Roomtype,"data2":''}
-             $('#CC_SRC_listsearch').val('SELECT');
+             var CSRC_customerheader=CSRC_customer_acc_detailstitle+" ROOM TYPE : "+Roomtype;
+             var CSRC_emptycustomerheader=CSRC_customer_acc_detailsemptytitle+" ROOM TYPE: "+Roomtype;
+//             $('#CC_SRC_listsearch').val('SELECT');
          }
          if(searchoption==24)
          {
              var Email=$('#CC_SRC_EmailSearch').val();
              var data={"SearchOption":searchoption,"data1":Email,"data2":''}
-             $('#CC_SRC_EmailSearch').val('');
+             var CSRC_customerheader=CSRC_customer_acc_detailstitle+" EMAIL ID : "+Email;
+             var CSRC_emptycustomerheader=CSRC_customer_acc_detailsemptytitle+" EMAIL ID: "+Email;
+//             $('#CC_SRC_EmailSearch').val('');
          }
          if(searchoption==25)
          {
              var Epno=$('#CC_SRC_EPnoSearch').val();
              var data={"SearchOption":searchoption,"data1":Epno,"data2":''}
-             $('#CC_SRC_EPnoSearch').val('');
+             var CSRC_customerheader=CSRC_customer_acc_detailstitle+" EP NUMBER : "+Epno;
+             var CSRC_emptycustomerheader=CSRC_customer_acc_detailsemptytitle+" EP NUMBER: "+Epno;
+//             $('#CC_SRC_EPnoSearch').val('');
          }
          if(searchoption==29)
          {
              var Passportno=$('#CC_SRC_PassportnoSearch').val();
              var data={"SearchOption":searchoption,"data1":Passportno,"data2":''}
-             $('#CC_SRC_PassportnoSearch').val('');
+             var CSRC_customerheader=CSRC_customer_acc_detailstitle+" PASSPORT NUMBER : "+Passportno;
+             var CSRC_emptycustomerheader=CSRC_customer_acc_detailsemptytitle+" PASSPORT NUMBER: "+Passportno;
+//             $('#CC_SRC_PassportnoSearch').val('');
          }
          if(searchoption==26)
          {
              var Mobile=$('#CC_SRC_MobilenoSearch').val();
              var data={"SearchOption":searchoption,"data1":Mobile,"data2":''}
-             $('#CC_SRC_MobilenoSearch').val('');
+             var CSRC_customerheader=CSRC_customer_acc_detailstitle+" MOBILE NUMBER : "+Mobile;
+             var CSRC_emptycustomerheader=CSRC_customer_acc_detailsemptytitle+" MOBILE NUMBER: "+Mobile;
+//             $('#CC_SRC_MobilenoSearch').val('');
          }
          if(searchoption==32)
          {
              var Mobile=$('#CC_SRC_IntMobilenoSearch').val();
              var data={"SearchOption":searchoption,"data1":Mobile,"data2":''}
-             $('#CC_SRC_IntMobilenoSearch').val('');
+             var CSRC_customerheader=CSRC_customer_acc_detailstitle+" INT'L NUMBER : "+Mobile;
+             var CSRC_emptycustomerheader=CSRC_customer_acc_detailsemptytitle+" INT'L NUMBER : "+Mobile;
+//             $('#CC_SRC_IntMobilenoSearch').val('');
          }
          if(searchoption==28)
          {
              var Mobile=$('#CC_SRC_OfficenoSearch').val();
              var data={"SearchOption":searchoption,"data1":Mobile,"data2":''}
-             $('#CC_SRC_OfficenoSearch').val('');
+             var CSRC_customerheader=CSRC_customer_acc_detailstitle+" OFFICE NUMBER : "+Mobile;
+             var CSRC_emptycustomerheader=CSRC_customer_acc_detailsemptytitle+" OFFICE NUMBER : "+Mobile;
+//             $('#CC_SRC_OfficenoSearch').val('');
          }
          if(searchoption==20)
          {
              var Comments=$('#CC_SRC_CommentsSearch').val();
              var data={"SearchOption":searchoption,"data1":Comments,"data2":''}
-             $('#CC_SRC_CommentsSearch').val('');
+             var CSRC_customerheader=CSRC_customer_acc_detailstitle+" COMMENTS : "+Comments;
+             var CSRC_emptycustomerheader=CSRC_customer_acc_detailsemptytitle+" COMMENTS : "+Comments;
+//             $('#CC_SRC_CommentsSearch').val('');
          }
          if(searchoption==23)
          {
             var fromdate=$('#CC_SRC_Fromdate').val();
             var todate=$('#CC_SRC_Todate').val();
              var data={"SearchOption":searchoption,"data1":fromdate,"data2":todate}
-             $('#CC_SRC_Fromdate').val('')
-             $('#CC_SRC_Todate').val('');
+             var CSRC_customerheader=CSRC_customer_acc_detailstitle+" DOB: "+fromdate+" To "+todate;
+             var CSRC_emptycustomerheader=CSRC_customer_acc_detailsemptytitle+" DOB: "+fromdate+" To "+todate;
+//             $('#CC_SRC_Fromdate').val('')
+//             $('#CC_SRC_Todate').val('');
          }
          if(searchoption==34)
          {
              var fromdate=$('#CC_SRC_Leaseperiod').val();
              var data={"SearchOption":searchoption,"data1":fromdate,"data2":''}
-             $('#CC_SRC_Leaseperiod').val('')
+             var CSRC_customerheader=CSRC_customer_acc_detailstitle+" LEASE PERIOD : "+fromdate;
+             var CSRC_emptycustomerheader=CSRC_customer_acc_detailsemptytitle+" LEASE PERIOD : "+fromdate;
+//             $('#CC_SRC_Leaseperiod').val('')
          }
          $.ajax({
              type: "POST",
@@ -915,222 +955,19 @@
              data:data,
              success: function(data){
                  var value_array=JSON.parse(data);
-                 var CustpmerPersonal_Tabledata='<table style="width: 3500px" id="Customer_Personal_Datatable" border="1" cellspacing="0" data-class="table" class="srcresult"><thead bgcolor="#6495ed" style="color:white"><tr>';
-                 CustpmerPersonal_Tabledata+="<th style='text-align:center;vertical-align: top;width:100px;'>CUSTOMER ID</th>";
-                 CustpmerPersonal_Tabledata+="<th style='text-align:center;vertical-align: top;width:200px;'>CUSTOMER FIRSTNAME</th>";
-                 CustpmerPersonal_Tabledata+="<th style='text-align:center;vertical-align: top;width:200px;'>CUSTOMER LASTNAME</th>";
-                 CustpmerPersonal_Tabledata+="<th style='text-align:center;vertical-align: top;width:200px;'>COMPANYNAME</th>";
-                 CustpmerPersonal_Tabledata+="<th style='text-align:center;vertical-align: top;width:200px;'>COMPANY ADDRESS</th>";
-                 CustpmerPersonal_Tabledata+="<th style='text-align:center;vertical-align: top;width:100px;'>POSTAL CODE</th>";
-                 CustpmerPersonal_Tabledata+="<th style='text-align:center;vertical-align: top;width:200px;'>EMAIL</th>";
-                 CustpmerPersonal_Tabledata+="<th style='text-align:center;vertical-align: top;width:100px;'>MOBILE</th>";
-                 CustpmerPersonal_Tabledata+="<th style='text-align:center;vertical-align: top;width:150px;'>INT'L MOBILE</th>";
-                 CustpmerPersonal_Tabledata+="<th style='text-align:center;vertical-align: top;width:100px;'>OFFICE</th>";
-                 CustpmerPersonal_Tabledata+="<th style='text-align:center;vertical-align: top;width:100px;' class='uk-date-column'>DOB</th>";
-                 CustpmerPersonal_Tabledata+="<th style='text-align:center;vertical-align: top;width:150px;'>NATIONALITY</th>";
-                 CustpmerPersonal_Tabledata+="<th style='text-align:center;vertical-align: top;width:100px;'>PASSPORTNO</th>";
-                 CustpmerPersonal_Tabledata+="<th style='text-align:center;vertical-align: top;width:100px;' class='uk-date-column'>PASSPORTDATE</th>";
-                 CustpmerPersonal_Tabledata+="<th style='text-align:center;vertical-align: top;width:100px;'>EPNO</th>";
-                 CustpmerPersonal_Tabledata+="<th style='text-align:center;vertical-align: top;width:100px;' class='uk-date-column'>EPDATE</th>";
-                 CustpmerPersonal_Tabledata+="<th style='text-align:center;vertical-align: top;width:800px;'>COMMENTS</th>";
-                 CustpmerPersonal_Tabledata+="</tr></thead><tbody>";
-                var CustomerPersonalDetailsarray=[];
-                 for(var i=0;i<value_array.length;i++)
+                 if(value_array.length!=0)
                  {
-                    if(value_array[i].CCD_COMPANY_NAME==null){var companyname='';}else{companyname=value_array[i].CCD_COMPANY_NAME;}
-                    if(value_array[i].CCD_COMPANY_ADDR==null){var companyaddress='';}else{companyaddress=value_array[i].CCD_COMPANY_ADDR;}
-                    if(value_array[i].CCD_POSTAL_CODE==null){var companypostalcode='';}else{companypostalcode=value_array[i].CCD_POSTAL_CODE;}
-                    if(value_array[i].CPD_MOBILE==null){var mobile='';}else{mobile=value_array[i].CPD_MOBILE;}
-                    if(value_array[i].CPD_INTL_MOBILE==null){var intlmobile='';}else{intlmobile=value_array[i].CPD_INTL_MOBILE;}
-                    if(value_array[i].CCD_OFFICE_NO==null){var office='';}else{office=value_array[i].CCD_OFFICE_NO;}
-                    if(value_array[i].CPD_DOB==null){var dob='';}else{dob=value_array[i].CPD_DOB;}
-                    if(value_array[i].CPD_PASSPORT_NO==null){var passportno='';}else{passportno=value_array[i].CPD_PASSPORT_NO;}
-                    if(value_array[i].CPD_PASSPORT_DATE==null){var passportdate='';}else{passportdate=value_array[i].CPD_PASSPORT_DATE;}
-                    if(value_array[i].CPD_EP_NO==null){var epno='';}else{epno=value_array[i].CPD_EP_NO;}
-                    if(value_array[i].CPD_PASSPORT_DATE==null){var epdate='';}else{epdate=value_array[i].CPD_PASSPORT_DATE;}
-                    if(value_array[i].CPD_COMMENTS==null){var Comments='';}else{Comments=value_array[i].CPD_COMMENTS;}
-                    var datas=[value_array[i].CUSTOMER_ID,value_array[i].CUSTOMER_FIRST_NAME,value_array[i].CUSTOMER_LAST_NAME,companyname,companyaddress,companypostalcode,value_array[i].CPD_EMAIL,mobile,intlmobile,office,dob,value_array[i].NC_DATA,passportno,passportdate,epno,epdate,Comments];
-                    CustomerPersonalDetailsarray.push(datas);
+                     CustomerTableLoading(value_array);
+                     $('#tableempty_message').text('');
+                     $('#Accesscardheader').text(CSRC_customerheader);
+                     $('.preloader').hide();
                  }
-                 CustomerPersonalDetailsarray=unique(CustomerPersonalDetailsarray);
-                 for(var i=0;i<CustomerPersonalDetailsarray.length;i++)
+                 else
                  {
-                     var custid=CustomerPersonalDetailsarray[i][0];
-                     CustpmerPersonal_Tabledata+='<tr style="text-align: center !important;">' +
-                         '<td >'+custid+'</td>' +
-                         '<td >'+CustomerPersonalDetailsarray[i][1]+'</td>' +
-                         '<td >'+CustomerPersonalDetailsarray[i][2]+'</td>' +
-                         '<td >'+CustomerPersonalDetailsarray[i][3]+'</td>' +
-                         '<td >'+CustomerPersonalDetailsarray[i][4]+'</td>' +
-                         '<td >'+CustomerPersonalDetailsarray[i][5]+'</td>' +
-                         '<td >'+CustomerPersonalDetailsarray[i][6]+'</td>' +
-                         "<td >"+CustomerPersonalDetailsarray[i][7]+"</td>" +
-                         "<td >"+CustomerPersonalDetailsarray[i][8]+"</td>" +
-                         "<td >"+CustomerPersonalDetailsarray[i][9]+"</td>" +
-                         "<td >"+CustomerPersonalDetailsarray[i][10]+"</td>" +
-                         "<td >"+CustomerPersonalDetailsarray[i][11]+"</td>" +
-                         "<td >"+CustomerPersonalDetailsarray[i][12]+"</td>" +
-                         "<td >"+CustomerPersonalDetailsarray[i][13]+"</td>" +
-                         "<td >"+CustomerPersonalDetailsarray[i][14]+"</td>" +
-                         "<td >"+CustomerPersonalDetailsarray[i][15]+"</td>" +
-                         "<td >"+CustomerPersonalDetailsarray[i][16]+"</td></tr>";
+                   $('#tableempty_message').text(CSRC_emptycustomerheader);
+                     $('#Accesscardheader').text('');
+                     $('.preloader').hide();
                  }
-                 CustpmerPersonal_Tabledata+="</body>";
-                 $('#Customer_Personal_Table').html(CustpmerPersonal_Tabledata);
-                 $('#Customer_Personal_Datatable').DataTable( {
-                     "sDom": 'Rlfrtip',
-                     "aoColumnDefs": [{"aTargets": ["uk-date-column"],"sType": "uk_date"}, {"aTargets": ["uk-timestp-column"], "sType": "uk_timestp"}]
-                 });
-                 var CustpmerAccount_Tabledata='<table style="width: 3500px" id="Customer_Account_Datatable" border="1" cellspacing="0" data-class="table" class="srcresult"><thead bgcolor="#6495ed" style="color:white"><tr>';
-                 CustpmerAccount_Tabledata+="<th style='text-align:center;vertical-align: top'>UPDATE / DELETE</th>";
-                 CustpmerAccount_Tabledata+="<th style='text-align:center;vertical-align: top'>CUSTOMER ID</th>";
-                 CustpmerAccount_Tabledata+="<th style='text-align:center;vertical-align: top'>UNIT NUMBER</th>";
-                 CustpmerAccount_Tabledata+="<th style='text-align:center;vertical-align: top' class='uk-date-column'>STARTDATE</th>";
-                 CustpmerAccount_Tabledata+="<th style='text-align:center;vertical-align: top' class='uk-date-column'>ENDDATE</th>";
-                 CustpmerAccount_Tabledata+="<th style='text-align:center;vertical-align: top' class='uk-date-column'>PRETERMINATE DATE</th>";
-                 CustpmerAccount_Tabledata+="<th style='text-align:center;vertical-align: top' class='uk-date-column'>CANCELDATE</th>";
-                 CustpmerAccount_Tabledata+="<th style='text-align:center;vertical-align: top'>LEASE PERIOD</th>";
-                 CustpmerAccount_Tabledata+="<th style='text-align:center;vertical-align: top'>ROOM TYPE</th>";
-                 CustpmerAccount_Tabledata+="<th style='text-align:center;vertical-align: top'>CARD NO</th>";
-                 CustpmerAccount_Tabledata+="<th style='text-align:center;vertical-align: top'>GUEST CARD</th>";
-                 CustpmerAccount_Tabledata+="<th style='text-align:center;vertical-align: top'>PRETERMINATE</th>";
-                 CustpmerAccount_Tabledata+="<th style='text-align:center;vertical-align: top'>EXTENSION</th>";
-                 CustpmerAccount_Tabledata+="<th style='text-align:center;vertical-align: top'>RECHECKIN NO</th>";
-                 CustpmerAccount_Tabledata+="<th style='text-align:center;vertical-align: top'>TERMINATE</th>";
-                 CustpmerAccount_Tabledata+="<th style='text-align:center;vertical-align: top'>LEASE PERIOD DURATION</th>";
-                 CustpmerAccount_Tabledata+="<th style='text-align:center;vertical-align: top'>QUARTERS</th>";
-                 CustpmerAccount_Tabledata+="<th style='text-align:center;vertical-align: top'>NOTICE PERIOD</th>";
-                 CustpmerAccount_Tabledata+="<th style='text-align:center;vertical-align: top' class='uk-date-column'>NOTICE PERIOD DATE</th>";
-                 CustpmerAccount_Tabledata+="<th style='text-align:center;vertical-align: top'>DEPOSIT</th>";
-                 CustpmerAccount_Tabledata+="<th style='text-align:center;vertical-align: top'>RENT</th>";
-                 CustpmerAccount_Tabledata+="<th style='text-align:center;vertical-align: top'>PRORATED</th>";
-                 CustpmerAccount_Tabledata+="<th style='text-align:center;vertical-align: top'>PROCESSING FEE</th>";
-                 CustpmerAccount_Tabledata+="<th style='text-align:center;vertical-align: top'>WAIVED</th>";
-                 CustpmerAccount_Tabledata+="<th style='text-align:center;vertical-align: top'>QUARTERLY SERVICE FEE</th>";
-                 CustpmerAccount_Tabledata+="<th style='text-align:center;vertical-align: top'>FIXED AIRCON FEE</th>";
-                 CustpmerAccount_Tabledata+="<th style='text-align:center;vertical-align: top'>ELECTRICITY CAPPED</th>";
-                 CustpmerAccount_Tabledata+="<th style='text-align:center;vertical-align: top'>CURTAIN DRYCLEANING FEE</th>";
-                 CustpmerAccount_Tabledata+="<th style='text-align:center;vertical-align: top'>CHECKOUT CLEANING FEE</th>";
-                 CustpmerAccount_Tabledata+="<th style='text-align:center;vertical-align: top'>USERSTAMP</th>";
-                 CustpmerAccount_Tabledata+="<th style='text-align:center;vertical-align: top' class='uk-timestp-column'>TIMESTAMP</th>";
-                 CustpmerAccount_Tabledata+="</tr></thead><tbody>";
-                 for(var i=0;i<value_array.length;i++)
-                 {
-                     if(value_array[i].CLP_PRETERMINATE_DATE==null){var preterminatedate='';}else{preterminatedate=value_array[i].CLP_PRETERMINATE_DATE;}
-                     if(value_array[i].CED_CANCEL_DATE==null){var canceldate='';}else{canceldate=value_array[i].CED_CANCEL_DATE;}
-                     if(value_array[i].UASD_ACCESS_CARD==null){var accesscard='';}else{accesscard=value_array[i].UASD_ACCESS_CARD;}
-                     if(value_array[i].CLP_GUEST_CARD==null){var guestcard='';}else{guestcard=value_array[i].CLP_GUEST_CARD;}
-                     if(value_array[i].CED_PRETERMINATE==null){var preterminate='';}else{preterminate=value_array[i].CED_PRETERMINATE;}
-                     if(value_array[i].CED_EXTENSION==null){var extension='';}else{extension=value_array[i].CED_EXTENSION;}
-                     if(value_array[i].CED_RECHECKIN==null){var recheckin='';}else{recheckin=value_array[i].CED_RECHECKIN;}
-                     if(value_array[i].CLP_TERMINATE==null){var terminate='';}else{terminate=value_array[i].CLP_TERMINATE;}
-                     if(value_array[i].CED_NOTICE_PERIOD==null){var noticeperiod='';}else{noticeperiod=value_array[i].CED_NOTICE_PERIOD;}
-                     if(value_array[i].CED_NOTICE_START_DATE==null){var noticedate='';}else{noticedate=value_array[i].CED_NOTICE_START_DATE;}
-                     if(value_array[i].CC_DEPOSIT==null){var deposit='';}else{deposit=value_array[i].CC_DEPOSIT;}
-                     if(value_array[i].CC_PROCESSING_FEE==null){var processfee='';}else{processfee=value_array[i].CC_PROCESSING_FEE;}
-                     if(value_array[i].CED_PRORATED==null){var prorated='';}else{prorated=value_array[i].CED_PRORATED;}
-                     if(value_array[i].CED_PROCESSING_WAIVED==null){var waived='';}else{waived=value_array[i].CED_PROCESSING_WAIVED;}
-                     if(value_array[i].CC_AIRCON_QUARTERLY_FEE==null){var quarterlyfee='';}else{quarterlyfee=value_array[i].CC_AIRCON_QUARTERLY_FEE;}
-                     if(value_array[i].CC_AIRCON_FIXED_FEE==null){var fixedaircon='';}else{fixedaircon=value_array[i].CC_AIRCON_FIXED_FEE;}
-                     if(value_array[i].CC_AIRCON_QUARTERLY_FEE==null){var quarterlyfee='';}else{quarterlyfee=value_array[i].CC_AIRCON_QUARTERLY_FEE;}
-                     if(value_array[i].CC_ELECTRICITY_CAP==null){var electricitycap='';}else{electricitycap=value_array[i].CC_ELECTRICITY_CAP;}
-                     if(value_array[i].CC_DRYCLEAN_FEE==null){var curtaindryclean='';}else{curtaindryclean=value_array[i].CC_DRYCLEAN_FEE;}
-                     if(value_array[i].CC_CHECKOUT_CLEANING_FEE==null){var checkoutclean='';}else{checkoutclean=value_array[i].CC_CHECKOUT_CLEANING_FEE;}
-                     var edit="Editid/"+value_array[i].CUSTOMER_ID+"/"+value_array[i].CED_REC_VER+"/"+value_array[i].UNIT_NO;
-                     var del=value_array[i].CUSTOMER_ID;
-                     if(guestcard!='X')
-                     {
-                         CustpmerAccount_Tabledata+='<tr style="text-align: center !important;">';
-                          if(accesscard=='' && terminate!='X' && value_array[i].CED_REC_VER==1 )
-                          {
-                              CustpmerAccount_Tabledata+="<td><div class='col-lg-1'><span style='display: block;color:green' class='glyphicon glyphicon-edit CC_SRC_editbutton' id="+edit+"></div><div class='col-lg-1'><span style='display: block;color:red' class='glyphicon glyphicon-trash CC_SRC_removebutton' id="+del+"></div></td>";
-                          }
-                         else
-                          {
-                              CustpmerAccount_Tabledata+="<td><div class='col-lg-1'><span style='display: block;color:green' class='glyphicon glyphicon-edit CC_SRC_editbutton' id="+edit+"></div></td>";
-                          }
-
-                          CustpmerAccount_Tabledata+="<td style='width:70px !important;'>"+value_array[i].CUSTOMER_ID+"</td>" +
-                         "<td style='width:70px !important;'>"+value_array[i].UNIT_NO+"</td>" +
-                         "<td style='width:80px !important;'>"+value_array[i].CLP_STARTDATE+"</td>" +
-                         "<td style='width:80px !important;'>"+value_array[i].CLP_ENDDATE+"</td>" +
-                         "<td style='width:80px !important;'>"+preterminatedate+"</td>" +
-                         "<td style='width:80px !important;'>"+canceldate+"</td>" +
-                         "<td style='width:80px !important;'>"+value_array[i].CED_REC_VER+"</td>" +
-                         "<td style='width:100px !important;'>"+value_array[i].CC_ROOM_TYPE+"</td>" +
-                         "<td style='width:80px !important;'>"+accesscard+"</td>" +
-                         "<td style='width:70px !important;'>"+guestcard+"</td>" +
-                         "<td style='width:80px !important;'>"+preterminate+"</td>" +
-                         "<td style='width:80px !important;'>"+extension+"</td>" +
-                         "<td style='width:80px !important;'>"+recheckin+"</td>" +
-                         "<td style='width:80px !important;'>"+terminate+"</td>" +
-                         "<td style='width:120px !important;'>"+value_array[i].CED_LEASE_PERIOD+"</td>" +
-                         "<td style='width:100px !important;'>"+value_array[i].CED_QUARTERS+"</td>" +
-                         "<td style='width:70px !important;'>"+noticeperiod+"</td>" +
-                         "<td style='width:90px !important;'>"+noticedate+"</td>" +
-                         "<td style='width:90px !important;'>"+deposit+"</td>" +
-                         "<td style='width:90px !important;'>"+value_array[i].CC_PAYMENT_AMOUNT+"</td>" +
-                         "<td style='width:70px !important;'>"+prorated+"</td>" +
-                         "<td style='width:90px !important;'>"+processfee+"</td>" +
-                         "<td style='width:70px !important;'>"+waived+"</td>" +
-                         "<td style='width:90px !important;'>"+quarterlyfee+"</td>" +
-                         "<td style='width:90px !important;'>"+fixedaircon+"</td>" +
-                         "<td style='width:90px !important;'>"+electricitycap+"</td>" +
-                         "<td style='width:90px !important;'>"+curtaindryclean+"</td>" +
-                         "<td style='width:90px !important;'>"+checkoutclean+"</td>" +
-                         "<td style='width:200px !important;'>"+value_array[i].ULD_LOGINID+"</td>" +
-                         "<td style='width:100px !important;'>"+value_array[i].CLP_TIMESTAMP+"</td></tr>";
-                     }
-                     else
-                     {
-                         CustpmerAccount_Tabledata+='<tr style="text-align: center !important;">' +
-                             "<td></td>" +
-                             "<td style='width:70px !important;'>"+value_array[i].CUSTOMER_ID+"</td>" +
-                             "<td style='width:70px !important;'>"+value_array[i].UNIT_NO+"</td>" +
-                             "<td style='width:80px !important;'>"+value_array[i].CLP_STARTDATE+"</td>" +
-                             "<td style='width:80px !important;'>"+value_array[i].CLP_ENDDATE+"</td>" +
-                             "<td style='width:80px !important;'>"+preterminatedate+"</td>" +
-                             "<td style='width:80px !important;'>"+canceldate+"</td>" +
-                             "<td style='width:80px !important;'>"+value_array[i].CED_REC_VER+"</td>" +
-                             "<td style='width:100px !important;'>"+value_array[i].CC_ROOM_TYPE+"</td>" +
-                             "<td style='width:80px !important;'>"+accesscard+"</td>" +
-                             "<td style='width:70px !important;'>"+guestcard+"</td>" +
-                             "<td style='width:80px !important;'>"+preterminate+"</td>" +
-                             "<td style='width:80px !important;'>"+extension+"</td>" +
-                             "<td style='width:80px !important;'>"+recheckin+"</td>" +
-                             "<td style='width:80px !important;'>"+terminate+"</td>" +
-                             "<td style='width:120px !important;'>"+value_array[i].CED_LEASE_PERIOD+"</td>" +
-                             "<td style='width:100px !important;'>"+value_array[i].CED_QUARTERS+"</td>" +
-                             "<td style='width:70px !important;'>"+noticeperiod+"</td>" +
-                             "<td style='width:90px !important;'>"+noticedate+"</td>" +
-                             "<td style='width:90px !important;'>"+deposit+"</td>" +
-                             "<td style='width:90px !important;'>"+value_array[i].CC_PAYMENT_AMOUNT+"</td>" +
-                             "<td style='width:70px !important;'>"+prorated+"</td>" +
-                             "<td style='width:90px !important;'>"+processfee+"</td>" +
-                             "<td style='width:70px !important;'>"+waived+"</td>" +
-                             "<td style='width:90px !important;'>"+quarterlyfee+"</td>" +
-                             "<td style='width:90px !important;'>"+fixedaircon+"</td>" +
-                             "<td style='width:90px !important;'>"+electricitycap+"</td>" +
-                             "<td style='width:90px !important;'>"+curtaindryclean+"</td>" +
-                             "<td style='width:90px !important;'>"+checkoutclean+"</td>" +
-                             "<td style='width:200px !important;'>"+value_array[i].ULD_LOGINID+"</td>" +
-                             "<td style='width:100px !important;'>"+value_array[i].CLP_TIMESTAMP+"</td></tr>";
-                     }
-                 }
-                 CustpmerAccount_Tabledata+="</body>";
-                 $('#AccessCard_table').html(CustpmerAccount_Tabledata);
-                 $('#Customer_Account_Datatable').DataTable( {
-                     "sDom": 'Rlfrtip',
-                     "aaSorting": [],
-                     "pageLength": 10,
-                     "sPaginationType":"full_numbers",
-                     "aoColumnDefs": [{"aTargets": ["uk-date-column"],"sType": "uk_date"}, {"aTargets": ["uk-timestp-column"], "sType": "uk_timestp"}]
-                 });
-                 sorting();
-                 $('#CC_SEARCH_DataTable').show();
-                 $('#CC_SEARCH_acDataTable').show();
-                 $('.preloader').hide();
-                 $("html, body").animate({ scrollTop: $(document).height() }, "slow");
              },
              error: function(data){
                  alert('error in getting'+JSON.stringify(data));
@@ -1139,6 +976,223 @@
          });
 
      });
+     function CustomerTableLoading(value_array)
+     {
+         var CustpmerPersonal_Tabledata='<table style="width: 3500px" id="Customer_Personal_Datatable" border="1" cellspacing="0" data-class="table" class="srcresult"><thead bgcolor="#6495ed" style="color:white"><tr>';
+         CustpmerPersonal_Tabledata+="<th style='text-align:center;vertical-align: top;width:100px;'>CUSTOMER ID</th>";
+         CustpmerPersonal_Tabledata+="<th style='text-align:center;vertical-align: top;width:200px;'>CUSTOMER FIRSTNAME</th>";
+         CustpmerPersonal_Tabledata+="<th style='text-align:center;vertical-align: top;width:200px;'>CUSTOMER LASTNAME</th>";
+         CustpmerPersonal_Tabledata+="<th style='text-align:center;vertical-align: top;width:200px;'>COMPANYNAME</th>";
+         CustpmerPersonal_Tabledata+="<th style='text-align:center;vertical-align: top;width:200px;'>COMPANY ADDRESS</th>";
+         CustpmerPersonal_Tabledata+="<th style='text-align:center;vertical-align: top;width:100px;'>POSTAL CODE</th>";
+         CustpmerPersonal_Tabledata+="<th style='text-align:center;vertical-align: top;width:200px;'>EMAIL</th>";
+         CustpmerPersonal_Tabledata+="<th style='text-align:center;vertical-align: top;width:100px;'>MOBILE</th>";
+         CustpmerPersonal_Tabledata+="<th style='text-align:center;vertical-align: top;width:150px;'>INT'L MOBILE</th>";
+         CustpmerPersonal_Tabledata+="<th style='text-align:center;vertical-align: top;width:100px;'>OFFICE</th>";
+         CustpmerPersonal_Tabledata+="<th style='text-align:center;vertical-align: top;width:100px;' class='uk-date-column'>DOB</th>";
+         CustpmerPersonal_Tabledata+="<th style='text-align:center;vertical-align: top;width:150px;'>NATIONALITY</th>";
+         CustpmerPersonal_Tabledata+="<th style='text-align:center;vertical-align: top;width:100px;'>PASSPORTNO</th>";
+         CustpmerPersonal_Tabledata+="<th style='text-align:center;vertical-align: top;width:100px;' class='uk-date-column'>PASSPORTDATE</th>";
+         CustpmerPersonal_Tabledata+="<th style='text-align:center;vertical-align: top;width:100px;'>EPNO</th>";
+         CustpmerPersonal_Tabledata+="<th style='text-align:center;vertical-align: top;width:100px;' class='uk-date-column'>EPDATE</th>";
+         CustpmerPersonal_Tabledata+="<th style='text-align:center;vertical-align: top;width:800px;'>COMMENTS</th>";
+         CustpmerPersonal_Tabledata+="</tr></thead><tbody>";
+         var CustomerPersonalDetailsarray=[];
+         for(var i=0;i<value_array.length;i++)
+         {
+             if(value_array[i].CCD_COMPANY_NAME==null){var companyname='';}else{companyname=value_array[i].CCD_COMPANY_NAME;}
+             if(value_array[i].CCD_COMPANY_ADDR==null){var companyaddress='';}else{companyaddress=value_array[i].CCD_COMPANY_ADDR;}
+             if(value_array[i].CCD_POSTAL_CODE==null){var companypostalcode='';}else{companypostalcode=value_array[i].CCD_POSTAL_CODE;}
+             if(value_array[i].CPD_MOBILE==null){var mobile='';}else{mobile=value_array[i].CPD_MOBILE;}
+             if(value_array[i].CPD_INTL_MOBILE==null){var intlmobile='';}else{intlmobile=value_array[i].CPD_INTL_MOBILE;}
+             if(value_array[i].CCD_OFFICE_NO==null){var office='';}else{office=value_array[i].CCD_OFFICE_NO;}
+             if(value_array[i].CPD_DOB==null){var dob='';}else{dob=value_array[i].CPD_DOB;}
+             if(value_array[i].CPD_PASSPORT_NO==null){var passportno='';}else{passportno=value_array[i].CPD_PASSPORT_NO;}
+             if(value_array[i].CPD_PASSPORT_DATE==null){var passportdate='';}else{passportdate=value_array[i].CPD_PASSPORT_DATE;}
+             if(value_array[i].CPD_EP_NO==null){var epno='';}else{epno=value_array[i].CPD_EP_NO;}
+             if(value_array[i].CPD_PASSPORT_DATE==null){var epdate='';}else{epdate=value_array[i].CPD_PASSPORT_DATE;}
+             if(value_array[i].CPD_COMMENTS==null){var Comments='';}else{Comments=value_array[i].CPD_COMMENTS;}
+             var datas=[value_array[i].CUSTOMER_ID,value_array[i].CUSTOMER_FIRST_NAME,value_array[i].CUSTOMER_LAST_NAME,companyname,companyaddress,companypostalcode,value_array[i].CPD_EMAIL,mobile,intlmobile,office,dob,value_array[i].NC_DATA,passportno,passportdate,epno,epdate,Comments];
+             CustomerPersonalDetailsarray.push(datas);
+         }
+         CustomerPersonalDetailsarray=unique(CustomerPersonalDetailsarray);
+         for(var i=0;i<CustomerPersonalDetailsarray.length;i++)
+         {
+             var custid=CustomerPersonalDetailsarray[i][0];
+             CustpmerPersonal_Tabledata+='<tr style="text-align: center !important;">' +
+             '<td >'+custid+'</td>' +
+             '<td >'+CustomerPersonalDetailsarray[i][1]+'</td>' +
+             '<td >'+CustomerPersonalDetailsarray[i][2]+'</td>' +
+             '<td >'+CustomerPersonalDetailsarray[i][3]+'</td>' +
+             '<td >'+CustomerPersonalDetailsarray[i][4]+'</td>' +
+             '<td >'+CustomerPersonalDetailsarray[i][5]+'</td>' +
+             '<td >'+CustomerPersonalDetailsarray[i][6]+'</td>' +
+             "<td >"+CustomerPersonalDetailsarray[i][7]+"</td>" +
+             "<td >"+CustomerPersonalDetailsarray[i][8]+"</td>" +
+             "<td >"+CustomerPersonalDetailsarray[i][9]+"</td>" +
+             "<td >"+CustomerPersonalDetailsarray[i][10]+"</td>" +
+             "<td >"+CustomerPersonalDetailsarray[i][11]+"</td>" +
+             "<td >"+CustomerPersonalDetailsarray[i][12]+"</td>" +
+             "<td >"+CustomerPersonalDetailsarray[i][13]+"</td>" +
+             "<td >"+CustomerPersonalDetailsarray[i][14]+"</td>" +
+             "<td >"+CustomerPersonalDetailsarray[i][15]+"</td>" +
+             "<td >"+CustomerPersonalDetailsarray[i][16]+"</td></tr>";
+         }
+         CustpmerPersonal_Tabledata+="</body>";
+         $('#Customer_Personal_Table').html(CustpmerPersonal_Tabledata);
+         $('#Customer_Personal_Datatable').DataTable( {
+             "aoColumnDefs": [{"aTargets": ["uk-date-column"],"sType": "uk_date"}, {"aTargets": ["uk-timestp-column"], "sType": "uk_timestp"}]
+         });
+         var CustpmerAccount_Tabledata='<table style="width: 3500px" id="Customer_Account_Datatable" border="1" cellspacing="0" data-class="table" class="srcresult"><thead bgcolor="#6495ed" style="color:white"><tr>';
+         CustpmerAccount_Tabledata+="<th style='text-align:center;vertical-align: top'>UPDATE / DELETE</th>";
+         CustpmerAccount_Tabledata+="<th style='text-align:center;vertical-align: top'>CUSTOMER ID</th>";
+         CustpmerAccount_Tabledata+="<th style='text-align:center;vertical-align: top'>UNIT NUMBER</th>";
+         CustpmerAccount_Tabledata+="<th style='text-align:center;vertical-align: top' class='uk-date-column'>STARTDATE</th>";
+         CustpmerAccount_Tabledata+="<th style='text-align:center;vertical-align: top' class='uk-date-column'>ENDDATE</th>";
+         CustpmerAccount_Tabledata+="<th style='text-align:center;vertical-align: top' class='uk-date-column'>PRETERMINATE DATE</th>";
+         CustpmerAccount_Tabledata+="<th style='text-align:center;vertical-align: top' class='uk-date-column'>CANCELDATE</th>";
+         CustpmerAccount_Tabledata+="<th style='text-align:center;vertical-align: top'>LEASE PERIOD</th>";
+         CustpmerAccount_Tabledata+="<th style='text-align:center;vertical-align: top'>ROOM TYPE</th>";
+         CustpmerAccount_Tabledata+="<th style='text-align:center;vertical-align: top'>CARD NO</th>";
+         CustpmerAccount_Tabledata+="<th style='text-align:center;vertical-align: top'>GUEST CARD</th>";
+         CustpmerAccount_Tabledata+="<th style='text-align:center;vertical-align: top'>PRETERMINATE</th>";
+         CustpmerAccount_Tabledata+="<th style='text-align:center;vertical-align: top'>EXTENSION</th>";
+         CustpmerAccount_Tabledata+="<th style='text-align:center;vertical-align: top'>RECHECKIN</th>";
+         CustpmerAccount_Tabledata+="<th style='text-align:center;vertical-align: top'>TERMINATE</th>";
+         CustpmerAccount_Tabledata+="<th style='text-align:center;vertical-align: top'>LEASE PERIOD DURATION</th>";
+         CustpmerAccount_Tabledata+="<th style='text-align:center;vertical-align: top'>QUARTERS</th>";
+         CustpmerAccount_Tabledata+="<th style='text-align:center;vertical-align: top'>NOTICE PERIOD</th>";
+         CustpmerAccount_Tabledata+="<th style='text-align:center;vertical-align: top' class='uk-date-column'>NOTICE PERIOD DATE</th>";
+         CustpmerAccount_Tabledata+="<th style='text-align:center;vertical-align: top'>DEPOSIT</th>";
+         CustpmerAccount_Tabledata+="<th style='text-align:center;vertical-align: top'>RENT</th>";
+         CustpmerAccount_Tabledata+="<th style='text-align:center;vertical-align: top'>PRORATED</th>";
+         CustpmerAccount_Tabledata+="<th style='text-align:center;vertical-align: top'>PROCESSING FEE</th>";
+         CustpmerAccount_Tabledata+="<th style='text-align:center;vertical-align: top'>WAIVED</th>";
+         CustpmerAccount_Tabledata+="<th style='text-align:center;vertical-align: top'>QUARTERLY SERVICE FEE</th>";
+         CustpmerAccount_Tabledata+="<th style='text-align:center;vertical-align: top'>FIXED AIRCON FEE</th>";
+         CustpmerAccount_Tabledata+="<th style='text-align:center;vertical-align: top'>ELECTRICITY CAPPED</th>";
+         CustpmerAccount_Tabledata+="<th style='text-align:center;vertical-align: top'>CURTAIN DRYCLEANING FEE</th>";
+         CustpmerAccount_Tabledata+="<th style='text-align:center;vertical-align: top'>CHECKOUT CLEANING FEE</th>";
+         CustpmerAccount_Tabledata+="<th style='text-align:center;vertical-align: top'>USERSTAMP</th>";
+         CustpmerAccount_Tabledata+="<th style='text-align:center;vertical-align: top' class='uk-timestp-column'>TIMESTAMP</th>";
+         CustpmerAccount_Tabledata+="</tr></thead><tbody>";
+         for(var i=0;i<value_array.length;i++)
+         {
+             if(value_array[i].CLP_PRETERMINATE_DATE==null){var preterminatedate='';}else{preterminatedate=value_array[i].CLP_PRETERMINATE_DATE;}
+             if(value_array[i].CED_CANCEL_DATE==null){var canceldate='';}else{canceldate=value_array[i].CED_CANCEL_DATE;}
+             if(value_array[i].UASD_ACCESS_CARD==null){var accesscard='';}else{accesscard=value_array[i].UASD_ACCESS_CARD;}
+             if(value_array[i].CLP_GUEST_CARD==null){var guestcard='';}else{guestcard=value_array[i].CLP_GUEST_CARD;}
+             if(value_array[i].CED_PRETERMINATE==null){var preterminate='';}else{preterminate=value_array[i].CED_PRETERMINATE;}
+             if(value_array[i].CED_EXTENSION==null){var extension='';}else{extension=value_array[i].CED_EXTENSION;}
+             if(value_array[i].CED_RECHECKIN==null){var recheckin='';}else{recheckin=value_array[i].CED_RECHECKIN;}
+             if(value_array[i].CLP_TERMINATE==null){var terminate='';}else{terminate=value_array[i].CLP_TERMINATE;}
+             if(value_array[i].CED_NOTICE_PERIOD==null){var noticeperiod='';}else{noticeperiod=value_array[i].CED_NOTICE_PERIOD;}
+             if(value_array[i].CED_NOTICE_START_DATE==null){var noticedate='';}else{noticedate=value_array[i].CED_NOTICE_START_DATE;}
+             if(value_array[i].CC_DEPOSIT==null){var deposit='';}else{deposit=value_array[i].CC_DEPOSIT;}
+             if(value_array[i].CC_PROCESSING_FEE==null){var processfee='';}else{processfee=value_array[i].CC_PROCESSING_FEE;}
+             if(value_array[i].CED_PRORATED==null){var prorated='';}else{prorated=value_array[i].CED_PRORATED;}
+             if(value_array[i].CED_PROCESSING_WAIVED==null){var waived='';}else{waived=value_array[i].CED_PROCESSING_WAIVED;}
+             if(value_array[i].CC_AIRCON_QUARTERLY_FEE==null){var quarterlyfee='';}else{quarterlyfee=value_array[i].CC_AIRCON_QUARTERLY_FEE;}
+             if(value_array[i].CC_AIRCON_FIXED_FEE==null){var fixedaircon='';}else{fixedaircon=value_array[i].CC_AIRCON_FIXED_FEE;}
+             if(value_array[i].CC_AIRCON_QUARTERLY_FEE==null){var quarterlyfee='';}else{quarterlyfee=value_array[i].CC_AIRCON_QUARTERLY_FEE;}
+             if(value_array[i].CC_ELECTRICITY_CAP==null){var electricitycap='';}else{electricitycap=value_array[i].CC_ELECTRICITY_CAP;}
+             if(value_array[i].CC_DRYCLEAN_FEE==null){var curtaindryclean='';}else{curtaindryclean=value_array[i].CC_DRYCLEAN_FEE;}
+             if(value_array[i].CC_CHECKOUT_CLEANING_FEE==null){var checkoutclean='';}else{checkoutclean=value_array[i].CC_CHECKOUT_CLEANING_FEE;}
+             var edit="Editid/"+value_array[i].CUSTOMER_ID+"/"+value_array[i].CED_REC_VER+"/"+value_array[i].UNIT_NO;
+             var del=value_array[i].CUSTOMER_ID;
+             if(guestcard!='X')
+             {
+                 CustpmerAccount_Tabledata+='<tr style="text-align: center !important;">';
+                 if(accesscard=='' && terminate!='X' && value_array[i].CED_REC_VER==1 )
+                 {
+                     CustpmerAccount_Tabledata+="<td><div class='col-lg-1'><span style='display: block;color:green' class='glyphicon glyphicon-edit CC_SRC_editbutton' id="+edit+"></div><div class='col-lg-1'><span style='display: block;color:red' class='glyphicon glyphicon-trash CC_SRC_removebutton' id="+del+"></div></td>";
+                 }
+                 else
+                 {
+                     CustpmerAccount_Tabledata+="<td><div class='col-lg-1'><span style='display: block;color:green' class='glyphicon glyphicon-edit CC_SRC_editbutton' id="+edit+"></div></td>";
+                 }
+
+                 CustpmerAccount_Tabledata+="<td style='width:70px !important;'>"+value_array[i].CUSTOMER_ID+"</td>" +
+                 "<td style='width:70px !important;'>"+value_array[i].UNIT_NO+"</td>" +
+                 "<td style='width:80px !important;'>"+value_array[i].CLP_STARTDATE+"</td>" +
+                 "<td style='width:80px !important;'>"+value_array[i].CLP_ENDDATE+"</td>" +
+                 "<td style='width:80px !important;'>"+preterminatedate+"</td>" +
+                 "<td style='width:80px !important;'>"+canceldate+"</td>" +
+                 "<td style='width:80px !important;'>"+value_array[i].CED_REC_VER+"</td>" +
+                 "<td style='width:100px !important;'>"+value_array[i].CC_ROOM_TYPE+"</td>" +
+                 "<td style='width:80px !important;'>"+accesscard+"</td>" +
+                 "<td style='width:70px !important;'>"+guestcard+"</td>" +
+                 "<td style='width:80px !important;'>"+preterminate+"</td>" +
+                 "<td style='width:80px !important;'>"+extension+"</td>" +
+                 "<td style='width:80px !important;'>"+recheckin+"</td>" +
+                 "<td style='width:80px !important;'>"+terminate+"</td>" +
+                 "<td style='width:120px !important;'>"+value_array[i].CED_LEASE_PERIOD+"</td>" +
+                 "<td style='width:100px !important;'>"+value_array[i].CED_QUARTERS+"</td>" +
+                 "<td style='width:70px !important;'>"+noticeperiod+"</td>" +
+                 "<td style='width:90px !important;'>"+noticedate+"</td>" +
+                 "<td style='width:90px !important;'>"+deposit+"</td>" +
+                 "<td style='width:90px !important;'>"+value_array[i].CC_PAYMENT_AMOUNT+"</td>" +
+                 "<td style='width:70px !important;'>"+prorated+"</td>" +
+                 "<td style='width:90px !important;'>"+processfee+"</td>" +
+                 "<td style='width:70px !important;'>"+waived+"</td>" +
+                 "<td style='width:90px !important;'>"+quarterlyfee+"</td>" +
+                 "<td style='width:90px !important;'>"+fixedaircon+"</td>" +
+                 "<td style='width:90px !important;'>"+electricitycap+"</td>" +
+                 "<td style='width:90px !important;'>"+curtaindryclean+"</td>" +
+                 "<td style='width:90px !important;'>"+checkoutclean+"</td>" +
+                 "<td style='width:200px !important;'>"+value_array[i].ULD_LOGINID+"</td>" +
+                 "<td style='width:100px !important;'>"+value_array[i].CLP_TIMESTAMP+"</td></tr>";
+             }
+             else
+             {
+                 CustpmerAccount_Tabledata+='<tr style="text-align: center !important;">' +
+                 "<td></td>" +
+                 "<td style='width:70px !important;'>"+value_array[i].CUSTOMER_ID+"</td>" +
+                 "<td style='width:70px !important;'>"+value_array[i].UNIT_NO+"</td>" +
+                 "<td style='width:80px !important;'>"+value_array[i].CLP_STARTDATE+"</td>" +
+                 "<td style='width:80px !important;'>"+value_array[i].CLP_ENDDATE+"</td>" +
+                 "<td style='width:80px !important;'>"+preterminatedate+"</td>" +
+                 "<td style='width:80px !important;'>"+canceldate+"</td>" +
+                 "<td style='width:80px !important;'>"+value_array[i].CED_REC_VER+"</td>" +
+                 "<td style='width:100px !important;'>"+value_array[i].CC_ROOM_TYPE+"</td>" +
+                 "<td style='width:80px !important;'>"+accesscard+"</td>" +
+                 "<td style='width:70px !important;'>"+guestcard+"</td>" +
+                 "<td style='width:80px !important;'>"+preterminate+"</td>" +
+                 "<td style='width:80px !important;'>"+extension+"</td>" +
+                 "<td style='width:80px !important;'>"+recheckin+"</td>" +
+                 "<td style='width:80px !important;'>"+terminate+"</td>" +
+                 "<td style='width:120px !important;'>"+value_array[i].CED_LEASE_PERIOD+"</td>" +
+                 "<td style='width:100px !important;'>"+value_array[i].CED_QUARTERS+"</td>" +
+                 "<td style='width:70px !important;'>"+noticeperiod+"</td>" +
+                 "<td style='width:90px !important;'>"+noticedate+"</td>" +
+                 "<td style='width:90px !important;'>"+deposit+"</td>" +
+                 "<td style='width:90px !important;'>"+value_array[i].CC_PAYMENT_AMOUNT+"</td>" +
+                 "<td style='width:70px !important;'>"+prorated+"</td>" +
+                 "<td style='width:90px !important;'>"+processfee+"</td>" +
+                 "<td style='width:70px !important;'>"+waived+"</td>" +
+                 "<td style='width:90px !important;'>"+quarterlyfee+"</td>" +
+                 "<td style='width:90px !important;'>"+fixedaircon+"</td>" +
+                 "<td style='width:90px !important;'>"+electricitycap+"</td>" +
+                 "<td style='width:90px !important;'>"+curtaindryclean+"</td>" +
+                 "<td style='width:90px !important;'>"+checkoutclean+"</td>" +
+                 "<td style='width:200px !important;'>"+value_array[i].ULD_LOGINID+"</td>" +
+                 "<td style='width:100px !important;'>"+value_array[i].CLP_TIMESTAMP+"</td></tr>";
+             }
+         }
+         CustpmerAccount_Tabledata+="</body>";
+         $('#AccessCard_table').html(CustpmerAccount_Tabledata);
+         $('#Customer_Account_Datatable').DataTable( {
+             "aaSorting": [],
+             "pageLength": 10,
+             "sPaginationType":"full_numbers",
+             "aoColumnDefs": [{"aTargets": ["uk-date-column"],"sType": "uk_date"}, {"aTargets": ["uk-timestp-column"], "sType": "uk_timestp"}]
+         });
+         sorting();
+         $('#CC_SEARCH_DataTable').show();
+         $('#CC_SEARCH_acDataTable').show();
+         $('.preloader').hide();
+         $("html, body").animate({ scrollTop: $(document).height() }, "slow");
+     }
      function DTFormTable_DateFormat(inputdate){
          var string = inputdate.split("-");
          return string[2]+'-'+ string[1]+'-'+string[0];
@@ -1233,6 +1287,10 @@
                 $('#CCRE_SRC_IntlMobile').val(value_array[0][0].CPD_INTL_MOBILE);
                 $('#CCRE_SRC_Officeno').val(value_array[0][0].CCD_OFFICE_NO);
                 $('#CCRE_SRC_DOB').val(value_array[0][0].CPD_DOB);
+                $('#CCRE_SRC_PassportNo').val(value_array[0][0].CPD_PASSPORT_NO);
+                $('#CCRE_SRC_PassportDate').val(value_array[0][0].CPD_PASSPORT_DATE);
+                $('#CCRE_SRC_EpNo').val(value_array[0][0].CPD_EP_NO);
+                $('#CCRE_SRC_EPDate').val(value_array[0][0].CPD_EP_DATE);
                 $('#CCRE_SRC_NoticePeriod').val(value_array[0][0].CED_NOTICE_PERIOD);
                 $('#CCRE_SRC_NoticePeriodDate').val(value_array[0][0].CED_NOTICE_START_DATE);
                 if(value_array[0][0].CC_AIRCON_QUARTERLY_FEE!='' && value_array[0][0].CC_AIRCON_QUARTERLY_FEE!=null)
@@ -1523,7 +1581,7 @@
                             appenddata += '<a href=' + data[0] + ' target="_blank" class="uploadtag">' + file_name + '</a>';
                             appenddata += '</div>';
                             appenddata += '<div class="col-md-2">';
-                            appenddata += '<input type="button" class="btn" id=' + buttonid + ' class="filedelete" value="REMOVE">';
+                            appenddata += '<input type="button" class="btn filedelete" id=' + buttonid + '  value="REMOVE">';
                             appenddata += '</div>';
                             appenddata += '</div></div>';
                     }
@@ -1934,13 +1992,144 @@
          $('#CCRE_SRC_Enddate').prop('disabled', false);
          $('#CCRE_SRC_NoticePeriodDate').prop('disabled', false);
          var FormElements = document.getElementById("CCRE_Form_CustomerSearch");
+//         var CSRC_customer_acc_detailstitle="CUSTOMER ACCOUNT DETAILS - ";
+//         var CSRC_customer_acc_detailsemptytitle="RECORDS NOT AVAILABLE FOR SELECTED ";
+//         var searchoption=$('#CC_SRC_SearchOption').val();
+//         if(searchoption==18)
+//         {
+//             var companyname=$('#CC_SRC_CardNoSearch').val();
+//             var data={"SearchOption":searchoption,"data1":companyname}
+//             var CSRC_customerheader=CSRC_customer_acc_detailstitle+" CARD NO : "+companyname;
+//             var CSRC_emptycustomerheader=CSRC_customer_acc_detailsemptytitle+" CARD NO: "+companyname;
+//         }
+//         if(searchoption==19)
+//         {
+//             var companyname=$('#CC_SRC_CompanyNameSearch').val();
+//             var data={"SearchOption":searchoption,"data1":companyname}
+//             var CSRC_customerheader=CSRC_customer_acc_detailstitle+" COMPANY NAME : "+companyname;
+//             var CSRC_emptycustomerheader=CSRC_customer_acc_detailsemptytitle+" COMPANY NAME: "+companyname;
+//         }
+//         if(searchoption==21)
+//         {
+//             var customer_name=$('#CC_SRC_CustomerNameSearch').val();
+//             var customername=customer_name.replace('  ','_');
+//             var data={"SearchOption":searchoption,"data1":customername}
+//             var CSRC_customerheader=CSRC_customer_acc_detailstitle+" CUSTOMER NAME : "+customer_name;
+//             var CSRC_emptycustomerheader=CSRC_customer_acc_detailsemptytitle+" CUSTOMER NAME: "+customer_name;
+//         }
+//         if(searchoption==22)
+//         {
+//             var CC_SRC_fromamt=$('#CC_SRC_FromAmount').val();
+//             var CC_SRC_toamt=$('#CC_SRC_ToAmount').val();
+//             var data={"SearchOption":searchoption,"data1":CC_SRC_fromamt,"data2":CC_SRC_toamt}
+//             var CSRC_customerheader=CSRC_customer_acc_detailstitle+" DEPOSIT AMOUNT RANGE: "+CC_SRC_fromamt+" To "+CC_SRC_toamt
+//             var CSRC_emptycustomerheader=CSRC_customer_acc_detailsemptytitle+" DEPOSIT AMOUNT RANGE: "+CC_SRC_fromamt+" To "+CC_SRC_toamt;
+//         }
+//         if(searchoption==30)
+//         {
+//             var CC_SRC_fromamt=$('#CC_SRC_FromAmount').val();
+//             var CC_SRC_toamt=$('#CC_SRC_ToAmount').val();
+//             var data={"SearchOption":searchoption,"data1":CC_SRC_fromamt,"data2":CC_SRC_toamt}
+//             var CSRC_customerheader=CSRC_customer_acc_detailstitle+" RENT AMOUNT RANGE: "+CC_SRC_fromamt+" To "+CC_SRC_toamt
+//             var CSRC_emptycustomerheader=CSRC_customer_acc_detailsemptytitle+" RENT AMOUNT RANGE: "+CC_SRC_fromamt+" To "+CC_SRC_toamt;
+//         }
+//         if(searchoption==27)
+//         {
+//             var CC_SRC_fromamt=$('#CC_SRC_listsearch').val();
+//             var data={"SearchOption":searchoption,"data1":CC_SRC_fromamt,"data2":''}
+//             var CSRC_customerheader=CSRC_customer_acc_detailstitle+" NATIONALITY : "+CC_SRC_fromamt;
+//             var CSRC_emptycustomerheader=CSRC_customer_acc_detailsemptytitle+" NATIONALITY: "+CC_SRC_fromamt;
+//         }
+//         if(searchoption==31)
+//         {
+//             var Unit=$('#CC_SRC_listsearch').val();
+//             var data={"SearchOption":searchoption,"data1":Unit,"data2":''}
+//             var CSRC_customerheader=CSRC_customer_acc_detailstitle+" UNIT NO : "+Unit;
+//             var CSRC_emptycustomerheader=CSRC_customer_acc_detailsemptytitle+" UNIT NO: "+Unit;
+//         }
+//         if(searchoption==33)
+//         {
+//             var Roomtype=$('#CC_SRC_listsearch').val();
+//             var data={"SearchOption":searchoption,"data1":Roomtype,"data2":''}
+//             var CSRC_customerheader=CSRC_customer_acc_detailstitle+" ROOM TYPE : "+Roomtype;
+//             var CSRC_emptycustomerheader=CSRC_customer_acc_detailsemptytitle+" ROOM TYPE: "+Roomtype;
+//         }
+//         if(searchoption==24)
+//         {
+//             var Email=$('#CC_SRC_EmailSearch').val();
+//             var data={"SearchOption":searchoption,"data1":Email,"data2":''}
+//             var CSRC_customerheader=CSRC_customer_acc_detailstitle+" EMAIL ID : "+Email;
+//             var CSRC_emptycustomerheader=CSRC_customer_acc_detailsemptytitle+" EMAIL ID: "+Email;
+//         }
+//         if(searchoption==25)
+//         {
+//             var Epno=$('#CC_SRC_EPnoSearch').val();
+//             var data={"SearchOption":searchoption,"data1":Epno,"data2":''}
+//             var CSRC_customerheader=CSRC_customer_acc_detailstitle+" EP NUMBER : "+Epno;
+//             var CSRC_emptycustomerheader=CSRC_customer_acc_detailsemptytitle+" EP NUMBER: "+Epno;
+//         }
+//         if(searchoption==29)
+//         {
+//             var Passportno=$('#CC_SRC_PassportnoSearch').val();
+//             var data={"SearchOption":searchoption,"data1":Passportno,"data2":''}
+//             var CSRC_customerheader=CSRC_customer_acc_detailstitle+" PASSPORT NUMBER : "+Passportno;
+//             var CSRC_emptycustomerheader=CSRC_customer_acc_detailsemptytitle+" PASSPORT NUMBER: "+Passportno;
+//         }
+//         if(searchoption==26)
+//         {
+//             var Mobile=$('#CC_SRC_MobilenoSearch').val();
+//             var data={"SearchOption":searchoption,"data1":Mobile,"data2":''}
+//             var CSRC_customerheader=CSRC_customer_acc_detailstitle+" MOBILE NUMBER : "+Mobile;
+//             var CSRC_emptycustomerheader=CSRC_customer_acc_detailsemptytitle+" MOBILE NUMBER: "+Mobile;
+//         }
+//         if(searchoption==32)
+//         {
+//             var Mobile=$('#CC_SRC_IntMobilenoSearch').val();
+//             var data={"SearchOption":searchoption,"data1":Mobile,"data2":''}
+//             var CSRC_customerheader=CSRC_customer_acc_detailstitle+" INT'L NUMBER : "+Mobile;
+//             var CSRC_emptycustomerheader=CSRC_customer_acc_detailsemptytitle+" INT'L NUMBER : "+Mobile;
+//         }
+//         if(searchoption==28)
+//         {
+//             var Mobile=$('#CC_SRC_OfficenoSearch').val();
+//             var data={"SearchOption":searchoption,"data1":Mobile,"data2":''}
+//             var CSRC_customerheader=CSRC_customer_acc_detailstitle+" OFFICE NUMBER : "+Mobile;
+//             var CSRC_emptycustomerheader=CSRC_customer_acc_detailsemptytitle+" OFFICE NUMBER : "+Mobile;
+//        }
+//         if(searchoption==20)
+//         {
+//             var Comments=$('#CC_SRC_CommentsSearch').val();
+//             var data={"SearchOption":searchoption,"data1":Comments,"data2":''}
+//             var CSRC_customerheader=CSRC_customer_acc_detailstitle+" COMMENTS : "+Comments;
+//             var CSRC_emptycustomerheader=CSRC_customer_acc_detailsemptytitle+" COMMENTS : "+Comments;
+//         }
+//         if(searchoption==23)
+//         {
+//             var fromdate=$('#CC_SRC_Fromdate').val();
+//             var todate=$('#CC_SRC_Todate').val();
+//             var data={"SearchOption":searchoption,"data1":fromdate,"data2":todate}
+//             var CSRC_customerheader=CSRC_customer_acc_detailstitle+" DOB: "+fromdate+" To "+todate;
+//             var CSRC_emptycustomerheader=CSRC_customer_acc_detailsemptytitle+" DOB: "+fromdate+" To "+todate;
+//         }
+//         if(searchoption==34)
+//         {
+//             var fromdate=$('#CC_SRC_Leaseperiod').val();
+//             var data={"SearchOption":searchoption,"data1":fromdate,"data2":''}
+//             var CSRC_customerheader=CSRC_customer_acc_detailstitle+" LEASE PERIOD : "+fromdate;
+//             var CSRC_emptycustomerheader=CSRC_customer_acc_detailsemptytitle+" LEASE PERIOD : "+fromdate;
+//         }
          var xmlhttp = new XMLHttpRequest();
          xmlhttp.onreadystatechange = function () {
              if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+                 $('.preloader').hide();
+                 alert(xmlhttp.responseText);
                  var msg_alert = JSON.parse(xmlhttp.responseText);
+                 alert(msg_alert);
                  $('.preloader').hide();
                  if (msg_alert == 1) {
+                     $('#CC_SearchformDiv').hide();
                      $('#CC_SEARCH_DataTable').hide();
+                     $('#CC_SEARCH_acDataTable').hide();
                      $('#CSRC_updation_form').hide();
                      $('#CSRC_fileupload').val('');
                      show_msgbox("CUSTOMER SEARCH/UPDATE",errormsg[18].EMC_DATA,"success",false);
@@ -1958,6 +2147,7 @@
                  }
              }
          }
+//         xmlhttp.open("POST",controller_url+"CustomerDetailsUpdate?SearchOption="+searchoption+"&data1="+customer_name+"&data2="+customer_name, true);
          xmlhttp.open("POST",controller_url+"CustomerDetailsUpdate", true);
          xmlhttp.send(new FormData(FormElements));
      });
@@ -2076,6 +2266,7 @@
                  }
                  $('#CSRC_updation_form').hide();
                  $('#CC_SEARCH_DataTable').hide();
+                 $('#CC_SEARCH_acDataTable').hide();
                  $('.preloader').hide();
              },
              error: function(data){
@@ -2102,13 +2293,8 @@
          }
      });
      $(document).on('change','.Datepickerhide',function(){
-         alert($('#CCRE_SRC_SDStarttime').val())
          if ($('#CCRE_SRC_SDStarttime').val() != "Select") {
              $('#CusromerEnddate').show();
-             $('#CCRE_SRC_EDStarttime').val('Select');
-             $('#CCRE_SRC_Enddate').val('');
-             $('#CCRE_SRC_EDEndtime').hide();
-
          }
          else {
              $('#CusromerEnddate').hide();
@@ -2147,10 +2333,13 @@
                          </section>
                      </div>
                      <div id="CC_SEARCH_acDataTable" class="table-responsive" hidden>
-                        <h3 style="color:#498af3">CUSTOMER ACCOUNT DETAILS</h3><br>
+                        <h3 style="color:#498af3" id="Accesscardheader"></h3><br>
                         <section id="AccessCard_table">
 
                         </section>
+                    </div>
+                    <div id="tableemptymessage">
+                        <h3 class="errormsg" id="tableempty_message"></h3><br>
                     </div>
                     <div id="CSRC_updation_form" hidden>
                     <h3 style="color:#498af3">CUSTOMER DETAILS UPDATION</h3>

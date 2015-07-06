@@ -78,7 +78,8 @@
                         $('.preloader').hide();
                     },
                     error: function(data){
-                        alert('error in getting'+JSON.stringify(data));
+
+                        ('error in getting'+JSON.stringify(data));
                         $('.preloader').hide();
                     }
                 });
@@ -110,7 +111,7 @@
                         $('.preloader').hide();
                     },
                     error: function(data){
-                        alert('error in getting'+JSON.stringify(data));
+                        show_msgbox("ERM ENTRY/SEARCH/UPDATE",'error in getting'+JSON.stringify(data),"error",false);
                         $('.preloader').hide();
                     }
                 });
@@ -205,7 +206,7 @@
                     }
                 },
                 error: function(data){
-                    alert('error in getting'+JSON.stringify(data));
+                    show_msgbox("ERM ENTRY/SEARCH/UPDATE",'error in getting'+JSON.stringify(data),"error",false);
                 }
             });
         });
@@ -267,7 +268,7 @@
                         $("#ERM_SRC_CustomerNameSearch").focus();
                     },
                     error: function(data){
-                        alert('error in getting'+JSON.stringify(data));
+                        show_msgbox("ERM ENTRY/SEARCH/UPDATE",'error in getting'+JSON.stringify(data),"error",false);
                     }
                 });
             }
@@ -300,7 +301,7 @@
                         $("#ERM_SRC_ContactNo").focus();
                     },
                     error: function(data){
-                        alert('error in getting'+JSON.stringify(data));
+                        show_msgbox("ERM ENTRY/SEARCH/UPDATE",'error in getting'+JSON.stringify(data),"error",false);
                     }
                 });
             }
@@ -331,7 +332,7 @@
 
                     },
                     error: function(data){
-                        alert('error in getting'+JSON.stringify(data));
+                        show_msgbox("ERM ENTRY/SEARCH/UPDATE",'error in getting'+JSON.stringify(data),"error",false);
                     }
                 });
             }
@@ -624,25 +625,26 @@
                                 mail = value_array[i].ERM_EMAIL_ID;
                             }
                             tabledata += '<tr id=' + value_array[i].ERM_ID + '>' +
-                            "<td style='width:80px !important;vertical-align: middle'><div class='col-lg-1'><span style='display: block;color:green' title='Edit' class='glyphicon glyphicon-edit ERM_editbutton' disabled id=" + edit + "></div><div class='col-lg-1'><span style='display: block;color:red' title='Delete' class='glyphicon glyphicon-trash ERM_removebutton' disabled id=" + del + "></div></td>" +
+                            "<td style='width:80px !important;vertical-align: middle' id=SSICON_"+Ermid+"><div class='col-lg-1'><span style='display: block;color:green' title='Edit' class='glyphicon glyphicon-edit ERM_editbutton' disabled id=" + edit + "></div><div class='col-lg-1'><span style='display: block;color:red' title='Delete' class='glyphicon glyphicon-trash ERM_removebutton' disabled id=" + del + "></div></td>" +
                             "<td class='ERMEdit' style='width:200px !important;vertical-align: middle' id=Name_" + Ermid + ">" + value_array[i].ERM_CUST_NAME + "</td>" +
-                            "<td style='width:100px !important;text-align: middle' >" + value_array[i].ERM_RENT + "</td>" +
-                            "<td style='width:100px !important;text-align: middle'>" + value_array[i].MOVING_DATE + "</td>" +
-                            "<td style='width:100px !important;text-align: middle'>" + value_array[i].ERM_MIN_STAY + "</td>" +
-                            "<td style='width:150px !important;vertical-align: middle'>" + value_array[i].ERMO_DATA + "</td>" +
-                            "<td style='width:150px !important;vertical-align: middle'>" + nationality + "</td>" +
-                            "<td style='width:100px !important;text-align: middle'>" + guest + "</td>" +
-                            "<td style='width:100px !important;text-align: middle'>" + age + "</td>" +
-                            "<td style='width:100px !important;text-align: middle'>" + contact + "</td>" +
-                            "<td style='width:150px !important;vertical-align: middle'>" + mail + "</td>" +
-                            "<td style='width:200px !important;vertical-align: middle'>" + value_array[i].ERM_COMMENTS + "</td>" +
-                            "<td style='width:150px !important;vertical-align: middle'>" + value_array[i].ULD_LOGINID + "</td>" +
-                            "<td style='width:150px !important;vertical-align: middle'>" + value_array[i].ERM_TIME_STAMP + "</td></tr>";
+                            "<td style='width:100px !important;text-align: middle' id=RENT_" + Ermid + " >" + value_array[i].ERM_RENT + "</td>" +
+                            "<td style='width:100px !important;text-align: middle' id=MOVINGDATE_" + Ermid + " >" + value_array[i].MOVING_DATE + "</td>" +
+                            "<td style='width:100px !important;text-align: middle' id=MINSTAY_" + Ermid + " >" + value_array[i].ERM_MIN_STAY + "</td>" +
+                            "<td style='width:150px !important;vertical-align: middle' id=DATA_" + Ermid + " >" + value_array[i].ERMO_DATA + "</td>" +
+                            "<td style='width:150px !important;vertical-align: middle' id=NATIONALITY_" + Ermid + " >" + nationality + "</td>" +
+                            "<td style='width:100px !important;text-align: middle' id=GUEST_" + Ermid + " >" + guest + "</td>" +
+                            "<td style='width:100px !important;text-align: middle' id=AGE_" + Ermid + " >" + age + "</td>" +
+                            "<td style='width:100px !important;text-align: middle' id=CONTACT_" + Ermid + " >" + contact + "</td>" +
+                            "<td style='width:150px !important;vertical-align: middle' id=EMAIL_" + Ermid + " >" + mail + "</td>" +
+                            "<td style='width:200px !important;vertical-align: middle' id=COMMENTS_" + Ermid + " >" + value_array[i].ERM_COMMENTS + "</td>" +
+                            "<td style='width:150px !important;vertical-align: middle' id=LOGIN_" + Ermid + " >" + value_array[i].ULD_LOGINID + "</td>" +
+                            "<td style='width:150px !important;vertical-align: middle' id=TIMESTAMP_" + Ermid + " >" + value_array[i].ERM_TIME_STAMP + "</td></tr>";
                         }
                         tabledata += "</body>";
                         $('section').html(tabledata);
                         $('#ERM_SEARCH_DataTable').show();
                         var table = $('#ERM_Datatable').DataTable({
+                            "sDom":"Rlfrtip",
                             "aoColumnDefs": [{
                                 "aTargets": ["uk-date-column"],
                                 "sType": "uk_date"
@@ -659,7 +661,7 @@
                     $('.preloader').hide();
                 },
                 error: function(data){
-                    alert('error in getting'+JSON.stringify(data));
+                    show_msgbox("ERM ENTRY/SEARCH/UPDATE",'error in getting'+JSON.stringify(data),"error",false);
                     $('.preloader').hide();
                 }
             });
@@ -719,7 +721,7 @@
                     $('section').html('');
                 },
                 error: function(data){
-                    alert('error in getting'+JSON.stringify(data));
+                    show_msgbox("ERM ENTRY/SEARCH/UPDATE",'error in getting'+JSON.stringify(data),"error",false);
                     $('.preloader').hide();
                 }
             });
@@ -728,16 +730,39 @@
         //ERM INLINE EDIT
         var pre_tds;
         var selectedrowid;
+        var arrLast;var arrLast;var arrupdate;
         $(document).on('click','.ERM_editbutton', function (){
             var cid = $(this).attr('id');
             var SplittedData=cid.split('_');
             var Rowid=SplittedData[1];
             var tds = $('#'+Rowid).children('td');
+            var tdstr = '';
             selectedrowid=Rowid;
             pre_tds = tds;
             var tdstr = '';
             var edit="Editid_"+Rowid;
             var del="Deleteid_"+Rowid;
+            arrLast={"SSICON":[$('#SSICON_'+Rowid).html()],"Name":[$('#Name_'+Rowid).html()],"RENT":[$('#RENT_'+Rowid).html()],
+                "MOVINGDATE":[$('#MOVINGDATE_'+Rowid).html()],"MINSTAY":[$('#MINSTAY_'+Rowid).html()],"DATA":[$('#DATA_'+Rowid).html()],"NATIONALITY":[$('#NATIONALITY_'+Rowid).html()],
+                "GUEST":[$('#GUEST_'+Rowid).html()],"AGE":[$('#AGE_'+Rowid).html()],"CONTACT":[$('#CONTACT_'+Rowid).html()],"EMAIL":[$('#EMAIL_'+Rowid).html()],
+                "COMMENTS":[$('#COMMENTS_'+Rowid).html()],"LOGIN":[$('#LOGIN_'+Rowid).html()],"TIMESTAMP":[$('#TIMESTAMP_'+Rowid).html()]};
+            arr={"SSICON":["<div class='col-lg-1'><span style='display: block;color:green' title='Update' class='glyphicon glyphicon-print ERM_editbutton' disabled id="+edit+"></div><div class='col-lg-1'><span style='display: block;color:red' title='Cancel' class='glyphicon glyphicon-remove ERM_editcancel' disabled id="+del+"></div>"],"Name":["<input type='text' id=customername  name='customername'  class='autosize form-control FormValidation' style='font-weight:bold;width:200px' value='"+$('#Name_'+Rowid).html()+"'>"],
+                "RENT":["<input type='text' id='Rent' name='Rent'  class='form-control FormValidation' style='font-weight:bold;width:100px' value='"+$('#RENT_'+Rowid).html()+"'>"],
+                "MOVINGDATE":["<div class='col-sm-4'><div class='input-group addon'><input type='text' class='form-control FormValidation datemandtry' id=Movingdate style='width:120px;' value='"+$('#MOVINGDATE_'+Rowid).html()+"'><label  class='input-group-addon' for=Movingdate><span class='glyphicon glyphicon-calendar'></span></label></div></div>"],
+                "MINSTAY":["<input type='text' id='Minimumstay' name='Minimumstay'  class='form-control FormValidation' maxlength='10' style='font-weight:bold;width:120px' value='"+$('#MINSTAY_'+Rowid).html()+"'>"],
+                "DATA":["<SELECT id='Occupation' name='Occupation'  class='form-control FormValidation' style='font-weight:bold;width:200px' value='"+$('#DATA_'+Rowid).html()+"'><OPTION>SELECT</OPTION></SELECT>"],
+                "NATIONALITY":["<SELECT id='Nationality' name='Nationality'  class='form-control FormValidation' style='font-weight:bold;width:250px' value='"+$('#NATIONALITY_'+Rowid).html()+"'><OPTION>SELECT</OPTION></SELECT>"],
+                "GUEST":["<input type='text' id='Noofguests' name='Noofguests'  class='form-control alphanumonly FormValidation' maxlength='10' style='font-weight:bold;width:120px' value='"+$('#GUEST_'+Rowid).html()+"'>"],
+                "AGE":["<input type='text' id='age' name='age'  class='form-control alphanumonly FormValidation' maxlength='10' style='font-weight:bold;width:120px' value='"+$('#AGE_'+Rowid).html()+"'>"],
+                "CONTACT":["<input type='text' id='Contactno' name='Contactno'  class='form-control FormValidation' maxlength='20' style='font-weight:bold;width:150px' value='"+$('#CONTACT_'+Rowid).html()+"'>"],
+                "EMAIL":["<input type='text' id='Emailid' name='Emailid'  class='form-control FormValidation' maxlength='40' style='font-weight:bold;width:250px' value='"+$('#EMAIL_'+Rowid).html()+"'>"],
+                "COMMENTS":["<textarea id='Comments' name='Comments'  class='form-control autogrowcomments FormValidation'  style='font-weight:bold;width:350px' nowrap>"+$('#COMMENTS_'+Rowid).html()+"</textarea>"],
+                "LOGIN":[$('#LOGIN_'+Rowid).html()],
+                "TIMESTAMP":[$('#TIMESTAMP_'+Rowid).html()]};
+
+            for(var t=0;t<tds.length;t++){
+                $(tds[t]).html(arr[$(tds[t]).attr('id').split('_')[0]][0]);
+            }
             tdstr += "<td style='vertical-align: middle'><div class='col-lg-1'><span style='display: block;color:green' title='Update' class='glyphicon glyphicon-print ERM_editbutton' disabled id="+edit+"></div><div class='col-lg-1'><span style='display: block;color:red' title='Cancel' class='glyphicon glyphicon-remove ERM_editcancel' disabled id="+del+"></div></td>";
             tdstr += "<td style='vertical-align: middle'><input type='text' id=customername  name='customername'  class='autosize form-control FormValidation' style='font-weight:bold;width:200px' value='"+$(tds[1]).html()+"'></td>";
             tdstr += "<td style='vertical-align: middle'><input type='text' id='Rent' name='Rent'  class='form-control FormValidation' style='font-weight:bold;width:100px' value='"+$(tds[2]).html()+"'></td>";
@@ -753,7 +778,7 @@
             tdstr += "<td style='vertical-align: middle'><textarea id='Comments' name='Comments'  class='form-control autogrowcomments FormValidation'  style='font-weight:bold;width:350px' nowrap>"+$(tds[11]).html()+"</textarea></td>";
             tdstr += "<td style='vertical-align: middle'>"+$(tds[12]).html()+"</td>";
             tdstr += "<td style='vertical-align: middle'>"+$(tds[13]).html()+"</td>";
-            $('#'+Rowid).html(tdstr);
+//            $('#'+Rowid).html(tdstr);
             $(".autosize").doValidation({rule:'alphabets',prop:{whitespace:true,autosize:true}});
             $("#Contactno").doValidation({rule:'numbersonly',prop:{realpart:20,leadzero:true}});
             $('#ERM_Entry_Emailid').doValidation({rule:'email',prop:{uppercase:false,autosize:true}});
@@ -764,9 +789,8 @@
             $('#Movingdate').datepicker({
                 dateFormat: "dd-mm-yy",
                 changeYear: true,
-                changeMonth: true
-            });
-            var newmovingdate=($(tds[3]).html()).split('-');
+                changeMonth: true });
+            var newmovingdate=($('#MOVINGDATE_'+Rowid).html()).split('-');
             var CERM_NEWsysdate = new Date();
             $('#Movingdate').datepicker("option","minDate",new Date(newmovingdate[2]-1,newmovingdate[1]-1,newmovingdate[0]));
             $('#Movingdate').datepicker("option","maxDate",new Date(CERM_NEWsysdate.getFullYear(),CERM_NEWsysdate.getMonth()+3,CERM_NEWsysdate.getDate()));
@@ -777,7 +801,7 @@
                 options += '<option value="' + data.ERMO_DATA + '">' + data.ERMO_DATA + '</option>';
             }
             $('#Occupation').html(options);
-            $('#Occupation').val($(tds[5]).html());
+            $('#Occupation').val(arrLast["DATA"][0]);
             var Nation_options='<OPTION>SELECT</OPTION>';
             for (var i = 0; i < SRC_nationality.length; i++)
             {
@@ -785,8 +809,10 @@
                 Nation_options += '<option value="' + data.NC_DATA + '">' + data.NC_DATA + '</option>';
             }
             $('#Nationality').html(Nation_options);
-            if($(tds[6]).html()!="")
-            {                $('#Nationality').val($(tds[6]).html());            }
+            if(arrLast["NATIONALITY"][0]!="")
+            {
+                $('#Nationality').val(arrLast["NATIONALITY"][0]);
+            }
             for(var k=0;k<ERM_id.length;k++)
             {
                 $("#Editid_"+ERM_id[k]).removeClass("ERM_editbutton");
@@ -798,8 +824,13 @@
             var cid = $(this).attr('id');
             var SplittedData=cid.split('_');
             var Rowid=SplittedData[1];
-            $('#'+Rowid).html(pre_tds);
+//            $('#'+Rowid).html(pre_tds);
             $("#Editid_"+Rowid).removeClass("ERM_editcancel");
+            var tds = $('#'+Rowid).children('td');
+            for(var t=0;t<tds.length;t++){
+
+                $(tds[t]).html(arrLast[$(tds[t]).attr('id').split('_')[0]][0]);
+            }
             for(var k=0;k<ERM_id.length;k++)
             {
                 $("#Editid_"+ERM_id[k]).addClass("ERM_editbutton");
@@ -863,25 +894,34 @@
                     var value_array=JSON.parse(msg);
                     if(value_array[0]==1)
                     {
+                        arrupdate={"SSICON":["<div class='col-lg-1'><span style='display: block;color:green' title='Edit' class='glyphicon glyphicon-edit ERM_editbutton' disabled id="+edit+"></div><div class='col-lg-1'><span style='display: block;color:red' title='Delete' class='glyphicon glyphicon-trash ERM_removebutton' disabled id="+del+"></div>"],"Name":[customername],"RENT":[Rent],
+                            "MOVINGDATE":[movingdate],"MINSTAY":[minimumstay],"DATA":[occupation],"NATIONALITY":[Nationality],
+                            "GUEST":[guests],"AGE":[age],"CONTACT":[Contactno],"EMAIL":[Emailid],
+                            "COMMENTS":[comments],"LOGIN":[value_array[2]],"TIMESTAMP":[value_array[1]]};
+                        var tds = $('#'+selectedrowid).children('td');
+                        for(var t=0;t<tds.length;t++){
+                            $(tds[t]).html(arrupdate[$(tds[t]).attr('id').split('_')[0]][0]);
+                        }
                         show_msgbox("ERM ENTRY/SEARCH/UPDATE",SRC_errormsg[9].EMC_DATA,"success",false);
                         var edit="Editid_"+selectedrowid;
                         var del="Deleteid_"+selectedrowid;
-                        var tdstr = '';
-                        tdstr += "<td style='vertical-align: middle'><div class='col-lg-1'><span style='display: block;color:green' title='Edit' class='glyphicon glyphicon-edit ERM_editbutton' disabled id="+edit+"></div><div class='col-lg-1'><span style='display: block;color:red' title='Delete' class='glyphicon glyphicon-trash ERM_removebutton' disabled id="+del+"></div></td>";
-                        tdstr += "<td style='vertical-align: middle'>"+customername+"</td>";
-                        tdstr += "<td style='vertical-align: middle'>"+Rent+"</td>";
-                        tdstr += "<td style='vertical-align: middle'>"+movingdate+"</td>";
-                        tdstr += "<td style='vertical-align: middle'>"+minimumstay+"</td>";
-                        tdstr += "<td style='vertical-align: middle'>"+occupation+"</td>";
-                        tdstr += "<td style='vertical-align: middle'>"+Nationality+"</td>";
-                        tdstr += "<td style='vertical-align: middle'>"+guests+"</td>";
-                        tdstr += "<td style='vertical-align: middle'>"+age+"</td>";
-                        tdstr += "<td style='vertical-align: middle'>"+Contactno+"</td>";
-                        tdstr += "<td style='vertical-align: middle'>"+Emailid+"</td>";
-                        tdstr += "<td style='vertical-align: middle'>"+comments+"</td>";
-                        tdstr += "<td style='vertical-align: middle'>"+value_array[2]+"</td>";
-                        tdstr += "<td style='vertical-align: middle'>"+value_array[1]+"</td>";
-                        $('#'+selectedrowid).html(tdstr);
+//                        var tdstr = '';
+//                        tdstr += "<td style='vertical-align: middle' id=SSICON_"+selectedrowid+"><div class='col-lg-1'><span style='display: block;color:green' title='Edit' class='glyphicon glyphicon-edit ERM_editbutton' disabled id="+edit+"></div><div class='col-lg-1'><span style='display: block;color:red' title='Delete' class='glyphicon glyphicon-trash ERM_removebutton' disabled id="+del+"></div></td>";
+//                        tdstr += "<td style='vertical-align: middle' id=Name_" + selectedrowid + ">"+customername+"</td>";
+//                        tdstr += "<td style='vertical-align: middle' id=RENT_" + selectedrowid + " >"+Rent+"</td>";
+//                        tdstr += "<td style='vertical-align: middle' id=MOVINGDATE_" + selectedrowid + " >"+movingdate+"</td>";
+//                        tdstr += "<td style='vertical-align: middle' id=MINSTAY_" + selectedrowid + ">"+minimumstay+"</td>";
+//                        tdstr += "<td style='vertical-align: middle' id=DATA_" + selectedrowid + " >"+occupation+"</td>";
+//                        tdstr += "<td style='vertical-align: middle' id=NATIONALITY_" + selectedrowid + ">"+Nationality+"</td>";
+//                        tdstr += "<td style='vertical-align: middle' id=GUEST_" + selectedrowid + ">"+guests+"</td>";
+//                        tdstr += "<td style='vertical-align: middle' id=AGE_" + selectedrowid + ">"+age+"</td>";
+//                        tdstr += "<td style='vertical-align: middle' id=CONTACT_" + selectedrowid + " >"+Contactno+"</td>";
+//                        tdstr += "<td style='vertical-align: middle' id=EMAIL_" + selectedrowid + ">"+Emailid+"</td>";
+//                        tdstr += "<td style='vertical-align: middle' id=COMMENTS_" + selectedrowid + ">"+comments+"</td>";
+//                        tdstr += "<td style='vertical-align: middle' id=LOGIN_" + selectedrowid + " >"+value_array[2]+"</td>";
+//                        tdstr += "<td style='vertical-align: middle' id=TIMESTAMP_" + selectedrowid + ">"+value_array[1]+"</td>";
+//                        alert(tdstr)
+//                        $('#'+selectedrowid).html(tdstr);
                         for(var k=0;k<ERM_id.length;k++)
                         {
                             $("#Editid_"+ERM_id[k]).addClass("ERM_editbutton");
@@ -896,7 +936,6 @@
                     }
                 },
                 error: function(data){
-                    alert('error in getting'+JSON.stringify(msg));
                     $('.preloader').hide();
                 }
             });

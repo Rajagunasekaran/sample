@@ -152,15 +152,13 @@ Class Mdl_personal_daily_entry_search_update_delete extends CI_Model {
         }
         if($PDLY_INPUT_typelistdb==36)
         {
-            $PDLY_INPUT_insertintoExpense_Baby_withComment = "CALL SP_PERSONALBABY_INSERT('$PDLY_INPUT_ctrylist','$PDLY_INPUT_datesplit','$PDLY_INPUT_amountsplit','$PDLY_INPUT_invitem_split','$PDLY_INPUT_invfrom_split','$PDLY_INPUT_comments_split','$USERSTAMP',@FLAG_INSERT)";
-            $this->db->query($PDLY_INPUT_insertintoExpense_Baby_withComment);
+            $PDLY_INPUT_callquery = "CALL SP_PERSONALBABY_INSERT('$PDLY_INPUT_ctrylist','$PDLY_INPUT_datesplit','$PDLY_INPUT_amountsplit','$PDLY_INPUT_invitem_split','$PDLY_INPUT_invfrom_split','$PDLY_INPUT_comments_split','$USERSTAMP',@FLAG_INSERT)";
         }
         elseif($PDLY_INPUT_typelistdb==37)
         {
-            $PDLY_INPUT_ExpensePersonal_withComment = "CALL SP_PERSONAL_INSERT('$PDLY_INPUT_ctrylist','$PDLY_INPUT_datesplit','$PDLY_INPUT_amountsplit','$PDLY_INPUT_invitem_split','$PDLY_INPUT_invfrom_split','$PDLY_INPUT_comments_split','$USERSTAMP',@FLAG_INSERT)";
-            $this->db->query($PDLY_INPUT_ExpensePersonal_withComment);
+            $PDLY_INPUT_callquery = "CALL SP_PERSONAL_INSERT('$PDLY_INPUT_ctrylist','$PDLY_INPUT_datesplit','$PDLY_INPUT_amountsplit','$PDLY_INPUT_invitem_split','$PDLY_INPUT_invfrom_split','$PDLY_INPUT_comments_split','$USERSTAMP',@FLAG_INSERT)";
         }
-
+        $this->db->query($PDLY_INPUT_callquery);
         $PDLY_INPUT_rs_flag = 'SELECT @FLAG_INSERT as FLAG_INSERT';
         $query = $this->db->query($PDLY_INPUT_rs_flag);
         return $query->result();

@@ -991,7 +991,7 @@ require_once('application/libraries/EI_HDR.php');
                     }
                     else if(BTDTL_SEARCH_search_option==111)
                     {
-                        BTDTL_SEARCH_table_searchby +='<div class="form-group"><label class="col-sm-2">FROM DATE<em>*</em></label><div class="col-sm-2"><input type="text" id="BTDTL_SEARCH_db_starhubappl_startdate" style="width:100px" class="BTDTL_SEARCH_class_datesearchbtn datemandtry form-control"></div></div><div class="form-group"><label class="col-sm-2">TO DATE<em>*</em></label><div class="col-sm-2"><input type="text" id="BTDTL_SEARCH_db_starhubappl_enddate" style="width:100px" class="datemandtry BTDTL_SEARCH_class_datesearchbtn form-control"></div></div>';
+                        BTDTL_SEARCH_table_searchby +='<div class="form-group"><label class="col-sm-2">FROM DATE<em>*</em></label><div class="col-sm-2"><div class="input-group addon"><input type="text" id="BTDTL_SEARCH_db_starhubappl_startdate" class="BTDTL_SEARCH_class_datesearchbtn datemandtry form-control"><label for="BTDTL_SEARCH_db_starhubappl_startdate" class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></label></div></div></div><div class="form-group"><label class="col-sm-2">TO DATE<em>*</em></label><div class="col-sm-2"><div class="input-group addon"><input type="text" id="BTDTL_SEARCH_db_starhubappl_enddate"  class="datemandtry BTDTL_SEARCH_class_datesearchbtn form-control"><label for="BTDTL_SEARCH_db_starhubappl_enddate" class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></label></div></div></div>';
                     }
                     else if(BTDTL_SEARCH_search_option==112)
                     {
@@ -999,11 +999,11 @@ require_once('application/libraries/EI_HDR.php');
                     }
                     else if((BTDTL_SEARCH_search_option==115)||(BTDTL_SEARCH_search_option==114))
                     {
-                        BTDTL_SEARCH_table_searchby +='<div class="form-group"><label class="col-sm-2">FROM DATE<em>*</em></label><div class="col-sm-2"><input type="text" id="BTDTL_SEARCH_db_starhubcable_startdate" style="width:100px" class="BTDTL_SEARCH_class_datesearchbtn datemandtry form-control"></div></div><div class="form-group"><label class="col-sm-2">TO DATE<em>*</em></label><div class="col-sm-2"><input type="text" id="BTDTL_SEARCH_db_starhubcable_enddate" style="width:100px" class="BTDTL_SEARCH_class_datesearchbtn datemandtry form-control"></div></div>';
+                        BTDTL_SEARCH_table_searchby +='<div class="form-group"><label class="col-sm-2">FROM DATE<em>*</em></label><div class="col-sm-2"><div class="input-group addon"><input type="text" id="BTDTL_SEARCH_db_starhubcable_startdate"  class="BTDTL_SEARCH_class_datesearchbtn datemandtry form-control"><label for="BTDTL_SEARCH_db_starhubcable_startdate" class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></label></div></div></div><div class="form-group"><label class="col-sm-2">TO DATE<em>*</em></label><div class="col-sm-2"><div class="input-group addon"><input type="text" id="BTDTL_SEARCH_db_starhubcable_enddate"  class="BTDTL_SEARCH_class_datesearchbtn datemandtry form-control"><label for="BTDTL_SEARCH_db_starhubcable_enddate" class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></label></div></div></div>';
                     }
                     else if((BTDTL_SEARCH_search_option==117)||(BTDTL_SEARCH_search_option==116))
                     {
-                        BTDTL_SEARCH_table_searchby +='<div class="form-group"><label class="col-sm-2">FROM DATE<em>*</em></label><div class="col-sm-2"><input type="text"  id="BTDTL_SEARCH_db_starhubinternet_startdate" style="width:100px" class="BTDTL_SEARCH_class_datesearchbtn datemandtry form-control"></div></div><div class="form-group"><label class="col-sm-2">TO DATE<em>*</em></label><div class="col-sm-2"><input type="text" id="BTDTL_SEARCH_db_starhubinternet_enddate" style="width:100px" class="BTDTL_SEARCH_class_datesearchbtn datemandtry form-control"></div></div>';
+                        BTDTL_SEARCH_table_searchby +='<div class="form-group"><label class="col-sm-2">FROM DATE<em>*</em></label><div class="col-sm-2"><div class="input-group addon"><input type="text"  id="BTDTL_SEARCH_db_starhubinternet_startdate"  class="BTDTL_SEARCH_class_datesearchbtn datemandtry form-control"><label for="BTDTL_SEARCH_db_starhubinternet_startdate" class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></label></div></div></div><div class="form-group"><label class="col-sm-2">TO DATE<em>*</em></label><div class="col-sm-2"><div class="input-group addon"><input type="text" id="BTDTL_SEARCH_db_starhubinternet_enddate"  class="BTDTL_SEARCH_class_datesearchbtn datemandtry form-control"><label for="BTDTL_SEARCH_db_starhubinternet_enddate" class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></label></div></div></div>';
                     }
                     BTDTL_SEARCH_table_searchby +=' <div class="col-lg-offset-2" id="BDTL_INPUT_tble_btn"><input type="button" id="BTDTL_SEARCH_btn_datesearch" value="SEARCH" class="btn" disabled=""></div>';
                     $(BTDTL_SEARCH_table_searchby).appendTo($("#BTDTL_SEARCH_tble_searchby"));
@@ -3205,7 +3205,7 @@ require_once('application/libraries/EI_HDR.php');
                             <label class="col-sm-2">APPL DATE</label>
                             <div class="col-sm-2">
                                 <div class="input-group addon">
-                                    <input style="width:100px" type="text" placeholder="Appl Date" name="BDTL_INPUT_db_appl_date" id="BDTL_INPUT_db_appl_date" class='BDTL_INPUT_class_datebox BDTL_INPUT_class_save_valid datenonmandtry form-control'/>
+                                    <input  type="text" placeholder="Appl Date" name="BDTL_INPUT_db_appl_date" id="BDTL_INPUT_db_appl_date" class='BDTL_INPUT_class_datebox BDTL_INPUT_class_save_valid datenonmandtry form-control'/>
                                     <label for="BDTL_INPUT_db_appl_date" class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></label>
                                 </div>
                             </div>
@@ -3214,7 +3214,7 @@ require_once('application/libraries/EI_HDR.php');
                             <label class="col-sm-2">CABLE START DATE</label>
                             <div class="col-sm-2">
                                 <div class="input-group addon">
-                                    <input style="width:100px" type="text" placeholder="Cable StartDate" name="BDTL_INPUT_db_cable_startdate"  id="BDTL_INPUT_db_cable_startdate" class='BDTL_INPUT_class_datebox BDTL_INPUT_class_save_valid datenonmandtry form-control'/>
+                                    <input  type="text" placeholder="Cable StartDate" name="BDTL_INPUT_db_cable_startdate"  id="BDTL_INPUT_db_cable_startdate" class='BDTL_INPUT_class_datebox BDTL_INPUT_class_save_valid datenonmandtry form-control'/>
                                     <label for="BDTL_INPUT_db_cable_startdate" class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></label>
                                 </div>
                             </div>
@@ -3223,7 +3223,7 @@ require_once('application/libraries/EI_HDR.php');
                             <label class="col-sm-2">CABLE END DATE</label>
                             <div class="col-sm-2">
                                 <div class="input-group addon">
-                                    <input style="width:100px" type='text' placeholder="Cable Enddate" name='BDTL_INPUT_db_cable_enddate' id='BDTL_INPUT_db_cable_enddate' class='BDTL_INPUT_class_datebox BDTL_INPUT_class_save_valid BDTL_INPUT_dateInput datenonmandtry form-control'/>
+                                    <input  type='text' placeholder="Cable Enddate" name='BDTL_INPUT_db_cable_enddate' id='BDTL_INPUT_db_cable_enddate' class='BDTL_INPUT_class_datebox BDTL_INPUT_class_save_valid BDTL_INPUT_dateInput datenonmandtry form-control'/>
                                     <label for="BDTL_INPUT_db_cable_enddate" class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></label>
                                 </div>
                             </div>
@@ -3232,7 +3232,7 @@ require_once('application/libraries/EI_HDR.php');
                             <label class="col-sm-2">INTERNET START DATE</label>
                             <div class="col-sm-2">
                                 <div class="input-group addon">
-                                    <input style="width:100px" type='text' placeholder="Internet Startdate" name='BDTL_INPUT_db_internet_startdate' id='BDTL_INPUT_db_internet_startdate' class='BDTL_INPUT_class_internet_datebox BDTL_INPUT_class_save_valid datenonmandtry form-control'/>
+                                    <input  type='text' placeholder="Internet Startdate" name='BDTL_INPUT_db_internet_startdate' id='BDTL_INPUT_db_internet_startdate' class='BDTL_INPUT_class_internet_datebox BDTL_INPUT_class_save_valid datenonmandtry form-control'/>
                                     <label for="BDTL_INPUT_db_internet_startdate" class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></label>
                                 </div>
                             </div>
@@ -3241,7 +3241,7 @@ require_once('application/libraries/EI_HDR.php');
                             <label class="col-sm-2">INTERNET END DATE</label>
                             <div class="col-sm-2">
                                 <div class="input-group addon">
-                                <input style="width:100px"type='text' placeholder="Internet Enddate" name='BDTL_INPUT_db_internet_enddate' id='BDTL_INPUT_db_internet_enddate' class='BDTL_INPUT_class_internet_datebox BDTL_INPUT_class_save_valid BDTL_INPUT_dateInput datenonmandtry form-control'/>
+                                <input type='text' placeholder="Internet Enddate" name='BDTL_INPUT_db_internet_enddate' id='BDTL_INPUT_db_internet_enddate' class='BDTL_INPUT_class_internet_datebox BDTL_INPUT_class_save_valid BDTL_INPUT_dateInput datenonmandtry form-control'/>
                                     <label for="BDTL_INPUT_db_internet_enddate" class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></label>
                                 </div>
                             </div>

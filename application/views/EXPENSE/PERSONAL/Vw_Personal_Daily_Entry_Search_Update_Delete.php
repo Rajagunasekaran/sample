@@ -12,7 +12,7 @@ require_once('application/libraries/EI_HDR.php');
 <style>
     td, th {
         padding: 8px;
-        text-align: center;
+        /*text-align: center;*/
     }
     textarea{
         resize: none;
@@ -257,7 +257,7 @@ $(document).ready(function(){
 // FUNCTION FOR MULTIROW
     function PDLY_SEARCH_clear_multirow(){
         $('#PDLY_INPUT_tble_multi').empty();
-        $('<tr><td nowrap><label  id="PDLY_INPUT_lbl_expense" >CATEGORY OF EXPENSE<em>*</em></label></td><td style="max-width: 150px;" nowrap><label  id="PDLY_INPUT_lbl_invdate" >INVOICE DATE<em>*</em></label></td><td style="max-width:200px;" nowrap><label id="PDLY_INPUT_lbl_invamt" >INVOICE AMOUNT<em>*</em></label> </td><td ><label id="PDLY_INPUT_lbl_invitm" >INVOICE ITEMS<em>*</em></label> </td><td ><label id="PDLY_INPUT_lbl_invfrom" >INVOICE FROM<em>*</em></label> </td><td><label id="PDLY_INPUT_lbl_invcmt" >COMMENTS</label></td></tr><tr><td> <select class="submultivalid form-control"   name="PDLY_INPUT_lb_category[]" id="PDLY_INPUT_lb_category1"  ><option >SELECT</option> </select> </td> <td><input class=" form-control date-picker submultivalid datemandtry"   type="text" name ="PDLY_INPUT_db_invdate[]" id="PDLY_INPUT_db_invdate1" style="max-width:100px;" /> </td><td><input   type="text" name ="PDLY_INPUT_tb_incamtrp[]" id="PDLY_INPUT_tb_incamtrp1"  class="form-control amtonly submultivalid" style="max-width:80px;"   /></td><td><textarea class="form-control submultivalid PDLY_INPUT_ta_cmtItem"   name="PDLY_INPUT_ta_invitem[]" id="PDLY_INPUT_ta_invitem1"   ></textarea></td><td><input class="form-control submultivalid autosize autocompinc"  type="text" name ="PDLY_INPUT_tb_invfrom[]" id="PDLY_INPUT_tb_invfrom1" maxlength="200" /></td><td><textarea  class=" form-control submultivalid PDLY_INPUT_ta_cmtItem" name ="PDLY_INPUT_tb_comments[]" id="PDLY_INPUT_tb_comments1" ></textarea></td><td><input enabled type="button" disabled value="+" class="addbttn" alt="Add Row" style="max-height: 30px; max-width:30px;" name ="PDLY_INPUT_btn_addbtn" id="PDLY_INPUT_btn_addbtn1" disabled/></td><td><input  type="button" value="-" class="deletebttn" alt="delete Row" style="max-height: 30px; max-width:30px;" name ="PDLY_INPUT_btn_delbtn" id="PDLY_INPUT_btn_delbtn1"  disabled /></td></tr>').appendTo($('#PDLY_INPUT_tble_multi'));
+        $('<tr><td nowrap><label  id="PDLY_INPUT_lbl_expense" >CATEGORY OF EXPENSE<em>*</em></label></td><td style="max-width: 150px;" nowrap><label  id="PDLY_INPUT_lbl_invdate" >INVOICE DATE<em>*</em></label></td><td style="max-width:200px;" nowrap><label id="PDLY_INPUT_lbl_invamt" >INVOICE AMOUNT<em>*</em></label> </td><td ><label id="PDLY_INPUT_lbl_invitm" >INVOICE ITEMS<em>*</em></label> </td><td ><label id="PDLY_INPUT_lbl_invfrom" >INVOICE FROM<em>*</em></label> </td><td><label id="PDLY_INPUT_lbl_invcmt" >COMMENTS</label></td></tr><tr><td> <select class="submultivalid form-control"   name="PDLY_INPUT_lb_category[]" id="PDLY_INPUT_lb_category1"  ><option >SELECT</option> </select> </td> <td><input class=" form-control date-picker submultivalid datemandtry"   type="text" name ="PDLY_INPUT_db_invdate[]" id="PDLY_INPUT_db_invdate1" style="max-width:100px;" /> </td><td><input   type="text" name ="PDLY_INPUT_tb_incamtrp[]" id="PDLY_INPUT_tb_incamtrp1"  class="form-control amtonly submultivalid" style="max-width:90px;"   /></td><td><textarea class="form-control submultivalid PDLY_INPUT_ta_cmtItem"   name="PDLY_INPUT_ta_invitem[]" id="PDLY_INPUT_ta_invitem1"   ></textarea></td><td><input class="form-control submultivalid autosize autocompinc"  type="text" name ="PDLY_INPUT_tb_invfrom[]" id="PDLY_INPUT_tb_invfrom1" maxlength="200" /></td><td><textarea  class=" form-control submultivalid PDLY_INPUT_ta_cmtItem" name ="PDLY_INPUT_tb_comments[]" id="PDLY_INPUT_tb_comments1" ></textarea></td><td><input enabled type="button" disabled value="+" class="addbttn" alt="Add Row" style="max-height: 30px; max-width:30px;" name ="PDLY_INPUT_btn_addbtn" id="PDLY_INPUT_btn_addbtn1" disabled/></td><td><input  type="button" value="-" class="deletebttn" alt="delete Row" style="max-height: 30px; max-width:30px;" name ="PDLY_INPUT_btn_delbtn" id="PDLY_INPUT_btn_delbtn1"  disabled /></td></tr>').appendTo($('#PDLY_INPUT_tble_multi'));
         $(".autosize").doValidation({rule:'general',prop:{autosize:true}});
         $(".amtonly").doValidation({rule:'numbersonly',prop:{realpart:5,imaginary:2}});
         $(".date-picker").datepicker({dateFormat:'dd-mm-yy', changeYear: true, changeMonth: true});
@@ -296,7 +296,7 @@ $(document).ready(function(){
             }
         });
         $('.date-picker').datepicker("option","maxDate",new Date());
-        fCell.innerHTML ="<td><input  class='submultivalid form-control amtonlyinc' type='text'  name ='PDLY_INPUT_tb_incamtrp[]' id='"+"PDLY_INPUT_tb_incamtrp"+incid+"' style='max-width:80px;'/></td>"
+        fCell.innerHTML ="<td><input  class='submultivalid form-control amtonlyinc' type='text'  name ='PDLY_INPUT_tb_incamtrp[]' id='"+"PDLY_INPUT_tb_incamtrp"+incid+"' style='max-width:90px;'/></td>"
         fCell = newRow.insertCell(3);
         $(".amtonlyinc").doValidation({rule:'numbersonly',prop:{realpart:5,imaginary:2}});
         fCell.innerHTML ="<td><textarea class='submultivalid form-control PDLY_INPUT_ta_cmtItem'  type='text' name='PDLY_INPUT_ta_invitem[]' id='"+"PDLY_INPUT_ta_invitem"+incid+"'></textarea></td>"
@@ -431,6 +431,7 @@ $(document).ready(function(){
                 $('#PDLY_INPUT_btn_bbypsnlsbutton').show();
             }
         }
+        PDLY_INPUT_submultivalidfunction()
     });
 //CAR EXPENSE VALIDATION.........................
     $(document).on('change blur','.carsubmultivalid',function() {
@@ -666,6 +667,9 @@ $(document).ready(function(){
                     }
                     $('#PDLY_INPUT_btn_bbypsnlsbutton').attr('disabled','disabled');
                 }
+            },
+            error: function (data) {
+                alert('error in getting' + JSON.stringify(data));
             }
         });
     });
@@ -2137,7 +2141,7 @@ $(document).ready(function(){
                 babycategory += '<option value="' + baby_category[i].ECN_DATA + '">' + baby_category[i].ECN_DATA + '</option>';
             }
             $('#Eb_category').html(babycategory)
-            $('#Eb_category').prop('selectedIndex',categorysindex);
+            $('#Eb_category').prop('selectedIndex',categorysindex+1);
         }
         if(ifcondition=='ebinvdate')
         {
@@ -2795,7 +2799,7 @@ $(document).ready(function(){
                 <tr>
                     <td><select class="form-control submultivalid"   name="PDLY_INPUT_lb_category[]" id="PDLY_INPUT_lb_category1"><option >SELECT</option> </select> </td>
                     <td><input class="form-control submultivalid date-picker datemandtry"   type="text" name ="PDLY_INPUT_db_invdate[]" id="PDLY_INPUT_db_invdate1" style="max-width:100px;" /> </td>
-                    <td><input   type="text" name ="PDLY_INPUT_tb_incamtrp[]" id="PDLY_INPUT_tb_incamtrp1"  class="submultivalid form-control amtonly" style="max-width:80px;"   /></td>
+                    <td><input   type="text" name ="PDLY_INPUT_tb_incamtrp[]" id="PDLY_INPUT_tb_incamtrp1"  class="submultivalid form-control amtonly" style="max-width:90px;"   /></td>
                     <td><textarea class="submultivalid form-control"   name="PDLY_INPUT_ta_invitem[]" id="PDLY_INPUT_ta_invitem1"></textarea></td>
                     <td><input class="submultivalid form-control autosize autocompinc"  type="text" name ="PDLY_INPUT_tb_invfrom[]" id="PDLY_INPUT_tb_invfrom1" maxlength="200"/></td>
                     <td><textarea  class="submultivalid form-control" name ="PDLY_INPUT_tb_comments[]" id="PDLY_INPUT_tb_comments1"></textarea></td>
@@ -2822,9 +2826,9 @@ $(document).ready(function(){
         </div>
         <div class="form-group">
             <label id="PCE_lbl_invdte" class="col-sm-2" >INVOICE DATE<em>*</em></label>
-            <div class="col-sm-3">
+            <div class="col-sm-2">
                 <div class="input-group addon">
-                <input type="text" style="max-width: 100px;" placeholder="Invoice Date" id="PCE_tb_invdate" name="PCE_tb_invdate" class="form-control date-picker datemandtry carsubmultivalid"/>
+                <input type="text"  placeholder="Invoice Date" id="PCE_tb_invdate" name="PCE_tb_invdate" class="form-control date-picker datemandtry carsubmultivalid"/>
                 <label for="PCE_tb_invdate" class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></label>
             </div>
             </div>
@@ -2861,27 +2865,27 @@ $(document).ready(function(){
     <div id="form_carloan" hidden>
         <div class="form-group">
             <label id="PCLE_lbl_paiddte" class="col-sm-2" >PAID DATE<em>*</em></label>
-            <div class="col-sm-3">
+            <div class="col-sm-2">
                 <div class="input-group addon">
-                <input type="text" placeholder="Paid Date" style="max-width: 100px;" id="PCLE_tb_paiddte" name="PCLE_tb_paiddte" class="form-control date-picker datemandtry carloansubmultivalid"  />
+                <input type="text" placeholder="Paid Date"  id="PCLE_tb_paiddte" name="PCLE_tb_paiddte" class="form-control date-picker datemandtry carloansubmultivalid"  />
                     <label for="PCLE_tb_paiddte" class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></label>
                 </div>
             </div>
         </div>
         <div class="form-group">
             <label id="PCLE_lbl_frmperiod" class="col-sm-2" >FROM PERIOD<em>*</em></label>
-            <div class="col-sm-3">
+            <div class="col-sm-2">
                 <div class="input-group addon">
-                <input type="text" placeholder="From Period" style="max-width: 100px;" id="PCLE_tb_fromperiod" name="PCLE_tb_fromperiod" class="form-control date-picker datemandtry carloansubmultivalid" />
+                <input type="text" placeholder="From Period"  id="PCLE_tb_fromperiod" name="PCLE_tb_fromperiod" class="form-control date-picker datemandtry carloansubmultivalid" />
                     <label for="PCLE_tb_fromperiod" class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></label>
                 </div>
             </div>
         </div>
         <div class="form-group">
             <label id="PCLE_lbl_toperiod" class="col-sm-2" >TO PERIOD<em>*</em></label>
-            <div class="col-sm-3">
+            <div class="col-sm-2">
                 <div class="input-group addon">
-                <input type="text" placeholder="To Period" style="max-width: 100px;" id="PCLE_ta_toperiod" name="PCLE_ta_toperiod" class="form-control date-picker datemandtry carloansubmultivalid" >
+                <input type="text" placeholder="To Period"  id="PCLE_ta_toperiod" name="PCLE_ta_toperiod" class="form-control date-picker datemandtry carloansubmultivalid" >
                     <label for="PCLE_ta_toperiod" class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></label>
                 </div>
             </div>
@@ -2934,7 +2938,7 @@ $(document).ready(function(){
             <label  id='PDLY_SEARCH_lbl_startdate' class="col-sm-2" hidden> START DATE <em>*</em></label>
             <div class="col-sm-2">
                 <div class="input-group addon">
-                <input  type="text" class="datebox submitval datemandtry form-control"  name="PDLY_SEARCH_db_startdate" id="PDLY_SEARCH_db_startdate" style="width:100px;" hidden />
+                <input  type="text" class="datebox submitval datemandtry form-control"  name="PDLY_SEARCH_db_startdate" id="PDLY_SEARCH_db_startdate"  hidden />
                     <label for="PDLY_SEARCH_db_startdate" class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></label>
                 </div>
            </div>
@@ -2943,7 +2947,7 @@ $(document).ready(function(){
             <label id='PDLY_SEARCH_lbl_enddate' class="col-sm-2" hidden> END DATE <em>*</em></label>
             <div class="col-sm-2">
                 <div class="input-group addon">
-                <input  type="text" class="datebox submitval datemandtry form-control" name="PDLY_SEARCH_db_enddate" id="PDLY_SEARCH_db_enddate" style="width:100px;" hidden />
+                <input  type="text" class="datebox submitval datemandtry form-control" name="PDLY_SEARCH_db_enddate" id="PDLY_SEARCH_db_enddate"  hidden />
                     <label for="PDLY_SEARCH_db_enddate" class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></label>
             </div>
             </div>

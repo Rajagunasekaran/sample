@@ -3524,8 +3524,8 @@ var BDLY_SRC_flag_autocom='';
                     var TempAccountTR ='<div id="BDLY_SRC_tr_searchopt_accountno" class="BDLY_SRC_class_dynamicrows form-group" ><label class="BDLY_SRC_class_lb_lbl col-sm-2">ACCOUNT NO</label><div class="col-sm-2"><select  class="BDLY_SRC_class_Searchbtn_list_box BDLY_SCR_Field form-control" name="BDLY_SRC_lb_accountno" id="BDLY_SRC_lb_accountno" ><option>SELECT</option></select></div></div>';
                     var TempFromamtTR ='<div id="BDLY_SRC_tr_searchopt_fromamt" class="BDLY_SRC_class_dynamicrows form-group" ><label class="col-sm-2">FROM AMOUNT</label><div class="col-sm-2" ><input class="BDLY_SCR_Field form-control" type="text" id="BDLY_SRC_tb_fromamt" name="BDLY_SRC_tb_fromamnt" /></div></div>';
                     var TempToamtTR ='<div id="BDLY_SRC_tr_searchopt_toamt" class="BDLY_SRC_class_dynamicrows form-group" ><label class="col-sm-2">TO AMOUNT</label><div class="col-sm-2"><input class="BDLY_SCR_Field form-control" type="text" id="BDLY_SRC_tb_toamt"  name="BDLY_SRC_tb_toamnt" /></div><div class="errormsg" id="BDLY_SRC_tb_fromtoamnt_errormsg"></div></div>';
-                    var TempStart_DateTR ='<div id="BDLY_SRC_tr_searchopt_startdate" class="BDLY_SRC_class_dynamicrowss form-group" ><label class="col-sm-2">START DATE</label><div class="col-sm-2"><div class="input-group addon"><input  type="text" id="BDLY_SRC_startdate" name="BDLY_SRC_startdate" class="BDLY_SCR_Field datepickerbox BDLY_class_sedatechange datemandtry form-control" style="width:100px;"/><label for="BDLY_SRC_startdate" class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></label></div></div><div class="errormsg" id="BDLY_SRC_startdate_errormsg"></div></div>';
-                    var TempEnd_DateTR ='<div id="BDLY_SRC_tr_searchopt_enddate" class="BDLY_SRC_class_dynamicrowss form-group" ><label class="col-sm-2">END DATE</label><div class="col-sm-2"><div class="input-group addon"><input class="BDLY_SCR_Field datepickerbox BDLY_class_sedatechange datemandtry form-control" type="text" id="BDLY_SRC_enddate" name="BDLY_SRC_enddate"  style="width:100px;"/><label for="BDLY_SRC_enddate" class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></label></div></div><div class="errormsg" id="BDLY_SRC_enddate_errormsg"></div></div></div>';
+                    var TempStart_DateTR ='<div id="BDLY_SRC_tr_searchopt_startdate" class="BDLY_SRC_class_dynamicrowss form-group" ><label class="col-sm-2">START DATE</label><div class="col-sm-2"><div class="input-group addon"><input  type="text" id="BDLY_SRC_startdate" name="BDLY_SRC_startdate" class="BDLY_SCR_Field datepickerbox BDLY_class_sedatechange datemandtry form-control" /><label for="BDLY_SRC_startdate" class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></label></div></div><div class="errormsg" id="BDLY_SRC_startdate_errormsg"></div></div>';
+                    var TempEnd_DateTR ='<div id="BDLY_SRC_tr_searchopt_enddate" class="BDLY_SRC_class_dynamicrowss form-group" ><label class="col-sm-2">END DATE</label><div class="col-sm-2"><div class="input-group addon"><input class="BDLY_SCR_Field datepickerbox BDLY_class_sedatechange datemandtry form-control" type="text" id="BDLY_SRC_enddate" name="BDLY_SRC_enddate" /><label for="BDLY_SRC_enddate" class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></label></div></div><div class="errormsg" id="BDLY_SRC_enddate_errormsg"></div></div></div>';
                     var TempStart_ForperiodTR ='<div id="BDLY_SRC_tr_searchopt_startforperiod"  class="form-group"><label class="col-sm-2">START PERIOD</label><div style="padding-left:0px;" class="col-sm-9"><div class="col-sm-3"><div class="input-group addon"><input type="text" name="BDLY_SRC_startforperiod" id="BDLY_SRC_startforperiod"  class="BDLY_SCR_Field BDLY_SCR_forperiod monthpicker datemandtry form-control" /><label for="BDLY_SRC_startforperiod" class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></label></div></div></div></div>';
                     var TempEnd_ForperiodTR ='<div id="BDLY_SRC_tr_searchopt_endforperiod" class="form-group" ><label class="col-sm-2">END PERIOD</label><div style="padding-left:0px;" class="col-sm-9"><div class="col-sm-3"><div class="input-group addon"><input type="text" name="BDLY_SRC_endforperiod" id="BDLY_SRC_endforperiod"  class="BDLY_SCR_Field BDLY_SCR_forperiod monthpicker datemandtry form-control" /><label for="BDLY_SRC_endforperiod" class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></label></div></div></div></div>';
                     var BDLY_SRC_Form_search_btn_html='<div class="col-lg-offset-2" style="padding-left:65px;"><input type="button" name="BDLY_SRC_btn_search" id="BDLY_SRC_btn_search" class="btn" value="SEARCH"  />';
@@ -5737,9 +5737,9 @@ var BDLY_SRC_flag_autocom='';
                     </div>
                     <div class="form-group">
                         <label  id='BDLY_INPUT_lbl_air_date' class="col-sm-2" >DATE<em>*</em></label>
-                        <div class="col-sm-4">
+                        <div class="col-sm-2">
                             <div class="input-group addon">
-                                <input type="text" id="BDLY_INPUT_tb_air_date" name="BDLY_INPUT_tb_air_date" class="datepickdate BDLY_INPUT_class_submitvalidate datemandtry form-control" placeholder="Date" style="width:100px" >
+                                <input type="text" id="BDLY_INPUT_tb_air_date" name="BDLY_INPUT_tb_air_date" class="datepickdate BDLY_INPUT_class_submitvalidate datemandtry form-control" placeholder="Date" >
                                 <label for="BDLY_INPUT_tb_air_date" class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></label>
                             </div>
                         </div>
@@ -5757,9 +5757,9 @@ var BDLY_SRC_flag_autocom='';
                         </div>
                         <div class="form-group">
                             <label  id='BDLY_INPUT_lbl_cp_invoicedate' class="col-sm-2" >INVOICE DATE<em>*</em></label>
-                            <div class="col-sm-4">
+                            <div class="col-sm-2">
                                 <div class="input-group addon">
-                                <input type="text" id="BDLY_INPUT_tb_cp_invoicedate" name="BDLY_INPUT_tb_cp_invoicedate" placeholder="Invoice Date" class="BDLY_INPUT_class_submitvalidate datemandtry form-control" style="width:100px" >
+                                <input type="text" id="BDLY_INPUT_tb_cp_invoicedate" name="BDLY_INPUT_tb_cp_invoicedate" placeholder="Invoice Date" class="BDLY_INPUT_class_submitvalidate datemandtry form-control"  >
                                 <label for="BDLY_INPUT_tb_cp_invoicedate" class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></label>
                                 </div>
                             </div>
@@ -5768,7 +5768,7 @@ var BDLY_SRC_flag_autocom='';
                             <label  id='BDLY_INPUT_lbl_cp_fromdate' class="col-sm-2">FROM PERIOD<em>*</em></label>
                             <div class="col-sm-2">
                                 <div class="input-group addon">
-                                    <input type="text" id="BDLY_INPUT_tb_cp_fromdate" name="BDLY_INPUT_tb_cp_fromdate" placeholder="From Period" class=" BDLY_INPUT_class_submitvalidate datemandtry form-control" style="width:100px" >
+                                    <input type="text" id="BDLY_INPUT_tb_cp_fromdate" name="BDLY_INPUT_tb_cp_fromdate" placeholder="From Period" class=" BDLY_INPUT_class_submitvalidate datemandtry form-control"  >
                                     <label for="BDLY_INPUT_tb_cp_fromdate" class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></label>
                                 </div>
                             </div>
@@ -5777,7 +5777,7 @@ var BDLY_SRC_flag_autocom='';
                             <label  id='BDLY_INPUT_lbl_cp_todate' class="col-sm-2">TO PERIOD<em>*</em></label>
                             <div class="col-sm-2">
                                 <div class="input-group addon">
-                                <input type="text" id="BDLY_INPUT_tb_cp_todate" name="BDLY_INPUT_tb_cp_todate"  placeholder="To Period"class="BDLY_INPUT_class_submitvalidate datemandtry form-control" style="width:100px" >
+                                <input type="text" id="BDLY_INPUT_tb_cp_todate" name="BDLY_INPUT_tb_cp_todate"  placeholder="To Period"class="BDLY_INPUT_class_submitvalidate datemandtry form-control"  >
                                 <label for="BDLY_INPUT_tb_cp_todate" class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></label>
                                 </div>
                             </div>
@@ -5807,27 +5807,27 @@ var BDLY_SRC_flag_autocom='';
                         </div>
                         <div class="form-group">
                             <label  id='BDLY_INPUT_lbl_digi_invoicedate' class="col-sm-2">INVOICE DATE<em>*</em></label>
-                            <div class="col-sm-4">
+                            <div class="col-sm-2">
                                 <div class="input-group addon">
-                                <input type="text" id="BDLY_INPUT_tb_digi_invoicedate" name="BDLY_INPUT_tb_digi_invoicedate" placeholder="Invoice Date" class=" BDLY_INPUT_class_submitvalidate datemandtry form-control" style="width:100px" >
+                                <input type="text" id="BDLY_INPUT_tb_digi_invoicedate" name="BDLY_INPUT_tb_digi_invoicedate" placeholder="Invoice Date" class=" BDLY_INPUT_class_submitvalidate datemandtry form-control"  >
                                 <label for="BDLY_INPUT_tb_digi_invoicedate" class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></label>
                                 </div>
                             </div>
                         </div>
                         <div class="form-group">
                             <label  id='BDLY_INPUT_lbl_digi_fromdate' class="col-sm-2">FROM PERIOD<em>*</em></label>
-                            <div class="col-sm-4">
+                            <div class="col-sm-2">
                                 <div class="input-group addon">
-                                <input type="text" id="BDLY_INPUT_tb_digi_fromdate" name="BDLY_INPUT_tb_digi_fromdate" placeholder="From Period" class=" BDLY_INPUT_class_submitvalidate datemandtry form-control" style="width:100px" >
+                                <input type="text" id="BDLY_INPUT_tb_digi_fromdate" name="BDLY_INPUT_tb_digi_fromdate" placeholder="From Period" class=" BDLY_INPUT_class_submitvalidate datemandtry form-control"  >
                                 <label for="BDLY_INPUT_tb_digi_fromdate" class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></label>
                                 </div>
                             </div>
                         </div>
                         <div class="form-group">
                             <label  id='BDLY_INPUT_lbl_digi_todate' class="col-sm-2">TO PERIOD<em>*</em></label>
-                            <div class="col-sm-4">
+                            <div class="col-sm-2">
                                 <div class="input-group addon">
-                                <input type="text" id="BDLY_INPUT_tb_digi_todate" placeholder="To Period" name="BDLY_INPUT_tb_digi_todate"  class=" BDLY_INPUT_class_submitvalidate datemandtry form-control" style="width:100px" >
+                                <input type="text" id="BDLY_INPUT_tb_digi_todate" placeholder="To Period" name="BDLY_INPUT_tb_digi_todate"  class=" BDLY_INPUT_class_submitvalidate datemandtry form-control" >
                                 <label for="BDLY_INPUT_tb_digi_todate" class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></label>
                                 </div>
                             </div>
@@ -5845,9 +5845,9 @@ var BDLY_SRC_flag_autocom='';
                     <div id="BDLY_INPUT_tble_facility" hidden>
                         <div class="form-group">
                             <label  id='BDLY_INPUT_lbl_fac_invoicedate' class="col-sm-2">DATE<em>*</em></label>
-                            <div class="col-sm-4">
+                            <div class="col-sm-2">
                                 <div class="input-group addon">
-                                    <input type="text" style="width:100px" id="BDLY_INPUT_tb_fac_invoicedate" placeholder="Date" name="BDLY_INPUT_tb_fac_invoicedate" class=" form-control datepickdate BDLY_INPUT_class_hksubmitvalidate datemandtry" >
+                                    <input type="text" id="BDLY_INPUT_tb_fac_invoicedate" placeholder="Date" name="BDLY_INPUT_tb_fac_invoicedate" class=" form-control datepickdate BDLY_INPUT_class_hksubmitvalidate datemandtry" >
                                     <label for="BDLY_INPUT_tb_fac_invoicedate" class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></label>
                                 </div>
                             </div>
@@ -5888,7 +5888,7 @@ var BDLY_SRC_flag_autocom='';
                             <label  id='BDLY_INPUT_lbl_mov_date' class="col-sm-2">INVOICE DATE<em>*</em></label>
                             <div class="col-sm-2">
                                 <div class="input-group addon">
-                                    <input type="text" id="BDLY_INPUT_tb_mov_date" name="BDLY_INPUT_tb_mov_date" placeholder="Invoice Date" class="BDLY_INPUT_class_hksubmitvalidate datepickdate datemandtry form-control" style="width:100px" >
+                                    <input type="text" id="BDLY_INPUT_tb_mov_date" name="BDLY_INPUT_tb_mov_date" placeholder="Invoice Date" class="BDLY_INPUT_class_hksubmitvalidate datepickdate datemandtry form-control"  >
                                     <label for="BDLY_INPUT_tb_mov_date" class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></label>
                                 </div>
                             </div>
@@ -5913,7 +5913,7 @@ var BDLY_SRC_flag_autocom='';
                             <label  id='BDLY_INPUT_lbl_access_date' class="col-sm-2">INVOICE DATE<em>*</em></label>
                             <div class="col-sm-2">
                                 <div class="input-group addon">
-                                    <input type="text" id="BDLY_INPUT_tb_access_date" name="BDLY_INPUT_tb_access_date" placeholder="Invoice Date" style="width:100px;" class="datepickdate BDLY_INPUT_class_hksubmitvalidate datemandtry form-control" >
+                                    <input type="text" id="BDLY_INPUT_tb_access_date" name="BDLY_INPUT_tb_access_date" placeholder="Invoice Date"  class="datepickdate BDLY_INPUT_class_hksubmitvalidate datemandtry form-control" >
                                     <label for="BDLY_INPUT_tb_access_date" class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></label>
                                 </div>
                             </div>
@@ -5935,9 +5935,9 @@ var BDLY_SRC_flag_autocom='';
                         </div>
                         <div class="form-group">
                             <label  id='BDLY_INPUT_lbl_petty_date'class="col-sm-2" >DATE<em>*</em></label>
-                            <div class="col-sm-4">
+                            <div class="col-sm-2">
                                 <div class="input-group addon">
-                                    <input type="text" id="BDLY_INPUT_tb_petty_date" name="BDLY_INPUT_tb_petty_date" placeholder="Date" class="datepickdate BDLY_INPUT_class_hksubmitvalidate datemandtry form-control"style="width:100px;" >
+                                    <input type="text" id="BDLY_INPUT_tb_petty_date" name="BDLY_INPUT_tb_petty_date" placeholder="Date" class="datepickdate BDLY_INPUT_class_hksubmitvalidate datemandtry form-control">
                                     <label for="BDLY_INPUT_tb_petty_date" class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></label>
                                 </div><!--datepickdate-->
                             </div>
@@ -5989,7 +5989,7 @@ var BDLY_SRC_flag_autocom='';
                             <label  id='BDLY_INPUT_lbl_house_date' class="col-sm-2">WORK DATE<em>*</em></label>
                             <div class="col-sm-2">
                                 <div class="input-group addon">
-                                    <input type="text" id="BDLY_INPUT_tb_house_date" name="BDLY_INPUT_tb_house_date" placeholder="Work Date" class="datepickdate BDLY_INPUT_class_hksubmitvalidate datemandtry form-control" style="width:100px;" >
+                                    <input type="text" id="BDLY_INPUT_tb_house_date" name="BDLY_INPUT_tb_house_date" placeholder="Work Date" class="datepickdate BDLY_INPUT_class_hksubmitvalidate datemandtry form-control"  >
                                     <label for="BDLY_INPUT_tb_house_date" class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></label>
                                 </div>
                             </div>
@@ -6036,7 +6036,7 @@ var BDLY_SRC_flag_autocom='';
                             <label  id='BDLY_INPUT_lbl_pay_paiddate' class="col-sm-2">PAID DATE<em>*</em></label>
                             <div class="col-sm-2">
                                 <div class="input-group addon">
-                                    <input type="text" id="BDLY_INPUT_tb_pay_paiddate" name="BDLY_INPUT_tb_pay_paiddate" placeholder="Paid Date" class="datepickdate BDLY_INPUT_class_hksubmitvalidate datemandtry form-control" style="width:100px;" >
+                                    <input type="text" id="BDLY_INPUT_tb_pay_paiddate" name="BDLY_INPUT_tb_pay_paiddate" placeholder="Paid Date" class="datepickdate BDLY_INPUT_class_hksubmitvalidate datemandtry form-control" >
                                     <label for="BDLY_INPUT_tb_pay_paiddate" class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></label>
                                 </div>
                             </div>

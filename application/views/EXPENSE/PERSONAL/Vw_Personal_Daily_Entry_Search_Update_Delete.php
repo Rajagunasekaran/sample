@@ -12,7 +12,6 @@ require_once('application/libraries/EI_HDR.php');
 <style>
     td, th {
         padding: 8px;
-        /*text-align: center;*/
     }
     textarea{
         resize: none;

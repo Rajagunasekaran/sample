@@ -128,6 +128,7 @@
         //*******************ERM ENTRY FORM DETAILS END ************************//
         var AllchequenoArray=[];
         var AllchequeunitArray=[];
+        var arr;var arrLast;var arrupdate;
         $('#CHEQUE_SRC_SearchOption').change(function(){
             $('#SearchformDiv').html('');
             $('section').html('');
@@ -435,23 +436,24 @@
                                 date = value_array[i].CHEQUE_DEBITED_RETURNED_DATE;
                             }
                             tabledata += '<tr id=' + value_array[i].CHEQUE_ID + '>' +
-                            "<td style='width:80px !important;vertical-align: middle' nowrap><div class='col-lg-2'><span style='display: block;color:green' title='Edit' class='glyphicon glyphicon-edit Cheque_editbutton' disabled id=" + edit + "></div></td>" +
-                            "<td style='width:100px !important;vertical-align: middle;text-align: center' nowrap>" + value_array[i].CHEQUE_DATE + "</td>" +
-                            "<td style='width:100px !important;vertical-align: middle;text-align: center' nowrap>" + value_array[i].CHEQUE_NO + "</td>" +
-                            "<td style='width:250px !important;vertical-align: middle' >" + value_array[i].CHEQUE_TO + "</td>" +
-                            "<td style='width:250px !important;vertical-align: middle' >" + value_array[i].CHEQUE_FOR + "</td>" +
-                            "<td style='width:120px !important;vertical-align: middle;text-align: center' nowrap>" + value_array[i].CHEQUE_AMOUNT + "</td>" +
-                            "<td style='width:150px !important;vertical-align: middle;text-align: center'nowrap>" + unit + "</td>" +
-                            "<td style='width:100px !important;vertical-align: middle;text-align: center' nowrap>" + value_array[i].BCN_DATA + "</td>" +
-                            "<td style='width:100px !important;vertical-align: middle;text-align: center' nowrap>" + date + "</td>" +
-                            "<td style='width:250px !important;vertical-align: middle'>" + comments + "</td>" +
-                            "<td style='width:200px !important;vertical-align: middle' nowrap>" + value_array[i].ULD_LOGINID + "</td>" +
-                            "<td style='width:150px !important;vertical-align: middle' nowrap>" + value_array[i].CED_TIME_STAMP + "</td></tr>";
+                            "<td id=ICON_"+value_array[i].CHEQUE_ID+" style='width:80px !important;vertical-align: middle' nowrap><div class='col-lg-2'><span style='display: block;color:green' title='Edit' class='glyphicon glyphicon-edit Cheque_editbutton' disabled id=" + edit + "></div></td>" +
+                            "<td id=CHKDATE_"+value_array[i].CHEQUE_ID+" style='width:100px !important;vertical-align: middle;text-align: center' nowrap>" + value_array[i].CHEQUE_DATE + "</td>" +
+                            "<td id=CHKNO_"+value_array[i].CHEQUE_ID+" style='width:100px !important;vertical-align: middle;text-align: center' nowrap>" + value_array[i].CHEQUE_NO + "</td>" +
+                            "<td id=CHKTO_"+value_array[i].CHEQUE_ID+" style='width:250px !important;vertical-align: middle' >" + value_array[i].CHEQUE_TO + "</td>" +
+                            "<td id=CHKFOR_"+value_array[i].CHEQUE_ID+" style='width:250px !important;vertical-align: middle' >" + value_array[i].CHEQUE_FOR + "</td>" +
+                            "<td id=CHKAMT_"+value_array[i].CHEQUE_ID+" style='width:120px !important;vertical-align: middle;text-align: center' nowrap>" + value_array[i].CHEQUE_AMOUNT + "</td>" +
+                            "<td id=UNIT_"+value_array[i].CHEQUE_ID+" style='width:150px !important;vertical-align: middle;text-align: center'nowrap>" + unit + "</td>" +
+                            "<td id=STATUS_"+value_array[i].CHEQUE_ID+" style='width:100px !important;vertical-align: middle;text-align: center' nowrap>" + value_array[i].BCN_DATA + "</td>" +
+                            "<td id=DEBITED_"+value_array[i].CHEQUE_ID+" style='width:100px !important;vertical-align: middle;text-align: center' nowrap>" + date + "</td>" +
+                            "<td id=COMMENTS_"+value_array[i].CHEQUE_ID+" style='width:250px !important;vertical-align: middle'>" + comments + "</td>" +
+                            "<td id=USERSTAMP_"+value_array[i].CHEQUE_ID+" style='width:200px !important;vertical-align: middle' nowrap>" + value_array[i].ULD_LOGINID + "</td>" +
+                            "<td id=TIMESTAMP_"+value_array[i].CHEQUE_ID+" style='width:150px !important;vertical-align: middle' nowrap>" + value_array[i].CED_TIME_STAMP + "</td></tr>";
                         }
                         tabledata += "</body>";
                         $('section').html(tabledata);
                         $('#CHEQUE_SEARCH_DataTable').show();
                         var table = $('#CHEQUE_Datatable').DataTable({
+                            "sDom":"Rlfrtip",
                             "pageLength": 10,
                             "sPaginationType": "full_numbers",
                             "aoColumnDefs": [{
@@ -513,6 +515,26 @@
             var tdstr = '';
             var edit="Editid_"+Rowid;
             var del="Deleteid_"+Rowid;
+            arrLast={"ICON":[$('#ICON_'+Rowid).html()],
+                "CHKDATE":[$('#CHKDATE_'+Rowid).html()],"CHKNO":[$('#CHKNO_'+Rowid).html()],
+                "CHKTO":[$('#CHKTO_'+Rowid).html()],"CHKFOR":[$('#CHKFOR_'+Rowid).html()],
+                "CHKAMT":[$('#CHKAMT_'+Rowid).html()],"UNIT":[$('#UNIT_'+Rowid).html()],
+                "STATUS":[$('#STATUS_'+Rowid).html()],"DEBITED":[$('#DEBITED_'+Rowid).html()],"COMMENTS":[$('#COMMENTS_'+Rowid).html()],"USERSTAMP":[$('#USERSTAMP_'+Rowid).html()],"TIMESTAMP":[$('#TIMESTAMP_'+Rowid).html()]}
+            arr={"ICON":["<div class='col-lg-1'><span style='display: block;color:green' title='Update' class='glyphicon glyphicon-print Cheque_editbutton' disabled id="+edit+"></div><div class='col-lg-1'><span style='display: block;color:red' title='Cancel' class='glyphicon glyphicon-remove Cheque_editcancel' disabled id="+del+"></div>"],
+                "CHKDATE":["<input type='text' id=chequedate  name='chequedate'  class='numonly datemandtry form-control FormValidation' style='font-weight:bold;width:120px' value='"+$('#CHKDATE_'+Rowid).html()+"'>"],
+                "CHKNO":["<input type='text' id='chequeno' name='chequeno'  class='form-control FormValidation' maxlength='6' style='font-weight:bold;width:100px' value='"+$('#CHKNO_'+Rowid).html()+"'>"],
+                "CHKTO":["<textarea id='chequeto' name='chequeto'  class='form-control FormValidation autogrowcomments autosize' maxlength='100' style='font-weight:bold;'>"+$('#CHKTO_'+Rowid).html()+"</textarea>"],
+                "CHKFOR":["<textarea id='chequefor' name='chequefor'  class='form-control FormValidation autogrowcomments autosize' maxlength='100' style='font-weight:bold;'>"+$('#CHKFOR_'+Rowid).html()+"</textarea>"],
+                "CHKAMT":["<input id='amount' name='amount'  class='amtonly form-control FormValidation' style='font-weight:bold;width:120px' value='"+$('#CHKAMT_'+Rowid).html()+"'>"],
+                "UNIT":["<input id='unit' name='unit'  class='form-control FormValidation' style='font-weight:bold;width:150px' value='"+$('#UNIT_'+Rowid).html()+"'>"],
+                "STATUS":["<SELECT id='status' name='status'  class='form-control  FormValidation Debitedvalidation'  style='font-weight:bold;width:150px' value='"+$('#STATUS_'+Rowid).html()+"'><OPTION>SELECT</OPTION></SELECT>"],
+                "DEBITED":["<div class='col-sm-4'><div class='input-group addon'><input type='text' class='form-control FormValidation datemandtry' id=debiteddate style='width:120px;' value='"+$('#DEBITED_'+Rowid).html()+"'><label  class='input-group-addon' for=debiteddate><span class='glyphicon glyphicon-calendar'></span></label></div></div>"],
+                "COMMENTS":["<textarea id='Comments' name='Comments'  class='form-control autogrowcomments FormValidation'  style='font-weight:bold;'>"+$('#COMMENTS_'+Rowid).html()+"</textarea>"],
+                "USERSTAMP":[$(tds[10]).html()],
+                "TIMESTAMP":[$(tds[11]).html()]}
+            for(var t=0;t<tds.length;t++){
+                $(tds[t]).html(arr[$(tds[t]).attr('id').split('_')[0]][0]);
+            }
             tdstr += "<td style='vertical-align: middle'><div class='col-lg-1'><span style='display: block;color:green' title='Update' class='glyphicon glyphicon-print Cheque_editbutton' disabled id="+edit+"></div><div class='col-lg-1'><span style='display: block;color:red' title='Cancel' class='glyphicon glyphicon-remove Cheque_editcancel' disabled id="+del+"></div></td>";
             tdstr += "<td style='vertical-align: middle'><input type='text' id=chequedate  name='chequedate'  class='numonly datemandtry form-control FormValidation' style='font-weight:bold;width:120px' value='"+$(tds[1]).html()+"'></td>";
             tdstr += "<td style='vertical-align: middle'><input type='text' id='chequeno' name='chequeno'  class='form-control FormValidation' maxlength='6' style='font-weight:bold;width:100px' value='"+$(tds[2]).html()+"'></td>";
@@ -525,7 +547,7 @@
             tdstr += "<td style='vertical-align: middle'><textarea id='Comments' name='Comments'  class='form-control autogrowcomments FormValidation'  style='font-weight:bold;'>"+$(tds[9]).html()+"</textarea></td>";
             tdstr += "<td style='vertical-align: middle'>"+$(tds[10]).html()+"</td>";
             tdstr += "<td style='vertical-align: middle'>"+$(tds[11]).html()+"</td>";
-            $('#'+Rowid).html(tdstr);
+//            $('#'+Rowid).html(tdstr);
             $(".autosize").doValidation({rule:'alphanumeric',prop:{whitespace:true,autosize:true}});
             $(".amtonly").doValidation({rule:'numbersonly',prop:{realpart:5,imaginary:2}});
             $(".numonly").doValidation({rule:'numbersonly'});
@@ -537,7 +559,7 @@
                 options += '<option value="' + data.BCN_DATA + '">' + data.BCN_DATA + '</option>';
             }
             $('#status').html(options);
-            $('#status').val($(tds[7]).html());
+            $('#status').val(arrLast["STATUS"][0]);
             $('#debiteddate').datepicker({
                 dateFormat: "dd-mm-yy",changeYear: true,changeMonth: true
             });
@@ -545,7 +567,7 @@
             $('#chequedate').datepicker("option","minDate",new Date(2005,00));
             var chequenewdate=new Date();
             $('#chequedate').datepicker("option","maxDate",new Date());
-            var CCRE_date1=$(tds[1]).html();
+            var CCRE_date1=arrLast["CHKDATE"][0];
             var CCRE_db_chkindate1 = new Date( Date.parse( FormTableDateFormat(CCRE_date1)));
             CCRE_db_chkindate1.setDate( CCRE_db_chkindate1.getDate());
             var CCRE_db_chkindate1 = CCRE_db_chkindate1.toDateString();
@@ -556,7 +578,7 @@
             {
                 $("#Editid_"+Cheque_id[k]).removeClass("Cheque_editbutton");
             }
-            if($(tds[7]).html()=="ENTERED" || $(tds[7]).html()=="CREATED" || $(tds[7]).html()=="CANCELLED")
+            if(arrLast["DEBITED"][0]=="ENTERED" || arrLast["DEBITED"][0]=="CREATED" || arrLast["DEBITED"][0]=="CANCELLED")
             {
                 $('#debiteddate').prop('disabled',true);
             }
@@ -591,7 +613,13 @@
             var cid = $(this).attr('id');
             var SplittedData=cid.split('_');
             var Rowid=SplittedData[1];
-            $('#'+Rowid).html(pre_tds);
+//            $('#'+Rowid).html(pre_tds);
+            var tds = $('#'+Rowid).children('td');
+//            alert(Rowid);
+            for(var t=0;t<tds.length;t++){
+                alert(arrLast[$(tds[t]).attr('id').split('_')[0]][0])
+                $(tds[t]).html(arrLast[$(tds[t]).attr('id').split('_')[0]][0]);
+            }
             $("#Editid_"+Rowid).removeClass("Cheque_editcancel");
             for(var k=0;k<Cheque_id.length;k++)
             {
@@ -663,7 +691,16 @@
                         tdstr += "<td style='vertical-align: middle'>"+comments+"</td>";
                         tdstr += "<td style='vertical-align: middle'>"+value_array[1]+"</td>";
                         tdstr += "<td style='vertical-align: middle'>"+value_array[2]+"</td>";
-                        $('#'+selectedrowid).html(tdstr);
+//                        $('#'+selectedrowid).html(tdstr);
+                        arrupdate={"ICON":["<div class='col-lg-2'><span style='display: block;color:green' title='Edit' class='glyphicon glyphicon-edit Cheque_editbutton' disabled id="+edit+"></div>"],
+                            "CHKDATE":[cheque_date],"CHKNO":[cheque_no],
+                            "CHKTO":[cheque_to],"CHKFOR":[check_for],
+                            "CHKAMT":[check_amount],"UNIT":[unit],
+                            "STATUS":[status],"DEBITED":[debiteddate],"COMMENTS":[comments],"USERSTAMP":[value_array[1]],"TIMESTAMP":[value_array[2]]}
+                         var tds = $('#'+selectedrowid).children('td');
+                        for(var t=0;t<tds.length;t++){
+                            $(tds[t]).html(arrupdate[$(tds[t]).attr('id').split('_')[0]][0]);
+                        }
                         $('.preloader').hide();
                         for(var k=0;k<Cheque_id.length;k++)
                         {

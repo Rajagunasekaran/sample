@@ -608,6 +608,7 @@ require_once('application/libraries/EI_HDR.php');
                            $('.preloader').hide();
                            $('#Banktt_Search_DataTable').show();
                            $('#Banktt_Datatable').DataTable({
+                               "sDom":"Rlfrtip",
                                "aaSorting": [],
                                "pageLength": 10,
                                "sPaginationType": "full_numbers",
@@ -767,6 +768,7 @@ require_once('application/libraries/EI_HDR.php');
             $('.preloader').hide();
             $('#Banktt_Search_DataTable').show();
             $('#Banktt_Datatable').DataTable({
+                "sDom":"Rlfrtip",
                 "aaSorting": [],
                 "pageLength": 10,
                 "sPaginationType": "full_numbers",
@@ -812,75 +814,162 @@ require_once('application/libraries/EI_HDR.php');
             $('#BankTT_Updation_Form')[0].reset();
             $('#Temp_Bt_id').val(Rowid);
             var tds = $('#'+Rowid).children('td');
-            if($(tds[1]).html()=='TT')
-            {
-                $('#ttgiropart1').show();
-                $('#ttgiropart2').show();
-                $('#giropart').hide();
-                $('#modeldiv').hide();
-                $('#ttpart').show();
-                $('#Banktt_SRC_TTtype').val($(tds[1]).html());
-                $('#Banktt_SRC_Accname').val($(tds[3]).html());
-                $('#Banktt_SRC_Accno').val($(tds[4]).html());
-                $('#Banktt_SRC_Unit').val($(tds[6]).html());
-                $('#Banktt_SRC_Customername').val($(tds[7]).html());
-                $('#Banktt_SRC_Swiftcode').val($(tds[13]).html());
-                $('#Banktt_SRC_Chargesto').val($(tds[14]).html());
-            }
-            else if($(tds[1]).html()=='GIRO')
-            {
-                $('#ttgiropart1').show();
-                $('#ttgiropart2').show();
-                $('#ttpart').hide();
-                $('#modeldiv').hide();
-                $('#giropart').show();
-                $('#Banktt_SRC_TTtype').val($(tds[1]).html());
-                $('#Banktt_SRC_Accname').val($(tds[3]).html());
-                $('#Banktt_SRC_Accno').val($(tds[4]).html());
-                $('#Banktt_SRC_Unit').val($(tds[6]).html());
-                $('#Banktt_SRC_Customername').val($(tds[7]).html());
-                $('#Banktt_SRC_Bankcode').val($(tds[10]).html());
-                $('#Banktt_SRC_Branchcode').val($(tds[11]).html());
-            }
-            else
-            {
-                $('#ttgiropart1').hide();
-                $('#ttgiropart2').hide();
-                $('#ttpart').hide();
-                $('#giropart').hide();
-                $('#modeldiv').show();
-                $('#Banktt_SRC_TTtype').val('MODEL');
-                $('#Banktt_SRC_Modelnames').val($(tds[1]).html());
-            }
-            $('#Banktt_SRC_Date').val($(tds[2]).html());
-            $('#Banktt_SRC_Amount').val($(tds[5]).html());
-            $('#Banktt_SRC_Status').val($(tds[8]).html());
-            $('#Banktt_SRC_Debitedon').val($(tds[9]).html());
-            $('#Banktt_SRC_BankAddress').val($(tds[12]).html());
-            $('#Banktt_SRC_Customerref').val($(tds[15]).html());
-            $('#Banktt_SRC_Invdetails').val($(tds[16]).html());
-            if($(tds[18]).html()!='')
-            {
-                $('#Banktt_SRC_Createdby').val($(tds[18]).html());
-            }
-            $('#Banktt_SRC_Comments').val($(tds[17]).html());
-            var bankttdate=$(tds[2]).html();
-            var BANKTT_db_chkindate1 = new Date( Date.parse( FormTableDateFormat(bankttdate)));
-            BANKTT_db_chkindate1.setDate( BANKTT_db_chkindate1.getDate());
-            var BANKTT_db_chkindate1 = BANKTT_db_chkindate1.toDateString();
-            BANKTT_db_chkindate1 = new Date( Date.parse( BANKTT_db_chkindate1 ) );
-            $('#Banktt_SRC_Date').datepicker("option","minDate",new Date(BANKTT_db_chkindate1.getFullYear()-1,BANKTT_db_chkindate1.getMonth(),BANKTT_db_chkindate1.getDate()));
-            if($(tds[9]).html()=='')
-            {
-                $('#debittedondiv').hide().val('');
-            }
-            else
-            {
-                $('#debittedondiv').show();
-            }
-            $('#Banktt_SRC_Debitedon').datepicker("option","minDate",BANKTT_db_chkindate1);
-            $('#Banktt_SRC_Debitedon').datepicker("option","maxDate",new Date());
-            $('#BankTT_Updation_Form').show();
+//            if($(tds[1]).html()=='TT')
+//            {
+//                $('#ttgiropart1').show();
+//                $('#ttgiropart2').show();
+//                $('#giropart').hide();
+//                $('#modeldiv').hide();
+//                $('#ttpart').show();
+//                $('#Banktt_SRC_TTtype').val($(tds[1]).html());
+//                $('#Banktt_SRC_Accname').val($(tds[3]).html());
+//                $('#Banktt_SRC_Accno').val($(tds[4]).html());
+//                $('#Banktt_SRC_Unit').val($(tds[6]).html());
+//                $('#Banktt_SRC_Customername').val($(tds[7]).html());
+//                $('#Banktt_SRC_Swiftcode').val($(tds[13]).html());
+//                $('#Banktt_SRC_Chargesto').val($(tds[14]).html());
+//            }
+//            else if($(tds[1]).html()=='GIRO')
+//            {
+//                $('#ttgiropart1').show();
+//                $('#ttgiropart2').show();
+//                $('#ttpart').hide();
+//                $('#modeldiv').hide();
+//                $('#giropart').show();
+//                $('#Banktt_SRC_TTtype').val($(tds[1]).html());
+//                $('#Banktt_SRC_Accname').val($(tds[3]).html());
+//                $('#Banktt_SRC_Accno').val($(tds[4]).html());
+//                $('#Banktt_SRC_Unit').val($(tds[6]).html());
+//                $('#Banktt_SRC_Customername').val($(tds[7]).html());
+//                $('#Banktt_SRC_Bankcode').val($(tds[10]).html());
+//                $('#Banktt_SRC_Branchcode').val($(tds[11]).html());
+//            }
+//            else
+//            {
+//                $('#ttgiropart1').hide();
+//                $('#ttgiropart2').hide();
+//                $('#ttpart').hide();
+//                $('#giropart').hide();
+//                $('#modeldiv').show();
+//                $('#Banktt_SRC_TTtype').val('MODEL');
+//                $('#Banktt_SRC_Modelnames').val($(tds[1]).html());
+//            }
+//            $('#Banktt_SRC_Date').val($(tds[2]).html());
+//            $('#Banktt_SRC_Amount').val($(tds[5]).html());
+//            $('#Banktt_SRC_Status').val($(tds[8]).html());
+//            $('#Banktt_SRC_Debitedon').val($(tds[9]).html());
+//            $('#Banktt_SRC_BankAddress').val($(tds[12]).html());
+//            $('#Banktt_SRC_Customerref').val($(tds[15]).html());
+//            $('#Banktt_SRC_Invdetails').val($(tds[16]).html());
+//            if($(tds[18]).html()!='')
+//            {
+//                $('#Banktt_SRC_Createdby').val($(tds[18]).html());
+//            }
+//            $('#Banktt_SRC_Comments').val($(tds[17]).html());
+//            var bankttdate=$(tds[2]).html();
+//            var BANKTT_db_chkindate1 = new Date( Date.parse( FormTableDateFormat(bankttdate)));
+//            BANKTT_db_chkindate1.setDate( BANKTT_db_chkindate1.getDate());
+//            var BANKTT_db_chkindate1 = BANKTT_db_chkindate1.toDateString();
+//            BANKTT_db_chkindate1 = new Date( Date.parse( BANKTT_db_chkindate1 ) );
+//            $('#Banktt_SRC_Date').datepicker("option","minDate",new Date(BANKTT_db_chkindate1.getFullYear()-1,BANKTT_db_chkindate1.getMonth(),BANKTT_db_chkindate1.getDate()));
+//            if($(tds[9]).html()=='')
+//            {
+//                $('#debittedondiv').hide().val('');
+//            }
+//            else
+//            {
+//                $('#debittedondiv').show();
+//            }
+//            $('#Banktt_SRC_Debitedon').datepicker("option","minDate",BANKTT_db_chkindate1);
+//            $('#Banktt_SRC_Debitedon').datepicker("option","maxDate",new Date());
+//            $('#BankTT_Updation_Form').show();
+            $.ajax({
+                type: "POST",
+                url: controller_url+"Banktt_Update_FetchData",
+                data:{"id":$(this).attr('id')},
+                success: function(data){
+                    var returnvalue=JSON.parse(data);
+                    alert(returnvalue[0].BT_ID)
+                    var tds=[];
+                    tds[0]=""; tds[1]=""; tds[2]=""; tds[3]="";
+                    tds[4]=""; tds[5]=""; tds[6]=""; tds[7]="";
+                    if($(tds[1]).html()=='TT')
+                    {
+                        $('#ttgiropart1').show();
+                        $('#ttgiropart2').show();
+                        $('#giropart').hide();
+                        $('#modeldiv').hide();
+                        $('#ttpart').show();
+                        $('#Banktt_SRC_TTtype').val(returnvalue[0].TRANSACTION_TYPE);
+                        $('#Banktt_SRC_Accname').val(returnvalue[0].BT_ACC_NAME);
+                        $('#Banktt_SRC_Accno').val(returnvalue[0].BT_ACC_NO);
+                        $('#Banktt_SRC_Unit').val(returnvalue[0].UNIT);
+                        $('#Banktt_SRC_Customername').val(returnvalue[0].CUSTOMER_NAME);
+                        $('#Banktt_SRC_Swiftcode').val($(tds[13]).html());
+                        $('#Banktt_SRC_Chargesto').val($(tds[14]).html());
+                    }
+                    else if($(tds[1]).html()=='GIRO')
+                    {
+                        $('#ttgiropart1').show();
+                        $('#ttgiropart2').show();
+                        $('#ttpart').hide();
+                        $('#modeldiv').hide();
+                        $('#giropart').show();
+                        $('#Banktt_SRC_TTtype').val($(tds[1]).html());
+                        $('#Banktt_SRC_Accname').val($(tds[3]).html());
+                        $('#Banktt_SRC_Accno').val($(tds[4]).html());
+                        $('#Banktt_SRC_Unit').val($(tds[6]).html());
+                        $('#Banktt_SRC_Customername').val($(tds[7]).html());
+                        $('#Banktt_SRC_Bankcode').val($(tds[10]).html());
+                        $('#Banktt_SRC_Branchcode').val($(tds[11]).html());
+                    }
+                    else
+                    {
+                        $('#ttgiropart1').hide();
+                        $('#ttgiropart2').hide();
+                        $('#ttpart').hide();
+                        $('#giropart').hide();
+                        $('#modeldiv').show();
+                        $('#Banktt_SRC_TTtype').val('MODEL');
+                        $('#Banktt_SRC_Modelnames').val($(tds[1]).html());
+                    }
+                    $('#Banktt_SRC_Date').val($(tds[2]).html());
+                    $('#Banktt_SRC_Amount').val($(tds[5]).html());
+                    $('#Banktt_SRC_Status').val($(tds[8]).html());
+                    $('#Banktt_SRC_Debitedon').val($(tds[9]).html());
+                    $('#Banktt_SRC_BankAddress').val($(tds[12]).html());
+                    $('#Banktt_SRC_Customerref').val($(tds[15]).html());
+                    $('#Banktt_SRC_Invdetails').val($(tds[16]).html());
+                    if($(tds[18]).html()!='')
+                    {
+                        $('#Banktt_SRC_Createdby').val($(tds[18]).html());
+                    }
+                    $('#Banktt_SRC_Comments').val($(tds[17]).html());
+                    var bankttdate=$(tds[2]).html();
+                    var BANKTT_db_chkindate1 = new Date( Date.parse( FormTableDateFormat(bankttdate)));
+                    BANKTT_db_chkindate1.setDate( BANKTT_db_chkindate1.getDate());
+                    var BANKTT_db_chkindate1 = BANKTT_db_chkindate1.toDateString();
+                    BANKTT_db_chkindate1 = new Date( Date.parse( BANKTT_db_chkindate1 ) );
+                    $('#Banktt_SRC_Date').datepicker("option","minDate",new Date(BANKTT_db_chkindate1.getFullYear()-1,BANKTT_db_chkindate1.getMonth(),BANKTT_db_chkindate1.getDate()));
+                    if($(tds[9]).html()=='')
+                    {
+                        $('#debittedondiv').hide().val('');
+                    }
+                    else
+                    {
+                        $('#debittedondiv').show();
+                    }
+                    $('#Banktt_SRC_Debitedon').datepicker("option","minDate",BANKTT_db_chkindate1);
+                    $('#Banktt_SRC_Debitedon').datepicker("option","maxDate",new Date());
+                    $('#BankTT_Updation_Form').show();
+                    $('.preloader').hide();
+                },
+                error: function(data){
+                    $('#BankTT_Updation_Form').hide();
+                    show_msgbox("BANK TT ENTRY",'error in getting'+JSON.stringify(data),"error",false);
+                    $('.preloader').hide();
+                }
+            });
         });
         $(document).on('change','#Banktt_SRC_Date',function() {
             var debiteddate=$('#Banktt_SRC_Date').val();

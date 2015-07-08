@@ -1,6 +1,6 @@
 <?php
-require_once 'google/appengine/api/mail/Message.php';
-use google\appengine\api\mail\Message;
+//require_once 'google/appengine/api/mail/Message.php';
+//use google\appengine\api\mail\Message;
 class Ctrl_Ocbc_Banktt_Search_Update extends CI_Controller
 {
     function __construct() {
@@ -32,6 +32,13 @@ class Ctrl_Ocbc_Banktt_Search_Update extends CI_Controller
     {
         $accname=$this->Mdl_ocbc_banktt_entry->get_Accountnames();
         echo json_encode($accname);
+    }
+    //FETCH THE DATA FOR UPDATE FORM
+    public function Banktt_Update_FetchData()
+    {
+        $primaryId=$_GET['id'];
+        $SearchResultsUpdate=$this->Mdl_ocbc_banktt_entry->get_UpdateFormData($primaryId);
+        echo json_encode($SearchResultsUpdate);
     }
     public function Banktt_Search_Details()
     {

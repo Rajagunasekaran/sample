@@ -394,7 +394,6 @@ class Mdl_configuration_trigger extends CI_Model {
         $message1->setHtmlBody($mailbody);
         $message1->send();
     }
-
     public function getTriggerConfiguration()
     {
         $Selectquery="SELECT TC_ID,TC_DATA FROM TRIGGER_CONFIGURATION WHERE CGN_ID=31 ORDER BY TC_DATA ASC";

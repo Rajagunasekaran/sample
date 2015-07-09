@@ -1561,6 +1561,8 @@ require_once('application/libraries/EI_HDR.php');
         /*--------------------------------------------SUCCESS FUNCTION FOR FLEX TABLE-----------------------------------------------------*/
         var BTDTL_SEARCH_searchvalue=[];
         function BTDTL_SEARCH_success_showflex(BTDTL_SEARCH_responseflex){
+            $('#BTDTL_SEARCH_div_flex').hide();
+            $('#BDTL_btn_pdf').hide();
             $("html, body").animate({ scrollTop: $(document).height() }, "slow");
                 $('#BTDTL_SEARCH_btn_datesearch').attr("disabled", "disabled")
                 $('#BTDTL_SEARCH_tble_searchdel').hide();
@@ -1588,6 +1590,8 @@ require_once('application/libraries/EI_HDR.php');
                 {
                     if(BTDTL_SEARCH_response.length!=1)
                     {
+                        $('#BTDTL_SEARCH_div_flex_searchbtn').show();
+                        $('#BTDTL_SEARCH_div_flex').show();
                         $('#BTDTL_SEARCH_div_errmsg').text('');
                         if($('#BTDTL_SEARCH_lb_searchoptions').val()==191)//UNIT NO
                         {
@@ -1744,27 +1748,28 @@ require_once('application/libraries/EI_HDR.php');
                         }
                         else if(BTDTL_SEARCH_expensetypes==17)
                         {
-                            BTDTL_SEARCH_tr +='<table class="srcresult" id="BTDTL_SEARCH_tble_flex"><thead><tr><th style="width:20px">DELETE</th><th style="width:75px">UNIT NUMBER</th><th style="width:80px">CAR NO</th><th style="width:250px">COMMENTS</th><th style="width:250px">USERSTAMP</th><th style="width:130px" class="uk-timestp-column">TIMESTAMP</th></tr></thead><tbody>';
+                            BTDTL_SEARCH_tr ='<table class="srcresult" id="BTDTL_SEARCH_tble_flex"><thead><tr><th style="width:20px">DELETE</th><th style="width:75px">UNIT NUMBER</th><th style="width:80px">CAR NO</th><th style="width:250px">COMMENTS</th><th style="width:250px">USERSTAMP</th><th style="width:130px" class="uk-timestp-column">TIMESTAMP</th></tr></thead><tbody>';
 
                         }
                         else if(BTDTL_SEARCH_expensetypes==15)
                         {
-                            BTDTL_SEARCH_tr +='<table class="srcresult" id="BTDTL_SEARCH_tble_flex"><thead><tr><th style="width:20px">DELETE</th><th style="width:75px">UNIT NUMBER</th><th style="width:150px">INVOICE TO</th><th style="width:80px">DIGITAL VOICE NO</th><th style="width:110px">DIGITAL ACCOUNT NO</th><th style="width:300px">COMMENTS</th><th style="width:250px">USERSTAMP</th><th style="width:130px" class="uk-timestp-column">TIMESTAMP</th></tr></thead><tbody>';
+                            BTDTL_SEARCH_tr ='<table class="srcresult" id="BTDTL_SEARCH_tble_flex"><thead><tr><th style="width:20px">DELETE</th><th style="width:75px">UNIT NUMBER</th><th style="width:150px">INVOICE TO</th><th style="width:80px">DIGITAL VOICE NO</th><th style="width:110px">DIGITAL ACCOUNT NO</th><th style="width:300px">COMMENTS</th><th style="width:250px">USERSTAMP</th><th style="width:130px" class="uk-timestp-column">TIMESTAMP</th></tr></thead><tbody>';
 
                         }
                         else if(BTDTL_SEARCH_expensetypes==13)
                         {
-                            BTDTL_SEARCH_tr +='<table class="srcresult" id="BTDTL_SEARCH_tble_flex"><thead><tr><th style="width:20px">DELETE</th><th style="width:75px">UNIT NUMBER</th><th style="width:140px">INVOICE TO</th><th style="width:300px">COMMENTS</th><th style="width:250px">USERSTAMP</th><th style="width:130px" class="uk-timestp-column">TIMESTAMP</th></tr></thead><tbody>'
+                            BTDTL_SEARCH_tr ='<table class="srcresult" id="BTDTL_SEARCH_tble_flex"><thead><tr><th style="width:20px">DELETE</th><th style="width:75px">UNIT NUMBER</th><th style="width:140px">INVOICE TO</th><th style="width:300px">COMMENTS</th><th style="width:250px">USERSTAMP</th><th style="width:130px" class="uk-timestp-column">TIMESTAMP</th></tr></thead><tbody>'
 
                         }
                         else if(BTDTL_SEARCH_expensetypes==14){
-                            BTDTL_SEARCH_tr += '<table class="srcresult" id="BTDTL_SEARCH_tble_flex" style="width: 2750px;"><thead><tr><th style="width:20px">EDIT/ DELETE</th><th style="width:75px">UNIT NUMBER</th><th style="width:140px">INVOICE TO</th><th style="width:100px">STARHUB ACCOUNT NO<em>*</em></th><th style="width:75px" class="uk-date-column">APPL DATE</th><th style="width:75px" class="uk-date-column">CABLE START DATE</th><th style="width:75px" class="uk-date-column">CABLE END DATE</th><th style="width:75px" class="uk-date-column">INTERNET START DATE</th><th style="width:75px" class="uk-date-column">INTERNET END DATE</th><th style="width:200px">SSID</th><th style="width:200px">PWD</th><th style="width:200px">CABLE BOX SERIAL NO</th><th style="width:250px">MODEM SERIAL NO</th><th style="width:200px">BASIC GROUP</th><th style="width:200px">ADDTNL CH</th><th style="width:300px">COMMENTS</th><th style="width:200px">USERSTAMP</th><th style="width:130px" class="uk-timestp-column">TIMESTAMP</th></tr></thead><tbody>';
+                            BTDTL_SEARCH_tr = '<table class="srcresult" id="BTDTL_SEARCH_tble_flex" style="width: 2750px;"><thead><tr><th style="width:20px">EDIT/ DELETE</th><th style="width:75px" >UNIT NUMBER</th><th style="width:140px">INVOICE TO</th><th style="width:100px">STARHUB ACCOUNT NO<em>*</em></th><th style="width:75px" class="uk-date-column">APPL DATE</th><th style="width:75px" class="uk-date-column">CABLE START DATE</th><th style="width:75px" class="uk-date-column">CABLE END DATE</th><th style="width:75px" class="uk-date-column">INTERNET START DATE</th><th style="width:75px" class="uk-date-column">INTERNET END DATE</th><th style="width:200px">SSID</th><th style="width:200px">PWD</th><th style="width:200px">CABLE BOX SERIAL NO</th><th style="width:250px">MODEM SERIAL NO</th><th style="width:200px">BASIC GROUP</th><th style="width:200px">ADDTNL CH</th><th style="width:300px">COMMENTS</th><th style="width:200px">USERSTAMP</th><th style="width:130px" class="uk-timestp-column">TIMESTAMP</th></tr></thead><tbody>';
 
                         }
                         $('#BDTL_btn_pdf').show();
                     }
                     else if(BTDTL_SEARCH_response.length==1)
                     {
+                        $('#BTDTL_SEARCH_div_flex_searchbtn').show();
                         $('#BTDTL_SEARCH_btn_datesearch').attr("disabled", "disabled")
                         $('#BDTL_btn_pdf').hide();
                         if($('#BTDTL_SEARCH_lb_searchoptions').val()==108)
@@ -2111,16 +2116,26 @@ require_once('application/libraries/EI_HDR.php');
                         }
                         BTDTL_SEARCH_tr +='</tbody></table>';
                     }
-                    $('#BTDTL_SEARCH_div_flex_searchbtn').show();
                     $('section').html(BTDTL_SEARCH_tr);
-                    $('#BTDTL_SEARCH_tble_flex').DataTable( {
+                    var oTable=$('#BTDTL_SEARCH_tble_flex').dataTable( {
                         "aaSorting": [],
                         "pageLength": 10,
                         "sPaginationType":"full_numbers",
                         "aoColumnDefs" : [
-                            { "aTargets" : ["uk-date-column"] , "sType" : "uk_date"}, { "aTargets" : ["uk-timestp-column"] , "sType" : "uk_timestp"} ]
+                            { "aTargets" : ["uk-date-column"] , "sType" : "uk_date"}, { "aTargets" : ["uk-timestp-column"] , "sType" : "uk_timestp"} ],
+                        "sDom":"Rlfrtip",
+                        "scrollX": true,
+                        "sScrollY":  ( 0.6 * $(window).height() ),
+                        "bScrollCollapse": true,
+                        "sScrollXInner": "100%",
+                        "bAutoWidth": true
 
                     });
+                    if ( $.browser.webkit ) {
+                        setTimeout(function () {
+                            oTable.fnAdjustColumnSizing();
+                        }, 10);
+                    }
                }
             sorting();
         }
@@ -2883,7 +2898,7 @@ require_once('application/libraries/EI_HDR.php');
                 else if($('#BTDTL_SEARCH_lb_searchoptions').val()==191)
                     var searchvalue=$('#BTDTL_SEARCH_lb_starhubunitno').val();
             }
-            var pdfurl=document.location.href='<?php echo site_url("EXPENSE/BIZEXPENSE/Ctrl_Pdf/pdfexportbizdetailexpense") ?>?Expensetype='+Expensetype+'&BTDTL_SEARCH_lb_searchoptions='+$("#BTDTL_SEARCH_lb_searchoptions").val()+'&searchvalue='+searchvalue+'&startdate='+startdate+'&BTDTL_SEARCH_parentfunc_flex=BTDTL_SEARCH_parentfunc_flex&labelheadername='+$('#BTDTL_SEARCH_div_msg').text();
+            var pdfurl=document.location.href='<?php echo site_url("EXPENSE/Ctrl_Pdf/pdfexportbizdetailexpense") ?>?Expensetype='+Expensetype+'&BTDTL_SEARCH_lb_searchoptions='+$("#BTDTL_SEARCH_lb_searchoptions").val()+'&searchvalue='+searchvalue+'&startdate='+startdate+'&BTDTL_SEARCH_parentfunc_flex=BTDTL_SEARCH_parentfunc_flex&labelheadername='+$('#BTDTL_SEARCH_div_msg').text();
         });
    // DELTE FUNCTION
         var rowid;
@@ -2893,7 +2908,6 @@ require_once('application/libraries/EI_HDR.php');
         $(document).on('click','.classdelete', function (){
             $('.preloader').show();
             var id=this.id;
-            var unitno = $(this).closest("tr").children("td:nth-child(2)").html();
             var splitid=id.split('_');
 
             if(splitid[0]=='aircondelete' || splitid[0]=="carparkdelete" || splitid[0]=="digitaldelete" || splitid[0]=="electricitydelete")
@@ -2941,6 +2955,7 @@ require_once('application/libraries/EI_HDR.php');
                     var recversion=result[1];
                     if(checktransflag==0)
                     {
+                            var unitno = result[2];
                             var BDTL_INPUT_errormsg_replace = BTDTL_SEARCH_errorarr[64].EMC_DATA.replace("[UNITNO]",unitno);
                             BDTL_INPUT_errormsg_replace=BDTL_INPUT_errormsg_replace.replace("[LP]",recversion);
                             show_msgbox("BIZ EXPENSE DETAIL ENTRY/SEARCH/UPDATE/DELETE",BDTL_INPUT_errormsg_replace,"success",false);
@@ -3306,7 +3321,7 @@ require_once('application/libraries/EI_HDR.php');
                     <div id="BTDTL_SEARCH_div_msg" class="srctitle"></div>
                     <div id="BTDTL_SEARCH_div_errmsg" class="errormsg"></div>
                     <div><input type="button" id='BDTL_btn_pdf' class="btnpdf" value="PDF" hidden></div>
-                    <div id ="BTDTL_SEARCH_div_flex" class="table-responsive">
+                    <div id ="BTDTL_SEARCH_div_flex">
                         <section></section>
                     </div>
                 </div>

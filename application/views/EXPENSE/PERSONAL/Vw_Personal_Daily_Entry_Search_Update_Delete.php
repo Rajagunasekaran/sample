@@ -2072,9 +2072,20 @@ $(document).ready(function(){
                 "pageLength": 10,
                 "sPaginationType":"full_numbers",
                 "aoColumnDefs" : [
-                    { "aTargets" : ["uk-date-column"] , "sType" : "uk_date"}, { "aTargets" : ["uk-timestp-column"] , "sType" : "uk_timestp"} ]
+                    { "aTargets" : ["uk-date-column"] , "sType" : "uk_date"}, { "aTargets" : ["uk-timestp-column"] , "sType" : "uk_timestp"} ],
+                "sDom":"Rlfrtip",
+                "scrollX": true,
+                "sScrollY":  ( 0.6 * $(window).height() ),
+                "bScrollCollapse": true,
+                "sScrollXInner": "100%",
+                "bAutoWidth": true
 
             });
+            if ( $.browser.webkit ) {
+                setTimeout(function () {
+                    table.fnAdjustColumnSizing();
+                }, 10);
+            }
             sorting()
         }
         var PDLY_SEARCH_expensetype=$('#PDLY_SEARCH_lb_typelist').find('option:selected').text();
@@ -2973,13 +2984,13 @@ $(document).ready(function(){
         <div class="form-group" id="div_fromamt">
             <label  id='PDLY_SEARCH_lbl_fromamount' class="col-sm-2" hidden> FROM AMOUNT <em>*</em></label>
             <div class="col-sm-2">
-                <input   type="text" name ="PDLY_SEARCH_tb_fromamount" id="PDLY_SEARCH_tb_fromamount"  class="amtsubmitval form-control" style="width:80px;"hidden />
+                <input   type="text" name ="PDLY_SEARCH_tb_fromamount" id="PDLY_SEARCH_tb_fromamount"  class="amtsubmitval form-control" style="width:90px;"hidden />
             </div>
         </div>
         <div class="form-group" id="div_toamt">
             <label  id='PDLY_SEARCH_lbl_toamount' class="col-sm-2" hidden> TO AMOUNT <em>*</em></label>
             <div class="col-sm-2">
-                <input   type="text" name ="PDLY_SEARCH_tb_toamount" id="PDLY_SEARCH_tb_toamount"  class="amtsubmitval form-control" style="width:80px;"hidden />
+                <input   type="text" name ="PDLY_SEARCH_tb_toamount" id="PDLY_SEARCH_tb_toamount"  class="amtsubmitval form-control" style="width:90px;" hidden />
             </div>
             <label class="errormsg" id='PDLY_SEARCH_lbl_amounterrormsg'  hidden></label>
         </div>

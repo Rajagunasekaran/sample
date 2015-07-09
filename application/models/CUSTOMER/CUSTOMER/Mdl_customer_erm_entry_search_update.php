@@ -1,8 +1,10 @@
 <?php
 error_reporting(0);
+require_once 'google/appengine/api/mail/Message.php';
+use google\appengine\api\mail\Message;
 class Mdl_customer_erm_entry_search_update extends CI_Model
 {
-    public function ERM_EntrySave($UserStamp,$username)
+    public function ERM_EntrySave($UserStamp,$username,$displayname,$Emailtemplate)
     {
       $Customername=$_POST['ERM_Entry_Customername'];
       $Rent=$_POST['ERM_Entry_Rent'];
@@ -20,11 +22,15 @@ class Mdl_customer_erm_entry_search_update extends CI_Model
       $Contactno=$_POST['ERM_Entry_Contactno'];
       $Mailid=$_POST['ERM_Entry_Emailid'];
       $Comments=$this->db->escape_like_str($_POST['ERM_Entry_Comments']);
-      $CallQuery="CALL SP_ERM_INSERT('$Customername','$Rent','$MovingDate','$Minimumstay','$Occupation','$Nationality','$Numberofguests','$Age','$Contactno','$Mailid','$Comments','$UserStamp',@ERM_SUCCESSFLAG)";
+        $this->db->query('SET AUTOCOMMIT=0');
+        $this->db->query('START TRANSACTION');
+      $CallQuery="CALL SP_ERM_INSERT('$Customername','$Rent','$MovingDate','$Minimumstay','$Occupation','$Nationality','$Numberofguests','$Age','$Contactno','$Mailid','$Comments','$UserStamp',@ERM_SUCCESSFLAG,@ERM_SAVEPOINT)";
       $this->db->query($CallQuery);
       $ERM_Entry_flag = 'SELECT @ERM_SUCCESSFLAG as FLAG_INSERT';
       $query = $this->db->query($ERM_Entry_flag);
       $Confirm_Meessage=$query->row()->FLAG_INSERT;
+        $query_SAVEPOINT = $this->db->query('SELECT @ERM_SAVEPOINT as ERMSAVEPOINT');
+        $erm_savepoint_update=$query_SAVEPOINT->row()->ERMSAVEPOINT;
       $dataarray=array($Customername,$Rent,$_POST['ERM_Entry_MovingDate'],$_POST['ERM_Entry_Minimumstay'],$Occupation,$_POST['ERM_Entry_Nationality'],$_POST['ERM_Entry_Numberofguests'],$_POST['ERM_Entry_Age'],$Contactno,$Mailid,$_POST['ERM_Entry_Comments']);
       $subject="HELLO, "."<font color='gray'></font><font color='#498af3'><b>$username</b> </font><br>PLEASE FIND ATTACHED NEW LEED DETAILS FROM ERM: <br>";
       $message = '<body><br><h> '.$subject.'</h><br</body>';
@@ -38,8 +44,32 @@ class Mdl_customer_erm_entry_search_update extends CI_Model
             $message .= '<body><table border="1"width="500" ><tr align="left" ><td width=40%>'.$head_array[$i].'</td><td width=60%>'.$value.'</td></tr></table></body>';
           }
       }
-      $this->db->query("COMMIT");
       $returnarray=array($message,$Confirm_Meessage);
+        $mydate=getdate(date("U"));
+        $month=strtoupper($mydate[month]);
+        $sysdate="$mydate[mday]-$month-$mydate[year]";
+        $emailsubject="NEW ERM LEED -[".$sysdate."]";
+        if($returnarray[1]==1)
+        {
+            try{
+            $message1 = new Message();
+            $message1->setSender($displayname.'<'.$UserStamp.'>');
+            $message1->setSender($UserStamp);
+            $message1->addTo($Emailtemplate[0]);
+            $message1->addCc($Emailtemplate[1]);
+            $message1->setSubject($emailsubject);
+            $message1->setHtmlBody($returnarray[0]);
+            $message1->send();
+                $this->db->trans_savepoint_release($erm_savepoint_update) ;
+            }
+            catch(Exception $e){
+                $this->db->trans_savepoint_rollback($erm_savepoint_update);
+                return array($message,"RECORD NOT SAVED");
+            }
+        }else{
+            $this->db->trans_savepoint_rollback($erm_savepoint_update);
+            return array($message,"RECORD NOT SAVED");
+        }
       return $returnarray;
     }
     public function getSearchOption()
@@ -107,19 +137,22 @@ class Mdl_customer_erm_entry_search_update extends CI_Model
         }
         return $query->result();
     }
-    public function ERM_Update_Record($Rowid,$Name,$Rent,$Movedate,$Minstay,$Occupation,$Nation,$Guests,$Custage,$Contactno,$Emailid,$Comment,$UserStamp,$timeZoneFormat,$username)
+    public function ERM_Update_Record($displayname,$Emailtemplate,$Rowid,$Name,$Rent,$Movedate,$Minstay,$Occupation,$Nation,$Guests,$Custage,$Contactno,$Emailid,$Comment,$UserStamp,$timeZoneFormat,$username)
     {
         $Min_stay=$this->db->escape_like_str($Minstay);
         $Guest=$this->db->escape_like_str($Guests);
         $age=$this->db->escape_like_str($Custage);
         $Comments=$this->db->escape_like_str($Comment);
         $Movedate=date('Y-m-d',strtotime($Movedate));
-        $CallQuery="CALL SP_ERM_UPDATE('$Occupation',$Rowid,'$Name','$Rent','$Movedate','$Min_stay','$Nation','$Guest','$age','$Contactno','$Emailid','$Comments','$UserStamp',@ERM_SUCCESSFLAG)";
+        $this->db->query('SET AUTOCOMMIT=0');
+        $this->db->query('START TRANSACTION');
+        $CallQuery="CALL SP_ERM_UPDATE('$Occupation',$Rowid,'$Name','$Rent','$Movedate','$Min_stay','$Nation','$Guest','$age','$Contactno','$Emailid','$Comments','$UserStamp',@ERM_SUCCESSFLAG,@ERM_UPDATE_SAVE_POINT)";
         $this->db->query($CallQuery);
         $ERM_Entry_flag = 'SELECT @ERM_SUCCESSFLAG as FLAG_INSERT';
         $query = $this->db->query($ERM_Entry_flag);
         $Confirm_Meessage=$query->row()->FLAG_INSERT;
-        $this->db->query("COMMIT");
+        $query_updateSavepoint= $this->db->query('SELECT @ERM_UPDATE_SAVE_POINT as ERM_UPDATE_SAVEPOINT');
+        $erm_update_savepoint=$query_updateSavepoint->row()->ERM_UPDATE_SAVEPOINT;
         $Timestamp;
         if($Confirm_Meessage==1)
         {
@@ -142,6 +175,31 @@ class Mdl_customer_erm_entry_search_update extends CI_Model
             }
         }
         $Return_values=array($Confirm_Meessage,$Timestamp,$UserStamp,$message);
+        $message=$Return_values[3];
+        $mydate=getdate(date("U"));
+        $month=strtoupper($mydate[month]);
+        $sysdate="$mydate[mday]-$month-$mydate[year]";
+        $emailsubject="NEW ERM LEED -[".$sysdate."]";
+        if($Return_values[0]==1)
+        {
+            try{
+            $message1 = new Message();
+            $message1->setSender($displayname.'<'.$UserStamp.'>');
+            $message1->addTo($Emailtemplate[0]);
+            $message1->addCc($Emailtemplate[1]);
+            $message1->setSubject($emailsubject);
+            $message1->setHtmlBody($message);
+            $message1->send();
+                $this->db->trans_savepoint_release($erm_update_savepoint) ;
+            }
+            catch(Exception $e){
+                $this->db->trans_savepoint_rollback($erm_update_savepoint);
+                return array("RECORD NOT UPDATED",$Timestamp,$UserStamp,$message);
+            }
+        }else{
+            $this->db->trans_savepoint_rollback($erm_update_savepoint);
+            return array("RECORD NOT UPDATED",$Timestamp,$UserStamp,$message);
+        }
         return $Return_values;
     }
     public function getpdfdetails($Option,$Data1,$Data2,$timeZoneFormat)

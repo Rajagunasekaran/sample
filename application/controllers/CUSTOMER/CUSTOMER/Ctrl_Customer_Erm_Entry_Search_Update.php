@@ -1,7 +1,7 @@
 <?php
 error_reporting(0);
-require_once 'google/appengine/api/mail/Message.php';
-use google\appengine\api\mail\Message;
+//require_once 'google/appengine/api/mail/Message.php';
+//use google\appengine\api\mail\Message;
 Class Ctrl_Customer_Erm_Entry_Search_Update extends CI_Controller
 {
     function __construct() {
@@ -30,22 +30,11 @@ Class Ctrl_Customer_Erm_Entry_Search_Update extends CI_Controller
         $Emailtemplate=$this->Mdl_eilib_common_function->getProfileEmailId('ERM');
         $splitMailid=explode('@',$Emailtemplate[0]);
         $username=strtoupper($splitMailid[0]);
-        $Create_confirm=$this->Mdl_customer_erm_entry_search_update->ERM_EntrySave($UserStamp,$username);
-        $mydate=getdate(date("U"));
-        $month=strtoupper($mydate[month]);
-        $sysdate="$mydate[mday]-$month-$mydate[year]";
-        $emailsubject="NEW ERM LEED -[".$sysdate."]";
-        if($Create_confirm[1]==1)
-        {
-            $message1 = new Message();
-            $message1->setSender($displayname.'<'.$UserStamp.'>');
-            $message1->setSender($UserStamp);
-            $message1->addTo($Emailtemplate[0]);
-            $message1->addCc($Emailtemplate[1]);
-            $message1->setSubject($emailsubject);
-            $message1->setHtmlBody($Create_confirm[0]);
-            $message1->send();
-        }
+        $Create_confirm=$this->Mdl_customer_erm_entry_search_update->ERM_EntrySave($UserStamp,$username,$displayname,$Emailtemplate);
+//        $mydate=getdate(date("U"));
+//        $month=strtoupper($mydate[month]);
+//        $sysdate="$mydate[mday]-$month-$mydate[year]";
+//        $emailsubject="NEW ERM LEED -[".$sysdate."]";
         echo json_encode($Create_confirm[1]);
     }
     public function ERM_SRC_InitialDataLoad()
@@ -114,23 +103,13 @@ Class Ctrl_Customer_Erm_Entry_Search_Update extends CI_Controller
         $Emailtemplate=$this->Mdl_eilib_common_function->getProfileEmailId('ERM');
         $splitMailid=explode('@',$Emailtemplate[0]);
         $username=strtoupper($splitMailid[0]);
-        $Create_confirm=$this->Mdl_customer_erm_entry_search_update->ERM_Update_Record($Rowid,$Name,$Rent,$Movedate,$Min_stay,$Occupation,$Nation,$Guests,$age,$Contactno,$Emailid,$Comments,$UserStamp,$timeZoneFormat,$username);
+        $Create_confirm=$this->Mdl_customer_erm_entry_search_update->ERM_Update_Record($displayname,$Emailtemplate,$Rowid,$Name,$Rent,$Movedate,$Min_stay,$Occupation,$Nation,$Guests,$age,$Contactno,$Emailid,$Comments,$UserStamp,$timeZoneFormat,$username);
         $Returnvalues=array($Create_confirm[0],$Create_confirm[1],$Create_confirm[2]);
         $message=$Create_confirm[3];
         $mydate=getdate(date("U"));
         $month=strtoupper($mydate[month]);
         $sysdate="$mydate[mday]-$month-$mydate[year]";
         $emailsubject="NEW ERM LEED -[".$sysdate."]";
-        if($Create_confirm[0]==1)
-        {
-            $message1 = new Message();
-            $message1->setSender($displayname.'<'.$UserStamp.'>');
-            $message1->addTo($Emailtemplate[0]);
-            $message1->addCc($Emailtemplate[1]);
-            $message1->setSubject($emailsubject);
-            $message1->setHtmlBody($message);
-            $message1->send();
-        }
         echo json_encode($Returnvalues);
     }
     public function ERMPdfCreation()

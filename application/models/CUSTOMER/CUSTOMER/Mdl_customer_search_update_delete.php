@@ -1,8 +1,8 @@
 <?php
 error_reporting(0);
-//require_once 'google/appengine/api/mail/Message.php';
-//use google\appengine\api\mail\Message;
-require_once 'PHPMailer-master/PHPMailerAutoload.php';
+require_once 'google/appengine/api/mail/Message.php';
+use google\appengine\api\mail\Message;
+//require_once 'PHPMailer-master/PHPMailerAutoload.php';
 class Mdl_customer_search_update_delete extends CI_Model
 {
     public function getSearchOption()
@@ -530,38 +530,38 @@ class Mdl_customer_search_update_delete extends CI_Model
             exit;
         }
      }
-//    public function CustomerUpdatemailpart($Confirm_Meessage,$Emailsub,$Messagebody,$Displayname,$Docowner,$UserStamp)
-//    {
-//        $message1 = new Message();
-//        $message1->setSender($Displayname.'<'.$UserStamp.'>');
-//        $message1->addTo($Docowner);
-//        $message1->setSubject($Emailsub);
-//        $message1->setHtmlBody($Messagebody);
-//        $message1->send();
-//        $this->db->trans_commit();
-//        echo $Confirm_Meessage;
-//        exit;
-//    }
-    public function CustomerUpdatemailpart($Confirm_Meessage,$Emailsub,$Messagebody,$Displayname,$Sendmailid,$UserStamp)
+    public function CustomerUpdatemailpart($Confirm_Meessage,$Emailsub,$Messagebody,$Displayname,$Docowner,$UserStamp)
     {
-        $mail = new PHPMailer;
-        $mail->isSMTP();
-        $mail->Host = 'smtp.gmail.com';
-        $mail->SMTPAuth = true;
-        $mail->Username = 'safiyullah84@gmail.com';
-        $mail->Password = 'safi984151';
-        $mail->SMTPSecure = 'tls';
-        $mail->Port = 587;
-        $mail->FromName = $Displayname;
-        $mail->addAddress($Sendmailid);
-        $mail->WordWrap = 50;
-        $mail->isHTML(true);
-        $mail->Subject = $Emailsub;
-        $mail->Body = $Messagebody;
-        $mail->Send();
+        $message1 = new Message();
+        $message1->setSender($Displayname.'<'.$UserStamp.'>');
+        $message1->addTo($Docowner);
+        $message1->setSubject($Emailsub);
+        $message1->setHtmlBody($Messagebody);
+        $message1->send();
+        $this->db->trans_commit();
         echo $Confirm_Meessage;
         exit;
     }
+//    public function CustomerUpdatemailpart($Confirm_Meessage,$Emailsub,$Messagebody,$Displayname,$Sendmailid,$UserStamp)
+//    {
+//        $mail = new PHPMailer;
+//        $mail->isSMTP();
+//        $mail->Host = 'smtp.gmail.com';
+//        $mail->SMTPAuth = true;
+//        $mail->Username = 'safiyullah84@gmail.com';
+//        $mail->Password = 'safi984151';
+//        $mail->SMTPSecure = 'tls';
+//        $mail->Port = 587;
+//        $mail->FromName = $Displayname;
+//        $mail->addAddress($Sendmailid);
+//        $mail->WordWrap = 50;
+//        $mail->isHTML(true);
+//        $mail->Subject = $Emailsub;
+//        $mail->Body = $Messagebody;
+//        $mail->Send();
+//        echo $Confirm_Meessage;
+//        exit;
+//    }
     public function CAL_DEL_CREATE($CSRC_customerid)
     {
         $Selectquery="CALL SP_CUSTOMER_MIN_MAX_RV('$CSRC_customerid',@MIN_LP,@MAX_LP)";

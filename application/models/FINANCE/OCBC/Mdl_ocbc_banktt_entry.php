@@ -1,5 +1,8 @@
 <?php
 error_reporting(0);
+require_once 'google/appengine/api/mail/Message.php';
+use google\appengine\api\mail\Message;
+//require 'application/PHPMailer-master/PHPMailerAutoload.php';
 class Mdl_ocbc_banktt_entry extends CI_Model {
     public function Initial_data()
     {
@@ -68,7 +71,9 @@ class Mdl_ocbc_banktt_entry extends CI_Model {
         $invdetails=$this->db->escape_like_str($_POST['banktt_ta_invdetails']);
         $comments=$this->db->escape_like_str($_POST['banktt_ta_comments']);
         $configdatas=$type.',ENTERED'.','.$chargesto;
-        $CallQuery="CALL SP_BANK_TT_INSERT('$configdatas','$model','$unit','$customerid','$date','$amount','$accname','$accno','$bankttcode','$banktt_branchcode','$bankaddress','$swiftcode','$customerref','$invdetails','$comments','$UserStamp',@BANK_SUCCESSFLAG)";
+        $this->db->query('SET AUTOCOMMIT=0');
+        $this->db->query('START TRANSACTION');
+        $CallQuery="CALL SP_BANK_TT_INSERT('$configdatas','$model','$unit','$customerid','$date','$amount','$accname','$accno','$bankttcode','$banktt_branchcode','$bankaddress','$swiftcode','$customerref','$invdetails','$comments','$UserStamp',@BANK_SUCCESSFLAG,@BANK_SAVEPOINT)";
         $this->db->query($CallQuery);
         $outparm_query = 'SELECT @BANK_SUCCESSFLAG AS MESSAGE';
         $outparm_result = $this->db->query($outparm_query);
@@ -83,20 +88,45 @@ class Mdl_ocbc_banktt_entry extends CI_Model {
         $subject="HELLO ".','."<font color='gray'></font><font color='#498af3'><b>".$mailusername."</b> </font><br>PLEASE FIND ATTACHED NEW TRANSACTION DETAILS FROM BANK TT: <br>";
         $message = '<body><br><h> '.$subject.'</h><br></body>';
         for($i=0;$i<count($dataarray);$i++)
-         {
-         $value=$dataarray[$i];
+        {
+            $value=$dataarray[$i];
             if($value!=null){$value=str_replace('_',' ',$value);}
             if($value=="" || $value=="SELECT" || $value==null)continue;
             $message.= '<body><table border="1"width="600" ><tr align="left" ><td width=40%>'.$headerarray[$i].'</td><td width=60%>'.$value.'</td></tr></table></body>';
-         }
+        }
         $emailsubject="BANK TRANSFER";
         $returnvalues=array($Confirmmrssage,$emailsubject,$message,$Displayname,$Sendmailid);
-        $this->db->query("COMMIT");
+        $outparm_query_savepoint = 'SELECT @BANK_SAVEPOINT AS SAVEPOINT';
+        $outparm_result_savepoint = $this->db->query($outparm_query_savepoint);
+        $banktt_savepoint_update=$outparm_result_savepoint->row()->SAVEPOINT;
+        if($returnvalues[0]==1)
+        {
+            try{
+                $message1 = new Message();
+                $message1->setSender($returnvalues[3].'<'.$UserStamp.'>');
+                $message1->addTo($returnvalues[4][0]);
+                $message1->addCc($returnvalues[4][1]);
+                $message1->setSubject($returnvalues[1]);
+                $message1->setHtmlBody($returnvalues[2]);
+                $message1->send();
+                $this->db->trans_savepoint_release($banktt_savepoint_update) ;}
+            catch(Exception $e){
+                $this->db->trans_savepoint_rollback($banktt_savepoint_update);
+                return array("RECORD NOT SAVED",$emailsubject,$message,$Displayname,$Sendmailid);
+            }
+        }else{
+            $this->db->trans_savepoint_rollback($banktt_savepoint_update);
+            return array("RECORD NOT SAVED",$emailsubject,$message,$Displayname,$Sendmailid);
+        }
         return $returnvalues;
     }
     public function get_UpdateFormData($primaryId){
-        $resultset=$this->db->query("select * from BANK_TRANSFER where  BT_ID=221");
-        return $resultset->result();
+        $this->db->query("CALL SP_BANK_TT_SEARCH('$primaryId','dhandapani.sattanathan@ssomens.com',@TEMP_MAIN_TABLE)");
+        $outparm_result = $this->db->query('SELECT @TEMP_MAIN_TABLE AS TEMP_TABLE');
+        $banktt_tablename=$outparm_result->row()->TEMP_TABLE;
+        $resultset_srch = $this->db->query('SELECT * FROM '.$banktt_tablename);
+        $this->db->query('DROP TABLE IF EXISTS '.$banktt_tablename);
+        return $resultset_srch->result();
     }
     public function Banktt_Search_Option()
     {
@@ -135,7 +165,7 @@ class Mdl_ocbc_banktt_entry extends CI_Model {
         if($Option==1)
         {
             $BANKTT_TEMPTABLEQUERY="CALL SP_TEMP_TABLE_BANKTT('$unit',null,'$Option','$UserStamp',@BANKTT_SEARCH_TEMPTBLNAME,@BANKTT_TEMP_TABLE_NAME)";
-           $BANKTT_SRC_QUERY="SELECT BT.BT_ID,TBST.BANK_TRANSFER_TYPE,TBST.TRANSACTION_STATUS,TBST.BANK_TRANSFER_CHARGES_TO,TBST.BANK_TRANSFER_CREATED_BY,U.UNIT_NO,CONCAT(C.CUSTOMER_FIRST_NAME,' ',CUSTOMER_LAST_NAME)AS CUSTOMERNAME,DATE_FORMAT(CONVERT_TZ(BT.BT_DATE,".$timeZoneFormat."),'%d-%m-%Y') AS BT_DATE,BT.BT_AMOUNT,BT.BT_ACC_NAME,BT.BT_ACC_NO,BT.BT_BANK_CODE,BT.BT_BRANCH_CODE,BT.BT_BANK_ADDRESS,BT.BT_SWIFT_CODE,BT.BT_CUST_REF,BT.BT_INV_DETAILS,DATE_FORMAT(CONVERT_TZ(BT.BT_DEBITED_ON,".$timeZoneFormat."),'%d-%m-%Y') AS BT_DEBITED_ON,BT.BT_COMMENTS,ULD.ULD_LOGINID,DATE_FORMAT(CONVERT_TZ(BT.BT_TIMESTAMP,".$timeZoneFormat."),'%d-%m-%Y %T') AS BT_TIME_STAMP FROM BANK_TRANSFER BT,BANK_TRANSFER_DETAIL BTD,UNIT U,CUSTOMER C,TEMP_BANKTTSEARCHTABLE TBST,USER_LOGIN_DETAILS ULD WHERE BT.BT_ID=BTD.BT_ID AND U.UNIT_ID=BTD.UNIT_ID AND C.CUSTOMER_ID=BTD.CUSTOMER_ID AND TBST.BT_ID=BTD.BT_ID AND ULD.ULD_ID=BT.ULD_ID";
+            $BANKTT_SRC_QUERY="SELECT BT.BT_ID,TBST.BANK_TRANSFER_TYPE,TBST.TRANSACTION_STATUS,TBST.BANK_TRANSFER_CHARGES_TO,TBST.BANK_TRANSFER_CREATED_BY,U.UNIT_NO,CONCAT(C.CUSTOMER_FIRST_NAME,' ',CUSTOMER_LAST_NAME)AS CUSTOMERNAME,DATE_FORMAT(CONVERT_TZ(BT.BT_DATE,".$timeZoneFormat."),'%d-%m-%Y') AS BT_DATE,BT.BT_AMOUNT,BT.BT_ACC_NAME,BT.BT_ACC_NO,BT.BT_BANK_CODE,BT.BT_BRANCH_CODE,BT.BT_BANK_ADDRESS,BT.BT_SWIFT_CODE,BT.BT_CUST_REF,BT.BT_INV_DETAILS,DATE_FORMAT(CONVERT_TZ(BT.BT_DEBITED_ON,".$timeZoneFormat."),'%d-%m-%Y') AS BT_DEBITED_ON,BT.BT_COMMENTS,ULD.ULD_LOGINID,DATE_FORMAT(CONVERT_TZ(BT.BT_TIMESTAMP,".$timeZoneFormat."),'%d-%m-%Y %T') AS BT_TIME_STAMP FROM BANK_TRANSFER BT,BANK_TRANSFER_DETAIL BTD,UNIT U,CUSTOMER C,TEMP_BANKTTSEARCHTABLE TBST,USER_LOGIN_DETAILS ULD WHERE BT.BT_ID=BTD.BT_ID AND U.UNIT_ID=BTD.UNIT_ID AND C.CUSTOMER_ID=BTD.CUSTOMER_ID AND TBST.BT_ID=BTD.BT_ID AND ULD.ULD_ID=BT.ULD_ID";
         }
         if($Option==2)
         {
@@ -207,7 +237,7 @@ class Mdl_ocbc_banktt_entry extends CI_Model {
         $status=$_POST['Banktt_SRC_Status'];
         if($_POST['Banktt_SRC_Debitedon']!='')
         {
-        $debitedon=date('Y-m-d',strtotime($_POST['Banktt_SRC_Debitedon']));
+            $debitedon=date('Y-m-d',strtotime($_POST['Banktt_SRC_Debitedon']));
         }
         else
         {
@@ -217,11 +247,16 @@ class Mdl_ocbc_banktt_entry extends CI_Model {
         else if($chargesto!=''){$configdatas=$status.','.$chargesto;}
         else if($createdby!=''){$configdatas=$status.','.$createdby;}
         else{$configdatas=$status;}
-        $BANKTT_SRC_updatequery="CALL SP_BANK_TT_UPDATE($id,'$configdatas','$model','$date',$amount,'$accname','$accno','$bankttcode','$banktt_branchcode','$bankaddress','$swiftcode','$customerref','$invdetails','$debitedon','$comments','$UserStamp',@BANK_SUCCESSFLAG)";
+        $this->db->query('SET AUTOCOMMIT=0');
+        $this->db->query('START TRANSACTION');
+        $BANKTT_SRC_updatequery="CALL SP_BANK_TT_UPDATE($id,'$configdatas','$model','$date',$amount,'$accname','$accno','$bankttcode','$banktt_branchcode','$bankaddress','$swiftcode','$customerref','$invdetails','$debitedon','$comments','$UserStamp',@BANK_SUCCESSFLAG,@BANK_SAVEPOINT)";
         $this->db->query($BANKTT_SRC_updatequery);
         $outparm_query = 'SELECT @BANK_SUCCESSFLAG AS MESSAGE';
         $outparm_result = $this->db->query($outparm_query);
         $Confirm_mrssage=$outparm_result->row()->MESSAGE;
+        $outparm_query_savepoint = 'SELECT @BANK_SAVEPOINT AS SAVEPOINT';
+        $outparm_result_savepoint = $this->db->query($outparm_query_savepoint);
+        $banktt_savepoint_update=$outparm_result_savepoint->row()->SAVEPOINT;
         $this->load->model('EILIB/Mdl_eilib_common_function');
         $Sendmailid=$this->Mdl_eilib_common_function->getProfileEmailId('BANKTT');
         $Displayname=$this->Mdl_eilib_common_function->Get_MailDisplayName('BANK_TT');
@@ -233,28 +268,46 @@ class Mdl_ocbc_banktt_entry extends CI_Model {
         $message = '<body><br><h> '.$subject.'</h><br></body>';
         for($i=0;$i<count($dataarray);$i++)
         {
-         $value=$dataarray[$i];
-         if($customername!=null){$customername=str_replace('_',' ',$customername);}
-         if($value=="" || $value=="SELECT" || $value==null)continue;
-         if($value!='REJECTED')
-         {
-          $message.= '<body><table border="1"width="600" ><tr align="left" ><td width=40%>'.$headerarray[$i].'</td><td width=60%>'.$value.'</td></tr></table></body>';
-         }
-         else
-         {
-          $message.= '<body><table border="1"width="600" ><tr align="left" ><td width=40%>'.$headerarray[$i].'</td><td width=60%><span style="background-color:#FF0000">'.$value.'</span></td></tr></table></body>';
-         }
-         }
-         if($status!='REJECTED')
-         {
-          $emailsubject="BANK TRANSFER";
-          }
-         else
-         {
-        $emailsubject="BANK TRANSFER-REJECTED";
-         }
+            $value=$dataarray[$i];
+            if($customername!=null){$customername=str_replace('_',' ',$customername);}
+            if($value=="" || $value=="SELECT" || $value==null)continue;
+            if($value!='REJECTED')
+            {
+                $message.= '<body><table border="1"width="600" ><tr align="left" ><td width=40%>'.$headerarray[$i].'</td><td width=60%>'.$value.'</td></tr></table></body>';
+            }
+            else
+            {
+                $message.= '<body><table border="1"width="600" ><tr align="left" ><td width=40%>'.$headerarray[$i].'</td><td width=60%><span style="background-color:#FF0000">'.$value.'</span></td></tr></table></body>';
+            }
+        }
+        if($status!='REJECTED')
+        {
+            $emailsubject="BANK TRANSFER";
+        }
+        else
+        {
+            $emailsubject="BANK TRANSFER-REJECTED";
+        }
         $returnvalues=array($Confirm_mrssage,$emailsubject,$message,$Displayname,$Sendmailid);
-        $this->db->query("COMMIT");
+        if($returnvalues[0]==1)
+        {
+            try{
+                $message1 = new Message();
+                $message1->setSender($returnvalues[3].'<'.$UserStamp.'>');
+                $message1->addTo($returnvalues[4][0]);
+                $message1->addCc($returnvalues[4][1]);
+                $message1->setSubject($returnvalues[1]);
+                $message1->setHtmlBody($returnvalues[2]);
+                $message1->send();
+                $this->db->trans_savepoint_release($banktt_savepoint_update) ;}
+            catch(Exception $e){
+                $this->db->trans_savepoint_rollback($banktt_savepoint_update);
+                return array("RECORD NOT UPDATED",$emailsubject,$message,$Displayname,$Sendmailid);
+            }
+        }else{
+            $this->db->trans_savepoint_rollback($banktt_savepoint_update);
+            return array("RECORD NOT UPDATED",$emailsubject,$message,$Displayname,$Sendmailid);
+        }
         return $returnvalues;
     }
 }

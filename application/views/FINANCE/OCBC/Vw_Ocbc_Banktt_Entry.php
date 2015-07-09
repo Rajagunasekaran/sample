@@ -1,5 +1,6 @@
 <!--********************************************OCBC BANK TT ENTRY*******************************************-->
 <!--*******************************************FILE DESCRIPTION***************************************************-->
+<!--VER 15.1 -SD:09/07/2015 ED:09/07/2015 SAVE POINT-->
 <!--VER 6.6 -SD:05/06/2015 ED:05/06/2015 GETTING HEADER FILE FROM LIB-->
 <!--VER 0.02- SD:04/06/2015 ED:04/06/2015,changed Controller Model and View names in ver0.02-->
 <!--VER 0.01-INITIAL VERSION-SD:18/05/2015 ED:18/05/2015 in ver0.01-->
@@ -419,7 +420,7 @@ $(document).ready(function(){
                 $('.preloader').hide();
             },
             error: function(data){
-                alert('error in getting'+JSON.stringify(data));
+                show_msgbox("BANK TT ENTRY",'error in getting'+JSON.stringify(data),"error",false);
             }
         });
     });

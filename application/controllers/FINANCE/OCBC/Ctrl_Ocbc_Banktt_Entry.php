@@ -1,6 +1,4 @@
 <?php
-require_once 'google/appengine/api/mail/Message.php';
-use google\appengine\api\mail\Message;
 class Ctrl_Ocbc_Banktt_Entry extends CI_Controller
 {
     function __construct() {
@@ -26,16 +24,6 @@ class Ctrl_Ocbc_Banktt_Entry extends CI_Controller
     {
         $UserStamp=$this->Mdl_eilib_common_function->getSessionUserStamp();
         $Confirmmessage=$this->Mdl_Ocbc_Banktt_Entry->Banktt_EntrySave($UserStamp);
-        if($Confirmmessage[0]==1)
-        {
-            $message1 = new Message();
-            $message1->setSender($Confirmmessage[3].'<'.$UserStamp.'>');
-            $message1->addTo($Confirmmessage[4][0]);
-            $message1->addCc($Confirmmessage[4][1]);
-            $message1->setSubject($Confirmmessage[1]);
-            $message1->setHtmlBody($Confirmmessage[2]);
-            $message1->send();
-        }
         echo json_encode($Confirmmessage[0]);
     }
 }

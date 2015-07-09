@@ -30,6 +30,9 @@
             $('#ERM_SRC_ToDate').datepicker("option","minDate",FIN_ENTRY_db_chkindate1);
             $('#ERM_SRC_ToDate').datepicker("option","maxDate",new Date());
         });
+        $(document).on('change','.CLASS_VALIDATE_SRCH',function() {
+            $('section').html('');
+        });
         function FormTableDateFormat(inputdate)
         {
             var string = inputdate.split("-");
@@ -227,7 +230,7 @@
                 var appenddata='<BR><h4 style="color:#498af3;">NATIONALITY SEARCH</h4><BR>';
                 appenddata+='<div class="row form-group">';
                 appenddata+='<div class="col-md-2"><label>NATIONALITY<span class="labelrequired"><em>*</em></span></label></div>';
-                appenddata+='<div class="col-md-3"><SELECT class="form-control" name="ERM_SRC_NationalitySearch"  id="ERM_SRC_NationalitySearch">';
+                appenddata+='<div class="col-md-3"><SELECT class="form-control CLASS_VALIDATE_SRCH" name="ERM_SRC_NationalitySearch"  id="ERM_SRC_NationalitySearch">';
                 appenddata+='</SELECT></div></div>';
                 appenddata+='<div class="row form-group">';
                 appenddata+='<div class="col-lg-offset-1 col-lg-2">';
@@ -243,16 +246,17 @@
             }
 
             else if(searchoption==2)
-            {
+            { $('preloader').show();
                 $.ajax({
                     type: "POST",
                     url: controller_url+"CustomerName",
                     success: function(data){
+                        $('preloader').hide();
                         var value_array=JSON.parse(data);
                         var appenddata='<BR><h4 style="color:#498af3;">CUSTOMER NAME SEARCH</h4><BR>';
                         appenddata+='<div class="row form-group">';
                         appenddata+='<div class="col-md-2"><label>CUSTOMER NAME<span class="labelrequired"><em>*</em></span></label></div>';
-                        appenddata+='<div class="col-md-3"><input type=text class="form-control autosize customernameautovalidate" name="ERM_SRC_CustomerNameSearch"  id="ERM_SRC_CustomerNameSearch"/></div>';
+                        appenddata+='<div class="col-md-3"><input type=text class="form-control autosize customernameautovalidate CLASS_VALIDATE_SRCH" name="ERM_SRC_CustomerNameSearch"  id="ERM_SRC_CustomerNameSearch"/></div>';
                         appenddata+='<div class="col-md-3"><label id="customernameautocompleteerrormsg" class="errormsg" hidden></label></div>';
                         appenddata+='</div>';
                         appenddata+='<div class="row form-group">';
@@ -268,21 +272,23 @@
                         $("#ERM_SRC_CustomerNameSearch").focus();
                     },
                     error: function(data){
+                        $('preloader').hide();
                         show_msgbox("ERM ENTRY/SEARCH/UPDATE",'error in getting'+JSON.stringify(data),"error",false);
                     }
                 });
             }
             else if(searchoption==3)
-            {
+            {$('preloader').show();
                 $.ajax({
                     type: "POST",
                     url: controller_url+"CustomerContact",
                     success: function(data){
+                        $('preloader').hide();
                         var value_array=JSON.parse(data);
                         var appenddata='<BR><h4 style="color:#498af3;">CONTACT NUMBER SEARCH</h4><BR>';
                         appenddata+='<div class="row form-group">';
                         appenddata+='<div class="col-md-2"><label>CONTACT NO<span class="labelrequired"><em>*</em></span></label></div>';
-                        appenddata+='<div class="col-md-3"><input type=text class="form-control contactnoautovalidate" name="ERM_SRC_ContactNo"  id="ERM_SRC_ContactNo"/></div>';
+                        appenddata+='<div class="col-md-3"><input type=text class="form-control contactnoautovalidate CLASS_VALIDATE_SRCH" name="ERM_SRC_ContactNo"  id="ERM_SRC_ContactNo"/></div>';
                         appenddata+='<div class="col-md-3"><label id="contactautocompleteerrormsg" class="errormsg" hidden></label></div>';
                         appenddata+='</div>';
                         appenddata+='<div class="row form-group">';
@@ -301,22 +307,24 @@
                         $("#ERM_SRC_ContactNo").focus();
                     },
                     error: function(data){
+                        $('preloader').hide();
                         show_msgbox("ERM ENTRY/SEARCH/UPDATE",'error in getting'+JSON.stringify(data),"error",false);
                     }
                 });
             }
             else if(searchoption==6)
-            {
+            {$('preloader').show();
                 $.ajax({
                     type: "POST",
                     url: controller_url+"Userstamp",
                     success: function(data){
+                        $('preloader').hide();
                         var value_array=JSON.parse(data);
 
                         var appenddata='<BR><h4 style="color:#498af3;">USERSTAMP SEARCH</h4><BR>';
                         appenddata+='<div class="row form-group">';
                         appenddata+='<div class="col-md-2"><label>USERSTAMP<span class="labelrequired"><em>*</em></span></label></div>';
-                        appenddata+='<div class="col-md-3"><SELECT  class="form-control" name="ERM_SRC_UserStamp"  id="ERM_SRC_UserStamp"></SELECT>';
+                        appenddata+='<div class="col-md-3"><SELECT  class="form-control CLASS_VALIDATE_SRCH" name="ERM_SRC_UserStamp"  id="ERM_SRC_UserStamp"></SELECT>';
                         appenddata+='</div></div>';
                         appenddata+='<div class="row form-group">';
                         appenddata+='<div class="col-lg-offset-1 col-lg-2">';
@@ -332,6 +340,7 @@
 
                     },
                     error: function(data){
+                        $('preloader').hide();
                         show_msgbox("ERM ENTRY/SEARCH/UPDATE",'error in getting'+JSON.stringify(data),"error",false);
                     }
                 });
@@ -341,10 +350,10 @@
                 var appenddata='<BR><h4 style="color:#498af3;">AMOUNT RANGE SEARCH</h4><BR>';
                 appenddata+='<div class="row form-group">';
                 appenddata+='<div class="col-md-2"><label>FROM AMOUNT<span class="labelrequired"><em>*</em></span></label></div>';
-                appenddata+='<div class="col-md-3"><input type=text class="form-control amountonly Amount_btn_validation" name="ERM_SRC_FromAmount"  id="ERM_SRC_FromAmount" style="max-width:120px;" /></div></div>';
+                appenddata+='<div class="col-md-3"><input type=text class="form-control amountonly Amount_btn_validation CLASS_VALIDATE_SRCH" name="ERM_SRC_FromAmount"  id="ERM_SRC_FromAmount" style="max-width:120px;" /></div></div>';
                 appenddata+='<div class="row form-group">';
                 appenddata+='<div class="col-md-2"><label>TO AMOUNT<span class="labelrequired"><em>*</em></span></label></div>';
-                appenddata+='<div class="col-md-3"><input type=text class="form-control amountonly Amount_btn_validation" name="ERM_SRC_ToAmount"  id="ERM_SRC_ToAmount" style="max-width:120px;" /></div>';
+                appenddata+='<div class="col-md-3"><input type=text class="form-control amountonly Amount_btn_validation CLASS_VALIDATE_SRCH" name="ERM_SRC_ToAmount"  id="ERM_SRC_ToAmount" style="max-width:120px;" /></div>';
                 appenddata+='<div class="col-md-3"><label id="ERM_SRC_lbl_amounterrormsg" class="errormsg" hidden></label></div></div>';
                 appenddata+='<div class="row form-group">';
                 appenddata+='<div class="col-lg-offset-1 col-lg-2">';
@@ -359,10 +368,10 @@
                 var appenddata='<BR><h4 style="color:#498af3;">TIMESTAMP SEARCH</h4><BR>';
                 appenddata+='<div class="row form-group">';
                 appenddata+='<div class="col-md-2"><label>FROM DATE<span class="labelrequired"><em>*</em></span></label></div>';
-                appenddata+='<div class="col-md-9"><div class="col-sm-3" style="padding-left: 0px;"><div class="input-group addon"><input type="text" class="form-control timestamp_btn_validation" name="ERM_SRC_FromDate" id="ERM_SRC_FromDate"  placeholder="From Date"><label  class="input-group-addon" for=ERM_SRC_FromDate><span class="glyphicon glyphicon-calendar"></span></label></div></div></div></div>';
+                appenddata+='<div class="col-md-9"><div class="col-sm-3" style="padding-left: 0px;"><div class="input-group addon"><input type="text" class="form-control timestamp_btn_validation CLASS_VALIDATE_SRCH" name="ERM_SRC_FromDate" id="ERM_SRC_FromDate"  placeholder="From Date"><label  class="input-group-addon" for=ERM_SRC_FromDate><span class="glyphicon glyphicon-calendar"></span></label></div></div></div></div>';
                 appenddata+='<div class="row form-group">';
                 appenddata+='<div class="col-md-2"><label>TO DATE<span class="labelrequired"><em>*</em></span></label></div>';
-                appenddata+='<div class="col-md-9"><div class="col-sm-3" style="padding-left: 0px;"><div class="input-group addon"><input type="text" class="form-control timestamp_btn_validation" name="ERM_SRC_ToDate" id="ERM_SRC_ToDate"  placeholder="To Date"><label  class="input-group-addon" for=ERM_SRC_ToDate><span class="glyphicon glyphicon-calendar"></span></label></div></div></div></div>';
+                appenddata+='<div class="col-md-9"><div class="col-sm-3" style="padding-left: 0px;"><div class="input-group addon"><input type="text" class="form-control timestamp_btn_validation CLASS_VALIDATE_SRCH" name="ERM_SRC_ToDate" id="ERM_SRC_ToDate"  placeholder="To Date"><label  class="input-group-addon" for=ERM_SRC_ToDate><span class="glyphicon glyphicon-calendar"></span></label></div></div></div></div>';
                 appenddata+='<div class="row form-group">';
                 appenddata+='<div class="col-lg-offset-1 col-lg-2">';
                 appenddata+='<input type="button" id="ERM_src_btn_search" class="btn" value="SEARCH" disabled></div></div>';
@@ -645,6 +654,11 @@
                         $('#ERM_SEARCH_DataTable').show();
                         var table = $('#ERM_Datatable').DataTable({
                             "sDom":"Rlfrtip",
+                            "sDom":"Rlfrtip",
+                            "deferRender":    true,
+                            "scrollY": 200,
+                            "scrollX": 500,
+                            "scrollCollapse": true,
                             "aoColumnDefs": [{
                                 "aTargets": ["uk-date-column"],
                                 "sType": "uk_date"
@@ -730,7 +744,7 @@
         //ERM INLINE EDIT
         var pre_tds;
         var selectedrowid;
-        var arrLast;var arrLast;var arrupdate;
+        var arr;var arrLast;var arrupdate;
         $(document).on('click','.ERM_editbutton', function (){
             var cid = $(this).attr('id');
             var SplittedData=cid.split('_');
@@ -742,11 +756,11 @@
             var tdstr = '';
             var edit="Editid_"+Rowid;
             var del="Deleteid_"+Rowid;
-            arrLast={"SSICON":[$('#SSICON_'+Rowid).html()],"Name":[$('#Name_'+Rowid).html()],"RENT":[$('#RENT_'+Rowid).html()],
+             arrLast={"SSICON":[$('#SSICON_'+Rowid).html()],"Name":[$('#Name_'+Rowid).html()],"RENT":[$('#RENT_'+Rowid).html()],
                 "MOVINGDATE":[$('#MOVINGDATE_'+Rowid).html()],"MINSTAY":[$('#MINSTAY_'+Rowid).html()],"DATA":[$('#DATA_'+Rowid).html()],"NATIONALITY":[$('#NATIONALITY_'+Rowid).html()],
                 "GUEST":[$('#GUEST_'+Rowid).html()],"AGE":[$('#AGE_'+Rowid).html()],"CONTACT":[$('#CONTACT_'+Rowid).html()],"EMAIL":[$('#EMAIL_'+Rowid).html()],
                 "COMMENTS":[$('#COMMENTS_'+Rowid).html()],"LOGIN":[$('#LOGIN_'+Rowid).html()],"TIMESTAMP":[$('#TIMESTAMP_'+Rowid).html()]};
-            arr={"SSICON":["<div class='col-lg-1'><span style='display: block;color:green' title='Update' class='glyphicon glyphicon-print ERM_editbutton' disabled id="+edit+"></div><div class='col-lg-1'><span style='display: block;color:red' title='Cancel' class='glyphicon glyphicon-remove ERM_editcancel' disabled id="+del+"></div>"],"Name":["<input type='text' id=customername  name='customername'  class='autosize form-control FormValidation' style='font-weight:bold;width:200px' value='"+$('#Name_'+Rowid).html()+"'>"],
+                 arr={"SSICON":["<div class='col-lg-1'><span style='display: block;color:green' title='Update' class='glyphicon glyphicon-print ERM_editbutton' disabled id="+edit+"></div><div class='col-lg-1'><span style='display: block;color:red' title='Cancel' class='glyphicon glyphicon-remove ERM_editcancel' disabled id="+del+"></div>"],"Name":["<input type='text' id=customername  name='customername'  class='autosize form-control FormValidation' style='font-weight:bold;width:200px' value='"+$('#Name_'+Rowid).html()+"'>"],
                 "RENT":["<input type='text' id='Rent' name='Rent'  class='form-control FormValidation' style='font-weight:bold;width:100px' value='"+$('#RENT_'+Rowid).html()+"'>"],
                 "MOVINGDATE":["<div class='col-sm-4'><div class='input-group addon'><input type='text' class='form-control FormValidation datemandtry' id=Movingdate style='width:120px;' value='"+$('#MOVINGDATE_'+Rowid).html()+"'><label  class='input-group-addon' for=Movingdate><span class='glyphicon glyphicon-calendar'></span></label></div></div>"],
                 "MINSTAY":["<input type='text' id='Minimumstay' name='Minimumstay'  class='form-control FormValidation' maxlength='10' style='font-weight:bold;width:120px' value='"+$('#MINSTAY_'+Rowid).html()+"'>"],
@@ -759,7 +773,6 @@
                 "COMMENTS":["<textarea id='Comments' name='Comments'  class='form-control autogrowcomments FormValidation'  style='font-weight:bold;width:350px' nowrap>"+$('#COMMENTS_'+Rowid).html()+"</textarea>"],
                 "LOGIN":[$('#LOGIN_'+Rowid).html()],
                 "TIMESTAMP":[$('#TIMESTAMP_'+Rowid).html()]};
-
             for(var t=0;t<tds.length;t++){
                 $(tds[t]).html(arr[$(tds[t]).attr('id').split('_')[0]][0]);
             }
@@ -828,7 +841,6 @@
             $("#Editid_"+Rowid).removeClass("ERM_editcancel");
             var tds = $('#'+Rowid).children('td');
             for(var t=0;t<tds.length;t++){
-
                 $(tds[t]).html(arrLast[$(tds[t]).attr('id').split('_')[0]][0]);
             }
             for(var k=0;k<ERM_id.length;k++)

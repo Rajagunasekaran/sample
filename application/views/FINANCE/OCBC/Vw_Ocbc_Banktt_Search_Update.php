@@ -1,5 +1,6 @@
 <!--********************************************OCBC BANK TT SEARCH/UPDATE*******************************************-->
 <!--*******************************************FILE DESCRIPTION***************************************************-->
+<!--VER 15.1 -SD:09/07/2015 ED:09/07/2015 GET DATA FROM DB INSTEAD OF GET FROM FLEX TABLE FOR UPDATE FORM,SAVE POINT,INCLUDED COL-REORDER->
 <!--VER 6.6 -SD:05/06/2015 ED:05/06/2015 GETTING HEADER FILE FROM LIB-->
 <!--VER 0.02- SD:04/06/2015 ED:04/06/2015,changed Controller Model and View names in ver0.02-->
 <!--VER 0.01-INITIAL VERSION-SD:18/05/2015 ED:18/05/2015 in ver0.01-->
@@ -82,7 +83,7 @@ require_once('application/libraries/EI_HDR.php');
                 $('.preloader').hide();
             },
             error: function(data){
-                alert('error in getting'+JSON.stringify(data));
+                show_msgbox("BANK TT ENTRY",'error in getting'+JSON.stringify(data),"error",false);
             }
         });
         var AllaccnameArray=[];
@@ -300,7 +301,7 @@ require_once('application/libraries/EI_HDR.php');
                         $('.preloader').hide();
                     },
                     error: function(data){
-                        alert('error in getting'+JSON.stringify(data));
+                        show_msgbox("BANK TT ENTRY",'error in getting'+JSON.stringify(data),"error",false);
                         $('.preloader').hide();
                     }
                 });
@@ -628,7 +629,7 @@ require_once('application/libraries/EI_HDR.php');
                     $('.preloader').hide();
                 },
                 error: function(data){
-                    alert('error in getting'+JSON.stringify(data));
+                    show_msgbox("BANK TT ENTRY",'error in getting'+JSON.stringify(data),"error",false);
                     $('.preloader').hide();
                 }
             });
@@ -814,86 +815,14 @@ require_once('application/libraries/EI_HDR.php');
             $('#BankTT_Updation_Form')[0].reset();
             $('#Temp_Bt_id').val(Rowid);
             var tds = $('#'+Rowid).children('td');
-//            if($(tds[1]).html()=='TT')
-//            {
-//                $('#ttgiropart1').show();
-//                $('#ttgiropart2').show();
-//                $('#giropart').hide();
-//                $('#modeldiv').hide();
-//                $('#ttpart').show();
-//                $('#Banktt_SRC_TTtype').val($(tds[1]).html());
-//                $('#Banktt_SRC_Accname').val($(tds[3]).html());
-//                $('#Banktt_SRC_Accno').val($(tds[4]).html());
-//                $('#Banktt_SRC_Unit').val($(tds[6]).html());
-//                $('#Banktt_SRC_Customername').val($(tds[7]).html());
-//                $('#Banktt_SRC_Swiftcode').val($(tds[13]).html());
-//                $('#Banktt_SRC_Chargesto').val($(tds[14]).html());
-//            }
-//            else if($(tds[1]).html()=='GIRO')
-//            {
-//                $('#ttgiropart1').show();
-//                $('#ttgiropart2').show();
-//                $('#ttpart').hide();
-//                $('#modeldiv').hide();
-//                $('#giropart').show();
-//                $('#Banktt_SRC_TTtype').val($(tds[1]).html());
-//                $('#Banktt_SRC_Accname').val($(tds[3]).html());
-//                $('#Banktt_SRC_Accno').val($(tds[4]).html());
-//                $('#Banktt_SRC_Unit').val($(tds[6]).html());
-//                $('#Banktt_SRC_Customername').val($(tds[7]).html());
-//                $('#Banktt_SRC_Bankcode').val($(tds[10]).html());
-//                $('#Banktt_SRC_Branchcode').val($(tds[11]).html());
-//            }
-//            else
-//            {
-//                $('#ttgiropart1').hide();
-//                $('#ttgiropart2').hide();
-//                $('#ttpart').hide();
-//                $('#giropart').hide();
-//                $('#modeldiv').show();
-//                $('#Banktt_SRC_TTtype').val('MODEL');
-//                $('#Banktt_SRC_Modelnames').val($(tds[1]).html());
-//            }
-//            $('#Banktt_SRC_Date').val($(tds[2]).html());
-//            $('#Banktt_SRC_Amount').val($(tds[5]).html());
-//            $('#Banktt_SRC_Status').val($(tds[8]).html());
-//            $('#Banktt_SRC_Debitedon').val($(tds[9]).html());
-//            $('#Banktt_SRC_BankAddress').val($(tds[12]).html());
-//            $('#Banktt_SRC_Customerref').val($(tds[15]).html());
-//            $('#Banktt_SRC_Invdetails').val($(tds[16]).html());
-//            if($(tds[18]).html()!='')
-//            {
-//                $('#Banktt_SRC_Createdby').val($(tds[18]).html());
-//            }
-//            $('#Banktt_SRC_Comments').val($(tds[17]).html());
-//            var bankttdate=$(tds[2]).html();
-//            var BANKTT_db_chkindate1 = new Date( Date.parse( FormTableDateFormat(bankttdate)));
-//            BANKTT_db_chkindate1.setDate( BANKTT_db_chkindate1.getDate());
-//            var BANKTT_db_chkindate1 = BANKTT_db_chkindate1.toDateString();
-//            BANKTT_db_chkindate1 = new Date( Date.parse( BANKTT_db_chkindate1 ) );
-//            $('#Banktt_SRC_Date').datepicker("option","minDate",new Date(BANKTT_db_chkindate1.getFullYear()-1,BANKTT_db_chkindate1.getMonth(),BANKTT_db_chkindate1.getDate()));
-//            if($(tds[9]).html()=='')
-//            {
-//                $('#debittedondiv').hide().val('');
-//            }
-//            else
-//            {
-//                $('#debittedondiv').show();
-//            }
-//            $('#Banktt_SRC_Debitedon').datepicker("option","minDate",BANKTT_db_chkindate1);
-//            $('#Banktt_SRC_Debitedon').datepicker("option","maxDate",new Date());
-//            $('#BankTT_Updation_Form').show();
+            $('.preloader').show();
             $.ajax({
                 type: "POST",
                 url: controller_url+"Banktt_Update_FetchData",
-                data:{"id":$(this).attr('id')},
+                data:{"id":Rowid},
                 success: function(data){
                     var returnvalue=JSON.parse(data);
-                    alert(returnvalue[0].BT_ID)
-                    var tds=[];
-                    tds[0]=""; tds[1]=""; tds[2]=""; tds[3]="";
-                    tds[4]=""; tds[5]=""; tds[6]=""; tds[7]="";
-                    if($(tds[1]).html()=='TT')
+                    if(returnvalue[0].TRANSACTION_TYPE=='TT')
                     {
                         $('#ttgiropart1').show();
                         $('#ttgiropart2').show();
@@ -905,23 +834,23 @@ require_once('application/libraries/EI_HDR.php');
                         $('#Banktt_SRC_Accno').val(returnvalue[0].BT_ACC_NO);
                         $('#Banktt_SRC_Unit').val(returnvalue[0].UNIT);
                         $('#Banktt_SRC_Customername').val(returnvalue[0].CUSTOMER_NAME);
-                        $('#Banktt_SRC_Swiftcode').val($(tds[13]).html());
-                        $('#Banktt_SRC_Chargesto').val($(tds[14]).html());
+                        $('#Banktt_SRC_Swiftcode').val(returnvalue[0].SWIFT_CODE);
+                        $('#Banktt_SRC_Chargesto').val(returnvalue[0].CHARGES_TO);
                     }
-                    else if($(tds[1]).html()=='GIRO')
+                    else if(returnvalue[0].TRANSACTION_TYPE=='GIRO')
                     {
                         $('#ttgiropart1').show();
                         $('#ttgiropart2').show();
                         $('#ttpart').hide();
                         $('#modeldiv').hide();
                         $('#giropart').show();
-                        $('#Banktt_SRC_TTtype').val($(tds[1]).html());
-                        $('#Banktt_SRC_Accname').val($(tds[3]).html());
-                        $('#Banktt_SRC_Accno').val($(tds[4]).html());
-                        $('#Banktt_SRC_Unit').val($(tds[6]).html());
-                        $('#Banktt_SRC_Customername').val($(tds[7]).html());
-                        $('#Banktt_SRC_Bankcode').val($(tds[10]).html());
-                        $('#Banktt_SRC_Branchcode').val($(tds[11]).html());
+                        $('#Banktt_SRC_TTtype').val(returnvalue[0].TRANSACTION_TYPE);
+                        $('#Banktt_SRC_Accname').val(returnvalue[0].BT_ACC_NAME);
+                        $('#Banktt_SRC_Accno').val(returnvalue[0].BT_ACC_NO);
+                        $('#Banktt_SRC_Unit').val(returnvalue[0].UNIT_NO);
+                        $('#Banktt_SRC_Customername').val(returnvalue[0].CUSTOMER_NAME);
+                        $('#Banktt_SRC_Bankcode').val(returnvalue[0].BANK_CODE);
+                        $('#Banktt_SRC_Branchcode').val(returnvalue[0].BRANCH_CODE);
                     }
                     else
                     {
@@ -931,27 +860,27 @@ require_once('application/libraries/EI_HDR.php');
                         $('#giropart').hide();
                         $('#modeldiv').show();
                         $('#Banktt_SRC_TTtype').val('MODEL');
-                        $('#Banktt_SRC_Modelnames').val($(tds[1]).html());
+                        $('#Banktt_SRC_Modelnames').val(returnvalue[0].BRANCH_CODE);
                     }
-                    $('#Banktt_SRC_Date').val($(tds[2]).html());
-                    $('#Banktt_SRC_Amount').val($(tds[5]).html());
-                    $('#Banktt_SRC_Status').val($(tds[8]).html());
-                    $('#Banktt_SRC_Debitedon').val($(tds[9]).html());
-                    $('#Banktt_SRC_BankAddress').val($(tds[12]).html());
-                    $('#Banktt_SRC_Customerref').val($(tds[15]).html());
-                    $('#Banktt_SRC_Invdetails').val($(tds[16]).html());
-                    if($(tds[18]).html()!='')
+                    $('#Banktt_SRC_Date').val(FormTableDateFormat(returnvalue[0].BT_DATE));
+                    $('#Banktt_SRC_Amount').val(returnvalue[0].BT_AMOUNT);
+                    $('#Banktt_SRC_Status').val(returnvalue[0].STATUS);
+                    $('#Banktt_SRC_Debitedon').val(FormTableDateFormat(returnvalue[0].DEBITED_ON));
+                    $('#Banktt_SRC_BankAddress').val(returnvalue[0].BANK_ADDRESS);
+                    $('#Banktt_SRC_Customerref').val(returnvalue[0].CUST_REF);
+                    $('#Banktt_SRC_Invdetails').val(returnvalue[0].INV_DETAILS);
+                    if(returnvalue[0].CREATED_BY!='')
                     {
-                        $('#Banktt_SRC_Createdby').val($(tds[18]).html());
+                        $('#Banktt_SRC_Createdby').val(returnvalue[0].CREATED_BY);
                     }
-                    $('#Banktt_SRC_Comments').val($(tds[17]).html());
-                    var bankttdate=$(tds[2]).html();
-                    var BANKTT_db_chkindate1 = new Date( Date.parse( FormTableDateFormat(bankttdate)));
+                    $('#Banktt_SRC_Comments').val(returnvalue[0].COMMENTS);
+                    var bankttdate=returnvalue[0].BT_DATE;
+                    var BANKTT_db_chkindate1 = new Date( Date.parse( bankttdate));
                     BANKTT_db_chkindate1.setDate( BANKTT_db_chkindate1.getDate());
                     var BANKTT_db_chkindate1 = BANKTT_db_chkindate1.toDateString();
                     BANKTT_db_chkindate1 = new Date( Date.parse( BANKTT_db_chkindate1 ) );
                     $('#Banktt_SRC_Date').datepicker("option","minDate",new Date(BANKTT_db_chkindate1.getFullYear()-1,BANKTT_db_chkindate1.getMonth(),BANKTT_db_chkindate1.getDate()));
-                    if($(tds[9]).html()=='')
+                    if(returnvalue[0].DEBITED_ON=='')
                     {
                         $('#debittedondiv').hide().val('');
                     }
@@ -1093,7 +1022,6 @@ require_once('application/libraries/EI_HDR.php');
                 url: controller_url+"Banktt_Update_Save",
                 data:FormElements,
                 success: function(data){
-                    alert(data)
                     var returnvalue=JSON.parse(data);
                     if(returnvalue==1)
                     {
@@ -1110,7 +1038,7 @@ require_once('application/libraries/EI_HDR.php');
                     $('.preloader').hide();
                 },
                 error: function(data){
-                    alert('error in getting'+JSON.stringify(data));
+                    show_msgbox("BANK TT ENTRY",'error in getting'+JSON.stringify(data),"error",false);
                     $('.preloader').hide();
                 }
             });

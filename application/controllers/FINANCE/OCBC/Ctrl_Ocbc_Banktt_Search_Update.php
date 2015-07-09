@@ -1,6 +1,4 @@
 <?php
-//require_once 'google/appengine/api/mail/Message.php';
-//use google\appengine\api\mail\Message;
 class Ctrl_Ocbc_Banktt_Search_Update extends CI_Controller
 {
     function __construct() {
@@ -36,7 +34,7 @@ class Ctrl_Ocbc_Banktt_Search_Update extends CI_Controller
     //FETCH THE DATA FOR UPDATE FORM
     public function Banktt_Update_FetchData()
     {
-        $primaryId=$_GET['id'];
+        $primaryId=$_POST['id'];
         $SearchResultsUpdate=$this->Mdl_ocbc_banktt_entry->get_UpdateFormData($primaryId);
         echo json_encode($SearchResultsUpdate);
     }
@@ -54,16 +52,6 @@ class Ctrl_Ocbc_Banktt_Search_Update extends CI_Controller
     {
         $UserStamp=$this->Mdl_eilib_common_function->getSessionUserStamp();
         $Confirm_message=$this->Mdl_ocbc_banktt_entry->getBanktt_UpdateSave($UserStamp);
-        if($Confirm_message[0]==1)
-        {
-            $message1 = new Message();
-            $message1->setSender($Confirm_message[3].'<'.$UserStamp.'>');
-            $message1->addTo($Confirm_message[4][0]);
-            $message1->addCc($Confirm_message[4][1]);
-            $message1->setSubject($Confirm_message[1]);
-            $message1->setHtmlBody($Confirm_message[2]);
-            $message1->send();
-        }
         echo json_encode($Confirm_message[0]);
     }
     public function BankttPdfCreation()

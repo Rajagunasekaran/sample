@@ -493,8 +493,7 @@ require_once('application/libraries/EI_HDR.php');
                 $('#CA_ta_comments').val(CA_customerdetails.comments);
                 $('#CA_tb_companyname').val(CA_customerdetails.company);
                 $('#CA_tb_nation').val(CA_customerdetails.nationality);
-                $('#CA_ta_comments').height(116);
-                $('#CA_ta_comments').width(342);
+                $('#CA_ta_comments').height(114);
                 var CA_quaterlyfee=CA_customerdetails.airconquartelyfee;
                 var CA_fixedfee=CA_customerdetails.airconfixedfee;
                 if(CA_quaterlyfee==null || CA_quaterlyfee=='')
@@ -984,7 +983,7 @@ require_once('application/libraries/EI_HDR.php');
                     <div id='CA_comment'>
                         <div class="form-group">
                             <label class="col-sm-3">COMMENTS</label>
-                            <div class="col-sm-4"><textarea name="CA_ta_comments" id="CA_ta_comments" class="form-control CA_formvalidation" rows="5"></textarea></div>
+                            <div class="col-sm-4"><textarea name="CA_ta_comments" id="CA_ta_comments" class="form-control CA_formvalidation" style="height: 114px" rows="5"></textarea></div>
                         </div>
                     </div>
                     <div id="CA_guest_cardno" hidden>

@@ -104,7 +104,7 @@ require_once('application/libraries/EI_HDR.php');
             });
         // GET CARD NUMBER FOR SELECTED CUSTOMER NAME
             $('#CSU_lb_custname').change(function(){
-                $('textarea').height(116);
+                $('textarea').height(114);
                 var CSU_custname=$(this).val();
                 $(".preloader").show();
                 var CSU_unit = $('#CSU_lb_unitno').val();
@@ -356,7 +356,7 @@ require_once('application/libraries/EI_HDR.php');
                 </div>
                 <div class="form-group" id='CSU_comments' hidden>
                     <label class="col-sm-2">COMMENTS</label>
-                    <div class="col-sm-4"><textarea name="CSU_ta_comments" id="CSU_ta_comments" class="submit_validate form-control" rows="5"></textarea></div>
+                    <div class="col-sm-4"><textarea name="CSU_ta_comments" id="CSU_ta_comments" class="submit_validate form-control" style="height: 114px" rows="5"></textarea></div>
                 </div>
                 <div class="form-group" id="CSU_buttons" hidden>
                     <div class="col-sm-offset-1 col-sm-3">

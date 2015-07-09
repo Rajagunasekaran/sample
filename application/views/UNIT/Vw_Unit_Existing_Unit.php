@@ -183,7 +183,7 @@ require_once('application/libraries/EI_HDR.php');
                     $("#EU_btn_update").attr("disabled", "disabled");
             });
         // CHANGE EVENT FUNCTION FOR ROOM TYPE
-            $(document).on("blur",'#EU_tb_newroomtype',function(){
+            $(document).on("change blur",'#EU_tb_newroomtype',function(){
                 var EU_newroom=$(this).val();
                 var EU_source=  $(this).attr('id');
                 if(EU_newroom.length==0){
@@ -247,7 +247,7 @@ require_once('application/libraries/EI_HDR.php');
                     $("#EU_btn_update").attr("disabled", "disabled");
             });
         // CHANGE EVENT FUNCTION FOR STAMP TYPE
-            $(document).on("blur",'#EU_tb_newstamptype',function(){
+            $(document).on("change blur",'#EU_tb_newstamptype',function(){
                 var EU_newstamp=$(this).val();
                 var EU_source=$(this).attr('id');
                 if(EU_newstamp.length==0){
@@ -592,7 +592,7 @@ require_once('application/libraries/EI_HDR.php');
                         show_msgbox("EXISTING UNIT",errordata,'error',false);
                     }
                 });
-                $('textarea').height(116);
+                $('textarea').height(114);
             });
         // SUCCESS FUNCTION FOR WHICH ARE INSERTING VALUES
             function EU_updateSuccess(EU_response){
@@ -613,7 +613,7 @@ require_once('application/libraries/EI_HDR.php');
                 }
             }
         // CHANGE FUNCTION FOR ACCESS CARD FOR ALREADY EXISTS DATA
-            $(document).on("blur",'#EU_tb_accesscard',function(){
+            $(document).on("change blur",'#EU_tb_accesscard',function(){
                 var EU_access=$("#EU_tb_accesscard").val();
                 var EU_source='EU_tb_accesscard';
                 if((parseInt(EU_access).toString().length>0)&&(parseInt(EU_access).toString().length<4)){
@@ -717,7 +717,7 @@ require_once('application/libraries/EI_HDR.php');
                     EU_flg_Doorcode=0;
                     $('#EU_lbl_doorcode').text(EU_errorMsg_array[14].EMC_DATA);
                 }
-                else if(($(this).val()!='')&&(parseInt($(this).val())!=0)&&($(this).val().length>=6)){
+                else if(($(this).val()!='')&&(parseInt($(this).val())!=0)&&($(this).val().length>=6)&&($('#UNIT_tb_doorcode').hasClass('rdonly'))!=true){
                     EU_func_doorcode_login($(this).val(),$(this).attr('id'));
                 }
             });
@@ -731,7 +731,7 @@ require_once('application/libraries/EI_HDR.php');
                     EU_flg_Login=0;
                     $('#EU_lbl_weblogin').text(EU_errorMsg_array[13].EMC_DATA);
                 }
-                else if(($(this).val()!='')&&(parseInt($(this).val())!=0)&&($(this).val().length>=5)){
+                else if(($(this).val()!='')&&(parseInt($(this).val())!=0)&&($(this).val().length>=5)&&($('#UNIT_tb_weblogin').hasClass('rdonly'))!=true){
                     EU_func_doorcode_login($(this).val(),$(this).attr('id'));
                 }
             });
@@ -952,7 +952,7 @@ require_once('application/libraries/EI_HDR.php');
                             </div>
                             <div class="form-group" id="EU_comments">
                                 <label class="col-sm-2">COMMENTS</label>
-                                <div class="col-sm-4"><textarea name="EU_ta_comments" id="EU_ta_comments" class="EU_class_validupdate form-control" placeholder="Comments" rows="5"></textarea></div>
+                                <div class="col-sm-4"><textarea name="EU_ta_comments" id="EU_ta_comments" class="EU_class_validupdate form-control" placeholder="Comments" style="height: 114px;" rows="5"></textarea></div>
                             </div>
                         </div>
                         <div class="form-group EU_td_webotheraccount" id="EU_selectoption3">
@@ -982,7 +982,7 @@ require_once('application/libraries/EI_HDR.php');
                             </div>
                             <div class="form-group" id="EU_bankaddress">
                                 <label class="col-sm-2">BANK ADDRESS</label>
-                                <div class="col-sm-4"><textarea name="EU_tb_bankaddrs" id="EU_tb_bankaddrs" class="EU_class_validupdate autosize form-control" placeholder="Bank Address" rows="5"></textarea></div>
+                                <div class="col-sm-4"><textarea name="EU_tb_bankaddrs" id="EU_tb_bankaddrs" class="EU_class_validupdate autosize form-control" placeholder="Bank Address" style="height: 114px;" rows="5"></textarea></div>
                             </div>
                         </div>
                     </div>

@@ -104,7 +104,8 @@ require_once('application/libraries/EI_HDR.php');
                         "pageLength": 10,
                         "sPaginationType":"full_numbers",
                         "aoColumnDefs" : [
-                            { "aTargets" : ["uk-timestp-column"] , "sType" : "uk_timestp"} ]
+                            { "aTargets" : ["uk-timestp-column"] , "sType" : "uk_timestp"} ],
+                        "sDom":"Rlfrtip"
                     });
                     sorting();
                     $("#DCSU_div_htmltable").show();
@@ -127,12 +128,6 @@ require_once('application/libraries/EI_HDR.php');
         // CLICK EVENT FOR INLINE EDIT FOR STAMP TYPE AND ROOM TYPE
             var previous_id;var tdvalue;var primcid;
             $(document).on('click','.data',function(){
-                $('#DCSU_tble_htmltable tr').each(function(){
-                    var $tds = $(this).find('td');
-                    DCSU_doorcode_val=$tds.eq(0).text();
-                    DCSU_weblogin_val=$tds.eq(1).text();
-                    DCSU_webpass_val=$tds.eq(2).text();
-                });
                 if(previous_id!=undefined){
                     $('#'+previous_id).replaceWith("<td class='data' style='text-align: center' id='"+previous_id+"' >"+tdvalue+"</td>");
                 }
@@ -142,6 +137,9 @@ require_once('application/libraries/EI_HDR.php');
                 var rowcid=splittedcid[0];
                 primcid=splittedcid[1];
                 tdvalue=$(this).text();
+                DCSU_doorcode_val=$('#doorcode_'+primcid).text();
+                DCSU_weblogin_val=$('#weblogin_'+primcid).text();
+                DCSU_webpass_val=$('#webpass_'+primcid).text();
                 if(rowcid=='doorcode')//door code
                 {
                     $('#'+cid).replaceWith('<td class="new" id="'+previous_id+'"><input type="text" name="UNIT_tb_doorcode" id="UNIT_tb_doorcode" maxlength=10 size="6" class="DCSU_class_login numonly DCSU_class_numsonly form-control" value="'+tdvalue+'">');

@@ -180,7 +180,7 @@ require_once('application/libraries/EI_HDR.php');
                     </div>
                     <div class="form-group" id="UT_comments">
                         <label class="col-sm-2">COMMENTS</label>
-                        <div class="col-sm-4"><textarea name="UT_ta_comments" id="UT_ta_comments" placeholder="Comments" rows="5" class="form-control"></textarea></div>
+                        <div class="col-sm-4"><textarea name="UT_ta_comments" id="UT_ta_comments" placeholder="Comments" style="height: 114px" rows="5" class="form-control"></textarea></div>
                     </div>
                     <div class="form-group" id="UT_buttons">
                         <div class="col-sm-offset-1 col-sm-4">

@@ -102,6 +102,7 @@ class Mdl_eilib_calender  extends CI_Model {
             $event->setLocation($calseventloc);
             $event->setSummary($calseventtitle);
             $cal->events->insert($calId, $event);
+            return 1;
         }
         catch(Exception $ex){
             return $ex->getMessage();
@@ -140,6 +141,7 @@ class Mdl_eilib_calender  extends CI_Model {
                     }
                 }
             }
+            return 1;
         }
         catch(Exception $ex){
             return $ex->getMessage();

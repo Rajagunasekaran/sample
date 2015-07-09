@@ -988,6 +988,7 @@ require_once('application/libraries/EI_HDR.php');
                 });
             });
         // SUCCESS FUNCTION FOR FLEX TABLE
+            var USU_flex_arr=[];
             var table; var previous_id;var tdvalue;var rid;
             function USU_success_flex(USU_response_flex){
                 $(".preloader").hide();
@@ -1005,7 +1006,6 @@ require_once('application/libraries/EI_HDR.php');
                         $('#USU_div_htmltable').hide();
                         $('#USU_div_htmltable','#USU_div_stamphtmltable').empty();
                         $('#USU_headermsg').text('');
-                        var USU_flex_arr=[];
                         var USU_flex_flag=USU_response_flex.USU_flag;
                         USU_flex_arr=USU_response_flex.USU_flex_values;
                         var USU_load_flag_lb=USU_response_flex.USU_loadlb_obj;
@@ -1134,7 +1134,8 @@ require_once('application/libraries/EI_HDR.php');
                                     "pageLength": 10,
                                     "sPaginationType":"full_numbers",
                                     "aoColumnDefs" : [
-                                        { "aTargets" : ["uk-date-column"] , "sType" : "uk_date"}, { "aTargets" : ["uk-timestp-column"] , "sType" : "uk_timestp"} ]
+                                        { "aTargets" : ["uk-date-column"] , "sType" : "uk_date"}, { "aTargets" : ["uk-timestp-column"] , "sType" : "uk_timestp"}],
+                                    "sDom":"Rlfrtip"
                                 });
                                 // remove row hightlight and replace inline edit as td
                                 table.on('page.dt', function(){
@@ -1175,7 +1176,8 @@ require_once('application/libraries/EI_HDR.php');
                                         "pageLength": 10,
                                         "sPaginationType":"full_numbers",
                                         "aoColumnDefs" : [
-                                            { "aTargets" : ["uk-date-column"] , "sType" : "uk_date"}, { "aTargets" : ["uk-timestp-column"] , "sType" : "uk_timestp"} ]
+                                            { "aTargets" : ["uk-date-column"] , "sType" : "uk_date"}, { "aTargets" : ["uk-timestp-column"] , "sType" : "uk_timestp"} ],
+                                        "sDom":"Rlfrtip"
                                     });
                                     sorting();
                                     $('#USU_div_stamphtmltable').show();
@@ -1293,7 +1295,19 @@ require_once('application/libraries/EI_HDR.php');
                 var USU_dataid=splitteddata[0];
                 var USU_id_attr=splitteddata[1];
                 editrowid=USU_id_attr;
-                var tds = table.row(USU_dataid).data();
+                for(var i=0;i<USU_flex_arr.length;i++){
+                    if(USU_id_attr==USU_flex_arr[i][0]){
+                        var tds = USU_flex_arr[i];
+                    }
+                }
+                for(var j=0;j<tds.length;j++){
+                    if(tds[j]==null){
+                        tds[j]='';
+                    }
+                    else{
+                        tds[j]=tds[j];
+                    }
+                }
                 USU_obj_rowvalue={"USU_tr_first":tds[1],"USU_tr_second":tds[2],"USU_tr_third":tds[3],"USU_tr_four":tds[4],"USU_tr_five":tds[5],"USU_tr_six":tds[6],"USU_tr_seven":tds[7],"USU_tr_eight":tds[8],"USU_tr_nine":tds[9],"USU_tr_ten":tds[10],"USU_tr_eleven":tds[11],"USU_tr_twelve":tds[12],"USU_tr_thirteen":tds[13]};
                 var USU_upd_tr='';
                 var USU_lb_selectoption_unit=$('#USU_lb_searchby').val();
@@ -1478,7 +1492,7 @@ require_once('application/libraries/EI_HDR.php');
                         $('#USU_tb_unitno').prop('readonly', true);
                         $('#USU_tb_unitno').addClass('rdonly');
                     }
-                // CHECK TRANSACTION FOR SDATE,IF NO TRANS MEANS NOT SET MIN DATE
+                    // CHECK TRANSACTION FOR SDATE,IF NO TRANS MEANS NOT SET MIN DATE
                 }
                 // SUCCESS FUNCTION FOR LOAD LISTBOX FOR STAMP & ROOM TYPE
                 function USU_success_stamp_room(USU_response_stamp_room){
@@ -1554,7 +1568,19 @@ require_once('application/libraries/EI_HDR.php');
                 previous_id=primcid;
                 editrowid=primcid;
                 tdvalue=$(this).text();
-                var tds = table.row(rowcid).data();
+                for(var i=0;i<USU_flex_arr.length;i++){
+                    if(primcid==USU_flex_arr[i][0]){
+                        var tds = USU_flex_arr[i];
+                    }
+                }
+                for(var j=0;j<tds.length;j++){
+                    if(tds[j]==null){
+                        tds[j]='';
+                    }
+                    else{
+                        tds[j]=tds[j];
+                    }
+                }
                 USU_obj_rowvalue={"USU_tr_first":tds[0],"USU_tr_second":tds[1],"USU_tr_third":tds[2],"USU_tr_four":tds[3],"USU_tr_five":tds[4],"USU_tr_six":tds[5],"USU_tr_seven":tds[6],"USU_tr_eight":tds[7],"USU_tr_nine":tds[8],"USU_tr_ten":tds[9],"USU_tr_eleven":tds[10],"USU_tr_twelve":tds[11],"USU_tr_thirteen":tds[12]};
                 if($('#USU_lb_searchby').val()==5)//ROOM TYPE
                 {
@@ -1580,7 +1606,7 @@ require_once('application/libraries/EI_HDR.php');
                     var USU_roomstamptype_val=$('#USU_tb_sep_stamptype').val();
                     var USU_parentfunc_already=8;
                 }
-                if((($('#USU_tb_sep_stamptype').val()==undefined)&&($('#USU_tb_sep_roomtype').val()!='')&&(($('#USU_tb_sep_roomtype').val()).trim()!=USU_obj_rowvalue.USU_tr_first))||(($('#USU_tb_sep_stamptype').val()!='')&&($('#USU_tb_sep_roomtype').val()==undefined)&&(($('#USU_tb_sep_stamptype').val()).trim()!=USU_obj_rowvalue.USU_tr_first))){
+                if((($('#USU_tb_sep_stamptype').val()==undefined)&&($('#USU_tb_sep_roomtype').val()!='')&&(($('#USU_tb_sep_roomtype').val()).trim()!=USU_obj_rowvalue.USU_tr_second))||(($('#USU_tb_sep_stamptype').val()!='')&&($('#USU_tb_sep_roomtype').val()==undefined)&&(($('#USU_tb_sep_stamptype').val()).trim()!=USU_obj_rowvalue.USU_tr_second))){
                     $(".preloader").show();
                     $.ajax({
                         type: "POST",

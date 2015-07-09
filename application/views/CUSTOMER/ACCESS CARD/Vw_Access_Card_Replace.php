@@ -131,7 +131,7 @@ require_once('application/libraries/EI_HDR.php');
         // GET CARD NUMBER FOR SELECTED CUSTOMER NAME
             $('#CR_lb_custname').change(function(){
                 var CR_custname=$(this).val();
-                $('textarea').height(116);
+                $('textarea').height(114);
                 var CR_unit = $('#CR_lb_unitno').val();
                 if(CR_custname=='SELECT'){
                     $('#CR_carddiv').find('select').val('SELECT');
@@ -357,7 +357,7 @@ require_once('application/libraries/EI_HDR.php');
                 </div>
                 <div class="form-group" id='CR_comment' hidden>
                     <label class="col-sm-2">COMMENTS</label>
-                    <div class="col-sm-4"><textarea name="CR_ta_comments" id="CR_ta_comments" class="form-control" rows="5"></textarea></div>
+                    <div class="col-sm-4"><textarea name="CR_ta_comments" id="CR_ta_comments" class="form-control" style="height: 114px" rows="5"></textarea></div>
                 </div>
                 <div class="form-group" id="CR_buttons" hidden>
                     <div class="col-sm-offset-1 col-sm-4">

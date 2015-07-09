@@ -349,7 +349,8 @@ require_once('application/libraries/EI_HDR.php');
                     $('#CV_tble_htmltable').DataTable({
                         "aaSorting": [],
                         "pageLength": 10,
-                        "sPaginationType":"full_numbers"
+                        "sPaginationType":"full_numbers",
+                        "sDom":"Rlfrtip"
                     });
                     $('#CV_div_htmltable').show();
                     var msg=(CV_errorAarray[1].EMC_DATA).replace('[FIRST NAME + LAST NAME]',CV_name);
@@ -397,7 +398,8 @@ require_once('application/libraries/EI_HDR.php');
                             $('#CV_tble_htmltable').DataTable({
                                 "aaSorting": [],
                                 "pageLength": 10,
-                                "sPaginationType":"full_numbers"
+                                "sPaginationType":"full_numbers",
+                                "sDom":"Rlfrtip"
                             });
                             $('#CV_div_htmltable').show();
                             var msg=(CV_errorAarray[2].EMC_DATA).replace('[CARD NO]',CV_cardno);
@@ -457,7 +459,8 @@ require_once('application/libraries/EI_HDR.php');
                             $('#CV_tble_htmltable').DataTable({
                                 "aaSorting": [],
                                 "pageLength": 10,
-                                "sPaginationType":"full_numbers"
+                                "sPaginationType":"full_numbers",
+                                "sDom":"Rlfrtip"
                             });
                             $('#CV_div_htmltable').show();
                             var msg=(CV_errorAarray[0].EMC_DATA).replace('[UNIT NO]',CV_unitno);
@@ -502,7 +505,8 @@ require_once('application/libraries/EI_HDR.php');
                         $('#CV_tble_htmltable').DataTable({
                             "aaSorting": [],
                             "pageLength": 10,
-                            "sPaginationType":"full_numbers"
+                            "sPaginationType":"full_numbers",
+                            "sDom":"Rlfrtip"
                         });
                         $('#CV_div_htmltable').show();
                         var msg=CV_errorAarray[8].EMC_DATA;

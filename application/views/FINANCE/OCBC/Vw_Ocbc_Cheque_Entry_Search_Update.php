@@ -454,6 +454,10 @@
                         $('#CHEQUE_SEARCH_DataTable').show();
                         var table = $('#CHEQUE_Datatable').DataTable({
                             "sDom":"Rlfrtip",
+                            "deferRender":    true,
+                            "scrollY": 200,
+                            "scrollX": 500,
+                            "scrollCollapse": true,
                             "pageLength": 10,
                             "sPaginationType": "full_numbers",
                             "aoColumnDefs": [{

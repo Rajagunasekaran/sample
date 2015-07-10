@@ -10,6 +10,9 @@
 <link rel="stylesheet" href ="<?php echo base_url().'bootstrap/CSS/colreorder.css'?>"  />
 <script src="<?php echo base_url().'JS/colreorder.js'?>"></script>
 <style>
+    .calendar-off table.ui-datepicker-calendar {
+        display:none !important;
+    }
     body { font-size: 140%; }
     th, td { white-space: nowrap; }
     div.dataTables_wrapper {
@@ -28,11 +31,14 @@
             showButtonPanel: true,  // button panel having today and done button
             dateFormat: 'MM-yy',    //set date format
             onClose: function(dateText, inst) {
-                var month = $("#ui-datepicker-div .ui-datepicker-month :selected").val();
-                var year = $("#ui-datepicker-div .ui-datepicker-year :selected").val();
+                var month =inst.selectedMonth;
+                var year = inst.selectedYear;
                 $(this).datepicker('setDate', new Date(year, month, 1));//here set the date when closing.
                 $(this).blur();//remove focus input box
                 leaseperiodvalidation();
+            },
+            beforeShow:function(input, inst) {
+                $(inst.dpDiv).addClass('calendar-off');
             }
         });
         $("#Fin_OCBC_Forperiod").focus(function () {

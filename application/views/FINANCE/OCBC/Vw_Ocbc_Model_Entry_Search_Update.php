@@ -75,13 +75,22 @@
             Model_Tabledata+="</body>";
             $('section').html(Model_Tabledata);
             $('#Model_Search_DataTable').show();
-            $('#Model_Datatable').DataTable( {
+            var oTable=$('#Model_Datatable').DataTable( {
                 "aaSorting": [],
-                "sDom": 'Rlfrtip',
+                "sDom":"Rlfrtip",
+                "deferRender":    true,
+                "scrollY": 200,
+                "scrollX": 500,
+                "scrollCollapse": true,
                 "pageLength": 10,
                 "sPaginationType":"full_numbers",
                 "aoColumnDefs" : [{ "aTargets" : ["uk-timestp-column"] , "sType" : "uk_timestp"} ]
             });
+            if ( $.browser.webkit ) {
+                setTimeout(function () {
+                    oTable.fnAdjustColumnSizing();
+                }, 10);
+            }
             sorting();
         }
         var combineid;

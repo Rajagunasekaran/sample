@@ -1,14 +1,13 @@
 <?php
 error_reporting(0);
-//require_once 'google/appengine/api/mail/Message.php';
-//use google\appengine\api\mail\Message;
-require_once 'PHPMailer-master/PHPMailerAutoload.php';
+require_once 'google/appengine/api/mail/Message.php';
+use google\appengine\api\mail\Message;
+//require_once 'PHPMailer-master/PHPMailerAutoload.php';
 class Mdl_customer_creation extends CI_Model
 {
     public function Customer_Creation_Save($UserStamp,$Leaseperiod,$Quoters)
     {
         try {
-            set_time_limit(0);
             $FirstName = $_POST['CCRE_FirstName'];
             $Lastname = $_POST['CCRE_LastName'];
             $CompanyName = $_POST['CCRE_CompanyName'];
@@ -249,8 +248,7 @@ class Mdl_customer_creation extends CI_Model
                             }
                         } else if ($CCoption == 5) {
                             $ContractId = $this->Mdl_eilib_invoice_contract->CUST_contract($service, $Uint, $Startdate, $Enddate, $CompanyName, $Name, $NoticePeriod, $PassportNo, $PassportDate, $EpNo, $EPDate, $NoticePeriodDate, $Leaseperiod, $Cont_cardno, $Rent, $InvQuaterlyfee, $InvFixedaircon_fee, $InvElectricitycapFee, $InvCurtain_DrycleanFee, $InvCheckOutCleanFee, $InvProcessingFee, $InvDepositFee, $Invwaived, $RoomType, $InvProrated, 'CREATION', $Sendmailid, $Docowner, $CustomerFolder);
-                            if ($ContractId[0] == 0) {
-
+                            if ($ContractId[0] == 1) {
                                 $this->ContractCreation($ContractId, $Emailtemplate, $Username, $Confirm_Meessage, $Uint, $Name, $Sendmailid, $UserStamp);
                                 $this->db->trans_savepoint_release($savepoint) ;
                                 echo $Confirm_Meessage;
@@ -270,16 +268,17 @@ class Mdl_customer_creation extends CI_Model
                             }
 
                         } else if ($CCoption == 6) {
+                            print_r($service);
                             $InvoiceId = $this->Mdl_eilib_invoice_contract->CUST_invoice($UserStamp, $service, $Uint, $Name, $CompanyName, $Invoiceandcontractid[9], $Invoiceandcontractid[0], $Invoiceandcontractid[1], $Rent, $ProcessingFee, $DepositFee, $StartDate, $EndDate, $RoomType, $Leaseperiod, $Prorated, $Sendmailid, $Docowner, 'CREATION', $processwaived, $Customerid, $CustomerFolder);
                             $ContractId = $this->Mdl_eilib_invoice_contract->CUST_contract($service, $Uint, $Startdate, $Enddate, $CompanyName, $Name, $NoticePeriod, $PassportNo, $PassportDate, $EpNo, $EPDate, $NoticePeriodDate, $Leaseperiod, $Cont_cardno, $Rent, $InvQuaterlyfee, $InvFixedaircon_fee, $InvElectricitycapFee, $InvCurtain_DrycleanFee, $InvCheckOutCleanFee, $InvProcessingFee, $InvDepositFee, $Invwaived, $RoomType, $InvProrated, 'CREATION', $Sendmailid, $Docowner, $CustomerFolder);
-                             if ($InvoiceId[0] == 1 && $ContractId[0] == 1) {
-                                 $this->db->trans_savepoint_release($savepoint) ;
+                            if ($InvoiceId[0] == 1 && $ContractId[0] == 1) {
+                                $this->db->trans_savepoint_release($savepoint) ;
                                 $this->InvoiceandContract($InvoiceId, $ContractId, $Emailtemplate, $Username, $Confirm_Meessage, $Uint, $Name, $Sendmailid, $UserStamp);
                                 echo $Confirm_Meessage;
                                 exit;
                             } else {
-                                 echo $savepoint;
-                                 $this->db->trans_savepoint_rollback($savepoint);
+//                                 echo $savepoint;
+                                $this->db->trans_savepoint_rollback($savepoint);
                                 $this->db->query('DROP TABLE IF EXISTS ' . $temptable);
                                 $returnmessage = $this->Mdl_eilib_calender->CUST_CREATION_customercalenderdeletion($cal, $Customerid, $cal_arry);
                                 if ($UnitFolderrollback != '') {
@@ -341,36 +340,36 @@ class Mdl_customer_creation extends CI_Model
             exit;
         }
     }
-    public function Customercreationmailpart($Confirm_Meessage,$Emailsub,$Messagebody,$Displayname,$Sendmailid,$UserStamp)
-    {
-        $mail = new PHPMailer;
-        $mail->isSMTP();
-        $mail->Host = 'smtp.gmail.com';
-        $mail->SMTPAuth = true;
-        $mail->Username = 'safiyullah84@gmail.com';
-        $mail->Password = 'safi984151';
-        $mail->SMTPSecure = 'tls';
-        $mail->Port = 587;
-        $mail->FromName = $Displayname;
-        $mail->addAddress($Sendmailid);
-        $mail->WordWrap = 50;
-        $mail->isHTML(true);
-        $mail->Subject = $Emailsub;
-        $mail->Body = $Messagebody;
-        $mail->Send();
-    }
-//
 //    public function Customercreationmailpart($Confirm_Meessage,$Emailsub,$Messagebody,$Displayname,$Sendmailid,$UserStamp)
 //    {
-//        $message1 = new Message();
-//        $message1->setSender($Displayname.'<'.$UserStamp.'>');
-//        $message1->addTo($Sendmailid);
-//        $message1->setSubject($Emailsub);
-//        $message1->setHtmlBody($Messagebody);
-//        $message1->send();
-//        $this->db->trans_commit();
-//        return $Confirm_Meessage;
+//        $mail = new PHPMailer;
+//        $mail->isSMTP();
+//        $mail->Host = 'smtp.gmail.com';
+//        $mail->SMTPAuth = true;
+//        $mail->Username = 'safiyullah84@gmail.com';
+//        $mail->Password = 'safi984151';
+//        $mail->SMTPSecure = 'tls';
+//        $mail->Port = 587;
+//        $mail->FromName = $Displayname;
+//        $mail->addAddress("saradambal.munusamy@ssomens.com");
+//        $mail->WordWrap = 50;
+//        $mail->isHTML(true);
+//        $mail->Subject = $Emailsub;
+//        $mail->Body = $Messagebody;
+//        $mail->Send();
 //    }
+//
+    public function Customercreationmailpart($Confirm_Meessage,$Emailsub,$Messagebody,$Displayname,$Sendmailid,$UserStamp)
+    {
+        $message1 = new Message();
+        $message1->setSender($Displayname.'<'.$UserStamp.'>');
+        $message1->addTo($Sendmailid);
+        $message1->setSubject($Emailsub);
+        $message1->setHtmlBody($Messagebody);
+        $message1->send();
+        $this->db->trans_commit();
+        return $Confirm_Meessage;
+    }
     public function InvoiceCreation($InvoiceId,$Emailtemplate,$Username,$Confirm_Meessage,$Uint,$Name,$Docowner,$UserStamp)
     {
         $subcontent = $Uint . '-' . $Name . '-' . $InvoiceId[3];
@@ -435,7 +434,6 @@ class Mdl_customer_creation extends CI_Model
     public function Customer_Recheckin_Save($UserStamp,$Leaseperiod,$Quoters)
     {
         try {
-            set_time_limit(0);
             $Customerid = $_POST['CCRE_CustomerId'];
             $FirstName = $_POST['CCRE_FirstName'];
             $Lastname = $_POST['CCRE_LastName'];

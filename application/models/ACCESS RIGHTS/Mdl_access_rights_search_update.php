@@ -136,7 +136,7 @@ class Mdl_access_rights_search_update extends CI_Model{
     return $URSRC_final_array;
     }
     //Function to get custom roles
-   public  function URSRC_get_roles(){
+    public  function URSRC_get_roles(){
         $URSRC_role_array=array();
         $this->db->select();
         $this->db->from('ROLE_CREATION');
@@ -147,8 +147,7 @@ class Mdl_access_rights_search_update extends CI_Model{
 
         }
         return $URSRC_role_array;
-  }
-
+    }
     public  function URSRC_get_loginid(){
         $URSRC_loginid_array=array();
         $this->db->select();
@@ -160,7 +159,6 @@ class Mdl_access_rights_search_update extends CI_Model{
         }
         return $URSRC_loginid_array;
     }
-
     public function URSRC_get_logindetails($loginid){
 
         $URSRC_details_array=array();
@@ -178,7 +176,7 @@ class Mdl_access_rights_search_update extends CI_Model{
         $URSRC_role_array=$this->URSRC_get_roles();
         $URSRC_loginid_details_array=[$URSRC_details_array,$URSRC_role_array];
         return $URSRC_loginid_details_array;
-}
+    }
     public function URSRC_getmenu_folder($basicrole,$service) {
         $URSRC_basicrole=str_replace("_"," ",$basicrole);
         $URSRC_finalmenu=array();
@@ -333,7 +331,6 @@ class Mdl_access_rights_search_update extends CI_Model{
         $URSRC_values_array[]=($URSRC_values);
         return $URSRC_values_array;
     }
-
     public function URSRC_getmenubasic_folder1() {
 
         $URSRC_finalmenu=array();
@@ -402,7 +399,6 @@ class Mdl_access_rights_search_update extends CI_Model{
         $final_value=[$folder_name,$docflag];
         return $final_value;
     }
-
     //Function to get custom role details
     public function URSRC_get_roledetails($custome_role,$service){
 
@@ -441,14 +437,13 @@ class Mdl_access_rights_search_update extends CI_Model{
         $final_value=[$URSRC_roledetails_array,$URSRC_usermenudetails_array,$URSRC_fileid_array,$URSRC_menu_folder];
         return $final_value;
     }
-
-   public function URSRC_get_customrole(){
+    public function URSRC_get_customrole(){
        $URSRC_role_array=$this->URSRC_get_roles();
        return $URSRC_role_array;
 
-   }
+    }
     //FUNCTION to get basic role menus
-   public function URSRC_loadbasicrole_menu($basicrole,$URSRC_basic_role,$service){
+    public function URSRC_loadbasicrole_menu($basicrole,$URSRC_basic_role,$service){
 
         $basicrole=str_replace("_"," ",$basicrole);
         $URSRC_basicrole_menu_array=array();
@@ -487,12 +482,12 @@ class Mdl_access_rights_search_update extends CI_Model{
         $URSRC_basic_menu=$this->URSRC_getmenubasic_folder1();
         $URSRC_basicrole_values_array[]=($URSRC_basic_menu);
         return $URSRC_basicrole_values_array;
-   }
+    }
      //Role creation save and update & Basic role menu creation save and update
     public function URSRC_role_creation_save($URSRC_mainradiobutton,$URSRC_menu,$URSRC_submenu,$URSRC_sub_submenu,$basicroles,$customrole,$customerrole_upd,$URSRC_radio_basicroles,$URSRC_cb_basicroles,$UserStamp,$service){
         $URSRC_sharedocflag=0;
         try{
-            //      $URSRC_menuid;
+
             //      URSRC_conn.setAutoCommit(false);
             $URSRC_sub_submenu_array=array();
             $submenu_array=array();
@@ -595,16 +590,23 @@ class Mdl_access_rights_search_update extends CI_Model{
                     return $URSRC_flag_bscprfsveinsert;
                 }
                 else if($URSRC_mainradiobutton=="BASIC ROLE MENU SEARCH UPDATE"){
-                     $URSRC_basicrole_menu_update=("CALL SP_USER_RIGHTS_BASIC_PROFILE_UPDATE ('".$UserStamp."','".$URSRC_radio_basicrole."','".$URSRC_checkbox_basicrole_array."', '".$URSRC_menuid."',@BASIC_PRFUPDATE,@BASICROLE_TEMPTABLEDROP)");
+                     $URSRC_basicrole_menu_update=("CALL SP_USER_RIGHTS_BASIC_PROFILE_UPDATE ('".$UserStamp."','".$URSRC_radio_basicrole."','".$URSRC_checkbox_basicrole_array."', '".$URSRC_menuid."',@BASIC_PRFUPDATE,@BASICROLE_TEMPTABLEDROP,@SAVE_POINT)");
                      $this->db->query($URSRC_basicrole_menu_update);
-                     $URSRC_flag_bscprfupdselect="SELECT @BASIC_PRFUPDATE as BASIC_PRFUPDATE,@BASICROLE_TEMPTABLEDROP as BASICROLE_TEMPTABLEDROP";
+                     $URSRC_flag_bscprfupdselect="SELECT @BASIC_PRFUPDATE as BASIC_PRFUPDATE,@BASICROLE_TEMPTABLEDROP as BASICROLE_TEMPTABLEDROP,@SAVE_POINT as SAVE_POINT";
                      $URSRC_flag_bscprfupdrs=$this->db->query($URSRC_flag_bscprfupdselect);
                      $URSRC_flag_bscprfupdinsert=$URSRC_flag_bscprfupdrs->row()->BASIC_PRFUPDATE;
                      $URSRC_temptble_bscprfupdinsert=$URSRC_flag_bscprfupdrs->row()->BASICROLE_TEMPTABLEDROP;
+                     $save_point=$URSRC_flag_bscprfupdrs->row()->SAVE_POINT;
                      if($URSRC_flag_bscprfupdinsert==1){
                        $URSRC_sharedocflag=$this->URSRC_updateSharedDocuments("",'',$URSRC_radio_basicrole,$service);
+                         if($URSRC_sharedocflag==0){
+                             $this->db->trans_savepoint_rollback($save_point);
+                         }
+                         $this->db->trans_savepoint_release($save_point) ;
                      }
-                     $this->db->trans_commit();
+                    else{
+                        $this->db->trans_savepoint_rollback($save_point);
+                    }
                     $drop_query = "DROP TABLE ".$URSRC_temptble_bscprfupdinsert;
                     $this->db->query($drop_query);
                     return $URSRC_flag_bscprfupdinsert;
@@ -613,19 +615,23 @@ class Mdl_access_rights_search_update extends CI_Model{
             else{
                 $URSRC_customrolename=$customerrole_upd;
                 $URSRC_basicrole=str_replace("_"," ",$basicroles);
-                $URSRC_rolecreation_update=("CALL SP_ROLE_CREATION_UPDATE('".$URSRC_customrolename."','".$URSRC_basicrole."','".$URSRC_menuid."',".$fileid.",'".$UserStamp."','".$schema_name."',@ROLE_CREATIONUPDATE,@ROLE_TEMPTABLEDROP)");//,@TEMP_OUT_REMOVE_MENU,@TEMP_OUT_INSERT_FILE,@TEMP_OUT_REMOVE_FILE,@REVOKE_TEMP_PM_TABLE,@REVOKE_TEMP_PM_UNIQUE_TABLE,@REVOKE_TEMP_PM_SP_TABLE,@GRANT_TEMP_PM_TABLE,@GRANT_TEMP_PM_UNIQUE_TABLE,@GRANT_TEMP_PM_SP_TABLE)");
+                $URSRC_rolecreation_update=("CALL SP_ROLE_CREATION_UPDATE('".$URSRC_customrolename."','".$URSRC_basicrole."','".$URSRC_menuid."',".$fileid.",'".$UserStamp."','".$schema_name."',@ROLE_CREATIONUPDATE,@ROLE_TEMPTABLEDROP,@SAVE_POINT)");//,@TEMP_OUT_REMOVE_MENU,@TEMP_OUT_INSERT_FILE,@TEMP_OUT_REMOVE_FILE,@REVOKE_TEMP_PM_TABLE,@REVOKE_TEMP_PM_UNIQUE_TABLE,@REVOKE_TEMP_PM_SP_TABLE,@GRANT_TEMP_PM_TABLE,@GRANT_TEMP_PM_UNIQUE_TABLE,@GRANT_TEMP_PM_SP_TABLE)");
                 $this->db->query($URSRC_rolecreation_update);
-                $URSRC_flag_rolecreselect=("SELECT @ROLE_CREATIONUPDATE as ROLE_CREATIONUPDATE,@ROLE_TEMPTABLEDROP as ROLE_TEMPTABLEDROP");//,@TEMP_OUT_REMOVE_MENU,@TEMP_OUT_INSERT_FILE,@TEMP_OUT_REMOVE_FILE,@REVOKE_TEMP_PM_TABLE,@REVOKE_TEMP_PM_UNIQUE_TABLE,@REVOKE_TEMP_PM_SP_TABLE,@GRANT_TEMP_PM_TABLE,@GRANT_TEMP_PM_UNIQUE_TABLE,@GRANT_TEMP_PM_SP_TABLE";
+                $URSRC_flag_rolecreselect=("SELECT @ROLE_CREATIONUPDATE as ROLE_CREATIONUPDATE,@ROLE_TEMPTABLEDROP as ROLE_TEMPTABLEDROP,@SAVE_POINT as SAVE_POINT");//,@TEMP_OUT_REMOVE_MENU,@TEMP_OUT_INSERT_FILE,@TEMP_OUT_REMOVE_FILE,@REVOKE_TEMP_PM_TABLE,@REVOKE_TEMP_PM_UNIQUE_TABLE,@REVOKE_TEMP_PM_SP_TABLE,@GRANT_TEMP_PM_TABLE,@GRANT_TEMP_PM_UNIQUE_TABLE,@GRANT_TEMP_PM_SP_TABLE";
                 $URSRC_flag_rolecreselect_rs = $this->db->query($URSRC_flag_rolecreselect);
                 $URSRC_flag_rolecreinsert=$URSRC_flag_rolecreselect_rs->row()->ROLE_CREATIONUPDATE;
                 $URSRC_temptble_bscprfupdinsert=$URSRC_flag_rolecreselect_rs->row()->ROLE_TEMPTABLEDROP;
+                $save_point=$URSRC_flag_rolecreselect_rs->row()->SAVE_POINT;
                 if($URSRC_flag_rolecreinsert==1){
                   $URSRC_sharedocflag=$this->URSRC_updateSharedDocuments($URSRC_customrolename,'','',$service);
                     if($URSRC_sharedocflag==0){
-                        $this->db->trans_rollback();
+                        $this->db->trans_savepoint_rollback($save_point);
                     }
+                    $this->db->trans_savepoint_release($save_point) ;
                 }
-                $this->db->trans_commit();
+                else{
+                    $this->db->trans_savepoint_rollback($save_point);
+                }
                 if($URSRC_temptble_bscprfupdinsert!=null){
                     $drop_query = "DROP TABLE ".$URSRC_temptble_bscprfupdinsert;
                     $this->db->query($drop_query);
@@ -636,27 +642,26 @@ class Mdl_access_rights_search_update extends CI_Model{
         }
         catch(Exception $e)
         {
-////            Logger.log("SCRIPT EXCEPTION:"+err)
-//            //      if(URSRC_conn.isClosed()){OpenConnection(URSRC_conn);}
-//            //      if(err=='This Connection is closed')
-//            //      {OpenConnection(URSRC_conn);}
-            $this->db->trans_rollback();
+            ////            Logger.log("SCRIPT EXCEPTION:"+err)
+            //            //      if(URSRC_conn.isClosed()){OpenConnection(URSRC_conn);}
+            //            //      if(err=='This Connection is closed')
+            //            //      {OpenConnection(URSRC_conn);}
+            $this->db->trans_savepoint_rollback($save_point);
 ////      URSRC_RoleupdateDroptemptable(URSRC_conn,URSRC_temptble_bscprfupdinsert);
-      if($URSRC_sharedocflag==1)
-      {
-          if($URSRC_radio_basicrole!=""&&$URSRC_radio_basicrole!='undefined')
-              $this->URSRC_updateSharedDocuments($URSRC_customrolename,'',$URSRC_radio_basicrole,$service);
-          else
-              $this->URSRC_updateSharedDocuments($URSRC_customrolename,'','',$service);
-      }
-      $this->db->trans_commit();
+              if($URSRC_sharedocflag==1)
+              {
+                  if($URSRC_radio_basicrole!=""&&$URSRC_radio_basicrole!='undefined')
+                      $this->URSRC_updateSharedDocuments($URSRC_customrolename,'',$URSRC_radio_basicrole,$service);
+                  else
+                      $this->URSRC_updateSharedDocuments($URSRC_customrolename,'','',$service);
+              }
+              $this->db->trans_commit();
 ////      URSRC_conn.close();
 ////      return (Logger.getLog())
         }
     }
 
     public function URSRC_login_creation_save($URSRC_mainradiobutton,$URSRC_tb_joindate,$URSRC_custom_role,$URSRC_tb_loginid,$USERSTAMP,$service){
-//                        set_time_limit(0);
         $URSRC_sharedocflag='';$URSRC_sharecalflag='';$URSRC_sharesiteflag=0;
         try{
           $URSRC_temptable='';
@@ -666,37 +671,49 @@ class Mdl_access_rights_search_update extends CI_Model{
           $URSRC_joindate = date('Y-m-d',strtotime($URSRC_tb_joindate));
           $URSRC_custom_role=str_replace("_"," ",$URSRC_custom_role);
             $this->load->model('EILIB/Mdl_eilib_common_function');
+            $this->db->query('SET AUTOCOMMIT=0');
+            $this->db->query('START TRANSACTION');
                   //      URSRC_conn.setAutoCommit(false);
               if($URSRC_mainradiobutton=="LOGIN CREATION"){
                   $URSRC_loginid=$URSRC_tb_loginid;
                   $loginid=$URSRC_loginid;
-                  $login_creation_insert = "CALL SP_LOGIN_CREATION_INSERT('$URSRC_loginid','$URSRC_custom_role','$URSRC_joindate','$USERSTAMP',@TEMPTABLE,@LOGIN_CREATIONFLAG)";
+                  $login_creation_insert = "CALL SP_LOGIN_CREATION_INSERT('$URSRC_loginid','$URSRC_custom_role','$URSRC_joindate','$USERSTAMP',@TEMPTABLE,@LOGIN_CREATIONFLAG,@SAVE_POINT)";
                   $this->db->query($login_creation_insert);
                   $temptable=('SELECT @TEMPTABLE AS TEMPTABLE');
                   $flag=('SELECT @LOGIN_CREATIONFLAG as FLAG');
+                  $savepoint=('SELECT @SAVE_POINT as SAVE_POINT');
                   $query1 = $this->db->query($temptable);
                   $query2 = $this->db->query($flag);
+                  $query3=$this->db->query($savepoint);
                   $temp_tablename=$query1->row()->TEMPTABLE;
                   $URSRC_flag_lgncreinsert=$query2->row()->FLAG;
+                  $save_point=$query3->row()->SAVE_POINT;
                   if($URSRC_flag_lgncreinsert==1){
                       $URSRC_sharedocflag= $this->Mdl_eilib_common_function->URSRC_shareDocuments($URSRC_custom_role,$URSRC_loginid,$service);
                       if($URSRC_sharedocflag==1){
                          $URSRC_sharecalflag=$this->Mdl_eilib_common_function->USRC_shareUnSharecalender($URSRC_loginid,'writer',$service);
                           if($URSRC_sharecalflag==0){
-                              $this->db->trans_rollback();
+                              $this->db->trans_savepoint_rollback($save_point);
+//                              $this->db->trans_rollback();
                               $this->Mdl_eilib_common_function->URSRC_unshareDocuments($URSRC_custom_role,$URSRC_loginid,$service);
                           }
                      }
                      else{
-                          $this->db->trans_rollback();
+                         $this->db->trans_savepoint_rollback($save_point);
+//                          $this->db->trans_rollback();
                           $this->Mdl_eilib_common_function->URSRC_unshareDocuments($URSRC_custom_role,$URSRC_loginid,$service);
                      }
+                      $this->db->trans_savepoint_release($save_point) ;
+
+                  }
+                  else{
+                      $this->db->trans_savepoint_rollback($save_point);
                   }
                   if($URSRC_temptable!=null){
                       $drop_query = "DROP TABLE ".$temp_tablename;
                       $this->db->query($drop_query);
                   }
-                  $this->db->trans_commit();
+//                  $this->db->trans_commit();
                   $final_flag=[$URSRC_flag_lgncreinsert,$URSRC_sharedocflag,$URSRC_sharecalflag];
                   return $final_flag;
               }
@@ -705,20 +722,27 @@ class Mdl_access_rights_search_update extends CI_Model{
                   $URSRC_loginid=$_POST['URSRC_lb_loginid'];
                   $loginid=$URSRC_loginid;
                   $URSRC_role_name=$_POST['URSRC_old_rolename'];
-                  $URSRC_logincreation_update=("CALL SP_LOGIN_UPDATE('".$URSRC_loginid."','".$URSRC_custom_role."','".$URSRC_joindate."','".$USERSTAMP."',@TEMPTABLE1,@TEMPTABLE2,@LOGIN_UPDATEFLAG)");
+                  $URSRC_logincreation_update=("CALL SP_LOGIN_UPDATE('".$URSRC_loginid."','".$URSRC_custom_role."','".$URSRC_joindate."','".$USERSTAMP."',@TEMPTABLE1,@TEMPTABLE2,@LOGIN_UPDATEFLAG,@SAVE_POINT)");
                   $this->db->query($URSRC_logincreation_update);
-                  $URSRC_flag_lgnupdselect="SELECT @TEMPTABLE1 as TEMPTABLE1 ,@TEMPTABLE2 as TEMPTABLE2,@LOGIN_UPDATEFLAG as LOGIN_UPDATEFLAG";
+                  $URSRC_flag_lgnupdselect="SELECT @TEMPTABLE1 as TEMPTABLE1 ,@TEMPTABLE2 as TEMPTABLE2,@LOGIN_UPDATEFLAG as LOGIN_UPDATEFLAG,@SAVE_POINT as SAVE_POINT";
                   $URSRC_flag_lgnupdrs=$this->db->query($URSRC_flag_lgnupdselect);
                   $URSRC_flag_lgnupdinsert=$URSRC_flag_lgnupdrs->row()->LOGIN_UPDATEFLAG;
                   $URSRC_temptable1=$URSRC_flag_lgnupdrs->row()->TEMPTABLE1;
                   $URSRC_temptable2=$URSRC_flag_lgnupdrs->row()->TEMPTABLE2;
+                  $save_point=$URSRC_flag_lgnupdrs->row()->SAVE_POINT;
                   if($URSRC_flag_lgnupdinsert==1){
                         if($URSRC_role_name!==$URSRC_custom_role){
                             $URSRC_sharedocflag=$this->URSRC_updateSharedDocuments($URSRC_custom_role,$URSRC_loginid,'',$service);
                             if($URSRC_sharedocflag==0){
-                                $this->db->trans_rollback();
+                                $this->db->trans_savepoint_rollback($save_point);
+//                                $this->db->trans_rollback();
                             }
                         }
+                      $this->db->trans_savepoint_release($save_point) ;
+                  }
+                  else{
+
+                      $this->db->trans_savepoint_rollback($save_point);
                   }
                   if($URSRC_temptable1!=null&&$URSRC_temptable1!='undefined'){
                     $drop_query = "DROP TABLE ".$URSRC_temptable1;
@@ -728,7 +752,7 @@ class Mdl_access_rights_search_update extends CI_Model{
                     $drop_query = "DROP TABLE ".$URSRC_temptable2;
                     $this->db->query($drop_query);
                   }
-                  $this->db->trans_commit();
+//                  $this->db->trans_commit();
                   $final_flag=[$URSRC_flag_lgnupdinsert,$URSRC_sharedocflag,$URSRC_sharecalflag];
                   return $final_flag;
               }
@@ -736,7 +760,8 @@ class Mdl_access_rights_search_update extends CI_Model{
           catch(Exception $e){
             //        Logger.log("SCRIPT EXCEPTION:"+err)
             //      URSRC_conn.rollback();
-                $this->db->trans_rollback();
+              $this->db->trans_savepoint_rollback($save_point);
+//                $this->db->trans_rollback();
             //      if(radiobutton=="LOGIN CREATION"){
             //          if(URSRC_temptable!='null'){
             //              eilib.DropTempTable(URSRC_conn,URSRC_temptable)

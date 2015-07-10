@@ -163,14 +163,17 @@ class Mdl_customer_cancel_uncancel extends CI_Model {
              $CCAN_comments_fetch=$this->db->escape_like_str($CCAN_comments_fetch);
           }
           $type="CANCEL";
+          $this->db->query('SET AUTOCOMMIT=0');
+          $this->db->query('START TRANSACTION');
          //    CCAN_conn.setAutoCommit(false);
-         $CCAN_save=("CALL SP_CUSTOMER_CANCEL_INSERT(".$CCAN_custid.",".$CCAN_rec_ver.",'".$UserStamp."','".$CCAN_comments_fetch."',@cancel_temptable1,@cancel_temptable2,@cancel_flag)");
+         $CCAN_save=("CALL SP_CUSTOMER_CANCEL_INSERT(".$CCAN_custid.",".$CCAN_rec_ver.",'".$UserStamp."','".$CCAN_comments_fetch."',@cancel_temptable1,@cancel_temptable2,@cancel_flag,@SAVE_POINT)");
          $this->db->query($CCAN_save);
-         $CCAN_getresult=("SELECT @cancel_temptable1 as cancel_temptable1,@cancel_temptable2 as cancel_temptable2,@cancel_flag as cancel_flag");
+         $CCAN_getresult=("SELECT @cancel_temptable1 as cancel_temptable1,@cancel_temptable2 as cancel_temptable2,@cancel_flag as cancel_flag,@SAVE_POINT as SAVE_POINT");
          $CCAN_getresult_rs = $this->db->query($CCAN_getresult);
          $CCAN_temptable1=$CCAN_getresult_rs->row()->cancel_temptable1;
          $CCAN_temptable2=$CCAN_getresult_rs->row()->cancel_temptable2;
          $CCAN_chkcancelflag=$CCAN_getresult_rs->row()->cancel_flag;
+          $save_point=$CCAN_getresult_rs->row()->SAVE_POINT;
          if($CCAN_chkcancelflag==1){
             $CCAN_customerevent=$this->db->query("SELECT CED.CUSTOMER_ID, b.CTP_DATA as CED_SD_STIME, c.CTP_DATA as CED_SD_ETIME, d.CTP_DATA as CED_ED_STIME ,e.CTP_DATA as CED_ED_ETIME ,CLP.CLP_STARTDATE,CLP.CLP_ENDDATE FROM CUSTOMER_ENTRY_DETAILS CED LEFT JOIN CUSTOMER_TIME_PROFILE b ON CED.CED_SD_STIME = b.CTP_ID LEFT JOIN CUSTOMER_TIME_PROFILE c ON CED.CED_SD_ETIME = c.CTP_ID LEFT JOIN CUSTOMER_TIME_PROFILE d ON CED.CED_ED_STIME = d.CTP_ID LEFT JOIN CUSTOMER_TIME_PROFILE e ON CED.CED_ED_ETIME = e.CTP_ID ,CUSTOMER_LP_DETAILS CLP  WHERE    (CED.CUSTOMER_ID=".$CCAN_custid.")AND (CLP.CUSTOMER_ID=CED.CUSTOMER_ID) AND (CED.CED_REC_VER=CLP.CED_REC_VER) AND (CLP.CLP_GUEST_CARD IS NULL) and CED.CED_REC_VER>=".$CCAN_rec_ver." AND CLP.CLP_TERMINATE IS NULL");
              foreach( $CCAN_customerevent->result_array() as $row){
@@ -183,12 +186,11 @@ class Mdl_customer_cancel_uncancel extends CI_Model {
                $cal_flag=$this->Mdl_eilib_calender->CUST_customercalenderdeletion($cal_service,$CCAN_custid,$CCAN_checkin_date,$CCAN_start_time_in,$CCAN_start_time_out,$CCAN_checkout_date,$CCAN_end_time_in,$CCAN_end_time_out,'');
              }
          }
-
           if($cal_flag==1){
-              $this->db->trans_commit();
+              $this->db->trans_savepoint_release($save_point) ;
           }
           else{
-              $this->db->trans_rollback();
+              $this->db->trans_savepoint_rollback($save_point);
           }
           if($CCAN_temptable1!=null){
           $this->DropTempTable($CCAN_temptable1);
@@ -200,7 +202,7 @@ class Mdl_customer_cancel_uncancel extends CI_Model {
           return $final_value;
       }
       catch(Exception $err){
-          $this->db->trans_rollback();
+          $this->db->trans_savepoint_rollback($save_point);
           if($CCAN_temptable1!=null){
               $this->DropTempTable($CCAN_temptable1);
           }
@@ -219,8 +221,8 @@ class Mdl_customer_cancel_uncancel extends CI_Model {
             $CCAN_lastname  = $CCAN_tb_lastname;
             $CCAN_comments_fetch = $CCAN_ta_comments;
             $CCAN_roomType=$CCAN_tb_roomtype;
-            $CCAN_custid=$custid;//PropertiesService.getUserProperties().getProperty('CCAN_custid');
-            $CCAN_rec_ver=$recver;//PropertiesService.getUserProperties().getProperty('CCAN_rec_ver')
+            $CCAN_custid=$custid;
+            $CCAN_rec_ver=$recver;
             $CCAN_userStamp=$UserStamp;
 //          CCAN_conn.setAutoCommit(false);
             $CCAN_customerevent="SELECT  URTD.URTD_ROOM_TYPE,U.UNIT_NO,CPD.CPD_EMAIL,CCD.CCD_OFFICE_NO,CLP.CLP_STARTDATE,CLP.CLP_ENDDATE,CED.CED_REC_VER,CED.CED_CANCEL_DATE,CED.CUSTOMER_ID, b.CTP_DATA as CED_SD_STIME, c.CTP_DATA as CED_SD_ETIME, d.CTP_DATA as CED_ED_STIME ,e.CTP_DATA as CED_ED_ETIME,CPD.CPD_MOBILE,CPD.CPD_INTL_MOBILE FROM  CUSTOMER_ENTRY_DETAILS CED LEFT JOIN CUSTOMER_TIME_PROFILE b ON CED.CED_SD_STIME = b.CTP_ID LEFT JOIN CUSTOMER_TIME_PROFILE c ON CED.CED_SD_ETIME = c.CTP_ID LEFT JOIN CUSTOMER_TIME_PROFILE d ON CED.CED_ED_STIME = d.CTP_ID LEFT JOIN CUSTOMER_TIME_PROFILE e ON CED.CED_ED_ETIME = e.CTP_ID LEFT JOIN CUSTOMER_COMPANY_DETAILS CCD ON CED.CUSTOMER_ID=CCD.CUSTOMER_ID LEFT JOIN  CUSTOMER_PERSONAL_DETAILS CPD ON CED.CUSTOMER_ID=CPD.CUSTOMER_ID,CUSTOMER_LP_DETAILS CLP,UNIT_ROOM_TYPE_DETAILS URTD, UNIT_ACCESS_STAMP_DETAILS UASD ,UNIT U  WHERE  CED.UNIT_ID=U.UNIT_ID AND (CED.CUSTOMER_ID=".$CCAN_custid.")AND (CLP.CUSTOMER_ID=CED.CUSTOMER_ID) AND (CED.CED_REC_VER=CLP.CED_REC_VER) AND (CLP.CLP_GUEST_CARD IS NULL) AND CED.CED_CANCEL_DATE IS  NOT NULL AND(UASD.UASD_ID=CED.UASD_ID) AND(UASD.URTD_ID=URTD.URTD_ID)and CED.CED_REC_VER>=".$CCAN_rec_ver." order by CED.CED_REC_VER";
@@ -254,16 +256,18 @@ class Mdl_customer_cancel_uncancel extends CI_Model {
             if($CCAN_comments_fetch!=''){
                 $CCAN_comments_fetch=$this->db->escape_like_str($CCAN_comments_fetch);
             }
-            $this->db->trans_begin();
-            $CCAN_save=("CALL SP_CUSTOMER_UNCANCEL_INSERT(".$CCAN_custid.",".$CCAN_rec_ver.",'".$CCAN_comments_fetch."','".$lease_quaters."','".$UserStamp."',@uncancel_temptable1,@uncancel_temptable2,@uncancel_temptable3,@uncancel_temptable4,@uncancel_flag)");
+            $this->db->query('SET AUTOCOMMIT=0');
+            $this->db->query('START TRANSACTION');
+            $CCAN_save=("CALL SP_CUSTOMER_UNCANCEL_INSERT(".$CCAN_custid.",".$CCAN_rec_ver.",'".$CCAN_comments_fetch."','".$lease_quaters."','".$UserStamp."',@uncancel_temptable1,@uncancel_temptable2,@uncancel_temptable3,@uncancel_temptable4,@uncancel_flag,@SAVE_POINT)");
             $this->db->query($CCAN_save);
-            $CCAN_getresult= ("SELECT @uncancel_temptable1 as uncancel_temptable1,@uncancel_temptable2 as uncancel_temptable2,@uncancel_temptable3 as uncancel_temptable3,@uncancel_temptable4 as uncancel_temptable4,@uncancel_flag as uncancel_flag");
+            $CCAN_getresult= ("SELECT @uncancel_temptable1 as uncancel_temptable1,@uncancel_temptable2 as uncancel_temptable2,@uncancel_temptable3 as uncancel_temptable3,@uncancel_temptable4 as uncancel_temptable4,@uncancel_flag as uncancel_flag,@SAVE_POINT as savepoint");
             $CCAN_getresult_rs=$this->db->query($CCAN_getresult);
             $CCAN_uncancel_temptable1=$CCAN_getresult_rs->row()->uncancel_temptable1;
             $CCAN_uncancel_temptable2=$CCAN_getresult_rs->row()->uncancel_temptable2;
             $CCAN_uncancel_temptable3=$CCAN_getresult_rs->row()->uncancel_temptable3;
             $CCAN_uncancel_temptable4=$CCAN_getresult_rs->row()->uncancel_temptable4;
             $CCAN_chkuncancelflag=$CCAN_getresult_rs->row()->uncancel_flag;
+            $savepoint=$CCAN_getresult_rs->row()->savepoint;
             if($CCAN_chkuncancelflag==1){
                  $CCAN_customerevent="SELECT  URTD.URTD_ROOM_TYPE,U.UNIT_NO,CPD.CPD_EMAIL,CCD.CCD_OFFICE_NO,CLP.CLP_STARTDATE,CLP.CLP_ENDDATE,CED.CED_REC_VER,CED.CED_CANCEL_DATE,CED.CUSTOMER_ID, b.CTP_DATA as CED_SD_STIME, c.CTP_DATA as CED_SD_ETIME, d.CTP_DATA as CED_ED_STIME ,e.CTP_DATA as CED_ED_ETIME,CPD.CPD_MOBILE,CPD.CPD_INTL_MOBILE FROM  CUSTOMER_ENTRY_DETAILS CED LEFT JOIN CUSTOMER_TIME_PROFILE b ON CED.CED_SD_STIME = b.CTP_ID LEFT JOIN CUSTOMER_TIME_PROFILE c ON CED.CED_SD_ETIME = c.CTP_ID LEFT JOIN CUSTOMER_TIME_PROFILE d ON CED.CED_ED_STIME = d.CTP_ID LEFT JOIN CUSTOMER_TIME_PROFILE e ON CED.CED_ED_ETIME = e.CTP_ID LEFT JOIN CUSTOMER_COMPANY_DETAILS CCD ON CED.CUSTOMER_ID=CCD.CUSTOMER_ID LEFT JOIN  CUSTOMER_PERSONAL_DETAILS CPD ON CED.CUSTOMER_ID=CPD.CUSTOMER_ID,CUSTOMER_LP_DETAILS CLP,UNIT_ROOM_TYPE_DETAILS URTD, UNIT_ACCESS_STAMP_DETAILS UASD ,UNIT U  WHERE  CED.UNIT_ID=U.UNIT_ID AND (CED.CUSTOMER_ID=".$CCAN_custid.")AND (CLP.CUSTOMER_ID=CED.CUSTOMER_ID) AND (CED.CED_REC_VER=CLP.CED_REC_VER) AND (CLP.CLP_GUEST_CARD IS NULL) AND CED.CED_CANCEL_DATE IS NULL AND(UASD.UASD_ID=CED.UASD_ID) AND(UASD.URTD_ID=URTD.URTD_ID)and CED.CED_REC_VER>=".$CCAN_rec_ver." order by CED.CED_REC_VER";
                  $CCAN_custeventrs=$this->db->query($CCAN_customerevent);
@@ -292,27 +296,27 @@ class Mdl_customer_cancel_uncancel extends CI_Model {
                     $CCAN_roomtype=$row["URTD_ROOM_TYPE"];
                     if($CCAN_unitno==$CCAN_unit_value && $CCAN_roomtype==$CCAN_roomType){
                        if($count==1){
-                         $cal_flag=$this->Mdl_eilib_calender->CUST_customercalendercreation($cal_service,$CCAN_custid,$CCAN_checkin_date,$CCAN_start_time_in,$CCAN_start_time_out,$CCAN_checkout_date,$CCAN_end_time_in,$CCAN_end_time_out,$CCAN_firstname,$CCAN_lastname,$CCAN_mobile,$CCAN_intmoblie,$CCAN_office,$CCAN_emailid,$CCAN_unitno,$CCAN_roomtype,"");
+                         $cal_flag=$this->Mdl_eilib_calender->CUST_customercalendercreation('',$cal_service,$CCAN_custid,$CCAN_checkin_date,$CCAN_start_time_in,$CCAN_start_time_out,$CCAN_checkout_date,$CCAN_end_time_in,$CCAN_end_time_out,$CCAN_firstname,$CCAN_lastname,$CCAN_mobile,$CCAN_intmoblie,$CCAN_office,$CCAN_emailid,$CCAN_unitno,$CCAN_roomtype,"");
                          $cal_flag= $this->Mdl_eilib_calender->CUST_customercalenderdeletion($cal_service,$CCAN_custid,'','','',$CCAN_checkout_date,$CCAN_end_time_in,$CCAN_end_time_out,$type);
                        }
                        else{
-                         $cal_flag=$this->Mdl_eilib_calender->CUST_customercalendercreation($cal_service,$CCAN_custid,$CCAN_checkin_date,$CCAN_start_time_in,$CCAN_start_time_out,$CCAN_checkout_date,$CCAN_end_time_in,$CCAN_end_time_out,$CCAN_firstname,$CCAN_lastname,$CCAN_mobile,$CCAN_intmoblie,$CCAN_office,$CCAN_emailid,$CCAN_unitno,$CCAN_roomtype,"");
+                         $cal_flag=$this->Mdl_eilib_calender->CUST_customercalendercreation('',$cal_service,$CCAN_custid,$CCAN_checkin_date,$CCAN_start_time_in,$CCAN_start_time_out,$CCAN_checkout_date,$CCAN_end_time_in,$CCAN_end_time_out,$CCAN_firstname,$CCAN_lastname,$CCAN_mobile,$CCAN_intmoblie,$CCAN_office,$CCAN_emailid,$CCAN_unitno,$CCAN_roomtype,"");
                           $this->Mdl_eilib_calender->CUST_customercalenderdeletion($cal_service,$CCAN_custid,'','','',$CCAN_checkout_date,$CCAN_end_time_in,$CCAN_end_time_out,$type);
                        }
                     }
                     if($CCAN_roomtype!=$CCAN_roomType&&$CCAN_unitno==$CCAN_unit_value){
                        $CCAN_custunittype="DIFF RM";
                        $this->Mdl_eilib_calender->CUST_customercalenderdeletion($cal_service,$CCAN_custid,$CCAN_checkin_date,$CCAN_start_time_in,$CCAN_start_time_out,'','','',$type);
-                       $this->Mdl_eilib_calender->CUST_customercalendercreation($cal_service,$CCAN_custid,$CCAN_checkin_date,$CCAN_start_time_in,$CCAN_start_time_out,$CCAN_checkout_date,$CCAN_end_time_in,$CCAN_end_time_out,$CCAN_firstname,$CCAN_lastname,$CCAN_mobile,$CCAN_intmoblie,$CCAN_office,$CCAN_emailid,$CCAN_unitno,$CCAN_roomtype,$CCAN_custunittype);
+                       $this->Mdl_eilib_calender->CUST_customercalendercreation('',$cal_service,$CCAN_custid,$CCAN_checkin_date,$CCAN_start_time_in,$CCAN_start_time_out,$CCAN_checkout_date,$CCAN_end_time_in,$CCAN_end_time_out,$CCAN_firstname,$CCAN_lastname,$CCAN_mobile,$CCAN_intmoblie,$CCAN_office,$CCAN_emailid,$CCAN_unitno,$CCAN_roomtype,$CCAN_custunittype);
                     }
                     if($CCAN_unitno!=$CCAN_unit_value){
                        $CCAN_custunittype="DIFF UNIT";
                        $cal_flag= $this->Mdl_eilib_calender->CUST_customercalendercreation($cal_service,$CCAN_custid,$CCAN_checkin_date,$CCAN_start_time_in,$CCAN_start_time_out,$CCAN_checkout_date,$CCAN_end_time_in,$CCAN_end_time_out,$CCAN_firstname,$CCAN_lastname,$CCAN_mobile,$CCAN_intmoblie,$CCAN_office,$CCAN_emailid,$CCAN_unitno,$CCAN_roomtype,$CCAN_custunittype);
-                       $cal_flag=$this->Mdl_eilib_calender->CUST_customercalendercreation($cal_service,$CCAN_custid,$CCAN_checkin_date,$CCAN_start_time_in,$CCAN_start_time_out,$CCAN_checkout_date,$CCAN_end_time_in,$CCAN_end_time_out,$CCAN_firstname,$CCAN_lastname,$CCAN_mobile,$CCAN_intmoblie,$CCAN_office,$CCAN_emailid,$CCAN_unitno,$CCAN_roomtype,$CCAN_custunittype);
+                       $cal_flag=$this->Mdl_eilib_calender->CUST_customercalendercreation('',$cal_service,$CCAN_custid,$CCAN_checkin_date,$CCAN_start_time_in,$CCAN_start_time_out,$CCAN_checkout_date,$CCAN_end_time_in,$CCAN_end_time_out,$CCAN_firstname,$CCAN_lastname,$CCAN_mobile,$CCAN_intmoblie,$CCAN_office,$CCAN_emailid,$CCAN_unitno,$CCAN_roomtype,$CCAN_custunittype);
                     }
                  }
                  if($count==1){
-                   $cal_flag=$this->Mdl_eilib_calender->CUST_customercalendercreation($cal_service,$CCAN_custid,'','','',$CCAN_checkout_date,$CCAN_end_time_in,$CCAN_end_time_out,$CCAN_firstname,$CCAN_lastname,$CCAN_mobile,$CCAN_intmoblie,$CCAN_office,$CCAN_emailid,$CCAN_unitno,$CCAN_roomtype,'');
+                   $cal_flag=$this->Mdl_eilib_calender->CUST_customercalendercreation('',$cal_service,$CCAN_custid,'','','',$CCAN_checkout_date,$CCAN_end_time_in,$CCAN_end_time_out,$CCAN_firstname,$CCAN_lastname,$CCAN_mobile,$CCAN_intmoblie,$CCAN_office,$CCAN_emailid,$CCAN_unitno,$CCAN_roomtype,'');
                  }
 
             }
@@ -329,17 +333,17 @@ class Mdl_customer_cancel_uncancel extends CI_Model {
               $this->DropTempTable($CCAN_uncancel_temptable4);
             }
             if($cal_flag==1){
-              $this->db->trans_commit();
+                $this->db->trans_savepoint_release($savepoint) ;
             }
             else{
-              $this->db->trans_rollback();
+                $this->db->trans_savepoint_rollback($savepoint);
             }
             $final_value=[$CCAN_chkuncancelflag,$cal_flag];
             return $final_value;
 
         }
         catch(Exception $err){
-            $this->db->trans_rollback();
+            $this->db->trans_savepoint_rollback($savepoint);
             if($CCAN_uncancel_temptable1!=null){
                 $this->DropTempTable($CCAN_uncancel_temptable1);
             }

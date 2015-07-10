@@ -13,7 +13,7 @@ require_once('application/libraries/EI_HDR.php');
 <script>
 
 $(document).ready(function(){
-
+    $('#spacewidth').height('0%');
     $(".preloader").show();
     $('textarea').autogrow({onInitialize: true});
     var CCAN_errorAarray=[];
@@ -490,6 +490,7 @@ $(document).ready(function(){
             url:controller_url+"CCAN_uncancel",
             data:form_element+"&cust_id="+cust_id+"&CCAN_name_recver="+CCAN_name_recver,
             success:function(data){
+
                 var final_value=JSON.parse(data);
                 CCAN_clear(final_value);
 

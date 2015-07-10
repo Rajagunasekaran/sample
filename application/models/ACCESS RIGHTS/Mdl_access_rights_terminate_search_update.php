@@ -132,6 +132,8 @@ class Mdl_access_rights_terminate_search_update  extends CI_Model{
         try{
                   $URSRC_sharedocflag=0;$URSRC_sharecalflag=0;$URSRC_sharesiteflag=0;
                   $URT_SRC_enddate = date('Y-m-d',strtotime($URT_SRC_enddate));
+
+
                   //      URT_SRC_conn.setAutoCommit(false);
                   $this->db->select('UA_ID,UA_REASON');
                   $this->db->from('USER_ACCESS');
@@ -143,14 +145,17 @@ class Mdl_access_rights_terminate_search_update  extends CI_Model{
                       $URT_SRC_userpro_id=$row['UA_ID'];
                       $URT_SRC_old_reason=$row['UA_REASON'];
                   }
-                  $URT_SRC_insert_terminate ="CALL SP_LOGIN_TERMINATE_SAVE('".$URT_SRC_emailid."','".$URT_SRC_enddate."','".$URT_SRC_reason."','".$UserStamp."',@TERM_FLAG,@TEMPTBL_OUT_LOGINID)";
+            $this->db->query('SET AUTOCOMMIT=0');
+            $this->db->query('START TRANSACTION');
+                  $URT_SRC_insert_terminate ="CALL SP_LOGIN_TERMINATE_SAVE('".$URT_SRC_emailid."','".$URT_SRC_enddate."','".$URT_SRC_reason."','".$UserStamp."',@TERM_FLAG,@TEMPTBL_OUT_LOGINID,@SAVE_POINT)";
 
           $URT_SRC_sucess_flag=0;
                 $this->db->query($URT_SRC_insert_terminate);
-                $URT_SRC_flag_lgnterminateselect="SELECT @TERM_FLAG as TERM_FLAG ,@TEMPTBL_OUT_LOGINID as TEMPTBL_OUT_LOGINID";
+                $URT_SRC_flag_lgnterminateselect="SELECT @TERM_FLAG as TERM_FLAG ,@TEMPTBL_OUT_LOGINID as TEMPTBL_OUT_LOGINID ,@SAVE_POINT as SAVE_POINT";
                 $URT_SRC_flag_lgnterminaters=$this->db->query($URT_SRC_flag_lgnterminateselect);
                 $URT_SRC_sucess_flag=$URT_SRC_flag_lgnterminaters->row()->TERM_FLAG;
                 $URT_SRC_terminatetemplogidtbl=$URT_SRC_flag_lgnterminaters->row()->TEMPTBL_OUT_LOGINID;
+            $save_point=$URT_SRC_flag_lgnterminaters->row()->SAVE_POINT;
 
           if($URT_SRC_sucess_flag==1)
           {
@@ -161,19 +166,27 @@ class Mdl_access_rights_terminate_search_update  extends CI_Model{
             //********************** UNSHARE CALENDAR
                   $URSRC_sharecalflag=$this->Mdl_eilib_common_function->USRC_shareUnSharecalender($URT_SRC_emailid,'none',$service);
                   if($URSRC_sharecalflag==0){
-                      $this->db->trans_rollback();
+                      $this->db->trans_savepoint_rollback($save_point);
+//                      $this->db->trans_rollback();
                       $this->Mdl_eilib_common_function->URSRC_shareDocuments("",$URT_SRC_emailid,$service);
                   }
               }
               else{
-                  $this->db->trans_rollback();
+                  $this->db->trans_savepoint_rollback($save_point);
+
+//                  $this->db->trans_rollback();
                   $this->Mdl_eilib_common_function->URSRC_shareDocuments("",$URT_SRC_emailid,$service);
               }
+              $this->db->trans_savepoint_release($save_point) ;
+
           }
+            else{
+                $this->db->trans_savepoint_rollback($save_point);
+            }
 
           $URT_SRC_success_flag=array();
           $URT_SRC_success_flag=[$URT_SRC_flg_terminate,$URT_SRC_sucess_flag,$URSRC_sharedocflag,$URSRC_sharecalflag];
-                $this->db->trans_commit();
+//                $this->db->trans_commit();
           if($URT_SRC_terminatetemplogidtbl!=null&&$URT_SRC_terminatetemplogidtbl!='undefined'){
               $drop_query = "DROP TABLE ".$URT_SRC_terminatetemplogidtbl;
               $this->db->query($drop_query);
@@ -181,7 +194,8 @@ class Mdl_access_rights_terminate_search_update  extends CI_Model{
           return $URT_SRC_success_flag;
     }catch(Exception $e)
         {
-            $this->db->trans_rollback();
+            $this->db->trans_savepoint_rollback($save_point);
+//            $this->db->trans_rollback();
 //            Logger.log("SCRIPT EXCEPTION:"+err)
 //      URT_SRC_conn.rollback();
 //      if(URT_SRC_terminatetemplogidtbl!=null&&URT_SRC_terminatetemplogidtbl!=undefined){
@@ -247,13 +261,18 @@ function URT_SRC_func_rejoin($URT_SRC_upd_emailid,$URT_SRC_upd_rejoindate,$URT_S
   foreach($URT_SRC_rs_rc_id->result_array() as $row){
       $URT_SRC_rc_id=$row['RC_ID'];
     }
-  $URT_SRC_select_rejoin="CALL SP_LOGIN_CREATION_INSERT('".$URT_SRC_upd_emailid."','".$URT_SRC_upd_customrole."','".$URT_SRC_upd_rejoindate."','".$UserStamp."',@TEMPTABLE,@LOGIN_CREATIONFLAG)";
+        $this->db->query('SET AUTOCOMMIT=0');
+        $this->db->query('START TRANSACTION');
+
+  $URT_SRC_select_rejoin="CALL SP_LOGIN_CREATION_INSERT('".$URT_SRC_upd_emailid."','".$URT_SRC_upd_customrole."','".$URT_SRC_upd_rejoindate."','".$UserStamp."',@TEMPTABLE,@LOGIN_CREATIONFLAG,@SAVE_POINT)";
         $this->db->query($URT_SRC_select_rejoin);
 
-  $URT_SRC_flag_rejoinselect="SELECT @TEMPTABLE as TEMPTABLE,@LOGIN_CREATIONFLAG as REJOIN_FLAG";
+  $URT_SRC_flag_rejoinselect="SELECT @TEMPTABLE as TEMPTABLE,@LOGIN_CREATIONFLAG as REJOIN_FLAG,@SAVE_POINT as SAVE_POINT";
   $URT_SRC_flag_rejoincrers=$this->db->query($URT_SRC_flag_rejoinselect);
     $URT_SRC_flag_lgncreinsert=$URT_SRC_flag_rejoincrers->row()->REJOIN_FLAG;
     $URT_SRC_temptable=$URT_SRC_flag_rejoincrers->row()->TEMPTABLE;
+        $save_point=$URT_SRC_flag_rejoincrers->row()->SAVE_POINT;
+
         if($URT_SRC_flag_lgncreinsert==1){
             $this->load->model('EILIB/Mdl_eilib_common_function');
             $URSRC_sharedocflag= $this->Mdl_eilib_common_function->URSRC_shareDocuments($URT_SRC_upd_customrole,$URT_SRC_upd_emailid,$service);
@@ -261,28 +280,36 @@ function URT_SRC_func_rejoin($URT_SRC_upd_emailid,$URT_SRC_upd_rejoindate,$URT_S
                 //URSRC_sharesiteflag=URSRC_addViewer(URSRC_conn,URSRC_loginid)
                 $URSRC_sharecalflag=$this->Mdl_eilib_common_function->USRC_shareUnSharecalender($URT_SRC_upd_emailid,'writer',$service);
                 if($URSRC_sharecalflag==0){
-                    $this->db->trans_rollback();
+                    $this->db->trans_savepoint_rollback($save_point);
+//                    $this->db->trans_rollback();
                     $this->Mdl_eilib_common_function->URSRC_unshareDocuments($URT_SRC_upd_customrole,$URT_SRC_upd_emailid,$service);
                 }
             }
             else{
-                $this->db->trans_rollback();
+                $this->db->trans_savepoint_rollback($save_point);
+//                $this->db->trans_rollback();
                 $this->Mdl_eilib_common_function->URSRC_unshareDocuments($URT_SRC_upd_customrole,$URT_SRC_upd_emailid,$service);
 
             }
+            $this->db->trans_savepoint_release($save_point) ;
+        }
+        else{
+            $this->db->trans_savepoint_rollback($save_point);
+
         }
   if($URT_SRC_temptable!='null'){
       $drop_query = "DROP TABLE ".$URT_SRC_temptable;
       $this->db->query($drop_query);
   }
-    $this->db->trans_commit();
+//    $this->db->trans_commit();
   $URT_SRC_success_flag=array();
   $URT_SRC_success_flag=[$URT_SRC_flg_rejoin,$URT_SRC_flag_lgncreinsert,$URSRC_sharedocflag,$URSRC_sharecalflag];
   return $URT_SRC_success_flag;
 }catch(Exception $e)
     {
 //            Logger.log("SCRIPT EXCEPTION:"+err)
-  $this->db->trans_rollback();
+        $this->db->trans_savepoint_rollback($save_point);
+//  $this->db->trans_rollback();
 //      if(URT_SRC_temptable!='null'){
 //          eilib.DropTempTable(URT_SRC_conn,URT_SRC_temptable)
 //      }

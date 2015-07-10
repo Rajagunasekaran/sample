@@ -579,7 +579,10 @@ $(document).ready(function(){
         }
     });
 
-    $(document).on("click",'.exp,.collapse2', function (){
+    $(document).on("click",'.exp,.collapse2', function (evt){
+        evt.stopPropagation();
+        evt.preventDefault();
+        evt.stopImmediatePropagation();
         var button_id=$(this).attr("id")
         var btnid=button_id.split("_");
         var menu_btnid=btnid[1]
@@ -603,7 +606,10 @@ $(document).ready(function(){
             $(this).replaceWith('<input type="button"   value="+" id='+button_id+'  height="1" width="1" class="exp" />');
         }
     });
-    $(document).on("click",'.exp1,.collapse1', function (){
+    $(document).on("click",'.exp1,.collapse1', function (evt){
+        evt.stopPropagation();
+        evt.preventDefault();
+        evt.stopImmediatePropagation();
         var sub_buttonid=$(this).attr("id")
         var btnid=sub_buttonid.split("_");
         var menu_btnid=btnid[2]

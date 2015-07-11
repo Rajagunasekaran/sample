@@ -1536,14 +1536,14 @@ require_once('application/libraries/EI_HDR.php');
                 }
             });
         // CHANGE FUNCTION FOR END DATE VALIDATION
-            $(document).on('change','#USU_db_startdate_update',function(){
-                var USU_sdate_onchange=new Date(Date.parse(USU_FormTableDateFormat($('#USU_db_startdate_update').val())));
-                var USU_edate_onchange=new Date(Date.parse(USU_FormTableDateFormat($('#USU_db_enddate_update').val())));
-                USU_sdate_onchange.setDate( USU_sdate_onchange.getDate()+1);
-                var USU_newDate = USU_sdate_onchange.toDateString();
-                USU_newDate = new Date( Date.parse( USU_newDate ) );
-                $('#USU_db_enddate_update').datepicker("option","minDate",USU_newDate);
-            });
+//            $(document).on('change','#USU_db_startdate_update',function(){
+//                var USU_sdate_onchange=new Date(Date.parse(USU_FormTableDateFormat($('#USU_db_startdate_update').val())));
+//                var USU_edate_onchange=new Date(Date.parse(USU_FormTableDateFormat($('#USU_db_enddate_update').val())));
+//                USU_sdate_onchange.setDate( USU_sdate_onchange.getDate()+1);
+//                var USU_newDate = USU_sdate_onchange.toDateString();
+//                USU_newDate = new Date( Date.parse( USU_newDate ) );
+//                $('#USU_db_enddate_update').datepicker("option","minDate",USU_newDate);
+//            });
         // CHANGE FUNCTION FOR END DATE VALIDATION
             $(document).on('change','#USU_db_enddate_update',function(){
                 var USU_enddate_oldvalue=new Date(Date.parse(USU_FormTableDateFormat(USU_obj_rowvalue.USU_tr_third)));

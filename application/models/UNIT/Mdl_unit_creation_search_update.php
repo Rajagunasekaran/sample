@@ -328,11 +328,10 @@ class Mdl_unit_creation_search_update extends CI_Model{
                     $arraydata=$this->USU_Initial_data();
                     $USU_loadunitno=$arraydata[0];
                 }
-                $USU_enddate_query="CALL SP_UNIT_CHECK_TRANSACTION((SELECT UNIT_ID FROM UNIT WHERE UNIT_NO=".$USU_inventory_unitno."),'".$UserStamp."',@SDATE,@EDATE,@TEMP_CHKTRANS,@TEMP_CUST,@TEMP_CUSTLP)";
+                $USU_enddate_query="CALL SP_UNIT_CHECK_TRANSACTION((SELECT UNIT_ID FROM UNIT WHERE UNIT_NO=".$USU_inventory_unitno."),'".$UserStamp."',@SDATE,@EDATE,@TRNSCOUNT)";
                 $this->db->query($USU_enddate_query);
-                $USU_cardunitno_query1 = 'SELECT @SDATE AS SDATE,@EDATE AS EDATE,@TEMP_CHKTRANS AS TEMP_CHKTRANS,@TEMP_CUST AS TEMP_CUST,@TEMP_CUSTLP AS TEMP_CUSTLP';
+                $USU_cardunitno_query1 = 'SELECT @SDATE AS SDATE,@EDATE AS EDATE';
                 $USU_card_rs1 = $this->db->query($USU_cardunitno_query1);
-    //            $USU_flag_results=array();
                 if ($USU_card_rs1->num_rows() > 0)
                 {
                     foreach($USU_card_rs1->result_array() as $row){
@@ -341,12 +340,6 @@ class Mdl_unit_creation_search_update extends CI_Model{
                         if(($USU_flag_card_unitno=='USU_flag_transac_check_enddate')||($USU_flag_card_unitno=='USU_flag_transac_check_unitno')){
                             $USU_arr_custexpense[]=$row['SDATE'];
                             $USU_arr_custexpense[]=$row['EDATE'];
-                            $drop_query = "DROP TABLE ".$row['TEMP_CHKTRANS'];
-                            $this->db->query($drop_query);
-                            $drop_query = "DROP TABLE ".$row['TEMP_CUST'];
-                            $this->db->query($drop_query);
-                            $drop_query = "DROP TABLE ".$row['TEMP_CUSTLP'];
-                            $this->db->query($drop_query);
                         }
                     }
                 }
@@ -523,7 +516,7 @@ class Mdl_unit_creation_search_update extends CI_Model{
         $USU_sh_arr=$this->Mdl_eilib_common_function->getStarHubUnitCalTime();
         $USU_oldvalues_sdate = date('Y-m-d',strtotime($USU_obj_rowvalue['USU_tr_second']));
         $USU_oldvalues_edate = date('Y-m-d',strtotime($USU_obj_rowvalue['USU_tr_third']));
-        $USU_temp_chktrans='';$USU_temp_cust='';$USU_temp_custlp='';$savepoint='';$USU_flag_flag_update=0;
+        $savepoint='';$USU_flag_flag_update=0;
         try{
             if(($USU_upd_startdate_update!='')||($USU_upd_enddate_update!=''))
             {
@@ -556,13 +549,10 @@ class Mdl_unit_creation_search_update extends CI_Model{
                     $USU_upd_bankaddr=$this->db->escape_like_str($USU_upd_bankaddr);
                 if($USU_upd_comments!='')
                     $USU_upd_comments=$this->db->escape_like_str($USU_upd_comments);
-                $USU_upd_sp ="CALL SP_UNIT_UPDATE(".$USU_upd_unitid_stampid.",".$USU_upd_unitno.",'".$USU_upd_startdate_update."','".$USU_upd_enddate_update."',".$USU_upd_unitpayment.",".$USU_upd_unitdeposit.",".$USU_upd_obsolete.",".$USU_upd_nonei.",'".$USU_upd_comments."','".$USU_upd_accnoid."','".$USU_upd_accname."','".$USU_upd_bankcodeid."','".$USU_upd_branchcode."','".$USU_upd_bankaddr."','".$UserStamp."',@FLAG_UPDATE,@TEMP_CHK_TRANS,@TEMP_CUST,@TEMP_CUSTLP,@SAVE_POINT_NAME)";
+                $USU_upd_sp ="CALL SP_UNIT_UPDATE(".$USU_upd_unitid_stampid.",".$USU_upd_unitno.",'".$USU_upd_startdate_update."','".$USU_upd_enddate_update."',".$USU_upd_unitpayment.",".$USU_upd_unitdeposit.",".$USU_upd_obsolete.",".$USU_upd_nonei.",'".$USU_upd_comments."','".$USU_upd_accnoid."','".$USU_upd_accname."','".$USU_upd_bankcodeid."','".$USU_upd_branchcode."','".$USU_upd_bankaddr."','".$UserStamp."',@FLAG_UPDATE,@SAVE_POINT_NAME)";
                 $this->db->query($USU_upd_sp);
-                $USU_rs_droptemp = $this->db->query("SELECT @TEMP_CHK_TRANS AS TEMP_CHK_TRANS ,@TEMP_CUST AS TEMP_CUST,@TEMP_CUSTLP AS TEMP_CUSTLP,@SAVE_POINT_NAME AS SAVEPOINT");
+                $USU_rs_droptemp = $this->db->query("SELECT @SAVE_POINT_NAME AS SAVEPOINT");
                 foreach($USU_rs_droptemp->result_array() as $row){
-                    $USU_temp_chktrans=$row["TEMP_CHK_TRANS"];
-                    $USU_temp_cust=$row["TEMP_CUST"];
-                    $USU_temp_custlp=$row["TEMP_CUSTLP"];
                     $savepoint=$row["SAVEPOINT"];
                 }
             }
@@ -646,18 +636,6 @@ class Mdl_unit_creation_search_update extends CI_Model{
             else{
                 $this->db->trans_savepoint_rollback($savepoint);
             }
-            if($USU_temp_chktrans!=''){
-                $drop_query = "DROP TABLE ".$USU_temp_chktrans;
-                $this->db->query($drop_query);
-            }
-            if($USU_temp_cust!=''){
-                $drop_query = "DROP TABLE ".$USU_temp_cust;
-                $this->db->query($drop_query);
-            }
-            if($USU_temp_custlp!=''){
-                $drop_query = "DROP TABLE ".$USU_temp_custlp;
-                $this->db->query($drop_query);
-            }
             if($USU_flag_flag_update==0){
                 return ["USU_parentfunc_obj"=>'zero'];
             }
@@ -680,18 +658,6 @@ class Mdl_unit_creation_search_update extends CI_Model{
             return $USU_refresh;
         }
         catch(Exception $ex){
-            if($USU_temp_chktrans!=''){
-                $drop_query = "DROP TABLE ".$USU_temp_chktrans;
-                $this->db->query($drop_query);
-            }
-            if($USU_temp_cust!=''){
-                $drop_query = "DROP TABLE ".$USU_temp_cust;
-                $this->db->query($drop_query);
-            }
-            if($USU_temp_custlp!=''){
-                $drop_query = "DROP TABLE ".$USU_temp_custlp;
-                $this->db->query($drop_query);
-            }
             if($USU_flag_flag_update==1){
                 if(($USU_upd_selectoption_unit==3)||($USU_upd_selectoption_unit==4)||($USU_upd_selectoption_unit==6)||($USU_upd_selectoption_unit==7)){
                     $caldel_value=$this->Mdl_eilib_calender->StarHubUnit_DeleteCalEvent($cal,$USU_obj_rowvalue['USU_tr_first'],$USU_oldvalues_sdate,$USU_sh_arr[0]['ECN_DATA'],$USU_sh_arr[1]['ECN_DATA'],$USU_oldvalues_edate,$USU_sh_arr[0]['ECN_DATA'],$USU_sh_arr[1]['ECN_DATA'],'UNIT');

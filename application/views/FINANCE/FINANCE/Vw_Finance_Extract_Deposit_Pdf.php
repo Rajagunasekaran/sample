@@ -435,13 +435,11 @@ require_once('application/libraries/EI_HDR.php');
                 var day = dt.getDate();
                 month = month + 1;
                 month = month + "";
-                if (month.length == 1)
-                {
+                if (month.length == 1){
                     month = "0" + month;
                 }
                 day = day + "";
-                if (day.length == 1)
-                {
+                if (day.length == 1){
                     day = "0" + day;
                 }
                 return day + '-' + month + '-' + dt.getFullYear();

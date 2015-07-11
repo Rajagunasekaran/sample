@@ -367,7 +367,7 @@ class Mdl_customer_creation extends CI_Model
         $message1->setSubject($Emailsub);
         $message1->setHtmlBody($Messagebody);
         $message1->send();
-        $this->db->trans_commit();
+//        $this->db->trans_commit();
         return $Confirm_Meessage;
     }
     public function InvoiceCreation($InvoiceId,$Emailtemplate,$Username,$Confirm_Meessage,$Uint,$Name,$Docowner,$UserStamp)
@@ -550,7 +550,7 @@ class Mdl_customer_creation extends CI_Model
             $Sendmailid = $_POST['CCRE_MailList'];
             $this->db->query('SET AUTOCOMMIT=0');
             $this->db->query('START TRANSACTION');
-            $CallQuery = "CALL SP_CUSTOMER_CREATION_INSERT(2,'$Customerid','$FirstName','$Lastname','$CompanyName','$CompanyAddress','$CompanyPostalCode','$Officeno',$Uint,'$RoomType','$S_starttime','$S_endtime','$E_starttime','$E_endtime','$Leaseperiod',$CCRE_quators,'$processwaived','$Prorated','$NoticePeriod','$NoticePeriodDate',$Rent,'$DepositFee','$ProcessingFee','$Fixedaircon_fee','$Quaterlyfee','$ElectricitycapFee','$CheckOutCleanFee','$Curtain_DrycleanFee','$cardno','$StartDate','$UserStamp','$StartDate','$EndDate','$accesscard','$Nationality','$Mobile','$IntlMobile','$Emailid','$PassportNo','$PassportDate','$DOB','$EpNo','$EPDate','$Comments',@CUSTOMER_CREATION_TEMPTBLNAME,@CUSTOMER_SUCCESSFLAG,SAVE_POINT_NAME)";
+            $CallQuery = "CALL SP_CUSTOMER_CREATION_INSERT(2,'$Customerid','$FirstName','$Lastname','$CompanyName','$CompanyAddress','$CompanyPostalCode','$Officeno',$Uint,'$RoomType','$S_starttime','$S_endtime','$E_starttime','$E_endtime','$Leaseperiod',$CCRE_quators,'$processwaived','$Prorated','$NoticePeriod','$NoticePeriodDate',$Rent,'$DepositFee','$ProcessingFee','$Fixedaircon_fee','$Quaterlyfee','$ElectricitycapFee','$CheckOutCleanFee','$Curtain_DrycleanFee','$cardno','$StartDate','$UserStamp','$StartDate','$EndDate','$accesscard','$Nationality','$Mobile','$IntlMobile','$Emailid','$PassportNo','$PassportDate','$DOB','$EpNo','$EPDate','$Comments',@CUSTOMER_CREATION_TEMPTBLNAME,@CUSTOMER_SUCCESSFLAG,@SAVE_POINT_NAME)";
             $this->db->query($CallQuery);
             $outparm_query = $this->db->query('SELECT @CUSTOMER_CREATION_TEMPTBLNAME AS TEMP_TABLE,@CUSTOMER_SUCCESSFLAG AS CONFIRM,@SAVE_POINT_NAME AS SAVEPOINT_NAME');
             foreach ($outparm_query->result_array() as $key=>$val)

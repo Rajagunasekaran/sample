@@ -2,7 +2,7 @@
 error_reporting(0);
 require_once 'google/appengine/api/mail/Message.php';
 use google\appengine\api\mail\Message;
-//require_once 'PHPMailer-master/PHPMailerAutoload.php';
+//require 'application/PHPMailer-master/PHPMailerAutoload.php';
 class Mdl_customer_search_update_delete extends CI_Model
 {
     public function getSearchOption()
@@ -288,7 +288,6 @@ class Mdl_customer_search_update_delete extends CI_Model
     public function Customer_Search_Update($UserStamp,$Leaseperiod,$Quoters)
     {
         try {
-            set_time_limit(0);
             $FirstName = $_POST['CCRE_SRC_FirstName'];
             $Lastname = $_POST['CCRE_SRC_LastName'];
             $Name=$FirstName.' '.$Lastname;
@@ -372,15 +371,20 @@ class Mdl_customer_search_update_delete extends CI_Model
             }
             $Customerid = $_POST['CCRE_SRC_customerid'];
             $Cedrecver=$_POST['CCRE_SRC_Recver'];
+            $this->db->query('SET AUTOCOMMIT=0');
+            $this->db->query('START TRANSACTION');
             $Update_query = "CALL SP_CUSTOMER_SEARCH_UPDATE('$Customerid','$FirstName','$Lastname','$CompanyName','$CompanyAddress',
            '$CompanyPostalCode','$Officeno',$Uint,$Cedrecver,'$RoomType','$S_starttime','$S_endtime','$E_starttime','$E_endtime',
            '$Leaseperiod','$Quoters','$processwaived','$Prorated','$NoticePeriod','$NoticePeriodDate','$Rent','$DepositFee','$ProcessingFee','$Fixedaircon_fee','$Quaterlyfee','$ElectricitycapFee','$CheckOutCleanFee','$Curtain_DrycleanFee',
-           '$UserStamp','$Startdate','$Enddate','$Nationality','$Mobile','$IntlMobile','$Emailid','$PassportNo','$PassportDate','$DOB','$EpNo','$EPDate','$Comments','$acesscard','$Accesscarddates',@SUCCESS_FLAG)";
+           '$UserStamp','$Startdate','$Enddate','$Nationality','$Mobile','$IntlMobile','$Emailid','$PassportNo','$PassportDate','$DOB','$EpNo','$EPDate','$Comments','$acesscard','$Accesscarddates',@SUCCESS_FLAG,@CC_UPDATE_SAVEPOINT)";
             $this->db->query($Update_query);
+//            return $Update_query;
             $Confirm_query = 'SELECT @SUCCESS_FLAG AS CONFIRM';
             $Confirm_result = $this->db->query($Confirm_query);
             $Confirm_Meessage =$Confirm_result->row()->CONFIRM;
-            $this->db->trans_commit();
+            $Confirm_result_savepoint = $this->db->query('SELECT @CC_UPDATE_SAVEPOINT AS CCUPDATE_SAVEPOINT');
+            $Confirm_savepoint =$Confirm_result_savepoint->row()->CCUPDATE_SAVEPOINT;
+//            $this->db->trans_savepoint_release($Confirm_savepoint) ;
             //FILEUPLOAD
             $filetempname = $_FILES['CSRC_fileupload']['tmp_name'];
             $filename = $_FILES['CSRC_fileupload']['name'];
@@ -414,7 +418,6 @@ class Mdl_customer_search_update_delete extends CI_Model
                         $CustomerFolder = $this->Mdl_eilib_common_function->Customer_FolderCreation($service, $customerfoldername, 'PersonalDetails', $UnitFolder);
                     }
                 }
-
                 $Fileidinsertquery="CALL SP_INSERT_UPDATE_CUSTOMER_FILE_DIRECTORY($Uint,'$UnitFolder',$Customerid,'$CustomerFolder','$UserStamp',@SUCCESS_MESSAGE)";
                 $result=$this->db->query($Fileidinsertquery);
                 if($filetempname!='')
@@ -422,6 +425,7 @@ class Mdl_customer_search_update_delete extends CI_Model
                     $this->Mdl_eilib_common_function->Customer_FileUpload($service, $filename, 'PersonalDetails', $CustomerFolder, $mimetype, $filetempname);
                 }
             }
+//            return $Confirm_Meessage.'confirmmsg';
             if ($Confirm_Meessage == 1)
             {
                 if($Customerflag==1)
@@ -429,8 +433,9 @@ class Mdl_customer_search_update_delete extends CI_Model
                     $this->load->model('EILIB/Mdl_eilib_calender');
                     $calId = $this->Mdl_eilib_calender->GetEICalendarId();
                     $cal = $this->Mdl_eilib_calender->createCalendarService();
-                    $calevents=$this->CAL_DEL_CREATE($Customerid);
+                     $calevents=$this->CAL_DEL_CREATE($Customerid);
                     $caldelresponse=$this->CUST_customercalenderdeletion_StartDate($calId,$cal,$calevents[0],$Customerid);
+//                    return $caldelresponse;
                     $calcreateresponse=$this->CUST_customercalendercreation_StartDate($calId,$cal,$calevents[1],$Customerid,$FirstName,$Lastname,$Mobile,$IntlMobile,$Officeno,$Emailid,$Uint,$RoomType);
                 }
                 else
@@ -460,16 +465,20 @@ class Mdl_customer_search_update_delete extends CI_Model
                             $Messagebody = $Messagebody . '<br><br>INVOICE :' . $InvoiceId[2];
                             $Displayname = $this->Mdl_eilib_common_function->Get_MailDisplayName('INVOICE');
                             $this->CustomerUpdatemailpart($Confirm_Meessage, $Emailsub, $Messagebody, $Displayname, $Sendmailid, $UserStamp);
-                            $this->db->trans_commit();
+                            $this->db->trans_savepoint_release($Confirm_savepoint) ;
                             echo $InvoiceId[0];
                             exit;
                         }
                         else
                         {
-
+                            $this->db->trans_savepoint_rollback($Confirm_savepoint) ;
+                            echo $InvoiceId[0];
+                            exit;
                         }
                     } else if ($CCoption == 5) {
+//                        return 'contract';
                         $ContractId = $this->Mdl_eilib_invoice_contract->CUST_contract($service, $Uint, $Start_date, $End_date, $CompanyName, $Name, $NoticePeriod, $PassportNo, $PassportDate, $EpNo, $EPDate, $NoticePeriodDate, $Leaseperiod, $Cont_cardno, $Rent, $InvQuaterlyfee, $InvFixedaircon_fee, $InvElectricitycapFee, $InvCurtain_DrycleanFee, $InvCheckOutCleanFee, $InvProcessingFee, $InvDepositFee, $Invwaived, $RoomType, $InvProrated, 'CREATION', $Sendmailid, $Docowner,$CustomerFolder);
+//                        $ContractId[0]=0;
                         if($ContractId[0]==1)
                         {
                             $Messcontent = $Uint . '-' . $Name;
@@ -481,14 +490,19 @@ class Mdl_customer_search_update_delete extends CI_Model
                             $Messagebody = $Messagebody . '<br><br>CONTRACT :' . $ContractId[2];
                             $Displayname = $this->Mdl_eilib_common_function->Get_MailDisplayName('CONTRACT');
                             $this->CustomerUpdatemailpart($Confirm_Meessage, $Emailsub, $Messagebody, $Displayname, $Sendmailid, $UserStamp);
-                            $this->db->trans_commit();
+                            $this->db->trans_savepoint_release($Confirm_savepoint) ;
+                            echo $ContractId[0];
+                            exit;
+                        }else{
+//                            return 'rollback';
+                            $this->db->trans_savepoint_rollback($Confirm_savepoint) ;
                             echo $ContractId[0];
                             exit;
                         }
                     } else if ($CCoption == 6) {
-
                         $InvoiceId = $this->Mdl_eilib_invoice_contract->CUST_invoice($UserStamp, $service, $Uint, $Name, $CompanyName, $Invoiceandcontractid[9], $Invoiceandcontractid[0], $Invoiceandcontractid[1], $Rent, $ProcessingFee, $DepositFee, $Start_date, $End_date, $RoomType, $Leaseperiod, $InvProrated, $Sendmailid, $Docowner, 'CREATION', $Invwaived, $Customerid,$CustomerFolder);
                         $ContractId = $this->Mdl_eilib_invoice_contract->CUST_contract($service, $Uint, $Start_date, $End_date, $CompanyName, $Name, $NoticePeriod, $PassportNo, $PassportDate, $EpNo, $EPDate, $NoticePeriodDate, $Leaseperiod, $Cont_cardno, $Rent, $InvQuaterlyfee, $InvFixedaircon_fee, $InvElectricitycapFee, $InvCurtain_DrycleanFee, $InvCheckOutCleanFee, $InvProcessingFee, $InvDepositFee, $Invwaived, $RoomType, $InvProrated, 'CREATION', $Sendmailid, $Docowner,$CustomerFolder);
+//                        $InvoiceId[0]=1;$ContractId[0]=1;
                         if($InvoiceId[0]==1 && $ContractId[0]==1)
                         {
                             $subcontent = $Uint . '-' . $Name . '-' . $InvoiceId[3];
@@ -502,30 +516,44 @@ class Mdl_customer_search_update_delete extends CI_Model
                             $Messagebody = $Messagebody . '<br><br>CONTRACT :' . $ContractId[2];
                             $Displayname = $this->Mdl_eilib_common_function->Get_MailDisplayName('INVOICE_N_CONTRACT');
                             $this->CustomerUpdatemailpart($Confirm_Meessage, $Emailsub, $Messagebody, $Displayname, $Sendmailid, $UserStamp);
-                            $this->db->trans_commit();
-                            echo $ContractId[0];
+                            $this->db->trans_savepoint_release($Confirm_savepoint) ;
+                            echo $InvoiceId[0];
+                            exit;
+                        }else{
+                            $this->db->trans_savepoint_rollback($Confirm_savepoint) ;
                             echo $InvoiceId[0];
                             exit;
                         }
                     }
-                    $this->db->trans_commit();
+//                    $this->db->trans_savepoint_release($Confirm_savepoint) ;
                 }
                 else
                 {
-                    $this->db->trans_commit();
-                    echo $Confirm_Meessage;
-                    exit;
+                    if ($caldelresponse==1 && $calcreateresponse==1) {
+                        $this->db->trans_savepoint_release($Confirm_savepoint) ;
+                        echo $Confirm_Meessage;
+                        exit;
+                    } else {
+                        $this->db->trans_savepoint_rollback($Confirm_savepoint);
+                        echo $Confirm_Meessage;
+                        exit;
+                    }
+//                    $this->db->trans_savepoint_rollback($Confirm_savepoint) ;
+//                    echo $Confirm_Meessage;
+//                    exit;
                 }
             }
             else
             {
+                $this->db->trans_savepoint_rollback($Confirm_savepoint);
                 echo $Confirm_Meessage;
                 exit;
             }
         }
         catch (Exception $e)
         {
-            $this->db->trans_rollback();
+            $this->db->trans_savepoint_rollback($Confirm_savepoint);
+//            $this->db->trans_rollback();
             return $e->getMessage();
             exit;
         }
@@ -538,7 +566,7 @@ class Mdl_customer_search_update_delete extends CI_Model
         $message1->setSubject($Emailsub);
         $message1->setHtmlBody($Messagebody);
         $message1->send();
-        $this->db->trans_commit();
+//        $this->db->trans_commit();
         echo $Confirm_Meessage;
         exit;
     }
@@ -733,7 +761,6 @@ class Mdl_customer_search_update_delete extends CI_Model
     }
     public function getCustomerRecordDelete($Customerid,$UserStamp)
     {
-        set_time_limit(0);
         $this->load->library('Google');
         $this->load->model('EILIB/Mdl_eilib_calender');
         $cal = $this->Mdl_eilib_calender->createCalendarService();
@@ -747,12 +774,13 @@ class Mdl_customer_search_update_delete extends CI_Model
             $CSRC_oldestarttime = $value['CED_ED_STIME'];
             $CSRC_oldeendtime = $value['CED_ED_ETIME'];
         }
-        $customersearch_tick_query = "CALL SP_CUSTOMER_SEARCH_TICKLER_DELETION('$Customerid','$UserStamp',@CUSTOMER_SEARCH_DELETION,@FLAG)";
+        $customersearch_tick_query = "CALL SP_CUSTOMER_SEARCH_TICKLER_DELETION('$Customerid','$UserStamp',@CUSTOMER_SEARCH_DELETION,@FLAG,@SAVE_POINT_CUST_DELETE)";
         $this->db->query($customersearch_tick_query);
-        $customerdelete_getresult = $this->db->query("SELECT @CUSTOMER_SEARCH_DELETION,@FLAG");
+        $customerdelete_getresult = $this->db->query("SELECT @CUSTOMER_SEARCH_DELETION,@FLAG,@SAVE_POINT_CUST_DELETE");
         foreach ($customerdelete_getresult->result_array() as $key => $val) {
             $customerdeletion_temptable = $val['@CUSTOMER_SEARCH_DELETION'];
             $customerdeletion_flag = $val['@FLAG'];
+            $customerdeletion_savepoint = $val['@SAVE_POINT_CUST_DELETE'];
         }
         $this->db->query('DROP TABLE IF EXISTS ' .$customerdeletion_temptable);
         if($customerdeletion_flag == 1)
@@ -761,9 +789,9 @@ class Mdl_customer_search_update_delete extends CI_Model
         }
         else
         {
-            $this->db->trans_rollback();
+            $this->db->trans_savepoint_rollback($customerdeletion_savepoint);
         }
-        $this->db->trans_commit();
+        $this->db->trans_savepoint_release($customerdeletion_savepoint) ;
         return $Calresponse;
     }
 }

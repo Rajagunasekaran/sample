@@ -84,537 +84,510 @@
          $('#CSRC_updation_form').hide();
          $('#tableempty_message').text('');
          $('#Accesscardheader').text('');
-         $('.preloader').show();
          $('#CC_SEARCH_DataTable').hide();
          $('#CC_SEARCH_acDataTable').hide();
          var searchoption=$('#CC_SRC_SearchOption').val();
-         if(searchoption==21)
-         {
-             $.ajax({
-                 type: "POST",
-                 url: controller_url+"CustomerName",
-                 success: function(data){
-
-                     var value_array=JSON.parse(data);
-                     var appenddata='<h4 style="color:#498af3;">CUSTOMER NAME SEARCH</h4><br>';
-                     appenddata+='<div class="row form-group" style="padding-left:20px;">';
-                     appenddata+='<div class="col-md-3" ><label>CUSTOMER NAME<span class="labelrequired"><em>*</em></span></label></div>';
-                     appenddata+='<div class="col-md-3"><input type=text class="form-control autosize customernameautovalidate" name="CC_SRC_CustomerNameSearch"  id="CC_SRC_CustomerNameSearch"/></div>';
-                     appenddata+='<div class="col-md-3"><label id="customernameautocompleteerrormsg" class="errormsg" hidden></label></div>';
-                     appenddata+='</div>';
-                     appenddata+='<div class="row form-group">';
-                     appenddata+='<div class="col-lg-offset-2 col-lg-2">';
-                     appenddata+='<input type="button" id="CC_src_btn_search" class="btn" value="SEARCH" disabled></div></div>';
-                     $('#CC_SearchformDiv').html(appenddata);
-                     for (var i = 0; i < value_array.length; i++)
-                     {
-                         var data=value_array[i].CUSTOMER_FIRST_NAME+'  '+value_array[i].CUSTOMER_LAST_NAME;
-                         AllcustomerArray.push(data);
-                     }
-                     AllcustomerArray=unique(AllcustomerArray);
-                     $('#customernameautocompleteerrormsg').text(errormsg[17].EMC_DATA);
-                     $("#CC_SRC_CustomerNameSearch").focus();
-                     $('.preloader').hide();
-                 },
-                 error: function(data){
-                     alert('error in getting'+JSON.stringify(data));
-                     $('.preloader').hide();
-                 }
-             });
-         }
-         else if(searchoption==18)
-         {
-             $.ajax({
-                 type: "POST",
-                 url: controller_url+"CustomerCardNos",
-                 success: function(data){
-                     var value_array=JSON.parse(data);
-                     var appenddata='<h4 style="color:#498af3;">CARD NUMBER SEARCH</h4><br>';
-                     appenddata+='<div class="row form-group" style="padding-left:20px;">';
-                     appenddata+='<div class="col-md-3"><label>CARD NUMBER<span class="labelrequired"><em>*</em></span></label></div>';
-                     appenddata+='<div class="col-md-3"><input type=text class="form-control customernameautovalidate" name="CC_SRC_CardNoSearch" maxlength="7"  id="CC_SRC_CardNoSearch" style="max-width: 150px;"/></div>';
-                     appenddata+='<div class="col-md-3"><label id="customernameautocompleteerrormsg" class="errormsg" hidden></label></div>';
-                     appenddata+='</div>';
-                     appenddata+='<div class="row form-group">';
-                     appenddata+='<div class="col-lg-offset-2 col-lg-2">';
-                     appenddata+='<input type="button" id="CC_src_btn_search" class="btn" value="SEARCH" disabled></div></div>';
-                     $('#CC_SearchformDiv').html(appenddata);
-                     for (var i = 0; i < value_array.length; i++)
-                     {
-                         if(value_array[i].UASD_ACCESS_CARD!='' && value_array[i].UASD_ACCESS_CARD!=null)
-                         {
-                             AllcradsArray.push(value_array[i].UASD_ACCESS_CARD);
+         if(searchoption!='SELECT') {
+             $('.preloader').show();
+             $('#CC_SearchformDiv').html('').show();
+             if (searchoption == 21) {
+                 $.ajax({
+                     type: "POST",
+                     url: controller_url + "CustomerName",
+                     success: function (data) {
+                         var value_array = JSON.parse(data);
+                         var appenddata = '<h4 style="color:#498af3;">CUSTOMER NAME SEARCH</h4><br>';
+                         appenddata += '<div class="row form-group" style="padding-left:20px;">';
+                         appenddata += '<div class="col-md-3" ><label>CUSTOMER NAME<span class="labelrequired"><em>*</em></span></label></div>';
+                         appenddata += '<div class="col-md-3"><input type=text class="form-control autosize customernameautovalidate" name="CC_SRC_CustomerNameSearch"  id="CC_SRC_CustomerNameSearch"/></div>';
+                         appenddata += '<div class="col-md-3"><label id="customernameautocompleteerrormsg" class="errormsg" hidden></label></div>';
+                         appenddata += '</div>';
+                         appenddata += '<div class="row form-group">';
+                         appenddata += '<div class="col-lg-offset-2 col-lg-2">';
+                         appenddata += '<input type="button" id="CC_src_btn_search" class="btn" value="SEARCH" disabled></div></div>';
+                         $('#CC_SearchformDiv').html(appenddata);
+                         for (var i = 0; i < value_array.length; i++) {
+                             var data = value_array[i].CUSTOMER_FIRST_NAME + '  ' + value_array[i].CUSTOMER_LAST_NAME;
+                             AllcustomerArray.push(data);
                          }
+                         AllcustomerArray = unique(AllcustomerArray);
+                         $('#customernameautocompleteerrormsg').text(errormsg[17].EMC_DATA);
+                         $("#CC_SRC_CustomerNameSearch").focus();
+                         $('.preloader').hide();
+                     },
+                     error: function (data) {
+                         alert('error in getting' + JSON.stringify(data));
+                         $('.preloader').hide();
                      }
-                     $('#customernameautocompleteerrormsg').text(errormsg[17].EMC_DATA);
-                     $("#CC_SRC_CardNoSearch").doValidation({rule:'numbersonly',prop:{realpart:7,leadzero:true}});
-                     $("#CC_SRC_CardNoSearch").focus();
-                     $('.preloader').hide();
-                 },
-                 error: function(data){
-                     alert('error in getting'+JSON.stringify(data));
-                     $('.preloader').hide();
-                 }
-             });
-         }
-         else if(searchoption==19)
-         {
-             $.ajax({
-                 type: "POST",
-                 url: controller_url+"CustomerCompnameName",
-                 success: function(data){
-                     var value_array=JSON.parse(data);
-                     var appenddata='<h4 style="color:#498af3;">COMPANY NAME SEARCH</h4><br>';
-                     appenddata+='<div class="row form-group" style="padding-left:20px;">';
-                     appenddata+='<div class="col-md-3"><label>COMPANY NAME<span class="labelrequired"><em>*</em></span></label></div>';
-                     appenddata+='<div class="col-md-3"><input type=text class="form-control autosize customernameautovalidate" name="CC_SRC_CompanyNameSearch"  id="CC_SRC_CompanyNameSearch"/></div>';
-                     appenddata+='<div class="col-md-3"><label id="customernameautocompleteerrormsg" class="errormsg" hidden></label></div>';
-                     appenddata+='</div>';
-                     appenddata+='<div class="row form-group">';
-                     appenddata+='<div class="col-lg-offset-2 col-lg-2">';
-                     appenddata+='<input type="button" id="CC_src_btn_search" class="btn" value="SEARCH" disabled></div></div>';
-                     $('#CC_SearchformDiv').html(appenddata);
-                     for (var i = 0; i < value_array.length; i++)
-                     {
-                         if(value_array[i].CCD_COMPANY_NAME!='' && value_array[i].CCD_COMPANY_NAME!=null)
-                         {
-                             AllcompanyArray.push(value_array[i].CCD_COMPANY_NAME);
-                         }
-                     }
-                     $('#customernameautocompleteerrormsg').text(errormsg[17].EMC_DATA);
-                     $("#CC_SRC_CompanyNameSearch").focus();
-                     $('.preloader').hide();
-                 },
-                 error: function(data){
-                     alert('error in getting'+JSON.stringify(data));
-                     $('.preloader').hide();
-                 }
-             });
-         }
-         else if(searchoption==22)
-         {
-             var appenddata='<h4 style="color:#498af3;">DEPOSIT AMOUNT SEARCH</h4><br>';
-             appenddata+='<div class="row form-group" style="padding-left:20px;">';
-             appenddata+='<div class="col-md-3"><label>FROM AMOUNT<span class="labelrequired"><em>*</em></span></label></div>';
-             appenddata+='<div class="col-md-3"><input type=text class="form-control CCRE_amtonlyvalidationmaxdigit AmountValidation" name="CC_SRC_FromAmount"  id="CC_SRC_FromAmount" style="max-width: 100px" placeholder="0.00"/></div>';
-             appenddata+='</div>';
-             appenddata+='<div class="row form-group" style="padding-left:20px;">';
-             appenddata+='<div class="col-md-3"><label>TO AMOUNT<span class="labelrequired"><em>*</em></span></label></div>';
-             appenddata+='<div class="col-md-3"><input type=text class="form-control CCRE_amtonlyvalidationmaxdigit AmountValidation" name="CC_SRC_ToAmount"  id="CC_SRC_ToAmount" style="max-width: 100px" placeholder="0.00"/></div>';
-             appenddata+='<div class="col-md-5"><label id="depositamterrormsg" class="errormsg" hidden></label></div>';
-             appenddata+='</div>';
-             appenddata+='<div class="row form-group">';
-             appenddata+='<div class="col-lg-offset-2 col-lg-2">';
-             appenddata+='<input type="button" id="CC_src_btn_search" class="btn" value="SEARCH" disabled></div></div>';
-             $('#CC_SearchformDiv').html(appenddata);
-             $(".CCRE_amtonlyvalidationmaxdigit").doValidation({rule:'numbersonly',prop:{realpart:5,imaginary:2}});
-             $('#depositamterrormsg').text(errormsg[7].EMC_DATA);
-             $('.preloader').hide();
-         }
-         else if(searchoption==30)
-         {
-             var appenddata='<h4 style="color:#498af3;">RENT AMOUNT SEARCH</h4><br>';
-             appenddata+='<div class="row form-group" style="padding-left:20px;">';
-             appenddata+='<div class="col-md-3"><label>FROM AMOUNT<span class="labelrequired"><em>*</em></span></label></div>';
-             appenddata+='<div class="col-md-3"><input type=text class="form-control CCRE_amtonlyvalidationmaxdigit AmountValidation" name="CC_SRC_FromAmount"  id="CC_SRC_FromAmount" style="max-width: 100px" placeholder="0.00"/></div>';
-             appenddata+='</div>';
-             appenddata+='<div class="row form-group" style="padding-left:20px;">';
-             appenddata+='<div class="col-md-3"><label>TO AMOUNT<span class="labelrequired"><em>*</em></span></label></div>';
-             appenddata+='<div class="col-md-3"><input type=text class="form-control CCRE_amtonlyvalidationmaxdigit AmountValidation" name="CC_SRC_ToAmount"  id="CC_SRC_ToAmount" style="max-width: 100px" placeholder="0.00"/></div>';
-             appenddata+='<div class="col-md-5"><label id="depositamterrormsg" class="errormsg" hidden></label></div>';
-             appenddata+='</div>';
-             appenddata+='<div class="row form-group">';
-             appenddata+='<div class="col-lg-offset-2 col-lg-2">';
-             appenddata+='<input type="button" id="CC_src_btn_search" class="btn" value="SEARCH" disabled></div></div>';
-             $('#CC_SearchformDiv').html(appenddata);
-             $(".CCRE_amtonlyvalidationmaxdigit").doValidation({rule:'numbersonly',prop:{realpart:5,imaginary:2}});
-             $('#depositamterrormsg').text(errormsg[7].EMC_DATA);
-             $('.preloader').hide();
-         }
-         else if(searchoption==27)
-         {
-             var appenddata='<h4 style="color:#498af3;">NATIONALITY SEARCH</h4><br>';
-             appenddata+='<div class="row form-group" style="padding-left:20px;">';
-             appenddata+='<div class="col-md-3"><label>NATIONALITY<span class="labelrequired"><em>*</em></span></label></div>';
-             appenddata+='<div class="col-md-3"><SELECT class="form-control" name="CC_SRC_listsearch"  id="CC_SRC_listsearch" ></SELECT></div>';
-             appenddata+='</div>';
-             appenddata+='<div class="row form-group">';
-             appenddata+='<div class="col-lg-offset-2 col-lg-2">';
-             appenddata+='<input type="button" id="CC_src_btn_search" class="btn" value="SEARCH" disabled></div></div>';
-             $('#CC_SearchformDiv').html(appenddata);
-             var options='<OPTION>SELECT</OPTION>';
-             for (var i = 0; i < nationality.length; i++)
-             {
-                 var data=nationality[i];
-                 options += '<option value="' + data.NC_DATA + '">' + data.NC_DATA + '</option>';
-             }
-             $('#CC_SRC_listsearch').html(options);
-             $('.preloader').hide();
-         }
-         else if(searchoption==31)
-         {
-             $.ajax({
-                 type: "POST",
-                 url: controller_url+"AllUnits",
-                 success: function(data){
-                     var value_array=JSON.parse(data);
-                     var appenddata='<h4 style="color:#498af3;">UNIT NUMBER SEARCH</h4><br>';
-                     appenddata+='<div class="row form-group" style="padding-left:20px;">';
-                     appenddata+='<div class="col-md-3"><label>UNIT NUMBER<span class="labelrequired"><em>*</em></span></label></div>';
-                     appenddata+='<div class="col-md-3"><SELECT class="form-control" name="CC_SRC_listsearch"  id="CC_SRC_listsearch" style="max-width: 120px"></SELECT></div>';
-                     appenddata+='</div>';
-                     appenddata+='<div class="row form-group">';
-                     appenddata+='<div class="col-lg-offset-2 col-lg-2">';
-                     appenddata+='<input type="button" id="CC_src_btn_search" class="btn" value="SEARCH" disabled></div></div>';
-                     $('#CC_SearchformDiv').html(appenddata);
-                     var options='<OPTION>SELECT</OPTION>';
-                     for (var i = 0; i < value_array.length; i++)
-                     {
-                         var data=value_array[i];
-                         options += '<option value="' + data.UNIT_NO + '">' + data.UNIT_NO + '</option>';
-                     }
-                     $('#CC_SRC_listsearch').html(options);
-                     $('.preloader').hide();
-                 },
-                 error: function(data){
-                     alert('error in getting'+JSON.stringify(data));
-                     $('.preloader').hide();
-                 }
-             });
-         }
-         else if(searchoption==33)
-         {
-             $.ajax({
-                 type: "POST",
-                 url: controller_url+"AllRoomtype",
-                 success: function(data){
-                     var value_array=JSON.parse(data);
-                     var appenddata='<h4 style="color:#498af3;">ROOMTYPE SEARCH</h4><br>';
-                     appenddata+='<div class="row form-group" style="padding-left:20px;">';
-                     appenddata+='<div class="col-md-3"><label>ROOMTYPE<span class="labelrequired"><em>*</em></span></label></div>';
-                     appenddata+='<div class="col-md-3"><SELECT class="form-control" name="CC_SRC_listsearch"  id="CC_SRC_listsearch" style="max-width: 170px"></SELECT></div>';
-                     appenddata+='</div>';
-                     appenddata+='<div class="row form-group">';
-                     appenddata+='<div class="col-lg-offset-2 col-lg-2">';
-                     appenddata+='<input type="button" id="CC_src_btn_search" class="btn" value="SEARCH" disabled></div></div>';
-                     $('#CC_SearchformDiv').html(appenddata);
-                     var options='<OPTION>SELECT</OPTION>';
-                     for (var i = 0; i < value_array.length; i++)
-                     {
-                         var data=value_array[i];
-                         options += '<option value="' + data.URTD_ROOM_TYPE + '">' + data.URTD_ROOM_TYPE + '</option>';
-                     }
-                     $('#CC_SRC_listsearch').html(options);
-                     $('.preloader').hide();
-                 },
-                 error: function(data){
-                     alert('error in getting'+JSON.stringify(data));
-                     $('.preloader').hide();
-                 }
-             });
-         }
-         else if(searchoption==24)
-         {
-             $.ajax({
-                 type: "POST",
-                 url: controller_url+"AllEmails",
-                 success: function(data){
-                     var value_array=JSON.parse(data);
-                     var appenddata='<h4 style="color:#498af3;">EMAIL ID SEARCH</h4><br>';
-                     appenddata+='<div class="row form-group" style="padding-left:20px;">';
-                     appenddata+='<div class="col-md-3"><label>EMAIL ID<span class="labelrequired"><em>*</em></span></label></div>';
-                     appenddata+='<div class="col-md-3"><input type=text class="form-control customernameautovalidate" name="CC_SRC_EmailSearch"  id="CC_SRC_EmailSearch"/></div>';
-                     appenddata+='<div class="col-md-3"><label id="customernameautocompleteerrormsg" class="errormsg" hidden></label></div>';
-                     appenddata+='</div>';
-                     appenddata+='<div class="row form-group">';
-                     appenddata+='<div class="col-lg-offset-2 col-lg-2">';
-                     appenddata+='<input type="button" id="CC_src_btn_search" class="btn" value="SEARCH" disabled></div></div>';
-                     $('#CC_SearchformDiv').html(appenddata);
-                     for (var i = 0; i < value_array.length; i++)
-                     {
-                         if(value_array[i].CPD_EMAIL!='' && value_array[i].CPD_EMAIL!=null)
-                         {
-                             AllEmailsArray.push(value_array[i].CPD_EMAIL);
-                         }
-                     }
-                     $('#customernameautocompleteerrormsg').text(errormsg[17].EMC_DATA);
-                     $("#CC_SRC_EmailSearch").focus();
-                     $('.preloader').hide();
-                 },
-                 error: function(data){
-                     alert('error in getting'+JSON.stringify(data));
-                     $('.preloader').hide();
-                 }
-             });
-         }
-         else if(searchoption==25)
-         {
-             $.ajax({
-                 type: "POST",
-                 url: controller_url+"AllEPNumbers",
-                 success: function(data){
-                     var value_array=JSON.parse(data);
-                     var appenddata='<h4 style="color:#498af3;">EP NUMBER SEARCH</h4><br>';
-                     appenddata+='<div class="row form-group" style="padding-left:20px;">';
-                     appenddata+='<div class="col-md-3"><label>EP NUMBER<span class="labelrequired"><em>*</em></span></label></div>';
-                     appenddata+='<div class="col-md-3"><input type=text class="form-control autosize customernameautovalidate" name="CC_SRC_EPnoSearch"  id="CC_SRC_EPnoSearch"/></div>';
-                     appenddata+='<div class="col-md-3"><label id="customernameautocompleteerrormsg" class="errormsg" hidden></label></div>';
-                     appenddata+='</div>';
-                     appenddata+='<div class="row form-group">';
-                     appenddata+='<div class="col-lg-offset-2 col-lg-2">';
-                     appenddata+='<input type="button" id="CC_src_btn_search" class="btn" value="SEARCH" disabled></div></div>';
-                     $('#CC_SearchformDiv').html(appenddata);
-                     for (var i = 0; i < value_array.length; i++)
-                     {
-                         if(value_array[i].CPD_EP_NO!='' && value_array[i].CPD_EP_NO!=null)
-                         {
-                             AllEPnoArray.push(value_array[i].CPD_EP_NO);
-                         }
-                     }
-                     $('#customernameautocompleteerrormsg').text(errormsg[17].EMC_DATA);
-                     $("#CC_SRC_EPnoSearch").focus();
-                     $('.preloader').hide();
-                 },
-                 error: function(data){
-                     alert('error in getting'+JSON.stringify(data));
-                     $('.preloader').hide();
-                 }
-             });
-         }
-         else if(searchoption==29)
-         {
-             $.ajax({
-                 type: "POST",
-                 url: controller_url+"AllPassPortNumbers",
-                 success: function(data){
-                     var value_array=JSON.parse(data);
-                     var appenddata='<h4 style="color:#498af3;">PASSPORT NUMBER SEARCH</h4><br>';
-                     appenddata+='<div class="row form-group" style="padding-left:20px;">';
-                     appenddata+='<div class="col-md-3"><label>PASSPORT NUMBER<span class="labelrequired"><em>*</em></span></label></div>';
-                     appenddata+='<div class="col-md-3"><input type=text class="form-control autosize customernameautovalidate" name="CC_SRC_PassportnoSearch"  id="CC_SRC_PassportnoSearch"/></div>';
-                     appenddata+='<div class="col-md-3"><label id="customernameautocompleteerrormsg" class="errormsg" hidden></label></div>';
-                     appenddata+='</div>';
-                     appenddata+='<div class="row form-group">';
-                     appenddata+='<div class="col-lg-offset-2 col-lg-2">';
-                     appenddata+='<input type="button" id="CC_src_btn_search" class="btn" value="SEARCH" disabled></div></div>';
-                     $('#CC_SearchformDiv').html(appenddata);
-                     for (var i = 0; i < value_array.length; i++)
-                     {
-                         if(value_array[i].CPD_PASSPORT_NO!='' && value_array[i].CPD_PASSPORT_NO!=null)
-                         {
-                             AllPassportnoArray.push(value_array[i].CPD_PASSPORT_NO);
-                         }
-                     }
-                     $('#customernameautocompleteerrormsg').text(errormsg[17].EMC_DATA);
-                     $("#CC_SRC_PassportnoSearch").focus();
-                     $('.preloader').hide();
-                 },
-                 error: function(data){
-                     alert('error in getting'+JSON.stringify(data));
-                     $('.preloader').hide();
-                 }
-             });
-         }
-         else if(searchoption==26)
-         {
-             $.ajax({
-                 type: "POST",
-                 url: controller_url+"AllMobileNumbers",
-                 success: function(data){
-                     var value_array=JSON.parse(data);
-                     var appenddata='<h4 style="color:#498af3;">MOBILE NUMBER SEARCH</h4><br>';
-                     appenddata+='<div class="row form-group" style="padding-left:20px;">';
-                     appenddata+='<div class="col-md-3"><label>MOBILE NUMBER<span class="labelrequired"><em>*</em></span></label></div>';
-                     appenddata+='<div class="col-md-3"><input type=text class="form-control autosize customernameautovalidate" name="CC_SRC_MobilenoSearch"  id="CC_SRC_MobilenoSearch"/></div>';
-                     appenddata+='<div class="col-md-3"><label id="customernameautocompleteerrormsg" class="errormsg" hidden></label></div>';
-                     appenddata+='</div>';
-                     appenddata+='<div class="row form-group">';
-                     appenddata+='<div class="col-lg-offset-2 col-lg-2">';
-                     appenddata+='<input type="button" id="CC_src_btn_search" class="btn" value="SEARCH" disabled></div></div>';
-                     $('#CC_SearchformDiv').html(appenddata);
-                     for (var i = 0; i < value_array.length; i++)
-                     {
-                         if(value_array[i].CPD_MOBILE!='' && value_array[i].CPD_MOBILE!=null)
-                         {
-                             AllMobilenoArray.push(value_array[i].CPD_MOBILE);
-                         }
-                     }
-                     $('#customernameautocompleteerrormsg').text(errormsg[17].EMC_DATA);
-                     $("#CC_SRC_MobilenoSearch").focus();
-                     $('.preloader').hide();
-                 },
-                 error: function(data){
-                     alert('error in getting'+JSON.stringify(data));
-                     $('.preloader').hide();
-                 }
-             });
-         }
-         else if(searchoption==32)
-         {
-             $.ajax({
-                 type: "POST",
-                 url: controller_url+"AllIntMobileNumbers",
-                 success: function(data){
-                     var value_array=JSON.parse(data);
-                     var appenddata='<h4 style="color:#498af3;">INTL MOBILE NUMBER SEARCH</h4><br>';
-                     appenddata+='<div class="row form-group" style="padding-left:20px;">';
-                     appenddata+='<div class="col-md-3"><label>INTL MOBILE NUMBER<span class="labelrequired"><em>*</em></span></label></div>';
-                     appenddata+='<div class="col-md-3"><input type=text class="form-control autosize customernameautovalidate" name="CC_SRC_IntMobilenoSearch"  id="CC_SRC_IntMobilenoSearch"/></div>';
-                     appenddata+='<div class="col-md-3"><label id="customernameautocompleteerrormsg" class="errormsg" hidden></label></div>';
-                     appenddata+='</div>';
-                     appenddata+='<div class="row form-group">';
-                     appenddata+='<div class="col-lg-offset-2 col-lg-2">';
-                     appenddata+='<input type="button" id="CC_src_btn_search" class="btn" value="SEARCH" disabled></div></div>';
-                     $('#CC_SearchformDiv').html(appenddata);
-                     for (var i = 0; i < value_array.length; i++)
-                     {
-                         if(value_array[i].CPD_INTL_MOBILE!='' && value_array[i].CPD_INTL_MOBILE!=null)
-                         {
-                             AllIntMobilenoArray.push(value_array[i].CPD_INTL_MOBILE);
-                         }
-                     }
-                     $('#customernameautocompleteerrormsg').text(errormsg[17].EMC_DATA);
-                     $("#CC_SRC_IntMobilenoSearch").focus();
-                     $('.preloader').hide();
-                 },
-                 error: function(data){
-                     alert('error in getting'+JSON.stringify(data));
-                     $('.preloader').hide();
-                 }
-             });
-         }
-         else if(searchoption==28)
-         {
-             $.ajax({
-                 type: "POST",
-                 url: controller_url+"AllOfficeNumbers",
-                 success: function(data){
-                     var value_array=JSON.parse(data);
-                     var appenddata='<h4 style="color:#498af3;">OFFICE NUMBER SEARCH</h4><br>';
-                     appenddata+='<div class="row form-group" style="padding-left:20px;">';
-                     appenddata+='<div class="col-md-3"><label>OFFICE NUMBER<span class="labelrequired"><em>*</em></span></label></div>';
-                     appenddata+='<div class="col-md-3"><input type=text class="form-control autosize customernameautovalidate" name="CC_SRC_OfficenoSearch"  id="CC_SRC_OfficenoSearch"/></div>';
-                     appenddata+='<div class="col-md-3"><label id="customernameautocompleteerrormsg" class="errormsg" hidden></label></div>';
-                     appenddata+='</div>';
-                     appenddata+='<div class="row form-group">';
-                     appenddata+='<div class="col-lg-offset-2 col-lg-2">';
-                     appenddata+='<input type="button" id="CC_src_btn_search" class="btn" value="SEARCH" disabled></div></div>';
-                     $('#CC_SearchformDiv').html(appenddata);
-                     for (var i = 0; i < value_array.length; i++)
-                     {
-                         if(value_array[i].CCD_OFFICE_NO!='' && value_array[i].CCD_OFFICE_NO!=null)
-                         {
-                             AllOfficenoArray.push(value_array[i].CCD_OFFICE_NO);
-                         }
-                     }
-                     $('#customernameautocompleteerrormsg').text(errormsg[17].EMC_DATA);
-                     $("#CC_SRC_OfficenoSearch").focus();
-                     $('.preloader').hide();
-                 },
-                 error: function(data){
-                     alert('error in getting'+JSON.stringify(data));
-                     $('.preloader').hide();
-                 }
-             });
-         }
-         else if(searchoption==20)
-         {
-             $.ajax({
-                 type: "POST",
-                 url: controller_url+"AllComments",
-                 success: function(data){
-                     var value_array=JSON.parse(data);
-                     var appenddata='<h4 style="color:#498af3;">COMMENTS SEARCH</h4><br>';
-                     appenddata+='<div class="row form-group" style="padding-left:20px;">';
-                     appenddata+='<div class="col-md-3"><label>COMMENTS<span class="labelrequired"><em>*</em></span></label></div>';
-                     appenddata+='<div class="col-md-3"><textarea class="form-control  customernameautovalidate" name="CC_SRC_CommentsSearch"  id="CC_SRC_CommentsSearch"></textarea></div>';
-                     appenddata+='<div class="col-md-3"><label id="customernameautocompleteerrormsg" class="errormsg" hidden></label></div>';
-                     appenddata+='</div>';
-                     appenddata+='<div class="row form-group">';
-                     appenddata+='<div class="col-lg-offset-2 col-lg-2">';
-                     appenddata+='<input type="button" id="CC_src_btn_search" class="btn" value="SEARCH" disabled></div></div>';
-                     $('#CC_SearchformDiv').html(appenddata);
-                     for (var i = 0; i < value_array.length; i++)
-                     {
-                         if(value_array[i].CPD_COMMENTS!='' && value_array[i].CPD_COMMENTS!=null)
-                         {
-                             AllCommentsArray.push(value_array[i].CPD_COMMENTS);
-                         }
-                     }
-                     $('#customernameautocompleteerrormsg').text(errormsg[17].EMC_DATA);
-                     $("#CC_SRC_CommentsSearch").focus();
-                     $('.preloader').hide();
-                 },
-                 error: function(data){
-                     alert('error in getting'+JSON.stringify(data));
-                     $('.preloader').hide();
-                 }
-             });
-         }
-         else if(searchoption==23)
-         {
-             var appenddata='<h4 style="color:#498af3;">DOB SEARCH</h4><br>';
-             appenddata+='<div class="row form-group" style="padding-left:20px;">';
-             appenddata+='<div class="col-md-3"><label>FROM DATE<span class="labelrequired"><em>*</em></span></label></div>';
-             appenddata+='<div class="col-md-3"><input type=text class="form-control dobvalidation" name="CC_SRC_Fromdate"  id="CC_SRC_Fromdate" style="max-width: 150px"/></div>';
-             appenddata+='</div>';
-             appenddata+='<div class="row form-group" style="padding-left:20px;">';
-             appenddata+='<div class="col-md-3"><label>TO DATE<span class="labelrequired"><em>*</em></span></label></div>';
-             appenddata+='<div class="col-md-3"><input type=text class="form-control dobvalidation" name="CC_SRC_Todate"  id="CC_SRC_Todate" style="max-width: 150px"/></div>';
-//             appenddata+='<div class="col-md-5"><label id="depositamterrormsg" class="errormsg" hidden></label></div>';
-             appenddata+='</div>';
-             appenddata+='<div class="row form-group">';
-             appenddata+='<div class="col-lg-offset-2 col-lg-2">';
-             appenddata+='<input type="button" id="CC_src_btn_search" class="btn" value="SEARCH" disabled></div></div>';
-             $('#CC_SearchformDiv').html(appenddata);
-             $('#CC_SRC_Fromdate').datepicker({
-                 dateFormat: 'dd-mm-yy',
-                 changeYear: true,
-                 changeMonth: true,
-                 yearRange: '1920:' + CCRE_year + '',
-                 defaultDate: CCRE_d});
-             $("#CC_SRC_Todate").datepicker({
-                 dateFormat: 'dd-mm-yy',
-                 changeYear: true,
-                 changeMonth: true});
-             $('#CC_SRC_Todate').datepicker("option","maxDate",new Date());
-             $('.preloader').hide();
-         }
-        else if(searchoption==34)
-         {
-             var appenddata='<h4 style="color:#498af3;">LEASE PERIOD SEARCH</h4><br>';
-             appenddata+='<div class="row form-group" style="padding-left:20px;">';
-             appenddata+='<div class="col-md-3"><label>LEASE PERIOD<span class="labelrequired"><em>*</em></span></label></div>';
-             appenddata+='<div class="col-md-3"><input type="text" class="form-control" name="CC_SRC_Leaseperiod"  id="CC_SRC_Leaseperiod" /></div>';
-             appenddata+='</div>';
-             appenddata+='<div class="row form-group">';
-             appenddata+='<div class="col-lg-offset-2 col-lg-2">';
-             appenddata+='<input type="button" id="CC_src_btn_search" class="btn" value="SEARCH" disabled></div></div>';
-             $('#CC_SearchformDiv').html(appenddata);
-             $('#CC_SRC_Leaseperiod').datepicker( {
-                 changeMonth: true,      //provide option to select Month
-                 changeYear: true,       //provide option to select year
-                 showButtonPanel: true,  // button panel having today and done button
-                 dateFormat: 'MM-yy',    //set date format
-                 onClose: function(dateText, inst) {
-                     var month = $("#ui-datepicker-div .ui-datepicker-month :selected").val();
-                     var year = $("#ui-datepicker-div .ui-datepicker-year :selected").val();
-                     $(this).datepicker('setDate', new Date(year, month, 1));//here set the date when closing.
-                     $(this).blur();//remove focus input box
-                     leaseperiodvalidation();
-                 }
-             });
-             $("#CC_SRC_Leaseperiod").focus(function () {
-                 $(".ui-datepicker-calendar").hide();
-                 $("#ui-datepicker-div").position({
-                     my: "center top",
-                     at: "center bottom",
-                     of: $(this)
                  });
-             });
-             $('.preloader').hide();
+             }
+             else if (searchoption == 18) {
+                 $.ajax({
+                     type: "POST",
+                     url: controller_url + "CustomerCardNos",
+                     success: function (data) {
+                         var value_array = JSON.parse(data);
+                         var appenddata = '<h4 style="color:#498af3;">CARD NUMBER SEARCH</h4><br>';
+                         appenddata += '<div class="row form-group" style="padding-left:20px;">';
+                         appenddata += '<div class="col-md-3"><label>CARD NUMBER<span class="labelrequired"><em>*</em></span></label></div>';
+                         appenddata += '<div class="col-md-3"><input type=text class="form-control customernameautovalidate" name="CC_SRC_CardNoSearch" maxlength="7"  id="CC_SRC_CardNoSearch" style="max-width: 150px;"/></div>';
+                         appenddata += '<div class="col-md-3"><label id="customernameautocompleteerrormsg" class="errormsg" hidden></label></div>';
+                         appenddata += '</div>';
+                         appenddata += '<div class="row form-group">';
+                         appenddata += '<div class="col-lg-offset-2 col-lg-2">';
+                         appenddata += '<input type="button" id="CC_src_btn_search" class="btn" value="SEARCH" disabled></div></div>';
+                         $('#CC_SearchformDiv').html(appenddata);
+                         for (var i = 0; i < value_array.length; i++) {
+                             if (value_array[i].UASD_ACCESS_CARD != '' && value_array[i].UASD_ACCESS_CARD != null) {
+                                 AllcradsArray.push(value_array[i].UASD_ACCESS_CARD);
+                             }
+                         }
+                         $('#customernameautocompleteerrormsg').text(errormsg[17].EMC_DATA);
+                         $("#CC_SRC_CardNoSearch").doValidation({
+                             rule: 'numbersonly',
+                             prop: {realpart: 7, leadzero: true}
+                         });
+                         $("#CC_SRC_CardNoSearch").focus();
+                         $('.preloader').hide();
+                     },
+                     error: function (data) {
+                         alert('error in getting' + JSON.stringify(data));
+                         $('.preloader').hide();
+                     }
+                 });
+             }
+             else if (searchoption == 19) {
+                 $.ajax({
+                     type: "POST",
+                     url: controller_url + "CustomerCompnameName",
+                     success: function (data) {
+                         var value_array = JSON.parse(data);
+                         var appenddata = '<h4 style="color:#498af3;">COMPANY NAME SEARCH</h4><br>';
+                         appenddata += '<div class="row form-group" style="padding-left:20px;">';
+                         appenddata += '<div class="col-md-3"><label>COMPANY NAME<span class="labelrequired"><em>*</em></span></label></div>';
+                         appenddata += '<div class="col-md-3"><input type=text class="form-control autosize customernameautovalidate" name="CC_SRC_CompanyNameSearch"  id="CC_SRC_CompanyNameSearch"/></div>';
+                         appenddata += '<div class="col-md-3"><label id="customernameautocompleteerrormsg" class="errormsg" hidden></label></div>';
+                         appenddata += '</div>';
+                         appenddata += '<div class="row form-group">';
+                         appenddata += '<div class="col-lg-offset-2 col-lg-2">';
+                         appenddata += '<input type="button" id="CC_src_btn_search" class="btn" value="SEARCH" disabled></div></div>';
+                         $('#CC_SearchformDiv').html(appenddata);
+                         for (var i = 0; i < value_array.length; i++) {
+                             if (value_array[i].CCD_COMPANY_NAME != '' && value_array[i].CCD_COMPANY_NAME != null) {
+                                 AllcompanyArray.push(value_array[i].CCD_COMPANY_NAME);
+                             }
+                         }
+                         $('#customernameautocompleteerrormsg').text(errormsg[17].EMC_DATA);
+                         $("#CC_SRC_CompanyNameSearch").focus();
+                         $('.preloader').hide();
+                     },
+                     error: function (data) {
+                         alert('error in getting' + JSON.stringify(data));
+                         $('.preloader').hide();
+                     }
+                 });
+             }
+             else if (searchoption == 22) {
+                 var appenddata = '<h4 style="color:#498af3;">DEPOSIT AMOUNT SEARCH</h4><br>';
+                 appenddata += '<div class="row form-group" style="padding-left:20px;">';
+                 appenddata += '<div class="col-md-3"><label>FROM AMOUNT<span class="labelrequired"><em>*</em></span></label></div>';
+                 appenddata += '<div class="col-md-3"><input type=text class="form-control CCRE_amtonlyvalidationmaxdigit AmountValidation" name="CC_SRC_FromAmount"  id="CC_SRC_FromAmount" style="max-width: 100px" placeholder="0.00"/></div>';
+                 appenddata += '</div>';
+                 appenddata += '<div class="row form-group" style="padding-left:20px;">';
+                 appenddata += '<div class="col-md-3"><label>TO AMOUNT<span class="labelrequired"><em>*</em></span></label></div>';
+                 appenddata += '<div class="col-md-3"><input type=text class="form-control CCRE_amtonlyvalidationmaxdigit AmountValidation" name="CC_SRC_ToAmount"  id="CC_SRC_ToAmount" style="max-width: 100px" placeholder="0.00"/></div>';
+                 appenddata += '<div class="col-md-5"><label id="depositamterrormsg" class="errormsg" hidden></label></div>';
+                 appenddata += '</div>';
+                 appenddata += '<div class="row form-group">';
+                 appenddata += '<div class="col-lg-offset-2 col-lg-2">';
+                 appenddata += '<input type="button" id="CC_src_btn_search" class="btn" value="SEARCH" disabled></div></div>';
+                 $('#CC_SearchformDiv').html(appenddata);
+                 $(".CCRE_amtonlyvalidationmaxdigit").doValidation({
+                     rule: 'numbersonly',
+                     prop: {realpart: 5, imaginary: 2}
+                 });
+                 $('#depositamterrormsg').text(errormsg[7].EMC_DATA);
+                 $('.preloader').hide();
+             }
+             else if (searchoption == 30) {
+                 var appenddata = '<h4 style="color:#498af3;">RENT AMOUNT SEARCH</h4><br>';
+                 appenddata += '<div class="row form-group" style="padding-left:20px;">';
+                 appenddata += '<div class="col-md-3"><label>FROM AMOUNT<span class="labelrequired"><em>*</em></span></label></div>';
+                 appenddata += '<div class="col-md-3"><input type=text class="form-control CCRE_amtonlyvalidationmaxdigit AmountValidation" name="CC_SRC_FromAmount"  id="CC_SRC_FromAmount" style="max-width: 100px" placeholder="0.00"/></div>';
+                 appenddata += '</div>';
+                 appenddata += '<div class="row form-group" style="padding-left:20px;">';
+                 appenddata += '<div class="col-md-3"><label>TO AMOUNT<span class="labelrequired"><em>*</em></span></label></div>';
+                 appenddata += '<div class="col-md-3"><input type=text class="form-control CCRE_amtonlyvalidationmaxdigit AmountValidation" name="CC_SRC_ToAmount"  id="CC_SRC_ToAmount" style="max-width: 100px" placeholder="0.00"/></div>';
+                 appenddata += '<div class="col-md-5"><label id="depositamterrormsg" class="errormsg" hidden></label></div>';
+                 appenddata += '</div>';
+                 appenddata += '<div class="row form-group">';
+                 appenddata += '<div class="col-lg-offset-2 col-lg-2">';
+                 appenddata += '<input type="button" id="CC_src_btn_search" class="btn" value="SEARCH" disabled></div></div>';
+                 $('#CC_SearchformDiv').html(appenddata);
+                 $(".CCRE_amtonlyvalidationmaxdigit").doValidation({
+                     rule: 'numbersonly',
+                     prop: {realpart: 5, imaginary: 2}
+                 });
+                 $('#depositamterrormsg').text(errormsg[7].EMC_DATA);
+                 $('.preloader').hide();
+             }
+             else if (searchoption == 27) {
+                 var appenddata = '<h4 style="color:#498af3;">NATIONALITY SEARCH</h4><br>';
+                 appenddata += '<div class="row form-group" style="padding-left:20px;">';
+                 appenddata += '<div class="col-md-3"><label>NATIONALITY<span class="labelrequired"><em>*</em></span></label></div>';
+                 appenddata += '<div class="col-md-3"><SELECT class="form-control" name="CC_SRC_listsearch"  id="CC_SRC_listsearch" ></SELECT></div>';
+                 appenddata += '</div>';
+                 appenddata += '<div class="row form-group">';
+                 appenddata += '<div class="col-lg-offset-2 col-lg-2">';
+                 appenddata += '<input type="button" id="CC_src_btn_search" class="btn" value="SEARCH" disabled></div></div>';
+                 $('#CC_SearchformDiv').html(appenddata);
+                 var options = '<OPTION>SELECT</OPTION>';
+                 for (var i = 0; i < nationality.length; i++) {
+                     var data = nationality[i];
+                     options += '<option value="' + data.NC_DATA + '">' + data.NC_DATA + '</option>';
+                 }
+                 $('#CC_SRC_listsearch').html(options);
+                 $('.preloader').hide();
+             }
+             else if (searchoption == 31) {
+                 $.ajax({
+                     type: "POST",
+                     url: controller_url + "AllUnits",
+                     success: function (data) {
+                         var value_array = JSON.parse(data);
+                         var appenddata = '<h4 style="color:#498af3;">UNIT NUMBER SEARCH</h4><br>';
+                         appenddata += '<div class="row form-group" style="padding-left:20px;">';
+                         appenddata += '<div class="col-md-3"><label>UNIT NUMBER<span class="labelrequired"><em>*</em></span></label></div>';
+                         appenddata += '<div class="col-md-3"><SELECT class="form-control" name="CC_SRC_listsearch"  id="CC_SRC_listsearch" style="max-width: 120px"></SELECT></div>';
+                         appenddata += '</div>';
+                         appenddata += '<div class="row form-group">';
+                         appenddata += '<div class="col-lg-offset-2 col-lg-2">';
+                         appenddata += '<input type="button" id="CC_src_btn_search" class="btn" value="SEARCH" disabled></div></div>';
+                         $('#CC_SearchformDiv').html(appenddata);
+                         var options = '<OPTION>SELECT</OPTION>';
+                         for (var i = 0; i < value_array.length; i++) {
+                             var data = value_array[i];
+                             options += '<option value="' + data.UNIT_NO + '">' + data.UNIT_NO + '</option>';
+                         }
+                         $('#CC_SRC_listsearch').html(options);
+                         $('.preloader').hide();
+                     },
+                     error: function (data) {
+                         alert('error in getting' + JSON.stringify(data));
+                         $('.preloader').hide();
+                     }
+                 });
+             }
+             else if (searchoption == 33) {
+                 $.ajax({
+                     type: "POST",
+                     url: controller_url + "AllRoomtype",
+                     success: function (data) {
+                         var value_array = JSON.parse(data);
+                         var appenddata = '<h4 style="color:#498af3;">ROOMTYPE SEARCH</h4><br>';
+                         appenddata += '<div class="row form-group" style="padding-left:20px;">';
+                         appenddata += '<div class="col-md-3"><label>ROOMTYPE<span class="labelrequired"><em>*</em></span></label></div>';
+                         appenddata += '<div class="col-md-3"><SELECT class="form-control" name="CC_SRC_listsearch"  id="CC_SRC_listsearch" style="max-width: 170px"></SELECT></div>';
+                         appenddata += '</div>';
+                         appenddata += '<div class="row form-group">';
+                         appenddata += '<div class="col-lg-offset-2 col-lg-2">';
+                         appenddata += '<input type="button" id="CC_src_btn_search" class="btn" value="SEARCH" disabled></div></div>';
+                         $('#CC_SearchformDiv').html(appenddata);
+                         var options = '<OPTION>SELECT</OPTION>';
+                         for (var i = 0; i < value_array.length; i++) {
+                             var data = value_array[i];
+                             options += '<option value="' + data.URTD_ROOM_TYPE + '">' + data.URTD_ROOM_TYPE + '</option>';
+                         }
+                         $('#CC_SRC_listsearch').html(options);
+                         $('.preloader').hide();
+                     },
+                     error: function (data) {
+                         alert('error in getting' + JSON.stringify(data));
+                         $('.preloader').hide();
+                     }
+                 });
+             }
+             else if (searchoption == 24) {
+                 $.ajax({
+                     type: "POST",
+                     url: controller_url + "AllEmails",
+                     success: function (data) {
+                         var value_array = JSON.parse(data);
+                         var appenddata = '<h4 style="color:#498af3;">EMAIL ID SEARCH</h4><br>';
+                         appenddata += '<div class="row form-group" style="padding-left:20px;">';
+                         appenddata += '<div class="col-md-3"><label>EMAIL ID<span class="labelrequired"><em>*</em></span></label></div>';
+                         appenddata += '<div class="col-md-3"><input type=text class="form-control customernameautovalidate" name="CC_SRC_EmailSearch"  id="CC_SRC_EmailSearch"/></div>';
+                         appenddata += '<div class="col-md-3"><label id="customernameautocompleteerrormsg" class="errormsg" hidden></label></div>';
+                         appenddata += '</div>';
+                         appenddata += '<div class="row form-group">';
+                         appenddata += '<div class="col-lg-offset-2 col-lg-2">';
+                         appenddata += '<input type="button" id="CC_src_btn_search" class="btn" value="SEARCH" disabled></div></div>';
+                         $('#CC_SearchformDiv').html(appenddata);
+                         for (var i = 0; i < value_array.length; i++) {
+                             if (value_array[i].CPD_EMAIL != '' && value_array[i].CPD_EMAIL != null) {
+                                 AllEmailsArray.push(value_array[i].CPD_EMAIL);
+                             }
+                         }
+                         $('#customernameautocompleteerrormsg').text(errormsg[17].EMC_DATA);
+                         $("#CC_SRC_EmailSearch").focus();
+                         $('.preloader').hide();
+                     },
+                     error: function (data) {
+                         alert('error in getting' + JSON.stringify(data));
+                         $('.preloader').hide();
+                     }
+                 });
+             }
+             else if (searchoption == 25) {
+                 $.ajax({
+                     type: "POST",
+                     url: controller_url + "AllEPNumbers",
+                     success: function (data) {
+                         var value_array = JSON.parse(data);
+                         var appenddata = '<h4 style="color:#498af3;">EP NUMBER SEARCH</h4><br>';
+                         appenddata += '<div class="row form-group" style="padding-left:20px;">';
+                         appenddata += '<div class="col-md-3"><label>EP NUMBER<span class="labelrequired"><em>*</em></span></label></div>';
+                         appenddata += '<div class="col-md-3"><input type=text class="form-control autosize customernameautovalidate" name="CC_SRC_EPnoSearch"  id="CC_SRC_EPnoSearch"/></div>';
+                         appenddata += '<div class="col-md-3"><label id="customernameautocompleteerrormsg" class="errormsg" hidden></label></div>';
+                         appenddata += '</div>';
+                         appenddata += '<div class="row form-group">';
+                         appenddata += '<div class="col-lg-offset-2 col-lg-2">';
+                         appenddata += '<input type="button" id="CC_src_btn_search" class="btn" value="SEARCH" disabled></div></div>';
+                         $('#CC_SearchformDiv').html(appenddata);
+                         for (var i = 0; i < value_array.length; i++) {
+                             if (value_array[i].CPD_EP_NO != '' && value_array[i].CPD_EP_NO != null) {
+                                 AllEPnoArray.push(value_array[i].CPD_EP_NO);
+                             }
+                         }
+                         $('#customernameautocompleteerrormsg').text(errormsg[17].EMC_DATA);
+                         $("#CC_SRC_EPnoSearch").focus();
+                         $('.preloader').hide();
+                     },
+                     error: function (data) {
+                         alert('error in getting' + JSON.stringify(data));
+                         $('.preloader').hide();
+                     }
+                 });
+             }
+             else if (searchoption == 29) {
+                 $.ajax({
+                     type: "POST",
+                     url: controller_url + "AllPassPortNumbers",
+                     success: function (data) {
+                         var value_array = JSON.parse(data);
+                         var appenddata = '<h4 style="color:#498af3;">PASSPORT NUMBER SEARCH</h4><br>';
+                         appenddata += '<div class="row form-group" style="padding-left:20px;">';
+                         appenddata += '<div class="col-md-3"><label>PASSPORT NUMBER<span class="labelrequired"><em>*</em></span></label></div>';
+                         appenddata += '<div class="col-md-3"><input type=text class="form-control autosize customernameautovalidate" name="CC_SRC_PassportnoSearch"  id="CC_SRC_PassportnoSearch"/></div>';
+                         appenddata += '<div class="col-md-3"><label id="customernameautocompleteerrormsg" class="errormsg" hidden></label></div>';
+                         appenddata += '</div>';
+                         appenddata += '<div class="row form-group">';
+                         appenddata += '<div class="col-lg-offset-2 col-lg-2">';
+                         appenddata += '<input type="button" id="CC_src_btn_search" class="btn" value="SEARCH" disabled></div></div>';
+                         $('#CC_SearchformDiv').html(appenddata);
+                         for (var i = 0; i < value_array.length; i++) {
+                             if (value_array[i].CPD_PASSPORT_NO != '' && value_array[i].CPD_PASSPORT_NO != null) {
+                                 AllPassportnoArray.push(value_array[i].CPD_PASSPORT_NO);
+                             }
+                         }
+                         $('#customernameautocompleteerrormsg').text(errormsg[17].EMC_DATA);
+                         $("#CC_SRC_PassportnoSearch").focus();
+                         $('.preloader').hide();
+                     },
+                     error: function (data) {
+                         alert('error in getting' + JSON.stringify(data));
+                         $('.preloader').hide();
+                     }
+                 });
+             }
+             else if (searchoption == 26) {
+                 $.ajax({
+                     type: "POST",
+                     url: controller_url + "AllMobileNumbers",
+                     success: function (data) {
+                         var value_array = JSON.parse(data);
+                         var appenddata = '<h4 style="color:#498af3;">MOBILE NUMBER SEARCH</h4><br>';
+                         appenddata += '<div class="row form-group" style="padding-left:20px;">';
+                         appenddata += '<div class="col-md-3"><label>MOBILE NUMBER<span class="labelrequired"><em>*</em></span></label></div>';
+                         appenddata += '<div class="col-md-3"><input type=text class="form-control autosize customernameautovalidate" name="CC_SRC_MobilenoSearch"  id="CC_SRC_MobilenoSearch"/></div>';
+                         appenddata += '<div class="col-md-3"><label id="customernameautocompleteerrormsg" class="errormsg" hidden></label></div>';
+                         appenddata += '</div>';
+                         appenddata += '<div class="row form-group">';
+                         appenddata += '<div class="col-lg-offset-2 col-lg-2">';
+                         appenddata += '<input type="button" id="CC_src_btn_search" class="btn" value="SEARCH" disabled></div></div>';
+                         $('#CC_SearchformDiv').html(appenddata);
+                         for (var i = 0; i < value_array.length; i++) {
+                             if (value_array[i].CPD_MOBILE != '' && value_array[i].CPD_MOBILE != null) {
+                                 AllMobilenoArray.push(value_array[i].CPD_MOBILE);
+                             }
+                         }
+                         $('#customernameautocompleteerrormsg').text(errormsg[17].EMC_DATA);
+                         $("#CC_SRC_MobilenoSearch").focus();
+                         $('.preloader').hide();
+                     },
+                     error: function (data) {
+                         alert('error in getting' + JSON.stringify(data));
+                         $('.preloader').hide();
+                     }
+                 });
+             }
+             else if (searchoption == 32) {
+                 $.ajax({
+                     type: "POST",
+                     url: controller_url + "AllIntMobileNumbers",
+                     success: function (data) {
+                         var value_array = JSON.parse(data);
+                         var appenddata = '<h4 style="color:#498af3;">INTL MOBILE NUMBER SEARCH</h4><br>';
+                         appenddata += '<div class="row form-group" style="padding-left:20px;">';
+                         appenddata += '<div class="col-md-3"><label>INTL MOBILE NUMBER<span class="labelrequired"><em>*</em></span></label></div>';
+                         appenddata += '<div class="col-md-3"><input type=text class="form-control autosize customernameautovalidate" name="CC_SRC_IntMobilenoSearch"  id="CC_SRC_IntMobilenoSearch"/></div>';
+                         appenddata += '<div class="col-md-3"><label id="customernameautocompleteerrormsg" class="errormsg" hidden></label></div>';
+                         appenddata += '</div>';
+                         appenddata += '<div class="row form-group">';
+                         appenddata += '<div class="col-lg-offset-2 col-lg-2">';
+                         appenddata += '<input type="button" id="CC_src_btn_search" class="btn" value="SEARCH" disabled></div></div>';
+                         $('#CC_SearchformDiv').html(appenddata);
+                         for (var i = 0; i < value_array.length; i++) {
+                             if (value_array[i].CPD_INTL_MOBILE != '' && value_array[i].CPD_INTL_MOBILE != null) {
+                                 AllIntMobilenoArray.push(value_array[i].CPD_INTL_MOBILE);
+                             }
+                         }
+                         $('#customernameautocompleteerrormsg').text(errormsg[17].EMC_DATA);
+                         $("#CC_SRC_IntMobilenoSearch").focus();
+                         $('.preloader').hide();
+                     },
+                     error: function (data) {
+                         alert('error in getting' + JSON.stringify(data));
+                         $('.preloader').hide();
+                     }
+                 });
+             }
+             else if (searchoption == 28) {
+                 $.ajax({
+                     type: "POST",
+                     url: controller_url + "AllOfficeNumbers",
+                     success: function (data) {
+                         var value_array = JSON.parse(data);
+                         var appenddata = '<h4 style="color:#498af3;">OFFICE NUMBER SEARCH</h4><br>';
+                         appenddata += '<div class="row form-group" style="padding-left:20px;">';
+                         appenddata += '<div class="col-md-3"><label>OFFICE NUMBER<span class="labelrequired"><em>*</em></span></label></div>';
+                         appenddata += '<div class="col-md-3"><input type=text class="form-control autosize customernameautovalidate" name="CC_SRC_OfficenoSearch"  id="CC_SRC_OfficenoSearch"/></div>';
+                         appenddata += '<div class="col-md-3"><label id="customernameautocompleteerrormsg" class="errormsg" hidden></label></div>';
+                         appenddata += '</div>';
+                         appenddata += '<div class="row form-group">';
+                         appenddata += '<div class="col-lg-offset-2 col-lg-2">';
+                         appenddata += '<input type="button" id="CC_src_btn_search" class="btn" value="SEARCH" disabled></div></div>';
+                         $('#CC_SearchformDiv').html(appenddata);
+                         for (var i = 0; i < value_array.length; i++) {
+                             if (value_array[i].CCD_OFFICE_NO != '' && value_array[i].CCD_OFFICE_NO != null) {
+                                 AllOfficenoArray.push(value_array[i].CCD_OFFICE_NO);
+                             }
+                         }
+                         $('#customernameautocompleteerrormsg').text(errormsg[17].EMC_DATA);
+                         $("#CC_SRC_OfficenoSearch").focus();
+                         $('.preloader').hide();
+                     },
+                     error: function (data) {
+                         alert('error in getting' + JSON.stringify(data));
+                         $('.preloader').hide();
+                     }
+                 });
+             }
+             else if (searchoption == 20) {
+                 $.ajax({
+                     type: "POST",
+                     url: controller_url + "AllComments",
+                     success: function (data) {
+                         var value_array = JSON.parse(data);
+                         var appenddata = '<h4 style="color:#498af3;">COMMENTS SEARCH</h4><br>';
+                         appenddata += '<div class="row form-group" style="padding-left:20px;">';
+                         appenddata += '<div class="col-md-3"><label>COMMENTS<span class="labelrequired"><em>*</em></span></label></div>';
+                         appenddata += '<div class="col-md-3"><textarea class="form-control  customernameautovalidate" name="CC_SRC_CommentsSearch"  id="CC_SRC_CommentsSearch"></textarea></div>';
+                         appenddata += '<div class="col-md-3"><label id="customernameautocompleteerrormsg" class="errormsg" hidden></label></div>';
+                         appenddata += '</div>';
+                         appenddata += '<div class="row form-group">';
+                         appenddata += '<div class="col-lg-offset-2 col-lg-2">';
+                         appenddata += '<input type="button" id="CC_src_btn_search" class="btn" value="SEARCH" disabled></div></div>';
+                         $('#CC_SearchformDiv').html(appenddata);
+                         for (var i = 0; i < value_array.length; i++) {
+                             if (value_array[i].CPD_COMMENTS != '' && value_array[i].CPD_COMMENTS != null) {
+                                 AllCommentsArray.push(value_array[i].CPD_COMMENTS);
+                             }
+                         }
+                         $('#customernameautocompleteerrormsg').text(errormsg[17].EMC_DATA);
+                         $("#CC_SRC_CommentsSearch").focus();
+                         $('.preloader').hide();
+                     },
+                     error: function (data) {
+                         alert('error in getting' + JSON.stringify(data));
+                         $('.preloader').hide();
+                     }
+                 });
+             }
+             else if (searchoption == 23) {
+                 var appenddata = '<h4 style="color:#498af3;">DOB SEARCH</h4><br>';
+                 appenddata += '<div class="row form-group" style="padding-left:20px;">';
+                 appenddata += '<div class="col-md-3"><label>FROM DATE<span class="labelrequired"><em>*</em></span></label></div>';
+                 appenddata += '<div class="col-md-3"><input type=text class="form-control dobvalidation" name="CC_SRC_Fromdate"  id="CC_SRC_Fromdate" style="max-width: 150px"/></div>';
+                 appenddata += '</div>';
+                 appenddata += '<div class="row form-group" style="padding-left:20px;">';
+                 appenddata += '<div class="col-md-3"><label>TO DATE<span class="labelrequired"><em>*</em></span></label></div>';
+                 appenddata += '<div class="col-md-3"><input type=text class="form-control dobvalidation" name="CC_SRC_Todate"  id="CC_SRC_Todate" style="max-width: 150px"/></div>';
+//             appenddata+='<div class="col-md-5"><label id="depositamterrormsg" class="errormsg" hidden></label></div>';
+                 appenddata += '</div>';
+                 appenddata += '<div class="row form-group">';
+                 appenddata += '<div class="col-lg-offset-2 col-lg-2">';
+                 appenddata += '<input type="button" id="CC_src_btn_search" class="btn" value="SEARCH" disabled></div></div>';
+                 $('#CC_SearchformDiv').html(appenddata);
+                 $('#CC_SRC_Fromdate').datepicker({
+                     dateFormat: 'dd-mm-yy',
+                     changeYear: true,
+                     changeMonth: true,
+                     yearRange: '1920:' + CCRE_year + '',
+                     defaultDate: CCRE_d
+                 });
+                 $("#CC_SRC_Todate").datepicker({
+                     dateFormat: 'dd-mm-yy',
+                     changeYear: true,
+                     changeMonth: true
+                 });
+                 $('#CC_SRC_Todate').datepicker("option", "maxDate", new Date());
+                 $('.preloader').hide();
+             }
+             else if (searchoption == 34) {
+                 var appenddata = '<h4 style="color:#498af3;">LEASE PERIOD SEARCH</h4><br>';
+                 appenddata += '<div class="row form-group" style="padding-left:20px;">';
+                 appenddata += '<div class="col-md-3"><label>LEASE PERIOD<span class="labelrequired"><em>*</em></span></label></div>';
+                 appenddata += '<div class="col-md-3"><input type="text" class="form-control" name="CC_SRC_Leaseperiod"  id="CC_SRC_Leaseperiod" /></div>';
+                 appenddata += '</div>';
+                 appenddata += '<div class="row form-group">';
+                 appenddata += '<div class="col-lg-offset-2 col-lg-2">';
+                 appenddata += '<input type="button" id="CC_src_btn_search" class="btn" value="SEARCH" disabled></div></div>';
+                 $('#CC_SearchformDiv').html(appenddata);
+                 $('#CC_SRC_Leaseperiod').datepicker({
+                     changeMonth: true,      //provide option to select Month
+                     changeYear: true,       //provide option to select year
+                     showButtonPanel: true,  // button panel having today and done button
+                     dateFormat: 'MM-yy',    //set date format
+                     onClose: function (dateText, inst) {
+                         var month = $("#ui-datepicker-div .ui-datepicker-month :selected").val();
+                         var year = $("#ui-datepicker-div .ui-datepicker-year :selected").val();
+                         $(this).datepicker('setDate', new Date(year, month, 1));//here set the date when closing.
+                         $(this).blur();//remove focus input box
+                         leaseperiodvalidation();
+                     }
+                 });
+                 $("#CC_SRC_Leaseperiod").focus(function () {
+                     $(".ui-datepicker-calendar").hide();
+                     $("#ui-datepicker-div").position({
+                         my: "center top",
+                         at: "center bottom",
+                         of: $(this)
+                     });
+                 });
+                 $('.preloader').hide();
+             }
          }
-
      });
      //////////////LEASE PERIOD///////////////////////////////
      function leaseperiodvalidation()
@@ -1041,6 +1014,11 @@
          CustpmerPersonal_Tabledata+="</body>";
          $('#Customer_Personal_Table').html(CustpmerPersonal_Tabledata);
          $('#Customer_Personal_Datatable').DataTable( {
+             "sDom":"Rlfrtip",
+             "deferRender":    true,
+             "scrollY": 200,
+             "scrollX": 500,
+             "scrollCollapse": true,
              "aoColumnDefs": [{"aTargets": ["uk-date-column"],"sType": "uk_date"}, {"aTargets": ["uk-timestp-column"], "sType": "uk_timestp"}]
          });
          var CustpmerAccount_Tabledata='<table style="width: 3500px" id="Customer_Account_Datatable" border="1" cellspacing="0" data-class="table" class="srcresult"><thead bgcolor="#6495ed" style="color:white"><tr>';
@@ -1182,6 +1160,11 @@
          CustpmerAccount_Tabledata+="</body>";
          $('#AccessCard_table').html(CustpmerAccount_Tabledata);
          $('#Customer_Account_Datatable').DataTable( {
+             "sDom":"Rlfrtip",
+             "deferRender":    true,
+             "scrollY": 200,
+             "scrollX": 500,
+             "scrollCollapse": true,
              "aaSorting": [],
              "pageLength": 10,
              "sPaginationType":"full_numbers",
@@ -1600,7 +1583,6 @@
      $(document).on('click','.filedelete',function(){
          var fileid=this.id;
          var splitfileid=fileid.split('/');
-         alert(splitfileid[0]);
          $('.preloader').show();
          $.ajax({
              type: "POST",
@@ -1982,6 +1964,7 @@
      }
 
      $(document).on('click','#CSRC_btn_Updatebutton', function (){
+         alert('update')
          $('.preloader').show();
          $('#CCRE_SRC_UnitNo').prop('disabled', false);
          $('#CCRE_SRC_SDStarttime').prop('disabled', false);
@@ -2122,16 +2105,14 @@
          xmlhttp.onreadystatechange = function () {
              if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
                  $('.preloader').hide();
-                 alert(xmlhttp.responseText);
                  var msg_alert = JSON.parse(xmlhttp.responseText);
-                 alert(msg_alert);
                  $('.preloader').hide();
                  if (msg_alert == 1) {
-                     $('#CC_SearchformDiv').hide();
-                     $('#CC_SEARCH_DataTable').hide();
-                     $('#CC_SEARCH_acDataTable').hide();
-                     $('#CSRC_updation_form').hide();
-                     $('#CSRC_fileupload').val('');
+//                     $('#CC_SearchformDiv').hide();
+//                     $('#CC_SEARCH_DataTable').hide();
+//                     $('#CC_SEARCH_acDataTable').hide();
+//                     $('#CSRC_updation_form').hide();
+//                     $('#CSRC_fileupload').val('');
                      show_msgbox("CUSTOMER SEARCH/UPDATE",errormsg[18].EMC_DATA,"success",false);
                  }
                  else {

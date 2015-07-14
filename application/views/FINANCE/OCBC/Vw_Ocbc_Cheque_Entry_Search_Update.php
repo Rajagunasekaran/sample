@@ -534,8 +534,8 @@
                 "STATUS":["<SELECT id='status' name='status'  class='form-control  FormValidation Debitedvalidation'  style='font-weight:bold;width:150px' value='"+$('#STATUS_'+Rowid).html()+"'><OPTION>SELECT</OPTION></SELECT>"],
                 "DEBITED":["<div class='col-sm-4'><div class='input-group addon'><input type='text' class='form-control FormValidation datemandtry' id=debiteddate style='width:120px;' value='"+$('#DEBITED_'+Rowid).html()+"'><label  class='input-group-addon' for=debiteddate><span class='glyphicon glyphicon-calendar'></span></label></div></div>"],
                 "COMMENTS":["<textarea id='Comments' name='Comments'  class='form-control autogrowcomments FormValidation'  style='font-weight:bold;'>"+$('#COMMENTS_'+Rowid).html()+"</textarea>"],
-                "USERSTAMP":[$(tds[10]).html()],
-                "TIMESTAMP":[$(tds[11]).html()]}
+                "USERSTAMP":[$('#USERSTAMP_'+Rowid).html()],
+                "TIMESTAMP":[$('#TIMESTAMP_'+Rowid).html()]}
             for(var t=0;t<tds.length;t++){
                 $(tds[t]).html(arr[$(tds[t]).attr('id').split('_')[0]][0]);
             }
@@ -621,7 +621,6 @@
             var tds = $('#'+Rowid).children('td');
 //            alert(Rowid);
             for(var t=0;t<tds.length;t++){
-                alert(arrLast[$(tds[t]).attr('id').split('_')[0]][0])
                 $(tds[t]).html(arrLast[$(tds[t]).attr('id').split('_')[0]][0]);
             }
             $("#Editid_"+Rowid).removeClass("Cheque_editcancel");
@@ -701,7 +700,7 @@
                             "CHKTO":[cheque_to],"CHKFOR":[check_for],
                             "CHKAMT":[check_amount],"UNIT":[unit],
                             "STATUS":[status],"DEBITED":[debiteddate],"COMMENTS":[comments],"USERSTAMP":[value_array[1]],"TIMESTAMP":[value_array[2]]}
-                         var tds = $('#'+selectedrowid).children('td');
+                        var tds = $('#'+selectedrowid).children('td');
                         for(var t=0;t<tds.length;t++){
                             $(tds[t]).html(arrupdate[$(tds[t]).attr('id').split('_')[0]][0]);
                         }

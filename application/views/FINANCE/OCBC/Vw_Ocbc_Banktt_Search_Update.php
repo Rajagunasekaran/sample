@@ -474,150 +474,154 @@ require_once('application/libraries/EI_HDR.php');
                 data:inputdata,
                 success: function(data){
 
-                        var valuearray = JSON.parse(data);
-                       if(valuearray.length!=0) {
-                           var tabledata = '<table style="width:3500px" id="Banktt_Datatable" border="1" cellspacing="0" data-class="table" class="srcresult"><thead bgcolor="#6495ed" style="color:white"><tr>';
-                           tabledata += "<th style='width:80px !important;text-align: center'>EDIT/UPDATE</th>";
-                           tabledata += "<th style='width:130px !important;text-align: center'>TRANSACTION TYPE<span class='labelrequired'><em>*</em></span></th>";
-                           tabledata += "<th style='width:100px !important;text-align: center' class='uk-date-column'>DATE<span class='labelrequired'><em>*</em></span></th>";
-                           tabledata += "<th style='width:150px !important;text-align: center'>ACCOUNT NAME<span class='labelrequired'><em>*</em></span></th>";
-                           tabledata += "<th style='width:150px !important;text-align: center'>ACCOUNT NO<span class='labelrequired'><em>*</em></span></th>";
-                           tabledata += "<th style='width:120px !important;text-align: center'>AMOUNT<span class='labelrequired'><em>*</em></span></th>";
-                           tabledata += "<th style='width:100px !important;text-align: center'>UNIT</th>";
-                           tabledata += "<th style='width:150px !important;text-align: center'>CUSTOMER<span class='labelrequired'><em>*</em></span></th>";
-                           tabledata += "<th style='width:100px !important;text-align: center'>STATUS<span class='labelrequired'><em>*</em></span></th>";
-                           tabledata += "<th style='width:150px !important;text-align: center' class='uk-date-column'>DEBITED / REJECTED DATE<span class='labelrequired'><em>*</em></span></th>";
-                           tabledata += "<th style='width:120px !important;text-align: center'>BANK CODE</th>";
-                           tabledata += "<th style='width:120px !important;text-align: center'>BRANCH CODE</th>";
-                           tabledata += "<th style='width:200px !important;text-align: center'>BANK ADDRESS</th>";
-                           tabledata += "<th style='width:150px !important;text-align: center'>SWIFT CODE</th>";
-                           tabledata += "<th style='width:150px !important;text-align: center'>CHARGES TO</th>";
-                           tabledata += "<th style='width:200px !important;text-align: center'>CUST REF</th>";
-                           tabledata += "<th style='width:200px !important;text-align: center'>INV DETAILSS</th>";
-                           tabledata += "<th style='width:200px !important;text-align: center'>COMMENTS</th>";
-                           tabledata += "<th style='width:150px !important;text-align: center'>CREATED BY</th>";
-                           tabledata += "<th style='width:150px !important;text-align: center'>USERSTAMP</th>";
-                           tabledata += "<th style='width:150px !important;text-align: center' class='uk-timestp-column'>TIMESTAMP</th>";
-                           tabledata += "</tr></thead><tbody>";
-                           for (var i = 0; i < valuearray.length; i++) {
-                               var Ermid = valuearray[i].BT_ID;
-                               BT_id.push(Ermid)
-                               var edit = "Editid_" + valuearray[i].BT_ID;
-                               var del = "Deleteid_" + valuearray[i].BT_ID;
-                               if (valuearray[i].BT_ACC_NAME == null) {
-                                   var accname = '';
-                               } else {
-                                   accname = valuearray[i].BT_ACC_NAME;
-                               }
-                               if (valuearray[i].BT_ACC_NO == null) {
-                                   var accno = '';
-                               } else {
-                                   accno = valuearray[i].BT_ACC_NO;
-                               }
-                               if (valuearray[i].UNIT_NO == null) {
-                                   var unit = '';
-                               } else {
-                                   unit = valuearray[i].UNIT_NO;
-                               }
-                               if (valuearray[i].CUSTOMERNAME == null) {
-                                   var customer = '';
-                               } else {
-                                   customer = valuearray[i].CUSTOMERNAME;
-                               }
-                               if (valuearray[i].TRANSACTION_STATUS == null) {
-                                   var status = '';
-                               } else {
-                                   status = valuearray[i].TRANSACTION_STATUS;
-                               }
-                               if (valuearray[i].BT_DEBITED_ON == null) {
-                                   var debitedon = '';
-                               } else {
-                                   debitedon = valuearray[i].BT_DEBITED_ON;
-                               }
-                               if (valuearray[i].BT_BANK_CODE == null) {
-                                   var bankcode = '';
-                               } else {
-                                   bankcode = valuearray[i].BT_BANK_CODE;
-                               }
-                               if (valuearray[i].BT_BRANCH_CODE == null) {
-                                   var branchcode = '';
-                               } else {
-                                   branchcode = valuearray[i].BT_BRANCH_CODE;
-                               }
-                               if (valuearray[i].BT_BANK_ADDRESS == null) {
-                                   var bankaddress = '';
-                               } else {
-                                   bankaddress = valuearray[i].BT_BANK_ADDRESS;
-                               }
-                               if (valuearray[i].BT_SWIFT_CODE == null) {
-                                   var swiftcode = '';
-                               } else {
-                                   swiftcode = valuearray[i].BT_SWIFT_CODE;
-                               }
-                               if (valuearray[i].BANK_TRANSFER_CHARGES_TO == null) {
-                                   var chargesto = '';
-                               } else {
-                                   chargesto = valuearray[i].BANK_TRANSFER_CHARGES_TO;
-                               }
-                               if (valuearray[i].BT_CUST_REF == null) {
-                                   var custoref = '';
-                               } else {
-                                   custoref = valuearray[i].BT_CUST_REF;
-                               }
-                               if (valuearray[i].BT_INV_DETAILS == null) {
-                                   var invdetails = '';
-                               } else {
-                                   invdetails = valuearray[i].BT_INV_DETAILS;
-                               }
-                               if (valuearray[i].BT_COMMENTS == null) {
-                                   var comments = '';
-                               } else {
-                                   comments = valuearray[i].BT_COMMENTS;
-                               }
-                               if (valuearray[i].BANK_TRANSFER_CREATED_BY == null) {
-                                   var createdby = '';
-                               } else {
-                                   createdby = valuearray[i].BANK_TRANSFER_CREATED_BY;
-                               }
-                               tabledata += '<tr id=' + valuearray[i].BT_ID + '>' +
-                               "<td ><div class='col-lg-2'><span style='display: block;color:green' title='Edit' class='glyphicon glyphicon-edit Banktt_editbutton' id=" + edit + "></div></td>" +
-                               "<td >" + valuearray[i].BANK_TRANSFER_TYPE + "</td>" +
-                               "<td  >" + valuearray[i].BT_DATE + "</td>" +
-                               "<td>" + accname + "</td>" +
-                               "<td>" + accno + "</td>" +
-                               "<td>" + valuearray[i].BT_AMOUNT + "</td>" +
-                               "<td>" + unit + "</td>" +
-                               "<td>" + customer + "</td>" +
-                               "<td>" + status + "</td>" +
-                               "<td>" + debitedon + "</td>" +
-                               "<td>" + bankcode + "</td>" +
-                               "<td>" + branchcode + "</td>" +
-                               "<td>" + bankaddress + "</td>" +
-                               "<td>" + swiftcode + "</td>" +
-                               "<td>" + chargesto + "</td>" +
-                               "<td>" + custoref + "</td>" +
-                               "<td>" + invdetails + "</td>" +
-                               "<td>" + comments + "</td>" +
-                               "<td>" + createdby + "</td>" +
-                               "<td>" + valuearray[i].ULD_LOGINID + "</td>" +
-                               "<td>" + valuearray[i].BT_TIME_STAMP + "</td>" +
-                               "</tr>";
-                           }
-                           tabledata += "</body>";
-                           $('#tableheader').text(header);
-                           $('section').html(tabledata);
-                           $('.preloader').hide();
-                           $('#Banktt_Search_DataTable').show();
-                           $('#Banktt_Datatable').DataTable({
-                               "sDom":"Rlfrtip",
-                               "aaSorting": [],
-                               "pageLength": 10,
-                               "sPaginationType": "full_numbers",
-                               "aoColumnDefs": [{
-                                   "aTargets": ["uk-date-column"],
-                                   "sType": "uk_date"
-                               }, {"aTargets": ["uk-timestp-column"], "sType": "uk_timestp"}]
-                           });
+                    var valuearray = JSON.parse(data);
+                    if(valuearray.length!=0) {
+                        var tabledata = '<table style="width:3500px" id="Banktt_Datatable" border="1" cellspacing="0" data-class="table" class="srcresult"><thead bgcolor="#6495ed" style="color:white"><tr>';
+                        tabledata += "<th style='width:80px !important;text-align: center'>EDIT/UPDATE</th>";
+                        tabledata += "<th style='width:130px !important;text-align: center'>TRANSACTION TYPE<span class='labelrequired'><em>*</em></span></th>";
+                        tabledata += "<th style='width:100px !important;text-align: center' class='uk-date-column'>DATE<span class='labelrequired'><em>*</em></span></th>";
+                        tabledata += "<th style='width:150px !important;text-align: center'>ACCOUNT NAME<span class='labelrequired'><em>*</em></span></th>";
+                        tabledata += "<th style='width:150px !important;text-align: center'>ACCOUNT NO<span class='labelrequired'><em>*</em></span></th>";
+                        tabledata += "<th style='width:120px !important;text-align: center'>AMOUNT<span class='labelrequired'><em>*</em></span></th>";
+                        tabledata += "<th style='width:100px !important;text-align: center'>UNIT</th>";
+                        tabledata += "<th style='width:150px !important;text-align: center'>CUSTOMER<span class='labelrequired'><em>*</em></span></th>";
+                        tabledata += "<th style='width:100px !important;text-align: center'>STATUS<span class='labelrequired'><em>*</em></span></th>";
+                        tabledata += "<th style='width:150px !important;text-align: center' class='uk-date-column'>DEBITED / REJECTED DATE<span class='labelrequired'><em>*</em></span></th>";
+                        tabledata += "<th style='width:120px !important;text-align: center'>BANK CODE</th>";
+                        tabledata += "<th style='width:120px !important;text-align: center'>BRANCH CODE</th>";
+                        tabledata += "<th style='width:200px !important;text-align: center'>BANK ADDRESS</th>";
+                        tabledata += "<th style='width:150px !important;text-align: center'>SWIFT CODE</th>";
+                        tabledata += "<th style='width:150px !important;text-align: center'>CHARGES TO</th>";
+                        tabledata += "<th style='width:200px !important;text-align: center'>CUST REF</th>";
+                        tabledata += "<th style='width:200px !important;text-align: center'>INV DETAILSS</th>";
+                        tabledata += "<th style='width:200px !important;text-align: center'>COMMENTS</th>";
+                        tabledata += "<th style='width:150px !important;text-align: center'>CREATED BY</th>";
+                        tabledata += "<th style='width:150px !important;text-align: center'>USERSTAMP</th>";
+                        tabledata += "<th style='width:150px !important;text-align: center' class='uk-timestp-column'>TIMESTAMP</th>";
+                        tabledata += "</tr></thead><tbody>";
+                        for (var i = 0; i < valuearray.length; i++) {
+                            var Ermid = valuearray[i].BT_ID;
+                            BT_id.push(Ermid)
+                            var edit = "Editid_" + valuearray[i].BT_ID;
+                            var del = "Deleteid_" + valuearray[i].BT_ID;
+                            if (valuearray[i].BT_ACC_NAME == null) {
+                                var accname = '';
+                            } else {
+                                accname = valuearray[i].BT_ACC_NAME;
+                            }
+                            if (valuearray[i].BT_ACC_NO == null) {
+                                var accno = '';
+                            } else {
+                                accno = valuearray[i].BT_ACC_NO;
+                            }
+                            if (valuearray[i].UNIT_NO == null) {
+                                var unit = '';
+                            } else {
+                                unit = valuearray[i].UNIT_NO;
+                            }
+                            if (valuearray[i].CUSTOMERNAME == null) {
+                                var customer = '';
+                            } else {
+                                customer = valuearray[i].CUSTOMERNAME;
+                            }
+                            if (valuearray[i].TRANSACTION_STATUS == null) {
+                                var status = '';
+                            } else {
+                                status = valuearray[i].TRANSACTION_STATUS;
+                            }
+                            if (valuearray[i].BT_DEBITED_ON == null) {
+                                var debitedon = '';
+                            } else {
+                                debitedon = valuearray[i].BT_DEBITED_ON;
+                            }
+                            if (valuearray[i].BT_BANK_CODE == null) {
+                                var bankcode = '';
+                            } else {
+                                bankcode = valuearray[i].BT_BANK_CODE;
+                            }
+                            if (valuearray[i].BT_BRANCH_CODE == null) {
+                                var branchcode = '';
+                            } else {
+                                branchcode = valuearray[i].BT_BRANCH_CODE;
+                            }
+                            if (valuearray[i].BT_BANK_ADDRESS == null) {
+                                var bankaddress = '';
+                            } else {
+                                bankaddress = valuearray[i].BT_BANK_ADDRESS;
+                            }
+                            if (valuearray[i].BT_SWIFT_CODE == null) {
+                                var swiftcode = '';
+                            } else {
+                                swiftcode = valuearray[i].BT_SWIFT_CODE;
+                            }
+                            if (valuearray[i].BANK_TRANSFER_CHARGES_TO == null) {
+                                var chargesto = '';
+                            } else {
+                                chargesto = valuearray[i].BANK_TRANSFER_CHARGES_TO;
+                            }
+                            if (valuearray[i].BT_CUST_REF == null) {
+                                var custoref = '';
+                            } else {
+                                custoref = valuearray[i].BT_CUST_REF;
+                            }
+                            if (valuearray[i].BT_INV_DETAILS == null) {
+                                var invdetails = '';
+                            } else {
+                                invdetails = valuearray[i].BT_INV_DETAILS;
+                            }
+                            if (valuearray[i].BT_COMMENTS == null) {
+                                var comments = '';
+                            } else {
+                                comments = valuearray[i].BT_COMMENTS;
+                            }
+                            if (valuearray[i].BANK_TRANSFER_CREATED_BY == null) {
+                                var createdby = '';
+                            } else {
+                                createdby = valuearray[i].BANK_TRANSFER_CREATED_BY;
+                            }
+                            tabledata += '<tr id=' + valuearray[i].BT_ID + '>' +
+                            "<td ><div class='col-lg-2'><span style='display: block;color:green' title='Edit' class='glyphicon glyphicon-edit Banktt_editbutton' id=" + edit + "></div></td>" +
+                            "<td >" + valuearray[i].BANK_TRANSFER_TYPE + "</td>" +
+                            "<td  >" + valuearray[i].BT_DATE + "</td>" +
+                            "<td>" + accname + "</td>" +
+                            "<td>" + accno + "</td>" +
+                            "<td>" + valuearray[i].BT_AMOUNT + "</td>" +
+                            "<td>" + unit + "</td>" +
+                            "<td>" + customer + "</td>" +
+                            "<td>" + status + "</td>" +
+                            "<td>" + debitedon + "</td>" +
+                            "<td>" + bankcode + "</td>" +
+                            "<td>" + branchcode + "</td>" +
+                            "<td>" + bankaddress + "</td>" +
+                            "<td>" + swiftcode + "</td>" +
+                            "<td>" + chargesto + "</td>" +
+                            "<td>" + custoref + "</td>" +
+                            "<td>" + invdetails + "</td>" +
+                            "<td>" + comments + "</td>" +
+                            "<td>" + createdby + "</td>" +
+                            "<td>" + valuearray[i].ULD_LOGINID + "</td>" +
+                            "<td>" + valuearray[i].BT_TIME_STAMP + "</td>" +
+                            "</tr>";
+                        }
+                        tabledata += "</body>";
+                        $('#tableheader').text(header);
+                        $('section').html(tabledata);
+                        $('.preloader').hide();
+                        $('#Banktt_Search_DataTable').show();
+                        $('#Banktt_Datatable').DataTable({
+                            "sDom":"Rlfrtip",
+                            "deferRender":    true,
+                            "scrollY": 200,
+                            "scrollX": 500,
+                            "scrollCollapse": true,
+                            "aaSorting": [],
+                            "pageLength": 10,
+                            "sPaginationType": "full_numbers",
+                            "aoColumnDefs": [{
+                                "aTargets": ["uk-date-column"],
+                                "sType": "uk_date"
+                            }, {"aTargets": ["uk-timestp-column"], "sType": "uk_timestp"}]
+                        });
                         sorting();
                     }
                     else

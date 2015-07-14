@@ -132,6 +132,9 @@ $(document).ready(function(){
                         if(perinvfrom[m].EP_INVOICE_FROM!='' && perinvfrom[m].EP_INVOICE_FROM!=null)
                             invfromarray.push(perinvfrom[m].EP_INVOICE_FROM);
                     }
+                },
+                error: function (data) {
+                    alert('error in getting' + JSON.stringify(data));
                 }
             });
             $('#PE_entryform').show();
@@ -186,6 +189,9 @@ $(document).ready(function(){
                         if(invfromarray[m].EP_INVOICE_FROM!='' && invfromarray[m].EP_INVOICE_FROM!=null)
                             personalinvoicefrom.push(invfromarray[m].EP_INVOICE_FROM);
                     }
+                },
+                error: function (data) {
+                    alert('error in getting' + JSON.stringify(data));
                 }
             });
             $('#PE_searchform').show();
@@ -573,6 +579,9 @@ $(document).ready(function(){
                     show_msgbox("PERSONAL EXPENSE ENTRY/SEARCH/UPDATE/DELETE",error_message[2].EMC_DATA,"success",false)
                     carexpenseclear();
                 }
+            },
+            error: function (data) {
+                alert('error in getting' + JSON.stringify(data));
             }
         });
     });
@@ -606,6 +615,9 @@ $(document).ready(function(){
                     show_msgbox("PERSONAL EXPENSE ENTRY/SEARCH/UPDATE/DELETE",error_message[2].EMC_DATA,"success",false)
                     carloaneclear();
                 }
+            },
+            error: function (data) {
+                alert('error in getting' + JSON.stringify(data));
             }
         });
     });
@@ -1026,8 +1038,10 @@ $(document).ready(function(){
                     $('#div_enddate').show();
                     $('#PDLY_SEARCH_btn_babybutton').show();
                     $('#PDLY_SEARCH_btn_babybutton').attr("disabled", "disabled");
+                },
+                error: function (data) {
+                    alert('error in getting' + JSON.stringify(data));
                 }
-
             });
         }
 //SEARCH BY INVOICE AMOUNT//
@@ -1351,6 +1365,9 @@ $(document).ready(function(){
                             var PDLY_SEARCH_CONFSAVEMSG = PDLY_SEARCH_hdrmsgArray[3].EMC_DATA.replace('[TYPE]', PDLY_SEARCH_expensetype);
                             show_msgbox("PERSONAL EXPENSE ENTRY/SEARCH/UPDATE/DELETE",PDLY_SEARCH_CONFSAVEMSG,"success",false)
                         }
+                    },
+                    error: function (data) {
+                        alert('error in getting' + JSON.stringify(data));
                     }
                 });
             }
@@ -1417,6 +1434,9 @@ $(document).ready(function(){
                             var PDLY_SEARCH_CONFSAVEMSG = PDLY_SEARCH_hdrmsgArray[3].EMC_DATA.replace('[TYPE]', PDLY_SEARCH_expensetype);
                             show_msgbox("PERSONAL EXPENSE ENTRY/SEARCH/UPDATE/DELETE",PDLY_SEARCH_CONFSAVEMSG,"success",false)
                         }
+                    },
+                    error: function (data) {
+                        alert('error in getting' + JSON.stringify(data));
                     }
                 });
             }
@@ -1482,6 +1502,9 @@ $(document).ready(function(){
                             var PDLY_SEARCH_CONFSAVEMSG = PDLY_SEARCH_hdrmsgArray[3].replace('[TYPE]', PDLY_SEARCH_expensetype);
                             show_msgbox("PERSONAL EXPENSE ENTRY/SEARCH/UPDATE/DELETE",PDLY_SEARCH_CONFSAVEMSG,"success",false)
                         }
+                    },
+                    error: function (data) {
+                        alert('error in getting' + JSON.stringify(data));
                     }
                 });
             }
@@ -1667,6 +1690,9 @@ $(document).ready(function(){
                     PDLY_SEARCH_babysearchdetailsvalues=JSON.parse(res);
                     PDLY_SEARCH_babysearchdetails(PDLY_SEARCH_babysearchdetailsvalues)
 
+                },
+                error: function (data) {
+                    alert('error in getting' + JSON.stringify(data));
                 }
             });
         }
@@ -1690,6 +1716,9 @@ $(document).ready(function(){
                     PDLY_SEARCH_babysearchdetailsvalues=JSON.parse(res);
                     PDLY_SEARCH_babysearchdetails(PDLY_SEARCH_babysearchdetailsvalues)
 
+                },
+                error: function (data) {
+                    alert('error in getting' + JSON.stringify(data));
                 }
             });
         }
@@ -1713,6 +1742,9 @@ $(document).ready(function(){
                     PDLY_SEARCH_babysearchdetailsvalues=JSON.parse(res);
                     PDLY_SEARCH_babysearchdetails(PDLY_SEARCH_babysearchdetailsvalues)
 
+                },
+                error: function (data) {
+                    alert('error in getting' + JSON.stringify(data));
                 }
             });
         }
@@ -1737,6 +1769,9 @@ $(document).ready(function(){
                     PDLY_SEARCH_babysearchdetailsvalues=JSON.parse(res);
                     PDLY_SEARCH_babysearchdetails(PDLY_SEARCH_babysearchdetailsvalues)
 
+                },
+                error: function (data) {
+                    alert('error in getting' + JSON.stringify(data));
                 }
             });
         }
@@ -1761,6 +1796,9 @@ $(document).ready(function(){
                     PDLY_SEARCH_babysearchdetailsvalues=JSON.parse(res);
                     PDLY_SEARCH_babysearchdetails(PDLY_SEARCH_babysearchdetailsvalues)
 
+                },
+                error: function (data) {
+                    alert('error in getting' + JSON.stringify(data));
                 }
             });
         }
@@ -1785,6 +1823,9 @@ $(document).ready(function(){
                     PDLY_SEARCH_babysearchdetailsvalues=JSON.parse(res);
                     PDLY_SEARCH_babysearchdetails(PDLY_SEARCH_babysearchdetailsvalues)
 
+                },
+                error: function (data) {
+                    alert('error in getting' + JSON.stringify(data));
                 }
             });
         }
@@ -1960,7 +2001,7 @@ $(document).ready(function(){
                 $('#PDLY_SEARCH_lbl_flextableheader').show();
                 if(PDLY_SEARCH_lb_typelistvalue==36)
                 {
-                    var PDLY_SEARCH_babytable_header='<table id="PDLY_SEARCH_tbl_htmltable" border="1" width="1300px" cellspacing="0" data-class="table" class="srcresult"><thead bgcolor="#6495ed" style="color:white;text-align: center;" ><tr><th></th><th>TYPE OF BABY EXPENSE</th><th style="width:75px" class="uk-date-column"">INVOICE DATE</th><th style="width:60px">INVOICE AMOUNT</th><th style="width:200px">INVOICE FROM</th><th style="width:200px" >INVOICE ITEMS</th><th style="width:250px">COMMENTS</th><th>USERSTAMP</th><th class="uk-timestp-column">TIMESTAMP</th></tr></thead><tbody>';
+                    var PDLY_SEARCH_babytable_header='<table id="PDLY_SEARCH_tbl_htmltable" border="1" width="1300px" cellspacing="0" data-class="table" class="srcresult"><thead bgcolor="#6495ed" style="color:white;text-align: center;" ><tr><th>DELETE</th><th>TYPE OF BABY EXPENSE</th><th style="width:75px" class="uk-date-column"">INVOICE DATE</th><th style="width:60px">INVOICE AMOUNT</th><th style="width:200px">INVOICE FROM</th><th style="width:200px" >INVOICE ITEMS</th><th style="width:250px">COMMENTS</th><th>USERSTAMP</th><th class="uk-timestp-column">TIMESTAMP</th></tr></thead><tbody>';
                     for(var i=0;i<PDLY_SEARCH_babyvalue.length;i++)
                     {
                         var rowid=(i+1);
@@ -1973,7 +2014,7 @@ $(document).ready(function(){
                 }
                 if(PDLY_SEARCH_lb_typelistvalue==35)
                 {
-                    var PDLY_SEARCH_babytable_header='<table id="PDLY_SEARCH_tbl_htmltable" border="1" width="1300px"  cellspacing="0" data-class="table" class="srcresult"><thead bgcolor="#6495ed" style="color:white"><tr><th></th><th>TYPE OF CAR EXPENSE</th><th style="width:75px" class="uk-date-column"">INVOICE DATE</th><th style="width:60px">INVOICE AMOUNT</th><th style="width:200px">INVOICE FROM</th><th style="width:200px">INVOICE ITEMS</th><th style="width:230px">COMMENTS</th><th>USERSTAMP</th><th class="uk-timestp-column">TIMESTAMP</th></tr></thead><tbody>';
+                    var PDLY_SEARCH_babytable_header='<table id="PDLY_SEARCH_tbl_htmltable" border="1" width="1300px"  cellspacing="0" data-class="table" class="srcresult"><thead bgcolor="#6495ed" style="color:white"><tr><th>DELETE</th><th>TYPE OF CAR EXPENSE</th><th style="width:75px" class="uk-date-column"">INVOICE DATE</th><th style="width:60px">INVOICE AMOUNT</th><th style="width:200px">INVOICE FROM</th><th style="width:200px">INVOICE ITEMS</th><th style="width:230px">COMMENTS</th><th>USERSTAMP</th><th class="uk-timestp-column">TIMESTAMP</th></tr></thead><tbody>';
                     for(var i=0;i<PDLY_SEARCH_babyvalue.length;i++)
                     {
                         var rowid=(i+1);
@@ -1986,7 +2027,7 @@ $(document).ready(function(){
                 }
                 if(PDLY_SEARCH_lb_typelistvalue==37)
                 {
-                    var PDLY_SEARCH_babytable_header='<table id="PDLY_SEARCH_tbl_htmltable" width="1300px" border="1"  cellspacing="0" data-class="table" class="srcresult"><thead bgcolor="#6495ed" style="color:white"><tr><th></th><th>TYPE OF PERSONAL EXPENSE</th><th style="width:75px" class="uk-date-column"">INVOICE DATE</th><th style="width:60px">INVOICE AMOUNT</th><th style="width:200px">INVOICE FROM</th><th style="width:200px">INVOICE ITEMS</th><th style="width:230px">COMMENTS</th><th>USERSTAMP</th><th class="uk-timestp-column">TIMESTAMP</th></tr></thead><tbody>';
+                    var PDLY_SEARCH_babytable_header='<table id="PDLY_SEARCH_tbl_htmltable" width="1300px" border="1"  cellspacing="0" data-class="table" class="srcresult"><thead bgcolor="#6495ed" style="color:white"><tr><th>DELETE</th><th>TYPE OF PERSONAL EXPENSE</th><th style="width:75px" class="uk-date-column"">INVOICE DATE</th><th style="width:60px">INVOICE AMOUNT</th><th style="width:200px">INVOICE FROM</th><th style="width:200px">INVOICE ITEMS</th><th style="width:230px">COMMENTS</th><th>USERSTAMP</th><th class="uk-timestp-column">TIMESTAMP</th></tr></thead><tbody>';
                     for(var i=0;i<PDLY_SEARCH_babyvalue.length;i++)
                     {
                         var rowid=(i+1);
@@ -2041,7 +2082,7 @@ $(document).ready(function(){
                 $('#PDLY_SEARCH_lbl_flextableheader').text(PDLY_SEARCH_CONFSAVEMSG);
                 $('#PDLY_SEARCH_hdn_flextableheader').val(PDLY_SEARCH_CONFSAVEMSG);
                 $('#PDLY_SEARCH_lbl_flextableheader').show();
-                PDLY_SEARCH_babytable_header='<table id="PDLY_SEARCH_tbl_htmltable" border="1" width="1100px" cellspacing="0" data-class="table" class="srcresult"><thead bgcolor="#6495ed" style="color:white"><tr><th></th><th width="75px" class="uk-date-column"">PAID DATE</th><th width="60px">INVOICE AMOUNT</th><th width="75px" class="uk-date-column"">FROM PERIOD</th><th width="75px" class="uk-date-column"">TO PERIOD</th><th width="180px">COMMENTS</th><th width="250px">USERSTAMP</th><th width="150px" class="uk-timestp-column">TIMESTAMP</th></tr></thead><tbody>';
+                PDLY_SEARCH_babytable_header='<table id="PDLY_SEARCH_tbl_htmltable" border="1" width="1100px" cellspacing="0" data-class="table" class="srcresult"><thead bgcolor="#6495ed" style="color:white"><tr><th>DELETE</th><th width="75px" class="uk-date-column"">PAID DATE</th><th width="60px">INVOICE AMOUNT</th><th width="75px" class="uk-date-column"">FROM PERIOD</th><th width="75px" class="uk-date-column"">TO PERIOD</th><th width="180px">COMMENTS</th><th width="250px">USERSTAMP</th><th width="150px" class="uk-timestp-column">TIMESTAMP</th></tr></thead><tbody>';
 
                 for(var i=0;i<PDLY_SEARCH_babyvalue.length;i++)
                 {
@@ -2077,7 +2118,6 @@ $(document).ready(function(){
                 "scrollX": true,
                 "sScrollY":  ( 0.6 * $(window).height() ),
                 "bScrollCollapse": true,
-                "sScrollXInner": "100%",
                 "bAutoWidth": true
 
             });
@@ -2259,6 +2299,9 @@ $(document).ready(function(){
                 {
                     show_msgbox("PERSONAL EXPENSE ENTRY/SEARCH/UPDATE/DELETE",PDLY_SEARCH_hdrmsgArray[36].EMC_DATA,"success",false);
                 }
+            },
+            error: function (data) {
+                alert('error in getting' + JSON.stringify(data));
             }
         });
     }) ;
@@ -2396,6 +2439,9 @@ $(document).ready(function(){
                 {
                     show_msgbox("PERSONAL EXPENSE ENTRY/SEARCH/UPDATE/DELETE",PDLY_SEARCH_hdrmsgArray[36].EMC_DATA,"success",false);
                 }
+            },
+            error: function (data) {
+                alert('error in getting' + JSON.stringify(data));
             }
         });
     }) ;
@@ -2558,6 +2604,9 @@ $(document).ready(function(){
 //                            PDLY_SEARCH_babysearchdetails(PDLY_SEARCH_babysearchdetailsvalues)
 //                            PDLY_SEARCH_searchvalue()
                 }
+            },
+            error: function (data) {
+                alert('error in getting' + JSON.stringify(data));
             }
         });
     }) ;
@@ -2688,6 +2737,9 @@ $(document).ready(function(){
                 {
                     show_msgbox("PERSONAL EXPENSE ENTRY/SEARCH/UPDATE/DELETE",PDLY_SEARCH_hdrmsgArray[36].EMC_DATA,"success",false);
                 }
+            },
+            error: function (data) {
+                alert('error in getting' + JSON.stringify(data));
             }
         });
     }) ;
@@ -2762,6 +2814,9 @@ $(document).ready(function(){
                 {
                     show_msgbox("PERSONAL EXPENSE ENTRY/SEARCH/UPDATE/DELETE",PDLY_SEARCH_hdrmsgArray[30].EMC_DATA,"success",false);
                 }
+            },
+            error: function (data) {
+                alert('error in getting' + JSON.stringify(data));
             }
         });
     });

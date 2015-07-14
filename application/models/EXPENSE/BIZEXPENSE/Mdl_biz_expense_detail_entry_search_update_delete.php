@@ -1322,47 +1322,48 @@ Class Mdl_biz_expense_detail_entry_search_update_delete extends CI_Model {
             $BTDTL_SEARCH_flag_del=0;
           $BTDTL_SEARCH_flag_cable=0;$BTDTL_SEARCH_flag_starhub=0;
             $this->load->model('EILIB/Mdl_eilib_calender');
-        $del_flag=1;
+        $del_flag=0;
               if ($BTDTL_SEARCH_flag_cal == 1) {
-                  if (($BTDTL_SEARCH_obj['BTDTL_cablestartdate'] != '') && ($BTDTL_SEARCH_obj['BTDTL_cableenddate'] != '')) {
+                  if (($BTDTL_SEARCH_obj['BTDTL_cablestartdate'][0] != '') && ($BTDTL_SEARCH_obj['BTDTL_cableenddate'][0] != '')) {
                       $BTDTL_SEARCH_flag_cable = 0;
-                      $cablestartdate=date('Y-m-d',strtotime($BTDTL_SEARCH_obj['BTDTL_cablestartdate']));
-                      $cableenddate=date('Y-m-d',strtotime($BTDTL_SEARCH_obj['BTDTL_cableenddate']));
-                      $del_flag=$this->Mdl_eilib_calender->StarHubUnit_DeleteCalEvent($calid,$BTDTL_SEARCH_obj['unitno'], $cablestartdate, $BTDTL_SEARCH_starhubid[0], $BTDTL_SEARCH_starhubid[1], $cableenddate, $BTDTL_SEARCH_starhubid[0], $BTDTL_SEARCH_starhubid[1], 'CABLE');
+                      $cablestartdate=date('Y-m-d',strtotime($BTDTL_SEARCH_obj['BTDTL_cablestartdate'][0]));
+                      $cableenddate=date('Y-m-d',strtotime($BTDTL_SEARCH_obj['BTDTL_cableenddate'][0]));
+                      $del_flag=$this->Mdl_eilib_calender->StarHubUnit_DeleteCalEvent($calid,$BTDTL_SEARCH_obj['unitno'][0], $cablestartdate, $BTDTL_SEARCH_starhubid[0], $BTDTL_SEARCH_starhubid[1], $cableenddate, $BTDTL_SEARCH_starhubid[0], $BTDTL_SEARCH_starhubid[1], 'CABLE');
                       $BTDTL_SEARCH_flag_cable = 1;
                   }
-                  if (($BTDTL_SEARCH_obj['BTDTL_internetsd'] != '') && ($BTDTL_SEARCH_obj['BTDTL_interneted'] != '')) {
+                  if (($BTDTL_SEARCH_obj['BTDTL_internetsd'][0] != '') && ($BTDTL_SEARCH_obj['BTDTL_interneted'][0] != '')) {
                       $BTDTL_SEARCH_flag_starhub = 0;
-                      $internetstartdate=date('Y-m-d',strtotime($BTDTL_SEARCH_obj['BTDTL_internetsd']));
-                      $internetenddate=date('Y-m-d',strtotime($BTDTL_SEARCH_obj['BTDTL_interneted']));
-                      $del_flag=$this->Mdl_eilib_calender->StarHubUnit_DeleteCalEvent($calid,$BTDTL_SEARCH_obj['unitno'], $internetstartdate, $BTDTL_SEARCH_starhubid[0], $BTDTL_SEARCH_starhubid[1], $internetenddate, $BTDTL_SEARCH_starhubid[0], $BTDTL_SEARCH_starhubid[1], 'INTERNET');
+                      $internetstartdate=date('Y-m-d',strtotime($BTDTL_SEARCH_obj['BTDTL_internetsd'][0]));
+                      $internetenddate=date('Y-m-d',strtotime($BTDTL_SEARCH_obj['BTDTL_interneted'][0]));
+                      $del_flag=$this->Mdl_eilib_calender->StarHubUnit_DeleteCalEvent($calid,$BTDTL_SEARCH_obj['unitno'][0], $internetstartdate, $BTDTL_SEARCH_starhubid[0], $BTDTL_SEARCH_starhubid[1], $internetenddate, $BTDTL_SEARCH_starhubid[0], $BTDTL_SEARCH_starhubid[1], 'INTERNET');
                       $BTDTL_SEARCH_flag_starhub = 1;
                   }
+                  if($del_flag!=1)
+                  {
+                      if($BTDTL_SEARCH_flag_cal==1){
+                          if(($BTDTL_SEARCH_obj['BTDTL_cablestartdate'][0]!='')&&($BTDTL_SEARCH_obj['BTDTL_cableenddate'][0]!='')&&($BTDTL_SEARCH_flag_cable==1))
+                          {
+                              $cablestartdate=date('Y-m-d',strtotime($BTDTL_SEARCH_obj['BTDTL_cablestartdate'][0]));
+                              $cableenddate=date('Y-m-d',strtotime($BTDTL_SEARCH_obj['BTDTL_cableenddate'][0]));
+                              $this->Mdl_eilib_calender->StarHubUnit_CreateCalEvent($calid,$cablestartdate,$BTDTL_SEARCH_starhubid[0],$BTDTL_SEARCH_starhubid[1],$cableenddate,$BTDTL_SEARCH_starhubid[0],$BTDTL_SEARCH_starhubid[1],'STARHUB',$BTDTL_SEARCH_obj['unitno'][0],$BTDTL_SEARCH_obj['BTDTL_acctno'][0],'CABLE START DATE','CABLE END DATE','','');
+                          }
+                          if(($BTDTL_SEARCH_obj['BTDTL_internetsd']!='')&&($BTDTL_SEARCH_obj['BTDTL_interneted']!='')&&($BTDTL_SEARCH_flag_starhub==1))
+                          {
+                              $internetstartdate=date('Y-m-d',strtotime($BTDTL_SEARCH_obj['BTDTL_internetsd'][0]));
+                              $internetenddate=date('Y-m-d',strtotime($BTDTL_SEARCH_obj['BTDTL_interneted'][0]));
+                              $this->Mdl_eilib_calender->StarHubUnit_CreateCalEvent($calid,$internetstartdate,$BTDTL_SEARCH_starhubid[0],$BTDTL_SEARCH_starhubid[1],$internetenddate,$BTDTL_SEARCH_starhubid[0],$BTDTL_SEARCH_starhubid[1],'STARHUB',$BTDTL_SEARCH_obj['unitno'][0],$BTDTL_SEARCH_obj['BTDTL_acctno'][0],'INTERNET START DATE','INTERNET END DATE','','');
+                          }
+                      }
+                      $this->db->trans_savepoint_rollback($savepoint);
+                      $BTDTL_SEARCH_flag_del=0;
+                  }
+                  else
+                  {
+                      $this->db->trans_savepoint_release($savepoint) ;
+                      $BTDTL_SEARCH_flag_del='BTDTL_SEARCH_flag_delete';
+                  }
               }
-          if($del_flag!=1)
-          {
-                if($BTDTL_SEARCH_flag_cal==1){
-                    if(($BTDTL_SEARCH_obj['BTDTL_cablestartdate']!='')&&($BTDTL_SEARCH_obj['BTDTL_cableenddate']!='')&&($BTDTL_SEARCH_flag_cable==1))
-                    {
-                        $cablestartdate=date('Y-m-d',strtotime($BTDTL_SEARCH_obj['BTDTL_cablestartdate']));
-                        $cableenddate=date('Y-m-d',strtotime($BTDTL_SEARCH_obj['BTDTL_cableenddate']));
-                        $this->Mdl_eilib_calender->StarHubUnit_CreateCalEvent($calid,$cablestartdate,$BTDTL_SEARCH_starhubid[0],$BTDTL_SEARCH_starhubid[1],$cableenddate,$BTDTL_SEARCH_starhubid[0],$BTDTL_SEARCH_starhubid[1],'STARHUB',$BTDTL_SEARCH_obj['unitno'],$BTDTL_SEARCH_obj['BTDTL_acctno'],'CABLE START DATE','CABLE END DATE','','');
-                    }
-                    if(($BTDTL_SEARCH_obj['BTDTL_internetsd']!='')&&($BTDTL_SEARCH_obj['BTDTL_interneted']!='')&&($BTDTL_SEARCH_flag_starhub==1))
-                    {
-                        $internetstartdate=date('Y-m-d',strtotime($BTDTL_SEARCH_obj['BTDTL_internetsd']));
-                        $internetenddate=date('Y-m-d',strtotime($BTDTL_SEARCH_obj['BTDTL_interneted']));
-                        $this->Mdl_eilib_calender->StarHubUnit_CreateCalEvent($calid,$internetstartdate,$BTDTL_SEARCH_starhubid[0],$BTDTL_SEARCH_starhubid[1],$internetenddate,$BTDTL_SEARCH_starhubid[0],$BTDTL_SEARCH_starhubid[1],'STARHUB',$BTDTL_SEARCH_obj['unitno'],$BTDTL_SEARCH_obj['BTDTL_acctno'],'INTERNET START DATE','INTERNET END DATE','','');
-                    }
-                }
-              $this->db->trans_savepoint_rollback($savepoint);
-              $BTDTL_SEARCH_flag_del=0;
-          }
-          else
-          {
-            $this->db->trans_savepoint_release($savepoint) ;
-            $BTDTL_SEARCH_flag_del='BTDTL_SEARCH_flag_delete';
-          }
+
         $BTDTL_SEARCH_refresh=[];
           if($BTDTL_SEARCH_lb_expense_type==16){
               if($BTDTL_SEARCH_lb_searchoptions==100)

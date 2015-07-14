@@ -532,9 +532,13 @@ Class Mdl_biz_expense_daily_entry_search_update_delete extends CI_Model {
           $BDLY_INPUT_period=date("Y-m-01", strtotime($BDLY_INPUT_tb_payforperiod));
 
           $BDLY_INPUT_tb_paypaiddate=date("Y-m-d", strtotime($_POST['BDLY_INPUT_tb_pay_paiddate']));
-          $BDLY_INPUT_ta_paycomments=$this->db->escape_like_str($_POST['BDLY_INPUT_ta_pay_comments']);
-          if($BDLY_INPUT_ta_paycomments!='')
-              $BDLY_INPUT_ta_paycomments="'$BDLY_INPUT_ta_paycomments'";
+          $BDLY_INPUT_ta_paycomments = $_POST['BDLY_INPUT_ta_pay_comments'];
+          if($BDLY_INPUT_ta_paycomments!='') {
+              $BDLY_INPUT_ta_paycomments = $this->db->escape_like_str($BDLY_INPUT_ta_paycomments);
+              $BDLY_INPUT_ta_paycomments = "'$BDLY_INPUT_ta_paycomments'";
+          }
+          else
+              $BDLY_INPUT_ta_paycomments="''";
           $BDLY_INPUT_hkp_savequery=$this->db->query("CALL SP_BIZDLY_HOUSEKEEPING_PAYMENT_INSERT('$BDLY_INPUT_tb_payunitno','$BDLY_INPUT_period','$BDLY_INPUT_tb_paypaiddate','$BDLY_INPUT_tb_payinvoiceamt',$BDLY_INPUT_ta_paycomments,'$USERSTAMP',@FLAG_INSERT)");
           $BDLY_INPUT_refresh=$this->BDLY_INPUT_get_allunitno();
          }
@@ -695,7 +699,6 @@ Class Mdl_biz_expense_daily_entry_search_update_delete extends CI_Model {
               $BDLY_INPUT_elect_payment_split=$BDLY_INPUT_elect_payment;
               }
           }
-
           $BDLY_INPUT_insertinto_electricity_withoutcomment =$this->db->query("CALL SP_BIZDLY_ELECTRICITY_INSERT('$BDLY_INPUT_electunit_split','$BDLY_INPUT_invoicedate_split','$BDLY_INPUT_fromperiod_split','$BDLY_INPUT_toperiod_split','$BDLY_INPUT_invoiceto_split','$BDLY_INPUT_elect_amount_split','$BDLY_INPUT_comments_split','$USERSTAMP',@FLAG_INSERT)");
 
       }

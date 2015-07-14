@@ -21,6 +21,9 @@ require_once('application/libraries/EI_HDR.php');
     .auto{
         width:100% !important;
     }
+    .calendar-off table.ui-datepicker-calendar {
+        display:none !important;
+    }
 </style>
 
 <script>
@@ -113,7 +116,9 @@ var BDLY_SRC_flag_autocom='';
         var BDLY_INPUT_unitno_options ='';
         var BDLY_INPUT_arr_autocmp='';
         var controller_url="<?php echo base_url(); ?>" + '/index.php/EXPENSE/BIZEXPENSE/Ctrl_Biz_Expense_Daily_Entry_Search_Update_Delete/' ;
-        $(".datepickdate").datepicker({dateFormat:'dd-mm-yy',changeYear: true,changeMonth: true});
+        $(".datepickdate").datepicker({dateFormat:'dd-mm-yy',changeYear: true,changeMonth: true,beforeShow:function(input, inst){
+            $(inst.dpDiv).removeClass('calendar-off');
+        }});
         $(".datepickdate").datepicker("option","maxDate",new Date());
     //RADIO BUTTON CLICK FUNCTION
         var initial_values=[];
@@ -463,14 +468,27 @@ var BDLY_SRC_flag_autocom='';
             BDLY_INPUT_checkunitno();
         });
         //DATE PICKER VALIDATION FOR INDEPENDENT UNIT
-        $(".datepickperiod").datepicker({dateFormat:'MM-yy', changeYear: true, changeMonth: true,maxDate:new Date()});
+        $(".datepickperiod").datepicker({dateFormat:'MM-yy', changeYear: true, changeMonth: true,maxDate:new Date(),
+            onClose: function(dateText, inst) {
+            var month =inst.selectedMonth;
+            var year = inst.selectedYear;
+            $(this).datepicker('setDate', new Date(year, month, 1));
+            $(this).blur();
+        },
+        beforeShow:function(input, inst) {
+            $(inst.dpDiv).addClass('calendar-off');
+        }});
         $('.BDLY_INPUT_class_forperiod').datepicker( {changeMonth: true,  changeYear: true,  showButtonPanel: true,  dateFormat: 'MM-yy',
             maxDate:new Date(),onClose: function(dateText, inst) {
                 var month =inst.selectedMonth;
                 var year = inst.selectedYear;
                 $(this).datepicker('setDate', new Date(year, month, 1));
                 $(this).blur();
-            } });
+            },
+            beforeShow:function(input, inst) {
+                $(inst.dpDiv).addClass('calendar-off');
+            }
+        });
         $(".BDLY_INPUT_class_forperiod").focus(function () {
             $(".ui-datepicker-calendar").hide();
             $("#ui-datepicker-div").position({ my: "left top", at: "left bottom", of: $(this)});});
@@ -898,6 +916,9 @@ var BDLY_SRC_flag_autocom='';
                         $('#BDLY_INPUT_btn_submitbutton').attr('disabled','disabled')
                     }
                 }
+            },
+            beforeShow:function(input, inst) {
+                $(inst.dpDiv).removeClass('calendar-off');
             }
         });
         //DATE PICKER FUNCTION FOR FROM DATE..............
@@ -921,6 +942,9 @@ var BDLY_SRC_flag_autocom='';
                         $('#BDLY_INPUT_btn_submitbutton').attr('disabled','disabled')
                     }
                 }
+            },
+            beforeShow:function(input, inst) {
+                $(inst.dpDiv).removeClass('calendar-off');
             }
         });
         //DATE PICKER FOR TO DATE ..................
@@ -950,6 +974,9 @@ var BDLY_SRC_flag_autocom='';
                         $('#BDLY_INPUT_btn_submitbutton').attr('disabled','disabled')
                     }
                 }
+            },
+            beforeShow:function(input, inst) {
+                $(inst.dpDiv).removeClass('calendar-off');
             }
         });
 //CAR PARK DATE PICKER//
@@ -965,6 +992,9 @@ var BDLY_SRC_flag_autocom='';
                         $('#BDLY_INPUT_btn_submitbutton').attr('disabled','disabled')
                     }
                 }
+            },
+            beforeShow:function(input, inst) {
+                $(inst.dpDiv).removeClass('calendar-off');
             }
         });
 //DATE PICKER FUNCTION FOR FROM DATE..............
@@ -986,6 +1016,9 @@ var BDLY_SRC_flag_autocom='';
                         $('#BDLY_INPUT_btn_submitbutton').attr('disabled','disabled')
                     }
                 }
+            },
+            beforeShow:function(input, inst) {
+                $(inst.dpDiv).removeClass('calendar-off');
             }
         });
         //DATE PICKER FOR TO DATE ..................
@@ -1007,6 +1040,9 @@ var BDLY_SRC_flag_autocom='';
                 else{
                     $('#BDLY_INPUT_btn_submitbutton').attr('disabled','disabled')
                 }
+            },
+            beforeShow:function(input, inst) {
+                $(inst.dpDiv).removeClass('calendar-off');
             }
         });
         var balance_result=[];
@@ -1050,7 +1086,7 @@ var BDLY_SRC_flag_autocom='';
                     BDLY_INPUT_arr_uniquedata[j]=BDLY_INPUT_arr_housekeepingname[j].BDLY_INPUT_cleanername;
                 }
                 BDLY_INPUT_arr_uniquedata=STDLY_INPUT_unique(BDLY_INPUT_arr_uniquedata)
-                var BDLY_INPUT_cleanername_options ='<option>SELECT</option>'
+                var BDLY_INPUT_cleanername_options ='<option value="SELECT">SELECT</option>'
                 for (var i = 0; i < BDLY_INPUT_arr_uniquedata.length; i++) {
                     BDLY_INPUT_cleanername_options += '<option value="' + BDLY_INPUT_arr_uniquedata[i] + '">' + BDLY_INPUT_arr_uniquedata[i] + '</option>';
                 }
@@ -1145,7 +1181,7 @@ var BDLY_SRC_flag_autocom='';
             if(BDLY_INPUT_listvalue==11)
             {
                 $('#BDLY_INPUT_ta_house_desc').val("");
-                $('#BDLY_INPUT_lb_house_cleanername').val("SELECT");
+                $('#BDLY_INPUT_lb_house_cleanername').prop('selectedIndex',0);
                 $('#BDLY_INPUT_tb_house_date').val("");
                 $('#BDLY_INPUT_tb_house_hours').val("");
                 $('#BDLY_INPUT_tb_house_min').val("");
@@ -1257,7 +1293,10 @@ var BDLY_SRC_flag_autocom='';
             $(".autosize").doValidation({rule:'general',prop:{autosize:true}});
             $(".datepickdate").datepicker({dateFormat:'dd-mm-yy',
                 changeYear: true,
-                changeMonth: true});
+                changeMonth: true,
+                beforeShow:function(input, inst){
+                $(inst.dpDiv).removeClass('calendar-off');
+            }});
             if(BDLY_INPUT_unit_response[0]!='BDLY_INPUT_flag_notsave'){
                 BDLY_INPUT_load_unitno(BDLY_INPUT_unit_response);
             }}
@@ -1269,7 +1308,9 @@ var BDLY_SRC_flag_autocom='';
             $('<tr><td nowrap><label id="BDLY_INPUT_lbl_uexp_unit" >UNIT</label><em>*</em> </td><td nowrap><label  id="BDLY_INPUT_lbl_uexp_category" >CATEGORY</label><em>*</em></td><td nowrap><label  id="BDLY_INPUT_lbl_uexp_customer" hidden>CUSTOMER<em>*</em></label></td><td nowrap><label  id="BDLY_INPUT_lbl_uexp_customerid" hidden></label></td><td nowrap> <label id="BDLY_INPUT_lbl_uexp_invoicedate" >INVOICE DATE</label><em>*</em> </td><td ><label id="BDLY_INPUT_lbl_uexp_invoiceitem" >INVOICE ITEM</label><em>*</em> </td><td nowrap><label id="BDLY_INPUT_lbl_uexp_invoicefrom" >INVOICE FROM</label><em>*</em></td><td nowrap><label id="BDLY_INPUT_lbl_uexp_amount" >AMOUNT</label><em>*</em> </td><td nowrap><label id="BDLY_INPUT_lbl_uexp_comments" >COMMENTS</label> </td><td ><label id="BDLY_INPUT_lbl_uexp_add" ></label> </td><td ><label id="BDLY_INPUT_lbl_uexp_del" ></label> </td></tr><tr><td style="max-width:200px;"> <select  class="BDLY_INPUT_uexp_class_unit uexp_submultivalid form-control"  name="BDLY_INPUT_lb_uexp_unit[]" id="BDLY_INPUT_lb_uexp_unit-1" style="display: none;" hidden><option value="">SELECT</option></select> </td> <td style="max-width:200px;"><select  name="BDLY_INPUT_lb_uexp_category[]" class="uexp_submultivalid BDLY_INPUT_uexp_class_category form-control" id="BDLY_INPUT_lb_uexp_category-1" style="display: none;" hidden><option value="" >SELECT</option></select></td><td style="max-width:200px;"><select  name="BDLY_INPUT_lb_uexp_customer[]" class="uexp_submultivalid BDLY_INPUT_uexp_class_custname form-control" id="BDLY_INPUT_lb_uexp_customer1" style="display: none;" hidden><option value="" >SELECT</option></select></td><td style="max-width:200px;"><table id="multiplecustomer-1" width="250px" hidden></table><td style="max-width:150px;"><input  class="datepickdate uexp_submultivalid datemandtry form-control "  type="text" name ="BDLY_INPUT_db_uexp_invoicedate[]" id="BDLY_INPUT_db_uexp_invoicedate1" style="width:100px;display: none;" hidden /> </td><td style="max-width:250px;"><textarea  class="uexp_submultivalid form-control"  name ="BDLY_INPUT_tb_uexp_invoiceitem[]" id="BDLY_INPUT_tb_uexp_invoiceitem1" style="display: none;" hidden/></textarea> </td><td style="max-width:200px;"><input  class="uexp_submultivalid autosize autocomplete form-control" type="text" name ="BDLY_INPUT_tb_uexp_invoicefrom[]" id="BDLY_INPUT_tb_uexp_invoicefrom1" style="display: none;" hidden/> </td><td style="max-width:100px;"><input  class="amtonlyfivedigit uexp_submultivalid form-control"  type="text" name ="BDLY_INPUT_tb_uexp_amount[]" id="BDLY_INPUT_tb_uexp_amount1" style="width:65px;display: none;" hidden /> </td><td><textarea style="max-width:250px;" row="3" name ="BDLY_INPUT_ta_uexpcomments[]" id="BDLY_INPUT_ta_uexpcomments1" class=" uexp_submultivalid form-control" hidden ></textarea> </td><td><input type="button" value="+" class="uexp_addbttn" alt="Add Row" height="30" width="30" name ="BDLY_INPUT_uexpadd[]" id="BDLY_INPUT_uexp_add1" disabled > </td><td><input  type="button" value="-" class="uexp_deletebttn" alt="delete Row" height="30" width="30" name ="BDLY_INPUT_uexpdelete[]" id="BDLY_INPUT_uexp_del1" disabled ></td><td><input    type="text" name ="BDLY_INPUT_tb_uexp_hideradioid[]" id="BDLY_INPUT_tb_uexp_hideradioid1" style="width:75px;" hidden/> </td></tr>').appendTo($('#BDLY_INPUT_tble_unitexpense'))
             $(".amtonlyfivedigit").doValidation({rule:'numbersonly',prop:{realpart:5,imaginary:2}});
             $(".autosize").doValidation({rule:'general',prop:{autosize:true}});
-            $(".datepickdate").datepicker({dateFormat:'dd-mm-yy', changeYear: true, changeMonth: true});
+            $(".datepickdate").datepicker({dateFormat:'dd-mm-yy', changeYear: true, changeMonth: true,beforeShow:function(input, inst){
+                $(inst.dpDiv).removeClass('calendar-off');
+            }});
             if(BDLY_INPUT_unit_response[0]!='BDLY_INPUT_flag_notsave'){
                 BDLY_INPUT_load_unitno(BDLY_INPUT_unit_response);
             }}
@@ -1282,7 +1323,10 @@ var BDLY_SRC_flag_autocom='';
             $('.includeminusfour').doValidation({rule:'numbersonly',prop:{integer:true,realpart:4,imaginary:2}});
             $(".datepickdate").datepicker({dateFormat:'dd-mm-yy',
                 changeYear: true,
-                changeMonth: true});
+                changeMonth: true,
+                beforeShow:function(input, inst){
+                $(inst.dpDiv).removeClass('calendar-off');
+            }});
             if(BDLY_INPUT_unit_response[0]!='BDLY_INPUT_flag_notsave'){
                 BDLY_INPUT_load_unitno(BDLY_INPUT_unit_response);
             }
@@ -1627,6 +1671,9 @@ var BDLY_SRC_flag_autocom='';
                     $("#BDLY_INPUT_db_fromperiod"+BDLY_INPUT_id_no).datepicker("option","maxDate",PDLY_INPUT_newDate);
                     $("#BDLY_INPUT_db_toperiod"+BDLY_INPUT_id_no).datepicker("option","maxDate",PDLY_INPUT_newDate);
                     BDLY_INPUT_electricityvaliation();
+                },
+                beforeShow:function(input, inst) {
+                    $(inst.dpDiv).removeClass('calendar-off');
                 }
             });
 //DATE PICKER FUNCTION FOR FROM DATE..............
@@ -1648,6 +1695,9 @@ var BDLY_SRC_flag_autocom='';
                     paidnewDate = new Date( Date.parse( paidnewDate ) );
                     $("#BDLY_INPUT_db_toperiod"+BDLY_INPUT_id_no).datepicker("option","maxDate",paidnewDate);
                     BDLY_INPUT_electricityvaliation();
+                },
+                beforeShow:function(input, inst) {
+                    $(inst.dpDiv).removeClass('calendar-off');
                 }
             });
 //DATE PICKER FOR TO DATE ..................
@@ -1669,6 +1719,9 @@ var BDLY_SRC_flag_autocom='';
                     PDLY_INPUT_paidnewDate = new Date( Date.parse( PDLY_INPUT_paidnewDate ) );
                     $("#BDLY_INPUT_db_toperiod"+BDLY_INPUT_id_no).datepicker("option","maxDate",PDLY_INPUT_paidnewDate);
                     BDLY_INPUT_electricityvaliation();
+                },
+                beforeShow:function(input, inst) {
+                    $(inst.dpDiv).removeClass('calendar-off');
                 }
             });
             BDLY_INPUT_electricityvaliation();
@@ -1748,6 +1801,9 @@ var BDLY_SRC_flag_autocom='';
                     PDLY_INPUT_newDate = new Date( Date.parse( PDLY_INPUT_newDate ) );
                     $("#BDLY_INPUT_db_fromperiod"+BDLY_INPUT_id_no).datepicker("option","maxDate",PDLY_INPUT_newDate);
                     $("#BDLY_INPUT_db_toperiod"+BDLY_INPUT_id_no).datepicker("option","maxDate",PDLY_INPUT_newDate);
+                },
+                beforeShow:function(input, inst) {
+                    $(inst.dpDiv).removeClass('calendar-off');
                 }
             });
 //DATE PICKER FUNCTION FOR FROM DATE..............
@@ -1763,6 +1819,9 @@ var BDLY_SRC_flag_autocom='';
                     PDLY_INPUT_newDate = new Date( Date.parse( PDLY_INPUT_newDate ) );
                     $("#BDLY_INPUT_db_toperiod"+BDLY_INPUT_id_no).datepicker("option","minDate",PDLY_INPUT_newDate);
                     BDLY_INPUT_electricityvaliation();
+                },
+                beforeShow:function(input, inst) {
+                    $(inst.dpDiv).removeClass('calendar-off');
                 }
             });
 //DATE PICKER FOR TO DATE ..................
@@ -2472,7 +2531,7 @@ var BDLY_SRC_flag_autocom='';
                 {
                     $('#BDLY_INPUT_tble_radioclearnername').empty();
                     $('#BDLY_INPUT_ta_house_desc').val("");
-                    $('#BDLY_INPUT_lb_house_cleanername').val("");
+                    $('#BDLY_INPUT_lb_house_cleanername').prop('selectedIndex',0);
                     $('#BDLY_INPUT_tb_house_date').val("");
                     $('#BDLY_INPUT_tb_house_hours').val("");
                     $('#BDLY_INPUT_tb_house_min').val("");
@@ -2728,6 +2787,9 @@ var BDLY_SRC_flag_autocom='';
                     $('#BDLY_INPUT_db_star_toperiod'+BDLY_INPUT_star_id_no).datepicker("option","minDate",PDLY_INPUT_newDate);
                     $('#BDLY_INPUT_db_star_toperiod'+BDLY_INPUT_star_id_no).datepicker("option","maxDate",BDLY_INPUT_sh_maxdate);
                     star_submultivalidvalidation();
+                },
+                beforeShow:function(input, inst) {
+                    $(inst.dpDiv).removeClass('calendar-off');
                 }
             });
             //DATE PICKER FOR TO DATE ..................
@@ -2743,6 +2805,9 @@ var BDLY_SRC_flag_autocom='';
                     newDate = new Date( Date.parse( newDate ) );
                     $('#BDLY_INPUT_db_star_toperiod'+BDLY_INPUT_star_id_no).datepicker("option","minDate",newDate);
                     star_submultivalidvalidation();
+                },
+                beforeShow:function(input, inst) {
+                    $(inst.dpDiv).removeClass('calendar-off');
                 }
             });
         }
@@ -2769,7 +2834,10 @@ var BDLY_SRC_flag_autocom='';
             $( ".datepickdate" ).datepicker({dateFormat:'dd-mm-yy', changeYear: true, changeMonth: true, onSelect: function(date){
                 uexp_submultivalidfun();
                 BDLY_INPUT_setdatepick();
-            }
+            },
+                beforeShow:function(input, inst) {
+                    $(inst.dpDiv).removeClass('calendar-off');
+                }
             });
             oCell = newRow.insertCell(5);
             oCell.innerHTML ="<textarea class='uexp_submultivalid form-control'  name ='BDLY_INPUT_tb_uexp_invoiceitem[]' id='"+"BDLY_INPUT_tb_uexp_invoiceitem"+newid+"' style='display:none;' hidden/></textarea> ";
@@ -2928,6 +2996,9 @@ var BDLY_SRC_flag_autocom='';
                 changeMonth: true,
                 onSelect: function(date){
                     star_submultivalidvalidation();
+                },
+                beforeShow:function(input, inst) {
+                    $(inst.dpDiv).removeClass('calendar-off');
                 }
             });
             //DATE PICKER FUNCTION FOR FROM DATE..............
@@ -2943,6 +3014,9 @@ var BDLY_SRC_flag_autocom='';
                     PDLY_INPUT_newDate = new Date( Date.parse( PDLY_INPUT_newDate ) );
                     $('#BDLY_INPUT_db_star_toperiod'+BDLY_INPUT_star_id_no).datepicker("option","minDate",PDLY_INPUT_newDate);
                     star_submultivalidvalidation();
+                },
+                beforeShow:function(input, inst) {
+                    $(inst.dpDiv).removeClass('calendar-off');
                 }
             });
 //DATE PICKER FOR TO DATE ..................
@@ -2958,6 +3032,9 @@ var BDLY_SRC_flag_autocom='';
                     newDate = new Date( Date.parse( newDate ) );
                     $('#BDLY_INPUT_db_star_toperiod'+BDLY_INPUT_star_id_no).datepicker("option","minDate",newDate);
                     star_submultivalidvalidation();
+                },
+                beforeShow:function(input, inst) {
+                    $(inst.dpDiv).removeClass('calendar-off');
                 }
             });
             oCell = newRow.insertCell(6);
@@ -3006,6 +3083,9 @@ var BDLY_SRC_flag_autocom='';
                 $("#BDLY_INPUT_db_fromperiod"+BDLY_INPUT_id_no).datepicker("option","maxDate",PDLY_INPUT_newDate);
                 $("#BDLY_INPUT_db_toperiod"+BDLY_INPUT_id_no).datepicker("option","maxDate",PDLY_INPUT_newDate);
                 BDLY_INPUT_electricityvaliation();
+            },
+            beforeShow:function(input, inst) {
+                $(inst.dpDiv).removeClass('calendar-off');
             }
         });
         //DATE PICKER FUNCTION FOR FROM DATE..............
@@ -3027,6 +3107,9 @@ var BDLY_SRC_flag_autocom='';
                 paidnewDate = new Date( Date.parse( paidnewDate ) );
                 $("#BDLY_INPUT_db_toperiod"+BDLY_INPUT_id_no).datepicker("option","maxDate",paidnewDate);
                 BDLY_INPUT_electricityvaliation();
+            },
+            beforeShow:function(input, inst) {
+                $(inst.dpDiv).removeClass('calendar-off');
             }
         });
         //DATE PICKER FOR TO DATE ..................
@@ -3048,6 +3131,9 @@ var BDLY_SRC_flag_autocom='';
                 PDLY_INPUT_paidnewDate = new Date( Date.parse( PDLY_INPUT_paidnewDate ) );
                 $("#BDLY_INPUT_db_toperiod"+BDLY_INPUT_id_no).datepicker("option","maxDate",PDLY_INPUT_paidnewDate);
                 BDLY_INPUT_electricityvaliation();
+            },
+            beforeShow:function(input, inst) {
+                $(inst.dpDiv).removeClass('calendar-off');
             }
         });
         //DELETE ROW IN UNIT EXPENSE//
@@ -3199,6 +3285,9 @@ var BDLY_SRC_flag_autocom='';
                 var PDLY_INPUT_newDate = date.toDateString();
                 PDLY_INPUT_newDate = new Date( Date.parse( PDLY_INPUT_newDate ) );
                 star_submultivalidvalidation();
+            },
+            beforeShow:function(input, inst) {
+                $(inst.dpDiv).removeClass('calendar-off');
             }
         });
         //DATE PICKER FOR TO DATE ..................
@@ -3214,6 +3303,9 @@ var BDLY_SRC_flag_autocom='';
                 newDate = new Date( Date.parse( newDate ) );
                 $('#BDLY_INPUT_db_star_toperiod'+BDLY_INPUT_star_id_no).datepicker("option","minDate",newDate);
                 star_submultivalidvalidation();
+            },
+            beforeShow:function(input, inst) {
+                $(inst.dpDiv).removeClass('calendar-off');
             }
         });
 //SUBMIT BUTTON VALIDATION FOR STAR HUB//
@@ -3250,6 +3342,9 @@ var BDLY_SRC_flag_autocom='';
                         BDLY_INPUT_sh_maxdate=enddate;
                     $('#BDLY_INPUT_db_star_toperiod'+BDLY_INPUT_star_id_no).datepicker("option","maxDate",BDLY_INPUT_sh_maxdate);
                     star_submultivalidvalidation();
+                },
+                beforeShow:function(input, inst) {
+                    $(inst.dpDiv).removeClass('calendar-off');
                 }});
             var BDLY_INPUT_table = document.getElementById('BDLY_INPUT_tble_starhub');
             var BDLY_INPUT_table_rowlength=BDLY_INPUT_table.rows.length;
@@ -3649,7 +3744,9 @@ var BDLY_SRC_flag_autocom='';
                     var maxinidate= new Date();
                     var maxdatyr =maxinidate.getFullYear()+2;
                     maxdatyr=new Date(maxinidate.setFullYear(maxdatyr));
-                    $(".BDLY_class_sedatechange").datepicker({dateFormat: "dd-mm-yy",changeYear: true,changeMonth: true});
+                    $(".BDLY_class_sedatechange").datepicker({dateFormat: "dd-mm-yy",changeYear: true,changeMonth: true,beforeShow:function(input, inst){
+                        $(inst.dpDiv).removeClass('calendar-off');}
+                    });
                     $('.BDLY_class_sedatechange').datepicker("option","minDate",new Date(1969, 10 , 19));
                     if((selectedSearchopt!=129)&&(selectedSearchopt!=130)&&(selectedSearchopt!=155)&&(selectedSearchopt!=158)&&(selectedSearchopt!=162)&&(selectedSearchopt!=166)&&(selectedSearchopt!=180)&&(selectedSearchopt!=183)&&(selectedSearchopt!=184))
                         $('#BDLY_SRC_enddate,#BDLY_SRC_startdate').datepicker("option","maxDate",new Date());
@@ -3702,7 +3799,8 @@ var BDLY_SRC_flag_autocom='';
                             });
                         }
                     }},
-                beforeShow : function(selected) {
+                        beforeShow : function(input, inst) {
+                    $(inst.dpDiv).addClass('calendar-off');
                     $("#BDLY_SRC_endforperiod").datepicker("option","minDate", new Date(BDLY_SCR_yearBefore, BDLY_SCR_monthBefore ,1));
                 } });
             $(".BDLY_SCR_forperiod").focus(function () {
@@ -4765,8 +4863,18 @@ var BDLY_SRC_flag_autocom='';
                     "pageLength": 10,
                     "sPaginationType":"full_numbers",
                     "aoColumnDefs" : [
-                        { "aTargets" : ["uk-date-column"] , "sType" : "uk_date"}, { "aTargets" : ["uk-timestp-column"] , "sType" : "uk_timestp"},{ "aTargets" : ["uk-forperiod-column"] , "sType" : "uk_forperiod"} ]
-                });}
+                        { "aTargets" : ["uk-date-column"] , "sType" : "uk_date"}, { "aTargets" : ["uk-timestp-column"] , "sType" : "uk_timestp"},{ "aTargets" : ["uk-forperiod-column"] , "sType" : "uk_forperiod"} ],
+                    "scrollX": true,
+                    "sScrollY":  "400px",
+                    "bScrollCollapse": true,
+                    "bAutoWidth": true
+                });
+                if ( $.browser.webkit ) {
+                    setTimeout(function () {
+                        oTable.fnAdjustColumnSizing();
+                    }, 10);
+                }
+            }
             if(BDLY_SRC_sucsval==1)
             {
                 show_msgbox("BIZ EXPENSE DAILY ENTRY/SEARCH/UPDATE/DELETE",BDLY_SRC_confirmmessages[0].replace('[TYPE]',$('#BDLY_SRC_lb_ExpenseList').find('option:selected').text()),"success",false);
@@ -4966,12 +5074,10 @@ var BDLY_SRC_flag_autocom='';
                 if(BDLY_SRC_selectedexptype==10||selectedSearchopt==198)
                 {
                     $('.cancel').removeClass('cancel glyphicon glyphicon-remove').addClass('delete glyphicon glyphicon-trash').hide();
-//                    $(this).val('Delete').css('display','none');
                 }
                 else
                 {
                     $(this).removeClass('cancel glyphicon glyphicon-remove').addClass('delete glyphicon glyphicon-trash');
-//                    $(this).val('Delete').show();
                 }
                 $(this).parent().prev().find('span').show().removeClass('update').removeClass("clsupdatebtn glyphicon glyphicon-print").addClass('edit glyphicon glyphicon-edit');
                 var td =  $(this).closest("tr").children("td");
@@ -4980,7 +5086,6 @@ var BDLY_SRC_flag_autocom='';
                         $(this).html($(this).data('restore'));
                     }
                 });
-//                $('.edit').removeAttr("disabled").next().removeAttr("disabled");
             }
             else{
                 var td =  $(this).closest("tr").children("td");
@@ -5154,8 +5259,8 @@ var BDLY_SRC_flag_autocom='';
                 var BDLY_SRC_date_err=BDLY_SRC_sdate.replace("[ED]", FormTableDateFormat(BDLY_SRC_unitinvdate))
                 show_msgbox("BIZ EXPENSE DAILY ENTRY/SEARCH/UPDATE/DELETE",BDLY_SRC_date_err,"success",false);
                 var td =$('.clsupdatebtn').closest("tr").children("td");
-                $(td).each(function () {
-                    if($(this).index()<td.length-3){
+                $(td).each(function (i) {
+                    if($(this).index()<td.length-2 && i!=0 ){
                         $(this).html($(this).data('restore'));
                     }});
                 $('.clsupdatebtn').val('Edit').addClass('edit glyphicon glyphicon-edit').removeClass('update').removeClass("clsupdatebtn glyphicon glyphicon-print").removeAttr('disabled');
@@ -5208,10 +5313,14 @@ var BDLY_SRC_flag_autocom='';
                             BDLY_DT_func_oldposition();
                         }
                         else
-                            $(".ndate").datepicker({dateFormat: "dd-mm-yy",changeMonth: true,changeYear:true,maxDate:new Date()});
+                            $(".ndate").datepicker({dateFormat: "dd-mm-yy",changeMonth: true,changeYear:true,maxDate:new Date(),beforeShow:function(input, inst){
+                                $(inst.dpDiv).removeClass('calendar-off');}
+                            });
                     }
                     if((thtext=='date')||(thtext=='edate')||(thtext=='sdate')){
-                        $(".datepickerbox").datepicker({dateFormat: "dd-mm-yy",changeMonth: true,changeYear:true});
+                        $(".datepickerbox").datepicker({dateFormat: "dd-mm-yy",changeMonth: true,changeYear:true,beforeShow:function(input, inst){
+                            $(inst.dpDiv).removeClass('calendar-off');}
+                        });
                     }
                     if(requiredindex!=-1)
                         $(this).find('input').addClass('required').addClass('prevent');
@@ -5291,7 +5400,10 @@ var BDLY_SRC_flag_autocom='';
                             var year = inst.selectedYear;
                             $(this).datepicker('setDate', new Date(year, month, 1));
                             $(this).blur();
-                        } });
+                        },
+                        beforeShow:function(input, inst) {
+                            $(inst.dpDiv).addClass('calendar-off');
+                        }});
                     $(".BDLY_SCR_forperiod").focus(function () {
                         $(".ui-datepicker-calendar").hide();
                         $("#ui-datepicker-div").position({ my: "left top", at: "left bottom", of: $(this)});});
@@ -5960,11 +6072,11 @@ var BDLY_SRC_flag_autocom='';
                                         <div class="radio">
                                             <label><input type="radio" id="BDLY_INPUT_radio_petty_cashout" name="BDLY_INPUT_radio_petty" class="BDLY_INPUT_class_submitvalidate" value="cashout">CASH OUT</label>
                                         </div>
-                                       </div>
+                                    </div>
                                       <div class="col-sm-2">
                                             <input type="text" id="BDLY_INPUT_tb_petty_cashout" name="BDLY_INPUT_tb_petty_cashout" class="BDLY_INPUT_class_submitvalidate BDLY_INPUT_class_numonly form-control"  style="width:80px" hidden>
-                                        </div>
-                            </div>
+                                      </div>
+                                </div>
                             </div>
                         </div>
                          <div class="form-group">

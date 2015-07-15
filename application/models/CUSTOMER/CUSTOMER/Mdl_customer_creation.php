@@ -268,7 +268,6 @@ class Mdl_customer_creation extends CI_Model
                             }
 
                         } else if ($CCoption == 6) {
-                            print_r($service);
                             $InvoiceId = $this->Mdl_eilib_invoice_contract->CUST_invoice($UserStamp, $service, $Uint, $Name, $CompanyName, $Invoiceandcontractid[9], $Invoiceandcontractid[0], $Invoiceandcontractid[1], $Rent, $ProcessingFee, $DepositFee, $StartDate, $EndDate, $RoomType, $Leaseperiod, $Prorated, $Sendmailid, $Docowner, 'CREATION', $processwaived, $Customerid, $CustomerFolder);
                             $ContractId = $this->Mdl_eilib_invoice_contract->CUST_contract($service, $Uint, $Startdate, $Enddate, $CompanyName, $Name, $NoticePeriod, $PassportNo, $PassportDate, $EpNo, $EPDate, $NoticePeriodDate, $Leaseperiod, $Cont_cardno, $Rent, $InvQuaterlyfee, $InvFixedaircon_fee, $InvElectricitycapFee, $InvCurtain_DrycleanFee, $InvCheckOutCleanFee, $InvProcessingFee, $InvDepositFee, $Invwaived, $RoomType, $InvProrated, 'CREATION', $Sendmailid, $Docowner, $CustomerFolder);
                             if ($InvoiceId[0] == 1 && $ContractId[0] == 1) {
@@ -320,7 +319,7 @@ class Mdl_customer_creation extends CI_Model
             else
             {   $this->db->trans_savepoint_rollback($savepoint);
                 $this->db->query('DROP TABLE IF EXISTS ' . $temptable);
-                echo 0;
+                echo $Confirm_Meessage;
                 exit;
             }
         }

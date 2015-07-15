@@ -1095,13 +1095,13 @@ var CustomernameDetails;
             if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
                 $('.preloader').hide();
                 var returnvalue=xmlhttp.responseText;
-//                var allunits=returnvalue[1];
+                var allunits=returnvalue[1];
                 var options ='<option value="">SELECT</option>';
-//                for (var i = 0; i < allunits.length; i++)
-//                {
-//                    var data=allunits[i];
-//                    options += '<option value="' + data.UNIT_NO + '">' + data.UNIT_NO + '</option>';
-//                }
+                for (var i = 0; i < allunits.length; i++)
+                {
+                    var data=allunits[i];
+                    options += '<option value="' + data.UNIT_NO + '">' + data.UNIT_NO + '</option>';
+                }
                 $('#CRC_AllUnits').html(options);
                 $('#CRC_AllCustomers').prop('disabled',true);
                 var CUSTOMERoptions ='<option value="">SELECT</option>';

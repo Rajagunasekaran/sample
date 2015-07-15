@@ -73,7 +73,7 @@ require_once('application/libraries/EI_HDR.php');
         }
         $(document).ready(function(){
             $(".preloader").show();
-            $('.preloaderimg').attr('src','https://googledrive.com/host/0B5pkfK_IBDxjU1FrR3hVTXB4a28/Loading.gif');
+            $('.preloaderimg').attr('src',"<?php echo base_url().'images/Loading.gif'?>");
             var CONFIG_ENTRY_controller_url="<?php echo base_url(); ?>" + '/index.php/ACCESSRIGHTS/Ctrl_Menu/' ;
             setInterval('updateClock()', 1000);
             $('#calendarTitle').hide();
@@ -105,7 +105,7 @@ require_once('application/libraries/EI_HDR.php');
                 return false;
             });
             $(document).on('click','.menuconfirm',function(){
-                $('.preloaderimg').attr('src','https://googledrive.com/host/0B5pkfK_IBDxjU1FrR3hVTXB4a28/Loading.gif');
+                $('.preloaderimg').attr('src',"<?php echo base_url().'images/Loading.gif'?>");
                 if(Page_url!='Ctrl_Error_Page'){
                     $(".preloader").show();
                     $('#menu_frame').load("<?php echo site_url(); ?>" + "/"+Page_url+"/index");

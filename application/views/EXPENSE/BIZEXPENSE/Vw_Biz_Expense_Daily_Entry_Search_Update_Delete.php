@@ -15,9 +15,9 @@ require_once('application/libraries/EI_HDR.php');
         resize: none;
         overflow: hidden;
     }
-     .glyphicon-remove,.glyphicon-trash{
-         color:red;
-     }
+    .glyphicon-remove,.glyphicon-trash{
+        color:red;
+    }
     .auto{
         width:100% !important;
     }
@@ -27,55 +27,55 @@ require_once('application/libraries/EI_HDR.php');
 </style>
 
 <script>
-//ERROR MESSAGE CODES
-var BDLY_SRC_errormessagecodes={126:[115,109],125:[119,113,406],124:[220,221,404],131:[115,109],191:[18,22,407,8,10],197:[312,313],
-    132:[116,110,45],127:[226,227,405],128:[119,113,406],129:[123,122],130:[125,124],151:[184,186,408],
-    152:[116,110,45],153:[119,113,406],154:[182,183,409],155:[123,122],156:[115,109],157:[180,181,410],
-    158:[125,124],159:[119,113,406],162:[123,122],164:[115,109],165:[179,181,410],166:[125,124],
-    160:[144,148,45],161:[144,148,45],163:[144,148,45],185:[119,113,406],186:[114,108,411],188:[115,109],
-    187:[116,110,45],189:[117,111,406],190:[118,112,406],178:[185,186,408],179:[119,113,406],180:[123,122],184:[125,124],181:[116,110,45],
-    182:[115,109],183:[178,181,410],175:[119,113,406,8,10],177:[115,109,0,8,10],174:[51,50,412,8,10],
-    176:[116,110,45,8,10],137:[144,148,45],138:[144,148,45],
-    136:[115,109],140:[119,113,406],139:[117,111,406],
-    171:[119,113,406],173:[115,109],172:[144,148,45],
-    146:[119,113,406],147:[415,134],148:[144,148,45],149:[130,134],150:[18,22,407,8,10],198:[414,7,9],
-    167:[119,113,406],170:[115,109],168:[144,148,45],169:[144,148,45],
-    141:[419,424,422,245,246,445],142:[421,425,422,245,246,445],143:[418,423,406,245,246,445],145:[416,417,0,245,246,445],144:[420,134,0,245,246,445]
-};
-//DECLARATION OF GLOBAL VARIABLES
-var BDLY_SRC_sucsval=0;
-var CurrentElem='null',
-    BDLY_SRC_CurrentTR=null,
-    Unit_Exp_Category=null,
-    BDLY_SRC_DeleteKey=null,
-    startdate=null,enddate=null,
-    Unit_Exp_Cusname_global=null,
-    unit_start_end_date_obj=null,
-    BDLY_DT_currentunit=null,
-    BDLY_DT_unitno_toload_name=null,
-    BDLY_DT_row_new_vals=null,
-    BDLY_DT_row_old_vals=null,
-    BDLY_SRC_unit_custname=null,
-    BDLY_SCR_DT_currentfield_access_card=null,
-    BDLY_SCR_DT_currentfield_hkp_unitno=null,BDLY_SCR_monthBefore=null,BDLY_SCR_yearBefore=null,
-    ErrorControl ={AmountCompare:'InValid'},
-    BDLY_SRC_unitcategoryvalue=[],
-    BDLY_SRC_HKunitnovalues=[],
-    BDLY_SRC_errormsglist=[],
-    BDLY_SRC_arr_chkexp=[],
-    BDLY_SRC_errormessagewitdata,
-    BDLY_SRC_errormessagenodata,
-    BDLY_SRC_finalerrr=[],
-    BDLY_SRC_finalerrrcodes,
-    BDLY_SRC_btn_dbvalues=true,
-    BDLY_SRC_purchasecard=1,
-    BDLY_SRC_unitenddate=null,
-    BDLY_SRC_unitstartdate=null,
-    BDLY_SRC_unitinvdate=null,
-    BDLY_DT_flg_date=1,
-    BDLY_SRC_confirmmessages=[],
-    BDLY_SRC_arr_unitcmts=[];
-var BDLY_SRC_flag_autocom='';
+    //ERROR MESSAGE CODES
+    var BDLY_SRC_errormessagecodes={126:[115,109],125:[119,113,406],124:[220,221,404],131:[115,109],191:[18,22,407,8,10],197:[312,313],
+        132:[116,110,45],127:[226,227,405],128:[119,113,406],129:[123,122],130:[125,124],151:[184,186,408],
+        152:[116,110,45],153:[119,113,406],154:[182,183,409],155:[123,122],156:[115,109],157:[180,181,410],
+        158:[125,124],159:[119,113,406],162:[123,122],164:[115,109],165:[179,181,410],166:[125,124],
+        160:[144,148,45],161:[144,148,45],163:[144,148,45],185:[119,113,406],186:[114,108,411],188:[115,109],
+        187:[116,110,45],189:[117,111,406],190:[118,112,406],178:[185,186,408],179:[119,113,406],180:[123,122],184:[125,124],181:[116,110,45],
+        182:[115,109],183:[178,181,410],175:[119,113,406,8,10],177:[115,109,0,8,10],174:[51,50,412,8,10],
+        176:[116,110,45,8,10],137:[144,148,45],138:[144,148,45],
+        136:[115,109],140:[119,113,406],139:[117,111,406],
+        171:[119,113,406],173:[115,109],172:[144,148,45],
+        146:[119,113,406],147:[415,134],148:[144,148,45],149:[130,134],150:[18,22,407,8,10],198:[414,7,9],
+        167:[119,113,406],170:[115,109],168:[144,148,45],169:[144,148,45],
+        141:[419,424,422,245,246,445],142:[421,425,422,245,246,445],143:[418,423,406,245,246,445],145:[416,417,0,245,246,445],144:[420,134,0,245,246,445]
+    };
+    //DECLARATION OF GLOBAL VARIABLES
+    var BDLY_SRC_sucsval=0;
+    var CurrentElem='null',
+        BDLY_SRC_CurrentTR=null,
+        Unit_Exp_Category=null,
+        BDLY_SRC_DeleteKey=null,
+        startdate=null,enddate=null,
+        Unit_Exp_Cusname_global=null,
+        unit_start_end_date_obj=null,
+        BDLY_DT_currentunit=null,
+        BDLY_DT_unitno_toload_name=null,
+        BDLY_DT_row_new_vals=null,
+        BDLY_DT_row_old_vals=null,
+        BDLY_SRC_unit_custname=null,
+        BDLY_SCR_DT_currentfield_access_card=null,
+        BDLY_SCR_DT_currentfield_hkp_unitno=null,BDLY_SCR_monthBefore=null,BDLY_SCR_yearBefore=null,
+        ErrorControl ={AmountCompare:'InValid'},
+        BDLY_SRC_unitcategoryvalue=[],
+        BDLY_SRC_HKunitnovalues=[],
+        BDLY_SRC_errormsglist=[],
+        BDLY_SRC_arr_chkexp=[],
+        BDLY_SRC_errormessagewitdata,
+        BDLY_SRC_errormessagenodata,
+        BDLY_SRC_finalerrr=[],
+        BDLY_SRC_finalerrrcodes,
+        BDLY_SRC_btn_dbvalues=true,
+        BDLY_SRC_purchasecard=1,
+        BDLY_SRC_unitenddate=null,
+        BDLY_SRC_unitstartdate=null,
+        BDLY_SRC_unitinvdate=null,
+        BDLY_DT_flg_date=1,
+        BDLY_SRC_confirmmessages=[],
+        BDLY_SRC_arr_unitcmts=[];
+    var BDLY_SRC_flag_autocom='';
 
     $(document).ready(function(){
         $('.preloader').hide();
@@ -120,10 +120,10 @@ var BDLY_SRC_flag_autocom='';
             $(inst.dpDiv).removeClass('calendar-off');
         }});
         $(".datepickdate").datepicker("option","maxDate",new Date());
-    //RADIO BUTTON CLICK FUNCTION
+        //RADIO BUTTON CLICK FUNCTION
         var initial_values=[];
-            $('.BE_rd_selectform').click(function(){
-                $('#BDLY_SRC_lb_ExpenseList').html('');
+        $('.BE_rd_selectform').click(function(){
+            $('#BDLY_SRC_lb_ExpenseList').html('');
             var bizdailyradiooption=$(this).val();
             if(bizdailyradiooption=='bizentryform')
             {
@@ -141,7 +141,7 @@ var BDLY_SRC_flag_autocom='';
                     error: function (data) {
                         alert('error in getting' + JSON.stringify(data));
                     }
-            });
+                });
                 $('#biz_expenseentryform').show();
                 $('#updateform').hide();
                 $('#BDLY_INPUT_lb_selectexptype').val('SELECT').show();
@@ -192,7 +192,7 @@ var BDLY_SRC_flag_autocom='';
                 $('#BDLY_SRC_Optionhead').text('');
                 $('#BDLY_SRC_div_searchresult_head').html('');
             }
-    });
+        });
         /*------------------------------------------------CHANGE FUNCTION FOR AMOUNT VALIDATION------------------------------------------*/
         $(document).on("change",'.amtentry', function (){
             var id=$(this).attr('id');
@@ -470,14 +470,14 @@ var BDLY_SRC_flag_autocom='';
         //DATE PICKER VALIDATION FOR INDEPENDENT UNIT
         $(".datepickperiod").datepicker({dateFormat:'MM-yy', changeYear: true, changeMonth: true,maxDate:new Date(),
             onClose: function(dateText, inst) {
-            var month =inst.selectedMonth;
-            var year = inst.selectedYear;
-            $(this).datepicker('setDate', new Date(year, month, 1));
-            $(this).blur();
-        },
-        beforeShow:function(input, inst) {
-            $(inst.dpDiv).addClass('calendar-off');
-        }});
+                var month =inst.selectedMonth;
+                var year = inst.selectedYear;
+                $(this).datepicker('setDate', new Date(year, month, 1));
+                $(this).blur();
+            },
+            beforeShow:function(input, inst) {
+                $(inst.dpDiv).addClass('calendar-off');
+            }});
         $('.BDLY_INPUT_class_forperiod').datepicker( {changeMonth: true,  changeYear: true,  showButtonPanel: true,  dateFormat: 'MM-yy',
             maxDate:new Date(),onClose: function(dateText, inst) {
                 var month =inst.selectedMonth;
@@ -500,23 +500,23 @@ var BDLY_SRC_flag_autocom='';
             var BDLY_INPUT_unitvalold=$('#BDLY_INPUT_tb_pay_unitno').val();
             if(BDLY_INPUT_unitvalold==undefined)
             {
-            if(BDLY_INPUT_unitval.length==4)
-            {
-                $('.preloader').show();
-                $.ajax({
-                    type: "POST",
-                    url: controller_url+"BDLY_INPUT_checkexistunit",
-                    data:{"BDLY_INPUT_unitval":BDLY_INPUT_unitval},
-                    success: function(res) {
-                        $('.preloader').hide();
-                        checkunit=res;
-                        BDLY_INPUT_checkunitnoexist(checkunit)
-                    },
-                    error: function (data) {
-                        alert('error in getting' + JSON.stringify(data));
-                    }
-                });
-            }
+                if(BDLY_INPUT_unitval.length==4)
+                {
+                    $('.preloader').show();
+                    $.ajax({
+                        type: "POST",
+                        url: controller_url+"BDLY_INPUT_checkexistunit",
+                        data:{"BDLY_INPUT_unitval":BDLY_INPUT_unitval},
+                        success: function(res) {
+                            $('.preloader').hide();
+                            checkunit=res;
+                            BDLY_INPUT_checkunitnoexist(checkunit)
+                        },
+                        error: function (data) {
+                            alert('error in getting' + JSON.stringify(data));
+                        }
+                    });
+                }
             }
             else
             {
@@ -618,63 +618,20 @@ var BDLY_SRC_flag_autocom='';
                 }
             }
         }
-      //  /SELECT THE EXPENSE//
+        //  /SELECT THE EXPENSE//
         var BDLY_INPUT_unitno_result_auto=[];
-    $(document).on('change','#BDLY_INPUT_lb_selectexptype',function() {
-        BDLY_INPUT_clearalldates();
-        $('textarea').height(116);
-        $('#BDLY_INPUT_tble_electricity').hide();
-        $('#BDLY_INPUT_tb_access_cardno').removeClass('invalid')
-        $('#BDLY_INPUT_tble_starhub').hide();
-        $('#BDLY_INPUT_tble_unitexpense').hide();
-        $('#BDLY_INPUT_lbl_pcarderrmsg').hide();
-        $('#BDLY_INPUT_lbl_pay_uniterrmsg').hide();
-        $('#BDLY_INPUT_tble_housepayment').hide();
-        $('#BDLY_INPUT_lbl_hourmsg').hide();
-        $('#BDLY_INPUT_lbl_minmsg').hide();
-        $('#BDLY_INPUT_tble_aircon').hide();
-        $('#BDLY_INPUT_lbl_unitno').hide();
-        $('#BDLY_INPUT_lb_unitno').hide();
-        $('#typeofexpense').hide();
-        $('#BDLY_INPUT_tble_cardpark').hide();
-        $('#BDLY_INPUT_tble_digitalvoice').hide();
-        $('#BDLY_INPUT_tble_facility').hide();
-        $('#BDLY_INPUT_tble_moving').hide();
-        $('#BDLY_INPUT_tble_purchase').hide();
-        $('#BDLY_INPUT_btn_submitbutton').hide();
-        $('#BDLY_INPUT_btn_resetbutton').hide();
-        $('#BDLY_INPUT_btn_submitbutton').attr("disabled", "disabled");
-        $('#BDLY_INPUT_tble_pettycash').hide();
-        $('#BDLY_INPUT_btn_submitbutton').attr('disabled','disabled');
-        $('#BDLY_INPUT_btn_multisubmitbutton').hide();
-        $('#BDLY_INPUT_lb_elect_unit-1').prop('selectedIndex',0)
-        $('#BDLY_INPUT_db_invoicedate1').val("").hide();
-        $('#BDLY_INPUT_db_fromperiod1').val('').hide();
-        $('#BDLY_INPUT_db_toperiod1').val('').hide();
-        $('#BDLY_INPUT_lb_elect_payment1').prop('selectedIndex',0).hide()
-        $('#BDLY_INPUT_tb_elect_amount1').val('').hide();
-        $('#BDLY_INPUT_tb_elect_minusamt1').val('').hide();
-        $('#BDLY_INPUT_ta_comments1').hide()
-        $('#BDLY_INPUT_tb_invoiceto1').val('').hide();
-        $('#BDLY_INPUT_tble_electricity').hide();
-        var BDLY_INPUT_flag_notsave=[];
-        BDLY_INPUT_flag_notsave[0]='BDLY_INPUT_flag_notsave'
-        BDLY_INPUT_clear_electricity(BDLY_INPUT_flag_notsave);
-        BDLY_INPUT_clear_unitExpanse(BDLY_INPUT_flag_notsave);
-        BDLY_INPUT_clear_starhub(BDLY_INPUT_flag_notsave);
-        $('#BDLY_INPUT_db_star_invoicedate1').val('').hide()
-        $('#BDLY_INPUT_tb_star_amount1').val("").hide()
-        $('#BDLY_INPUT_db_star_toperiod1').val('').hide();
-        $('#BDLY_INPUT_db_star_fromperiod1').val('').hide();
-        $('#BDLY_INPUT_star_add1').attr("disabled", "disabled").show();
-        $('#BDLY_INPUT_star_del1').attr("disabled", "disabled").show();
-        $('#BDLY_INPUT_lb_star_unit-1').prop('selectedIndex',0);
-        $('#BDLY_INPUT_btn_multisubmitbutton').attr('disabled','disabled')
-        $('#BDLY_INPUT_lb_star_invoice-1').hide();
-        $('#BDLY_INPUT_tb_star_accno1').hide();
-        $('#BDLY_INPUT_tble_unitexpense').hide();
-        var BDLY_INPUT_type=$('#BDLY_INPUT_lb_selectexptype').val()
-        if(BDLY_INPUT_type=="SELECT"){
+        $(document).on('change','#BDLY_INPUT_lb_selectexptype',function() {
+            BDLY_INPUT_clearalldates();
+            $('textarea').height(116);
+            $('#BDLY_INPUT_tble_electricity').hide();
+            $('#BDLY_INPUT_tb_access_cardno').removeClass('invalid')
+            $('#BDLY_INPUT_tble_starhub').hide();
+            $('#BDLY_INPUT_tble_unitexpense').hide();
+            $('#BDLY_INPUT_lbl_pcarderrmsg').hide();
+            $('#BDLY_INPUT_lbl_pay_uniterrmsg').hide();
+            $('#BDLY_INPUT_tble_housepayment').hide();
+            $('#BDLY_INPUT_lbl_hourmsg').hide();
+            $('#BDLY_INPUT_lbl_minmsg').hide();
             $('#BDLY_INPUT_tble_aircon').hide();
             $('#BDLY_INPUT_lbl_unitno').hide();
             $('#BDLY_INPUT_lb_unitno').hide();
@@ -690,155 +647,198 @@ var BDLY_SRC_flag_autocom='';
             $('#BDLY_INPUT_tble_pettycash').hide();
             $('#BDLY_INPUT_btn_submitbutton').attr('disabled','disabled');
             $('#BDLY_INPUT_btn_multisubmitbutton').hide();
+            $('#BDLY_INPUT_lb_elect_unit-1').prop('selectedIndex',0)
+            $('#BDLY_INPUT_db_invoicedate1').val("").hide();
+            $('#BDLY_INPUT_db_fromperiod1').val('').hide();
+            $('#BDLY_INPUT_db_toperiod1').val('').hide();
+            $('#BDLY_INPUT_lb_elect_payment1').prop('selectedIndex',0).hide()
+            $('#BDLY_INPUT_tb_elect_amount1').val('').hide();
+            $('#BDLY_INPUT_tb_elect_minusamt1').val('').hide();
+            $('#BDLY_INPUT_ta_comments1').hide()
+            $('#BDLY_INPUT_tb_invoiceto1').val('').hide();
             $('#BDLY_INPUT_tble_electricity').hide();
-            $('#BDLY_INPUT_tble_housekeeping').hide();
-            $('#BDLY_INPUT_tble_housepayment').hide();
-            $('#BDLY_INPUT_tble_pettycash').hide();
-            $('#BDLY_INPUT_lbl_checkcardno').hide();
-            $('#BDLY_INPUT_lbl_hourmsg').hide();
-        }
-        if(BDLY_INPUT_type!="SELECT"){
-            $('#BDLY_INPUT_btn_submitbutton').hide();
-            $(".preloader").show();
-             if(BDLY_INPUT_allunittables.length==0)
-            {
-                $(".preloader").hide();
-                $('#BDLY_INPUT_lbl_hourmsg').text(BDLY_INPUT_tableerrmsgarr[14].EMC_DATA);
-                $('#BDLY_INPUT_lbl_hourmsg').show();
-            }else
-            if(BDLY_INPUT_type==9 ||BDLY_INPUT_type==8||BDLY_INPUT_type==5||BDLY_INPUT_type==4||BDLY_INPUT_type==7||BDLY_INPUT_type==6||BDLY_INPUT_type==1||BDLY_INPUT_type==3||BDLY_INPUT_type==2){
-                $('#BDLY_INPUT_tble_housepayment').hide();
-                $('#BDLY_INPUT_tble_housekeeping').hide();
+            var BDLY_INPUT_flag_notsave=[];
+            BDLY_INPUT_flag_notsave[0]='BDLY_INPUT_flag_notsave'
+            BDLY_INPUT_clear_electricity(BDLY_INPUT_flag_notsave);
+            BDLY_INPUT_clear_unitExpanse(BDLY_INPUT_flag_notsave);
+            BDLY_INPUT_clear_starhub(BDLY_INPUT_flag_notsave);
+            $('#BDLY_INPUT_db_star_invoicedate1').val('').hide()
+            $('#BDLY_INPUT_tb_star_amount1').val("").hide()
+            $('#BDLY_INPUT_db_star_toperiod1').val('').hide();
+            $('#BDLY_INPUT_db_star_fromperiod1').val('').hide();
+            $('#BDLY_INPUT_star_add1').attr("disabled", "disabled").show();
+            $('#BDLY_INPUT_star_del1').attr("disabled", "disabled").show();
+            $('#BDLY_INPUT_lb_star_unit-1').prop('selectedIndex',0);
+            $('#BDLY_INPUT_btn_multisubmitbutton').attr('disabled','disabled')
+            $('#BDLY_INPUT_lb_star_invoice-1').hide();
+            $('#BDLY_INPUT_tb_star_accno1').hide();
+            $('#BDLY_INPUT_tble_unitexpense').hide();
+            var BDLY_INPUT_type=$('#BDLY_INPUT_lb_selectexptype').val()
+            if(BDLY_INPUT_type=="SELECT"){
+                $('#BDLY_INPUT_tble_aircon').hide();
+                $('#BDLY_INPUT_lbl_unitno').hide();
+                $('#BDLY_INPUT_lb_unitno').hide();
+                $('#typeofexpense').hide();
+                $('#BDLY_INPUT_tble_cardpark').hide();
                 $('#BDLY_INPUT_tble_digitalvoice').hide();
+                $('#BDLY_INPUT_tble_facility').hide();
+                $('#BDLY_INPUT_tble_moving').hide();
+                $('#BDLY_INPUT_tble_purchase').hide();
                 $('#BDLY_INPUT_btn_submitbutton').hide();
-                if((BDLY_INPUT_type==9)&&(BDLY_INPUT_airconservice.length==0))
-                {
-                    $(".preloader").hide();
-                    $('#BDLY_INPUT_lbl_checkcardno').text(BDLY_INPUT_tableerrmsgarr[9].EMC_DATA);
-                    $('#BDLY_INPUT_lbl_checkcardno').show();
-                }
-                else if((BDLY_INPUT_type==8)&&(BDLY_INPUT_allcarpark.length==0))
-                {
-                    $(".preloader").hide();
-                    $('#BDLY_INPUT_lbl_checkcardno').text(BDLY_INPUT_tableerrmsgarr[7].EMC_DATA);//
-                    $('#BDLY_INPUT_lbl_checkcardno').show();
-                }
-                else if((BDLY_INPUT_type==5)&&(BDLY_INPUT_alldetaildigitalvoice.length==0))
-                {
-                    $(".preloader").hide();
-                    $('#BDLY_INPUT_lbl_checkcardno').text(BDLY_INPUT_tableerrmsgarr[8].EMC_DATA);//
-                    $('#BDLY_INPUT_lbl_checkcardno').show();
-                }
-                else if((BDLY_INPUT_type==1)&&(BDLY_INPUT_alldetailelsec.length==0))
-                {
-                    $(".preloader").hide();
-                    $('#BDLY_INPUT_lbl_checkcardno').text(BDLY_INPUT_tableerrmsgarr[6].EMC_DATA);
-                    $('#BDLY_INPUT_lbl_checkcardno').show();
-                }
-                else if((BDLY_INPUT_type==2)&&(BDLY_INPUT_allsetailstarhub.length==0))
-                {
-                    $(".preloader").hide();
-                    $('#BDLY_INPUT_lbl_checkcardno').text(BDLY_INPUT_tableerrmsgarr[5].EMC_DATA);
-                    $('#BDLY_INPUT_lbl_checkcardno').show();
-                }
-                else if((BDLY_INPUT_type==3)&&(BDLY_INPUT_allcustentrydtl.length==0))
-                {
-                    $(".preloader").hide();
-                    $('#BDLY_INPUT_lbl_checkcardno').text(BDLY_INPUT_tableerrmsgarr[17].EMC_DATA);
-                    $('#BDLY_INPUT_lbl_checkcardno').show();
-                }
-                else
-                {
-                    $('#BDLY_INPUT_lbl_checkcardno').hide();
-                    $('#BDLY_INPUT_lbl_hourmsg').hide();
-                    $.ajax({
-                        type: "POST",
-                        url: controller_url+"BDLY_INPUT_get_unitno",
-                        data:{"BDLY_INPUT_type":BDLY_INPUT_type},
-                        success: function(res) {
-                            $('.preloader').hide();
-                            $("html, body").animate({ scrollTop: $(document).height() }, "slow");
-                            BDLY_INPUT_unitno_result_auto=JSON.parse(res);
-                            BDLY_INPUT_load_unitno(BDLY_INPUT_unitno_result_auto)
-                        },
-                        error: function (data) {
-                            alert('error in getting' + JSON.stringify(data));
-                        }
-                    });
-                }
-            }
-            if(BDLY_INPUT_type==10)
-            {
+                $('#BDLY_INPUT_btn_resetbutton').hide();
+                $('#BDLY_INPUT_btn_submitbutton').attr("disabled", "disabled");
+                $('#BDLY_INPUT_tble_pettycash').hide();
+                $('#BDLY_INPUT_btn_submitbutton').attr('disabled','disabled');
+                $('#BDLY_INPUT_btn_multisubmitbutton').hide();
+                $('#BDLY_INPUT_tble_electricity').hide();
+                $('#BDLY_INPUT_tble_housekeeping').hide();
+                $('#BDLY_INPUT_tble_housepayment').hide();
+                $('#BDLY_INPUT_tble_pettycash').hide();
                 $('#BDLY_INPUT_lbl_checkcardno').hide();
                 $('#BDLY_INPUT_lbl_hourmsg').hide();
-                $('#BDLY_INPUT_tble_housekeeping').hide();
-                $.ajax({
-                    type: "POST",
-                    url: controller_url+"BDLY_INPUT_get_balance",
-                    success: function(res) {
-                        $('.preloader').hide();
-                        balance_result=JSON.parse(res);
-                        BDLY_INPUT_load_balance(balance_result)
-                    },
-                    error: function (data) {
-                        alert('error in getting' + JSON.stringify(data));
-                    }
-                });
             }
-            if(BDLY_INPUT_type==11){
-                $('#BDLY_INPUT_tble_starhub').hide();
-                $('#BDLY_INPUT_tble_housepayment').hide();
-                if(BDLY_INPUT_allempdetailsarry.length==0)
-                {
-                    $(".preloader").hide();
-                    $('#BDLY_INPUT_lbl_checkcardno').text(BDLY_INPUT_tableerrmsgarr[10].EMC_DATA);//
-                    $('#BDLY_INPUT_lbl_checkcardno').show();
-                }else
-                {
-                    $('#BDLY_INPUT_lbl_checkcardno').hide();
-                    $('#BDLY_INPUT_lbl_hourmsg').hide();
-                    $.ajax({
-                        type: "POST",
-                        url: controller_url+"BDLY_INPUT_get_cleanername",
-                        success: function(res) {
-                            $('.preloader').hide();
-                            cleanername=JSON.parse(res);
-                            BDLY_INPUT_load_cleanername(cleanername)
-                        },
-                        error: function (data) {
-                            alert('error in getting' + JSON.stringify(data));
-                        }
-                    });
-                }
-            }
-            if(BDLY_INPUT_type==12){
+            if(BDLY_INPUT_type!="SELECT"){
+                $('#BDLY_INPUT_btn_submitbutton').hide();
+                $(".preloader").show();
                 if(BDLY_INPUT_allunittables.length==0)
                 {
                     $(".preloader").hide();
-                    $('#BDLY_INPUT_lbl_checkcardno').hide();
                     $('#BDLY_INPUT_lbl_hourmsg').text(BDLY_INPUT_tableerrmsgarr[14].EMC_DATA);
                     $('#BDLY_INPUT_lbl_hourmsg').show();
                 }else
+                if(BDLY_INPUT_type==9 ||BDLY_INPUT_type==8||BDLY_INPUT_type==5||BDLY_INPUT_type==4||BDLY_INPUT_type==7||BDLY_INPUT_type==6||BDLY_INPUT_type==1||BDLY_INPUT_type==3||BDLY_INPUT_type==2){
+                    $('#BDLY_INPUT_tble_housepayment').hide();
+                    $('#BDLY_INPUT_tble_housekeeping').hide();
+                    $('#BDLY_INPUT_tble_digitalvoice').hide();
+                    $('#BDLY_INPUT_btn_submitbutton').hide();
+                    if((BDLY_INPUT_type==9)&&(BDLY_INPUT_airconservice.length==0))
+                    {
+                        $(".preloader").hide();
+                        $('#BDLY_INPUT_lbl_checkcardno').text(BDLY_INPUT_tableerrmsgarr[9].EMC_DATA);
+                        $('#BDLY_INPUT_lbl_checkcardno').show();
+                    }
+                    else if((BDLY_INPUT_type==8)&&(BDLY_INPUT_allcarpark.length==0))
+                    {
+                        $(".preloader").hide();
+                        $('#BDLY_INPUT_lbl_checkcardno').text(BDLY_INPUT_tableerrmsgarr[7].EMC_DATA);//
+                        $('#BDLY_INPUT_lbl_checkcardno').show();
+                    }
+                    else if((BDLY_INPUT_type==5)&&(BDLY_INPUT_alldetaildigitalvoice.length==0))
+                    {
+                        $(".preloader").hide();
+                        $('#BDLY_INPUT_lbl_checkcardno').text(BDLY_INPUT_tableerrmsgarr[8].EMC_DATA);//
+                        $('#BDLY_INPUT_lbl_checkcardno').show();
+                    }
+                    else if((BDLY_INPUT_type==1)&&(BDLY_INPUT_alldetailelsec.length==0))
+                    {
+                        $(".preloader").hide();
+                        $('#BDLY_INPUT_lbl_checkcardno').text(BDLY_INPUT_tableerrmsgarr[6].EMC_DATA);
+                        $('#BDLY_INPUT_lbl_checkcardno').show();
+                    }
+                    else if((BDLY_INPUT_type==2)&&(BDLY_INPUT_allsetailstarhub.length==0))
+                    {
+                        $(".preloader").hide();
+                        $('#BDLY_INPUT_lbl_checkcardno').text(BDLY_INPUT_tableerrmsgarr[5].EMC_DATA);
+                        $('#BDLY_INPUT_lbl_checkcardno').show();
+                    }
+                    else if((BDLY_INPUT_type==3)&&(BDLY_INPUT_allcustentrydtl.length==0))
+                    {
+                        $(".preloader").hide();
+                        $('#BDLY_INPUT_lbl_checkcardno').text(BDLY_INPUT_tableerrmsgarr[17].EMC_DATA);
+                        $('#BDLY_INPUT_lbl_checkcardno').show();
+                    }
+                    else
+                    {
+                        $('#BDLY_INPUT_lbl_checkcardno').hide();
+                        $('#BDLY_INPUT_lbl_hourmsg').hide();
+                        $.ajax({
+                            type: "POST",
+                            url: controller_url+"BDLY_INPUT_get_unitno",
+                            data:{"BDLY_INPUT_type":BDLY_INPUT_type},
+                            success: function(res) {
+                                $('.preloader').hide();
+                                $("html, body").animate({ scrollTop: $(document).height() }, "slow");
+                                BDLY_INPUT_unitno_result_auto=JSON.parse(res);
+                                BDLY_INPUT_load_unitno(BDLY_INPUT_unitno_result_auto)
+                            },
+                            error: function (data) {
+                                alert('error in getting' + JSON.stringify(data));
+                            }
+                        });
+                    }
+                }
+                if(BDLY_INPUT_type==10)
                 {
                     $('#BDLY_INPUT_lbl_checkcardno').hide();
                     $('#BDLY_INPUT_lbl_hourmsg').hide();
+                    $('#BDLY_INPUT_tble_housekeeping').hide();
                     $.ajax({
                         type: "POST",
-                        url: controller_url+"BDLY_INPUT_get_allunitno",
+                        url: controller_url+"BDLY_INPUT_get_balance",
                         success: function(res) {
                             $('.preloader').hide();
-                            BDLY_INPUT_load_allunitnoval=JSON.parse(res);
-                            BDLY_INPUT_load_allunitno(BDLY_INPUT_load_allunitnoval.sort())
+                            balance_result=JSON.parse(res);
+                            BDLY_INPUT_load_balance(balance_result)
                         },
                         error: function (data) {
                             alert('error in getting' + JSON.stringify(data));
                         }
                     });
                 }
-                $('#BDLY_INPUT_tble_housekeeping').hide();
+                if(BDLY_INPUT_type==11){
+                    $('#BDLY_INPUT_tble_starhub').hide();
+                    $('#BDLY_INPUT_tble_housepayment').hide();
+                    if(BDLY_INPUT_allempdetailsarry.length==0)
+                    {
+                        $(".preloader").hide();
+                        $('#BDLY_INPUT_lbl_checkcardno').text(BDLY_INPUT_tableerrmsgarr[10].EMC_DATA);//
+                        $('#BDLY_INPUT_lbl_checkcardno').show();
+                    }else
+                    {
+                        $('#BDLY_INPUT_lbl_checkcardno').hide();
+                        $('#BDLY_INPUT_lbl_hourmsg').hide();
+                        $.ajax({
+                            type: "POST",
+                            url: controller_url+"BDLY_INPUT_get_cleanername",
+                            success: function(res) {
+                                $('.preloader').hide();
+                                cleanername=JSON.parse(res);
+                                BDLY_INPUT_load_cleanername(cleanername)
+                            },
+                            error: function (data) {
+                                alert('error in getting' + JSON.stringify(data));
+                            }
+                        });
+                    }
+                }
+                if(BDLY_INPUT_type==12){
+                    if(BDLY_INPUT_allunittables.length==0)
+                    {
+                        $(".preloader").hide();
+                        $('#BDLY_INPUT_lbl_checkcardno').hide();
+                        $('#BDLY_INPUT_lbl_hourmsg').text(BDLY_INPUT_tableerrmsgarr[14].EMC_DATA);
+                        $('#BDLY_INPUT_lbl_hourmsg').show();
+                    }else
+                    {
+                        $('#BDLY_INPUT_lbl_checkcardno').hide();
+                        $('#BDLY_INPUT_lbl_hourmsg').hide();
+                        $.ajax({
+                            type: "POST",
+                            url: controller_url+"BDLY_INPUT_get_allunitno",
+                            success: function(res) {
+                                $('.preloader').hide();
+                                BDLY_INPUT_load_allunitnoval=JSON.parse(res);
+                                BDLY_INPUT_load_allunitno(BDLY_INPUT_load_allunitnoval.sort())
+                            },
+                            error: function (data) {
+                                alert('error in getting' + JSON.stringify(data));
+                            }
+                        });
+                    }
+                    $('#BDLY_INPUT_tble_housekeeping').hide();
+                }
             }
-        }
-    });
+        });
         //FUNCTION TO LOAD UNIT NO//
         function BDLY_INPUT_load_unitno(BDLY_INPUT_unitno_result_auto)
         {
@@ -1227,7 +1227,7 @@ var BDLY_SRC_flag_autocom='';
                 $('#BDLY_INPUT_tb_access_invoiceamt').val('');
             }
         }
-   //FUNCATION FOR SETDATEPICKER
+        //FUNCATION FOR SETDATEPICKER
         function BDLY_INPUT_setdatepick()
         {
             var BDLY_INPUT_unit_end_date='';
@@ -1295,8 +1295,8 @@ var BDLY_SRC_flag_autocom='';
                 changeYear: true,
                 changeMonth: true,
                 beforeShow:function(input, inst){
-                $(inst.dpDiv).removeClass('calendar-off');
-            }});
+                    $(inst.dpDiv).removeClass('calendar-off');
+                }});
             if(BDLY_INPUT_unit_response[0]!='BDLY_INPUT_flag_notsave'){
                 BDLY_INPUT_load_unitno(BDLY_INPUT_unit_response);
             }}
@@ -1305,7 +1305,7 @@ var BDLY_SRC_flag_autocom='';
             $(".preloader").hide();
             $('#BDLY_INPUT_btn_multisubmitbutton').attr('disabled','disabled')
             $('#BDLY_INPUT_tble_unitexpense').empty();
-            $('<tr><td nowrap><label id="BDLY_INPUT_lbl_uexp_unit" >UNIT</label><em>*</em> </td><td nowrap><label  id="BDLY_INPUT_lbl_uexp_category" >CATEGORY</label><em>*</em></td><td nowrap><label  id="BDLY_INPUT_lbl_uexp_customer" hidden>CUSTOMER<em>*</em></label></td><td nowrap><label  id="BDLY_INPUT_lbl_uexp_customerid" hidden></label></td><td nowrap> <label id="BDLY_INPUT_lbl_uexp_invoicedate" >INVOICE DATE</label><em>*</em> </td><td ><label id="BDLY_INPUT_lbl_uexp_invoiceitem" >INVOICE ITEM</label><em>*</em> </td><td nowrap><label id="BDLY_INPUT_lbl_uexp_invoicefrom" >INVOICE FROM</label><em>*</em></td><td nowrap><label id="BDLY_INPUT_lbl_uexp_amount" >AMOUNT</label><em>*</em> </td><td nowrap><label id="BDLY_INPUT_lbl_uexp_comments" >COMMENTS</label> </td><td ><label id="BDLY_INPUT_lbl_uexp_add" ></label> </td><td ><label id="BDLY_INPUT_lbl_uexp_del" ></label> </td></tr><tr><td style="max-width:200px;"> <select  class="BDLY_INPUT_uexp_class_unit uexp_submultivalid form-control"  name="BDLY_INPUT_lb_uexp_unit[]" id="BDLY_INPUT_lb_uexp_unit-1" style="display: none;" hidden><option value="">SELECT</option></select> </td> <td style="max-width:200px;"><select  name="BDLY_INPUT_lb_uexp_category[]" class="uexp_submultivalid BDLY_INPUT_uexp_class_category form-control" id="BDLY_INPUT_lb_uexp_category-1" style="display: none;" hidden><option value="" >SELECT</option></select></td><td style="max-width:200px;"><select  name="BDLY_INPUT_lb_uexp_customer[]" class="uexp_submultivalid BDLY_INPUT_uexp_class_custname form-control" id="BDLY_INPUT_lb_uexp_customer1" style="display: none;" hidden><option value="" >SELECT</option></select></td><td style="max-width:200px;"><table id="multiplecustomer-1" width="250px" hidden></table><td style="max-width:150px;"><input  class="datepickdate uexp_submultivalid datemandtry form-control "  type="text" name ="BDLY_INPUT_db_uexp_invoicedate[]" id="BDLY_INPUT_db_uexp_invoicedate1" style="width:100px;display: none;" hidden /> </td><td style="max-width:250px;"><textarea  class="uexp_submultivalid form-control"  name ="BDLY_INPUT_tb_uexp_invoiceitem[]" id="BDLY_INPUT_tb_uexp_invoiceitem1" style="display: none;" hidden/></textarea> </td><td style="max-width:200px;"><input  class="uexp_submultivalid autosize autocomplete form-control" type="text" name ="BDLY_INPUT_tb_uexp_invoicefrom[]" id="BDLY_INPUT_tb_uexp_invoicefrom1" style="display: none;" hidden/> </td><td style="max-width:100px;"><input  class="amtonlyfivedigit uexp_submultivalid form-control"  type="text" name ="BDLY_INPUT_tb_uexp_amount[]" id="BDLY_INPUT_tb_uexp_amount1" style="width:65px;display: none;" hidden /> </td><td><textarea style="max-width:250px;" row="3" name ="BDLY_INPUT_ta_uexpcomments[]" id="BDLY_INPUT_ta_uexpcomments1" class=" uexp_submultivalid form-control" hidden ></textarea> </td><td><input type="button" value="+" class="uexp_addbttn" alt="Add Row" height="30" width="30" name ="BDLY_INPUT_uexpadd[]" id="BDLY_INPUT_uexp_add1" disabled > </td><td><input  type="button" value="-" class="uexp_deletebttn" alt="delete Row" height="30" width="30" name ="BDLY_INPUT_uexpdelete[]" id="BDLY_INPUT_uexp_del1" disabled ></td><td><input    type="text" name ="BDLY_INPUT_tb_uexp_hideradioid[]" id="BDLY_INPUT_tb_uexp_hideradioid1" style="width:75px;" hidden/> </td></tr>').appendTo($('#BDLY_INPUT_tble_unitexpense'))
+            $('<tr><td nowrap><label id="BDLY_INPUT_lbl_uexp_unit" >UNIT</label><em>*</em> </td><td nowrap><label  id="BDLY_INPUT_lbl_uexp_category" >CATEGORY</label><em>*</em></td><td nowrap><label  id="BDLY_INPUT_lbl_uexp_customer" hidden>CUSTOMER<em>*</em></label></td><td nowrap><label  id="BDLY_INPUT_lbl_uexp_customerid" hidden></label></td><td nowrap> <label id="BDLY_INPUT_lbl_uexp_invoicedate" >INVOICE DATE</label><em>*</em> </td><td ><label id="BDLY_INPUT_lbl_uexp_invoiceitem" >INVOICE ITEM</label><em>*</em> </td><td nowrap><label id="BDLY_INPUT_lbl_uexp_invoicefrom" >INVOICE FROM</label><em>*</em></td><td nowrap><label id="BDLY_INPUT_lbl_uexp_amount" >AMOUNT</label><em>*</em> </td><td nowrap><label id="BDLY_INPUT_lbl_uexp_comments" >COMMENTS</label> </td><td ><label id="BDLY_INPUT_lbl_uexp_add" ></label> </td><td ><label id="BDLY_INPUT_lbl_uexp_del" ></label> </td></tr><tr><td style="max-width:200px;"> <select  class="BDLY_INPUT_uexp_class_unit uexp_submultivalid form-control"  name="BDLY_INPUT_lb_uexp_unit[]" id="BDLY_INPUT_lb_uexp_unit-1" style="display: none; width:90px;" hidden><option value="">SELECT</option></select> </td> <td style="max-width:200px;"><select  name="BDLY_INPUT_lb_uexp_category[]" class="uexp_submultivalid BDLY_INPUT_uexp_class_category form-control" id="BDLY_INPUT_lb_uexp_category-1" style="display: none;width:140px;" hidden><option value="" >SELECT</option></select></td><td style="max-width:200px;"><select  name="BDLY_INPUT_lb_uexp_customer[]" class="uexp_submultivalid BDLY_INPUT_uexp_class_custname form-control" id="BDLY_INPUT_lb_uexp_customer1" style="display: none;width:160px;" hidden><option value="" >SELECT</option></select></td><td style="max-width:200px;"><table id="multiplecustomer-1" width="250px" hidden></table><td style="max-width:150px;"><input  class="datepickdate uexp_submultivalid datemandtry form-control "  type="text" name ="BDLY_INPUT_db_uexp_invoicedate[]" id="BDLY_INPUT_db_uexp_invoicedate1" style="width:100px;display: none;" hidden /> </td><td style="max-width:250px;"><textarea  class="uexp_submultivalid form-control"  name ="BDLY_INPUT_tb_uexp_invoiceitem[]" id="BDLY_INPUT_tb_uexp_invoiceitem1" style="display: none;" hidden/></textarea> </td><td style="max-width:200px;"><input  class="uexp_submultivalid autosize autocomplete form-control" type="text" name ="BDLY_INPUT_tb_uexp_invoicefrom[]" id="BDLY_INPUT_tb_uexp_invoicefrom1" style="display: none;" hidden/> </td><td style="max-width:100px;"><input  class="amtonlyfivedigit uexp_submultivalid form-control"  type="text" name ="BDLY_INPUT_tb_uexp_amount[]" id="BDLY_INPUT_tb_uexp_amount1" style="width:65px;display: none;" hidden /> </td><td><textarea style="max-width:250px;" row="3" name ="BDLY_INPUT_ta_uexpcomments[]" id="BDLY_INPUT_ta_uexpcomments1" class=" uexp_submultivalid form-control" hidden ></textarea> </td><td><input type="button" value="+" class="uexp_addbttn" alt="Add Row" height="30" width="30" name ="BDLY_INPUT_uexpadd[]" id="BDLY_INPUT_uexp_add1" disabled > </td><td><input  type="button" value="-" class="uexp_deletebttn" alt="delete Row" height="30" width="30" name ="BDLY_INPUT_uexpdelete[]" id="BDLY_INPUT_uexp_del1" disabled ></td><td><input    type="text" name ="BDLY_INPUT_tb_uexp_hideradioid[]" id="BDLY_INPUT_tb_uexp_hideradioid1" style="width:75px;" hidden/> </td></tr>').appendTo($('#BDLY_INPUT_tble_unitexpense'))
             $(".amtonlyfivedigit").doValidation({rule:'numbersonly',prop:{realpart:5,imaginary:2}});
             $(".autosize").doValidation({rule:'general',prop:{autosize:true}});
             $(".datepickdate").datepicker({dateFormat:'dd-mm-yy', changeYear: true, changeMonth: true,beforeShow:function(input, inst){
@@ -1325,8 +1325,8 @@ var BDLY_SRC_flag_autocom='';
                 changeYear: true,
                 changeMonth: true,
                 beforeShow:function(input, inst){
-                $(inst.dpDiv).removeClass('calendar-off');
-            }});
+                    $(inst.dpDiv).removeClass('calendar-off');
+                }});
             if(BDLY_INPUT_unit_response[0]!='BDLY_INPUT_flag_notsave'){
                 BDLY_INPUT_load_unitno(BDLY_INPUT_unit_response);
             }
@@ -1409,9 +1409,6 @@ var BDLY_SRC_flag_autocom='';
                 $('#BDLY_INPUT_tble_housekeeping').hide();
                 $('#BDLY_INPUT_tble_housepayment').hide();
                 $('#BDLY_INPUT_tble_pettycash').hide();
-                $('#BDLY_INPUT_tb_mov_date').hide();
-                $('#BDLY_INPUT_tb_mov_invoiceamt').hide();
-                $('#BDLY_INPUT_ta_mov_comments').hide();
                 $('#BDLY_INPUT_tble_moving').hide();
             }
             else
@@ -2822,11 +2819,11 @@ var BDLY_SRC_flag_autocom='';
             $('#BDLY_INPUT_uexp_del'+newid1).hide();
             var newRow = table.insertRow(rowCount);
             var oCell = newRow.insertCell(0);
-            oCell.innerHTML = "<select  class='BDLY_INPUT_uexp_class_unit uexp_submultivalid form-control' name ='BDLY_INPUT_lb_uexp_unit[]' id='"+"BDLY_INPUT_lb_uexp_unit-"+newid+"' style='display:none;' hidden  >";
+            oCell.innerHTML = "<select  class='BDLY_INPUT_uexp_class_unit uexp_submultivalid form-control' name ='BDLY_INPUT_lb_uexp_unit[]' id='"+"BDLY_INPUT_lb_uexp_unit-"+newid+"' style='display:none; width:90px;' hidden  >";
             oCell = newRow.insertCell(1);
-            oCell.innerHTML ="<select  name='BDLY_INPUT_lb_uexp_category[]' class='uexp_submultivalid BDLY_INPUT_uexp_class_category form-control' id='"+"BDLY_INPUT_lb_uexp_category-"+newid+"' style='display:none;' hidden><option value='' >SELECT</option></select>";
+            oCell.innerHTML ="<select  name='BDLY_INPUT_lb_uexp_category[]' class='uexp_submultivalid BDLY_INPUT_uexp_class_category form-control' id='"+"BDLY_INPUT_lb_uexp_category-"+newid+"' style='display:none;width:140px;' hidden><option value='' >SELECT</option></select>";
             oCell = newRow.insertCell(2);
-            oCell.innerHTML ="<select name='BDLY_INPUT_lb_uexp_customer[]' class='uexp_submultivalid BDLY_INPUT_uexp_class_custname form-control' id='"+"BDLY_INPUT_lb_uexp_customer"+newid+"'  style='display:none;' hidden><option value='' >SELECT</option></select>";
+            oCell.innerHTML ="<select name='BDLY_INPUT_lb_uexp_customer[]' class='uexp_submultivalid BDLY_INPUT_uexp_class_custname form-control' id='"+"BDLY_INPUT_lb_uexp_customer"+newid+"'  style='display:none;width:160px' hidden><option value='' >SELECT</option></select>";
             oCell = newRow.insertCell(3);
             oCell.innerHTML ="<table id='"+"multiplecustomer-"+newid+"' width='250px' hidden></table>"
             oCell = newRow.insertCell(4);
@@ -3438,42 +3435,42 @@ var BDLY_SRC_flag_autocom='';
         /*---------------------------------------------------FUNCTION TO GET SELECTED VALUE----------------------------------------------------------------*/
         function AutoCompleteSelectHandler(event, ui) {
         }
- /* SEARCH AND UPDATE FORM SCRIPT STARTS*/
-  function BDLY_SRC_result_getInitialvalue(initialvalue) {
-      var ExpenseList=[];
-      BDLY_SRC_errormsglist=initialvalue.errormsg;
-      ExpenseList=initialvalue.explist;
-      BDLY_SRC_unitcategoryvalue=initialvalue.unitcat;
-      BDLY_SRC_arr_chkexp=initialvalue.BIZDLY_SRC_chk_exptble;
-      var confirmmessagescodes=[106,107,170,401,315,2,462,204,205,206,207,208,426,427,428,429,430,431,432,433,434,435,436,437,438,439,413];
-      //GET CONFIRMATION MESSAGES
-      BDLY_SRC_confirmmessages=BDLY_SRC_getAllErrorMessages(confirmmessagescodes)
-      var BDLY_SRC_flg_chkExpTble=0;
-      for (var j = 0; j < initialvalue.BIZDLY_SRC_chk_exptble.length; j++)
-      {
-      if(initialvalue.BIZDLY_SRC_chk_exptble[j]==0)
-      BDLY_SRC_flg_chkExpTble=BDLY_SRC_flg_chkExpTble+1;
-      else
-      BDLY_SRC_flg_chkExpTble=BDLY_SRC_flg_chkExpTble;
-      }
-      if(BDLY_SRC_flg_chkExpTble==16){
-      var BDLY_SRC_append_errmsg='<p><label class="errormsg">';
-      for (var j = 7; j < BDLY_SRC_confirmmessages.length-2; j++)
-      {
-      BDLY_SRC_append_errmsg +=BDLY_SRC_confirmmessages[j]+'<br>'
-      }
-      BDLY_SRC_append_errmsg +='</label></p>'
-      $('#BDLY_INPUT_form_dailyentry').replaceWith(BDLY_SRC_append_errmsg)
-      }
-      else{
-      var options='<option value="SELECT" >SELECT</option>';
-      for (var i = 0; i < ExpenseList.length; i++)
-      {
-      options +='<option value="'+ExpenseList[i][0]+'">' + ExpenseList[i][1] + '</option>';
-      }
-      $('#BDLY_SRC_lb_ExpenseList').append(options).show();
-      }
-  }
+        /* SEARCH AND UPDATE FORM SCRIPT STARTS*/
+        function BDLY_SRC_result_getInitialvalue(initialvalue) {
+            var ExpenseList=[];
+            BDLY_SRC_errormsglist=initialvalue.errormsg;
+            ExpenseList=initialvalue.explist;
+            BDLY_SRC_unitcategoryvalue=initialvalue.unitcat;
+            BDLY_SRC_arr_chkexp=initialvalue.BIZDLY_SRC_chk_exptble;
+            var confirmmessagescodes=[106,107,170,401,315,2,462,204,205,206,207,208,426,427,428,429,430,431,432,433,434,435,436,437,438,439,413];
+            //GET CONFIRMATION MESSAGES
+            BDLY_SRC_confirmmessages=BDLY_SRC_getAllErrorMessages(confirmmessagescodes)
+            var BDLY_SRC_flg_chkExpTble=0;
+            for (var j = 0; j < initialvalue.BIZDLY_SRC_chk_exptble.length; j++)
+            {
+                if(initialvalue.BIZDLY_SRC_chk_exptble[j]==0)
+                    BDLY_SRC_flg_chkExpTble=BDLY_SRC_flg_chkExpTble+1;
+                else
+                    BDLY_SRC_flg_chkExpTble=BDLY_SRC_flg_chkExpTble;
+            }
+            if(BDLY_SRC_flg_chkExpTble==16){
+                var BDLY_SRC_append_errmsg='<p><label class="errormsg">';
+                for (var j = 7; j < BDLY_SRC_confirmmessages.length-2; j++)
+                {
+                    BDLY_SRC_append_errmsg +=BDLY_SRC_confirmmessages[j]+'<br>'
+                }
+                BDLY_SRC_append_errmsg +='</label></p>'
+                $('#BDLY_INPUT_form_dailyentry').replaceWith(BDLY_SRC_append_errmsg)
+            }
+            else{
+                var options='<option value="SELECT" >SELECT</option>';
+                for (var i = 0; i < ExpenseList.length; i++)
+                {
+                    options +='<option value="'+ExpenseList[i][0]+'">' + ExpenseList[i][1] + '</option>';
+                }
+                $('#BDLY_SRC_lb_ExpenseList').append(options).show();
+            }
+        }
         /*---------------------------------FUNCTION TO GET ERR MESSAGES-------------------------------------------*/
         function BDLY_SRC_getAllErrorMessages(BDLY_SRC_finalerrrcodes)
         {
@@ -3783,15 +3780,15 @@ var BDLY_SRC_flag_autocom='';
                         if(BDLY_SRC_getsearch_optiontypeval=="FOR PERIOD DURATION"&&BDLY_SRC_servicedue!="")
                         {
                             $(".preloader").show();
-                          $( ".BDLY_SRC_class_dynamicrows" ).show();
+                            $( ".BDLY_SRC_class_dynamicrows" ).show();
                             $.ajax({
                                 type: "POST",
                                 url: controller_url+"BDLY_SRC_get_cleanernameservicedue",
                                 data:{'BDLY_SRC_servicedue':BDLY_SRC_servicedue,'BDLY_SRC_servicedue':BDLY_SRC_servicedue,'selectedSearchopt':selectedSearchopt},
                                 success: function(res) {
                                     $('.preloader').hide();
-                                var response=JSON.parse(res);
-                                BDLY_SRC_success_exp_cleanername(response)
+                                    var response=JSON.parse(res);
+                                    BDLY_SRC_success_exp_cleanername(response)
                                 },
                                 error: function (data) {
                                     alert('error in getting' + JSON.stringify(data));
@@ -3799,7 +3796,7 @@ var BDLY_SRC_flag_autocom='';
                             });
                         }
                     }},
-                        beforeShow : function(input, inst) {
+                beforeShow : function(input, inst) {
                     $(inst.dpDiv).addClass('calendar-off');
                     $("#BDLY_SRC_endforperiod").datepicker("option","minDate", new Date(BDLY_SCR_yearBefore, BDLY_SCR_monthBefore ,1));
                 } });
@@ -4185,8 +4182,8 @@ var BDLY_SRC_flag_autocom='';
                         data:$('#BDLY_INPUT_form_dailyentry').serialize(),
                         success: function(res) {
                             $('.preloader').hide();
-                           var BDLY_autocompl_response=JSON.parse(res);
-                           BDLY_SRC_success_autodata(BDLY_autocompl_response)
+                            var BDLY_autocompl_response=JSON.parse(res);
+                            BDLY_SRC_success_autodata(BDLY_autocompl_response)
                         },
                         error: function (data) {
                             alert('error in getting' + JSON.stringify(data));
@@ -4226,7 +4223,7 @@ var BDLY_SRC_flag_autocom='';
                                 $('.preloader').hide();
                                 var response=JSON.parse(res);
                                 BDLY_SRC_success_exp_accountno(response)
-                           },
+                            },
                             error: function (data) {
                                 alert('error in getting' + JSON.stringify(data));
                             }
@@ -4356,7 +4353,7 @@ var BDLY_SRC_flag_autocom='';
                     BDLY_SRC_getsearch_optiontypeval=="FROM PERIOD"||
                     BDLY_SRC_getsearch_optiontypeval=="INVOICE DATE"||
                     BDLY_SRC_getsearch_optiontypeval=="FOR PERIOD"
-                    )
+                )
                 {
                     $('#BDLY_SRC_btn_search').removeAttr("disabled").show()
                 }
@@ -4465,7 +4462,7 @@ var BDLY_SRC_flag_autocom='';
                 BDLY_SRC_getsearch_optiontypeval=="SERVICED BY"||
                 BDLY_SRC_getsearch_optiontypeval=="INVOICE TO"||
                 BDLY_SRC_getsearch_optiontypeval=="CATEGORY"
-                )
+            )
             {
                 $( ".BDLY_SRC_class_Searchbtn_list_box" ).hide();
                 $( ".BDLY_SRC_class_lb_lbl" ).hide();
@@ -4530,8 +4527,8 @@ var BDLY_SRC_flag_autocom='';
                 }
             });
 
-               $.each(resultarray, function(index, row) {
-                   var keyid;
+            $.each(resultarray, function(index, row) {
+                var keyid;
                 if (index < 2) return;
                 var tr = $("#BDLY_SRC_tb_DataTableId >tbody").append("<tr></tr>");
                 var eachcell;
@@ -4547,24 +4544,24 @@ var BDLY_SRC_flag_autocom='';
                     else
                         eachcell +='<td >'+cell+'</td>';
                 });
-                   var selectedSearchopt=$("#BDLY_SRC_lb_serachopt").val(),
-                       BDLY_SRC_selectedexptype=$("#BDLY_SRC_lb_ExpenseList").val();
-                   if(BDLY_SRC_selectedexptype==10||selectedSearchopt==198)
-                   {
-                       var BDLY_SRC_delbtn='<span style="display: none;"  class="glyphicon glyphicon-trash  delete"  id="delete_'+keyid+'">';
+                var selectedSearchopt=$("#BDLY_SRC_lb_serachopt").val(),
+                    BDLY_SRC_selectedexptype=$("#BDLY_SRC_lb_ExpenseList").val();
+                if(BDLY_SRC_selectedexptype==10||selectedSearchopt==198)
+                {
+                    var BDLY_SRC_delbtn='<span style="display: none;"  class="glyphicon glyphicon-trash  delete"  id="delete_'+keyid+'">';
 //                   '<input type="button" class="multirowbtn delete" value="Delete" style="display: none;">';
-                   }
-                   else
-                   {
-                       var BDLY_SRC_delbtn='<span style="display: block;"  class="glyphicon glyphicon-trash  delete"  id="delete_'+keyid+'">';
+                }
+                else
+                {
+                    var BDLY_SRC_delbtn='<span style="display: block;"  class="glyphicon glyphicon-trash  delete"  id="delete_'+keyid+'">';
 //                           '<input type="button" class="multirowbtn delete" value="Delete" >';
-                   }
-                   if(selectedSearchopt!=142)
-                   {
-                       $("#BDLY_SRC_tb_DataTableId >tbody >tr:last").append('<td><div class="col-lg-1"><span style="display: block;color:green" class="glyphicon glyphicon-edit  edit" id="edit_'+keyid+'"></span></div><div class="col-lg-1">'+BDLY_SRC_delbtn+'</div></td>'); //myButton
+                }
+                if(selectedSearchopt!=142)
+                {
+                    $("#BDLY_SRC_tb_DataTableId >tbody >tr:last").append('<td><div class="col-lg-1"><span style="display: block;color:green" class="glyphicon glyphicon-edit  edit" id="edit_'+keyid+'"></span></div><div class="col-lg-1">'+BDLY_SRC_delbtn+'</div></td>'); //myButton
 //                   <input type="button" class="multirowbtn edit" value="Edit">
-                   }
-                   $("#BDLY_SRC_tb_DataTableId >tbody >tr:last").append(eachcell);
+                }
+                $("#BDLY_SRC_tb_DataTableId >tbody >tr:last").append(eachcell);
             });
             jQuery.fn.dataTableExt.oSort['uk_date-asc']  = function(a,b) {
                 var x = new Date( Date.parse(FormTableDateFormat(a)));
@@ -4977,7 +4974,7 @@ var BDLY_SRC_flag_autocom='';
                     {
                         if(BDLY_SCR_DT_access_card!='' && (BDLY_SCR_DT_access_card!=""&&(BDLY_SCR_DT_access_card).toString().length>=4&&parseInt(BDLY_SCR_DT_access_card)!=0)){
                             $(".preloader").show();
-                               BDLY_SRC_purchasecard=1;
+                            BDLY_SRC_purchasecard=1;
                             $.ajax({
                                 type: "POST",
                                 url: controller_url+"BDLY_SRC_check_access_cardOrUnitno",
@@ -5107,7 +5104,7 @@ var BDLY_SRC_flag_autocom='';
         /*------------------------------------------------TO DELETE EACH ROW FROM TABLE AFTER CONFIRMATION----------------------------*/
         $(document).on('click','.deleteconfirm',function(){
             $(".preloader").show();
-             var selectedexpense=$('#BDLY_SRC_lb_ExpenseList').val();
+            var selectedexpense=$('#BDLY_SRC_lb_ExpenseList').val();
             $.ajax({
                 type: "POST",
                 url: controller_url+"BDLY_SRC_DeleteRowData",
@@ -5142,7 +5139,7 @@ var BDLY_SRC_flag_autocom='';
                     BDLY_SRC_getsearch_optiontypeval=="SERVICED BY"||
                     BDLY_SRC_getsearch_optiontypeval=="INVOICE TO"||
                     BDLY_SRC_getsearch_optiontypeval=="CATEGORY"
-                    )
+                )
                 {
                     if(BDLY_SRC_sucsval==2)
                     {
@@ -5616,7 +5613,7 @@ var BDLY_SRC_flag_autocom='';
                 BDLY_SRC_purchasecard=0;
                 $('#DT_unitexp_cus_name_lb').hide().removeClass('required');
                 show_msgbox("BIZ EXPENSE DAILY ENTRY/SEARCH/UPDATE/DELETE",BDLY_SRC_confirmmessages[26],"success",false);
-                 }
+            }
             else{
                 BDLY_SRC_purchasecard=1;
                 for (var i = 0; i <Unit_Exp_Cusname_global.length; i++) {
@@ -5729,7 +5726,7 @@ var BDLY_SRC_flag_autocom='';
                         BDLY_SRC_getsearch_optiontypeval=="SERVICED BY"||
                         BDLY_SRC_getsearch_optiontypeval=="INVOICE TO"||
                         BDLY_SRC_getsearch_optiontypeval=="CATEGORY"
-                        )
+                    )
                     {
                         $("#BDLY_SRC_div_searchresult,#BDLY_SRC_div_searchresult_head,#BDLY_SRC_nodyndataerr").html('');
                         $('#BDLY_btn_pdf').hide();
@@ -5813,32 +5810,32 @@ var BDLY_SRC_flag_autocom='';
     <div class="title text-center"><h4><b>BIZ EXPENSE DAILY ENTRY/ SEARCH/ UPDATE/ DELETE</b></h4></div>
     <form id="BDLY_INPUT_form_dailyentry" class="form-horizontal content"  method="post" action="<?php echo site_url("EXPENSE/Ctrl_Pdf/pdfexportbizexpense") ?>">
         <div class="panel-body">
-                    <div style="padding-bottom: 15px">
-                        <div class="radio">
-                            <label><input type="radio" name="optradio" value="bizentryform" class="BE_rd_selectform">ENTRY</label>
-                        </div>
-                        <div class="radio">
-                            <label><input type="radio" name="optradio" value="bizsearchform" class="BE_rd_selectform">SEARCH/ UDATE/ DELETE</label>
-                        </div>
-                    </div>
+            <div style="padding-bottom: 15px">
+                <div class="radio">
+                    <label><input type="radio" name="optradio" value="bizentryform" class="BE_rd_selectform">ENTRY</label>
+                </div>
+                <div class="radio">
+                    <label><input type="radio" name="optradio" value="bizsearchform" class="BE_rd_selectform">SEARCH/ UDATE/ DELETE</label>
+                </div>
+            </div>
             <div id="biz_expenseentryform" hidden>
-                    <table id="BDLY_INPUT_table_errormsg">
-                    </table>
-                    <div class="form-group">
-                        <label  id='BDLY_INPUT_lbl_exptype' class="col-sm-2" hidden>TYPE OF EXPENSE <em>*</em></label>
-                        <div class="col-sm-3">
-                            <select id='BDLY_INPUT_lb_selectexptype' class="form-control" name="BDLY_INPUT_lb_selectexptype" hidden  >
-                            </select>
-                        </div>
+                <table id="BDLY_INPUT_table_errormsg">
+                </table>
+                <div class="form-group">
+                    <label  id='BDLY_INPUT_lbl_exptype' class="col-sm-2" hidden>TYPE OF EXPENSE <em>*</em></label>
+                    <div class="col-sm-3">
+                        <select id='BDLY_INPUT_lb_selectexptype' class="form-control" name="BDLY_INPUT_lb_selectexptype" hidden  >
+                        </select>
                     </div>
-                    <div class="form-group" id="typeofexpense">
-                        <label  id='BDLY_INPUT_lbl_unitno' class="col-sm-2" hidden>UNIT NO<em>*</em></label>
-                        <div class="col-sm-2">
-                            <select id='BDLY_INPUT_lb_unitno' class="form-control" name="BDLY_INPUT_lb_unitno" hidden >
+                </div>
+                <div class="form-group" id="typeofexpense">
+                    <label  id='BDLY_INPUT_lbl_unitno' class="col-sm-2" hidden>UNIT NO<em>*</em></label>
+                    <div class="col-sm-2">
+                        <select id='BDLY_INPUT_lb_unitno' class="form-control" name="BDLY_INPUT_lb_unitno" hidden >
                             <option value='SELECT' selected="selected"> SELECT</option>
-                            </select>
-                        </div>
+                        </select>
                     </div>
+                </div>
                 <!--CREATING AIRCON ELEMENT-->
                 <div id="BDLY_INPUT_tble_aircon" hidden>
                     <div class="form-group">
@@ -5861,306 +5858,306 @@ var BDLY_SRC_flag_autocom='';
                         <div class="col-sm-4"><textarea rows="5" name="BDLY_INPUT_ta_aircon_comments" id="BDLY_INPUT_ta_aircon_comments" class="form-control"  placeholder="Comments"></textarea></div>
                     </div>
                 </div>
-                    <!--CREATING OF CAR PARK ELEMENT-->
-                    <div id="BDLY_INPUT_tble_cardpark" hidden>
-                        <div class="form-group">
-                            <label  id='BDLY_INPUT_lbl_carno' class="col-sm-2">CAR NO<em>*</em></label>
-                            <div class="col-sm-2"><input type="text" id="BDLY_INPUT_tb_carno" name="BDLY_INPUT_tb_carno" placeholder="Car No" class="BDLY_INPUT_class_submitvalidate rdonly form-control" readonly  ></div>
-                        </div>
-                        <div class="form-group">
-                            <label  id='BDLY_INPUT_lbl_cp_invoicedate' class="col-sm-2" >INVOICE DATE<em>*</em></label>
-                            <div class="col-sm-2">
-                                <div class="input-group addon">
+                <!--CREATING OF CAR PARK ELEMENT-->
+                <div id="BDLY_INPUT_tble_cardpark" hidden>
+                    <div class="form-group">
+                        <label  id='BDLY_INPUT_lbl_carno' class="col-sm-2">CAR NO<em>*</em></label>
+                        <div class="col-sm-2"><input type="text" id="BDLY_INPUT_tb_carno" name="BDLY_INPUT_tb_carno" placeholder="Car No" class="BDLY_INPUT_class_submitvalidate rdonly form-control" readonly  ></div>
+                    </div>
+                    <div class="form-group">
+                        <label  id='BDLY_INPUT_lbl_cp_invoicedate' class="col-sm-2" >INVOICE DATE<em>*</em></label>
+                        <div class="col-sm-2">
+                            <div class="input-group addon">
                                 <input type="text" id="BDLY_INPUT_tb_cp_invoicedate" name="BDLY_INPUT_tb_cp_invoicedate" placeholder="Invoice Date" class="BDLY_INPUT_class_submitvalidate datemandtry form-control"  >
                                 <label for="BDLY_INPUT_tb_cp_invoicedate" class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></label>
-                                </div>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label  id='BDLY_INPUT_lbl_cp_fromdate' class="col-sm-2">FROM PERIOD<em>*</em></label>
-                            <div class="col-sm-2">
-                                <div class="input-group addon">
-                                    <input type="text" id="BDLY_INPUT_tb_cp_fromdate" name="BDLY_INPUT_tb_cp_fromdate" placeholder="From Period" class=" BDLY_INPUT_class_submitvalidate datemandtry form-control"  >
-                                    <label for="BDLY_INPUT_tb_cp_fromdate" class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></label>
-                                </div>
+                    </div>
+                    <div class="form-group">
+                        <label  id='BDLY_INPUT_lbl_cp_fromdate' class="col-sm-2">FROM PERIOD<em>*</em></label>
+                        <div class="col-sm-2">
+                            <div class="input-group addon">
+                                <input type="text" id="BDLY_INPUT_tb_cp_fromdate" name="BDLY_INPUT_tb_cp_fromdate" placeholder="From Period" class=" BDLY_INPUT_class_submitvalidate datemandtry form-control"  >
+                                <label for="BDLY_INPUT_tb_cp_fromdate" class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></label>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label  id='BDLY_INPUT_lbl_cp_todate' class="col-sm-2">TO PERIOD<em>*</em></label>
-                            <div class="col-sm-2">
-                                <div class="input-group addon">
+                    </div>
+                    <div class="form-group">
+                        <label  id='BDLY_INPUT_lbl_cp_todate' class="col-sm-2">TO PERIOD<em>*</em></label>
+                        <div class="col-sm-2">
+                            <div class="input-group addon">
                                 <input type="text" id="BDLY_INPUT_tb_cp_todate" name="BDLY_INPUT_tb_cp_todate"  placeholder="To Period"class="BDLY_INPUT_class_submitvalidate datemandtry form-control"  >
                                 <label for="BDLY_INPUT_tb_cp_todate" class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></label>
-                                </div>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label  id='BDLY_INPUT_lbl_cp_invoiceamt' class="col-sm-2">INVOICE AMOUNT<em>*</em></label>
-                            <div class="col-sm-2"><input type="text" id="BDLY_INPUT_tb_cp_invoiceamt" name="BDLY_INPUT_tb_cp_invoiceamt" placeholder="Invoice Amount" class="BDLY_INPUT_class_submitvalidate amtonly BDLY_INPUT_class_numonly form-control" style="width:70px" ></div>
-                        </div>
-                        <div class="form-group">
-                            <label  id='BDLY_INPUT_lbl_cp_comment' class="col-sm-2">COMMENTS</label>
-                            <div class="col-sm-4"><textarea name="BDLY_INPUT_ta_cp_comments" id="BDLY_INPUT_ta_cp_comments" placeholder="Comments" class="BDLY_INPUT_class_submitvalidate form-control" ></textarea></div>
-                        </div>
                     </div>
-                    <!--CREATING OF DIGITAL VOICE ELEMENT-->
-                    <div id="BDLY_INPUT_tble_digitalvoice" hidden>
-                        <div class="form-group">
-                            <label  id='BDLY_INPUT_lbl_digi_invoiceto' class="col-sm-2">INVOICE TO<em>*</em></label>
-                            <div class="col-sm-3"><select id='BDLY_INPUT_lb_digi_invoiceto' name="BDLY_INPUT_lb_digi_invoiceto" class="BDLY_INPUT_class_hksubmitvalidate rdonly form-control" readonly>
-                                </select></div></div>
-                        <div class="form-group">
-                            <label  id='BDLY_INPUT_lbl_digi_voiceno' class="col-sm-2">DIGITAL VOICE NO<em>*</em></label>
-                            <div class="col-sm-2"><input type="text" id="BDLY_INPUT_tb_digi_voiceno" name="BDLY_INPUT_tb_digi_voiceno" placeholder="Digital voice No" class="BDLY_INPUT_class_submitvalidate rdonly form-control" readonly  ></div>
-                        </div>
-                        <div class="form-group">
-                            <label  id='BDLY_INPUT_lbl_digi_accno' class="col-sm-2">ACCOUNT NO<em>*</em></label>
-                            <div class="col-sm-2"><input type="text" id="BDLY_INPUT_tb_digi_accno" name="BDLY_INPUT_tb_digi_accno" placeholder="Account No" class="BDLY_INPUT_class_submitvalidate rdonly form-control"  readonly></div>
-                        </div>
-                        <div class="form-group">
-                            <label  id='BDLY_INPUT_lbl_digi_invoicedate' class="col-sm-2">INVOICE DATE<em>*</em></label>
-                            <div class="col-sm-2">
-                                <div class="input-group addon">
+                    <div class="form-group">
+                        <label  id='BDLY_INPUT_lbl_cp_invoiceamt' class="col-sm-2">INVOICE AMOUNT<em>*</em></label>
+                        <div class="col-sm-2"><input type="text" id="BDLY_INPUT_tb_cp_invoiceamt" name="BDLY_INPUT_tb_cp_invoiceamt" placeholder="Invoice Amount" class="BDLY_INPUT_class_submitvalidate amtonly BDLY_INPUT_class_numonly form-control" style="width:70px" ></div>
+                    </div>
+                    <div class="form-group">
+                        <label  id='BDLY_INPUT_lbl_cp_comment' class="col-sm-2">COMMENTS</label>
+                        <div class="col-sm-4"><textarea name="BDLY_INPUT_ta_cp_comments" id="BDLY_INPUT_ta_cp_comments" placeholder="Comments" class="BDLY_INPUT_class_submitvalidate form-control" ></textarea></div>
+                    </div>
+                </div>
+                <!--CREATING OF DIGITAL VOICE ELEMENT-->
+                <div id="BDLY_INPUT_tble_digitalvoice" hidden>
+                    <div class="form-group">
+                        <label  id='BDLY_INPUT_lbl_digi_invoiceto' class="col-sm-2">INVOICE TO<em>*</em></label>
+                        <div class="col-sm-3"><select id='BDLY_INPUT_lb_digi_invoiceto' name="BDLY_INPUT_lb_digi_invoiceto" class="BDLY_INPUT_class_hksubmitvalidate rdonly form-control" readonly>
+                            </select></div></div>
+                    <div class="form-group">
+                        <label  id='BDLY_INPUT_lbl_digi_voiceno' class="col-sm-2">DIGITAL VOICE NO<em>*</em></label>
+                        <div class="col-sm-2"><input type="text" id="BDLY_INPUT_tb_digi_voiceno" name="BDLY_INPUT_tb_digi_voiceno" placeholder="Digital voice No" class="BDLY_INPUT_class_submitvalidate rdonly form-control" readonly  ></div>
+                    </div>
+                    <div class="form-group">
+                        <label  id='BDLY_INPUT_lbl_digi_accno' class="col-sm-2">ACCOUNT NO<em>*</em></label>
+                        <div class="col-sm-2"><input type="text" id="BDLY_INPUT_tb_digi_accno" name="BDLY_INPUT_tb_digi_accno" placeholder="Account No" class="BDLY_INPUT_class_submitvalidate rdonly form-control"  readonly></div>
+                    </div>
+                    <div class="form-group">
+                        <label  id='BDLY_INPUT_lbl_digi_invoicedate' class="col-sm-2">INVOICE DATE<em>*</em></label>
+                        <div class="col-sm-2">
+                            <div class="input-group addon">
                                 <input type="text" id="BDLY_INPUT_tb_digi_invoicedate" name="BDLY_INPUT_tb_digi_invoicedate" placeholder="Invoice Date" class=" BDLY_INPUT_class_submitvalidate datemandtry form-control"  >
                                 <label for="BDLY_INPUT_tb_digi_invoicedate" class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></label>
-                                </div>
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <label  id='BDLY_INPUT_lbl_digi_fromdate' class="col-sm-2">FROM PERIOD<em>*</em></label>
-                            <div class="col-sm-2">
-                                <div class="input-group addon">
-                                <input type="text" id="BDLY_INPUT_tb_digi_fromdate" name="BDLY_INPUT_tb_digi_fromdate" placeholder="From Period" class=" BDLY_INPUT_class_submitvalidate datemandtry form-control"  >
-                                <label for="BDLY_INPUT_tb_digi_fromdate" class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></label>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label  id='BDLY_INPUT_lbl_digi_todate' class="col-sm-2">TO PERIOD<em>*</em></label>
-                            <div class="col-sm-2">
-                                <div class="input-group addon">
-                                <input type="text" id="BDLY_INPUT_tb_digi_todate" placeholder="To Period" name="BDLY_INPUT_tb_digi_todate"  class=" BDLY_INPUT_class_submitvalidate datemandtry form-control" >
-                                <label for="BDLY_INPUT_tb_digi_todate" class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></label>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label  id='BDLY_INPUT_lbl_digi_invoiceamt' class="col-sm-2" >INVOICE AMOUNT<em>*</em></label>
-                            <div class="col-sm-2"><input type="text" id="BDLY_INPUT_tb_digi_invoiceamt" placeholder="Invoice Amount" name="BDLY_INPUT_tb_digi_invoiceamt" class="BDLY_INPUT_class_submitvalidate includeminus BDLY_INPUT_class_numonly form-control" style="width:70px"></div>
-                        </div>
-                        <div class="form-group">
-                            <label  id='BDLY_INPUT_lbl_digi_comment' class="col-sm-2">COMMENTS</label>
-                            <div class="col-sm-4"><textarea name="BDLY_INPUT_ta_digi_comments" id="BDLY_INPUT_ta_digi_comments" placeholder="Comments" class="BDLY_INPUT_class_submitvalidate form-control"></textarea></div>
                         </div>
                     </div>
-                    <!--CREATING OF FACILITY ELEMENT-->
-                    <div id="BDLY_INPUT_tble_facility" hidden>
-                        <div class="form-group">
-                            <label  id='BDLY_INPUT_lbl_fac_invoicedate' class="col-sm-2">DATE<em>*</em></label>
-                            <div class="col-sm-2">
-                                <div class="input-group addon">
-                                    <input type="text" id="BDLY_INPUT_tb_fac_invoicedate" placeholder="Date" name="BDLY_INPUT_tb_fac_invoicedate" class=" form-control datepickdate BDLY_INPUT_class_hksubmitvalidate datemandtry" >
-                                    <label for="BDLY_INPUT_tb_fac_invoicedate" class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></label>
-                                </div>
+                    <div class="form-group">
+                        <label  id='BDLY_INPUT_lbl_digi_fromdate' class="col-sm-2">FROM PERIOD<em>*</em></label>
+                        <div class="col-sm-2">
+                            <div class="input-group addon">
+                                <input type="text" id="BDLY_INPUT_tb_digi_fromdate" name="BDLY_INPUT_tb_digi_fromdate" placeholder="From Period" class=" BDLY_INPUT_class_submitvalidate datemandtry form-control"  >
+                                <label for="BDLY_INPUT_tb_digi_fromdate" class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></label>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label class="col-sm-2"></label>
-                            <div class="col-sm-9">
-                                <div class="row form-group">
-                                     <div class="col-md-3">
-                                         <div class="radio">
-                                                 <label><input type="radio" id="BDLY_INPUT_radio_fac_deposit" name="BDLY_INPUT_radio_facility"class="BDLY_INPUT_class_submitvalidate" value="deposit">DEPOSIT</label>
-                                          </div>
-                                      </div>
-                                        <div class="col-md-2">
-                                            <input style="width:70px" type="text" id="BDLY_INPUT_tb_fac_depositamt" name="BDLY_INPUT_tb_fac_depositamt"  class=" amtonly BDLY_INPUT_class_submitvalidate BDLY_INPUT_class_numonly form-control" hidden >
-                                        </div>
-                                 </div>
+                    </div>
+                    <div class="form-group">
+                        <label  id='BDLY_INPUT_lbl_digi_todate' class="col-sm-2">TO PERIOD<em>*</em></label>
+                        <div class="col-sm-2">
+                            <div class="input-group addon">
+                                <input type="text" id="BDLY_INPUT_tb_digi_todate" placeholder="To Period" name="BDLY_INPUT_tb_digi_todate"  class=" BDLY_INPUT_class_submitvalidate datemandtry form-control" >
+                                <label for="BDLY_INPUT_tb_digi_todate" class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label  id='BDLY_INPUT_lbl_digi_invoiceamt' class="col-sm-2" >INVOICE AMOUNT<em>*</em></label>
+                        <div class="col-sm-2"><input type="text" id="BDLY_INPUT_tb_digi_invoiceamt" placeholder="Invoice Amount" name="BDLY_INPUT_tb_digi_invoiceamt" class="BDLY_INPUT_class_submitvalidate includeminus BDLY_INPUT_class_numonly form-control" style="width:70px"></div>
+                    </div>
+                    <div class="form-group">
+                        <label  id='BDLY_INPUT_lbl_digi_comment' class="col-sm-2">COMMENTS</label>
+                        <div class="col-sm-4"><textarea name="BDLY_INPUT_ta_digi_comments" id="BDLY_INPUT_ta_digi_comments" placeholder="Comments" class="BDLY_INPUT_class_submitvalidate form-control"></textarea></div>
+                    </div>
+                </div>
+                <!--CREATING OF FACILITY ELEMENT-->
+                <div id="BDLY_INPUT_tble_facility" hidden>
+                    <div class="form-group">
+                        <label  id='BDLY_INPUT_lbl_fac_invoicedate' class="col-sm-2">DATE<em>*</em></label>
+                        <div class="col-sm-2">
+                            <div class="input-group addon">
+                                <input type="text" id="BDLY_INPUT_tb_fac_invoicedate" placeholder="Date" name="BDLY_INPUT_tb_fac_invoicedate" class=" form-control datepickdate BDLY_INPUT_class_hksubmitvalidate datemandtry" >
+                                <label for="BDLY_INPUT_tb_fac_invoicedate" class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2"></label>
+                        <div class="col-sm-9">
                             <div class="row form-group">
                                 <div class="col-md-3">
-                                   <div class="radio">
+                                    <div class="radio">
+                                        <label><input type="radio" id="BDLY_INPUT_radio_fac_deposit" name="BDLY_INPUT_radio_facility"class="BDLY_INPUT_class_submitvalidate" value="deposit">DEPOSIT</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <input style="width:70px" type="text" id="BDLY_INPUT_tb_fac_depositamt" name="BDLY_INPUT_tb_fac_depositamt"  class=" amtonly BDLY_INPUT_class_submitvalidate BDLY_INPUT_class_numonly form-control" hidden >
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col-md-3">
+                                    <div class="radio">
                                         <label><input type="radio" id="BDLY_INPUT_radio_fac_invoiceamt" name="BDLY_INPUT_radio_facility"class="BDLY_INPUT_class_submitvalidate" value="invoiceamount">INVOICE AMOUNT</label>
-                                   </div>
+                                    </div>
                                 </div>
                                 <div class="col-md-2">
                                     <input style="width:70px" type="text" id="BDLY_INPUT_tb_fac_invoiceamt" name="BDLY_INPUT_tb_fac_invoiceamt" class="amtonly BDLY_INPUT_class_submitvalidate BDLY_INPUT_class_numonly form-control" hidden >
                                 </div>
                             </div>
                         </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-2" id='BDLY_INPUT_lbl_fac_comment' >COMMENTS</label>
-                            <div class="col-sm-4"><textarea name="BDLY_INPUT_ta_fac_comments" id="BDLY_INPUT_ta_fac_comments" placeholder="Comments" class="BDLY_INPUT_class_submitvalidate form-control" ></textarea></div>
-                        </div>
                     </div>
-                    <!--CREATING OF MOVING IN AND OUT ELEMENT-->
-                    <div id="BDLY_INPUT_tble_moving" hidden>
-                        <div class="form-group">
-                            <label  id='BDLY_INPUT_lbl_mov_date' class="col-sm-2">INVOICE DATE<em>*</em></label>
-                            <div class="col-sm-2">
-                                <div class="input-group addon">
-                                    <input type="text" id="BDLY_INPUT_tb_mov_date" name="BDLY_INPUT_tb_mov_date" placeholder="Invoice Date" class="BDLY_INPUT_class_hksubmitvalidate datepickdate datemandtry form-control"  >
-                                    <label for="BDLY_INPUT_tb_mov_date" class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></label>
-                                </div>
+                    <div class="form-group">
+                        <label class="col-sm-2" id='BDLY_INPUT_lbl_fac_comment' >COMMENTS</label>
+                        <div class="col-sm-4"><textarea name="BDLY_INPUT_ta_fac_comments" id="BDLY_INPUT_ta_fac_comments" placeholder="Comments" class="BDLY_INPUT_class_submitvalidate form-control" ></textarea></div>
+                    </div>
+                </div>
+                <!--CREATING OF MOVING IN AND OUT ELEMENT-->
+                <div id="BDLY_INPUT_tble_moving" hidden>
+                    <div class="form-group">
+                        <label  id='BDLY_INPUT_lbl_mov_date' class="col-sm-2">INVOICE DATE<em>*</em></label>
+                        <div class="col-sm-2">
+                            <div class="input-group addon">
+                                <input type="text" id="BDLY_INPUT_tb_mov_date" name="BDLY_INPUT_tb_mov_date" placeholder="Invoice Date" class="BDLY_INPUT_class_hksubmitvalidate datepickdate datemandtry form-control"  >
+                                <label for="BDLY_INPUT_tb_mov_date" class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></label>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label  id='BDLY_INPUT_lbl_mov_invoiceamt' class="col-sm-2">INVOICE AMOUNT<em>*</em></label>
-                            <div class="col-sm-2"><input type="text" id="BDLY_INPUT_tb_mov_invoiceamt" name="BDLY_INPUT_tb_mov_invoiceamt" placeholder="Invoice Amount" class="BDLY_INPUT_class_submitvalidate thramtonly BDLY_INPUT_class_numonly form-control" style="width:70px" ></div>
-                        </div>
-                        <div class="form-group">
-                             <label  id='BDLY_INPUT_lbl_mov_comment' class="col-sm-2">COMMENTS</label>
-                            <div class="col-sm-4"><textarea name="BDLY_INPUT_ta_mov_comments" id="BDLY_INPUT_ta_mov_comments" placeholder="Comments" class="BDLY_INPUT_class_submitvalidate form-control" ></textarea></div>
-                        </div>
                     </div>
-                    <!--CREATING OF PURCHASE ELEMENT-->
-                    <div id="BDLY_INPUT_tble_purchase" hidden>
-                        <div class="form-group">
-                            <label  id='BDLY_INPUT_lbl_access_cardno' class="col-sm-2">CARD NO<em>*</em></label>
-                            <div class="col-sm-2"><input type="text" id="BDLY_INPUT_tb_access_cardno" name="BDLY_INPUT_tb_access_cardno" placeholder="Card No" style="width:85px;" class="numonly BDLY_INPUT_class_hksubmitvalidate form-control" ></div>
-                            <label class="errormsg" id="BDLY_INPUT_lbl_pcarderrmsg" ></label>
-                        </div>
-                        <div class="form-group">
-                            <label  id='BDLY_INPUT_lbl_access_date' class="col-sm-2">INVOICE DATE<em>*</em></label>
-                            <div class="col-sm-2">
-                                <div class="input-group addon">
-                                    <input type="text" id="BDLY_INPUT_tb_access_date" name="BDLY_INPUT_tb_access_date" placeholder="Invoice Date"  class="datepickdate BDLY_INPUT_class_hksubmitvalidate datemandtry form-control" >
-                                    <label for="BDLY_INPUT_tb_access_date" class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></label>
-                                </div>
+                    <div class="form-group">
+                        <label  id='BDLY_INPUT_lbl_mov_invoiceamt' class="col-sm-2">INVOICE AMOUNT<em>*</em></label>
+                        <div class="col-sm-2"><input type="text" id="BDLY_INPUT_tb_mov_invoiceamt" name="BDLY_INPUT_tb_mov_invoiceamt" placeholder="Invoice Amount" class="BDLY_INPUT_class_submitvalidate thramtonly BDLY_INPUT_class_numonly form-control" style="width:70px" ></div>
+                    </div>
+                    <div class="form-group">
+                        <label  id='BDLY_INPUT_lbl_mov_comment' class="col-sm-2">COMMENTS</label>
+                        <div class="col-sm-4"><textarea name="BDLY_INPUT_ta_mov_comments" id="BDLY_INPUT_ta_mov_comments" placeholder="Comments" class="BDLY_INPUT_class_submitvalidate form-control" ></textarea></div>
+                    </div>
+                </div>
+                <!--CREATING OF PURCHASE ELEMENT-->
+                <div id="BDLY_INPUT_tble_purchase" hidden>
+                    <div class="form-group">
+                        <label  id='BDLY_INPUT_lbl_access_cardno' class="col-sm-2">CARD NO<em>*</em></label>
+                        <div class="col-sm-2"><input type="text" id="BDLY_INPUT_tb_access_cardno" name="BDLY_INPUT_tb_access_cardno" placeholder="Card No" style="width:85px;" class="numonly BDLY_INPUT_class_hksubmitvalidate form-control" ></div>
+                        <label class="errormsg" id="BDLY_INPUT_lbl_pcarderrmsg" ></label>
+                    </div>
+                    <div class="form-group">
+                        <label  id='BDLY_INPUT_lbl_access_date' class="col-sm-2">INVOICE DATE<em>*</em></label>
+                        <div class="col-sm-2">
+                            <div class="input-group addon">
+                                <input type="text" id="BDLY_INPUT_tb_access_date" name="BDLY_INPUT_tb_access_date" placeholder="Invoice Date"  class="datepickdate BDLY_INPUT_class_hksubmitvalidate datemandtry form-control" >
+                                <label for="BDLY_INPUT_tb_access_date" class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></label>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label  id='BDLY_INPUT_lbl_access_invoiceamt' class="col-sm-2">INVOICE AMOUNT<em>*</em></label>
-                            <div class="col-sm-4"><input type="text" id="BDLY_INPUT_tb_access_invoiceamt" name="BDLY_INPUT_tb_access_invoiceamt" placeholder="Invoice Amount" style="width:70px;" class="BDLY_INPUT_class_hksubmitvalidate amtonly BDLY_INPUT_class_numonly form-control" ></div>
-                        </div>
-                        <div class="form-group">
-                            <label  id='BDLY_INPUT_lbl_access_comment' class="col-sm-2">COMMENTS</label>
-                            <div class="col-sm-4"><textarea name="BDLY_INPUT_ta_access_comments" id="BDLY_INPUT_ta_access_comments" placeholder="Comments" class="BDLY_INPUT_class_hksubmitvalidate form-control" ></textarea></div>
+                    </div>
+                    <div class="form-group">
+                        <label  id='BDLY_INPUT_lbl_access_invoiceamt' class="col-sm-2">INVOICE AMOUNT<em>*</em></label>
+                        <div class="col-sm-4"><input type="text" id="BDLY_INPUT_tb_access_invoiceamt" name="BDLY_INPUT_tb_access_invoiceamt" placeholder="Invoice Amount" style="width:70px;" class="BDLY_INPUT_class_hksubmitvalidate amtonly BDLY_INPUT_class_numonly form-control" ></div>
+                    </div>
+                    <div class="form-group">
+                        <label  id='BDLY_INPUT_lbl_access_comment' class="col-sm-2">COMMENTS</label>
+                        <div class="col-sm-4"><textarea name="BDLY_INPUT_ta_access_comments" id="BDLY_INPUT_ta_access_comments" placeholder="Comments" class="BDLY_INPUT_class_hksubmitvalidate form-control" ></textarea></div>
+                    </div>
+                </div>
+                <!--CREATING OF PETTYCASH ELEMENT-->
+                <div id="BDLY_INPUT_tble_pettycash" hidden>
+                    <div class="form-group">
+                        <label  id='BDLY_INPUT_lbl_petty_balance' class="col-sm-2" >CURRENT BALANCE<em>*</em></label>
+                        <div class="col-sm-4"><input type="text" id="BDLY_INPUT_tb_petty_balance" name="BDLY_INPUT_tb_petty_balance" placeholder="Current Balance" style="width:80px;" class="rdonly form-control" readonly ></div>
+                    </div>
+                    <div class="form-group">
+                        <label  id='BDLY_INPUT_lbl_petty_date'class="col-sm-2" >DATE<em>*</em></label>
+                        <div class="col-sm-2">
+                            <div class="input-group addon">
+                                <input type="text" id="BDLY_INPUT_tb_petty_date" name="BDLY_INPUT_tb_petty_date" placeholder="Date" class="datepickdate BDLY_INPUT_class_hksubmitvalidate datemandtry form-control">
+                                <label for="BDLY_INPUT_tb_petty_date" class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></label>
+                            </div><!--datepickdate-->
                         </div>
                     </div>
-                    <!--CREATING OF PETTYCASH ELEMENT-->
-                    <div id="BDLY_INPUT_tble_pettycash" hidden>
-                        <div class="form-group">
-                            <label  id='BDLY_INPUT_lbl_petty_balance' class="col-sm-2" >CURRENT BALANCE<em>*</em></label>
-                            <div class="col-sm-4"><input type="text" id="BDLY_INPUT_tb_petty_balance" name="BDLY_INPUT_tb_petty_balance" placeholder="Current Balance" style="width:80px;" class="rdonly form-control" readonly ></div>
-                        </div>
-                        <div class="form-group">
-                            <label  id='BDLY_INPUT_lbl_petty_date'class="col-sm-2" >DATE<em>*</em></label>
-                            <div class="col-sm-2">
-                                <div class="input-group addon">
-                                    <input type="text" id="BDLY_INPUT_tb_petty_date" name="BDLY_INPUT_tb_petty_date" placeholder="Date" class="datepickdate BDLY_INPUT_class_hksubmitvalidate datemandtry form-control">
-                                    <label for="BDLY_INPUT_tb_petty_date" class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></label>
-                                </div><!--datepickdate-->
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-2"></label>
-                            <div class="col-sm-9">
-                                <div class="row form-group">
-                                    <div class="col-md-2">
-                                        <div class="radio">
-                                            <label><input  type="radio" id="BDLY_INPUT_radio_petty_cashin" name="BDLY_INPUT_radio_petty" class="BDLY_INPUT_class_submitvalidate" value="cashin">CASH IN</label>
-                                        </div>
-                                        </div>
-                                        <div class="col-sm-2">
-                                            <input type="text" id="BDLY_INPUT_tb_petty_cashin" name="BDLY_INPUT_tb_petty_cashin"  class="BDLY_INPUT_class_submitvalidate BDLY_INPUT_class_numonly form-control"  style="width:80px" hidden>
-                                        </div>
-                                      </div>
-                                <div class="row form-group">
-                                    <div class="col-md-2">
-                                        <div class="radio">
-                                            <label><input type="radio" id="BDLY_INPUT_radio_petty_cashout" name="BDLY_INPUT_radio_petty" class="BDLY_INPUT_class_submitvalidate" value="cashout">CASH OUT</label>
-                                        </div>
+                    <div class="form-group">
+                        <label class="col-sm-2"></label>
+                        <div class="col-sm-9">
+                            <div class="row form-group">
+                                <div class="col-md-2">
+                                    <div class="radio">
+                                        <label><input  type="radio" id="BDLY_INPUT_radio_petty_cashin" name="BDLY_INPUT_radio_petty" class="BDLY_INPUT_class_submitvalidate" value="cashin">CASH IN</label>
                                     </div>
-                                      <div class="col-sm-2">
-                                            <input type="text" id="BDLY_INPUT_tb_petty_cashout" name="BDLY_INPUT_tb_petty_cashout" class="BDLY_INPUT_class_submitvalidate BDLY_INPUT_class_numonly form-control"  style="width:80px" hidden>
-                                      </div>
+                                </div>
+                                <div class="col-sm-2">
+                                    <input type="text" id="BDLY_INPUT_tb_petty_cashin" name="BDLY_INPUT_tb_petty_cashin"  class="BDLY_INPUT_class_submitvalidate BDLY_INPUT_class_numonly form-control"  style="width:80px" hidden>
                                 </div>
                             </div>
-                        </div>
-                         <div class="form-group">
-                            <label  id='BDLY_INPUT_lbl_petty_invoiceitem' class="col-sm-2">INVOICE ITEM<em>*</em></label>
-                            <div class="col-sm-4"><textarea id="BDLY_INPUT_ta_petty_invoiceitem" name="BDLY_INPUT_ta_petty_invoiceitem" placeholder="Invoice Item" class="BDLY_INPUT_class_submitvalidate form-control" ></textarea></div>
-                        </div>
-                        <div class="form-group">
-                            <label  id='BDLY_INPUT_lbl_petty_comment'class="col-sm-2" >COMMENTS</label>
-                            <div class="col-sm-4"><textarea name="BDLY_INPUT_ta_petty_comments" id="BDLY_INPUT_ta_petty_comments" placeholder="Comments" class="form-control" ></textarea></div>
+                            <div class="row form-group">
+                                <div class="col-md-2">
+                                    <div class="radio">
+                                        <label><input type="radio" id="BDLY_INPUT_radio_petty_cashout" name="BDLY_INPUT_radio_petty" class="BDLY_INPUT_class_submitvalidate" value="cashout">CASH OUT</label>
+                                    </div>
+                                </div>
+                                <div class="col-sm-2">
+                                    <input type="text" id="BDLY_INPUT_tb_petty_cashout" name="BDLY_INPUT_tb_petty_cashout" class="BDLY_INPUT_class_submitvalidate BDLY_INPUT_class_numonly form-control"  style="width:80px" hidden>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <!--CREATING OF HOUSE KEEPING ELEMENT-->
-                    <div id="BDLY_INPUT_tble_housekeeping" hidden>
-                        <div class="form-group">
-                            <label  id='BDLY_INPUT_lbl_house_cleanername' class="col-sm-2">CLEANER NAME<em>*</em></label>
-                            <div class="col-sm-3"><select id='BDLY_INPUT_lb_house_cleanername' name="BDLY_INPUT_lb_house_cleanername" class="BDLY_INPUT_class_submitvalidate form-control"  >
-                                    <option value='SELECT' selected="selected"> SELECT</option>
-                                </select></div></div>
-                        <div><input type="hidden" id="BDLY_INPUT_hidden_edeid" name="BDLY_INPUT_hidden_edeid"></div>
-                        <div><table id="BDLY_INPUT_tble_radioclearnername"></table></div>
-                        <div class="form-group">
-                            <label  id='BDLY_INPUT_lbl_house_date' class="col-sm-2">WORK DATE<em>*</em></label>
-                            <div class="col-sm-2">
-                                <div class="input-group addon">
-                                    <input type="text" id="BDLY_INPUT_tb_house_date" name="BDLY_INPUT_tb_house_date" placeholder="Work Date" class="datepickdate BDLY_INPUT_class_hksubmitvalidate datemandtry form-control"  >
-                                    <label for="BDLY_INPUT_tb_house_date" class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></label>
-                                </div>
+                    <div class="form-group">
+                        <label  id='BDLY_INPUT_lbl_petty_invoiceitem' class="col-sm-2">INVOICE ITEM<em>*</em></label>
+                        <div class="col-sm-4"><textarea id="BDLY_INPUT_ta_petty_invoiceitem" name="BDLY_INPUT_ta_petty_invoiceitem" placeholder="Invoice Item" class="BDLY_INPUT_class_submitvalidate form-control" ></textarea></div>
+                    </div>
+                    <div class="form-group">
+                        <label  id='BDLY_INPUT_lbl_petty_comment'class="col-sm-2" >COMMENTS</label>
+                        <div class="col-sm-4"><textarea name="BDLY_INPUT_ta_petty_comments" id="BDLY_INPUT_ta_petty_comments" placeholder="Comments" class="form-control" ></textarea></div>
+                    </div>
+                </div>
+                <!--CREATING OF HOUSE KEEPING ELEMENT-->
+                <div id="BDLY_INPUT_tble_housekeeping" hidden>
+                    <div class="form-group">
+                        <label  id='BDLY_INPUT_lbl_house_cleanername' class="col-sm-2">CLEANER NAME<em>*</em></label>
+                        <div class="col-sm-3"><select id='BDLY_INPUT_lb_house_cleanername' name="BDLY_INPUT_lb_house_cleanername" class="BDLY_INPUT_class_submitvalidate form-control"  >
+                                <option value='SELECT' selected="selected"> SELECT</option>
+                            </select></div></div>
+                    <div><input type="hidden" id="BDLY_INPUT_hidden_edeid" name="BDLY_INPUT_hidden_edeid"></div>
+                    <div><table id="BDLY_INPUT_tble_radioclearnername"></table></div>
+                    <div class="form-group">
+                        <label  id='BDLY_INPUT_lbl_house_date' class="col-sm-2">WORK DATE<em>*</em></label>
+                        <div class="col-sm-2">
+                            <div class="input-group addon">
+                                <input type="text" id="BDLY_INPUT_tb_house_date" name="BDLY_INPUT_tb_house_date" placeholder="Work Date" class="datepickdate BDLY_INPUT_class_hksubmitvalidate datemandtry form-control"  >
+                                <label for="BDLY_INPUT_tb_house_date" class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></label>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label  id='BDLY_INPUT_lbl_house_duration' class="col-sm-2">DURATION<em>*</em></label>
-                            <div class="col-sm-4" style="padding-left: 0px">
+                    </div>
+                    <div class="form-group">
+                        <label  id='BDLY_INPUT_lbl_house_duration' class="col-sm-2">DURATION<em>*</em></label>
+                        <div class="col-sm-4" style="padding-left: 0px">
                             <div class="col-sm-2"><input type="text" id="BDLY_INPUT_tb_house_hours" name="BDLY_INPUT_tb_house_hours" placeholder="Hrs" class="BDLY_INPUT_class_submitvalidate hrnumonly BDLY_INPUT_class_numonly form-control" style="width:50px;" ></div>
                             <div class="col-sm-2"><input type="text" id="BDLY_INPUT_tb_house_min" name="BDLY_INPUT_tb_house_min"  placeholder="Mins" class="BDLY_INPUT_class_submitvalidate hrnumonly BDLY_INPUT_class_numonly form-control"  style="width:50px;" >
-                                </div>
-                                </div>
-                        </div>
-                        <div class="form-group">
-                            <label  id='BDLY_INPUT_lbl_house_desc' class="col-sm-2">DESCRIPTION<em>*</em></label>
-                            <div class="col-sm-4"><textarea name="BDLY_INPUT_ta_house_desc" id="BDLY_INPUT_ta_house_desc" placeholder="Description" class="BDLY_INPUT_class_submitvalidate form-control" ></textarea></div>
+                            </div>
                         </div>
                     </div>
-                    <!--CREATING OF HOUSEKEEPING PAYMENT ELEMENT-->
-                    <div id="BDLY_INPUT_tble_housepayment" hidden>
-                        <div class="form-group">
-                            <label  id='BDLY_INPUT_lbl_pay_unitno' class="col-sm-2">UNIT NO<em>*</em></label>
-                            <div class="col-sm-2"><select id='BDLY_INPUT_tb_pay_unitno' name="BDLY_INPUT_tb_pay_unitno" class="BDLY_INPUT_class_hksubmitvalidate form-control"  >
-                                    <option value='SELECT' selected="selected"> SELECT</option>
-                                </select></div>
-                            <input class="btn" type="button"  id="BDLY_INPUT_btn_addbutton" name="BDLY_INPUT_btn_addbutton" value="ADD"  />
-                            <label class="errormsg" hidden id='BDLY_INPUT_lbl_pay_uniterrmsg' ></label>
-                        </div>
-                        <div class="form-group">
-                            <label  id='BDLY_INPUT_lbl_pay_invoiceamt'  class="col-sm-2">INVOICE AMOUNT<em>*</em></label>
-                            <div class="col-sm-2"><input type="text" id="BDLY_INPUT_tb_pay_invoiceamt" name="BDLY_INPUT_tb_pay_invoiceamt" placeholder="Invoice Amount" class="BDLY_INPUT_class_submitvalidate thramtonly BDLY_INPUT_class_numonly form-control" style="width:70px;" ></div>
-                        </div>
-                        <div class="form-group">
-                            <label  id='BDLY_INPUT_lbl_pay_forperiod' class="col-sm-2">FOR PERIOD<em>*</em></label>
-                            <div class="col-sm-9" style="padding:0px;">
+                    <div class="form-group">
+                        <label  id='BDLY_INPUT_lbl_house_desc' class="col-sm-2">DESCRIPTION<em>*</em></label>
+                        <div class="col-sm-4"><textarea name="BDLY_INPUT_ta_house_desc" id="BDLY_INPUT_ta_house_desc" placeholder="Description" class="BDLY_INPUT_class_submitvalidate form-control" ></textarea></div>
+                    </div>
+                </div>
+                <!--CREATING OF HOUSEKEEPING PAYMENT ELEMENT-->
+                <div id="BDLY_INPUT_tble_housepayment" hidden>
+                    <div class="form-group">
+                        <label  id='BDLY_INPUT_lbl_pay_unitno' class="col-sm-2">UNIT NO<em>*</em></label>
+                        <div class="col-sm-2"><select id='BDLY_INPUT_tb_pay_unitno' name="BDLY_INPUT_tb_pay_unitno" class="BDLY_INPUT_class_hksubmitvalidate form-control"  >
+                                <option value='SELECT' selected="selected"> SELECT</option>
+                            </select></div>
+                        <input class="btn" type="button"  id="BDLY_INPUT_btn_addbutton" name="BDLY_INPUT_btn_addbutton" value="ADD"  />
+                        <label class="errormsg" hidden id='BDLY_INPUT_lbl_pay_uniterrmsg' ></label>
+                    </div>
+                    <div class="form-group">
+                        <label  id='BDLY_INPUT_lbl_pay_invoiceamt'  class="col-sm-2">INVOICE AMOUNT<em>*</em></label>
+                        <div class="col-sm-2"><input type="text" id="BDLY_INPUT_tb_pay_invoiceamt" name="BDLY_INPUT_tb_pay_invoiceamt" placeholder="Invoice Amount" class="BDLY_INPUT_class_submitvalidate thramtonly BDLY_INPUT_class_numonly form-control" style="width:70px;" ></div>
+                    </div>
+                    <div class="form-group">
+                        <label  id='BDLY_INPUT_lbl_pay_forperiod' class="col-sm-2">FOR PERIOD<em>*</em></label>
+                        <div class="col-sm-9" style="padding:0px;">
                             <div class="col-sm-3">
                                 <div class="input-group addon">
                                     <input type="text" id="BDLY_INPUT_tb_pay_forperiod" name="BDLY_INPUT_tb_pay_forperiod" placeholder="For Period" class="BDLY_INPUT_class_forperiod BDLY_INPUT_class_hksubmitvalidate datemandtry form-control">
                                     <label for="BDLY_INPUT_tb_pay_forperiod" class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></label>
                                 </div>
                             </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label  id='BDLY_INPUT_lbl_pay_paiddate' class="col-sm-2">PAID DATE<em>*</em></label>
-                            <div class="col-sm-2">
-                                <div class="input-group addon">
-                                    <input type="text" id="BDLY_INPUT_tb_pay_paiddate" name="BDLY_INPUT_tb_pay_paiddate" placeholder="Paid Date" class="datepickdate BDLY_INPUT_class_hksubmitvalidate datemandtry form-control" >
-                                    <label for="BDLY_INPUT_tb_pay_paiddate" class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></label>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label  id='BDLY_INPUT_lbl_pay_comment' class="col-sm-2">COMMENTS</label>
-                            <div class="col-sm-4"><textarea name="BDLY_INPUT_ta_pay_comments" id="BDLY_INPUT_ta_pay_comments" placeholder="Comments" class="form-control" ></textarea></div>
                         </div>
                     </div>
-                    <!--CREATING OF ELECTRICITY ELEMENT-->
-                    <div class="table-responsive">
-                        <table id="BDLY_INPUT_tble_electricity" cellpadding="10" cellspacing="2" hidden>
+                    <div class="form-group">
+                        <label  id='BDLY_INPUT_lbl_pay_paiddate' class="col-sm-2">PAID DATE<em>*</em></label>
+                        <div class="col-sm-2">
+                            <div class="input-group addon">
+                                <input type="text" id="BDLY_INPUT_tb_pay_paiddate" name="BDLY_INPUT_tb_pay_paiddate" placeholder="Paid Date" class="datepickdate BDLY_INPUT_class_hksubmitvalidate datemandtry form-control" >
+                                <label for="BDLY_INPUT_tb_pay_paiddate" class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label  id='BDLY_INPUT_lbl_pay_comment' class="col-sm-2">COMMENTS</label>
+                        <div class="col-sm-4"><textarea name="BDLY_INPUT_ta_pay_comments" id="BDLY_INPUT_ta_pay_comments" placeholder="Comments" class="form-control" ></textarea></div>
+                    </div>
+                </div>
+                <!--CREATING OF ELECTRICITY ELEMENT-->
+                <div class="table-responsive">
+                    <table id="BDLY_INPUT_tble_electricity" cellpadding="10" cellspacing="2" hidden>
                         <tr> <td><label id="BDLY_INPUT_lbl_elect_unit" >UNIT</label><em>*</em> </td>
                             <td nowrap><label  id="BDLY_INPUT_lbl_elect_invoiceto" >INVOICE TO</label><em>*</em></td>
                             <td nowrap> <label id="BDLY_INPUT_lbl_elect_invoicedate" >INVOICE DATE</label><em>*</em> </td>
@@ -6184,10 +6181,10 @@ var BDLY_SRC_flag_autocom='';
                                 <input  type='button' value='-' class='deletebttn' alt='delete Row' height='30' width='30' name ='BDLY_INPUT_delete[]' id='BDLY_INPUT_del1' disabled ></td>
                         </tr>
                     </table>
-                    </div>
-                    <!--CREATING OF UNIT EXPENSE ELEMENT-->
-                    <div class="table-responsive">
-                    <table id="BDLY_INPUT_tble_unitexpense" cellpadding="10" cellspacing="2" hidden>
+                </div>
+                <!--CREATING OF UNIT EXPENSE ELEMENT-->
+                <div class="table-responsive">
+                    <table id="BDLY_INPUT_tble_unitexpense" cellpadding="10" cellspacing="2" style="width:1220px;"hidden>
                         <tr> <td><label id="BDLY_INPUT_lbl_uexp_unit" >UNIT</label><em>*</em> </td>
                             <td ><label  id="BDLY_INPUT_lbl_uexp_category" >CATEGORY</label><em>*</em></td>
                             <td ><label  id="BDLY_INPUT_lbl_uexp_customer" hidden>CUSTOMER<em>*</em></label></td>
@@ -6200,9 +6197,9 @@ var BDLY_SRC_flag_autocom='';
                             <td ><label id="BDLY_INPUT_lbl_uexp_add" ></label> </td>
                             <td ><label id="BDLY_INPUT_lbl_uexp_del" ></label> </td>
                         </tr>
-                        <tr><td> <select  class="BDLY_INPUT_uexp_class_unit uexp_submultivalid "  name="BDLY_INPUT_lb_uexp_unit[]" id="BDLY_INPUT_lb_uexp_unit-1" hidden><option value="">SELECT</option></select> </td>
-                            <td><select  name="BDLY_INPUT_lb_uexp_category[]" class="uexp_submultivalid BDLY_INPUT_uexp_class_category " id='BDLY_INPUT_lb_uexp_category-1' hidden><option value="" >SELECT</option></select></td>
-                            <td><select  name="BDLY_INPUT_lb_uexp_customer[]" class="uexp_submultivalid BDLY_INPUT_uexp_class_custname" id='BDLY_INPUT_lb_uexp_customer1' hidden><option value="" >SELECT</option></select></td>
+                        <tr><td> <select  class="BDLY_INPUT_uexp_class_unit uexp_submultivalid "  name="BDLY_INPUT_lb_uexp_unit[]" id="BDLY_INPUT_lb_uexp_unit-1" style="width:90px;" hidden><option value="">SELECT</option></select> </td>
+                            <td><select  name="BDLY_INPUT_lb_uexp_category[]" class="uexp_submultivalid BDLY_INPUT_uexp_class_category " id='BDLY_INPUT_lb_uexp_category-1' style="width:140px;" hidden><option value="" >SELECT</option></select></td>
+                            <td><select  name="BDLY_INPUT_lb_uexp_customer[]" class="uexp_submultivalid BDLY_INPUT_uexp_class_custname" id='BDLY_INPUT_lb_uexp_customer1' style="width:160px;" hidden><option value="" >SELECT</option></select></td>
                             <td ><table id="multiplecustomer-1" width="250px" hidden></table>
                             <td><input  class='datepickdate uexp_submultivalid datemandtry'  type="text" name ="BDLY_INPUT_db_uexp_invoicedate[]" id="BDLY_INPUT_db_uexp_invoicedate1" style="width:75px;" hidden /> </td>
                             <td><textarea  class='uexp_submultivalid'  name ="BDLY_INPUT_tb_uexp_invoiceitem[]" id="BDLY_INPUT_tb_uexp_invoiceitem1"  hidden></textarea> </td>
@@ -6214,9 +6211,9 @@ var BDLY_SRC_flag_autocom='';
                             <td><input    type="text" name ="BDLY_INPUT_tb_uexp_hideradioid" id="BDLY_INPUT_tb_uexp_hideradioid1" style="width:75px;" hidden/> </td>
                         </tr>
                     </table>
-                    </div>
-                    <!--CREATING OF STARHUB ELEMENT-->
-                  <div class="table-responsive">
+                </div>
+                <!--CREATING OF STARHUB ELEMENT-->
+                <div class="table-responsive">
                     <table id="BDLY_INPUT_tble_starhub" cellpadding="10" cellspacing="2" hidden>
                         <tr> <td><label id="BDLY_INPUT_lbl_star_unit" >UNIT</label><em>*</em> </td>
                             <td ><label  id="BDLY_INPUT_lbl_star_invoiceto" >INVOICE TO</label><em>*</em></td>
@@ -6242,53 +6239,53 @@ var BDLY_SRC_flag_autocom='';
                                 <input  type='button' value='-' class='star_deletebttn' alt='delete Row' height='30' width='30' name ='BDLY_INPUT_delete[]' id='BDLY_INPUT_star_del1' disabled ></td>
                         </tr>
                     </table>
-                    </div>
-                        <div class="col-lg-offset-1" id="BDLY_INPUT_tble_button">
-                            <input class="btn" type="button"  id="BDLY_INPUT_btn_submitbutton" name="BDLY_INPUT_btn_submitbutton" value="SAVE" disabled  hidden/>&nbsp;&nbsp;<input class="btn" type="button"  id="BDLY_INPUT_btn_resetbutton" name="BDLY_INPUT_btn_resetbutton" value="RESET" hidden />
-                      </div>
-
-                    <div>
-                      <input class="btn" type="button"  id="BDLY_INPUT_btn_multisubmitbutton" name="SAVE" value="SAVE" disabled hidden/>
-                        <br>
-                      <label class="errormsg" id="BDLY_INPUT_lbl_hourmsg" ></label>
-                      <label class="errormsg" id="BDLY_INPUT_lbl_minmsg" ></label>
-                      <label class="errormsg" id="BDLY_INPUT_lbl_checkcardno" ></label>
-                    </div>
-                    <input type="hidden" id="BDLY_INPUT_hidden_edcpid" name="BDLY_INPUT_hidden_edcpid">
-                    <input type="hidden" id="BDLY_INPUT_hidden_customerid" name="BDLY_INPUT_hidden_customerid">
-            </div>
-        <!-- SEARCH UPDATE FORM-->
-            <div id="updateform">
-                <div id="BDLY_SRC_tble_maintable" hidden>
-                    <div class="form-group">
-                        <label  id='BDLY_INPUT_srch_lbl_typeofexp' class="col-sm-2">TYPE OF EXPENSE<em>*</em></label>
-                        <div class="col-sm-3"><select id="BDLY_SRC_lb_ExpenseList" name="BDLY_SRC_lb_ExpenseList" class="form-control" ></select></div>
-                    </div>
-                    <div class="form-group" id="BDLY_SRC_tr_serachopt" style="display: none;">
-                        <label class="col-sm-2">SEARCH BY</label>
-                        <div class="BDLY_SRC_input_val col-sm-3">
-                            <select id="BDLY_SRC_lb_serachopt" name="BDLY_SRC_lb_serachopt" class="form-control"><option value="" >SELECT</option></select>
-                            </div>
-                    </div>
-                    <div><label class="srctitle" colspan="2" id="BDLY_SRC_Optionhead"></label></div>
-                    <div id="BDLY_SRC_dynamicarea" >
-                    </div>
-                    <div class="col-lg-offset-2" id="BDLY_SRC_td_for_searchbutton">
-                        <input type="button" name="BDLY_SRC_btn_search" id="BDLY_SRC_btn_search" class="btn" value="SEARCH" style="display:none" disabled />
-                    </div>
-                    <div><label id="BDLY_SRC_lbl_errmsg_exp" class="errormsg"></label></div>
                 </div>
-                <div id="BDLY_SRC_nodyndataerr" class="errormsg"></div>
-                <div class="srctitle" id="BDLY_SRC_div_searchresult_head"></div>
-                <input type="hidden" id="pdfheader" name="pdfheader"/>
-                <div><input type="submit" id='BDLY_btn_pdf' class="btnpdf" value="PDF" hidden></div>
-                <div id="BDLY_SRC_div_searchresult" class="table-responsive"></div>
-                <input type="hidden" id="startdate" name="startdate"/>
-                <input type="hidden" id="enddate" name="enddate"/>
-            </div>
+                <div class="col-lg-offset-1" id="BDLY_INPUT_tble_button">
+                    <input class="btn" type="button"  id="BDLY_INPUT_btn_submitbutton" name="BDLY_INPUT_btn_submitbutton" value="SAVE" disabled  hidden/>&nbsp;&nbsp;<input class="btn" type="button"  id="BDLY_INPUT_btn_resetbutton" name="BDLY_INPUT_btn_resetbutton" value="RESET" hidden />
+                </div>
 
+                <div>
+                    <input class="btn" type="button"  id="BDLY_INPUT_btn_multisubmitbutton" name="SAVE" value="SAVE" disabled hidden/>
+                </div>
+                <div><label class="errormsg" id="BDLY_INPUT_lbl_hourmsg" ></label></div>
+                <div><label class="errormsg" id="BDLY_INPUT_lbl_minmsg" ></label></div>
+                <div><label class="errormsg" id="BDLY_INPUT_lbl_checkcardno" ></label></div>
+
+            <input type="hidden" id="BDLY_INPUT_hidden_edcpid" name="BDLY_INPUT_hidden_edcpid">
+            <input type="hidden" id="BDLY_INPUT_hidden_customerid" name="BDLY_INPUT_hidden_customerid">
         </div>
-    </form>
+        <!-- SEARCH UPDATE FORM-->
+        <div id="updateform">
+            <div id="BDLY_SRC_tble_maintable" hidden>
+                <div class="form-group">
+                    <label  id='BDLY_INPUT_srch_lbl_typeofexp' class="col-sm-2">TYPE OF EXPENSE<em>*</em></label>
+                    <div class="col-sm-3"><select id="BDLY_SRC_lb_ExpenseList" name="BDLY_SRC_lb_ExpenseList" class="form-control" ></select></div>
+                </div>
+                <div class="form-group" id="BDLY_SRC_tr_serachopt" style="display: none;">
+                    <label class="col-sm-2">SEARCH BY</label>
+                    <div class="BDLY_SRC_input_val col-sm-3">
+                        <select id="BDLY_SRC_lb_serachopt" name="BDLY_SRC_lb_serachopt" class="form-control"><option value="" >SELECT</option></select>
+                    </div>
+                </div>
+                <div><label class="srctitle" colspan="2" id="BDLY_SRC_Optionhead"></label></div>
+                <div id="BDLY_SRC_dynamicarea" >
+                </div>
+                <div class="col-lg-offset-2" id="BDLY_SRC_td_for_searchbutton">
+                    <input type="button" name="BDLY_SRC_btn_search" id="BDLY_SRC_btn_search" class="btn" value="SEARCH" style="display:none" disabled />
+                </div>
+                <div><label id="BDLY_SRC_lbl_errmsg_exp" class="errormsg"></label></div>
+            </div>
+            <div id="BDLY_SRC_nodyndataerr" class="errormsg"></div>
+            <div class="srctitle" id="BDLY_SRC_div_searchresult_head"></div>
+            <input type="hidden" id="pdfheader" name="pdfheader"/>
+            <div><input type="submit" id='BDLY_btn_pdf' class="btnpdf" value="PDF" hidden></div>
+            <div id="BDLY_SRC_div_searchresult" class="table-responsive"></div>
+            <input type="hidden" id="startdate" name="startdate"/>
+            <input type="hidden" id="enddate" name="enddate"/>
+        </div>
+
+</div>
+</form>
 </div>
 </body>
 </html>

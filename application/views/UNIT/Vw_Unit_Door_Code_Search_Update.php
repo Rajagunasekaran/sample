@@ -49,6 +49,7 @@ require_once('application/libraries/EI_HDR.php');
                         DCSU_options += '<option value="' + DCSU_unitno[i].UNIT_NO + '">' + DCSU_unitno[i].UNIT_NO + '</option>';
                     }
                     $('#DCSU_lb_unitnumber').html(DCSU_options);
+                    $('#DCSU_lb_unitnumber').focus();
                     $("#DCSU_form_doorcode").show();
                 }
                 $('.preloader').hide();

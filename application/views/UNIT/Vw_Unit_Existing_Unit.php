@@ -33,6 +33,7 @@ require_once('application/libraries/EI_HDR.php');
             var EU_flg_Doorcode=1;
             var EU_unit_source= '';
             $('#spacewidth').height('0%');
+            $('#EU_radio_activeunit').focus();
         // initial data
             $.ajax({
                 type: "POST",
@@ -850,6 +851,7 @@ require_once('application/libraries/EI_HDR.php');
                 }
                 else{
                     $("#EU_unitno").show();
+                    $('#EU_lb_unitnumber').focus();
                     $('#EU_lbl_errmsgunitno').text('').hide();
                 }
             });

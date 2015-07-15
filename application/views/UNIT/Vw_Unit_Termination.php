@@ -47,6 +47,7 @@ require_once('application/libraries/EI_HDR.php');
                     }
                     $('#UT_lb_unitnumber').html(UT_options);
                     $("#UT_form_termination").show();
+                    $('#UT_lb_unitnumber').focus();
                 }
             }
         // CHANGE EVENT FUNCTION FOR UNIT NUMBER
@@ -93,6 +94,7 @@ require_once('application/libraries/EI_HDR.php');
                     $("#UT_tb_unitrental").val(UT_rental);
                     $("#UT_ta_comments").val(UT_comments);
                     $("#UT_btn_terminate").removeAttr("disabled");
+                    $('#UT_ta_comments').focus();
                 }
             }
         // CLICK FUNCTION FOR UPDATION

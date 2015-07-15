@@ -45,6 +45,7 @@ require_once('application/libraries/EI_HDR.php');
                         $('#CA_lb_unitno').html(CA_unitno_options);
                     }
                     $('#CA_lb_unitno').show();
+                    $("#CA_lb_unitno").focus();
                 },
                 error:function(data){
                     var errordata=(JSON.stringify(data));
@@ -110,6 +111,7 @@ require_once('application/libraries/EI_HDR.php');
                     }
                     $('#CA_lb_custname').html(CA_custname_options);
                     $('#CA_lb_custname').show();
+                    $("#CA_lb_custname").focus();
                 }
             });
         // GET DETAIL'S FOR SELECTED CUSTOMER NAME
@@ -222,6 +224,7 @@ require_once('application/libraries/EI_HDR.php');
                 }
                 $('#CA_lb_leaseperiod').html(CA_recver_options);
                 $('#CA_leaseperiod').show();
+                $("#CA_lb_leaseperiod").focus();
                 $(".preloader").hide();
             }
         // GET AVAILABLE CARD's FOR SELECTED UNIT

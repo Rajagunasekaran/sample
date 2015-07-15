@@ -54,6 +54,7 @@ require_once('application/libraries/EI_HDR.php');
                     CV_search_options += '<option value="' + CV_config_id + '">' + CV_config_data + '</option>';
                 }
                 $('#CV_lb_searchby').html(CV_search_options);
+                $('#CV_lb_searchby').focus();
                 if(CV_unitarray.length!=0){
                     var CV_unitno_options ='<option value="SELECT">SELECT</option>';
                     for (var i = 0; i < CV_unitarray.length; i++) {
@@ -136,6 +137,7 @@ require_once('application/libraries/EI_HDR.php');
                     $('#CV_tb_custname').val("");
                     $('#CV_tble_id > div').remove();
                     $('#CV_btn_search').attr("disabled","disabled");
+                    $('#CV_lb_unitno').focus();
                 }
                 else if($(this).val()==18)
                 {
@@ -147,6 +149,7 @@ require_once('application/libraries/EI_HDR.php');
                     $('#CV_cardno').show();
                     $('#CV_tble_id > div').remove();
                     $('#CV_btn_search').attr("disabled","disabled");
+                    $('#CV_lb_cardno').focus();
                 }
                 else if($(this).val()==21)
                 {
@@ -155,6 +158,7 @@ require_once('application/libraries/EI_HDR.php');
                     if(CV_customername.length!=0){
                         $('#CV_errmsg').hide();
                         $('#CV_custname').show();
+                        $('#CV_tb_custname').focus();
                     }
                     else{
                         var msg=CV_errorAarray[7].EMC_DATA;

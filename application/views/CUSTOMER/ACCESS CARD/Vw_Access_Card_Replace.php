@@ -53,6 +53,7 @@ require_once('application/libraries/EI_HDR.php');
                         CR_unitno_options += '<option value="' + CR_unit_array[i] + '">' + CR_unit_array[i] + '</option>';
                     }
                     $('#CR_lb_unitno').html(CR_unitno_options).show();
+                    $("#CR_lb_unitno").focus();
                 }
                 else{
                     $('#cardreplace_form').replaceWith('<form id="cardreplace_form" class="form-horizontal content" role="form"><div class="panel-body"><fieldset><div class="form-group"><label class="col-sm-12 errormsg"> '+CR_errorAarray[2].EMC_DATA+'</label></div></fieldset></div></form>');
@@ -118,6 +119,7 @@ require_once('application/libraries/EI_HDR.php');
                     }
                     $('#CR_lb_custname').html(CR_custname_options).show();
                     $('#CR_custname').show();
+                    $("#CR_lb_custname").focus();
                     $('#CR_lbl_error').hide();
                 }
                 else{
@@ -193,6 +195,7 @@ require_once('application/libraries/EI_HDR.php');
                 }
                 $('#CR_lb_curcard').html(CR_custcard_options);
                 $(".preloader").hide();
+                $("#CR_lb_curcard").focus();
             }
         // CHANGE EVENT FOR CURRENT CARD
             $('#CR_lb_curcard').change(function(){
@@ -223,6 +226,7 @@ require_once('application/libraries/EI_HDR.php');
                     CR_availablecard_options += '<option value="' + CR_availablecard_array[i] + '">' + CR_availablecard_array[i] + '</option>';
                 }
                 $('#CR_lb_newcard').html(CR_availablecard_options);
+                $("#CR_lb_newcard").focus();
             }
         // CHANGE EVENT FOR NEW CARD
             $('#CR_lb_newcard').change(function(){
@@ -234,6 +238,7 @@ require_once('application/libraries/EI_HDR.php');
                     $('#CR_comment,#CR_buttons').hide();
                     $('#CR_reason').show();
                     $('#CR_lb_reason').val('SELECT');
+                    $("#CR_lb_reason").focus();
                     $("html, body").animate({ scrollTop: $(document).height() }, "slow");
                 }
             });
@@ -253,6 +258,7 @@ require_once('application/libraries/EI_HDR.php');
             $('#CR_lb_reason').change(function(){
                 $('#CR_reason,#CR_comment').show();
                 $('#CR_ta_comments').val(CR_comment).show();
+                $("#CR_ta_comments").focus();
                 $('#CR_cust_id').val(CR_cust_id);
                 $('#CR_buttons').show();
                 $("html, body").animate({ scrollTop: $(document).height() }, "slow");
@@ -290,11 +296,11 @@ require_once('application/libraries/EI_HDR.php');
                 else
                 {
                     if(CR_SUCCESS_FLAG==0){
-                        show_msgbox("REPLACE OF ACCESS CARD",CR_errorAarray[3].EMC_DATA,'success',false);
+                        show_msgbox("REPLACE OF ACCESS CARD",CR_errorAarray[3].EMC_DATA,'error',false);
                     }
                     else
                     {
-                        show_msgbox("REPLACE OF ACCESS CARD",CR_SUCCESS_FLAG,'success',false);
+                        show_msgbox("REPLACE OF ACCESS CARD",CR_SUCCESS_FLAG,'error',false);
                     }
                 }
             }

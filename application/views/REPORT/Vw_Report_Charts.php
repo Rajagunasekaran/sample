@@ -1,6 +1,5 @@
 <?php
 require_once('application/libraries/EI_HDR.php');
-require_once('application/libraries/Chart.php');
 ?>
 <html>
 <head>

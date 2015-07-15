@@ -67,7 +67,7 @@ require_once('application/libraries/EI_HDR.php');
                 }
             });
             $("#UC_db_enddate").datepicker({dateFormat: "dd-mm-yy",changeYear: true,changeMonth: true,maxDate: '+2Y'});
-
+            $('#UNIT_form_unitcreate').focus();
         // RADIO BUTTON CLICK FUNCTION
             $('.UNIT_selectform').click(function(){
                 var radiooption=$(this).val();
@@ -117,6 +117,7 @@ require_once('application/libraries/EI_HDR.php');
                 else
                 {
                     $('#UC_form_unitcreation').show();
+                    $('#UC_tb_unitno').focus();
                     var UC_flag=UC_response[3];
                     if((UC_flag!=true)&&(UC_flag!=0)){
                         UC_room=UC_response[0];
@@ -645,6 +646,7 @@ require_once('application/libraries/EI_HDR.php');
                     $('#USU_lb_searchby').html(USU_select_options);
                     $('#USU_form_unitupdate').show();
                     $('.preloader').hide();
+                    $('#USU_lb_searchby').focus();
                 }
             }
             var USU_unitno_flag = 'unittrue';
@@ -689,6 +691,7 @@ require_once('application/libraries/EI_HDR.php');
                                 var valuesarray=JSON.parse(data);
                                 USU_success_load_searchby_lb(valuesarray);
                                 $("html, body").animate({ scrollTop: $(document).height() }, "slow");
+                                $('#USU_db_fromdate').focus();
                             },
                             error:function(data){
                                 var errordata=(JSON.stringify(data));
@@ -709,7 +712,7 @@ require_once('application/libraries/EI_HDR.php');
                 $('#USU_subheadermsg').text($('#USU_lb_searchby').find('option:selected').text());
                 if((USU_unit_optionfetch==2)||(USU_unit_optionfetch==4)||(USU_unit_optionfetch==3)||(USU_unit_optionfetch==6))
                 {
-                    if(USU_unit_optionfetch==2)//END DATE
+                    if(USU_unit_optionfetch==2)//STAMP AMOUNT
                     {
                         $('#USU_carddiv,#USU_roomdiv,#USU_datediv,#USU_paymentamtdiv,#USU_div_flex,#USU_headermsg,#USU_errmsg_roominventory').hide();
                         $('#USU_stampamtdiv,#USU_searchbtn,#USU_subheaderdiv').show();
@@ -717,6 +720,7 @@ require_once('application/libraries/EI_HDR.php');
                         $('#USU_carddiv,#USU_roomdiv').find('select').val('SELECT');
                         $('#USU_headermsg,#USU_errmsg_roominventory').text('');
                         $('#USU_pdf_btn').hide();
+                        $('#USU_tb_dutyamt_fromamt').focus();
                     }
                     else if(USU_unit_optionfetch==4)//PAYMENT
                     {
@@ -726,6 +730,7 @@ require_once('application/libraries/EI_HDR.php');
                         $('#USU_carddiv,#USU_roomdiv').find('select').val('SELECT');
                         $('#USU_headermsg,#USU_errmsg_roominventory').text('');
                         $('#USU_pdf_btn').hide();
+                        $('#USU_tb_payment_fromamt').focus();
                     }
                     else if((USU_unit_optionfetch==3)||(USU_unit_optionfetch==6))//END DATE,START DATE
                     {
@@ -774,6 +779,7 @@ require_once('application/libraries/EI_HDR.php');
                             $('#USU_carddiv,#USU_roomdiv').find('select').val('SELECT');
                             $('#USU_headermsg,#USU_errmsg_roominventory').text('');
                             $('#USU_pdf_btn').hide();
+                            $('#USU_lb_unitno').focus();
                         }
                         else if(USU_unit_optionfetch==9)//ROOM TYPE WITH UNIT
                         {
@@ -784,6 +790,7 @@ require_once('application/libraries/EI_HDR.php');
                             $('#USU_carddiv,#USU_roomdiv').find('select').val('SELECT');
                             $('#USU_headermsg,#USU_errmsg_roominventory').text('');
                             $('#USU_pdf_btn').hide();
+                            $('#USU_lb_roomtyps').focus();
                         }
                     }
                 }
@@ -834,7 +841,7 @@ require_once('application/libraries/EI_HDR.php');
                 $('#USU_cardtype,#USU_cardno,#USU_paymentamtdiv,#USU_stampamtdiv,#USU_div_flex,#USU_headermsg,#USU_errmsg_roominventory,#USU_div_updateform').hide();
                 $('#USU_form_unitupdate').find('input:text').val('');
                 $('#USU_cardtype,#USU_cardno').find('select').val('SELECT');
-                $('#USU_headermsg,#USU_errmsg_roominventory').text('');
+                $('#USU_headermsg,#USU_errmsg_roominventory,#USU_lbl_errmsg_cardno').text('');
                 $('#USU_section1,#USU_section2').empty();
                 $('#USU_lb_typeofcard').html('');
                 $('#USU_pdf_btn').hide();
@@ -845,6 +852,7 @@ require_once('application/libraries/EI_HDR.php');
                     {
                         $('#USU_lb_typeofcard').html(USU_select_options_card);
                         $('#USU_cardtype').show();
+                        $('#USU_lb_typeofcard').focus();
                     }
                     else
                     {
@@ -1665,6 +1673,7 @@ require_once('application/libraries/EI_HDR.php');
                         }
                         $('#USU_lb_cardno').html(USU_inventory_options);
                         $('#USU_cardno').show();
+                        $('#USU_lb_cardno').focus();
                     }
                 }
                 else

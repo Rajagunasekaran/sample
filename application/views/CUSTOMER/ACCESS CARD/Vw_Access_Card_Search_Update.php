@@ -51,6 +51,7 @@ require_once('application/libraries/EI_HDR.php');
                         CSU_unitno_options += '<option value="' + CSU_unit_array[i] + '">' + CSU_unit_array[i] + '</option>';
                     }
                     $('#CSU_lb_unitno').html(CSU_unitno_options);
+                    $('#CSU_lb_unitno').focus();
                 }
                 else{
                     $('#card_search_update_form').replaceWith('<form id="card_search_update_form" class="form-horizontal content" role="form"><div class="panel-body"><fieldset><div class="form-group"><label class="col-sm-12 errormsg"> '+CSU_errorAarray[0].EMC_DATA+'</label></div></fieldset></div></form>');
@@ -98,6 +99,7 @@ require_once('application/libraries/EI_HDR.php');
                     }
                     $('#CSU_lb_custname').html(CSU_custname_options).show();
                     $('#CSU_custname').show();
+                    $('#CSU_lb_custname').focus();
                     $('#CSU_lbl_error').hide();
                     $("html, body").animate({ scrollTop: $(document).height() }, "slow");
                 }
@@ -170,6 +172,7 @@ require_once('application/libraries/EI_HDR.php');
                     CSU_custcard_options += '<option value="' + CSU_lostcard_array[i] + '">' + CSU_lostcard_array[i] + '</option>';
                 }
                 $('#CSU_lb_curcard').html(CSU_custcard_options);
+                $('#CSU_lb_curcard').focus();
                 $(".preloader").hide();
             }
         // CUSTOMER RADIO CHANGE EVENT
@@ -245,6 +248,7 @@ require_once('application/libraries/EI_HDR.php');
                 $('#CSU_lb_reason').val(CSU_reason);
                 $('#CSU_cust_id').val(CSU_cust_id);
                 $('#CSU_detailsdiv,#CSU_comments,#CSU_buttons').show();
+                $('#CSU_lb_reason').focus();
             }
         // SUBMIT BUTTON VALIDATION
             $('.submit_validate').change(function(){

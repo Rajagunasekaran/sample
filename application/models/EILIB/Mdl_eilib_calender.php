@@ -28,7 +28,7 @@ class Mdl_eilib_calender  extends CI_Model {
     }
 //COMMON FUNCTION TO CREATE CALENDAR ID
     public function createCalendarService(){
-        $this->load->model('Eilib/Mdl_eilib_common_function');
+        $this->load->model('EILIB/Mdl_eilib_common_function');
         $arrClientId= $this->Mdl_eilib_common_function->getCalendarIdCilentIdService();
         $drive = new Google_Client();
         $drive->setClientId($arrClientId[0]);
@@ -168,9 +168,10 @@ class Mdl_eilib_calender  extends CI_Model {
     {
         try{
             $this->load->model('EILIB/Mdl_eilib_common_function');
-            if($fileDoc!=''){
+            $attachments=[];
+            for($j=0;$j<count($fileDoc)&&count($fileDoc)>0;$j++){
                 $servicedoc= $this->Mdl_eilib_common_function->get_service_document();
-                $file = $servicedoc->files->get($fileDoc);
+                $file = $servicedoc->files->get($fileDoc[$j]);
                 $attachments[]= array(
                     'fileUrl' => $file->alternateLink,
                     'mimeType' => $file->mimeType,
@@ -214,7 +215,7 @@ class Mdl_eilib_calender  extends CI_Model {
                 $event->setDescription($contactaddr);
                 $event->setLocation($details1);
                 $event->setSummary($details);
-                if($fileDoc!='') {
+                if(count($fileDoc)>0) {
                     $event->setAttachments($attachments);
                     $createdEvent = $calPrimary->events->insert($calId, $event, array('supportsAttachments' => TRUE));  // to create a event
                 }else{
@@ -231,14 +232,14 @@ class Mdl_eilib_calender  extends CI_Model {
                 $event->setDescription($contactaddr);
                 $event->setLocation($detailsend1);
                 $event->setSummary($detailsend);
-                if($fileDoc!='') {
+                if(count($fileDoc)>0) {
                     $event->setAttachments($attachments);
                     $createdEvent = $calPrimary->events->insert($calId, $event,array('supportsAttachments' => TRUE)); // to create a event
                 }else{
                     $createdEvent = $calPrimary->events->insert($calId, $event);
                 }
             }
-            return 1;
+            return $createdEvent;
         }
         catch(Exception $e){
             return $e->getMessage();
@@ -418,6 +419,8 @@ class Mdl_eilib_calender  extends CI_Model {
             $queryCustomer = $this->db->query("SELECT  C.CUSTOMER_FIRST_NAME,C.CUSTOMER_LAST_NAME,CED.CED_REC_VER,CTD.CLP_GUEST_CARD,CTD.CLP_STARTDATE,CTD.CLP_ENDDATE,CTD.CLP_PRETERMINATE_DATE,CPD.CPD_MOBILE,CPD.CPD_INTL_MOBILE,CCD.CCD_OFFICE_NO,CPD.CPD_EMAIL,U.UNIT_NO,URTD.URTD_ROOM_TYPE,CTPA.CTP_DATA AS CED_SD_STIME, CTPB.CTP_DATA AS CED_SD_ETIME,CTPC.CTP_DATA AS CED_ED_STIME, CTPD.CTP_DATA AS CED_ED_ETIME FROM  CUSTOMER_ENTRY_DETAILS CED LEFT JOIN CUSTOMER_TIME_PROFILE CTPA ON CED.CED_SD_STIME = CTPA.CTP_ID LEFT JOIN CUSTOMER_TIME_PROFILE CTPB ON CED.CED_SD_ETIME = CTPB.CTP_ID LEFT JOIN CUSTOMER_TIME_PROFILE CTPC ON CED.CED_ED_STIME = CTPC.CTP_ID LEFT JOIN CUSTOMER_TIME_PROFILE CTPD ON CED.CED_ED_ETIME = CTPD.CTP_ID LEFT JOIN CUSTOMER_COMPANY_DETAILS CCD ON CED.CUSTOMER_ID=CCD.CUSTOMER_ID LEFT JOIN  CUSTOMER_PERSONAL_DETAILS CPD ON CED.CUSTOMER_ID=CPD.CUSTOMER_ID,CUSTOMER_LP_DETAILS CTD,UNIT_ROOM_TYPE_DETAILS URTD, UNIT_ACCESS_STAMP_DETAILS UASD ,UNIT U,CUSTOMER C WHERE  CED.UNIT_ID=U.UNIT_ID AND (CED.CUSTOMER_ID=" . $CTermExtn_custid . ")AND (CTD.CUSTOMER_ID=CED.CUSTOMER_ID) AND (CED.CED_REC_VER=CTD.CED_REC_VER) AND (CTD.CLP_GUEST_CARD IS NULL) AND CED.CED_CANCEL_DATE IS  NULL AND(UASD.UASD_ID=CED.UASD_ID) AND(UASD.URTD_ID=URTD.URTD_ID)  AND (C.CUSTOMER_ID=CED.CUSTOMER_ID) AND (CTD.CUSTOMER_ID=C.CUSTOMER_ID) AND CED.CED_REC_VER>=" . $cterm_minlp . " AND CTD.CLP_GUEST_CARD IS NULL ORDER BY CED.CED_REC_VER, CTD.CLP_GUEST_CARD ASC");
             $result = $queryCustomer->result_array();
             $resultcount=$this->db->affected_rows();
+            $this->load->model('EILIB/Mdl_eilib_common_function');
+            $servicedoc= $this->Mdl_eilib_common_function->get_service_document();
             for ($s = 0; $s < $resultcount; $s++) {
                 $CTermExtn_caleventcount = $CTermExtn_caleventcount + 1;
                 $CTermExtn_gstcard = $result[$s]["CLP_GUEST_CARD"];
@@ -476,12 +479,13 @@ class Mdl_eilib_calender  extends CI_Model {
                             }
                         }
                     }
+                    $folderIdCustomer=$this->Mdl_eilib_calender->getcustomerfileid($servicedoc,581);
                     if ($CTermExtn_recversion == $CTermExtn_recver) {
-                        $this->CUST_customercalendercreation($fileDoc,$calPrimary, $CTermExtn_custid, $CTermExtn_stdate, $CTermExtn_start_time_in, $CTermExtn_start_time_out, $CTermExtn_eddate, $CTermExtn_end_time_in, $CTermExtn_end_time_out, $CTermExtn_custfirstname, $CTermExtn_custlastname, $CTermExtn_mobile, $CTermExtn_intmoblie, $CTermExtn_office, $CTermExtn_emailid, $CTermExtn_unitno, $CTermExtn_roomtype, $CTermExtn_custunittype);
+                        $this->CUST_customercalendercreation($folderIdCustomer,$calPrimary, $CTermExtn_custid, $CTermExtn_stdate, $CTermExtn_start_time_in, $CTermExtn_start_time_out, $CTermExtn_eddate, $CTermExtn_end_time_in, $CTermExtn_end_time_out, $CTermExtn_custfirstname, $CTermExtn_custlastname, $CTermExtn_mobile, $CTermExtn_intmoblie, $CTermExtn_office, $CTermExtn_emailid, $CTermExtn_unitno, $CTermExtn_roomtype, $CTermExtn_custunittype);
                         $CTermExtn_calevntchk_flag = 1;
                     }
                     if ($CTermExtn_calevntchk_flag == 0) {
-                        $this->CUST_customercalendercreation($fileDoc,$calPrimary, $CTermExtn_custid, $CTermExtn_stdate, $CTermExtn_start_time_in, $CTermExtn_start_time_out, "", "", "", $CTermExtn_custfirstname, $CTermExtn_custlastname, $CTermExtn_mobile, $CTermExtn_intmoblie, $CTermExtn_office, $CTermExtn_emailid, $CTermExtn_unitno, $CTermExtn_roomtype, $CTermExtn_custunittype);
+                        $this->CUST_customercalendercreation($folderIdCustomer,$calPrimary, $CTermExtn_custid, $CTermExtn_stdate, $CTermExtn_start_time_in, $CTermExtn_start_time_out, "", "", "", $CTermExtn_custfirstname, $CTermExtn_custlastname, $CTermExtn_mobile, $CTermExtn_intmoblie, $CTermExtn_office, $CTermExtn_emailid, $CTermExtn_unitno, $CTermExtn_roomtype, $CTermExtn_custunittype);
                     }
                 }
                 $i = $i + 1;
@@ -507,5 +511,35 @@ class Mdl_eilib_calender  extends CI_Model {
             $finalResult[]=array('sddate'=>$result[$s]['CLP_STARTDATE'],'sdtimein'=>$result[$s]['CED_SD_STIME'],'sdtimeout'=>$result[$s]['CED_SD_ETIME'],'eddate'=>$result[$s]['ENDDATE'],'edtimein'=>$result[$s]['CED_SD_STIME'],'edtimeout'=>$result[$s]['CED_SD_ETIME']);
         }
         return $finalResult;
+    }
+    public function getCustomerfolderid($Customerid){
+        $selectquery="SELECT CUFD_CUSTOMER_FOLDER_ID FROM  CUSTOMER_FILE_DIRECTORY WHERE  CUSTOMER_ID='$Customerid' ";
+        $resultset=$this->db->query($selectquery);
+        foreach ($resultset->result_array() as $key=>$val)
+        {
+            $result[]=$val['CUFD_CUSTOMER_FOLDER_ID'];
+        }
+
+        return $result;
+    }
+    //function get all upload file
+    public function getcustomerfileid($service,$Customerid){
+        $cust_folder_id=$this->getCustomerfolderid($Customerid);
+        print_r($cust_folder_id);
+        $emp_uploadfilenamelist=array();
+        for($i=0;$i<count($cust_folder_id);$i++){
+            $children1 = $service->children->listChildren($cust_folder_id[$i]);
+            $filearray1=$children1->getItems();
+            print_r($filearray1);
+            foreach ($filearray1 as $child1) {
+                $file = $service->files->get($child1->getId());
+                $MIME_type= $file->getMimeType();
+                if($MIME_type=='application/pdf')
+                    $emp_uploadfilenamelist[]=($child1->getId());
+            }
+
+        }
+
+        return $emp_uploadfilenamelist;
     }
 }

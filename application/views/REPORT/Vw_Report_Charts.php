@@ -51,6 +51,7 @@ $(document).ready(function(){
                 }
             }
             $('.preloader').hide();
+            $('#chart_lb_name').focus();
         },
         error:function(data){
             var errordata=(JSON.stringify(data));
@@ -369,6 +370,8 @@ $(document).ready(function(){
                             $('#chart_lb_srch_data').append($('<option>').text(typedata).attr('value',typeid));
                         }
                         $('#chart_srch_data').show();
+                        $('#chart_lb_srch_data').focus();
+
                     }
                 },
                 error:function(data){
@@ -457,6 +460,7 @@ $(document).ready(function(){
             $('#chart_unit').show();
             $('#chart_period').hide();
             $('#chart_lb_unit').val('SELECT').show();
+            $('#chart_lb_unit').focus();
             $('#chart_permonth').hide();
             $('#chart_periodfromto').hide();
             $('#chart_fromto').hide();

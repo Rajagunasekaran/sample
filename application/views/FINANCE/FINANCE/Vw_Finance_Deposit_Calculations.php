@@ -136,6 +136,7 @@ require_once('application/libraries/EI_HDR.php');
                         }
                         $('#DDC_lb_unitselect').html(DDC_unitvalue).show();
                         $('#DDC_unitno').show();
+                        $('#DDC_lb_unitselect').focus();
                     }
                 }
                 else
@@ -226,7 +227,7 @@ require_once('application/libraries/EI_HDR.php');
                     }
                     $('#DDC_lb_customerselect').html(options);
                     $('#DDC_customerselect').show();
-                    $("#DDC_lb_customerselect").val('SELECT');
+                    $("#DDC_lb_customerselect").val('SELECT').focus();
                 }
             });
         // CALL FOR REC_VER AND START DATE AND END DATE TO LOAD IN THE FORM.........

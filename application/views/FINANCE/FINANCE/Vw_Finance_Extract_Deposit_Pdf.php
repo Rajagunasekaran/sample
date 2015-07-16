@@ -331,6 +331,7 @@ require_once('application/libraries/EI_HDR.php');
                     $("#DDE_btn_sbutton").hide();
                     $("#DDE_btn_rbutton").hide();
                     $('#maintable').show();
+                    $('#DDE_lb_monthselect').focus();
                 }
             }
         // LOAD THE UNITNO FROM THE SHEET IN TO UNIT LISTBOX.................
@@ -346,6 +347,7 @@ require_once('application/libraries/EI_HDR.php');
                 }
                 $('#DDE_lb_unitselect').append(options);
                 $('#DDE_unitselect').show();
+                $('#DDE_lb_unitselect').focus();
                 $("#DDE_btn_sbutton").hide();
                 $("#DDE_btn_rbutton").hide();
             }
@@ -373,7 +375,7 @@ require_once('application/libraries/EI_HDR.php');
                 $('#DDE_lb_customerselect').html(options);
                 $('#DDE_customerselect').show();
                 $('#em').show();
-                $("#DDE_lb_customerselect").val('SELECT');
+                $("#DDE_lb_customerselect").val('SELECT').focus();
             }
         // SHOWS THE RADIOBUTTON  IF  WE HAVE  SAME CUSTOMER NAME WITH  DIFFERENT  CUSTID..........
             function DDE_getdatebox(getid)
@@ -535,6 +537,7 @@ require_once('application/libraries/EI_HDR.php');
                     $('#'+checkvalid).hide();
                     $('#DDE_tb_recdate').val(version);
                     DDE_flg_checkbox=0;
+                    $('#DDE_LB_Emaillist').focus();
                 }
             }
         // SHOWS THE ERROR MESSAGE WHEN WE HAVE DEFAULT DATE................
@@ -564,21 +567,20 @@ require_once('application/libraries/EI_HDR.php');
                         $('#DDE_btn_sbutton').hide();
                         $('#DDE_btn_rbutton').hide();
                     }
-                    else if((cc_check==true)&&sd!="" && sd!="")
+                    else if((cc_check==true) && sd!="" && sd!="")
                     {
                         $('#DDE_Emaillist').show();
                         $('#DDE_emailtable').show();
+                        $('#DDE_LB_Emaillist').focus();
+                        $('#DDE_btn_sbutton').show();
+                        $('#DDE_btn_rbutton').show();
                         if((email=="SELECT"))
                         {
                             $("#DDE_btn_sbutton").attr("disabled", "disabled");
-                            $('#DDE_btn_sbutton').hide();
-                            $('#DDE_btn_rbutton').hide();
                         }
                         else
                         {
                             $("#DDE_btn_sbutton").removeAttr("disabled");
-                            $('#DDE_btn_sbutton').show();
-                            $('#DDE_btn_rbutton').show();
                         }
                     }
                     if((cc_check==false)&&(email=="SELECT"))
@@ -607,38 +609,34 @@ require_once('application/libraries/EI_HDR.php');
                                 $('#DDE_btn_rbutton').hide();
                                 $('#DDE_Emaillist').hide();
                             }
-                            else
-                            if((sd=="")&&(ed!="")||(sd!="")&&(ed==""))
-                            {
-                                if((sd=="")&&(ed!=""))
-                                {
-                                    $("#DDE_btn_sbutton").attr("disabled", "disabled");
-                                    $('#'+errid).text(DDE_errorAarray[2].EMC_DATA).show();
-                                    $('#DDE_btn_sbutton').hide();
-                                    $('#DDE_btn_rbutton').hide();
-                                    $('#DDE_Emaillist').hide();
+                            else {
+                                if ((sd == "") && (ed != "") || (sd != "") && (ed == "")) {
+                                    if ((sd == "") && (ed != "")) {
+                                        $("#DDE_btn_sbutton").attr("disabled", "disabled");
+                                        $('#' + errid).text(DDE_errorAarray[2].EMC_DATA).show();
+                                        $('#DDE_btn_sbutton').hide();
+                                        $('#DDE_btn_rbutton').hide();
+                                        $('#DDE_Emaillist').hide();
+                                    }
+                                    if ((sd != "") && (ed == "")) {
+                                        $('#' + errid).text(DDE_errorAarray[1].EMC_DATA).show();
+                                        $("#DDE_btn_sbutton").attr("disabled", "disabled");
+                                        $('#DDE_btn_sbutton').hide();
+                                        $('#DDE_btn_rbutton').hide();
+                                        $('#DDE_Emaillist').hide();
+                                    }
                                 }
-                                if((sd!="")&&(ed==""))
-                                {
-                                    $('#'+errid).text(DDE_errorAarray[1].EMC_DATA).show();
+                                if ((sd == "" && ed == "") || ((sd != "" && ed == "") || (sd == "" && ed != ""))) {
                                     $("#DDE_btn_sbutton").attr("disabled", "disabled");
-                                    $('#DDE_btn_sbutton').hide();
-                                    $('#DDE_btn_rbutton').hide();
-                                    $('#DDE_Emaillist').hide();
                                 }
-                            }
-                            if(((sd==""&&ed=="")||((sd!=""&&ed=="")||(sd==""&&ed!=""))))
-                            {
-                                $("#DDE_btn_sbutton").attr("disabled", "disabled");
                             }
                         }
                         else
                         {
-                            if((cc_check==false)||(email=="SELECT"))
-                            {
+                            if((cc_check==false)||(email=="SELECT")) {
                                 $("#DDE_btn_sbutton").attr("disabled", "disabled");
-                            }else
-                            {
+                            }
+                            else {
                                 $("#DDE_btn_sbutton").removeAttr("disabled");
                             }
                             $('#'+errid).hide();

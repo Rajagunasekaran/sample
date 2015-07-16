@@ -341,7 +341,7 @@ require_once('application/libraries/EI_HDR.php');
                 CV_name=CV_name.replace("_"," ");
                 if(CV_custcard_array.length!=0)
                 {
-                    var CV_table_value='<table id="CV_tble_htmltable" border="1"  cellspacing="0" data-class="table" class="srcresult"><thead bgcolor="#6495ed" style="color:white"><tr><th style="text-align:center;width: 80px">UNIT NO</th><th style="text-align:center;">ACTIVE CARDS</th><th style="text-align:center;">OLD CARDS</th><th style="text-align:center;">ACCESS REASON</th><th style="text-align:center;">ACCESS COMMENTS</th></tr></thead><tbody>';
+                    var CV_table_value='<table id="CV_tble_htmltable" border="1"  cellspacing="0" data-class="table" class="srcresult"><thead bgcolor="#6495ed" style="color:white"><tr><th style="text-align:center;width: 80px" nowrap>UNIT NO</th><th style="text-align:center;width: 160px" nowrap>ACTIVE CARDS</th><th style="text-align:center;width: 160px" nowrap>OLD CARDS</th><th style="text-align:center;width: 100px" nowrap>ACCESS REASON</th><th style="text-align:center;width: 260px" nowrap>ACCESS COMMENTS</th></tr></thead><tbody>';
                     for(var i=0;i<CV_custcard_array.length;i++){
                         var CV_values=CV_custcard_array[i];
                         var CV_active=CV_values.active;
@@ -396,7 +396,7 @@ require_once('application/libraries/EI_HDR.php');
                             var CV_active=CV_result_array[0].active;
                             var CV_lost=CV_result_array[0].lost;
                             var CV_inventory=CV_result_array[0].inventory;
-                            var CV_table_header='<table id="CV_tble_htmltable" border="1" cellspacing="0" data-class="table" class="srcresult"><thead bgcolor="#6495ed" style="color:white"><tr><th style="width:60px;text-align:center;">UNIT NO</th><th style="width:150px;text-align:center;">ACTIVE CARDS</th><th style="width:130px;text-align:center;">NON ACTIVE CARDS</th><th style="width:150px;text-align:center;">OLD CARDS</th><th style="width:120px;text-align:center;">ACCESS REASON</th><th style="text-align:center;width: 230px">COMMENTS</th></tr></thead><tbody>';
+                            var CV_table_header='<table id="CV_tble_htmltable" border="1" cellspacing="0" data-class="table" class="srcresult"><thead bgcolor="#6495ed" style="color:white"><tr><th style="width:60px;text-align:center;" nowrap>UNIT NO</th><th style="width:160px;text-align:center;" nowrap>ACTIVE CARDS</th><th style="width:100px;text-align:center;">NON ACTIVE CARDS</th><th style="width:160px;text-align:center;" nowrap>OLD CARDS</th><th style="width:90px;text-align:center;">ACCESS REASON</th><th style="text-align:center;width: 250px">COMMENTS</th></tr></thead><tbody>';
                             CV_table_header+='<tr><td style="text-align:center;">'+CV_result_array[0].unitno+'<td>'+CV_active+'</td><td style="text-align:center;">'+CV_inventory+'</td><td>'+CV_lost+'</td><td style="text-align:center;">'+CV_result_array[0].reason+'</td><td>'+CV_result_array[0].comments+'</td></tr></tbody></table>';
                             $('section').html(CV_table_header);
                             $('#CV_tble_htmltable').DataTable({

@@ -1,7 +1,6 @@
 <!--//*******************************************FILE DESCRIPTION*********************************************//
 /**********************************************CUSTOMER EXTENSION******************************************/
 //DONE BY:SAFI
-//ver 0.03- updated save point and removed read only
 //VER 0.02-SD:20/06/2015 ED:20/06/2015 -removed duplicate cust radio
 //VER 0.01-INITIAL VERSION SD:01/06/2014 ED:12/06/2015
 //*********************************************************************************************************//
@@ -604,7 +603,7 @@ require_once('application/libraries/EI_HDR.php');
             }
             $(".preloader").hide();
         }
-       //FUNCTION TO COMPARE TWO ARRAYS
+        //FUNCTION TO COMPARE TWO ARRAYS
         function CEXTN_card_diffArray(a, b) {
             var seen = [], diff = [];
             for ( var i = 0; i < b.length; i++)
@@ -674,7 +673,7 @@ require_once('application/libraries/EI_HDR.php');
             if(CEXTN_tb_diffamtrent==""||CEXTN_radio_amt=="CEXTN_radio_sameamt"){
                 $("#CEXTN_cb_diffamtprorated").attr("disabled","disabled").prop('checked',false);
             }
-                $('#CEXTN_db_noticeperioddate').removeAttr("disabled");
+            $('#CEXTN_db_noticeperioddate').removeAttr("disabled");
             //SET NOTICE PERIOD DATE
             $('#CEXTN_db_noticeperioddate').datepicker({
                 dateFormat: "dd-mm-yy" ,
@@ -1712,6 +1711,7 @@ require_once('application/libraries/EI_HDR.php');
             var xmlhttp = new XMLHttpRequest();
             xmlhttp.onreadystatechange = function () {
                 if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+                    alert(xmlhttp.responseText);
                     var saveresult = JSON.parse(xmlhttp.responseText);
                     $('.preloader').hide();
                     CEXTN_SaveDetails_result(saveresult)
@@ -1745,7 +1745,7 @@ require_once('application/libraries/EI_HDR.php');
                     show_msgbox("CUSTOMER EXTENSION",CEXTN_errmsgs[21].EMC_DATA,"success",false);
                 }
                 else {
-                    show_msgbox("CUSTOMER EXTENSION",saveresult,"success",false);
+                    show_msgbox("CUSTOMER EXTENSION",saveresult1,"success",false);
                 }
                 $(".preloader").hide();
             }
@@ -1785,12 +1785,14 @@ require_once('application/libraries/EI_HDR.php');
         });
         $(document).on('change', '.CEXTN_fileextensionchk', function () {
             var filename = $('#CEXTN_fileupload').val();
-            var valid_extensions = /(\.pdf)$/i;
-            if (valid_extensions.test(filename)) {
-            }
-            else {
-                show_msgbox("CUSTOMER EXTENSION", 'UPLOAD ONLY PDF FILES', "success", false);
-                $('#CEXTN_fileupload').val('');
+            if(filename!='') {
+                var valid_extensions = /(\.pdf)$/i;
+                if (valid_extensions.test(filename)) {
+                }
+                else {
+                    show_msgbox("CUSTOMER EXTENSION", 'UPLOAD ONLY PDF FILES', "success", false);
+                    $('#CEXTN_fileupload').val('');
+                }
             }
         });
         //FUNCTION TO CLEAR ERR MSG
@@ -1828,7 +1830,7 @@ require_once('application/libraries/EI_HDR.php');
             $('#CEXTN_fileupload').val('');
             CEXTN_eppasslabel();
         }
-  });
+    });
 </script>
 <!--SCRIPT TAG END-->
 <!--BODY TAG START-->
@@ -1876,7 +1878,7 @@ require_once('application/libraries/EI_HDR.php');
                         <div class="col-sm-4"><p id="CEXTN_postcode_err" class="errormsg" ></p></div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-3">EMAIL ID</label>
+                        <label class="col-sm-3">EMAIL ID<em>*</em></label>
                         <div class="col-sm-3">
                             <input type="text" name="CEXTN_tb_emailid" id="CEXTN_tb_emailid"  maxlength="40"  class="form-control CEXTN_btn_validate_class"  placeholder="Customer Email Id" />
                         </div>
@@ -2118,129 +2120,129 @@ require_once('application/libraries/EI_HDR.php');
                             </div>
                         </div>
                     </div>
-                        <div class="form-group">
-                            <label class="col-sm-3">SAME/DIFFERENT AMOUNT<em>*</em></label>
-                            <div class="radio col-sm-offset-3" style="padding-left: 15px" >
-                                <label >
-                                    <input type="radio" name="CEXTN_radio_amt" id="CEXTN_radio_sameamt" value="CEXTN_radio_sameamt" checked="checked" class="CEXTN_class_prowaiv CEXTN_btn_validate_class" / >
-                                    SAME AMOUNT
-                                </label>
-                            </div>
-                            <div id="CEXTN_div_sameamt">
-                                <div id="CEXTN_tble_sameamt" class="col-sm-offset-3" style="padding-left: 15px">
-                                    <div class="form-group">
-                                        <label class="col-sm-3" id="CEXTN_lbl_sameamtdep">DEPOSIT</label>
-                                        <div class="col-sm-2">
-                                            <input type="text" name="CEXTN_tb_sameamtdep" id="CEXTN_tb_sameamtdep" style="width:77px;height: 34px" class="rdonly" readonly />
-                                        </div>
+                    <div class="form-group">
+                        <label class="col-sm-3">SAME/DIFFERENT AMOUNT<em>*</em></label>
+                        <div class="radio col-sm-offset-3" style="padding-left: 15px" >
+                            <label >
+                                <input type="radio" name="CEXTN_radio_amt" id="CEXTN_radio_sameamt" value="CEXTN_radio_sameamt" checked="checked" class="CEXTN_class_prowaiv CEXTN_btn_validate_class" / >
+                                SAME AMOUNT
+                            </label>
+                        </div>
+                        <div id="CEXTN_div_sameamt">
+                            <div id="CEXTN_tble_sameamt" class="col-sm-offset-3" style="padding-left: 15px">
+                                <div class="form-group">
+                                    <label class="col-sm-3" id="CEXTN_lbl_sameamtdep">DEPOSIT</label>
+                                    <div class="col-sm-2">
+                                        <input type="text" name="CEXTN_tb_sameamtdep" id="CEXTN_tb_sameamtdep" style="width:77px;height: 34px" class="rdonly" readonly />
                                     </div>
-                                    <div class="form-group">
-                                        <label  class="col-sm-3" id="CEXTN_lbl_sameamtrent">RENT</label>
-                                        <div class="col-sm-3">
-                                            <input type="text" name="CEXTN_tb_sameamtrent" id="CEXTN_tb_sameamtrent" style="width:77px;height: 34px" class="rdonly" readonly />
-                                            <input type="checkbox" name="CEXTN_cb_sameamtprorated" id="CEXTN_cb_sameamtprorated" disabled /><label id="CEXTN_lbl_sameamtprorated"></label><input type="hidden" name="CEXTN_hidden_sameamtprorated" id="CEXTN_hidden_sameamtprorated" />
-                                        </div>
+                                </div>
+                                <div class="form-group">
+                                    <label  class="col-sm-3" id="CEXTN_lbl_sameamtrent">RENT</label>
+                                    <div class="col-sm-3">
+                                        <input type="text" name="CEXTN_tb_sameamtrent" id="CEXTN_tb_sameamtrent" style="width:77px;height: 34px" class="rdonly" readonly />
+                                        <input type="checkbox" name="CEXTN_cb_sameamtprorated" id="CEXTN_cb_sameamtprorated" disabled /><label id="CEXTN_lbl_sameamtprorated"></label><input type="hidden" name="CEXTN_hidden_sameamtprorated" id="CEXTN_hidden_sameamtprorated" />
                                     </div>
-                                    <div class="form-group">
-                                        <label class="col-sm-3" id="CEXTN_lbl_sameamtprocost">PROCESSING COST</label>
-                                        <div class="col-sm-3">
-                                            <input type="text" name="CEXTN_tb_sameamtprocost" id="CEXTN_tb_sameamtprocost" style="width:77px;height: 34px" class="rdonly" readonly />
-                                            <input type="checkbox" name="CEXTN_cb_sameamtwaived" id="CEXTN_cb_sameamtwaived" class="CEXTN_btn_validate_class" disabled /><label id="CEXTN_lbl_sameamtwaived"></label><input type="hidden" id="CEXTN_hidden_sameamtwaived" name="CEXTN_hidden_sameamtwaived"/>
-                                        </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3" id="CEXTN_lbl_sameamtprocost">PROCESSING COST</label>
+                                    <div class="col-sm-3">
+                                        <input type="text" name="CEXTN_tb_sameamtprocost" id="CEXTN_tb_sameamtprocost" style="width:77px;height: 34px" class="rdonly" readonly />
+                                        <input type="checkbox" name="CEXTN_cb_sameamtwaived" id="CEXTN_cb_sameamtwaived" class="CEXTN_btn_validate_class" disabled /><label id="CEXTN_lbl_sameamtwaived"></label><input type="hidden" id="CEXTN_hidden_sameamtwaived" name="CEXTN_hidden_sameamtwaived"/>
                                     </div>
                                 </div>
                             </div>
-                            <div class="radio col-sm-offset-3" style="padding-left: 15px">
-                                <label >
-                                    <input type="radio" name="CEXTN_radio_amt" id="CEXTN_radio_diffamt"  value="CEXTN_radio_diffamt" class="CEXTN_class_prowaiv CEXTN_btn_validate_class" / >
-                                    DIFFERENT AMOUNT
-                                </label>
-                            </div>
-                            <div id="CEXTN_div_diffamt" hidden>
-                                <div id="CEXTN_tble_diffamt" class="col-sm-offset-3" style="padding-left: 15px">
-                                    <div class="form-group">
-                                        <label class="col-sm-3" id="CEXTN_lbl_diffamtdep">DEPOSIT</label>
-                                        <div class="col-sm-2">
-                                            <input type="text" name="CEXTN_tb_diffamtdep" id="CEXTN_tb_diffamtdep" style="width:85px;" class="5digitdollaronly CEXTN_btn_validate_class form-control" placeholder="0.00"/>
-                                         </div>
-                                        <<div class="col-sm-4">
-                                            <p id="CEXTN_diffamtdeposit_err" class="errormsg"></p>
-                                        </div>
+                        </div>
+                        <div class="radio col-sm-offset-3" style="padding-left: 15px">
+                            <label >
+                                <input type="radio" name="CEXTN_radio_amt" id="CEXTN_radio_diffamt"  value="CEXTN_radio_diffamt" class="CEXTN_class_prowaiv CEXTN_btn_validate_class" / >
+                                DIFFERENT AMOUNT
+                            </label>
+                        </div>
+                        <div id="CEXTN_div_diffamt" hidden>
+                            <div id="CEXTN_tble_diffamt" class="col-sm-offset-3" style="padding-left: 15px">
+                                <div class="form-group">
+                                    <label class="col-sm-3" id="CEXTN_lbl_diffamtdep">DEPOSIT</label>
+                                    <div class="col-sm-2">
+                                        <input type="text" name="CEXTN_tb_diffamtdep" id="CEXTN_tb_diffamtdep" style="width:85px;" class="5digitdollaronly CEXTN_btn_validate_class form-control" placeholder="0.00"/>
                                     </div>
+                                    <<div class="col-sm-4">
+                                        <p id="CEXTN_diffamtdeposit_err" class="errormsg"></p>
+                                    </div>
+                                </div>
 
-                                    <div class="form-group">
-                                        <label class="col-sm-3" id="CEXTN_lbl_diffamtrent">RENT<em>*</em></label>
-                                        <div class="col-sm-6">
-                                            <div class="row form-group">
-                                                <div class="col-md-3">
-                                                    <input type="text" name="CEXTN_tb_diffamtrent" id="CEXTN_tb_diffamtrent" style="width:85px;" class="CEXTN_class_prowaiv 5digitdollaronly CEXTN_btn_validate_class form-control" placeholder="0.00"/>
-                                                </div>
-                                                <div class="col-md-2" style="padding-right:10px;width:10px">
-                                                    <input type="checkbox" name="CEXTN_cb_diffamtprorated" id="CEXTN_cb_diffamtprorated"  class="CEXTN_btn_validate_class" disabled />
-                                                </div>
-                                                <div class="col-md-3"><label id="CEXTN_lbl_diffamtprorated"></label><input type="hidden" name="CEXTN_hidden_diffamtprorated" id="CEXTN_hidden_diffamtprorated" /></div>
-                                                <div class="col-md-6"><p id="CEXTN_diffamtrent_err" class="errormsg"></p></div>
+                                <div class="form-group">
+                                    <label class="col-sm-3" id="CEXTN_lbl_diffamtrent">RENT<em>*</em></label>
+                                    <div class="col-sm-6">
+                                        <div class="row form-group">
+                                            <div class="col-md-3">
+                                                <input type="text" name="CEXTN_tb_diffamtrent" id="CEXTN_tb_diffamtrent" style="width:85px;" class="CEXTN_class_prowaiv 5digitdollaronly CEXTN_btn_validate_class form-control" placeholder="0.00"/>
                                             </div>
+                                            <div class="col-md-2" style="padding-right:10px;width:10px">
+                                                <input type="checkbox" name="CEXTN_cb_diffamtprorated" id="CEXTN_cb_diffamtprorated"  class="CEXTN_btn_validate_class" disabled />
+                                            </div>
+                                            <div class="col-md-3"><label id="CEXTN_lbl_diffamtprorated"></label><input type="hidden" name="CEXTN_hidden_diffamtprorated" id="CEXTN_hidden_diffamtprorated" /></div>
+                                            <div class="col-md-6"><p id="CEXTN_diffamtrent_err" class="errormsg"></p></div>
                                         </div>
                                     </div>
-                                    <div class=" row form-group">
-                                        <label class="col-sm-3" id="CEXTN_lbl_diffamtprocost">PROCESSING COST</label>
-                                        <div class="col-sm-6">
-                                            <div class="row form-group">
-                                                <div class="col-md-3">
-                                                    <input type="text" name="CEXTN_tb_diffamtprocost" id="CEXTN_tb_diffamtprocost" style="width:77px;" maxlength="7" class="CEXTN_class_prowaiv CEXTN_btn_validate_class form-control" placeholder="0.00"/>
-                                                </div>
-                                                <div class="col-md-1" style="padding-right:10px;width:10px">
-                                                    <input type="checkbox" name="CEXTN_cb_diffamtwaived" id="CEXTN_cb_diffamtwaived" class="CEXTN_class_prowaiv CEXTN_btn_validate_class" disabled  />
-                                                </div>
-                                                <div class="col-md-3"><label id="CEXTN_lbl_diffamtwaived"></label><input type="hidden" id="CEXTN_hidden_diffamtwaived" name="CEXTN_hidden_diffamtwaived"/></div>
-                                                <div class="col-md-8" style="padding-right:10px"><p id="CEXTN_diffamtprofee_err" class="errormsg"></p></div>
+                                </div>
+                                <div class=" row form-group">
+                                    <label class="col-sm-3" id="CEXTN_lbl_diffamtprocost">PROCESSING COST</label>
+                                    <div class="col-sm-6">
+                                        <div class="row form-group">
+                                            <div class="col-md-3">
+                                                <input type="text" name="CEXTN_tb_diffamtprocost" id="CEXTN_tb_diffamtprocost" style="width:77px;" maxlength="7" class="CEXTN_class_prowaiv CEXTN_btn_validate_class form-control" placeholder="0.00"/>
                                             </div>
+                                            <div class="col-md-1" style="padding-right:10px;width:10px">
+                                                <input type="checkbox" name="CEXTN_cb_diffamtwaived" id="CEXTN_cb_diffamtwaived" class="CEXTN_class_prowaiv CEXTN_btn_validate_class" disabled  />
+                                            </div>
+                                            <div class="col-md-3"><label id="CEXTN_lbl_diffamtwaived"></label><input type="hidden" id="CEXTN_hidden_diffamtwaived" name="CEXTN_hidden_diffamtwaived"/></div>
+                                            <div class="col-md-8" style="padding-right:10px"><p id="CEXTN_diffamtprofee_err" class="errormsg"></p></div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label class="col-sm-3">ELECTRICITY CAPPED</label>
-                            <div class="col-sm-2"><input type="text" name="CEXTN_tb_electcapfee" id="CEXTN_tb_electcapfee" style="width:77px;" maxlength="7" class="3digitdollaronly CEXTN_btn_validate_class form-control" placeholder="0.00"/>
-                                <p id="CEXTN_electcap_err" class="errormsg"></p>
-                            </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3">ELECTRICITY CAPPED</label>
+                        <div class="col-sm-2"><input type="text" name="CEXTN_tb_electcapfee" id="CEXTN_tb_electcapfee" style="width:77px;" maxlength="7" class="3digitdollaronly CEXTN_btn_validate_class form-control" placeholder="0.00"/>
+                            <p id="CEXTN_electcap_err" class="errormsg"></p>
                         </div>
-                        <div class="form-group">
-                            <label class="col-sm-3">CURTAIN DRY CLEANING FEE</label>
-                            <div class="col-sm-2"><input type="text" name="CEXTN_tb_curtaindryfee" id="CEXTN_tb_curtaindryfee" style="width:77px;" maxlength="7" class="3digitdollaronly CEXTN_btn_validate_class form-control" placeholder="0.00"/></div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3">CURTAIN DRY CLEANING FEE</label>
+                        <div class="col-sm-2"><input type="text" name="CEXTN_tb_curtaindryfee" id="CEXTN_tb_curtaindryfee" style="width:77px;" maxlength="7" class="3digitdollaronly CEXTN_btn_validate_class form-control" placeholder="0.00"/></div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3">CHECKOUT CLEANING FEE</label>
+                        <div class="col-sm-2"><input type="text" name="CEXTN_tb_chkoutcleanfee" id="CEXTN_tb_chkoutcleanfee" style="width:77px;" maxlength="7" class="3digitdollaronly CEXTN_btn_validate_class form-control" placeholder="0.00"/></div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3">E-MAIL ID<em>*</em></label>
+                        <div class="col-sm-4"><select id="CEXTN_lb_emailid" name="CEXTN_lb_emailid" class="CEXTN_btn_validate_class form-control"><option>SELECT</option></select>
                         </div>
-                        <div class="form-group">
-                            <label class="col-sm-3">CHECKOUT CLEANING FEE</label>
-                            <div class="col-sm-2"><input type="text" name="CEXTN_tb_chkoutcleanfee" id="CEXTN_tb_chkoutcleanfee" style="width:77px;" maxlength="7" class="3digitdollaronly CEXTN_btn_validate_class form-control" placeholder="0.00"/></div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3">COMMENTS</label>
+                        <div class="col-sm-4"><textarea  style="min-height: 116px;" name="CEXTN_ta_comments" id="CEXTN_ta_comments" class="CEXTN_btn_validate_class form-control" rows="5"></textarea></div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col-md-3">
+                            <label>FILE UPLOAD</label>
                         </div>
-                        <div class="form-group">
-                            <label class="col-sm-3">E-MAIL ID<em>*</em></label>
-                            <div class="col-sm-4"><select id="CEXTN_lb_emailid" name="CEXTN_lb_emailid" class="CEXTN_btn_validate_class form-control"><option>SELECT</option></select>
-                            </div>
+                        <div class="col-md-3">
+                            <input type="file" id="CEXTN_fileupload" name="CEXTN_fileupload" class="form-control CEXTN_fileextensionchk" />
                         </div>
-                        <div class="form-group">
-                            <label class="col-sm-3">COMMENTS</label>
-                            <div class="col-sm-4"><textarea  name="CEXTN_ta_comments" id="CEXTN_ta_comments" class="CEXTN_btn_validate_class form-control" rows="5"></textarea></div>
-                        </div>
+                    </div>
+
+                    <div  id="CEXTN_div_save">
                         <div class="row form-group">
-                            <div class="col-md-3">
-                                <label>FILE UPLOAD</label>
-                            </div>
-                            <div class="col-md-3">
-                                <input type="file" id="CEXTN_fileupload" name="CEXTN_fileupload" class="form-control CEXTN_fileextensionchk" />
+                            <div class="col-lg-offset-2 col-lg-3">
+                                <input  type="button" value="EXTEND" id="CEXTN_btn_save" class="btn" disabled /><input type="button" value="RESET"  id="CEXTN_btn_reset" class="btn"/>
                             </div>
                         </div>
-
-                        <div  id="CEXTN_div_save">
-                            <div class="row form-group">
-                                <div class="col-lg-offset-2 col-lg-3">
-                                    <input  type="button" value="EXTEND" id="CEXTN_btn_save" class="btn" disabled /><input type="button" value="RESET"  id="CEXTN_btn_reset" class="btn"/>
-                                </div>
-                            </div>
-                        </div>
-                        <input type="hidden" name="CEXTN_slctcustlbl" id="CEXTN_slctcustlbl">
+                    </div>
+                    <input type="hidden" name="CEXTN_slctcustlbl" id="CEXTN_slctcustlbl">
 
     </form>
 </div>

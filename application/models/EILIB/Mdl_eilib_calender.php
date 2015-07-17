@@ -479,7 +479,7 @@ class Mdl_eilib_calender  extends CI_Model {
                             }
                         }
                     }
-                    $folderIdCustomer=$this->Mdl_eilib_calender->getcustomerfileid($servicedoc,581);
+                    $folderIdCustomer=$this->Mdl_eilib_calender->getcustomerfileid($servicedoc,$CTermExtn_custid);
                     if ($CTermExtn_recversion == $CTermExtn_recver) {
                         $this->CUST_customercalendercreation($folderIdCustomer,$calPrimary, $CTermExtn_custid, $CTermExtn_stdate, $CTermExtn_start_time_in, $CTermExtn_start_time_out, $CTermExtn_eddate, $CTermExtn_end_time_in, $CTermExtn_end_time_out, $CTermExtn_custfirstname, $CTermExtn_custlastname, $CTermExtn_mobile, $CTermExtn_intmoblie, $CTermExtn_office, $CTermExtn_emailid, $CTermExtn_unitno, $CTermExtn_roomtype, $CTermExtn_custunittype);
                         $CTermExtn_calevntchk_flag = 1;
@@ -525,12 +525,10 @@ class Mdl_eilib_calender  extends CI_Model {
     //function get all upload file
     public function getcustomerfileid($service,$Customerid){
         $cust_folder_id=$this->getCustomerfolderid($Customerid);
-        print_r($cust_folder_id);
         $emp_uploadfilenamelist=array();
         for($i=0;$i<count($cust_folder_id);$i++){
             $children1 = $service->children->listChildren($cust_folder_id[$i]);
             $filearray1=$children1->getItems();
-            print_r($filearray1);
             foreach ($filearray1 as $child1) {
                 $file = $service->files->get($child1->getId());
                 $MIME_type= $file->getMimeType();

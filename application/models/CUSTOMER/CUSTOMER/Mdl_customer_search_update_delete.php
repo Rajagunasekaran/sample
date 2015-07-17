@@ -401,6 +401,8 @@ class Mdl_customer_search_update_delete extends CI_Model
             $this->load->model('EILIB/Mdl_eilib_common_function');
             $service = $this->Mdl_eilib_common_function->get_service_document();
             $Fileupload='';
+            $UnitFolderrollback = '';
+            $CustomerFolderback = '';
             if (($filetempname != '' && $Confirm_Meessage==1) || ($CCoption!=3 && $Confirm_Meessage==1))
             {
                 $Targetfolderid=$this->Mdl_eilib_common_function->CUST_TargetFolderId();
@@ -415,12 +417,14 @@ class Mdl_customer_search_update_delete extends CI_Model
                 {
                     if ($unitcount == 0) {
                         $UnitFolder = $this->Mdl_eilib_common_function->Customer_FolderCreation($service, $Uint, 'PersonalDetails', $Targetfolderid);
+                        $UnitFolderrollback = $UnitFolder;
                     } else {
                         $UnitFolder = $UnitFolderid[0];
                     }
                     if ($UnitFolder != '') {
                         $customerfoldername = $Customerid . '-' . $FirstName . ' ' . $Lastname;
                         $CustomerFolder = $this->Mdl_eilib_common_function->Customer_FolderCreation($service, $customerfoldername, 'PersonalDetails', $UnitFolder);
+                        $CustomerFolderback = $CustomerFolder;
                     }
                 }
                 $Fileidinsertquery="CALL SP_INSERT_UPDATE_CUSTOMER_FILE_DIRECTORY($Uint,'$UnitFolder',$Customerid,'$CustomerFolder','$UserStamp',@SUCCESS_MESSAGE)";
@@ -440,7 +444,7 @@ class Mdl_customer_search_update_delete extends CI_Model
                     $cal = $this->Mdl_eilib_calender->createCalendarService();
                     $calevents=$this->CAL_DEL_CREATE($Customerid);
                     $caldelresponse=$this->CUST_customercalenderdeletion_StartDate($calId,$cal,$calevents[0],$Customerid);
-                    $calcreateresponse=$this->CUST_customercalendercreation_StartDate($calId,$cal,$calevents[1],$Customerid,$FirstName,$Lastname,$Mobile,$IntlMobile,$Officeno,$Emailid,$Uint,$RoomType);
+                    $calcreateresponse=$this->CUST_customercalendercreation_StartDate($service,$calId,$cal,$calevents[1],$Customerid,$FirstName,$Lastname,$Mobile,$IntlMobile,$Officeno,$Emailid,$Uint,$RoomType);
                 }
                 else
                 {
@@ -482,9 +486,16 @@ class Mdl_customer_search_update_delete extends CI_Model
                                 $caldelresponse = $this->CUST_customercalenderdeletion_StartDate($calId, $cal, $calevents[0], $Customerid);
 //                            return $Customerid;
                                 $getPersonalDetails = $this->getPersonalDetails($Customerid);
-                                $calcreateresponse = $this->CUST_customercalendercreation_StartDate($calId, $cal, $calevents[1], $Customerid, $getPersonalDetails[0]["CUSTOMER_FIRST_NAME"], $getPersonalDetails[0]["CUSTOMER_LAST_NAME"], $getPersonalDetails[0]["CPD_MOBILE"], $getPersonalDetails[0]["CPD_INTL_MOBILE"], $getPersonalDetails[0]["CCD_OFFICE_NO"], $getPersonalDetails[0]["CPD_EMAIL"], $Uint, $RoomType);
+                                $calcreateresponse = $this->CUST_customercalendercreation_StartDate($service,$calId, $cal, $calevents[1], $Customerid, $getPersonalDetails[0]["CUSTOMER_FIRST_NAME"], $getPersonalDetails[0]["CUSTOMER_LAST_NAME"], $getPersonalDetails[0]["CPD_MOBILE"], $getPersonalDetails[0]["CPD_INTL_MOBILE"], $getPersonalDetails[0]["CCD_OFFICE_NO"], $getPersonalDetails[0]["CPD_EMAIL"], $Uint, $RoomType);
 
-                            } echo $InvoiceId[0];
+                            }
+                            if ($UnitFolderrollback != '') {
+                                $this->Mdl_eilib_invoice_contract->CUST_UNSHARE_FILE($service, $UnitFolderrollback);
+                            }
+                            if ($CustomerFolderback != '') {
+                                $this->Mdl_eilib_invoice_contract->CUST_UNSHARE_FILE($service, $CustomerFolderback);
+                            }
+                            echo $InvoiceId[0];
                             exit;
                         }
                     } else if ($CCoption == 5) {
@@ -511,7 +522,13 @@ class Mdl_customer_search_update_delete extends CI_Model
                                 $calevents = $this->CAL_DEL_CREATE($Customerid);
                                 $caldelresponse = $this->CUST_customercalenderdeletion_StartDate($calId, $cal, $calevents[0], $Customerid);
                                 $getPersonalDetails = $this->getPersonalDetails($Customerid);
-                                $calcreateresponse = $this->CUST_customercalendercreation_StartDate($calId, $cal, $calevents[1], $Customerid, $getPersonalDetails[0]["CUSTOMER_FIRST_NAME"], $getPersonalDetails[0]["CUSTOMER_LAST_NAME"], $getPersonalDetails[0]["CPD_MOBILE"], $getPersonalDetails[0]["CPD_INTL_MOBILE"], $getPersonalDetails[0]["CCD_OFFICE_NO"], $getPersonalDetails[0]["CPD_EMAIL"], $Uint, $RoomType);
+                                $calcreateresponse = $this->CUST_customercalendercreation_StartDate($service,$calId, $cal, $calevents[1], $Customerid, $getPersonalDetails[0]["CUSTOMER_FIRST_NAME"], $getPersonalDetails[0]["CUSTOMER_LAST_NAME"], $getPersonalDetails[0]["CPD_MOBILE"], $getPersonalDetails[0]["CPD_INTL_MOBILE"], $getPersonalDetails[0]["CCD_OFFICE_NO"], $getPersonalDetails[0]["CPD_EMAIL"], $Uint, $RoomType);
+                            }
+                            if ($UnitFolderrollback != '') {
+                                $this->Mdl_eilib_invoice_contract->CUST_UNSHARE_FILE($service, $UnitFolderrollback);
+                            }
+                            if ($CustomerFolderback != '') {
+                                $this->Mdl_eilib_invoice_contract->CUST_UNSHARE_FILE($service, $CustomerFolderback);
                             }
                             echo $ContractId[0];
                             exit;
@@ -542,7 +559,13 @@ class Mdl_customer_search_update_delete extends CI_Model
                                 $calevents = $this->CAL_DEL_CREATE($Customerid);
                                 $caldelresponse = $this->CUST_customercalenderdeletion_StartDate($calId, $cal, $calevents[0], $Customerid);
                                 $getPersonalDetails = $this->getPersonalDetails($Customerid);
-                                $calcreateresponse = $this->CUST_customercalendercreation_StartDate($calId, $cal, $calevents[1], $Customerid, $getPersonalDetails[0]["CUSTOMER_FIRST_NAME"], $getPersonalDetails[0]["CUSTOMER_LAST_NAME"], $getPersonalDetails[0]["CPD_MOBILE"], $getPersonalDetails[0]["CPD_INTL_MOBILE"], $getPersonalDetails[0]["CCD_OFFICE_NO"], $getPersonalDetails[0]["CPD_EMAIL"], $Uint, $RoomType);
+                                $calcreateresponse = $this->CUST_customercalendercreation_StartDate($service,$calId, $cal, $calevents[1], $Customerid, $getPersonalDetails[0]["CUSTOMER_FIRST_NAME"], $getPersonalDetails[0]["CUSTOMER_LAST_NAME"], $getPersonalDetails[0]["CPD_MOBILE"], $getPersonalDetails[0]["CPD_INTL_MOBILE"], $getPersonalDetails[0]["CCD_OFFICE_NO"], $getPersonalDetails[0]["CPD_EMAIL"], $Uint, $RoomType);
+                            }
+                            if ($UnitFolderrollback != '') {
+                                $this->Mdl_eilib_invoice_contract->CUST_UNSHARE_FILE($service, $UnitFolderrollback);
+                            }
+                            if ($CustomerFolderback != '') {
+                                $this->Mdl_eilib_invoice_contract->CUST_UNSHARE_FILE($service, $CustomerFolderback);
                             }
                             echo $InvoiceId[0];
                             exit;
@@ -562,7 +585,7 @@ class Mdl_customer_search_update_delete extends CI_Model
                             $calevents = $this->CAL_DEL_CREATE($Customerid);
                             $caldelresponse = $this->CUST_customercalenderdeletion_StartDate($calId, $cal, $calevents[0], $Customerid);
                             $getPersonalDetails = $this->getPersonalDetails($Customerid);
-                            $calcreateresponse = $this->CUST_customercalendercreation_StartDate($calId, $cal, $calevents[1], $Customerid, $getPersonalDetails[0]["CUSTOMER_FIRST_NAME"], $getPersonalDetails[0]["CUSTOMER_LAST_NAME"], $getPersonalDetails[0]["CPD_MOBILE"], $getPersonalDetails[0]["CPD_INTL_MOBILE"], $getPersonalDetails[0]["CCD_OFFICE_NO"], $getPersonalDetails[0]["CPD_EMAIL"], $Uint, $RoomType);
+                            $calcreateresponse = $this->CUST_customercalendercreation_StartDate($service,$calId, $cal, $calevents[1], $Customerid, $getPersonalDetails[0]["CUSTOMER_FIRST_NAME"], $getPersonalDetails[0]["CUSTOMER_LAST_NAME"], $getPersonalDetails[0]["CPD_MOBILE"], $getPersonalDetails[0]["CPD_INTL_MOBILE"], $getPersonalDetails[0]["CCD_OFFICE_NO"], $getPersonalDetails[0]["CPD_EMAIL"], $Uint, $RoomType);
                         }
                         echo 0;
                         exit;
@@ -575,6 +598,12 @@ class Mdl_customer_search_update_delete extends CI_Model
             else
             {
                 $this->db->trans_savepoint_rollback($Confirm_savepoint);
+                if ($UnitFolderrollback != '') {
+                    $this->Mdl_eilib_invoice_contract->CUST_UNSHARE_FILE($service, $UnitFolderrollback);
+                }
+                if ($CustomerFolderback != '') {
+                    $this->Mdl_eilib_invoice_contract->CUST_UNSHARE_FILE($service, $CustomerFolderback);
+                }
                 echo 0;
                 exit;
             }
@@ -589,8 +618,14 @@ class Mdl_customer_search_update_delete extends CI_Model
                 $getPersonalDetails=$this->getPersonalDetails($Customerid);
                 $calcreateresponse = $this->CUST_customercalendercreation_StartDate($calId, $cal, $calevents[1], $Customerid, $getPersonalDetails[0]["CUSTOMER_FIRST_NAME"], $getPersonalDetails[0]["CUSTOMER_LAST_NAME"], $getPersonalDetails[0]["CPD_MOBILE"], $getPersonalDetails[0]["CPD_INTL_MOBILE"], $getPersonalDetails[0]["CCD_OFFICE_NO"], $getPersonalDetails[0]["CPD_EMAIL"], $Uint, $RoomType);
             }
+            if ($UnitFolderrollback != '') {
+                $this->Mdl_eilib_invoice_contract->CUST_UNSHARE_FILE($service, $UnitFolderrollback);
+            }
+            if ($CustomerFolderback != '') {
+                $this->Mdl_eilib_invoice_contract->CUST_UNSHARE_FILE($service, $CustomerFolderback);
+            }
 //            $this->db->trans_rollback();
-            return $e->getMessage();
+            return 0;
             exit;
         }
     }
@@ -725,10 +760,9 @@ class Mdl_customer_search_update_delete extends CI_Model
         $end->setDateTime($startdate.'T'.$startdate_endtime.':00.000+08:00');
         return array($start,$end);
     }
-    public function  CUST_customercalendercreation_StartDate($calId,$calPrimary,$calevents,$custid,$firstname,$lastname,$mobile,$intmobile,$office,$customermailid,$unit,$unitrmtype)
+    public function  CUST_customercalendercreation_StartDate($servicedoc,$calId,$calPrimary,$calevents,$custid,$firstname,$lastname,$mobile,$intmobile,$office,$customermailid,$unit,$unitrmtype)
     {
         try{
-            $servicedoc= $this->Mdl_eilib_common_function->get_service_document();
             $folderIdCustomer=$this->Mdl_eilib_calender->getcustomerfileid($servicedoc,$custid);
             for($k=0;$k<count($calevents);$k++)
             {

@@ -179,7 +179,7 @@ class Mdl_customer_creation extends CI_Model
                 $mimetype = 'application/pdf';
                 $this->load->model('EILIB/Mdl_eilib_common_function');
                 $service = $this->Mdl_eilib_common_function->get_service_document();
-                $Fileupload = '';
+                $Fileupload = '';$FileuploadArr =[];
                 $UnitFolderrollback = '';
                 $CustomerFolderback = '';
                 if (($filetempname != '' && $Confirm_Meessage == 1) || ($CCoption != 3 && $Confirm_Meessage == 1))
@@ -201,6 +201,7 @@ class Mdl_customer_creation extends CI_Model
                     if ($filetempname != '')
                     {
                         $Fileupload = $this->Mdl_eilib_common_function->Customer_FileUpload($service, $filename, 'PersonalDetails', $CustomerFolder, $mimetype, $filetempname);
+                        $FileuploadArr[]=$Fileupload;
                     }
                     if ($CustomerFolder != '') {
                         $Fileidinsertquery = "CALL SP_INSERT_UPDATE_CUSTOMER_FILE_DIRECTORY($Uint,'$UnitFolder',$Customerid,'$CustomerFolder','$UserStamp',@SUCCESS_MESSAGE)";
@@ -217,7 +218,7 @@ class Mdl_customer_creation extends CI_Model
                     $cal_endevents = $EndDate . ',' . $E_starttime . ',' . $E_endtime;
                     $cal_arry = array();
                     array_push($cal_arry, $cal_startevents, $cal_endevents);
-                    $calresponse = $this->Mdl_eilib_calender->CUST_customercalendercreation($Fileupload,$cal, $Customerid, $StartDate, $S_starttime, $S_endtime, $EndDate, $E_starttime, $E_endtime, $FirstName, $Lastname, $Mobile, $IntlMobile, $Officeno, $Emailid, $Uint, $RoomType, '');
+                    $calresponse = $this->Mdl_eilib_calender->CUST_customercalendercreation($FileuploadArr,$cal, $Customerid, $StartDate, $S_starttime, $S_endtime, $EndDate, $E_starttime, $E_endtime, $FirstName, $Lastname, $Mobile, $IntlMobile, $Officeno, $Emailid, $Uint, $RoomType, '');
                     if (($CCoption == 4 || $CCoption == 5 || $CCoption == 6) && $calresponse == 1)
                     {
                         $Invoiceandcontractid = $this->Mdl_eilib_common_function->CUST_invoice_contractreplacetext();
@@ -566,7 +567,7 @@ class Mdl_customer_creation extends CI_Model
                 $mimetype = 'application/pdf';
                 $this->load->model('EILIB/Mdl_eilib_common_function');
                 $service = $this->Mdl_eilib_common_function->get_service_document();
-                $Fileupload = '';
+                $Fileupload = '';$FileuploadArr=[];
                 $unitfileid = '';
                 $customerfileid = '';
                 if (($filetempname != '' && $Confirm_Meessage == 1) || ($CCoption != 3 && $Confirm_Meessage == 1)) {
@@ -588,6 +589,7 @@ class Mdl_customer_creation extends CI_Model
                     }
                     if ($filetempname != '') {
                         $Fileupload = $this->Mdl_eilib_common_function->Customer_FileUpload($service, $filename, 'PersonalDetails', $CustomerFolder, $mimetype, $filetempname);
+                        $FileuploadArr[]=$Fileupload;
                     }
                     if ($customerfileid != '') {
                         $Fileidinsertquery = "CALL SP_INSERT_UPDATE_CUSTOMER_FILE_DIRECTORY($Uint,'$UnitFolder',$Customerid,'$CustomerFolder','$UserStamp',@SUCCESS_MESSAGE)";
@@ -602,7 +604,7 @@ class Mdl_customer_creation extends CI_Model
                     $cal_endevents = $EndDate . ',' . $E_starttime . ',' . $E_endtime;
                     $cal_arry = array();
                     array_push($cal_arry, $cal_startevents, $cal_endevents);
-                    $calresponse = $this->Mdl_eilib_calender->CUST_customercalendercreation($Fileupload,$cal, $Customerid, $StartDate, $S_starttime, $S_endtime, $EndDate, $E_starttime, $E_endtime, $FirstName, $Lastname, $Mobile, $IntlMobile, $Officeno, $Emailid, $Uint, $RoomType, '');
+                    $calresponse = $this->Mdl_eilib_calender->CUST_customercalendercreation($FileuploadArr,$cal, $Customerid, $StartDate, $S_starttime, $S_endtime, $EndDate, $E_starttime, $E_endtime, $FirstName, $Lastname, $Mobile, $IntlMobile, $Officeno, $Emailid, $Uint, $RoomType, '');
 
                     if (($CCoption == 4 || $CCoption == 5 || $CCoption == 6) && $calresponse == 1) {
                         $Invoiceandcontractid = $this->Mdl_eilib_common_function->CUST_invoice_contractreplacetext();
@@ -612,7 +614,7 @@ class Mdl_customer_creation extends CI_Model
                         $Username = strtoupper($mail_username[0]);
                         $this->load->model('EILIB/Mdl_eilib_invoice_contract');
                         if ($CCoption == 4) {
-                            $InvoiceId = $this->Mdl_eilib_invoice_contract->CUST_invoice($UserStamp, $service, $Uint, $Name, $CompanyName, $Invoiceandcontractid[9], $Invoiceandcontractid[0], $Invoiceandcontractid[1], $Rent, $ProcessingFee, $DepositFee, $StartDate, $EndDate, $RoomType, $Leaseperiod, $Prorated, $Sendmailid, $Docowner, 'CREATION', $processwaived, $Customerid, $CustomerFolder);
+                            $InvoiceId = $this->Mdl_eilib_invoice_contract->CUST_invoice($UserStamp, $service, $Uint, $Name, $CompanyName, $Invoiceandcontractid[9], $Invoiceandcontractid[0], $Invoiceandcontractid[1], $Rent, $ProcessingFee, $DepositFee, $StartDate, $EndDate, $RoomType, $Leaseperiod, $InvProrated, $Sendmailid, $Docowner, 'CREATION', $processwaived, $Customerid, $CustomerFolder);
                             if ($InvoiceId[0] == 1) {
                                 $this->db->trans_savepoint_release($savepoint) ;
                                 $this->db->query('DROP TABLE IF EXISTS ' . $temptable);
@@ -666,7 +668,7 @@ class Mdl_customer_creation extends CI_Model
                                 exit;
                             }
                         } else if ($CCoption == 6) {
-                            $InvoiceId = $this->Mdl_eilib_invoice_contract->CUST_invoice($UserStamp, $service, $Uint, $Name, $CompanyName, $Invoiceandcontractid[9], $Invoiceandcontractid[0], $Invoiceandcontractid[1], $Rent, $ProcessingFee, $DepositFee, $StartDate, $EndDate, $RoomType, $Leaseperiod, $Prorated, $Sendmailid, $Docowner, 'CREATION', $processwaived, $Customerid, $CustomerFolder);
+                            $InvoiceId = $this->Mdl_eilib_invoice_contract->CUST_invoice($UserStamp, $service, $Uint, $Name, $CompanyName, $Invoiceandcontractid[9], $Invoiceandcontractid[0], $Invoiceandcontractid[1], $Rent, $ProcessingFee, $DepositFee, $StartDate, $EndDate, $RoomType, $Leaseperiod, $InvProrated, $Sendmailid, $Docowner, 'CREATION', $processwaived, $Customerid, $CustomerFolder);
                             $ContractId = $this->Mdl_eilib_invoice_contract->CUST_contract($service, $Uint, $Startdate, $Enddate, $CompanyName, $Name, $NoticePeriod, $PassportNo, $PassportDate, $EpNo, $EPDate, $NoticePeriodDate, $Leaseperiod, $Cont_cardno, $Rent, $InvQuaterlyfee, $InvFixedaircon_fee, $InvElectricitycapFee, $InvCurtain_DrycleanFee, $InvCheckOutCleanFee, $InvProcessingFee, $InvDepositFee, $Invwaived, $RoomType, $InvProrated, 'CREATION', $Sendmailid, $Docowner, $CustomerFolder);
                             if ($InvoiceId[0] == 1 && $ContractId[0] == 1) {
                                 $this->db->trans_savepoint_release($savepoint) ;

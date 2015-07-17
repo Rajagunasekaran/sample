@@ -234,7 +234,6 @@ Class Mdl_biz_expense_daily_entry_search_update_delete extends CI_Model {
     public function BDLY_INPUT_get_values($BDLY_INPUT_unitno,$BDLY_INPUT_type)
     {
      $BDLY_INPUT_values_array=[];
-
     if($BDLY_INPUT_type==9)
     {
         $BDLY_INPUT_select_serviceby=$this->db->query("SELECT AIRCONDTL.EDAS_ID,EAS.EASB_DATA FROM EXPENSE_DETAIL_AIRCON_SERVICE AIRCONDTL,UNIT U,EXPENSE_AIRCON_SERVICE_BY EAS WHERE (U.UNIT_ID=AIRCONDTL.UNIT_ID) AND U.UNIT_NO='$BDLY_INPUT_unitno' and (EAS.EASB_ID=AIRCONDTL.EASB_ID) ORDER BY AIRCONDTL.EDAS_REC_VER DESC");
@@ -972,6 +971,7 @@ public function BDLY_SRC_getUnitList($selectedexpense,$selectedSearchopt,$startd
         $BDLY_SRC_finalwidth=(object)["headerwidth"=>$BDLY_SRC_finalheader,"tablewidth"=>$BDLY_SRC_tablewidth[$BDLY_SRC_exptype]];
         return $BDLY_SRC_finalwidth;
     }
+
     /*------------------------------------------WILL FETCH RESULT FROM DB AND WILL SHOW IN DATA TABLE -----------------------------------------------------*/
     public function BDLY_SRC_getAnyTypeExpData($USERSTAMP,$timeZoneFormat,$BDLY_SRC_lb_unitno,$BDLY_SRC_lb_invoiceto,$BDLY_SRC_comments,$BDLY_SRC_comments,$BDLY_SRC_tb_fromamnt,$BDLY_SRC_tb_toamnt,$BDLY_SRC_servicedue,$BDLY_SRC_lb_cleanername,$BDLY_SRC_tb_durationamt,$BDLY_SRC_startdate,$BDLY_SRC_enddate,$BDLY_SRC_invoicefrom,$BDLY_SRC_lb_accountno,$BDLY_SRC_lb_cusname,$BDLY_SRC_lb_Digvoiceno,$BDLY_SRC_lb_cardno,$BDLY_SRC_lb_carno,$BDLY_SRC_lb_serviceby,$BDLY_SRC_invoiceitem,$BDLY_SRC_lb_category){
         $BDLY_SRC_lb_ExpenseList_val=$_POST['BDLY_SRC_lb_ExpenseList'];
@@ -981,7 +981,7 @@ public function BDLY_SRC_getUnitList($selectedexpense,$selectedSearchopt,$startd
         $BDLY_SRC_startdate=date('Y-m-d',strtotime($BDLY_SRC_startdate));
         $BDLY_SRC_enddate=date('Y-m-d',strtotime($BDLY_SRC_enddate));
         $BDLY_SRC_invoiceitemssrcvalue=$this->db->escape_like_str($BDLY_SRC_invoiceitem);
-        $BDLY_SRC_commentssrcvalue=$this->db->escape_like_str($BDLY_SRC_comments);
+        $BDLY_SRC_commentssrcvalue=$BDLY_SRC_comments;
         $BDLY_SRC_invfromsrcvalue=$this->db->escape_like_str($BDLY_SRC_invoicefrom);
         $BDLY_SRC_temptabledropQuery=[1=>[],2=>[],3=>[],4=>[],5=>[],6=>[],7=>[],8=>[],9=>[],10=>[],11=>[],12=>[]];
         $BDLY_SRC_SelectQuery=[1=>[],2=>[],3=>[],4=>[],5=>[],6=>[],7=>[],8=>[],9=>[],10=>[],11=>[],12=>[]];

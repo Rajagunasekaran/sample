@@ -297,17 +297,27 @@ Class Mdl_biz_expense_detail_entry_search_update_delete extends CI_Model {
           $BDTL_INPUT_sh_arr=$this->Mdl_eilib_common_function->getStarHubUnitCalTime();
           $BDTL_INPUT_sh_starttime=$BDTL_INPUT_sh_arr[0]['ECN_DATA'];
           $BDTL_INPUT_sh_endtime=$BDTL_INPUT_sh_arr[1]['ECN_DATA'];
-
+          $setflag=0;$cal_flag=0;
+          if((($BDTL_INPUT_starhub_cablestartdate_shtime == '') && ($BDTL_INPUT_starhub_cableenddate_shtime == '')) || (($BDTL_INPUT_starhub_internetstartdate_shtime == '') && ($BDTL_INPUT_starhub_internetenddate_shtime != ''))){
+            $setflag=1;
+          }
               if (($BDTL_INPUT_starhub_cablestartdate_shtime != '') && ($BDTL_INPUT_starhub_cableenddate_shtime != '') && ($BDTL_INPUT_starhub_cablestartdate_shtime != 'undefined') && ($BDTL_INPUT_starhub_cableenddate_shtime != 'undefined')) {
                   $cal_flag = $this->Mdl_eilib_calender->StarHubUnit_CreateCalEvent($calid, $BDTL_INPUT_starhub_cablestartdate_shtime, $BDTL_INPUT_sh_starttime, $BDTL_INPUT_sh_endtime, $BDTL_INPUT_starhub_cableenddate_shtime, $BDTL_INPUT_sh_starttime, $BDTL_INPUT_sh_endtime, 'STARHUB', $BDTL_INPUT_unitnoaircon, $BDTL_INPUT_starhub_acctno, 'CABLE START DATE', 'CABLE END DATE', '', '');
+                  $setflag=1;
               }
               if (($BDTL_INPUT_starhub_internetstartdate_shtime != '') && ($BDTL_INPUT_starhub_internetenddate_shtime != '') && ($BDTL_INPUT_starhub_internetstartdate_shtime != 'undefined') && ($BDTL_INPUT_starhub_internetenddate_shtime != 'undefined')) {
                   $cal_flag = $this->Mdl_eilib_calender->StarHubUnit_CreateCalEvent($calid, $BDTL_INPUT_starhub_internetstartdate_shtime, $BDTL_INPUT_sh_starttime, $BDTL_INPUT_sh_endtime, $BDTL_INPUT_starhub_internetenddate_shtime, $BDTL_INPUT_sh_starttime, $BDTL_INPUT_sh_endtime, 'STARHUB', $BDTL_INPUT_unitnoaircon, $BDTL_INPUT_starhub_acctno, 'INTERNET START DATE', 'INTERNET END DATE', '', '');
+                  $setflag=1;
               }
-          if($cal_flag==1){
+          if($cal_flag==1 && $setflag==1){
               $this->db->trans_savepoint_release('bizdetailentry') ;
               $successflag=1;
            }
+          elseif($cal_flag==0 && $setflag==1)
+          {
+              $this->db->trans_savepoint_release('bizdetailentry') ;
+              $successflag=1;
+          }
           else{
               $this->db->trans_savepoint_rollback('bizdetailentry');
               $successflag=0;
@@ -386,12 +396,8 @@ Class Mdl_biz_expense_detail_entry_search_update_delete extends CI_Model {
         $BTDTL_SEARCH_select_flag = $this->db->get();
         foreach($BTDTL_SEARCH_select_flag->result_array() as $row){
             $BTDTL_SEARCH_flag_starhub=true;}
-        $airconservicby=$this->db->query("SELECT EASB_ID,EASB_DATA FROM EXPENSE_AIRCON_SERVICE_BY  WHERE  EASB_DATA!='' ORDER BY EASB_DATA ASC");
-        foreach($airconservicby->result_array() as $row){
-            $servicbyid[]=$row['EASB_ID'];
-            $servicebydata[]=$row['EASB_DATA'];}
-          $airconservicebyarray=(object)['BTDTL_SEARCH_obj_id'=>$servicbyid,'BTDTL_SEARCH_obj_data'=>$servicebydata];
-        return ["BTDTL_SEARCH_expense"=>$BTDTL_SEARCH_expense_type_array,"BTDTL_SEARCH_errormsg"=>$BTDTL_SEARCH_errormsg_array,"BTDTL_SEARCH_aircon_errmsg"=>$BTDTL_SEARCH_aircon_configmon,"BTDTL_SEARCH_notable_obj"=>$BTDTL_SEARCH_notable_flag,"BTDTL_SEARCH_obj_invoiceto"=>$BTDTL_SEARCH_arr_invoiceto,"BTDTL_SEARCH_obj_starhubid"=>$BTDTL_SEARCH_arr_starhubid,"BTDTL_SEARCH_aircondetail_obj"=>$BTDTL_SEARCH_flag_aircon,"BTDTL_SEARCH_cardetail_obj"=>$BTDTL_SEARCH_flag_carpark,"BTDTL_SEARCH_elecdetail_obj"=>$BTDTL_SEARCH_flag_electricity,"BTDTL_SEARCH_digitaldetail_obj"=>$BTDTL_SEARCH_flag_digital,"BTDTL_SEARCH_stardetail_obj"=>$BTDTL_SEARCH_flag_starhub,'airconservicebyarray'=>$airconservicebyarray];
+
+        return ["BTDTL_SEARCH_expense"=>$BTDTL_SEARCH_expense_type_array,"BTDTL_SEARCH_errormsg"=>$BTDTL_SEARCH_errormsg_array,"BTDTL_SEARCH_aircon_errmsg"=>$BTDTL_SEARCH_aircon_configmon,"BTDTL_SEARCH_notable_obj"=>$BTDTL_SEARCH_notable_flag,"BTDTL_SEARCH_obj_invoiceto"=>$BTDTL_SEARCH_arr_invoiceto,"BTDTL_SEARCH_obj_starhubid"=>$BTDTL_SEARCH_arr_starhubid,"BTDTL_SEARCH_aircondetail_obj"=>$BTDTL_SEARCH_flag_aircon,"BTDTL_SEARCH_cardetail_obj"=>$BTDTL_SEARCH_flag_carpark,"BTDTL_SEARCH_elecdetail_obj"=>$BTDTL_SEARCH_flag_electricity,"BTDTL_SEARCH_digitaldetail_obj"=>$BTDTL_SEARCH_flag_digital,"BTDTL_SEARCH_stardetail_obj"=>$BTDTL_SEARCH_flag_starhub];
   }
     /*---------------------------------FUNCTION FOR SEARCH BY AIRCON,CARPARK,ELECTRICITY,STARHUB,DIGITALVOICE-----------------*/
     public function BTDTL_SEARCH_expense_searchby($BTDTL_SEARCH_search_option,$BTDTL_SEARCH_expense_types,$BTDTL_SEARCH_flag_searchby,$timezoneformat)
@@ -592,7 +598,13 @@ Class Mdl_biz_expense_detail_entry_search_update_delete extends CI_Model {
       $BTDTL_SEARCH_array[]=$arr;
     }
     $BTDTL_SEARCH_array[]=$BTDTL_SEARCH_parentfunc;
-    $BTDTL_SEARCH_result=["BTDTL_SEARCH_expenseflex"=>$BTDTL_SEARCH_array,"BTDTL_SEARCH_id"=>$BTDTL_SEARCH_id];
+        $airconservicby=$this->db->query("SELECT EASB_ID,EASB_DATA FROM EXPENSE_AIRCON_SERVICE_BY  WHERE  EASB_DATA!='' ORDER BY EASB_DATA ASC");
+        foreach($airconservicby->result_array() as $row){
+            $servicbyid[]=$row['EASB_ID'];
+            $servicebydata[]=$row['EASB_DATA'];}
+        $airconservicebyarray=(object)['BTDTL_SEARCH_obj_id'=>$servicbyid,'BTDTL_SEARCH_obj_data'=>$servicebydata];
+
+        $BTDTL_SEARCH_result=["BTDTL_SEARCH_expenseflex"=>$BTDTL_SEARCH_array,"BTDTL_SEARCH_id"=>$BTDTL_SEARCH_id,"airconservicebyarray"=>$airconservicebyarray];
     return $BTDTL_SEARCH_result;
   }
     /*-----------------------------------------------FUNCTION FOR CARPARK SHOWING FLEX TABLE--------------------------------------------------*/
@@ -1322,7 +1334,8 @@ Class Mdl_biz_expense_detail_entry_search_update_delete extends CI_Model {
             $BTDTL_SEARCH_flag_del=0;
           $BTDTL_SEARCH_flag_cable=0;$BTDTL_SEARCH_flag_starhub=0;
             $this->load->model('EILIB/Mdl_eilib_calender');
-        $del_flag=0;
+        $del_flag=0;$setflag=0;
+
               if ($BTDTL_SEARCH_flag_cal == 1) {
                   if (($BTDTL_SEARCH_obj['BTDTL_cablestartdate'][0] != '') && ($BTDTL_SEARCH_obj['BTDTL_cableenddate'][0] != '')) {
                       $BTDTL_SEARCH_flag_cable = 0;
@@ -1337,6 +1350,9 @@ Class Mdl_biz_expense_detail_entry_search_update_delete extends CI_Model {
                       $internetenddate=date('Y-m-d',strtotime($BTDTL_SEARCH_obj['BTDTL_interneted'][0]));
                       $del_flag=$this->Mdl_eilib_calender->StarHubUnit_DeleteCalEvent($calid,$BTDTL_SEARCH_obj['unitno'][0], $internetstartdate, $BTDTL_SEARCH_starhubid[0], $BTDTL_SEARCH_starhubid[1], $internetenddate, $BTDTL_SEARCH_starhubid[0], $BTDTL_SEARCH_starhubid[1], 'INTERNET');
                       $BTDTL_SEARCH_flag_starhub = 1;
+                  }
+                  if((($BTDTL_SEARCH_obj['BTDTL_cablestartdate'][0] == '') && ($BTDTL_SEARCH_obj['BTDTL_cableenddate'][0] == '')) || (($BTDTL_SEARCH_obj['BTDTL_internetsd'][0] == '') && ($BTDTL_SEARCH_obj['BTDTL_interneted'][0] != ''))){
+                      $setflag=1;$del_flag=1;
                   }
                   if($del_flag!=1)
                   {
@@ -1356,6 +1372,10 @@ Class Mdl_biz_expense_detail_entry_search_update_delete extends CI_Model {
                       }
                       $this->db->trans_savepoint_rollback($savepoint);
                       $BTDTL_SEARCH_flag_del=0;
+                  }
+                  elseif($setflag==1){
+                      $this->db->trans_savepoint_release($savepoint) ;
+                      $BTDTL_SEARCH_flag_del='BTDTL_SEARCH_flag_delete';
                   }
                   else
                   {
@@ -1377,12 +1397,23 @@ Class Mdl_biz_expense_detail_entry_search_update_delete extends CI_Model {
             $BTDTL_SEARCH_refresh= $this->BTDTL_SEARCH_show_electricity($searchvalue,$BTDTL_SEARCH_lb_searchoptions,$BTDTL_SEARCH_flag_del,$timeZoneFormat);
           else if($BTDTL_SEARCH_lb_expense_type==15)
             $BTDTL_SEARCH_refresh= $this->BTDTL_SEARCH_show_digital($searchvalue,$BTDTL_SEARCH_lb_searchoptions,$BTDTL_SEARCH_flag_del,$timeZoneFormat);
-          else if($BTDTL_SEARCH_lb_expense_type==14)
-            $BTDTL_SEARCH_refresh = $this->BTDTL_SEARCH_show_starhub($startdate,$searchvalue,$BTDTL_SEARCH_lb_searchoptions,$BTDTL_SEARCH_flag_del,$timeZoneFormat);
-            if((count($BTDTL_SEARCH_refresh->BTDTL_SEARCH_id)==0)&&($BTDTL_SEARCH_lb_searchoptions!=101)&&($BTDTL_SEARCH_lb_searchoptions!=103)&&($BTDTL_SEARCH_lb_searchoptions!=108)&&($BTDTL_SEARCH_lb_searchoptions!=104)&&($BTDTL_SEARCH_lb_searchoptions!=110)&&($BTDTL_SEARCH_lb_searchoptions!=112)&&($BTDTL_SEARCH_lb_searchoptions!=122))
+          else if($BTDTL_SEARCH_lb_expense_type==14) {
+              $BTDTL_SEARCH_refresh = $this->BTDTL_SEARCH_show_starhub($startdate, $searchvalue, $BTDTL_SEARCH_lb_searchoptions, $BTDTL_SEARCH_flag_del, $timeZoneFormat);
+          }
+        if($BTDTL_SEARCH_lb_expense_type==14){
+            if((count($BTDTL_SEARCH_refresh->BTDTL_SEARCH_id==0)&&($BTDTL_SEARCH_lb_searchoptions!=101)&&($BTDTL_SEARCH_lb_searchoptions!=103)&&($BTDTL_SEARCH_lb_searchoptions!=108)&&($BTDTL_SEARCH_lb_searchoptions!=104)&&($BTDTL_SEARCH_lb_searchoptions!=110)&&($BTDTL_SEARCH_lb_searchoptions!=112)&&($BTDTL_SEARCH_lb_searchoptions!=122)))
             {
                 $BTDTL_SEARCH_refresh= $this->BTDTL_SEARCH_expense_searchby($BTDTL_SEARCH_lb_searchoptions,$BTDTL_SEARCH_lb_expense_type,'BTDTL_SEARCH_flag_delete',$timeZoneFormat);
             }
+        }
+        else
+        {
+            if((count($BTDTL_SEARCH_refresh['BTDTL_SEARCH_id']==0)&&($BTDTL_SEARCH_lb_searchoptions!=101)&&($BTDTL_SEARCH_lb_searchoptions!=103)&&($BTDTL_SEARCH_lb_searchoptions!=108)&&($BTDTL_SEARCH_lb_searchoptions!=104)&&($BTDTL_SEARCH_lb_searchoptions!=110)&&($BTDTL_SEARCH_lb_searchoptions!=112)&&($BTDTL_SEARCH_lb_searchoptions!=122)))
+            {
+                $BTDTL_SEARCH_refresh= $this->BTDTL_SEARCH_expense_searchby($BTDTL_SEARCH_lb_searchoptions,$BTDTL_SEARCH_lb_expense_type,'BTDTL_SEARCH_flag_delete',$timeZoneFormat);
+            }
+        }
+
         return $BTDTL_SEARCH_refresh;
 
 

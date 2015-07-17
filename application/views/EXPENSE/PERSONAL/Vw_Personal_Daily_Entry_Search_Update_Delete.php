@@ -1953,6 +1953,7 @@ $(document).ready(function(){
             $('#PDLY_SEARCH_lbl_nodataerrormsg').hide();
             $('#PDLY_SEARCH_btn_babybutton').attr("disabled", "disabled");
             var PDLY_SEARCH_babyvalue=PDLY_SEARCH_babysearchdetailsvalues;
+            var expensetypetext=$('#PDLY_SEARCH_lb_typelist').find('option:selected').text();
             var PDLY_SEARCH_babytable_value='';
             if((PDLY_SEARCH_lb_typelistvalue==36)||(PDLY_SEARCH_lb_typelistvalue==35)||(PDLY_SEARCH_lb_typelistvalue==37))
             {
@@ -1998,6 +1999,7 @@ $(document).ready(function(){
                 }
                 $('#PDLY_SEARCH_lbl_flextableheader').text(PDLY_SEARCH_CONFSAVEMSG);
                 $('#PDLY_SEARCH_hdn_flextableheader').val(PDLY_SEARCH_CONFSAVEMSG);
+                $('#PDLY_SEARCH_hdn_expensetype').val(expensetypetext);
                 $('#PDLY_SEARCH_lbl_flextableheader').show();
                 if(PDLY_SEARCH_lb_typelistvalue==36)
                 {
@@ -2081,6 +2083,7 @@ $(document).ready(function(){
                 }
                 $('#PDLY_SEARCH_lbl_flextableheader').text(PDLY_SEARCH_CONFSAVEMSG);
                 $('#PDLY_SEARCH_hdn_flextableheader').val(PDLY_SEARCH_CONFSAVEMSG);
+                $('#PDLY_SEARCH_hdn_expensetype').val(expensetypetext);
                 $('#PDLY_SEARCH_lbl_flextableheader').show();
                 PDLY_SEARCH_babytable_header='<table id="PDLY_SEARCH_tbl_htmltable" border="1" width="1100px" cellspacing="0" data-class="table" class="srcresult"><thead bgcolor="#6495ed" style="color:white"><tr><th>DELETE</th><th width="75px" class="uk-date-column"">PAID DATE</th><th width="60px">INVOICE AMOUNT</th><th width="75px" class="uk-date-column"">FROM PERIOD</th><th width="75px" class="uk-date-column"">TO PERIOD</th><th width="180px">COMMENTS</th><th width="250px">USERSTAMP</th><th width="150px" class="uk-timestp-column">TIMESTAMP</th></tr></thead><tbody>';
 
@@ -2114,11 +2117,11 @@ $(document).ready(function(){
                 "sPaginationType":"full_numbers",
                 "aoColumnDefs" : [
                     { "aTargets" : ["uk-date-column"] , "sType" : "uk_date"}, { "aTargets" : ["uk-timestp-column"] , "sType" : "uk_timestp"} ],
-                "sDom":"Rlfrtip",
-                "scrollX": true,
-                "sScrollY":  ( 0.6 * $(window).height() ),
-                "bScrollCollapse": true,
-                "bAutoWidth": true
+                "sDom":"Rlfrtip"
+//                "scrollX": true,
+//                "sScrollY":  ( 0.6 * $(window).height() ),
+//                "bScrollCollapse": true,
+//                "bAutoWidth": true
 
             });
             if ( $.browser.webkit ) {
@@ -3056,6 +3059,7 @@ $(document).ready(function(){
     <div>
         <label id='PDLY_SEARCH_lbl_flextableheader' name='PDLY_SEARCH_lbl_flextableheader' class="srctitle" hidden></label>
         <input type="hidden" name="PDLY_SEARCH_hdn_flextableheader" id="PDLY_SEARCH_hdn_flextableheader" />
+        <input type="hidden" name="PDLY_SEARCH_hdn_expensetype" id="PDLY_SEARCH_hdn_expensetype" />
     </div>
     <div><input type="submit" id='PDLY_btn_pdf' class="btnpdf" value="PDF" hidden></div>
     <div  id ="PDLY_SEARCH_div_htmltable" class="table-responsive">

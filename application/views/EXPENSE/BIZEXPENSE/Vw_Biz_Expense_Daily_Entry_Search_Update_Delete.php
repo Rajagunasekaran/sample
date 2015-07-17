@@ -191,6 +191,7 @@ require_once('application/libraries/EI_HDR.php');
                 $('#BDLY_SRC_div_searchresult').html('');
                 $('#BDLY_SRC_Optionhead').text('');
                 $('#BDLY_SRC_div_searchresult_head').html('');
+                $('#BDLY_SRC_nodyndataerr').html('');
             }
         });
         /*------------------------------------------------CHANGE FUNCTION FOR AMOUNT VALIDATION------------------------------------------*/
@@ -1289,7 +1290,7 @@ require_once('application/libraries/EI_HDR.php');
             $(".preloader").hide();
             $('#BDLY_INPUT_btn_multisubmitbutton').attr('disabled','disabled')
             $('#BDLY_INPUT_tble_electricity').empty();
-            $('<tr><td nowrap><label id="BDLY_INPUT_lbl_elect_unit" >UNIT</label><em>*</em> </td><td nowrap><label  id="BDLY_INPUT_lbl_elect_invoiceto" >INVOICE TO</label><em>*</em></td><td nowrap> <label id="BDLY_INPUT_lbl_elect_invoicedate" >INVOICE DATE</label><em>*</em> </td><td nowrap><label id="BDLY_INPUT_lbl_elect_fromperiod" >FROM PERIOD</label><em>*</em> </td><td nowrap><label id="BDLY_INPUT_lbl_elect_toperiod" >TO PERIOD</label><em>*</em></td><td nowrap><label id="BDLY_INPUT_lbl_elect_payment"  >PAYMENT OF</label><em>*</em> </td><td nowrap><label id="BDLY_INPUT_lbl_elect_amount" >AMOUNT</label><em>*</em> </td><td ><label id="BDLY_INPUT_lbl_elect_comments" >COMMENTS</label> </td><td ><label id="BDLY_INPUT_lbl_elect_add" ></label> </td><td ><label id="BDLY_INPUT_lbl_elect_del" ></label> </td></tr><tr><td> <select  class="BDLY_INPUT_class_unit submultivalid form-control"  name="BDLY_INPUT_lb_elect_unit[]" id="BDLY_INPUT_lb_elect_unit-1" style="width: 90px;" hidden><option value="">SELECT</option></select> </td> <td><input  class="submultivalid rdonly form-control"  type="text" name ="BDLY_INPUT_tb_invoiceto[]" id="BDLY_INPUT_tb_invoiceto1"  style="display: none;" readonly/><input type="text" id="BDLY_INPUT_hidden_ecnid_elec1" name="BDLY_INPUT_hidden_ecnid_elec[]" class="form-control" style="display: none;"  hidden> </td><td><input  class="eledatepicker submultivalid datemandtry form-control"   type="text" name ="BDLY_INPUT_db_invoicedate[]" id="BDLY_INPUT_db_invoicedate1" style="width:100px;display: none;" hidden /> </td><td><input   class="eledatepicker submultivalid datemandtry form-control"  type="text" name ="BDLY_INPUT_db_fromperiod[]" id="BDLY_INPUT_db_fromperiod1" style="width:100px;display: none;" hidden/> </td><td><input  class="eledatepicker submultivalid datemandtry form-control"  type="text" name ="BDLY_INPUT_db_toperiod[]" id="BDLY_INPUT_db_toperiod1" style="width:100px;display: none;" hidden/> </td><td><select style="display: none;width:173px;"   name="BDLY_INPUT_lb_elect_payment[]" class="submultivalid amtentry form-control" id="BDLY_INPUT_lb_elect_payment1"  hidden><option value="" >SELECT</option></select></td><td><input  class="amtonlyvalidation submultivalid form-control" type="text" name ="BDLY_INPUT_tb_elect_amount[]" id="BDLY_INPUT_tb_elect_amount1" style="width:70px;display: none;" hidden /> <input class="amtonlyvalidation submultivalid form-control"  type="text" name ="BDLY_INPUT_tb_elect_minusamt[]" id="BDLY_INPUT_tb_elect_minusamt1" style="width:70px;display: none;" hidden /><input type="hidden" id="BDLY_INPUT_hidden_amt_elec1" style="display: none;"  name="BDLY_INPUT_hidden_amt_elec[]" ></td><td><textarea row="3" class=" submultivalid form-control" name ="BDLY_INPUT_ta_comments[]"  style="display: none;" id="BDLY_INPUT_ta_comments1" hidden ></textarea> </td><td><input type="button" value="+" class="addbttn" alt="Add Row" height="30" width="30" name ="BDLY_INPUT_add[]" id="BDLY_INPUT_add1" disabled > </td><td><input  type="button" value="-" class="deletebttn" alt="delete Row" height="30" width="30" name ="BDLY_INPUT_delete[]" id="BDLY_INPUT_del1" disabled ></td></tr>').appendTo($('#BDLY_INPUT_tble_electricity'));
+            $('<tr><td nowrap><label id="BDLY_INPUT_lbl_elect_unit" >UNIT</label><em>*</em> </td><td nowrap><label  id="BDLY_INPUT_lbl_elect_invoiceto" >INVOICE TO</label><em>*</em></td><td nowrap> <label id="BDLY_INPUT_lbl_elect_invoicedate" >INVOICE DATE</label><em>*</em> </td><td nowrap><label id="BDLY_INPUT_lbl_elect_fromperiod" >FROM PERIOD</label><em>*</em> </td><td nowrap><label id="BDLY_INPUT_lbl_elect_toperiod" >TO PERIOD</label><em>*</em></td><td nowrap><label id="BDLY_INPUT_lbl_elect_payment"  >PAYMENT OF</label><em>*</em> </td><td nowrap><label id="BDLY_INPUT_lbl_elect_amount" >AMOUNT</label><em>*</em> </td><td ><label id="BDLY_INPUT_lbl_elect_comments" >COMMENTS</label> </td><td ><label id="BDLY_INPUT_lbl_elect_add" ></label> </td><td ><label id="BDLY_INPUT_lbl_elect_del" ></label> </td></tr><tr><td> <select  class="BDLY_INPUT_class_unit submultivalid form-control"  name="BDLY_INPUT_lb_elect_unit[]" id="BDLY_INPUT_lb_elect_unit-1" style="width: 90px;" hidden><option value="">SELECT</option></select> </td> <td><input  class="submultivalid rdonly form-control"  type="text" name ="BDLY_INPUT_tb_invoiceto[]" id="BDLY_INPUT_tb_invoiceto1"  style="display: none;" readonly/><input type="text" id="BDLY_INPUT_hidden_ecnid_elec1" name="BDLY_INPUT_hidden_ecnid_elec[]" class="form-control" style="display: none;"  hidden> </td><td><input  class="eledatepicker submultivalid datemandtry form-control"   type="text" name ="BDLY_INPUT_db_invoicedate[]" id="BDLY_INPUT_db_invoicedate1" style="width:100px;display: none;" hidden /> </td><td><input   class="eledatepicker submultivalid datemandtry form-control"  type="text" name ="BDLY_INPUT_db_fromperiod[]" id="BDLY_INPUT_db_fromperiod1" style="width:100px;display: none;" hidden/> </td><td><input  class="eledatepicker submultivalid datemandtry form-control"  type="text" name ="BDLY_INPUT_db_toperiod[]" id="BDLY_INPUT_db_toperiod1" style="width:100px;display: none;" hidden/> </td><td><select style="display: none;width:173px;"   name="BDLY_INPUT_lb_elect_payment[]" class="submultivalid amtentry form-control" id="BDLY_INPUT_lb_elect_payment1"  hidden><option value="" >SELECT</option></select></td><td><input  class="amtonlyvalidation submultivalid form-control" type="text" name ="BDLY_INPUT_tb_elect_amount[]" id="BDLY_INPUT_tb_elect_amount1" style="width:70px;display: none;" hidden /> <input class="amtonlyvalidation submultivalid form-control"  type="text" name ="BDLY_INPUT_tb_elect_minusamt[]" id="BDLY_INPUT_tb_elect_minusamt1" style="width:70px;display: none;" hidden /><input type="hidden" id="BDLY_INPUT_hidden_amt_elec1" style="display: none;"  name="BDLY_INPUT_hidden_amt_elec[]" ></td><td><textarea row="3" class=" submultivalid form-control" name ="BDLY_INPUT_ta_comments[]"  style="display: none;min-height:100px;width:180px;" id="BDLY_INPUT_ta_comments1" hidden ></textarea> </td><td><input type="button" value="+" class="addbttn" alt="Add Row" height="30" width="30" name ="BDLY_INPUT_add[]" id="BDLY_INPUT_add1" disabled > </td><td><input  type="button" value="-" class="deletebttn" alt="delete Row" height="30" width="30" name ="BDLY_INPUT_delete[]" id="BDLY_INPUT_del1" disabled ></td></tr>').appendTo($('#BDLY_INPUT_tble_electricity'));
             $(".autosize").doValidation({rule:'general',prop:{autosize:true}});
             $(".datepickdate").datepicker({dateFormat:'dd-mm-yy',
                 changeYear: true,
@@ -1305,7 +1306,7 @@ require_once('application/libraries/EI_HDR.php');
             $(".preloader").hide();
             $('#BDLY_INPUT_btn_multisubmitbutton').attr('disabled','disabled')
             $('#BDLY_INPUT_tble_unitexpense').empty();
-            $('<tr><td nowrap><label id="BDLY_INPUT_lbl_uexp_unit" >UNIT</label><em>*</em> </td><td nowrap><label  id="BDLY_INPUT_lbl_uexp_category" >CATEGORY</label><em>*</em></td><td nowrap><label  id="BDLY_INPUT_lbl_uexp_customer" hidden>CUSTOMER<em>*</em></label></td><td nowrap><label  id="BDLY_INPUT_lbl_uexp_customerid" hidden></label></td><td nowrap> <label id="BDLY_INPUT_lbl_uexp_invoicedate" >INVOICE DATE</label><em>*</em> </td><td ><label id="BDLY_INPUT_lbl_uexp_invoiceitem" >INVOICE ITEM</label><em>*</em> </td><td nowrap><label id="BDLY_INPUT_lbl_uexp_invoicefrom" >INVOICE FROM</label><em>*</em></td><td nowrap><label id="BDLY_INPUT_lbl_uexp_amount" >AMOUNT</label><em>*</em> </td><td nowrap><label id="BDLY_INPUT_lbl_uexp_comments" >COMMENTS</label> </td><td ><label id="BDLY_INPUT_lbl_uexp_add" ></label> </td><td ><label id="BDLY_INPUT_lbl_uexp_del" ></label> </td></tr><tr><td style="max-width:200px;"> <select  class="BDLY_INPUT_uexp_class_unit uexp_submultivalid form-control"  name="BDLY_INPUT_lb_uexp_unit[]" id="BDLY_INPUT_lb_uexp_unit-1" style="display: none; width:90px;" hidden><option value="">SELECT</option></select> </td> <td style="max-width:200px;"><select  name="BDLY_INPUT_lb_uexp_category[]" class="uexp_submultivalid BDLY_INPUT_uexp_class_category form-control" id="BDLY_INPUT_lb_uexp_category-1" style="display: none;width:140px;" hidden><option value="" >SELECT</option></select></td><td style="max-width:200px;"><select  name="BDLY_INPUT_lb_uexp_customer[]" class="uexp_submultivalid BDLY_INPUT_uexp_class_custname form-control" id="BDLY_INPUT_lb_uexp_customer1" style="display: none;width:160px;" hidden><option value="" >SELECT</option></select></td><td style="max-width:200px;"><table id="multiplecustomer-1" width="250px" hidden></table><td style="max-width:150px;"><input  class="datepickdate uexp_submultivalid datemandtry form-control "  type="text" name ="BDLY_INPUT_db_uexp_invoicedate[]" id="BDLY_INPUT_db_uexp_invoicedate1" style="width:100px;display: none;" hidden /> </td><td style="max-width:250px;"><textarea  class="uexp_submultivalid form-control"  name ="BDLY_INPUT_tb_uexp_invoiceitem[]" id="BDLY_INPUT_tb_uexp_invoiceitem1" style="display: none;" hidden/></textarea> </td><td style="max-width:200px;"><input  class="uexp_submultivalid autosize autocomplete form-control" type="text" name ="BDLY_INPUT_tb_uexp_invoicefrom[]" id="BDLY_INPUT_tb_uexp_invoicefrom1" style="display: none;" hidden/> </td><td style="max-width:100px;"><input  class="amtonlyfivedigit uexp_submultivalid form-control"  type="text" name ="BDLY_INPUT_tb_uexp_amount[]" id="BDLY_INPUT_tb_uexp_amount1" style="width:65px;display: none;" hidden /> </td><td><textarea style="max-width:250px;" row="3" name ="BDLY_INPUT_ta_uexpcomments[]" id="BDLY_INPUT_ta_uexpcomments1" class=" uexp_submultivalid form-control" hidden ></textarea> </td><td><input type="button" value="+" class="uexp_addbttn" alt="Add Row" height="30" width="30" name ="BDLY_INPUT_uexpadd[]" id="BDLY_INPUT_uexp_add1" disabled > </td><td><input  type="button" value="-" class="uexp_deletebttn" alt="delete Row" height="30" width="30" name ="BDLY_INPUT_uexpdelete[]" id="BDLY_INPUT_uexp_del1" disabled ></td><td><input    type="text" name ="BDLY_INPUT_tb_uexp_hideradioid[]" id="BDLY_INPUT_tb_uexp_hideradioid1" style="width:75px;" hidden/> </td></tr>').appendTo($('#BDLY_INPUT_tble_unitexpense'))
+            $('<tr><td nowrap><label id="BDLY_INPUT_lbl_uexp_unit" >UNIT</label><em>*</em> </td><td nowrap><label  id="BDLY_INPUT_lbl_uexp_category" >CATEGORY</label><em>*</em></td><td nowrap><label  id="BDLY_INPUT_lbl_uexp_customer" hidden>CUSTOMER<em>*</em></label></td><td nowrap><label  id="BDLY_INPUT_lbl_uexp_customerid" hidden></label></td><td nowrap> <label id="BDLY_INPUT_lbl_uexp_invoicedate" >INVOICE DATE</label><em>*</em> </td><td ><label id="BDLY_INPUT_lbl_uexp_invoiceitem" >INVOICE ITEM</label><em>*</em> </td><td nowrap><label id="BDLY_INPUT_lbl_uexp_invoicefrom" >INVOICE FROM</label><em>*</em></td><td nowrap><label id="BDLY_INPUT_lbl_uexp_amount" >AMOUNT</label><em>*</em> </td><td nowrap><label id="BDLY_INPUT_lbl_uexp_comments" >COMMENTS</label> </td><td ><label id="BDLY_INPUT_lbl_uexp_add" ></label> </td><td ><label id="BDLY_INPUT_lbl_uexp_del" ></label> </td></tr><tr><td style="max-width:200px;"> <select  class="BDLY_INPUT_uexp_class_unit uexp_submultivalid form-control"  name="BDLY_INPUT_lb_uexp_unit[]" id="BDLY_INPUT_lb_uexp_unit-1" style="display: none; width:90px;" hidden><option value="">SELECT</option></select> </td> <td style="max-width:200px;"><select  name="BDLY_INPUT_lb_uexp_category[]" class="uexp_submultivalid BDLY_INPUT_uexp_class_category form-control" id="BDLY_INPUT_lb_uexp_category-1" style="display: none;width:140px;" hidden><option value="" >SELECT</option></select></td><td style="max-width:200px;"><select  name="BDLY_INPUT_lb_uexp_customer[]" class="uexp_submultivalid BDLY_INPUT_uexp_class_custname form-control" id="BDLY_INPUT_lb_uexp_customer1" style="display: none;width:160px;" hidden><option value="" >SELECT</option></select></td><td style="max-width:200px;"><table id="multiplecustomer-1" width="250px" hidden></table><td style="max-width:150px;"><input  class="datepickdate uexp_submultivalid datemandtry form-control "  type="text" name ="BDLY_INPUT_db_uexp_invoicedate[]" id="BDLY_INPUT_db_uexp_invoicedate1" style="width:100px;display: none;" hidden /> </td><td style="max-width:250px;"><textarea  class="uexp_submultivalid form-control"  name ="BDLY_INPUT_tb_uexp_invoiceitem[]" id="BDLY_INPUT_tb_uexp_invoiceitem1" style="display: none;min-height:100px;width:180px;" hidden/></textarea> </td><td style="max-width:200px;"><input  class="uexp_submultivalid autosize autocomplete form-control" type="text" name ="BDLY_INPUT_tb_uexp_invoicefrom[]" id="BDLY_INPUT_tb_uexp_invoicefrom1" maxlength="200" style="display: none;" hidden/> </td><td style="max-width:100px;"><input  class="amtonlyfivedigit uexp_submultivalid form-control"  type="text" name ="BDLY_INPUT_tb_uexp_amount[]" id="BDLY_INPUT_tb_uexp_amount1" style="width:65px;display: none;" hidden /> </td><td><textarea style="width:180px;min-height:100px;" row="3" name ="BDLY_INPUT_ta_uexpcomments[]" id="BDLY_INPUT_ta_uexpcomments1" class=" uexp_submultivalid form-control" hidden ></textarea> </td><td><input type="button" value="+" class="uexp_addbttn" alt="Add Row" height="30" width="30" name ="BDLY_INPUT_uexpadd[]" id="BDLY_INPUT_uexp_add1" disabled > </td><td><input  type="button" value="-" class="uexp_deletebttn" alt="delete Row" height="30" width="30" name ="BDLY_INPUT_uexpdelete[]" id="BDLY_INPUT_uexp_del1" disabled ></td><td><input    type="text" name ="BDLY_INPUT_tb_uexp_hideradioid[]" id="BDLY_INPUT_tb_uexp_hideradioid1" style="width:75px;" hidden/> </td></tr>').appendTo($('#BDLY_INPUT_tble_unitexpense'))
             $(".amtonlyfivedigit").doValidation({rule:'numbersonly',prop:{realpart:5,imaginary:2}});
             $(".autosize").doValidation({rule:'general',prop:{autosize:true}});
             $(".datepickdate").datepicker({dateFormat:'dd-mm-yy', changeYear: true, changeMonth: true,beforeShow:function(input, inst){
@@ -1318,7 +1319,7 @@ require_once('application/libraries/EI_HDR.php');
         function BDLY_INPUT_clear_starhub(BDLY_INPUT_unit_response){
             $(".preloader").hide();
             $('#BDLY_INPUT_tble_starhub').empty();
-            $('<tr> <td nowrap><label id="BDLY_INPUT_lbl_star_unit" >UNIT</label><em>*</em> </td><td nowrap><label  id="BDLY_INPUT_lbl_star_invoiceto" >INVOICE TO</label><em>*</em></td><td nowrap><label id="BDLY_INPUT_lbl_star_accountno"  >ACCOUNT NO</label><em>*</em> </td><td nowrap> <label id="BDLY_INPUT_lbl_star_invoicedate" >INVOICE DATE</label><em>*</em> </td><td nowrap><label id="BDLY_INPUT_lbl_star_fromperiod" >FROM PERIOD</label><em>*</em> </td><td nowrap><label id="BDLY_INPUT_lbl_star_toperiod" >TO PERIOD</label><em>*</em></td><td nowrap><label id="BDLY_INPUT_lbl_star_amount" >AMOUNT</label><em>*</em> </td><td nowrap><label id="BDLY_INPUT_lbl_star_comments" >COMMENTS</label> </td><td ><label id="BDLY_INPUT_lbl_star_add" ></label> </td><td ><label id="BDLY_INPUT_lbl_star_del" ></label> </td></tr><tr><td> <select  class="BDLY_INPUT_class_star_unit star_submultivalid form-control"  name="BDLY_INPUT_lb_star_unit[]" id="BDLY_INPUT_lb_star_unit-1" style="display:none;" hidden>'+BDLY_INPUT_unitno_options+'</select> </td> <td> <select  class="BDLY_INPUT_class_star_invoice star_submultivalid form-control"  name="BDLYUT_lb_star_invoiceto[]" id="BDLY_INPUT_lb_star_invoice-1" style="display:none;" hidden><option value="">SELECT</option></select><input type="hidden" id="BDLY_INPUT_hidden_star_ecnid1" name="BDLY_INPUT_hidden_star_ecnid[]"> </td><td><input  class="star_submultivalid rdonly form-control"  type="text" name ="BDLY_INPUT_tb_star_accno[]" id="BDLY_INPUT_tb_star_accno1"  style="display:none;" hidden readonly/> </td><td><input  class="starinvdatepickdate star_submultivalid datemandtry form-control"  type="text" name ="BDLY_INPUT_db_star_invoicedate[]" id="BDLY_INPUT_db_star_invoicedate1" style="width:100px;display: none;" hidden /> </td><td><input  class="starfrmdatepickdate star_submultivalid datemandtry form-control"  type="text" name ="BDLY_INPUT_db_star_fromperiod[]" id="BDLY_INPUT_db_star_fromperiod1" style="width:100px;display: none;" hidden/> </td><td><input  class="startodatepickdate star_submultivalid datemandtry form-control"  type="text" name ="BDLY_INPUT_db_star_toperiod[]" id="BDLY_INPUT_db_star_toperiod1" style="width:100px;display: none;" hidden/> </td><td><input  class=" star_submultivalid includeminusfour form-control"  type="text" name ="BDLY_INPUT_tb_star_amount[]" id="BDLY_INPUT_tb_star_amount1" style="width:70px;display: none;" maxlength=4 hidden /> </td><td><textarea row="3" class=" star_submultivalid form-control"  name ="BDLY_INPUT_ta_star_comments[]" id="BDLY_INPUT_ta_star_comments1" style="display:none;" hidden ></textarea> </td><td><input type="button" value="+" class="star_addbttn" alt="Add Row" height="30" width="30" name ="BDLY_INPUT_add[]" id="BDLY_INPUT_star_add1" disabled > </td><td><input  type="button" value="-" class="star_deletebttn" alt="delete Row" height="30" width="30" name ="BDLY_INPUT_delete[]" id="BDLY_INPUT_star_del1" disabled ></td></tr>').appendTo($('#BDLY_INPUT_tble_starhub'));
+            $('<tr> <td nowrap><label id="BDLY_INPUT_lbl_star_unit" >UNIT</label><em>*</em> </td><td nowrap><label  id="BDLY_INPUT_lbl_star_invoiceto" >INVOICE TO</label><em>*</em></td><td nowrap><label id="BDLY_INPUT_lbl_star_accountno"  >ACCOUNT NO</label><em>*</em> </td><td nowrap> <label id="BDLY_INPUT_lbl_star_invoicedate" >INVOICE DATE</label><em>*</em> </td><td nowrap><label id="BDLY_INPUT_lbl_star_fromperiod" >FROM PERIOD</label><em>*</em> </td><td nowrap><label id="BDLY_INPUT_lbl_star_toperiod" >TO PERIOD</label><em>*</em></td><td nowrap><label id="BDLY_INPUT_lbl_star_amount" >AMOUNT</label><em>*</em> </td><td nowrap><label id="BDLY_INPUT_lbl_star_comments" >COMMENTS</label> </td><td ><label id="BDLY_INPUT_lbl_star_add" ></label> </td><td ><label id="BDLY_INPUT_lbl_star_del" ></label> </td></tr><tr><td> <select  class="BDLY_INPUT_class_star_unit star_submultivalid form-control"  name="BDLY_INPUT_lb_star_unit[]" id="BDLY_INPUT_lb_star_unit-1" style="display:none;" hidden>'+BDLY_INPUT_unitno_options+'</select> </td> <td> <select  class="BDLY_INPUT_class_star_invoice star_submultivalid form-control"  name="BDLYUT_lb_star_invoiceto[]" id="BDLY_INPUT_lb_star_invoice-1" style="display:none;" hidden><option value="">SELECT</option></select><input type="hidden" id="BDLY_INPUT_hidden_star_ecnid1" name="BDLY_INPUT_hidden_star_ecnid[]"> </td><td><input  class="star_submultivalid rdonly form-control"  type="text" name ="BDLY_INPUT_tb_star_accno[]" id="BDLY_INPUT_tb_star_accno1"  style="display:none;" hidden readonly/> </td><td><input  class="starinvdatepickdate star_submultivalid datemandtry form-control"  type="text" name ="BDLY_INPUT_db_star_invoicedate[]" id="BDLY_INPUT_db_star_invoicedate1" style="width:100px;display: none;" hidden /> </td><td><input  class="starfrmdatepickdate star_submultivalid datemandtry form-control"  type="text" name ="BDLY_INPUT_db_star_fromperiod[]" id="BDLY_INPUT_db_star_fromperiod1" style="width:100px;display: none;" hidden/> </td><td><input  class="startodatepickdate star_submultivalid datemandtry form-control"  type="text" name ="BDLY_INPUT_db_star_toperiod[]" id="BDLY_INPUT_db_star_toperiod1" style="width:100px;display: none;" hidden/> </td><td><input  class=" star_submultivalid includeminusfour form-control"  type="text" name ="BDLY_INPUT_tb_star_amount[]" id="BDLY_INPUT_tb_star_amount1" style="width:90px;display: none;" maxlength=4 hidden /> </td><td><textarea row="3" class=" star_submultivalid form-control"  name ="BDLY_INPUT_ta_star_comments[]" id="BDLY_INPUT_ta_star_comments1" style="display:none;min-height:100px;width:180px;" hidden ></textarea> </td><td><input type="button" value="+" class="star_addbttn" alt="Add Row" height="30" width="30" name ="BDLY_INPUT_add[]" id="BDLY_INPUT_star_add1" disabled > </td><td><input  type="button" value="-" class="star_deletebttn" alt="delete Row" height="30" width="30" name ="BDLY_INPUT_delete[]" id="BDLY_INPUT_star_del1" disabled ></td></tr>').appendTo($('#BDLY_INPUT_tble_starhub'));
             $(".autosize").doValidation({rule:'general',prop:{autosize:true}});
             $('.includeminusfour').doValidation({rule:'numbersonly',prop:{integer:true,realpart:4,imaginary:2}});
             $(".datepickdate").datepicker({dateFormat:'dd-mm-yy',
@@ -1864,7 +1865,7 @@ require_once('application/libraries/EI_HDR.php');
                     $('#BDLY_INPUT_hidden_amt_elec'+BDLY_INPUT_elemtid).val($('#BDLY_INPUT_tb_elect_amount'+BDLY_INPUT_elemtid).val());
                 }});
             oCell = newRow.insertCell(7);
-            oCell.innerHTML = "<textarea row='2' class=' submultivalid form-control' name ='BDLY_INPUT_ta_comments[]' id='"+"BDLY_INPUT_ta_comments"+newid+"' style='display:none;' hidden></textarea>";
+            oCell.innerHTML = "<textarea row='2' class=' submultivalid form-control' name ='BDLY_INPUT_ta_comments[]' id='"+"BDLY_INPUT_ta_comments"+newid+"' style='display:none;min-height:100px;width:180px' hidden></textarea>";
             oCell = newRow.insertCell(8);
             oCell.innerHTML = "<input type='button' value='+' class='addbttn' alt='Add Row' height='30' width='30' name ='BDLY_INPUT_add[]' id='"+"BDLY_INPUT_add"+newid+"' disabled>";
             oCell = newRow.insertCell(9);
@@ -2736,11 +2737,13 @@ require_once('application/libraries/EI_HDR.php');
             }
             else{
                 var BDLY_INPUT_options =''
-                for (var i = 0; i <BDLY_INPUT_exptype_array.length ; i++) {
+                var expense_id=BDLY_INPUT_exptype_array.BDLY_INPUT_expanse_id;
+                var expense_Data=BDLY_INPUT_exptype_array.BDLY_INPUT_expanse_date;
+                 for (var i = 0; i <expense_id.length ; i++) {
                     var PDLY_INPUT_gettypofexpensevalues=BDLY_INPUT_exptype_array[i]
                     if(i>=16 && i<=18)
                     {
-                        BDLY_INPUT_options += '<option value="' + BDLY_INPUT_exptype_array[i].BDLY_INPUT_expanse_id + '">' + BDLY_INPUT_exptype_array[i].BDLY_INPUT_expanse_date+ '</option>';
+                        BDLY_INPUT_options += '<option value="' + expense_id[i] + '">' + expense_Data[i]+ '</option>';
                     }
                 }
                 var values="<table><tr><td> <select  class='BDLY_INPUT_class_star_invoice star_submultivalid form-control'  name='BDLY_INPUT_lb_star_invoiceto' id='BDLY_INPUT_lb_star_invoice-"+BDLY_INPUT_star_id_no+"' >"+BDLY_INPUT_options+"</select></td></tr></table>"
@@ -2837,15 +2840,15 @@ require_once('application/libraries/EI_HDR.php');
                 }
             });
             oCell = newRow.insertCell(5);
-            oCell.innerHTML ="<textarea class='uexp_submultivalid form-control'  name ='BDLY_INPUT_tb_uexp_invoiceitem[]' id='"+"BDLY_INPUT_tb_uexp_invoiceitem"+newid+"' style='display:none;' hidden/></textarea> ";
+            oCell.innerHTML ="<textarea class='uexp_submultivalid form-control'  name ='BDLY_INPUT_tb_uexp_invoiceitem[]' id='"+"BDLY_INPUT_tb_uexp_invoiceitem"+newid+"' style='display:none;min-height:100px;width:180px;' hidden/></textarea> ";
             oCell = newRow.insertCell(6);
-            oCell.innerHTML ="<input  class='uexp_submultivalid autosize autocomplete form-control'  type='text' name ='BDLY_INPUT_tb_uexp_invoicefrom[]' id='"+"BDLY_INPUT_tb_uexp_invoicefrom"+newid+"'  style='display:none;' hidden/> ";
+            oCell.innerHTML ="<input  class='uexp_submultivalid autosize autocomplete form-control'  type='text' name ='BDLY_INPUT_tb_uexp_invoicefrom[]' id='"+"BDLY_INPUT_tb_uexp_invoicefrom"+newid+"' maxlength='200'  style='display:none;' hidden/> ";
             $(".autosize").doValidation({rule:'general',prop:{autosize:true}});
             oCell = newRow.insertCell(7);
             oCell.innerHTML ="<input  class='amtonlyfivedigit uexp_submultivalid form-control' type='text' name ='BDLY_INPUT_tb_uexp_amount[]' id='"+"BDLY_INPUT_tb_uexp_amount"+newid+"' style='width:65px;display:none;' hidden /> ";
             $(".amtonlyfivedigit").doValidation({rule:'numbersonly',prop:{realpart:5,imaginary:2}});
             oCell = newRow.insertCell(8);
-            oCell.innerHTML = "<textarea row='2' class=' uexp_submultivalid form-control' name ='BDLY_INPUT_ta_uexpcomments[]' id='"+"BDLY_INPUT_ta_uexpcomments"+newid+"' style='display:none;' hidden></textarea>";
+            oCell.innerHTML = "<textarea row='2' class=' uexp_submultivalid form-control' name ='BDLY_INPUT_ta_uexpcomments[]' id='"+"BDLY_INPUT_ta_uexpcomments"+newid+"' style='display:none;min-height:100px;width:180px;' hidden></textarea>";
             oCell = newRow.insertCell(9);
             oCell.innerHTML = "<input type='button' value='+' class='uexp_addbttn' alt='Add Row' height='30' width='30' name ='BDLY_INPUT_uexp_add[]' id='"+"BDLY_INPUT_uexp_add"+newid+"' disabled>";
             oCell = newRow.insertCell(10);
@@ -2974,7 +2977,7 @@ require_once('application/libraries/EI_HDR.php');
             var oCell = newRow.insertCell(0);
             oCell.innerHTML = "<select class='BDLY_INPUT_class_star_unit star_submultivalid form-control' style='display: none;' name ='BDLY_INPUT_lb_star_unit[]' id='"+"BDLY_INPUT_lb_star_unit-"+newid+"'   hidden  >";
             oCell = newRow.insertCell(1);
-            oCell.innerHTML ="<select readonly  class='rdonly BDLY_INPUT_class_star_invoice star_submultivalid form-control'  style='display: none;' name='BDLY_INPUT_lb_star_invoiceto[]' id='"+"BDLY_INPUT_lb_star_invoice-"+newid+"' hidden><option value=''>SELECT</option></select><input type='hidden' id='"+"BDLY_INPUT_hidden_star_ecnid"+newid+"' name='BDLY_INPUT_hidden_star_ecnid'>";
+            oCell.innerHTML ="<select readonly  class='rdonly BDLY_INPUT_class_star_invoice star_submultivalid form-control'  style='display: none;' name='BDLY_INPUT_lb_star_invoiceto[]' id='"+"BDLY_INPUT_lb_star_invoice-"+newid+"' hidden><option value=''>SELECT</option></select><input type='hidden' id='"+"BDLY_INPUT_hidden_star_ecnid"+newid+"' name='BDLY_INPUT_hidden_star_ecnid[]'>";
             oCell = newRow.insertCell(2);
             oCell.innerHTML ="<input class='rdonly star_submultivalid form-control ' style='display: none;' type='text' name ='BDLY_INPUT_tb_star_accno[]' id='"+"BDLY_INPUT_tb_star_accno"+newid+"'  readonly hidden /> ";
             oCell = newRow.insertCell(3);
@@ -3035,10 +3038,10 @@ require_once('application/libraries/EI_HDR.php');
                 }
             });
             oCell = newRow.insertCell(6);
-            oCell.innerHTML ="<input  class='includeminusfour star_submultivalid form-control' type='text' name ='BDLY_INPUT_tb_star_amount[]' id='"+"BDLY_INPUT_tb_star_amount"+newid+"' style='width:70px;display:none;' maxlength=4 hidden /> ";
+            oCell.innerHTML ="<input  class='includeminusfour star_submultivalid form-control' type='text' name ='BDLY_INPUT_tb_star_amount[]' id='"+"BDLY_INPUT_tb_star_amount"+newid+"' style='width:90px;display:none;' maxlength=4 hidden /> ";
             $('.includeminusfour').doValidation({rule:'numbersonly',prop:{integer:true,realpart:4,imaginary:2}});
             oCell = newRow.insertCell(7);
-            oCell.innerHTML = "<textarea row='3' class=' star_submultivalid form-control' name ='BDLY_INPUT_ta_star_comments[]' style='display: none;' id='"+"BDLY_INPUT_ta_star_comments"+newid+"' hidden></textarea>";
+            oCell.innerHTML = "<textarea row='3' class=' star_submultivalid form-control' name ='BDLY_INPUT_ta_star_comments[]' style='display: none;min-height:100px;width:180px;' id='"+"BDLY_INPUT_ta_star_comments"+newid+"' hidden></textarea>";
             oCell = newRow.insertCell(8);
             oCell.innerHTML = "<input type='button' value='+' class='star_addbttn' alt='Add Row' height='30' width='30' name ='BDLY_INPUT_star_add[]' id='"+"BDLY_INPUT_star_add"+newid+"' disabled>";
             oCell = newRow.insertCell(9);
@@ -3602,8 +3605,8 @@ require_once('application/libraries/EI_HDR.php');
                     var TempDurationFromTR ='<div id="BDLY_SRC_tr_searchopt_durationfrom" class="BDLY_SRC_class_dynamicrows form-group" ><label class="col-sm-2">FROM DURATION</label><div class="col-sm-2"><input type="text" name="BDLY_SRC_fromduration" id="BDLY_SRC_durationfrom" class="BDLY_SCR_Field duration form-control"/></div></div>';
                     var TempDurationToTR ='<div id="BDLY_SRC_tr_searchopt_durationto" class="BDLY_SRC_class_dynamicrows form-group" ><label class="col-sm-2">TO DURATION</label><div class="col-sm-2"><input type="text" name="BDLY_SRC_toduration" id="BDLY_SRC_durationto" class="BDLY_SCR_Field duration form-control"/></div><div><label id="BDLY_SCR_lbl_err_durationmin" class="errormsg"></label></div><div><label id="BDLY_SCR_lbl_err_durationhrs" class="errormsg"></label></div><div><label id="BDLY_SCR_lbl_err_duration" class="errormsg"></label></div></div>';
                     var TempServiceDueTR ='<div id="BDLY_SRC_tr_searchopt_servicedue" class="form-group"><label class=" col-sm-2">SERVICE DUE</label><div style="padding-left:0px;" class="col-sm-9"><div class="col-sm-3"><div class="input-group addon"><input type="text" name="BDLY_SRC_servicedue" id="BDLY_SRC_servicedue" class="BDLY_SCR_Field BDLY_SCR_forperiod BDLT_SRC_Month_picker monthpicker datemandtry form-control"/><label for="BDLY_SRC_servicedue" class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></label></div></div></div></div>';
-                    var TempCommentsTR ='<div id="BDLY_SRC_tr_searchopt_comments" class="BDLY_SRC_class_dynamicrows form-group" ><label class="col-sm-2">COMMENTS</label><div class="col-sm-4"><textarea name="BDLY_SRC_comments" id="BDLY_SRC_comments"  class="form-control auto" style="height:116px;!important" disabled ></textarea></div></div>';
-                    var TempItemsTR ='<div id="BDLY_SRC_tr_searchopt_invoiceitem" class="BDLY_SRC_class_dynamicrows form-group" ><label class="col-sm-2">INVOICE ITEMS</label><div class="col-sm-4"><textarea name="BDLY_SRC_invoiceitem" id="BDLY_SRC_invoiceitem"  class="auto form-control" style="height:116px; !important"  disabled ></textarea></div></div>';
+                    var TempCommentsTR ='<div id="BDLY_SRC_tr_searchopt_comments" class="BDLY_SRC_class_dynamicrows form-group" ><label class="col-sm-2">COMMENTS</label><div class="col-sm-4"><textarea name="BDLY_SRC_comments" id="BDLY_SRC_comments"  class="form-control auto" style="min-height:116px;!important" disabled ></textarea></div></div>';
+                    var TempItemsTR ='<div id="BDLY_SRC_tr_searchopt_invoiceitem" class="BDLY_SRC_class_dynamicrows form-group" ><label class="col-sm-2">INVOICE ITEMS</label><div class="col-sm-4"><textarea name="BDLY_SRC_invoiceitem" id="BDLY_SRC_invoiceitem"  class="auto form-control" style="min-height:116px; !important"  disabled ></textarea></div></div>';
                     var TempCategoryTR ='<div id="BDLY_SRC_tr_searchopt_category" class="BDLY_SRC_class_dynamicrows form-group" ><label class="BDLY_SRC_class_lb_lbl col-sm-2">CATEGORY</label><div class="col-sm-2"><select class="BDLY_SRC_class_Searchbtn_list_box BDLY_SCR_Field form-control" name="BDLY_SRC_lb_category" id="BDLY_SRC_lb_category" ><option>SELECT</option></select></div></div>';
                     var TempCusnameTR ='<div style="display:none;" id="BDLY_SRC_tr_searchopt_cusname" class="form-group"><label class="BDLY_SRC_class_lb_lbl col-sm-2">CUSTOMER NAME</label><div class="col-sm-4"><select class="BDLY_SRC_class_Searchbtn_list_box form-control" name="BDLY_SRC_lb_cusname" id="BDLY_SRC_lb_cusname" ><option>SELECT</option></select></div></div>';
                     var TempUnitTR ='<div id="BDLY_SRC_tr_searchopt_unit" class="BDLY_SRC_class_dynamicrows form-group" ><label class="BDLY_SRC_class_lb_lbl col-sm-2">UNIT NO</label><div class="col-sm-2"><select class="BDLY_SRC_class_Searchbtn_list_box BDLY_SCR_Field form-control" name="BDLY_SRC_lb_unitno" id="BDLY_SRC_lb_unitno" ><option>SELECT</option></select></div></div>';
@@ -4855,16 +4858,18 @@ require_once('application/libraries/EI_HDR.php');
                 $('#BDLY_SRC_tb_DataTableId').show();
                 $("#BDLY_SRC_div_searchresult_head").text(BDLY_SRC_errormessagewitdata).removeClass("errormsg").addClass("srctitle");
                 $('#pdfheader').val(BDLY_SRC_errormessagewitdata);
+                var expensetype=$('#BDLY_SRC_lb_ExpenseList').find('option:selected').text();
+                $('#expensetypetext').val(expensetype);
                 oTable= $('#BDLY_SRC_tb_DataTableId').dataTable({
                     "aaSorting": [],
                     "pageLength": 10,
                     "sPaginationType":"full_numbers",
                     "aoColumnDefs" : [
-                        { "aTargets" : ["uk-date-column"] , "sType" : "uk_date"}, { "aTargets" : ["uk-timestp-column"] , "sType" : "uk_timestp"},{ "aTargets" : ["uk-forperiod-column"] , "sType" : "uk_forperiod"} ],
-                    "scrollX": true,
-                    "sScrollY":  "400px",
-                    "bScrollCollapse": true,
-                    "bAutoWidth": true
+                        { "aTargets" : ["uk-date-column"] , "sType" : "uk_date"}, { "aTargets" : ["uk-timestp-column"] , "sType" : "uk_timestp"},{ "aTargets" : ["uk-forperiod-column"] , "sType" : "uk_forperiod"} ]
+//                    "scrollX": true,
+//                    "sScrollY":  "400px",
+//                    "bScrollCollapse": true,
+//                    "bAutoWidth": true
                 });
                 if ( $.browser.webkit ) {
                     setTimeout(function () {
@@ -5855,7 +5860,7 @@ require_once('application/libraries/EI_HDR.php');
                     </div>
                     <div class="form-group">
                         <label  id='BDLY_INPUT_lbl_comment' class="col-sm-2">COMMENTS</label>
-                        <div class="col-sm-4"><textarea rows="5" name="BDLY_INPUT_ta_aircon_comments" id="BDLY_INPUT_ta_aircon_comments" class="form-control"  placeholder="Comments"></textarea></div>
+                        <div class="col-sm-4"><textarea  name="BDLY_INPUT_ta_aircon_comments" id="BDLY_INPUT_ta_aircon_comments" class="form-control" style="height:116px;" placeholder="Comments"></textarea></div>
                     </div>
                 </div>
                 <!--CREATING OF CAR PARK ELEMENT-->
@@ -5897,7 +5902,7 @@ require_once('application/libraries/EI_HDR.php');
                     </div>
                     <div class="form-group">
                         <label  id='BDLY_INPUT_lbl_cp_comment' class="col-sm-2">COMMENTS</label>
-                        <div class="col-sm-4"><textarea name="BDLY_INPUT_ta_cp_comments" id="BDLY_INPUT_ta_cp_comments" placeholder="Comments" class="BDLY_INPUT_class_submitvalidate form-control" ></textarea></div>
+                        <div class="col-sm-4"><textarea name="BDLY_INPUT_ta_cp_comments" id="BDLY_INPUT_ta_cp_comments" placeholder="Comments" style="height:116px;" class="BDLY_INPUT_class_submitvalidate form-control" ></textarea></div>
                     </div>
                 </div>
                 <!--CREATING OF DIGITAL VOICE ELEMENT-->
@@ -5947,7 +5952,7 @@ require_once('application/libraries/EI_HDR.php');
                     </div>
                     <div class="form-group">
                         <label  id='BDLY_INPUT_lbl_digi_comment' class="col-sm-2">COMMENTS</label>
-                        <div class="col-sm-4"><textarea name="BDLY_INPUT_ta_digi_comments" id="BDLY_INPUT_ta_digi_comments" placeholder="Comments" class="BDLY_INPUT_class_submitvalidate form-control"></textarea></div>
+                        <div class="col-sm-4"><textarea name="BDLY_INPUT_ta_digi_comments" id="BDLY_INPUT_ta_digi_comments" placeholder="Comments" style="height:116px;" class="BDLY_INPUT_class_submitvalidate form-control"></textarea></div>
                     </div>
                 </div>
                 <!--CREATING OF FACILITY ELEMENT-->
@@ -5988,7 +5993,7 @@ require_once('application/libraries/EI_HDR.php');
                     </div>
                     <div class="form-group">
                         <label class="col-sm-2" id='BDLY_INPUT_lbl_fac_comment' >COMMENTS</label>
-                        <div class="col-sm-4"><textarea name="BDLY_INPUT_ta_fac_comments" id="BDLY_INPUT_ta_fac_comments" placeholder="Comments" class="BDLY_INPUT_class_submitvalidate form-control" ></textarea></div>
+                        <div class="col-sm-4"><textarea name="BDLY_INPUT_ta_fac_comments" id="BDLY_INPUT_ta_fac_comments" placeholder="Comments" class="BDLY_INPUT_class_submitvalidate form-control" style="height:116px;" ></textarea></div>
                     </div>
                 </div>
                 <!--CREATING OF MOVING IN AND OUT ELEMENT-->
@@ -6008,7 +6013,7 @@ require_once('application/libraries/EI_HDR.php');
                     </div>
                     <div class="form-group">
                         <label  id='BDLY_INPUT_lbl_mov_comment' class="col-sm-2">COMMENTS</label>
-                        <div class="col-sm-4"><textarea name="BDLY_INPUT_ta_mov_comments" id="BDLY_INPUT_ta_mov_comments" placeholder="Comments" class="BDLY_INPUT_class_submitvalidate form-control" ></textarea></div>
+                        <div class="col-sm-4"><textarea name="BDLY_INPUT_ta_mov_comments" id="BDLY_INPUT_ta_mov_comments" placeholder="Comments" style="height:116px;" class="BDLY_INPUT_class_submitvalidate form-control" ></textarea></div>
                     </div>
                 </div>
                 <!--CREATING OF PURCHASE ELEMENT-->
@@ -6033,7 +6038,7 @@ require_once('application/libraries/EI_HDR.php');
                     </div>
                     <div class="form-group">
                         <label  id='BDLY_INPUT_lbl_access_comment' class="col-sm-2">COMMENTS</label>
-                        <div class="col-sm-4"><textarea name="BDLY_INPUT_ta_access_comments" id="BDLY_INPUT_ta_access_comments" placeholder="Comments" class="BDLY_INPUT_class_hksubmitvalidate form-control" ></textarea></div>
+                        <div class="col-sm-4"><textarea name="BDLY_INPUT_ta_access_comments" id="BDLY_INPUT_ta_access_comments" placeholder="Comments" style="height:116px;" class="BDLY_INPUT_class_hksubmitvalidate form-control" ></textarea></div>
                     </div>
                 </div>
                 <!--CREATING OF PETTYCASH ELEMENT-->
@@ -6078,11 +6083,11 @@ require_once('application/libraries/EI_HDR.php');
                     </div>
                     <div class="form-group">
                         <label  id='BDLY_INPUT_lbl_petty_invoiceitem' class="col-sm-2">INVOICE ITEM<em>*</em></label>
-                        <div class="col-sm-4"><textarea id="BDLY_INPUT_ta_petty_invoiceitem" name="BDLY_INPUT_ta_petty_invoiceitem" placeholder="Invoice Item" class="BDLY_INPUT_class_submitvalidate form-control" ></textarea></div>
+                        <div class="col-sm-4"><textarea id="BDLY_INPUT_ta_petty_invoiceitem" name="BDLY_INPUT_ta_petty_invoiceitem" placeholder="Invoice Item" style="height:116px;" class="BDLY_INPUT_class_submitvalidate form-control" ></textarea></div>
                     </div>
                     <div class="form-group">
                         <label  id='BDLY_INPUT_lbl_petty_comment'class="col-sm-2" >COMMENTS</label>
-                        <div class="col-sm-4"><textarea name="BDLY_INPUT_ta_petty_comments" id="BDLY_INPUT_ta_petty_comments" placeholder="Comments" class="form-control" ></textarea></div>
+                        <div class="col-sm-4"><textarea name="BDLY_INPUT_ta_petty_comments" id="BDLY_INPUT_ta_petty_comments" placeholder="Comments" class="form-control" style="height:116px;" ></textarea></div>
                     </div>
                 </div>
                 <!--CREATING OF HOUSE KEEPING ELEMENT-->
@@ -6113,7 +6118,7 @@ require_once('application/libraries/EI_HDR.php');
                     </div>
                     <div class="form-group">
                         <label  id='BDLY_INPUT_lbl_house_desc' class="col-sm-2">DESCRIPTION<em>*</em></label>
-                        <div class="col-sm-4"><textarea name="BDLY_INPUT_ta_house_desc" id="BDLY_INPUT_ta_house_desc" placeholder="Description" class="BDLY_INPUT_class_submitvalidate form-control" ></textarea></div>
+                        <div class="col-sm-4"><textarea name="BDLY_INPUT_ta_house_desc" id="BDLY_INPUT_ta_house_desc" placeholder="Description" class="BDLY_INPUT_class_submitvalidate form-control" style="height:116px;"></textarea></div>
                     </div>
                 </div>
                 <!--CREATING OF HOUSEKEEPING PAYMENT ELEMENT-->
@@ -6152,7 +6157,7 @@ require_once('application/libraries/EI_HDR.php');
                     </div>
                     <div class="form-group">
                         <label  id='BDLY_INPUT_lbl_pay_comment' class="col-sm-2">COMMENTS</label>
-                        <div class="col-sm-4"><textarea name="BDLY_INPUT_ta_pay_comments" id="BDLY_INPUT_ta_pay_comments" placeholder="Comments" class="form-control" ></textarea></div>
+                        <div class="col-sm-4"><textarea name="BDLY_INPUT_ta_pay_comments" id="BDLY_INPUT_ta_pay_comments" placeholder="Comments" class="form-control" style="height:116px;"></textarea></div>
                     </div>
                 </div>
                 <!--CREATING OF ELECTRICITY ELEMENT-->
@@ -6203,7 +6208,7 @@ require_once('application/libraries/EI_HDR.php');
                             <td ><table id="multiplecustomer-1" width="250px" hidden></table>
                             <td><input  class='datepickdate uexp_submultivalid datemandtry'  type="text" name ="BDLY_INPUT_db_uexp_invoicedate[]" id="BDLY_INPUT_db_uexp_invoicedate1" style="width:75px;" hidden /> </td>
                             <td><textarea  class='uexp_submultivalid'  name ="BDLY_INPUT_tb_uexp_invoiceitem[]" id="BDLY_INPUT_tb_uexp_invoiceitem1"  hidden></textarea> </td>
-                            <td><input  class=' uexp_submultivalid autosize autocomplete'  type="text" name ="BDLY_INPUT_tb_uexp_invoicefrom[]" id="BDLY_INPUT_tb_uexp_invoicefrom1"  hidden/> </td>
+                            <td><input  class=' uexp_submultivalid autosize autocomplete'  type="text" name ="BDLY_INPUT_tb_uexp_invoicefrom[]" id="BDLY_INPUT_tb_uexp_invoicefrom1" maxlength='200'  hidden/> </td>
                             <td><input  class="amtonlyfivedigit uexp_submultivalid BDLY_INPUT_class_numonly"  type="text" name ="BDLY_INPUT_tb_uexp_amount[]" id="BDLY_INPUT_tb_uexp_amount1" style="width:65px;" hidden /> </td>
                             <td><textarea row="2" name ="BDLY_INPUT_ta_uexpcomments[]" id="BDLY_INPUT_ta_uexpcomments1" class=" uexp_submultivalid" hidden ></textarea> </td><td>
                                 <input type='button' value='+' class='uexp_addbttn' alt='Add Row' height='30' width='30' name ='BDLY_INPUT_uexpadd[]' id='BDLY_INPUT_uexp_add1'disabled > </td><td>
@@ -6214,7 +6219,7 @@ require_once('application/libraries/EI_HDR.php');
                 </div>
                 <!--CREATING OF STARHUB ELEMENT-->
                 <div class="table-responsive">
-                    <table id="BDLY_INPUT_tble_starhub" cellpadding="10" cellspacing="2" hidden>
+                    <table id="BDLY_INPUT_tble_starhub" cellpadding="10" cellspacing="2" style="width:1200px;" hidden>
                         <tr> <td><label id="BDLY_INPUT_lbl_star_unit" >UNIT</label><em>*</em> </td>
                             <td ><label  id="BDLY_INPUT_lbl_star_invoiceto" >INVOICE TO</label><em>*</em></td>
                             <td ><label id="BDLY_INPUT_lbl_star_accountno"  >ACCOUNT NO</label><em>*</em> </td>
@@ -6228,7 +6233,7 @@ require_once('application/libraries/EI_HDR.php');
                         </tr>
                         <tr>
                             <td> <select  class="BDLY_INPUT_class_star_unit star_submultivalid "  name="BDLY_INPUT_lb_star_unit" id="BDLY_INPUT_lb_star_unit-1" hidden><option value="">SELECT</option></select> </td>
-                            <td> <select  class="BDLY_INPUT_class_star_invoice star_submultivalid "  name="BDLY_INPUT_lb_star_invoiceto" id="BDLY_INPUT_lb_star_invoice-1" hidden><option value="">SELECT</option></select><input type="hidden" id="BDLY_INPUT_hidden_star_ecnid1" name="BDLY_INPUT_hidden_star_ecnid"> </td>
+                            <td> <select  class="BDLY_INPUT_class_star_invoice star_submultivalid "  name="BDLY_INPUT_lb_star_invoiceto" id="BDLY_INPUT_lb_star_invoice-1" hidden><option value="">SELECT</option></select><input type="hidden" id="BDLY_INPUT_hidden_star_ecnid1" name="BDLY_INPUT_hidden_star_ecnid[]"> </td>
                             <td><input  class=' star_submultivalid rdonly'  type="text" name ="BDLY_INPUT_tb_star_accno" id="BDLY_INPUT_tb_star_accno1"  hidden readonly/> </td>
                             <td><input  class='starinvdatepickdate star_submultivalid datemandtry'  type="text" name ="BDLY_INPUT_db_star_invoicedate" id="BDLY_INPUT_db_star_invoicedate1" style="width:75px;" hidden /> </td>
                             <td><input  class='starfrmdatepickdate star_submultivalid datemandtry'  type="text" name ="BDLY_INPUT_db_star_fromperiod" id="BDLY_INPUT_db_star_fromperiod1" style="width:75px;" hidden/> </td>
@@ -6278,6 +6283,7 @@ require_once('application/libraries/EI_HDR.php');
             <div id="BDLY_SRC_nodyndataerr" class="errormsg"></div>
             <div class="srctitle" id="BDLY_SRC_div_searchresult_head"></div>
             <input type="hidden" id="pdfheader" name="pdfheader"/>
+            <input type="hidden" id="expensetypetext" name="expensetypetext"/>
             <div><input type="submit" id='BDLY_btn_pdf' class="btnpdf" value="PDF" hidden></div>
             <div id="BDLY_SRC_div_searchresult" class="table-responsive"></div>
             <input type="hidden" id="startdate" name="startdate"/>

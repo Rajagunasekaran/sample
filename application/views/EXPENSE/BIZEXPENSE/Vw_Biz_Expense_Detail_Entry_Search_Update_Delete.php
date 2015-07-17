@@ -3120,7 +3120,6 @@ require_once('application/libraries/EI_HDR.php');
                 url: controller_url + "deletefunction",
                 data: {'rowid':rowid,'unitid':unit_id,'BTDTL_SEARCH_lb_searchoptions': $('#BTDTL_SEARCH_lb_searchoptions').val(),'BTDTL_SEARCH_lb_expense_type': $('#BTDTL_SEARCH_lb_expense_type').val(),'searchvalue': searchvalue,'startdate': startdate,'BTDTL_SEARCH_starhubid':BTDTL_SEARCH_starhubid,'BTDTL_SEARCH_obj':BTDTL_SEARCH_obj},
                 success: function (data) {
-                    alert(data)
                     $('.preloader').hide();
                     var result = JSON.parse(data)
                     BTDTL_SEARCH_success_showflex(result);

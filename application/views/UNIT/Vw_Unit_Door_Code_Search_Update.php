@@ -33,6 +33,7 @@ require_once('application/libraries/EI_HDR.php');
                 error:function(data){
                     var errordata=(JSON.stringify(data));
                     show_msgbox("DOOR CODE:SEARCH/UPDATE",errordata,'error',false);
+                    $('.preloader').hide();
                 }
             });
         // SUCCESS FUNCTION FOR ERRORMSG & UNIT NO
@@ -77,6 +78,7 @@ require_once('application/libraries/EI_HDR.php');
                         error:function(data){
                             var errordata=(JSON.stringify(data));
                             show_msgbox("DOOR CODE:SEARCH/UPDATE",errordata,'error',false);
+                            $('.preloader').hide();
                         }
                     });
                 }
@@ -86,7 +88,7 @@ require_once('application/libraries/EI_HDR.php');
             });
         // SUCCESS FUNCTION FOR LOGIN DETAILS
             function DCSU_loginSuccess(DCSU_response){
-                $(".preloader").hide();
+                $(".preloader").show();
                 $("#DCSU_div_htmltable").hide();
                 var DCSU_unitnumber=$('#DCSU_lb_unitnumber').val();
                 if((DCSU_response.DCSU_id!='')&&(DCSU_response.DCSU_id!=undefined)){
@@ -98,7 +100,7 @@ require_once('application/libraries/EI_HDR.php');
                     var tr='<table id="DCSU_tble_htmltable" border="1" cellspacing="0" data-class="table" class="srcresult"><thead bgcolor="#6495ed" style="color:white;"><tr><th style="width:100px">DOOR CODE <em>*</em></th><th style="width:130px">WEB LOGIN</th><th style="width:100px">WEB PASSWORD</th><th style="width:300px">USERSTAMP</th><th style="width:150px" class="uk-timestp-column">TIMESTAMP</th></tr></thead><tbody>';
                     var i=0;
                     DCSU_login_id=DCSU_response.DCSU_id;
-                    tr += '<tr id="'+DCSU_response.DCSU_id+'"><td id="doorcode_'+DCSU_login_id+'" style="text-align: center" class="data">'+DCSU_response.DCSU_doorcode+'</td><td id="weblogin_'+DCSU_login_id+'" class="data" style="text-align: center">'+DCSU_response.DCSU_weblog+'</td><td id="webpass_'+DCSU_login_id+'" class="data" style="text-align: center">'+DCSU_response.DCSU_webpass+'</td><td>'+DCSU_response.DCSU_user+'</td><td style="text-align: center">'+DCSU_response.DCSU_time+'</td></tr></tbody></table>';
+                    tr += '<tr id="'+DCSU_response.DCSU_id+'"><td id="doorcode_'+DCSU_login_id+'" style="text-align: center" class="datadoorcode">'+DCSU_response.DCSU_doorcode+'</td><td id="weblogin_'+DCSU_login_id+'" class="datadoorcode" style="text-align: center">'+DCSU_response.DCSU_weblog+'</td><td id="webpass_'+DCSU_login_id+'" class="datadoorcode" style="text-align: center">'+DCSU_response.DCSU_webpass+'</td><td>'+DCSU_response.DCSU_user+'</td><td style="text-align: center">'+DCSU_response.DCSU_time+'</td></tr></tbody></table>';
                     $('#DCSU_div_htmltable').append(tr);
                     $('#DCSU_tble_htmltable').DataTable({
                         "aaSorting": [],
@@ -110,6 +112,7 @@ require_once('application/libraries/EI_HDR.php');
                     });
                     sorting();
                     $("#DCSU_div_htmltable").show();
+                    $(".preloader").hide();
                 }
                 else{
                     var DCSU_div_errmsg=DCSU_errormsg[2].EMC_DATA.replace('[UNIT NO]',DCSU_unitnumber);
@@ -117,20 +120,23 @@ require_once('application/libraries/EI_HDR.php');
                     $("#DCSU_div_errmsgdooor").hide();
                     $('#DCSU_pdf_btn').hide();
                     $("#DCSU_lbl_errmsgdooor").text('');
+                    $(".preloader").hide();
                 }
                 if(DCSU_response.DCSU_flg==1){
+                    $(".preloader").hide();
                     var DCSU_upd_errmsg=DCSU_errormsg[4].EMC_DATA.replace('[UNITNO]',DCSU_unitnumber);
                     show_msgbox("DOOR CODE:SEARCH/UPDATE",DCSU_upd_errmsg,'success',false);
                 }
                 if(DCSU_response.DCSU_flg==0){
+                    $(".preloader").hide();
                     show_msgbox("DOOR CODE:SEARCH/UPDATE",DCSU_errormsg[5].EMC_DATA,'error',false);
                 }
             }
         // CLICK EVENT FOR INLINE EDIT FOR STAMP TYPE AND ROOM TYPE
             var previous_id;var tdvalue;var primcid;
-            $(document).on('click','.data',function(){
+            $(document).on('click','.datadoorcode',function(){
                 if(previous_id!=undefined){
-                    $('#'+previous_id).replaceWith("<td class='data' style='text-align: center' id='"+previous_id+"' >"+tdvalue+"</td>");
+                    $('#'+previous_id).replaceWith("<td class='datadoorcode' style='text-align: center' id='"+previous_id+"' >"+tdvalue+"</td>");
                 }
                 var cid = $(this).attr('id');
                 previous_id=cid;
@@ -169,11 +175,19 @@ require_once('application/libraries/EI_HDR.php');
                 $('#DCSU_form_doorcode').find('input:text,textarea').removeClass('rdonly');
             });
         // CHANGE FUNCTION FOR DOORCODE
-            $(document).on('blur','.DCSU_class_login',function(){
+            $(document).on('blur','.DCSU_class_login',function(evnt){
+                evnt.stopPropagation();
+                evnt.preventDefault();
+                evnt.stopImmediatePropagation();
                 DCSU_flg_pass=0;DCSU_flg_Doorcode=0;DCSU_flg_Login=0;
                 var idval=$(this).val();
                 var idflag=$(this).attr('id');
-                if((($(this).attr('id')=='UNIT_tb_doorcode')&&($(this).val()!='')&&(parseInt($(this).val())!=0)&&($(this).val().length>=6)&&(($(this).val()).trim()!=DCSU_doorcode_val)) || (($(this).attr('id')=='UNIT_tb_weblogin')&&($(this).val()!='')&&(parseInt($(this).val())!=0)&&($(this).val().length>=5)&&(($(this).val()).trim()!=DCSU_weblogin_val))){
+                $(".preloader").hide();
+                if((($(this).attr('id')=='UNIT_tb_doorcode')&&($(this).val()!='')&&(parseInt($(this).val())!=0)&&($(this).val().length>=6)&&(($(this).val()).trim()!=DCSU_doorcode_val))){
+                    $(".preloader").show();
+                    callExistsDoorcode(idval,idflag);
+                }
+                else if((($(this).attr('id')=='UNIT_tb_weblogin')&&($(this).val()!='')&&(parseInt($(this).val())!=0)&&($(this).val().length>=5)&&(($(this).val()).trim()!=DCSU_weblogin_val))){
                     $(".preloader").show();
                     callExistsDoorcode(idval,idflag);
                 }
@@ -207,6 +221,7 @@ require_once('application/libraries/EI_HDR.php');
             });
         // FUNCTION FOR CALL THE EXIST DOOR CODE FUNCTION
             function callExistsDoorcode(values,flag){
+                $(".preloader").show();
                 $.ajax({
                     type: "POST",
                     url: ctrl_unitdoorcode_url+'/DCSU_ExistsDoorcode',
@@ -216,19 +231,19 @@ require_once('application/libraries/EI_HDR.php');
                         DCSU_doorcodeSuccess(exitst_data);
                         if(DCSU_flg_Doorcode==1 || DCSU_flg_Login==1 || DCSU_flg_pass==1){
                             $(".preloader").show();
-                            if($('#doorcode_'+primcid).hasClass("data")==true){
+                            if($('#doorcode_'+primcid).hasClass("datadoorcode")==true){
                                 var DCSU_doorcode=$('#doorcode_'+primcid).text();
                             }
                             else{
                                 var DCSU_doorcode=$("#UNIT_tb_doorcode").val();
                             }
-                            if($('#weblogin_'+primcid).hasClass("data")==true){
+                            if($('#weblogin_'+primcid).hasClass("datadoorcode")==true){
                                 var DCSU_weblogin=$('#weblogin_'+primcid).text();
                             }
                             else{
                                 var DCSU_weblogin=$("#UNIT_tb_weblogin").val();
                             }
-                            if($('#webpass_'+primcid).hasClass("data")==true){
+                            if($('#webpass_'+primcid).hasClass("datadoorcode")==true){
                                 var DCSU_webpass=$('#webpass_'+primcid).text();
                             }
                             else{
@@ -241,6 +256,7 @@ require_once('application/libraries/EI_HDR.php');
                     error:function(data){
                         var errordata=(JSON.stringify(data));
                         show_msgbox("DOOR CODE:SEARCH/UPDATE",errordata,'error',false);
+                        $('.preloader').hide();
                     }
                 });
             }
@@ -257,6 +273,7 @@ require_once('application/libraries/EI_HDR.php');
                         show_msgbox("DOOR CODE:SEARCH/UPDATE",DCSU_errormsg[6].EMC_DATA,'error',false);
                         $("#UNIT_tb_weblogin").addClass('invalid');
                     }
+                    $(".preloader").hide();
                 }
                 else{
                     if(DCSU_doorcoderesponse[1]=='UNIT_tb_doorcode'){
@@ -267,17 +284,18 @@ require_once('application/libraries/EI_HDR.php');
                         DCSU_flg_Login=1;
                         $("#UNIT_tb_weblogin").removeClass('invalid');
                     }
+                    $(".preloader").hide();
                 }
-                $(".preloader").hide();
             }
             // FUNCTION FOR UPDATE DOOR CODE
             function DCSU_update_Doorcode(DCSU_unitnumber,DCSU_doorcode,DCSU_weblogin,DCSU_webpass){
+                $(".preloader").show();
                 $.ajax({
                     type: "POST",
                     url: ctrl_unitdoorcode_url+'/DCSU_updateDoorcode',
                     data: {'DCSU_login_id':DCSU_login_id,'DCSU_unitnumber':DCSU_unitnumber,'DCSU_doorcode':DCSU_doorcode,'DCSU_weblogin':DCSU_weblogin,'DCSU_webpass':DCSU_webpass},
                     success: function(data){
-                        $(".preloader").hide();
+                        $(".preloader").show();
                         var successdata=JSON.parse(data);
                         DCSU_loginSuccess(successdata);
                         previous_id=undefined;
@@ -285,6 +303,7 @@ require_once('application/libraries/EI_HDR.php');
                     error:function(data){
                         var errordata=(JSON.stringify(data));
                         show_msgbox("DOOR CODE:SEARCH/UPDATE",errordata,'error',false);
+                        $('.preloader').hide();
                     }
                 });
             }

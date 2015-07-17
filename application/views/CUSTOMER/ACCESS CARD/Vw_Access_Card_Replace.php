@@ -27,6 +27,7 @@ require_once('application/libraries/EI_HDR.php');
                 error:function(data){
                     var errordata=(JSON.stringify(data));
                     show_msgbox("REPLACE OF ACCESS CARD",errordata,'error',false);
+                    $('.preloader').hide();
                 }
             });
             function unique(a) {
@@ -92,6 +93,7 @@ require_once('application/libraries/EI_HDR.php');
                         error:function(data){
                             var errordata=(JSON.stringify(data));
                             show_msgbox("REPLACE OF ACCESS CARD",errordata,'error',false);
+                            $('.preloader').hide();
                         }
                     });
                 }
@@ -323,6 +325,7 @@ require_once('application/libraries/EI_HDR.php');
                     error:function(data){
                         var errordata=(JSON.stringify(data));
                         show_msgbox("REPLACE OF ACCESS CARD",errordata,'error',false);
+                        $('.preloader').hide();
                     }
                 });
             });
@@ -367,8 +370,8 @@ require_once('application/libraries/EI_HDR.php');
                 </div>
                 <div class="form-group" id="CR_buttons" hidden>
                     <div class="col-sm-offset-1 col-sm-4">
-                        <input class="maxbtn btn-info" type="button" id="CR_btn_submitbutton" name="REPLACE" value="REPLACE" disabled/>
-                        <input class="maxbtn btn-info" type="button" id="CR_btn_resetbutton" name="RESET" value="RESET"/>
+                        <input class="maxbtn" type="button" id="CR_btn_submitbutton" name="REPLACE" value="REPLACE" disabled/>
+                        <input class="maxbtn" type="button" id="CR_btn_resetbutton" name="RESET" value="RESET"/>
                     </div>
                 </div>
                 <div class="form-group" id="CR_error" hidden>

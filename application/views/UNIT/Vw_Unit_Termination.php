@@ -23,6 +23,7 @@ require_once('application/libraries/EI_HDR.php');
                 error:function(data){
                     var errordata=(JSON.stringify(data));
                     show_msgbox("UNIT TERMINATION",errordata,'error',false);
+                    $('.preloader').hide();
                 }
             });
         // FUNCTION FOR CONVERT DATE FORMAT
@@ -70,6 +71,7 @@ require_once('application/libraries/EI_HDR.php');
                         error:function(data){
                             var errordata=(JSON.stringify(data));
                             show_msgbox("UNIT TERMINATION",errordata,'error',false);
+                            $('.preloader').hide();
                         }
                     });
                 }
@@ -112,6 +114,7 @@ require_once('application/libraries/EI_HDR.php');
                     error:function(data){
                         var errordata=(JSON.stringify(data));
                         show_msgbox("UNIT TERMINATION",errordata,'error',false);
+                        $('.preloader').hide();
                     }
                 });
             });

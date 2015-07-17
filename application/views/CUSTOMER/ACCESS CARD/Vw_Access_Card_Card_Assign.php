@@ -50,6 +50,7 @@ require_once('application/libraries/EI_HDR.php');
                 error:function(data){
                     var errordata=(JSON.stringify(data));
                     show_msgbox("CARD ASSIGN",errordata,'error',false);
+                    $('.preloader').hide();
                 }
             });
             function unique(a) {
@@ -413,6 +414,7 @@ require_once('application/libraries/EI_HDR.php');
                         error:function(data){
                             var errordata=(JSON.stringify(data));
                             show_msgbox("CARD ASSIGN",errordata,'error',false);
+                            $('.preloader').hide();
                         }
                     });
                 }
@@ -828,6 +830,7 @@ require_once('application/libraries/EI_HDR.php');
                     error:function(data){
                         var errordata=(JSON.stringify(data));
                         show_msgbox("CARD ASSIGN",errordata,'error',false);
+                        $('.preloader').hide();
                     }
                 });
             });

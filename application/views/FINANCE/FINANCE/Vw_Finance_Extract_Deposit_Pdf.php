@@ -35,6 +35,7 @@ require_once('application/libraries/EI_HDR.php');
                 error:function(data){
                     var errordata=(JSON.stringify(data));
                     show_msgbox("DEPOSIT DEDUCTION EXTRACTS",errordata,'error',false);
+                    $('.preloader').hide();
                 }
             });
             $('#DDE_customerselect').hide();
@@ -81,6 +82,7 @@ require_once('application/libraries/EI_HDR.php');
                         error:function(data){
                             var errordata=(JSON.stringify(data));
                             show_msgbox("DEPOSIT DEDUCTION EXTRACTS",errordata,'error',false);
+                            $('.preloader').hide();
                         }
                     });
                     $('#DDE_customerselect').hide();
@@ -125,6 +127,7 @@ require_once('application/libraries/EI_HDR.php');
                         error:function(data){
                             var errordata=(JSON.stringify(data));
                             show_msgbox("DEPOSIT DEDUCTION EXTRACTS",errordata,'error',false);
+                            $('.preloader').hide();
                         }
                     });
                     $('#DDE_customerselect').hide();
@@ -187,6 +190,7 @@ require_once('application/libraries/EI_HDR.php');
                             error:function(data){
                                 var errordata=(JSON.stringify(data));
                                 show_msgbox("DEPOSIT DEDUCTION EXTRACTS",errordata,'error',false);
+                                $('.preloader').hide();
                             }
                         });
                         $('#DDE_radiotable').hide();
@@ -217,6 +221,7 @@ require_once('application/libraries/EI_HDR.php');
                     error:function(data){
                         var errordata=(JSON.stringify(data));
                         show_msgbox("DEPOSIT DEDUCTION EXTRACTS",errordata,'error',false);
+                        $('.preloader').hide();
                     }
                 });
             });
@@ -252,6 +257,7 @@ require_once('application/libraries/EI_HDR.php');
                     error:function(data){
                         var errordata=(JSON.stringify(data));
                         show_msgbox("DEPOSIT DEDUCTION EXTRACTS",errordata,'error',false);
+                        $('.preloader').hide();
                     }
                 });
             });
@@ -398,6 +404,7 @@ require_once('application/libraries/EI_HDR.php');
                     error:function(data){
                         var errordata=(JSON.stringify(data));
                         show_msgbox("DEPOSIT DEDUCTION EXTRACTS",errordata,'error',false);
+                        $('.preloader').hide();
                     }
                 });
             }
@@ -427,6 +434,7 @@ require_once('application/libraries/EI_HDR.php');
                     error:function(data){
                         var errordata=(JSON.stringify(data));
                         show_msgbox("DEPOSIT DEDUCTION EXTRACTS",errordata,'error',false);
+                        $('.preloader').hide();
                     }
                 });
             }

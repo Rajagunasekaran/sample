@@ -46,6 +46,7 @@ require_once('application/libraries/EI_HDR.php');
                 error:function(data){
                     var errordata=(JSON.stringify(data));
                     show_msgbox("EXISTING UNIT",errordata,'error',false);
+                    $('.preloader').hide();
                 }
             });
         //SUCCESS FUNCTION FOR LOAD STAMP,ROOM TYPE PLUS ERROR MSG
@@ -173,6 +174,7 @@ require_once('application/libraries/EI_HDR.php');
                         error:function(data){
                             var errordata=(JSON.stringify(data));
                             show_msgbox("EXISTING UNIT",errordata,'error',false);
+                            $('.preloader').hide();
                         }
                     });
                     $('#EU_tb_newroomtype').replaceWith('<select id="EU_lb_oldroomtype" name="EU_lb_oldroomtype" class="EU_class_validupdate form-control"><option>SELECT</option></select>');
@@ -207,6 +209,7 @@ require_once('application/libraries/EI_HDR.php');
                         error:function(data){
                             var errordata=(JSON.stringify(data));
                             show_msgbox("EXISTING UNIT",errordata,'error',false);
+                            $('.preloader').hide();
                         }
                     });
                 }
@@ -237,6 +240,7 @@ require_once('application/libraries/EI_HDR.php');
                         error:function(data){
                             var errordata=(JSON.stringify(data));
                             show_msgbox("EXISTING UNIT",errordata,'error',false);
+                            $('.preloader').hide();
                         }
                     });
                     $('#EU_tb_newstamptype').replaceWith('<select id="EU_lb_oldstamptype" name="EU_lb_oldstamptype"class="EU_class_validupdate form-control" ><option>SELECT</option></select>');
@@ -271,6 +275,7 @@ require_once('application/libraries/EI_HDR.php');
                         error:function(data){
                             var errordata=(JSON.stringify(data));
                             show_msgbox("EXISTING UNIT",errordata,'error',false);
+                            $('.preloader').hide();
                         }
                     });
                 }
@@ -360,6 +365,7 @@ require_once('application/libraries/EI_HDR.php');
                             error:function(data){
                                 var errordata=(JSON.stringify(data));
                                 show_msgbox("EXISTING UNIT",errordata,'error',false);
+                                $('.preloader').hide();
                             }
                         });
                     }
@@ -415,6 +421,7 @@ require_once('application/libraries/EI_HDR.php');
                         error:function(data){
                             var errordata=(JSON.stringify(data));
                             show_msgbox("EXISTING UNIT",errordata,'error',false);
+                            $('.preloader').hide();
                         }
                     });
                 }
@@ -437,6 +444,7 @@ require_once('application/libraries/EI_HDR.php');
                         error:function(data){
                             var errordata=(JSON.stringify(data));
                             show_msgbox("EXISTING UNIT",errordata,'error',false);
+                            $('.preloader').hide();
                         }
                     });
                 }
@@ -455,6 +463,7 @@ require_once('application/libraries/EI_HDR.php');
                         error:function(data){
                             var errordata=(JSON.stringify(data));
                             show_msgbox("EXISTING UNIT",errordata,'error',false);
+                            $('.preloader').hide();
                         }
                     });
                     var EU_unitno=$('#EU_lb_unitnumber').val();
@@ -591,6 +600,7 @@ require_once('application/libraries/EI_HDR.php');
                     error:function(data){
                         var errordata=(JSON.stringify(data));
                         show_msgbox("EXISTING UNIT",errordata,'error',false);
+                        $('.preloader').hide();
                     }
                 });
                 $('textarea').height(114);
@@ -635,6 +645,7 @@ require_once('application/libraries/EI_HDR.php');
                         error:function(data){
                             var errordata=(JSON.stringify(data));
                             show_msgbox("EXISTING UNIT",errordata,'error',false);
+                            $('.preloader').hide();
                         }
                     });
                 }
@@ -749,6 +760,7 @@ require_once('application/libraries/EI_HDR.php');
                     error:function(data){
                         var errordata=(JSON.stringify(data));
                         show_msgbox("EXISTING UNIT",errordata,'error',false);
+                        $('.preloader').hide();
                     }
                 });
             }
@@ -817,6 +829,7 @@ require_once('application/libraries/EI_HDR.php');
                         error:function(data){
                             var errordata=(JSON.stringify(data));
                             show_msgbox("EXISTING UNIT",errordata,'error',false);
+                            $('.preloader').hide();
                         }
                     });
                 }

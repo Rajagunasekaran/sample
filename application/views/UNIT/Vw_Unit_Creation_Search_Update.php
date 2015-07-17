@@ -87,6 +87,7 @@ require_once('application/libraries/EI_HDR.php');
                         error:function(data){
                             var errordata=(JSON.stringify(data));
                             show_msgbox("UNIT CREATION",errordata,'error',false);
+                            $('.preloader').hide();
                         }
                     });
                 }
@@ -104,6 +105,7 @@ require_once('application/libraries/EI_HDR.php');
                         error:function(data){
                             var errordata=(JSON.stringify(data));
                             show_msgbox("UNIT CREATION",errordata,'error',false);
+                            $('.preloader').hide();
                         }
                     });
                 }
@@ -209,6 +211,7 @@ require_once('application/libraries/EI_HDR.php');
                         error:function(data){
                             var errordata=(JSON.stringify(data));
                             show_msgbox("UNIT CREATION",errordata,'error',false);
+                            $('.preloader').hide();
                         }
                     });
                 }
@@ -263,6 +266,7 @@ require_once('application/libraries/EI_HDR.php');
                         error:function(data){
                             var errordata=(JSON.stringify(data));
                             show_msgbox("UNIT CREATION",errordata,'error',false);
+                            $('.preloader').hide();
                         }
                     });
                 }
@@ -327,6 +331,7 @@ require_once('application/libraries/EI_HDR.php');
                         error:function(data){
                             var errordata=(JSON.stringify(data));
                             show_msgbox("UNIT CREATION",errordata,'error',false);
+                            $('.preloader').hide();
                         }
                     });
                     $('#UC_tb_newroomtype').replaceWith('<select name="UC_lb_roomtype" id="UC_lb_roomtype" class="form-control"><option>SELECT</option></select>');
@@ -364,6 +369,7 @@ require_once('application/libraries/EI_HDR.php');
                         error:function(data){
                             var errordata=(JSON.stringify(data));
                             show_msgbox("UNIT CREATION",errordata,'error',false);
+                            $('.preloader').hide();
                         }
                     });
                     $('#UC_div_errstamp').text('');
@@ -402,6 +408,7 @@ require_once('application/libraries/EI_HDR.php');
                         error:function(data){
                             var errordata=(JSON.stringify(data));
                             show_msgbox("UNIT CREATION",errordata,'error',false);
+                            $('.preloader').hide();
                         }
                     });
                 }
@@ -450,6 +457,7 @@ require_once('application/libraries/EI_HDR.php');
                         error:function(data){
                             var errordata=(JSON.stringify(data));
                             show_msgbox("UNIT CREATION",errordata,'error',false);
+                            $('.preloader').hide();
                         }
                     });
                 }
@@ -517,6 +525,7 @@ require_once('application/libraries/EI_HDR.php');
                     error:function(data){
                         var errordata=(JSON.stringify(data));
                         show_msgbox("UNIT CREATION",errordata,'error',false);
+                        $('.preloader').hide();
                     }
                 });
             }
@@ -582,6 +591,7 @@ require_once('application/libraries/EI_HDR.php');
                         error:function(data){
                             var errordata=(JSON.stringify(data));
                             show_msgbox("UNIT CREATION",errordata,'error',false);
+                            $('.preloader').hide();
                         }
                     });
                 }
@@ -608,6 +618,7 @@ require_once('application/libraries/EI_HDR.php');
                     error:function(data){
                         var errordata=(JSON.stringify(data));
                         show_msgbox("UNIT CREATION",errordata,'error',false);
+                        $('.preloader').hide();
                     }
                 });
             });
@@ -678,6 +689,7 @@ require_once('application/libraries/EI_HDR.php');
                             error:function(data){
                                 var errordata=(JSON.stringify(data));
                                 show_msgbox("UNIT SEARCH/UPDATE",errordata,'error',false);
+                                $('.preloader').hide();
                             }
                         });
                     }
@@ -696,6 +708,7 @@ require_once('application/libraries/EI_HDR.php');
                             error:function(data){
                                 var errordata=(JSON.stringify(data));
                                 show_msgbox("UNIT SEARCH/UPDATE",errordata,'error',false);
+                                $('.preloader').hide();
                             }
                         });
                     }
@@ -869,6 +882,7 @@ require_once('application/libraries/EI_HDR.php');
                             error:function(data){
                                 var errordata=(JSON.stringify(data));
                                 show_msgbox("UNIT SEARCH/UPDATE",errordata,'error',false);
+                                $('.preloader').hide();
                             }
                         });
                     }
@@ -906,6 +920,7 @@ require_once('application/libraries/EI_HDR.php');
                         error:function(data){
                             var errordata=(JSON.stringify(data));
                             show_msgbox("UNIT SEARCH/UPDATE",errordata,'error',false);
+                            $('.preloader').hide();
                         }
                     });
                 }
@@ -932,6 +947,7 @@ require_once('application/libraries/EI_HDR.php');
                         error:function(data){
                             var errordata=(JSON.stringify(data));
                             show_msgbox("UNIT SEARCH/UPDATE",errordata,'error',false);
+                            $('.preloader').hide();
                         }
                     });
                 }
@@ -958,6 +974,7 @@ require_once('application/libraries/EI_HDR.php');
                         error:function(data){
                             var errordata=(JSON.stringify(data));
                             show_msgbox("UNIT SEARCH/UPDATE",errordata,'error',false);
+                            $('.preloader').hide();
                         }
                     });
                 }
@@ -992,6 +1009,7 @@ require_once('application/libraries/EI_HDR.php');
                     error:function(data){
                         var errordata=(JSON.stringify(data));
                         show_msgbox("UNIT SEARCH/UPDATE",errordata,'error',false);
+                        $('.preloader').hide();
                     }
                 });
             });
@@ -1105,7 +1123,7 @@ require_once('application/libraries/EI_HDR.php');
                                             else
                                             {
                                                 if(i==1)
-                                                    USU_tr += '<td class="data" id="'+j+'_'+USU_flex_arr[j][0]+'">' + USU_null + '</td>';
+                                                    USU_tr += '<td class="data_room_stamp" id="'+j+'_'+USU_flex_arr[j][0]+'">' + USU_null + '</td>';
                                                 else{
                                                     if(i==3){
                                                         USU_tr += '<td style="text-align: center">' + USU_null + '</td>';
@@ -1150,7 +1168,7 @@ require_once('application/libraries/EI_HDR.php');
                                     $('#USU_tble_htmltable tr').removeClass('row_selected');
                                     $('#USU_div_updateform').hide();
                                     if(previous_id!=undefined){
-                                        $('#'+previous_id).replaceWith("<td class='data' id='"+rid+'_'+previous_id+"' >"+tdvalue+"</td>");
+                                        $('#'+previous_id).replaceWith("<td class='data_room_stamp' id='"+rid+'_'+previous_id+"' >"+tdvalue+"</td>");
                                     }
                                 });
                                 sorting();
@@ -1352,6 +1370,7 @@ require_once('application/libraries/EI_HDR.php');
                         error:function(data){
                             var errordata=(JSON.stringify(data));
                             show_msgbox("UNIT SEARCH/UPDATE",errordata,'error',false);
+                            $('.preloader').hide();
                         }
                     });
                     USU_flag_unitno=1;
@@ -1455,6 +1474,7 @@ require_once('application/libraries/EI_HDR.php');
                         error:function(data){
                             var errordata=(JSON.stringify(data));
                             show_msgbox("UNIT SEARCH/UPDATE",errordata,'error',false);
+                            $('.preloader').hide();
                         }
                     });
                     if(tds[6]==''){
@@ -1539,6 +1559,7 @@ require_once('application/libraries/EI_HDR.php');
                         error:function(data){
                             var errordata=(JSON.stringify(data));
                             show_msgbox("UNIT SEARCH/UPDATE",errordata,'error',false);
+                            $('.preloader').hide();
                         }
                     });
                 }
@@ -1564,9 +1585,9 @@ require_once('application/libraries/EI_HDR.php');
                 }
             });
         // CLICK EVENT FOR INLINE EDIT FOR STAMP TYPE AND ROOM TYPE
-            $(document).on('click','.data',function(){
+            $(document).on('click','.data_room_stamp',function(){
                 if(previous_id!=undefined){
-                    $('#'+previous_id).replaceWith("<td class='data' id='"+rid+'_'+previous_id+"' >"+tdvalue+"</td>");
+                    $('#'+previous_id).replaceWith("<td class='data_room_stamp' id='"+rid+'_'+previous_id+"' >"+tdvalue+"</td>");
                 }
                 var cid = $(this).attr('id');
                 var splittedcid=cid.split('_');
@@ -1604,7 +1625,10 @@ require_once('application/libraries/EI_HDR.php');
                 $(".USU_class_title_alpha").prop("title",USU_errormsg_arr[0].EMC_DATA);
             });
         // BLUR FUNCTION FOR ROOM TYPE,STAMP TYPE TEXTBOX
-            $(document).on('blur','.USU_class_sep_type',function(){
+            $(document).on('blur','.USU_class_sep_type',function(evnt){
+                evnt.stopPropagation();
+                evnt.preventDefault();
+                evnt.stopImmediatePropagation();
                 USU_flag_updbtn=0;
                 if($('#USU_tb_sep_roomtype').val()!=undefined){
                     var USU_roomstamptype_val=$('#USU_tb_sep_roomtype').val();
@@ -1631,6 +1655,7 @@ require_once('application/libraries/EI_HDR.php');
                         error:function(data){
                             var errordata=(JSON.stringify(data));
                             show_msgbox("UNIT SEARCH/UPDATE",errordata,'error',false);
+                            $('.preloader').hide();
                         }
                     });
                 }
@@ -1832,6 +1857,7 @@ require_once('application/libraries/EI_HDR.php');
                         error:function(data){
                             var errordata=(JSON.stringify(data));
                             show_msgbox("UNIT SEARCH/UPDATE",errordata,'error',false);
+                            $('.preloader').hide();
                         }
                     });
                 }
@@ -1852,6 +1878,7 @@ require_once('application/libraries/EI_HDR.php');
                         error:function(data){
                             var errordata=(JSON.stringify(data));
                             show_msgbox("UNIT SEARCH/UPDATE",errordata,'error',false);
+                            $('.preloader').hide();
                         }
                     });
                 }
@@ -1973,6 +2000,7 @@ require_once('application/libraries/EI_HDR.php');
                     error:function(data){
                         var errordata=(JSON.stringify(data));
                         show_msgbox("UNIT SEARCH/UPDATE",errordata,'error',false);
+                        $('.preloader').hide();
                     }
                 });
             }

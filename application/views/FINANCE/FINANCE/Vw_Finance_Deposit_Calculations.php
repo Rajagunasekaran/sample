@@ -37,6 +37,7 @@ require_once('application/libraries/EI_HDR.php');
                 error:function(data){
                     var errordata=(JSON.stringify(data));
                     show_msgbox("DEPOSIT DEDUCTION CALCULATIONS",errordata,'error',false);
+                    $('.preloader').hide();
                 }
             });
         // FUNCTION TO UNIQUE FOR CUSTOMER NAME
@@ -67,6 +68,7 @@ require_once('application/libraries/EI_HDR.php');
                     error:function(data){
                         var errordata=(JSON.stringify(data));
                         show_msgbox("DEPOSIT DEDUCTION CALCULATIONS",errordata,'error',false);
+                        $('.preloader').hide();
                     }
                 });
             });
@@ -326,6 +328,7 @@ require_once('application/libraries/EI_HDR.php');
                         error:function(data){
                             var errordata=(JSON.stringify(data));
                             show_msgbox("DEPOSIT DEDUCTION CALCULATIONS",errordata,'error',false);
+                            $('.preloader').hide();
                         }
                     });
                 }
@@ -354,6 +357,7 @@ require_once('application/libraries/EI_HDR.php');
                     error:function(data){
                         var errordata=(JSON.stringify(data));
                         show_msgbox("DEPOSIT DEDUCTION CALCULATIONS",errordata,'error',false);
+                        $('.preloader').hide();
                     }
                 });
             });

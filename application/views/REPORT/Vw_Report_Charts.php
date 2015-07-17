@@ -56,6 +56,7 @@ $(document).ready(function(){
         error:function(data){
             var errordata=(JSON.stringify(data));
             show_msgbox("CHARTS",errordata,'error',false);
+            $('.preloader').hide();
         }
     });
 // date picker and prepare input
@@ -135,6 +136,7 @@ $(document).ready(function(){
             error:function(data){
                 var errordata=(JSON.stringify(data));
                 show_msgbox("CHARTS",errordata,'error',false);
+                $('.preloader').hide();
             }
         });
     }
@@ -377,6 +379,7 @@ $(document).ready(function(){
                 error:function(data){
                     var errordata=(JSON.stringify(data));
                     show_msgbox("CHARTS",errordata,'error',false);
+                    $('.preloader').hide();
                 }
             });
         }

@@ -25,6 +25,7 @@ require_once('application/libraries/EI_HDR.php');
                 error:function(data){
                     var errordata=(JSON.stringify(data));
                     show_msgbox("ACCESS CARD SEARCH AND UPDATE",errordata,'error',false);
+                    $('.preloader').hide();
                 }
             });
             function unique(a) {
@@ -300,6 +301,7 @@ require_once('application/libraries/EI_HDR.php');
                     error:function(data){
                         var errordata=(JSON.stringify(data));
                         show_msgbox("ACCESS CARD SEARCH AND UPDATE",errordata,'error',false);
+                        $('.preloader').hide();
                     }
                 });
             });

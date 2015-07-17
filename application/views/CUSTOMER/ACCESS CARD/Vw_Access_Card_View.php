@@ -37,6 +37,7 @@ require_once('application/libraries/EI_HDR.php');
                 error:function(data){
                     var errordata=(JSON.stringify(data));
                     show_msgbox("VIEW ALL CARD",errordata,'error',false);
+                    $('.preloader').hide();
                 }
             });
         // FUNCTION TO LOAD INITIAL VALUES
@@ -190,6 +191,7 @@ require_once('application/libraries/EI_HDR.php');
                         error:function(data){
                             var errordata=(JSON.stringify(data));
                             show_msgbox("VIEW ALL CARD",errordata,'error',false);
+                            $('.preloader').hide();
                         }
                     });
                 }
@@ -236,6 +238,7 @@ require_once('application/libraries/EI_HDR.php');
                             error:function(data){
                                 var errordata=(JSON.stringify(data));
                                 show_msgbox("VIEW ALL CARD",errordata,'error',false);
+                                $('.preloader').hide();
                             }
                         });
                     }
@@ -258,6 +261,7 @@ require_once('application/libraries/EI_HDR.php');
                         error:function(data){
                             var errordata=(JSON.stringify(data));
                             show_msgbox("VIEW ALL CARD",errordata,'error',false);
+                            $('.preloader').hide();
                         }
                     });
                     $('#CV_div_htmltable').hide();
@@ -299,6 +303,7 @@ require_once('application/libraries/EI_HDR.php');
                         error:function(data){
                             var errordata=(JSON.stringify(data));
                             show_msgbox("VIEW ALL CARD",errordata,'error',false);
+                            $('.preloader').hide();
                         }
                     });
                     $('#CV_tble_id > div').remove();
@@ -327,6 +332,7 @@ require_once('application/libraries/EI_HDR.php');
                     error:function(data){
                         var errordata=(JSON.stringify(data));
                         show_msgbox("VIEW ALL CARD",errordata,'error',false);
+                        $('.preloader').hide();
                     }
                 });
             });

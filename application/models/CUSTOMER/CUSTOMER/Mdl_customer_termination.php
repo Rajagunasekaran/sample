@@ -665,6 +665,9 @@ class Mdl_customer_termination extends CI_Model{
                     $CTERM_updateflag=0;
                 }
             }
+            else{
+                $this->db->trans_savepoint_rollback($savepoint);
+            }
             return $CTERM_updateflag;
         }
         catch(Exception $e)

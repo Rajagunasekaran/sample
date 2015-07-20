@@ -513,6 +513,7 @@ class Mdl_eilib_calender  extends CI_Model {
         return $finalResult;
     }
     public function getCustomerfolderid($Customerid){
+        $result=[];
         $selectquery="SELECT CUFD_CUSTOMER_FOLDER_ID FROM  CUSTOMER_FILE_DIRECTORY WHERE  CUSTOMER_ID='$Customerid' ";
         $resultset=$this->db->query($selectquery);
         foreach ($resultset->result_array() as $key=>$val)

@@ -77,6 +77,7 @@ class Mdl_eilib_invoice_contract extends CI_Model{
                 try {
                     $this->URSRC_RemoveEditor($service,$docid,$editorfile[$j]);
                 } catch (Exception $e) {
+                    return 0;
                 }
             }
         }
@@ -85,9 +86,15 @@ class Mdl_eilib_invoice_contract extends CI_Model{
             try {
                 $this->URSRC_AddEditor($service,$docid,$semailid);
             } catch (Exception $e) {
+                return 0;
             }
         }
-        $this-> SetDocOwnerGivenId($service,$docid,$docowner);
+        try {
+            $this-> SetDocOwnerGivenId($service,$docid,$docowner);
+            return 1;
+        } catch (Exception $e) {
+            return 0;
+        }
     }
 //FUNCTION TO REMOVE EDITORS IF SESSION ID NOT OWNER OR EDITOR
     public function RemoveEditors($service,$docid,$email_fetch,$docowner,$UserStamp)
@@ -160,9 +167,9 @@ class Mdl_eilib_invoice_contract extends CI_Model{
                     $return[] = $start;
                 else if(date('Y-m-d', strtotime($startDate.'+'.$i.' days'))==date('Y-m-01', strtotime($startDate.'+'.$i.' days'))&& date('Y-m-d', strtotime($startDate.'+'.$i.' days'))<= date('Y-m-d', strtotime($endDate)))
                     $return[] = $start;
-                if( date('Y-m-d', strtotime($startDate.'+'.$i.' days'))==date('Y-m-t',strtotime($startDate.'+'.$i.' days'))	)
+                if( date('Y-m-d', strtotime($startDate.'+'.$i.' days'))==date('Y-m-t',strtotime($startDate.'+'.$i.' days')) )
                     $end[] = $start;
-                else if( date('Y-m-d', strtotime($startDate.'+'.$i.' days'))==date('Y-m-d',strtotime($endDate))	){
+                else if( date('Y-m-d', strtotime($startDate.'+'.$i.' days'))==date('Y-m-d',strtotime($endDate)) ){
                     $end[] = $endDate;
                     break;}
                 $i++;
@@ -326,26 +333,26 @@ class Mdl_eilib_invoice_contract extends CI_Model{
 //REMOVE EDITORS
     public  function URSRC_RemoveEditor($service,$fileid,$URSRC_loginid){
         $URSRC_sharedocflag='';
-        try {
-            $permissions = $service->permissions->listPermissions($fileid);
-            $return_value= $permissions->getItems();
-            $permission_id='';
-            foreach ($return_value as $key => $value) {
-                if ($value->emailAddress==$URSRC_loginid) {
-                    $permission_id=$value->id;
-                }
+        // try {
+        $permissions = $service->permissions->listPermissions($fileid);
+        $return_value= $permissions->getItems();
+        $permission_id='';
+        foreach ($return_value as $key => $value) {
+            if ($value->emailAddress==$URSRC_loginid) {
+                $permission_id=$value->id;
             }
-            if($permission_id!=''){
-                try {
-                    $service->permissions->delete($fileid, $permission_id);
-                } catch (Exception $e) {
-                    return $e->getMessage();
-                }
-            }
-            $URSRC_sharedocflag=1;
-        } catch (Exception $e) {
-            $URSRC_sharedocflag=0;
         }
+        if($permission_id!=''){
+            try {
+                $service->permissions->delete($fileid, $permission_id);
+            } catch (Exception $e) {
+                return $e->getMessage();
+            }
+        }
+        $URSRC_sharedocflag=1;
+        // } catch (Exception $e) {
+        //     $URSRC_sharedocflag=0;
+        // }
         return $URSRC_sharedocflag;
     }
 //ADD EDITORS
@@ -359,10 +366,10 @@ class Mdl_eilib_invoice_contract extends CI_Model{
         $newPermission->setType($type);
         $newPermission->setRole($role);
         $newPermission->setEmailAddress($email);
-        try {
-            $service->permissions->insert($fileid, $newPermission);
-        } catch (Exception $e) {
-        }
+        // try {
+        $service->permissions->insert($fileid, $newPermission);
+        // } catch (Exception $e) {
+        // }
     }
 //GET ALL FILES FROM FOLDER
     public function URSRC_GetAllFiles($service,$folderid){
@@ -741,8 +748,12 @@ class Mdl_eilib_invoice_contract extends CI_Model{
             $response = curl_exec($ch);
             curl_close($ch);
             if(strpos($response,"SCRIPT ERROR")===false){
-                $this->CUST_SetDocOwner($service,$response,$docowner,$sendmailid);
-                return [1,$newfile,$file->alternateLink];}
+                $flagownership= $this->CUST_SetDocOwner($service,$response,$docowner,$sendmailid);
+                if($flagownership==1)
+                    return [1,$newfile,$file->alternateLink];
+                else
+                    return [0,$newfile,$file->alternateLink,$this->Mdl_eilib_common_function->getErrorMessageList("581")[0]->EMC_DATA];
+            }
             else{
                 return [0,$newfile,$file->alternateLink,$response];
             }
@@ -774,11 +785,11 @@ class Mdl_eilib_invoice_contract extends CI_Model{
         $newPermission->setType($type);
         $newPermission->setRole($role);
         $newPermission->setEmailAddress($email);
-        try {
-            $service->permissions->insert($fileid, $newPermission);
-        } catch (Exception $e) {
-            echo $e->getMessage();
-        }
+        // try {
+        $service->permissions->insert($fileid, $newPermission);
+        // } catch (Exception $e) {
+        //     echo $e->getMessage();
+        // }
     }
 //FUNCTION TO CREATE INVOICE
     public  function CUST_invoice($UserStamp,$service,$unit,$customername,$companyname,$invoiceid,$invoicesno,$invoicedate,$rent,$process,$deposit,$sdate,$edate,$roomtype,$Leaseperiod,$rentcheck,$sendmailid,$docowner,$formname,$waived,$custid,$parentId)
@@ -1069,8 +1080,12 @@ class Mdl_eilib_invoice_contract extends CI_Model{
             $response = curl_exec($ch);
             curl_close($ch);
             if(strpos($response,"SCRIPT ERROR")===false){
-                $this->CUST_SetDocOwner($service,$response,$docowner,$sendmailid);
-                return [1,$newfile,$file->alternateLink,"INV".$todaysDate.$Slno];}
+                $flagownership= $this->CUST_SetDocOwner($service,$response,$docowner,$sendmailid);
+                if($flagownership==1)
+                    return [1,$newfile,$file->alternateLink,"INV".$todaysDate.$Slno];
+                else
+                    return [0,$newfile,$file->alternateLink,$this->Mdl_eilib_common_function->getErrorMessageList("581")[0]->EMC_DATA];
+            }
             else{
                 return [0,$newfile,$file->alternateLink,$response];
             }

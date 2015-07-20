@@ -174,6 +174,7 @@ class Ctrl_Unit_Creation_Search_Update extends CI_Controller{
         $USU_unino=$this->input->get('USU_lb_unitno');
         $USU_roomtype=$this->input->get('USU_lb_roomtyps');
         $USU_accesscard = $this->input->get('USU_lb_cardno');
+        $USU_typeofcard = $this->input->get('USU_lb_typeofcard');
         if($USU_unino!='SELECT' && $USU_unino!='' && $USU_unino!='null'){
             $USU_all_searchby=$USU_unino;
         }
@@ -183,15 +184,15 @@ class Ctrl_Unit_Creation_Search_Update extends CI_Controller{
         $pdfresult='';
         $pdfresult=$this->Mdl_unit_creation_search_update->Usu_flext_table_pdf($USU_unit_searchby,$USU_dutyamt_fromamt,$USU_dutyamt_toamt,$USU_payment_frmamt,$USU_payment_toamt,$USU_frmdate,$USU_enddate,$USU_all_searchby,$USU_accesscard,$USU_parent_updation,$timeZoneFrmt,$USERSTAMP);
         $pdfheader='';
-        if($USU_unit_searchby==1){$pdfheader='DETAILS FOR THE INVENTORY CARD: '.$USU_accesscard;}
+        if($USU_unit_searchby==1){$pdfheader='ACCESS CARD DETAILS FOR THE '.$USU_typeofcard.' CARD: '.$USU_accesscard;}
         elseif($USU_unit_searchby==2){$pdfheader='STAMP DUTY AMOUNT DETAIL BETWEEN '.$USU_dutyamt_fromamt.' AND '.$USU_dutyamt_toamt;}
-        elseif($USU_unit_searchby==3){$pdfheader='END DATE BETWEEN '.$USU_frmdate.' AND '.$USU_enddate;}
+        elseif($USU_unit_searchby==3){$pdfheader='UNIT DETAILS - END DATE BETWEEN '.$USU_frmdate.' AND '.$USU_enddate;}
         elseif($USU_unit_searchby==4){$pdfheader='UNIT PAYMENT AMOUNT DETAIL BETWEEN '.$USU_payment_frmamt.' AND '.$USU_payment_toamt;}
         elseif($USU_unit_searchby==5){$pdfheader='LIST OF ROOM TYPE';}
-        elseif($USU_unit_searchby==6){$pdfheader='START DATE BETWEEN '.$USU_frmdate.' AND '.$USU_enddate;}
-        elseif($USU_unit_searchby==7){$pdfheader='DETAILS FOR THE UNIT NUMBER '.$USU_unino;}
+        elseif($USU_unit_searchby==6){$pdfheader='UNIT DETAILS - START DATE BETWEEN '.$USU_frmdate.' AND '.$USU_enddate;}
+        elseif($USU_unit_searchby==7){$pdfheader='UNIT DETAILS FOR THE UNIT NUMBER '.$USU_unino;}
         elseif($USU_unit_searchby==8){$pdfheader='LIST OF STAMP TYPE';}
-        elseif($USU_unit_searchby==9){$pdfheader='DETAILS FOR THE ROOM TYPE: '.$USU_roomtype;}
+        elseif($USU_unit_searchby==9){$pdfheader='ACCESS CARD DETAILS FOR THE ROOM TYPE: '.$USU_roomtype;}
         $pdf = $this->pdf->load();
         if($USU_unit_searchby==5 || $USU_unit_searchby==8){
             $pdf=new mPDF('utf-8','A4');

@@ -44,10 +44,10 @@ class Ctrl_Access_Card_View extends CI_Controller{
         $option= $this->input->get('option');
         $pdfresult=$this->Mdl_access_card_view->Pdf_creation($custid,$unitno,$cardno,$option,$USERSTAMP);
         $pdfheader='';
-        if($option==18){$pdfheader='DETAIL FOR CARD NO '.$cardno;}
-        else if($option==21){$pdfheader='DETAIL FOR CUSTOMER '.$custname;}
-        else if($option==31){$pdfheader='DETAILS FOR THE UNIT NUMBER '.$unitno;}
-        else if($option==40){$pdfheader='DETAILS FOR ALL UNITS';}
+        if($option==18){$pdfheader='ACCESS CARD DETAIL FOR CARD NO '.$cardno;}
+        else if($option==21){$pdfheader='ACCESS CARD DETAIL FOR CUSTOMER '.$custname;}
+        else if($option==31){$pdfheader='ACCESS CARD DETAILS FOR THE UNIT NUMBER '.$unitno;}
+        else if($option==40){$pdfheader='ACCESS CARD DETAILS FOR ALL UNITS';}
         $pdf = $this->pdf->load();
         $pdf=new mPDF('utf-8','A4');
         $pdf->SetHTMLHeader('<div style="text-align: center; font-weight: bold;">'.$pdfheader.'</div>', 'O', true);

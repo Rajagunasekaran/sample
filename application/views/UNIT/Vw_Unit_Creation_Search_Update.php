@@ -1625,10 +1625,10 @@ require_once('application/libraries/EI_HDR.php');
                 $(".USU_class_title_alpha").prop("title",USU_errormsg_arr[0].EMC_DATA);
             });
         // BLUR FUNCTION FOR ROOM TYPE,STAMP TYPE TEXTBOX
-            $(document).on('blur','.USU_class_sep_type',function(evnt){
-                evnt.stopPropagation();
-                evnt.preventDefault();
-                evnt.stopImmediatePropagation();
+            $(document).on('blur','.USU_class_sep_type',function(event){
+                event.stopPropagation();
+                event.preventDefault();
+                event.stopImmediatePropagation();
                 USU_flag_updbtn=0;
                 if($('#USU_tb_sep_roomtype').val()!=undefined){
                     var USU_roomstamptype_val=$('#USU_tb_sep_roomtype').val();
@@ -2086,7 +2086,7 @@ require_once('application/libraries/EI_HDR.php');
         // PDF BUTTON EVENT
             $('#USU_btn_pdf').click(function()
             {
-                var pdfurl=document.location.href='<?php echo site_url('UNIT/Ctrl_Unit_Creation_Search_Update/USU_flexttablepdf')?>?USU_parent_updation=USU_parent_updation&USU_lb_searchby='+$("#USU_lb_searchby").val()+'&USU_tb_dutyamt_fromamt='+$("#USU_tb_dutyamt_fromamt").val()+'&USU_tb_dutyamt_toamt='+$("#USU_tb_dutyamt_toamt").val()+'&USU_tb_payment_fromamt='+$("#USU_tb_payment_fromamt").val()+'&USU_tb_payment_toamt='+$("#USU_tb_payment_toamt").val()+'&USU_db_fromdate='+$("#USU_db_fromdate").val()+'&USU_db_todate='+$("#USU_db_todate").val()+'&USU_lb_unitno='+$("#USU_lb_unitno").val()+'&USU_lb_roomtyps='+$("#USU_lb_roomtyps").val()+'&USU_lb_cardno='+$("#USU_lb_cardno").val();
+                var pdfurl=document.location.href='<?php echo site_url('UNIT/Ctrl_Unit_Creation_Search_Update/USU_flexttablepdf')?>?USU_parent_updation=USU_parent_updation&USU_lb_searchby='+$("#USU_lb_searchby").val()+'&USU_tb_dutyamt_fromamt='+$("#USU_tb_dutyamt_fromamt").val()+'&USU_tb_dutyamt_toamt='+$("#USU_tb_dutyamt_toamt").val()+'&USU_tb_payment_fromamt='+$("#USU_tb_payment_fromamt").val()+'&USU_tb_payment_toamt='+$("#USU_tb_payment_toamt").val()+'&USU_db_fromdate='+$("#USU_db_fromdate").val()+'&USU_db_todate='+$("#USU_db_todate").val()+'&USU_lb_unitno='+$("#USU_lb_unitno").val()+'&USU_lb_roomtyps='+$("#USU_lb_roomtyps").val()+'&USU_lb_cardno='+$("#USU_lb_cardno").val()+'&USU_lb_typeofcard='+$("#USU_lb_typeofcard").val();
             });
         });
     </script>

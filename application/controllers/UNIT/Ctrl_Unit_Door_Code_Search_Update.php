@@ -40,7 +40,7 @@ class Ctrl_Unit_Door_Code_Search_Update extends CI_Controller{
         $timeZoneFrmt= $this->Mdl_eilib_common_function->getTimezone();
         $unitno=$this->input->get("DCSUunitno");
         $pdfresult=$this->Mdl_unit_door_code_search_update->DCSU_table_pdf($unitno,$timeZoneFrmt);
-        $pdfheader='DETAILS FOR THE UNIT NUMBER '.$unitno;
+        $pdfheader='DOOR CODE LOGIN DETAILS FOR THE UNIT NUMBER '.$unitno;
         $this->load->library('pdf');
         $pdf = $this->pdf->load();
         $pdf=new mPDF('utf-8','A4');

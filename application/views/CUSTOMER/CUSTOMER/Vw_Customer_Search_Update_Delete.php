@@ -922,15 +922,12 @@
                 var CSRC_emptycustomerheader=CSRC_customer_acc_detailsemptytitle+" LEASE PERIOD : "+fromdate;
 //             $('#CC_SRC_Leaseperiod').val('')
             }
-            alert(JSON.stringify(data));
             $.ajax({
                 type: "POST",
                 url: controller_url+"SearchDataResults",
                 data:data,
                 success: function(data){
                     var value_array=JSON.parse(data);
-                    alert(value_array)
-
                     if(value_array.length!=0)
                     {
                         CustomerTableLoading(value_array);
@@ -1228,7 +1225,6 @@
             var unitno=splitteddata[3];
             var Recverdetails;
             $("#CSRC_btn_Updatebutton").attr("disabled", "disabled");
-            alert(customerid+' '+leaseperiod+' '+unitno)
             $('.preloader').show();
             $.ajax({
                 type: "POST",
@@ -1589,7 +1585,6 @@
         $(document).on('click','.filedelete',function(){
             var fileid=this.id;
             var splitfileid=fileid.split('/');
-            alert(splitfileid[0]);
             $('.preloader').show();
             $.ajax({
                 type: "POST",
@@ -2111,9 +2106,7 @@
             xmlhttp.onreadystatechange = function () {
                 if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
                     $('.preloader').hide();
-                    alert(xmlhttp.responseText);
                     var msg_alert = JSON.parse(xmlhttp.responseText);
-                    alert(msg_alert);
                     $('.preloader').hide();
                     if (msg_alert == 1) {
                         $('#CC_SearchformDiv').hide();
@@ -2132,7 +2125,10 @@
                         $('#CCRE_SRC_Startdate').prop('disabled', true);
                         $('#CCRE_SRC_Enddate').prop('disabled', true);
                         $('#CCRE_SRC_NoticePeriodDate').prop('disabled', true);
-                        show_msgbox("CUSTOMER SEARCH/UPDATE",data,"error",false);
+                        if(msg_alert == 0)
+                            show_msgbox("CUSTOMER SEARCH/UPDATE",data,"error",false);
+                        else
+                            show_msgbox("CUSTOMER SEARCH/UPDATE",xmlhttp.responseText,"error",false);
                     }
                 }
             }

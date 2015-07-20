@@ -1711,7 +1711,6 @@ require_once('application/libraries/EI_HDR.php');
             var xmlhttp = new XMLHttpRequest();
             xmlhttp.onreadystatechange = function () {
                 if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-                    alert(xmlhttp.responseText);
                     var saveresult = JSON.parse(xmlhttp.responseText);
                     $('.preloader').hide();
                     CEXTN_SaveDetails_result(saveresult)

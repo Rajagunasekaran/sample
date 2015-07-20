@@ -495,7 +495,7 @@ class Mdl_customer_search_update_delete extends CI_Model
                             if ($CustomerFolderback != '') {
                                 $this->Mdl_eilib_invoice_contract->CUST_UNSHARE_FILE($service, $CustomerFolderback);
                             }
-                            echo $InvoiceId[0];
+                            echo $InvoiceId[3];
                             exit;
                         }
                     } else if ($CCoption == 5) {
@@ -530,7 +530,7 @@ class Mdl_customer_search_update_delete extends CI_Model
                             if ($CustomerFolderback != '') {
                                 $this->Mdl_eilib_invoice_contract->CUST_UNSHARE_FILE($service, $CustomerFolderback);
                             }
-                            echo $ContractId[0];
+                            echo $ContractId[3];
                             exit;
                         }
                     } else if ($CCoption == 6) {
@@ -567,7 +567,10 @@ class Mdl_customer_search_update_delete extends CI_Model
                             if ($CustomerFolderback != '') {
                                 $this->Mdl_eilib_invoice_contract->CUST_UNSHARE_FILE($service, $CustomerFolderback);
                             }
-                            echo $InvoiceId[0];
+                            if($InvoiceId[0] == 0)
+                                echo $InvoiceId[3];
+                            if($ContractId[0] == 0)
+                                echo $ContractId[3];
                             exit;
                         }
                     }

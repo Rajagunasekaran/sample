@@ -159,7 +159,7 @@ class Mdl_customer_creation extends CI_Model
             $EndDate = date('Y-m-d', strtotime($Enddate));
             $this->db->query('SET AUTOCOMMIT=0');
             $this->db->query('START TRANSACTION');
-            $CallQuery = "CALL SP_CUSTOMER_CREATION_INSERT(1,null,'$FirstName','$Lastname','$CompanyName','$CompanyAddress','$CompanyPostalCode','$Officeno',$Uint,'$RoomType','$S_starttime','$S_endtime','$E_starttime','$E_endtime','$Leaseperiod',$CCRE_quators,'$processwaived','$Prorated','$NoticePeriod','$NoticePeriodDate',$Rent,'$DepositFee','$ProcessingFee','$Fixedaircon_fee','$Quaterlyfee','$ElectricitycapFee','$CheckOutCleanFee','$Curtain_DrycleanFee','$cardno','$StartDate','$UserStamp','$StartDate','$EndDate','$accesscard','$Nationality','$Mobile','$IntlMobile','$Emailid','$PassportNo','$PassportDate','$DOB','$EpNo','$EPDate','$Comments',@CUSTOMER_CREATION_TEMPTBLNAME,@CUSTOMER_SUCCESSFLAG,@SAVE_POINT_NAME)";
+            $CallQuery = "CALL SP_CUSTOMER_CREATION_INSERT(1,null,'$FirstName','$Lastname','$CompanyName','$CompanyAddress','$CompanyPostalCode','$Officeno',$Uint,'$RoomType','$S_starttime','$S_endtime','$E_starttime','$E_endtime','$Leaseperiod',$CCRE_quators,'$processwaived','$InvProrated','$NoticePeriod','$NoticePeriodDate',$Rent,'$DepositFee','$ProcessingFee','$Fixedaircon_fee','$Quaterlyfee','$ElectricitycapFee','$CheckOutCleanFee','$Curtain_DrycleanFee','$cardno','$StartDate','$UserStamp','$StartDate','$EndDate','$accesscard','$Nationality','$Mobile','$IntlMobile','$Emailid','$PassportNo','$PassportDate','$DOB','$EpNo','$EPDate','$Comments',@CUSTOMER_CREATION_TEMPTBLNAME,@CUSTOMER_SUCCESSFLAG,@SAVE_POINT_NAME)";
             $this->db->query($CallQuery);
             $outparm_query = $this->db->query('SELECT @CUSTOMER_CREATION_TEMPTBLNAME AS TEMP_TABLE,@CUSTOMER_SUCCESSFLAG AS CONFIRM,@SAVE_POINT_NAME AS SAVEPOINT_NAME');
             foreach ($outparm_query->result_array() as $key=>$val)
@@ -228,7 +228,7 @@ class Mdl_customer_creation extends CI_Model
                         $Username = strtoupper($mail_username[0]);
                         $this->load->model('EILIB/Mdl_eilib_invoice_contract');
                         if ($CCoption == 4) {
-                            $InvoiceId = $this->Mdl_eilib_invoice_contract->CUST_invoice($UserStamp, $service, $Uint, $Name, $CompanyName, $Invoiceandcontractid[9], $Invoiceandcontractid[0], $Invoiceandcontractid[1], $Rent, $ProcessingFee, $DepositFee, $StartDate, $EndDate, $RoomType, $Leaseperiod, $Prorated, $Sendmailid, $Docowner, 'CREATION', $processwaived, $Customerid, $CustomerFolder);
+                            $InvoiceId = $this->Mdl_eilib_invoice_contract->CUST_invoice($UserStamp, $service, $Uint, $Name, $CompanyName, $Invoiceandcontractid[9], $Invoiceandcontractid[0], $Invoiceandcontractid[1], $Rent, $ProcessingFee, $DepositFee, $StartDate, $EndDate, $RoomType, $Leaseperiod, $InvProrated, $Sendmailid, $Docowner, 'RECHECKIN', $processwaived, $Customerid, $CustomerFolder);
                             if ($InvoiceId[0] == 1) {
                                 $this->InvoiceCreation($InvoiceId, $Emailtemplate, $Username, $Confirm_Meessage, $Uint, $Name, $Sendmailid, $UserStamp);
                                 $this->db->trans_savepoint_release($savepoint) ;
@@ -244,11 +244,11 @@ class Mdl_customer_creation extends CI_Model
                                 if ($CustomerFolderback != '') {
                                     $this->Mdl_eilib_invoice_contract->CUST_UNSHARE_FILE($service, $CustomerFolderback);
                                 }
-                                echo $InvoiceId[4];
+                                echo $InvoiceId[3];
                                 exit;
                             }
                         } else if ($CCoption == 5) {
-                            $ContractId = $this->Mdl_eilib_invoice_contract->CUST_contract($service, $Uint, $Startdate, $Enddate, $CompanyName, $Name, $NoticePeriod, $PassportNo, $PassportDate, $EpNo, $EPDate, $NoticePeriodDate, $Leaseperiod, $Cont_cardno, $Rent, $InvQuaterlyfee, $InvFixedaircon_fee, $InvElectricitycapFee, $InvCurtain_DrycleanFee, $InvCheckOutCleanFee, $InvProcessingFee, $InvDepositFee, $Invwaived, $RoomType, $InvProrated, 'CREATION', $Sendmailid, $Docowner, $CustomerFolder);
+                            $ContractId = $this->Mdl_eilib_invoice_contract->CUST_contract($service, $Uint, $Startdate, $Enddate, $CompanyName, $Name, $NoticePeriod, $PassportNo, $PassportDate, $EpNo, $EPDate, $NoticePeriodDate, $Leaseperiod, $Cont_cardno, $Rent, $InvQuaterlyfee, $InvFixedaircon_fee, $InvElectricitycapFee, $InvCurtain_DrycleanFee, $InvCheckOutCleanFee, $InvProcessingFee, $InvDepositFee, $Invwaived, $RoomType, $InvProrated, 'RECHECKIN', $Sendmailid,$Docowner, $CustomerFolder);
                             if ($ContractId[0] == 1) {
                                 $this->ContractCreation($ContractId, $Emailtemplate, $Username, $Confirm_Meessage, $Uint, $Name, $Sendmailid, $UserStamp);
                                 $this->db->trans_savepoint_release($savepoint) ;
@@ -269,8 +269,8 @@ class Mdl_customer_creation extends CI_Model
                             }
 
                         } else if ($CCoption == 6) {
-                            $InvoiceId = $this->Mdl_eilib_invoice_contract->CUST_invoice($UserStamp, $service, $Uint, $Name, $CompanyName, $Invoiceandcontractid[9], $Invoiceandcontractid[0], $Invoiceandcontractid[1], $Rent, $ProcessingFee, $DepositFee, $StartDate, $EndDate, $RoomType, $Leaseperiod, $Prorated, $Sendmailid, $Docowner, 'CREATION', $processwaived, $Customerid, $CustomerFolder);
-                            $ContractId = $this->Mdl_eilib_invoice_contract->CUST_contract($service, $Uint, $Startdate, $Enddate, $CompanyName, $Name, $NoticePeriod, $PassportNo, $PassportDate, $EpNo, $EPDate, $NoticePeriodDate, $Leaseperiod, $Cont_cardno, $Rent, $InvQuaterlyfee, $InvFixedaircon_fee, $InvElectricitycapFee, $InvCurtain_DrycleanFee, $InvCheckOutCleanFee, $InvProcessingFee, $InvDepositFee, $Invwaived, $RoomType, $InvProrated, 'CREATION', $Sendmailid, $Docowner, $CustomerFolder);
+                            $InvoiceId = $this->Mdl_eilib_invoice_contract->CUST_invoice($UserStamp, $service, $Uint, $Name, $CompanyName, $Invoiceandcontractid[9], $Invoiceandcontractid[0], $Invoiceandcontractid[1], $Rent, $ProcessingFee, $DepositFee, $StartDate, $EndDate, $RoomType, $Leaseperiod, $InvProrated, $Sendmailid, $Docowner, 'RECHECKIN', $processwaived, $Customerid, $CustomerFolder);
+                            $ContractId = $this->Mdl_eilib_invoice_contract->CUST_contract($service, $Uint, $Startdate, $Enddate, $CompanyName, $Name, $NoticePeriod, $PassportNo, $PassportDate, $EpNo, $EPDate, $NoticePeriodDate, $Leaseperiod, $Cont_cardno, $Rent, $InvQuaterlyfee, $InvFixedaircon_fee, $InvElectricitycapFee, $InvCurtain_DrycleanFee, $InvCheckOutCleanFee, $InvProcessingFee, $InvDepositFee, $Invwaived, $RoomType, $InvProrated, 'RECHECKIN', $Sendmailid, $Docowner, $CustomerFolder);
                             if ($InvoiceId[0] == 1 && $ContractId[0] == 1) {
                                 $this->db->trans_savepoint_release($savepoint) ;
                                 $this->InvoiceandContract($InvoiceId, $ContractId, $Emailtemplate, $Username, $Confirm_Meessage, $Uint, $Name, $Sendmailid, $UserStamp);
@@ -287,7 +287,10 @@ class Mdl_customer_creation extends CI_Model
                                 if ($CustomerFolderback != '') {
                                     $this->Mdl_eilib_invoice_contract->CUST_UNSHARE_FILE($service, $CustomerFolderback);
                                 }
-                                echo 0;
+                                if($InvoiceId[0] == 0)
+                                    echo $InvoiceId[3];
+                                if($ContractId[0] == 0)
+                                    echo $ContractId[3];
                                 exit;
                             }
                         }
@@ -550,7 +553,7 @@ class Mdl_customer_creation extends CI_Model
             $Sendmailid = $_POST['CCRE_MailList'];
             $this->db->query('SET AUTOCOMMIT=0');
             $this->db->query('START TRANSACTION');
-            $CallQuery = "CALL SP_CUSTOMER_CREATION_INSERT(2,'$Customerid','$FirstName','$Lastname','$CompanyName','$CompanyAddress','$CompanyPostalCode','$Officeno',$Uint,'$RoomType','$S_starttime','$S_endtime','$E_starttime','$E_endtime','$Leaseperiod',$CCRE_quators,'$processwaived','$Prorated','$NoticePeriod','$NoticePeriodDate',$Rent,'$DepositFee','$ProcessingFee','$Fixedaircon_fee','$Quaterlyfee','$ElectricitycapFee','$CheckOutCleanFee','$Curtain_DrycleanFee','$cardno','$StartDate','$UserStamp','$StartDate','$EndDate','$accesscard','$Nationality','$Mobile','$IntlMobile','$Emailid','$PassportNo','$PassportDate','$DOB','$EpNo','$EPDate','$Comments',@CUSTOMER_CREATION_TEMPTBLNAME,@CUSTOMER_SUCCESSFLAG,@SAVE_POINT_NAME)";
+            $CallQuery = "CALL SP_CUSTOMER_CREATION_INSERT(2,'$Customerid','$FirstName','$Lastname','$CompanyName','$CompanyAddress','$CompanyPostalCode','$Officeno',$Uint,'$RoomType','$S_starttime','$S_endtime','$E_starttime','$E_endtime','$Leaseperiod',$CCRE_quators,'$processwaived','$InvProrated','$NoticePeriod','$NoticePeriodDate',$Rent,'$DepositFee','$ProcessingFee','$Fixedaircon_fee','$Quaterlyfee','$ElectricitycapFee','$CheckOutCleanFee','$Curtain_DrycleanFee','$cardno','$StartDate','$UserStamp','$StartDate','$EndDate','$accesscard','$Nationality','$Mobile','$IntlMobile','$Emailid','$PassportNo','$PassportDate','$DOB','$EpNo','$EPDate','$Comments',@CUSTOMER_CREATION_TEMPTBLNAME,@CUSTOMER_SUCCESSFLAG,@SAVE_POINT_NAME)";
             $this->db->query($CallQuery);
             $outparm_query = $this->db->query('SELECT @CUSTOMER_CREATION_TEMPTBLNAME AS TEMP_TABLE,@CUSTOMER_SUCCESSFLAG AS CONFIRM,@SAVE_POINT_NAME AS SAVEPOINT_NAME');
             foreach ($outparm_query->result_array() as $key=>$val)
@@ -559,6 +562,8 @@ class Mdl_customer_creation extends CI_Model
                 $Confirm_Meessage=$val['CONFIRM'];
                 $savepoint=$val['SAVEPOINT_NAME'];
             }
+//            echo $CallQuery;
+//            echo $Confirm_Meessage;
             if ($Confirm_Meessage == 1) {
                 //FILE UPLOAD
                 $filetempname = $_FILES['CC_fileupload']['tmp_name'];
@@ -609,12 +614,14 @@ class Mdl_customer_creation extends CI_Model
                     if (($CCoption == 4 || $CCoption == 5 || $CCoption == 6) && $calresponse == 1) {
                         $Invoiceandcontractid = $this->Mdl_eilib_common_function->CUST_invoice_contractreplacetext();
                         $Docowner = $this->Mdl_eilib_common_function->CUST_documentowner($UserStamp);
+                        $Docowner="saradagaya@gmail.com";
                         $Emailtemplate = $this->Mdl_eilib_common_function->CUST_emailsubandmessages();
                         $mail_username = explode('@', $Sendmailid);
                         $Username = strtoupper($mail_username[0]);
                         $this->load->model('EILIB/Mdl_eilib_invoice_contract');
                         if ($CCoption == 4) {
                             $InvoiceId = $this->Mdl_eilib_invoice_contract->CUST_invoice($UserStamp, $service, $Uint, $Name, $CompanyName, $Invoiceandcontractid[9], $Invoiceandcontractid[0], $Invoiceandcontractid[1], $Rent, $ProcessingFee, $DepositFee, $StartDate, $EndDate, $RoomType, $Leaseperiod, $InvProrated, $Sendmailid, $Docowner, 'CREATION', $processwaived, $Customerid, $CustomerFolder);
+//                            print_r($InvoiceId);
                             if ($InvoiceId[0] == 1) {
                                 $this->db->trans_savepoint_release($savepoint) ;
                                 $this->db->query('DROP TABLE IF EXISTS ' . $temptable);
@@ -637,7 +644,7 @@ class Mdl_customer_creation extends CI_Model
                                     $this->Mdl_eilib_invoice_contract->CUST_UNSHARE_FILE($service, $InvoiceId[1]);
                                 }
                                 $this->db->query('DROP TABLE IF EXISTS ' . $temptable);
-                                echo $Confirm_Meessage;
+                                echo $InvoiceId[3];
                                 exit;
                             }
                         } else if ($CCoption == 5) {
@@ -664,11 +671,11 @@ class Mdl_customer_creation extends CI_Model
                                     $this->Mdl_eilib_invoice_contract->CUST_UNSHARE_FILE($service, $ContractId[1]);
                                 }
                                 $this->db->query('DROP TABLE IF EXISTS ' . $temptable);
-                                echo $Confirm_Meessage;
+                                echo $ContractId[3];
                                 exit;
                             }
                         } else if ($CCoption == 6) {
-                            $InvoiceId = $this->Mdl_eilib_invoice_contract->CUST_invoice($UserStamp, $service, $Uint, $Name, $CompanyName, $Invoiceandcontractid[9], $Invoiceandcontractid[0], $Invoiceandcontractid[1], $Rent, $ProcessingFee, $DepositFee, $StartDate, $EndDate, $RoomType, $Leaseperiod, $InvProrated, $Sendmailid, $Docowner, 'CREATION', $processwaived, $Customerid, $CustomerFolder);
+                            $InvoiceId = $this->Mdl_eilib_invoice_contract->CUST_invoice($UserStamp, $service, $Uint, $Name, $CompanyName, $Invoiceandcontractid[9], $Invoiceandcontractid[0], $Invoiceandcontractid[1], $Rent, $ProcessingFee, $DepositFee, $StartDate, $EndDate, $RoomType, $Leaseperiod, $InvProrated, $Sendmailid, $Docowner, 'RECHECKIN', $processwaived, $Customerid, $CustomerFolder);
                             $ContractId = $this->Mdl_eilib_invoice_contract->CUST_contract($service, $Uint, $Startdate, $Enddate, $CompanyName, $Name, $NoticePeriod, $PassportNo, $PassportDate, $EpNo, $EPDate, $NoticePeriodDate, $Leaseperiod, $Cont_cardno, $Rent, $InvQuaterlyfee, $InvFixedaircon_fee, $InvElectricitycapFee, $InvCurtain_DrycleanFee, $InvCheckOutCleanFee, $InvProcessingFee, $InvDepositFee, $Invwaived, $RoomType, $InvProrated, 'CREATION', $Sendmailid, $Docowner, $CustomerFolder);
                             if ($InvoiceId[0] == 1 && $ContractId[0] == 1) {
                                 $this->db->trans_savepoint_release($savepoint) ;
@@ -695,7 +702,11 @@ class Mdl_customer_creation extends CI_Model
                                     $this->Mdl_eilib_invoice_contract->CUST_UNSHARE_FILE($service, $InvoiceId[1]);
                                 }
                                 $this->db->query('DROP TABLE IF EXISTS ' . $temptable);
-                                echo $Confirm_Meessage;
+//                                print_r($InvoiceId);
+                                if($InvoiceId[0] == 0)
+                                    echo $InvoiceId[3];
+                                if($ContractId[0] == 0)
+                                    echo $ContractId[3];
                                 exit;
                             }
                         }

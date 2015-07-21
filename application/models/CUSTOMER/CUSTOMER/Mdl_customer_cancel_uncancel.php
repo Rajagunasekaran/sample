@@ -275,7 +275,6 @@ class Mdl_customer_cancel_uncancel extends CI_Model {
                  $type='UNCANCEL';
                  $cancel_date_array=array();
                  $unit_no_array=array();
-                 $this->load->model('EILIB/Calender');
                  foreach($CCAN_custeventrs->result_array() as $row){
                     $count++;
                     $CCAN_checkin_date = $row["CLP_STARTDATE"];
@@ -311,7 +310,7 @@ class Mdl_customer_cancel_uncancel extends CI_Model {
                     }
                     if($CCAN_unitno!=$CCAN_unit_value){
                        $CCAN_custunittype="DIFF UNIT";
-                       $cal_flag= $this->Mdl_eilib_calender->CUST_customercalendercreation($cal_service,$CCAN_custid,$CCAN_checkin_date,$CCAN_start_time_in,$CCAN_start_time_out,$CCAN_checkout_date,$CCAN_end_time_in,$CCAN_end_time_out,$CCAN_firstname,$CCAN_lastname,$CCAN_mobile,$CCAN_intmoblie,$CCAN_office,$CCAN_emailid,$CCAN_unitno,$CCAN_roomtype,$CCAN_custunittype);
+                        $this->Mdl_eilib_calender->CUST_customercalenderdeletion($cal_service,$CCAN_custid,$CCAN_checkin_date,$CCAN_start_time_in,$CCAN_start_time_out,'','','',$type);
                        $cal_flag=$this->Mdl_eilib_calender->CUST_customercalendercreation('',$cal_service,$CCAN_custid,$CCAN_checkin_date,$CCAN_start_time_in,$CCAN_start_time_out,$CCAN_checkout_date,$CCAN_end_time_in,$CCAN_end_time_out,$CCAN_firstname,$CCAN_lastname,$CCAN_mobile,$CCAN_intmoblie,$CCAN_office,$CCAN_emailid,$CCAN_unitno,$CCAN_roomtype,$CCAN_custunittype);
                     }
                  }

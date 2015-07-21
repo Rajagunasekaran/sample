@@ -239,7 +239,7 @@ class Mdl_eilib_calender  extends CI_Model {
                     $createdEvent = $calPrimary->events->insert($calId, $event);
                 }
             }
-            return $createdEvent;
+            return 1;
         }
         catch(Exception $e){
             return $e->getMessage();

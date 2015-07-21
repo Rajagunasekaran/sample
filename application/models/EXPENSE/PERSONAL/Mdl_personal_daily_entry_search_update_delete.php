@@ -512,6 +512,20 @@ Class Mdl_personal_daily_entry_search_update_delete extends CI_Model {
     // EXPENSE CARLOAN UPDATE PART
     public  function expensecarloanupdate($eclid,$eclpaiddate,$eclfromperiod,$ecltopaid,$eclamount,$eclcomments,$USERSTAMP)
     {
+        if(strtotime($eclfromperiod)>strtotime($eclpaiddate))
+        {
+            $eclfromperiod=$eclpaiddate;
+        }
+        else{
+            $eclfromperiod=$eclfromperiod;
+        }
+        if(strtotime($ecltopaid)>strtotime($eclpaiddate))
+        {
+            $ecltopaid=$eclpaiddate;
+        }
+        else{
+            $ecltopaid=$ecltopaid;
+        }
         $updatequery = "UPDATE EXPENSE_CAR_LOAN SET ECL_PAID_DATE='$eclpaiddate',ECL_FROM_PERIOD='$eclfromperiod',ECL_TO_PERIOD='$ecltopaid',ECL_AMOUNT='$eclamount',ECL_COMMENTS='$eclcomments',ULD_ID=(SELECT ULD_ID FROM USER_LOGIN_DETAILS WHERE ULD_LOGINID='$USERSTAMP') WHERE ECL_ID='$eclid'";
         $this->db->query($updatequery);
         if ($this->db->affected_rows() > 0) {

@@ -1283,4 +1283,12 @@ public function getActive_Customer_Recver_Dates($unit,$customer,$Recever)
         $CI->load->database();
         return $CI->db->hostname;
     }
+    //ESCAPE SPECIAL CHARACTERS
+    public function jsspecialchars($string){
+        $string = preg_replace("/\r*\n/","\\n",$string);
+        $string = preg_replace("/\//","\\\/",$string);
+        $string = preg_replace("/\"/","\\\"",$string);
+        $string = preg_replace("/'/","\'",$string);
+        return $string;
+    }
 }

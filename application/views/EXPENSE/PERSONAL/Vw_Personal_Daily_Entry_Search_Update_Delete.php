@@ -2226,7 +2226,6 @@ $(document).ready(function(){
     });
     // EXPENSE BABY UPDATE FUNCTION
     $(document).on('change','.babyupdate', function (){
-        $('.preloader').show();
         if($('#ebcategory_'+combineid).hasClass("babyedit")==true){
 
             var babycategory=$('#ebcategory_'+combineid).text();
@@ -2269,44 +2268,51 @@ $(document).ready(function(){
         else{
             var babycomment=$('#Eb_invcomments').val();
         }
-        $.ajax({
-            type: "POST",
-            url: controller_url+"expensebabyupdate",
-            data:{'rowid':combineid,'babycategory':babycategory,'babyinvdate':babyinvdate,'babyinamt':babyinamt,'babyinfromt':babyinfromt,'babyinvitem':babyinvitem,'babycomment':babycomment},
-            success: function(data) {
-                $('.preloader').hide();
-                var resultflag=data;
-                if(resultflag==1)
-                {
-                    var PDLY_INPUT_expensetypetext=$('#PDLY_SEARCH_lb_typelist').find('option:selected').text();
-                    var PDLY_INPUT_CONFSAVEMSG =PDLY_SEARCH_hdrmsgArray[3].EMC_DATA.replace('[TYPE]', PDLY_INPUT_expensetypetext);
-                    show_msgbox("PERSONAL EXPENSE ENTRY/SEARCH/UPDATE/DELETE",PDLY_INPUT_CONFSAVEMSG,"success",false);
-                    var PDLY_SEARCH_lb_babysearchoptionvalue=$('#PDLY_SEARCH_lb_babysearchoption').val();
-                    if((PDLY_SEARCH_lb_babysearchoptionvalue==56)||(PDLY_SEARCH_lb_babysearchoptionvalue==55)||(PDLY_SEARCH_lb_babysearchoptionvalue==54))
-                    {
-                        $('#PDLY_SEARCH_tbl_htmltable').hide();
-                        $('#PDLY_SEARCH_div_htmltable').hide();
-                        $('#PDLY_SEARCH_lbl_flextableheader').hide();
-                        $('#PDLY_btn_pdf').hide();
-                        PDLY_SEARCH_searchvalue()
+        if($('#Eb_category').val()!='SELECT') {
+            $('.preloader').show();
+            $.ajax({
+                type: "POST",
+                url: controller_url + "expensebabyupdate",
+                data: {
+                    'rowid': combineid,
+                    'babycategory': babycategory,
+                    'babyinvdate': babyinvdate,
+                    'babyinamt': babyinamt,
+                    'babyinfromt': babyinfromt,
+                    'babyinvitem': babyinvitem,
+                    'babycomment': babycomment
+                },
+                success: function (data) {
+                    $('.preloader').hide();
+                    var resultflag = data;
+                    if (resultflag == 1) {
+                        var PDLY_INPUT_expensetypetext = $('#PDLY_SEARCH_lb_typelist').find('option:selected').text();
+                        var PDLY_INPUT_CONFSAVEMSG = PDLY_SEARCH_hdrmsgArray[3].EMC_DATA.replace('[TYPE]', PDLY_INPUT_expensetypetext);
+                        show_msgbox("PERSONAL EXPENSE ENTRY/SEARCH/UPDATE/DELETE", PDLY_INPUT_CONFSAVEMSG, "success", false);
+                        var PDLY_SEARCH_lb_babysearchoptionvalue = $('#PDLY_SEARCH_lb_babysearchoption').val();
+                        if ((PDLY_SEARCH_lb_babysearchoptionvalue == 56) || (PDLY_SEARCH_lb_babysearchoptionvalue == 55) || (PDLY_SEARCH_lb_babysearchoptionvalue == 54)) {
+                            $('#PDLY_SEARCH_tbl_htmltable').hide();
+                            $('#PDLY_SEARCH_div_htmltable').hide();
+                            $('#PDLY_SEARCH_lbl_flextableheader').hide();
+                            $('#PDLY_btn_pdf').hide();
+                            PDLY_SEARCH_searchvalue()
 
-                    }
-                    else
-                    {
-                        PDLY_SEARCH_loadflextable()
-                        previous_id=undefined;
+                        }
+                        else {
+                            PDLY_SEARCH_loadflextable()
+                            previous_id = undefined;
 
+                        }
                     }
+                    else {
+                        show_msgbox("PERSONAL EXPENSE ENTRY/SEARCH/UPDATE/DELETE", PDLY_SEARCH_hdrmsgArray[36].EMC_DATA, "success", false);
+                    }
+                },
+                error: function (data) {
+                    alert('error in getting' + JSON.stringify(data));
                 }
-                else
-                {
-                    show_msgbox("PERSONAL EXPENSE ENTRY/SEARCH/UPDATE/DELETE",PDLY_SEARCH_hdrmsgArray[36].EMC_DATA,"success",false);
-                }
-            },
-            error: function (data) {
-                alert('error in getting' + JSON.stringify(data));
-            }
-        });
+            });
+        }
     }) ;
     //EXPENSE CAR INLINE EDIT FUNCTION
     var carcombineid;
@@ -2368,7 +2374,6 @@ $(document).ready(function(){
     });
     // EXPENSE CAR UPDATE FUNCTION
     $(document).on('change','.carupdate', function (){
-        $('.preloader').show();
         if($('#eccategory_'+carcombineid).hasClass("caredit")==true){
 
             var carcategory=$('#eccategory_'+carcombineid).text();
@@ -2411,42 +2416,49 @@ $(document).ready(function(){
         else{
             var carcomment=$('#Ec_invcomments').val();
         }
-        $.ajax({
-            type: "POST",
-            url: controller_url+"expensecarupdate",
-            data:{'rowid':carcombineid,'carcategory':carcategory,'carinvdate':carinvdate,'carinamt':carinamt,'carinfromt':carinfromt,'carinvitem':carinvitem,'carcomment':carcomment},
-            success: function(data) {
-                $('.preloader').hide();
-                var resultflag=data;
-                if(resultflag==1)
-                {
-                    var PDLY_INPUT_expensetypetext=$('#PDLY_SEARCH_lb_typelist').find('option:selected').text();
-                    var PDLY_INPUT_CONFSAVEMSG =PDLY_SEARCH_hdrmsgArray[3].EMC_DATA.replace('[TYPE]', PDLY_INPUT_expensetypetext);
-                    show_msgbox("PERSONAL EXPENSE ENTRY/SEARCH/UPDATE/DELETE",PDLY_INPUT_CONFSAVEMSG,"success",false);
-                    var PDLY_SEARCH_lb_babysearchoptionvalue=$('#PDLY_SEARCH_lb_babysearchoption').val();
-                    if((PDLY_SEARCH_lb_babysearchoptionvalue==60)||(PDLY_SEARCH_lb_babysearchoptionvalue==61)||(PDLY_SEARCH_lb_babysearchoptionvalue==62))
-                    {
-                        $('#PDLY_SEARCH_tbl_htmltable').hide();
-                        $('#PDLY_SEARCH_div_htmltable').hide();
-                        $('#PDLY_SEARCH_lbl_flextableheader').hide();
-                        $('#PDLY_btn_pdf').hide();
-                        PDLY_SEARCH_searchvalue()
+        if($('#Ec_category').val()!='SELECT') {
+            $('.preloader').show();
+            $.ajax({
+                type: "POST",
+                url: controller_url + "expensecarupdate",
+                data: {
+                    'rowid': carcombineid,
+                    'carcategory': carcategory,
+                    'carinvdate': carinvdate,
+                    'carinamt': carinamt,
+                    'carinfromt': carinfromt,
+                    'carinvitem': carinvitem,
+                    'carcomment': carcomment
+                },
+                success: function (data) {
+                    $('.preloader').hide();
+                    var resultflag = data;
+                    if (resultflag == 1) {
+                        var PDLY_INPUT_expensetypetext = $('#PDLY_SEARCH_lb_typelist').find('option:selected').text();
+                        var PDLY_INPUT_CONFSAVEMSG = PDLY_SEARCH_hdrmsgArray[3].EMC_DATA.replace('[TYPE]', PDLY_INPUT_expensetypetext);
+                        show_msgbox("PERSONAL EXPENSE ENTRY/SEARCH/UPDATE/DELETE", PDLY_INPUT_CONFSAVEMSG, "success", false);
+                        var PDLY_SEARCH_lb_babysearchoptionvalue = $('#PDLY_SEARCH_lb_babysearchoption').val();
+                        if ((PDLY_SEARCH_lb_babysearchoptionvalue == 60) || (PDLY_SEARCH_lb_babysearchoptionvalue == 61) || (PDLY_SEARCH_lb_babysearchoptionvalue == 62)) {
+                            $('#PDLY_SEARCH_tbl_htmltable').hide();
+                            $('#PDLY_SEARCH_div_htmltable').hide();
+                            $('#PDLY_SEARCH_lbl_flextableheader').hide();
+                            $('#PDLY_btn_pdf').hide();
+                            PDLY_SEARCH_searchvalue()
+                        }
+                        else {
+                            PDLY_SEARCH_loadflextable()
+                            carprevious_id = undefined;
+                        }
                     }
-                    else
-                    {
-                        PDLY_SEARCH_loadflextable()
-                        carprevious_id=undefined;
+                    else {
+                        show_msgbox("PERSONAL EXPENSE ENTRY/SEARCH/UPDATE/DELETE", PDLY_SEARCH_hdrmsgArray[36].EMC_DATA, "success", false);
                     }
+                },
+                error: function (data) {
+                    alert('error in getting' + JSON.stringify(data));
                 }
-                else
-                {
-                    show_msgbox("PERSONAL EXPENSE ENTRY/SEARCH/UPDATE/DELETE",PDLY_SEARCH_hdrmsgArray[36].EMC_DATA,"success",false);
-                }
-            },
-            error: function (data) {
-                alert('error in getting' + JSON.stringify(data));
-            }
-        });
+            });
+        }
     }) ;
     //EXPENSE BAY INLINE EDIT FUNCTION
     var personalcombineid;
@@ -2530,7 +2542,6 @@ $(document).ready(function(){
     });
     // EXPENSE PERSONAL UPDATE FUNCTION
     $(document).on('change','.personalupdate', function (){
-        $('.preloader').show();
         if($('#epcategory_'+personalcombineid).hasClass("personaledit")==true){
 
             var personalcategory=$('#epcategory_'+personalcombineid).text();
@@ -2573,45 +2584,50 @@ $(document).ready(function(){
         else{
             var personalcomment=$('#Ep_invcomments').val();
         }
-        $.ajax({
-            type: "POST",
-            url: controller_url+"expensepersonalupdate",
-            data:{'rowid':personalcombineid,'personalcategory':personalcategory,'personalinvdate':personalinvdate,'personalinamt':personalinamt,'personalinfromt':personalinfromt,'personalinvitem':personalinvitem,'personalcomment':personalcomment},
-            success: function(data) {
-                $('.preloader').hide();
-                var resultflag=data;
-                if(resultflag==1)
-                {
-                    var PDLY_INPUT_expensetypetext=$('#PDLY_SEARCH_lb_typelist').find('option:selected').text();
-                    var PDLY_INPUT_CONFSAVEMSG =PDLY_SEARCH_hdrmsgArray[3].EMC_DATA.replace('[TYPE]', PDLY_INPUT_expensetypetext);
-                    show_msgbox("PERSONAL EXPENSE ENTRY/SEARCH/UPDATE/DELETE",PDLY_INPUT_CONFSAVEMSG,"success",false);
-                    var PDLY_SEARCH_lb_babysearchoptionvalue=$('#PDLY_SEARCH_lb_babysearchoption').val();
-                    if((PDLY_SEARCH_lb_babysearchoptionvalue==71)||(PDLY_SEARCH_lb_babysearchoptionvalue==72)||(PDLY_SEARCH_lb_babysearchoptionvalue==73))
-                    {
-                        $('#PDLY_SEARCH_tbl_htmltable').hide();
-                        $('#PDLY_SEARCH_div_htmltable').hide();
-                        $('#PDLY_SEARCH_lbl_flextableheader').hide();
-                        $('#PDLY_btn_pdf').hide();
-                        PDLY_SEARCH_searchvalue()
+        if($('#Ep_category').val()!='SELECT') {
+            $('.preloader').show();
+            $.ajax({
+                type: "POST",
+                url: controller_url + "expensepersonalupdate",
+                data: {
+                    'rowid': personalcombineid,
+                    'personalcategory': personalcategory,
+                    'personalinvdate': personalinvdate,
+                    'personalinamt': personalinamt,
+                    'personalinfromt': personalinfromt,
+                    'personalinvitem': personalinvitem,
+                    'personalcomment': personalcomment
+                },
+                success: function (data) {
+                    $('.preloader').hide();
+                    var resultflag = data;
+                    if (resultflag == 1) {
+                        var PDLY_INPUT_expensetypetext = $('#PDLY_SEARCH_lb_typelist').find('option:selected').text();
+                        var PDLY_INPUT_CONFSAVEMSG = PDLY_SEARCH_hdrmsgArray[3].EMC_DATA.replace('[TYPE]', PDLY_INPUT_expensetypetext);
+                        show_msgbox("PERSONAL EXPENSE ENTRY/SEARCH/UPDATE/DELETE", PDLY_INPUT_CONFSAVEMSG, "success", false);
+                        var PDLY_SEARCH_lb_babysearchoptionvalue = $('#PDLY_SEARCH_lb_babysearchoption').val();
+                        if ((PDLY_SEARCH_lb_babysearchoptionvalue == 71) || (PDLY_SEARCH_lb_babysearchoptionvalue == 72) || (PDLY_SEARCH_lb_babysearchoptionvalue == 73)) {
+                            $('#PDLY_SEARCH_tbl_htmltable').hide();
+                            $('#PDLY_SEARCH_div_htmltable').hide();
+                            $('#PDLY_SEARCH_lbl_flextableheader').hide();
+                            $('#PDLY_btn_pdf').hide();
+                            PDLY_SEARCH_searchvalue()
+                        }
+                        else {
+                            PDLY_SEARCH_loadflextable()
+                            personalprevious_id = undefined;
+                        }
                     }
-                    else
-                    {
-                        PDLY_SEARCH_loadflextable()
-                        personalprevious_id=undefined;
+                    else {
+                        show_msgbox("PERSONAL EXPENSE ENTRY/SEARCH/UPDATE/DELETE", PDLY_SEARCH_hdrmsgArray[36].EMC_DATA, "success", false);
+
                     }
+                },
+                error: function (data) {
+                    alert('error in getting' + JSON.stringify(data));
                 }
-                else
-                {
-                    show_msgbox("PERSONAL EXPENSE ENTRY/SEARCH/UPDATE/DELETE",PDLY_SEARCH_hdrmsgArray[36].EMC_DATA,"success",false);
-//                            PDLY_SEARCH_loadflextable()
-//                            PDLY_SEARCH_babysearchdetails(PDLY_SEARCH_babysearchdetailsvalues)
-//                            PDLY_SEARCH_searchvalue()
-                }
-            },
-            error: function (data) {
-                alert('error in getting' + JSON.stringify(data));
-            }
-        });
+            });
+        }
     }) ;
     //EXPENSE CARLOAN INLINE EDIT FUNCTION
     var carloancombineid;
@@ -2627,8 +2643,8 @@ $(document).ready(function(){
         carloanifcondition=id[0];
         carloancombineid=id[1];
         var $row = $(this).parents('tr');
-        var paiddate=$row.find('td:eq(1)').html();
-        var fromperiod=$row.find('td:eq(3)').html();
+        var paiddate=$('#eclpaiddate_'+carloancombineid).text();
+        var fromperiod=$('#eclfromperiod_'+carloancombineid).text();
         carloanprevious_id=cid;
         carloancval = $(this).text();
         if(carloanifcondition=='eclpaiddate')

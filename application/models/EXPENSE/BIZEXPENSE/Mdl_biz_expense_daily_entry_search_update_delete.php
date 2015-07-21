@@ -971,14 +971,6 @@ public function BDLY_SRC_getUnitList($selectedexpense,$selectedSearchopt,$startd
         $BDLY_SRC_finalwidth=(object)["headerwidth"=>$BDLY_SRC_finalheader,"tablewidth"=>$BDLY_SRC_tablewidth[$BDLY_SRC_exptype]];
         return $BDLY_SRC_finalwidth;
     }
-    //ESCAPE SPECIAL CHARACTERS
-    public function jsspecialchars($string){
-        $string = preg_replace("/\r*\n/","\\n",$string);
-        $string = preg_replace("/\//","\\\/",$string);
-        $string = preg_replace("/\"/","\\\"",$string);
-        $string = preg_replace("/'/"," ",$string);
-        return $string;
-    }
     /*------------------------------------------WILL FETCH RESULT FROM DB AND WILL SHOW IN DATA TABLE -----------------------------------------------------*/
     public function BDLY_SRC_getAnyTypeExpData($USERSTAMP,$timeZoneFormat,$BDLY_SRC_lb_unitno,$BDLY_SRC_lb_invoiceto,$BDLY_SRC_comments,$BDLY_SRC_comments,$BDLY_SRC_tb_fromamnt,$BDLY_SRC_tb_toamnt,$BDLY_SRC_servicedue,$BDLY_SRC_lb_cleanername,$BDLY_SRC_tb_durationamt,$BDLY_SRC_startdate,$BDLY_SRC_enddate,$BDLY_SRC_invoicefrom,$BDLY_SRC_lb_accountno,$BDLY_SRC_lb_cusname,$BDLY_SRC_lb_Digvoiceno,$BDLY_SRC_lb_cardno,$BDLY_SRC_lb_carno,$BDLY_SRC_lb_serviceby,$BDLY_SRC_invoiceitem,$BDLY_SRC_lb_category){
         $BDLY_SRC_lb_ExpenseList_val=$_POST['BDLY_SRC_lb_ExpenseList'];
@@ -987,9 +979,10 @@ public function BDLY_SRC_getUnitList($selectedexpense,$selectedSearchopt,$startd
 
         $BDLY_SRC_startdate=date('Y-m-d',strtotime($BDLY_SRC_startdate));
         $BDLY_SRC_enddate=date('Y-m-d',strtotime($BDLY_SRC_enddate));
-        $BDLY_SRC_invoiceitemssrcvalue=$this->jsspecialchars($BDLY_SRC_invoiceitem);
-        $BDLY_SRC_commentssrcvalue=$this->jsspecialchars($BDLY_SRC_comments);
-        $BDLY_SRC_invfromsrcvalue=$this->jsspecialchars($BDLY_SRC_invoicefrom);
+        $this->load->model('EILIB/Mdl_eilib_common_function');
+        $BDLY_SRC_invoiceitemssrcvalue=$this->Mdl_eilib_common_function->jsspecialchars($BDLY_SRC_invoiceitem);
+        $BDLY_SRC_commentssrcvalue=$this->Mdl_eilib_common_function->jsspecialchars($BDLY_SRC_comments);
+        $BDLY_SRC_invfromsrcvalue=$this->Mdl_eilib_common_function->jsspecialchars($BDLY_SRC_invoicefrom);
         $BDLY_SRC_temptabledropQuery=[1=>[],2=>[],3=>[],4=>[],5=>[],6=>[],7=>[],8=>[],9=>[],10=>[],11=>[],12=>[]];
         $BDLY_SRC_SelectQuery=[1=>[],2=>[],3=>[],4=>[],5=>[],6=>[],7=>[],8=>[],9=>[],10=>[],11=>[],12=>[]];
         //Data Table Header Caption

@@ -146,10 +146,11 @@ require_once('application/libraries/EI_HDR.php');
                         }
                         if((UC_flag=='UC_flag_stamptype')||(UC_flag=='UC_flag_notcreation')||(UC_flag=='UC_flag_created')){
                             if(UC_stamp.length==0){
-                                $('#UC_lb_stamptype').replaceWith('<input type="text" name="UC_tb_newstamptype" id="UC_tb_newstamptype" maxlength="12" class="form-control autosize" placeholder="Stamp Duty Type"/>');
+                                $('#UC_lb_stamptype').replaceWith('<input type="text" name="UC_tb_newstamptype" id="UC_tb_newstamptype" maxlength="12" class="form-control alphaonly autosize" placeholder="Stamp Duty Type"/>');
                                 $('#UC_btn_addstamptype').hide();
                                 $('#UC_btn_removestamptype').hide();
                                 $(".autosize").doValidation({rule:'general',prop:{autosize:true}});
+                                $("#UC_tb_newstamptype").prop("title",UC_errorMsg_array[0].EMC_DATA);
                             }
                             else{
                                 var UC_stampoptions ='<option>SELECT</option>';
@@ -351,9 +352,10 @@ require_once('application/libraries/EI_HDR.php');
                 // REPLACE NEW STAMP TYPE
                 if($(this).attr('id')=="UC_btn_addstamptype"){
                     UC_flag_stamp='false';
-                    $('#UC_lb_stamptype').replaceWith('<input type="text" name="UC_tb_newstamptype" id="UC_tb_newstamptype" maxlength="12" class="form-control autosize" placeholder="Stamp Duty Type"/>');
+                    $('#UC_lb_stamptype').replaceWith('<input type="text" name="UC_tb_newstamptype" id="UC_tb_newstamptype" maxlength="12" class="form-control alphaonly autosize" placeholder="Stamp Duty Type"/>');
                     $(this).replaceWith('<input type="button" name="UC_btn_removestamptype" value="CLEAR" id="UC_btn_removestamptype" class="btn btn-info"/>');
                     $('.autosize').doValidation({rule:'general',prop:{autosize:true}});
+                    $("#UC_tb_newstamptype").prop("title",UC_errorMsg_array[0].EMC_DATA);
                 }
                 if($(this).attr('id')=='UC_btn_removestamptype'){
                     $(".preloader").show();
@@ -1496,7 +1498,7 @@ require_once('application/libraries/EI_HDR.php');
                 $(".numonlyzero").doValidation({rule:'numbersonly',prop:{leadzero:true}});
                 $(".general").doValidation({rule:'general',prop:{whitespace:true,autosize:true}});
                 $(".numonly").doValidation({rule:'numbersonly'});
-                $(".alphaonly").doValidation({rule:'alphanumeric'});
+//                $(".alphaonly").doValidation({rule:'alphanumeric'});
                 $("#USU_tb_stampamt").doValidation({rule:'numbersonly',prop:{realpart:4,imaginary:2}});
                 $("#USU_db_stampdate").datepicker({dateFormat: "dd-mm-yy" ,changeYear: true,changeMonth: true });
                 $(".USU_class_title_nums").prop("title",USU_errormsg_arr[1].EMC_DATA);
@@ -1613,19 +1615,23 @@ require_once('application/libraries/EI_HDR.php');
                 USU_obj_rowvalue={"USU_tr_first":tds[0],"USU_tr_second":tds[1],"USU_tr_third":tds[2],"USU_tr_four":tds[3],"USU_tr_five":tds[4],"USU_tr_six":tds[5],"USU_tr_seven":tds[6],"USU_tr_eight":tds[7],"USU_tr_nine":tds[8],"USU_tr_ten":tds[9],"USU_tr_eleven":tds[10],"USU_tr_twelve":tds[11],"USU_tr_thirteen":tds[12]};
                 if($('#USU_lb_searchby').val()==5)//ROOM TYPE
                 {
-                    $('#'+cid).replaceWith('<td class="new" id="'+previous_id+'"><input id ="USU_tb_sep_roomtype" type="text" name="USU_tb_sep_roomtype" maxlength=30 class="form-control general USU_class_sep_type USU_class_updvalidation" value="'+tdvalue+'">');
+                    $('#'+cid).replaceWith('<td class="new" id="'+previous_id+'"><input id ="USU_tb_sep_roomtype" type="text" name="USU_tb_sep_roomtype" maxlength=30 class="form-control uppercase USU_class_sep_type USU_class_updvalidation" value="'+tdvalue+'">');
                 }
                 else if($('#USU_lb_searchby').val()==8)//STAMP TYPE
                 {
-                    $('#'+cid).replaceWith('<td class="new" id="'+previous_id+'"><input id ="USU_tb_sep_stamptype" type="text" name="USU_tb_sep_stamptype" maxlength=12 class="form-control alphaonly USU_class_title_alpha USU_class_sep_type USU_class_updvalidation" value="'+tdvalue+'">');
+                    $('#'+cid).replaceWith('<td class="new" id="'+previous_id+'"><input id ="USU_tb_sep_stamptype" type="text" name="USU_tb_sep_stamptype" maxlength=12 class="form-control alphaonly USU_class_title_alpha uppercase USU_class_sep_type USU_class_updvalidation" value="'+tdvalue+'">');
                 }
                 // VALIDATION
-                $(".general").doValidation({rule:'general',prop:{whitespace:true,autosize:true}});
-                $(".alphaonly").doValidation({rule:'alphanumeric'});
+                $(".uppercase").Setcase({caseValue : 'upper'});
                 $(".USU_class_title_alpha").prop("title",USU_errormsg_arr[0].EMC_DATA);
             });
-        // BLUR FUNCTION FOR ROOM TYPE,STAMP TYPE TEXTBOX
-            $(document).on('blur','.USU_class_sep_type',function(event){
+            $(document).on("keyup",'.alphaonly',function() {
+                if (this.value.match(/[^a-zA-Z\ ]/g)) {
+                    this.value = this.value.replace(/[^a-zA-Z\ ]/g, '').toUpperCase();
+                }
+            });
+        // CHANGE EVENT FOR ROOM TYPE,STAMP TYPE TEXTBOX
+            $(document).on('change','.USU_class_sep_type',function(event){
                 event.stopPropagation();
                 event.preventDefault();
                 event.stopImmediatePropagation();

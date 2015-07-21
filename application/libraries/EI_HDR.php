@@ -11,7 +11,7 @@
     <script src="<?php echo base_url().'JS/JQuery.js'?>"></script>
     <script src="<?php echo base_url().'JS/datepickerjs.js'?>"></script>
     <script src="<?php echo base_url().'JS/jquery-ui-timepicker-addon.js'?>"></script>
-
+    <script src="<?php echo base_url().'JS/SetCase.js'?>"></script>
     <!--TO SUPPORT CSS-->
     <link rel="stylesheet" href ="<?php echo base_url().'CSS/jquery-ui-1.11.0.css'?>"  />
     <!--TO SUPPORT BOOTSTRAP CSS-->

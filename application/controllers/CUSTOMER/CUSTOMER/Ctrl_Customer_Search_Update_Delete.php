@@ -1,5 +1,5 @@
 <?php
-error_reporting(0);
+//error_reporting(0);
 Class Ctrl_Customer_Search_Update_Delete extends CI_Controller
 {
     function __construct() {
@@ -100,7 +100,6 @@ Class Ctrl_Customer_Search_Update_Delete extends CI_Controller
     }
     public function SelectCustomerResults()
     {
-        set_time_limit(0);
         $this->load->library('Google');
         $UserStamp=$this->Mdl_eilib_common_function->getSessionUserStamp();
         $customerid=$_POST['customerid'];
@@ -113,7 +112,8 @@ Class Ctrl_Customer_Search_Update_Delete extends CI_Controller
         $unitnos = $this->Mdl_eilib_common_function->getAllActiveUnits();
         $CustomerStartDate=$this->Mdl_eilib_common_function->getCustomerStartDate();
         $uploadfilesarray=$this->Mdl_customer_search_update_delete->getUploadfileDetails($unit,$customerid);
-        $ReturnValues=array($Resultset,$RoomType,$RecverDetails,$UnitDates,$unitnos,$CustomerStartDate,$uploadfilesarray);
+        $getmaxDate=$this->Mdl_customer_search_update_delete->getMaximumDate($customerid);
+        $ReturnValues=array($Resultset,$RoomType,$RecverDetails,$UnitDates,$unitnos,$CustomerStartDate,$uploadfilesarray,$getmaxDate);
         echo json_encode($ReturnValues);
     }
     public function CustomerRoomTypeLoad()

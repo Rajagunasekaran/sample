@@ -587,6 +587,8 @@
                     });
                     $('.preloader').hide();
                 }
+            }else{
+                $('#CC_SearchformDiv').html('');
             }
         });
         //////////////LEASE PERIOD///////////////////////////////
@@ -1217,7 +1219,6 @@
         var card=[];
         $(document).on('click','.CC_SRC_editbutton',function() {
             $('#CSRC_div_fileupload').html('').html('<input type="file" id="CSRC_fileupload" name="CSRC_fileupload" class="form-control CSRC_fileextensionchk" />');
-
             var selectedrowDetails=this.id;
             var splitteddata=selectedrowDetails.split('/');
             var customerid=splitteddata[1];
@@ -1400,8 +1401,12 @@
                         var newDate=NewDate_dateConversion();
                         $('#CCRE_SRC_NoticePeriodDate').datepicker("option","minDate",newDate);
                     }
-                    var epandppdatemindate=Form_dateConversion(value_array[0][0].ENDDATE)
+                    var epandppdatemindate=DB_dateConversion(value_array[7][0].ENDDATE)
+//                    var epandppdatemindate=Form_dateConversion("2011-06-18");
+
+                    if(pass_changedmonth>epandppdatemindate)
                     $('#CCRE_SRC_PassportDate').datepicker("option","minDate",epandppdatemindate);
+                    if(ep_changedmonth>epandppdatemindate)
                     $('#CCRE_SRC_EPDate').datepicker("option","minDate",epandppdatemindate);
                     var CSRC_recheckin=value_array[0][0].CED_RECHECKIN;
                     if(MaxRecver==1 && leaseperiod==1 && terminate==null && CSRC_recheckin!='X')
@@ -2109,6 +2114,7 @@
                     var msg_alert = JSON.parse(xmlhttp.responseText);
                     $('.preloader').hide();
                     if (msg_alert == 1) {
+                        $('#CC_SRC_SearchOption').val("");
                         $('#CC_SearchformDiv').hide();
                         $('#CC_SEARCH_DataTable').hide();
                         $('#CC_SEARCH_acDataTable').hide();
@@ -2117,6 +2123,7 @@
                         show_msgbox("CUSTOMER SEARCH/UPDATE",errormsg[18].EMC_DATA,"success",false);
                     }
                     else {
+                        $('#CC_SRC_SearchOption').val("");
                         $('#CCRE_SRC_UnitNo').prop('disabled', true);
                         $('#CCRE_SRC_SDStarttime').prop('disabled', true);
                         $('#CCRE_SRC_SDEndtime').prop('disabled', true);

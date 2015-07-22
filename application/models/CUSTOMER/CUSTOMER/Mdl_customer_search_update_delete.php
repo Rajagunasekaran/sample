@@ -1,10 +1,14 @@
 <?php
-error_reporting(0);
+//error_reporting(0);
 require_once 'google/appengine/api/mail/Message.php';
 use google\appengine\api\mail\Message;
 //require 'application/PHPMailer-master/PHPMailerAutoload.php';
 class Mdl_customer_search_update_delete extends CI_Model
 {
+    public function getMaximumDate($cusId){
+        $queryPersonal=$this->db->query('select IF(CLP_PRETERMINATE_DATE IS NOT NULL,CLP_PRETERMINATE_DATE,CLP_ENDDATE)AS ENDDATE FROM CUSTOMER_LP_DETAILS CLP,VW_SUB_CUSTOMER VW WHERE CLP.CUSTOMER_ID=VW.CUSTOMERID AND CLP.CED_REC_VER=VW.REC_VER AND CUSTOMER_ID='.$cusId.'');
+        return $queryPersonal->result_array();
+    }
     public function getPersonalDetails($cusId){
         $queryPersonal=$this->db->query('SELECT CUST.CUSTOMER_FIRST_NAME,CUST.CUSTOMER_LAST_NAME,C.CPD_MOBILE,C.CPD_INTL_MOBILE,CCD.CCD_OFFICE_NO,C.CPD_EMAIL FROM CUSTOMER_PERSONAL_DETAILS C,CUSTOMER CUST left join CUSTOMER_COMPANY_DETAILS CCD on  CUST.CUSTOMER_ID = CCD.CUSTOMER_ID WHERE CUST.CUSTOMER_ID ='.$cusId.' AND  CUST.CUSTOMER_ID = C.CUSTOMER_ID');
         return $queryPersonal->result_array();
@@ -235,6 +239,7 @@ class Mdl_customer_search_update_delete extends CI_Model
             CED.CED_REC_VER='.$leaseperiod.' AND C.CUSTOMER_ID='.$customerid.' AND ((CACD.ACN_ID BETWEEN 1 AND 4) OR
             CACD.ACN_ID IS NULL) AND CED.CED_REC_VER=CTD.CED_REC_VER AND CTD.ULD_ID=ULD.ULD_ID
           ORDER BY C.CUSTOMER_ID,CED.CED_REC_VER,CACD.CACD_GUEST_CARD';
+//        echo $CSRC_customerflextable_query;
         $resultset=$this->db->query($CSRC_customerflextable_query);
         $this->db->query('DROP TABLE IF EXISTS '.$csrc_tablename);
         return $resultset->result();
@@ -287,7 +292,7 @@ class Mdl_customer_search_update_delete extends CI_Model
         $CSRC_customerflextable_query ="SELECT *FROM ".$csrc_tablename;
         $resultset=$this->db->query($CSRC_customerflextable_query);
         $this->db->query('DROP TABLE IF EXISTS '.$csrc_tablename);
-        return $resultset->result();;
+        return $resultset->result();
     }
     public function Customer_Search_Update($UserStamp,$Leaseperiod,$Quoters)
     {
@@ -383,6 +388,7 @@ class Mdl_customer_search_update_delete extends CI_Model
            '$Leaseperiod','$Quoters','$processwaived','$Prorated','$NoticePeriod','$NoticePeriodDate','$Rent','$DepositFee','$ProcessingFee','$Fixedaircon_fee','$Quaterlyfee','$ElectricitycapFee','$CheckOutCleanFee','$Curtain_DrycleanFee',
            '$UserStamp','$Startdate','$Enddate','$Nationality','$Mobile','$IntlMobile','$Emailid','$PassportNo','$PassportDate','$DOB','$EpNo','$EPDate','$Comments','$acesscard','$Accesscarddates',@SUCCESS_FLAG,@CC_UPDATE_SAVEPOINT)";
             $this->db->query($Update_query);
+echo $Update_query;
 //            return $Update_query;
             $Confirm_query = 'SELECT @SUCCESS_FLAG AS CONFIRM';
             $Confirm_result = $this->db->query($Confirm_query);
@@ -461,7 +467,6 @@ class Mdl_customer_search_update_delete extends CI_Model
                     $this->load->model('EILIB/Mdl_eilib_invoice_contract');
                     if ($CCoption == 4) {
                         $InvoiceId = $this->Mdl_eilib_invoice_contract->CUST_invoice($UserStamp, $service, $Uint, $Name, $CompanyName, $Invoiceandcontractid[9], $Invoiceandcontractid[0], $Invoiceandcontractid[1], $Rent, $ProcessingFee, $DepositFee, $Start_date, $End_date, $RoomType, $Leaseperiod, $InvProrated, $Sendmailid, $Docowner, 'CREATION', $Invwaived, $Customerid,$CustomerFolder);
-//                        $InvoiceId[0]=0;
                         if($InvoiceId[0]==1)
                         {
                             $subcontent = $Uint . '-' . $Name . '-' . $InvoiceId[3];
@@ -484,7 +489,6 @@ class Mdl_customer_search_update_delete extends CI_Model
                             if($Customerflag==1) {
                                 $calevents = $this->CAL_DEL_CREATE($Customerid);
                                 $caldelresponse = $this->CUST_customercalenderdeletion_StartDate($calId, $cal, $calevents[0], $Customerid);
-//                            return $Customerid;
                                 $getPersonalDetails = $this->getPersonalDetails($Customerid);
                                 $calcreateresponse = $this->CUST_customercalendercreation_StartDate($service,$calId, $cal, $calevents[1], $Customerid, $getPersonalDetails[0]["CUSTOMER_FIRST_NAME"], $getPersonalDetails[0]["CUSTOMER_LAST_NAME"], $getPersonalDetails[0]["CPD_MOBILE"], $getPersonalDetails[0]["CPD_INTL_MOBILE"], $getPersonalDetails[0]["CCD_OFFICE_NO"], $getPersonalDetails[0]["CPD_EMAIL"], $Uint, $RoomType);
 
@@ -500,7 +504,6 @@ class Mdl_customer_search_update_delete extends CI_Model
                         }
                     } else if ($CCoption == 5) {
                         $ContractId = $this->Mdl_eilib_invoice_contract->CUST_contract($service, $Uint, $Start_date, $End_date, $CompanyName, $Name, $NoticePeriod, $PassportNo, $PassportDate, $EpNo, $EPDate, $NoticePeriodDate, $Leaseperiod, $Cont_cardno, $Rent, $InvQuaterlyfee, $InvFixedaircon_fee, $InvElectricitycapFee, $InvCurtain_DrycleanFee, $InvCheckOutCleanFee, $InvProcessingFee, $InvDepositFee, $Invwaived, $RoomType, $InvProrated, 'CREATION', $Sendmailid, $Docowner,$CustomerFolder);
-//                        $ContractId[0]=0;
                         if($ContractId[0]==1)
                         {
                             $Messcontent = $Uint . '-' . $Name;
@@ -516,7 +519,6 @@ class Mdl_customer_search_update_delete extends CI_Model
                             echo $ContractId[0];
                             exit;
                         }else{
-//                            return 'rollback';
                             $this->db->trans_savepoint_rollback($Confirm_savepoint) ;
                             if($Customerflag==1) {
                                 $calevents = $this->CAL_DEL_CREATE($Customerid);
@@ -536,7 +538,6 @@ class Mdl_customer_search_update_delete extends CI_Model
                     } else if ($CCoption == 6) {
                         $InvoiceId = $this->Mdl_eilib_invoice_contract->CUST_invoice($UserStamp, $service, $Uint, $Name, $CompanyName, $Invoiceandcontractid[9], $Invoiceandcontractid[0], $Invoiceandcontractid[1], $Rent, $ProcessingFee, $DepositFee, $Start_date, $End_date, $RoomType, $Leaseperiod, $InvProrated, $Sendmailid, $Docowner, 'CREATION', $Invwaived, $Customerid,$CustomerFolder);
                         $ContractId = $this->Mdl_eilib_invoice_contract->CUST_contract($service, $Uint, $Start_date, $End_date, $CompanyName, $Name, $NoticePeriod, $PassportNo, $PassportDate, $EpNo, $EPDate, $NoticePeriodDate, $Leaseperiod, $Cont_cardno, $Rent, $InvQuaterlyfee, $InvFixedaircon_fee, $InvElectricitycapFee, $InvCurtain_DrycleanFee, $InvCheckOutCleanFee, $InvProcessingFee, $InvDepositFee, $Invwaived, $RoomType, $InvProrated, 'CREATION', $Sendmailid, $Docowner,$CustomerFolder);
-//                        $InvoiceId[0]=0;$ContractId[0]=0;
                         if($InvoiceId[0]==1 && $ContractId[0]==1)
                         {
                             $subcontent = $Uint . '-' . $Name . '-' . $InvoiceId[3];
@@ -567,14 +568,14 @@ class Mdl_customer_search_update_delete extends CI_Model
                             if ($CustomerFolderback != '') {
                                 $this->Mdl_eilib_invoice_contract->CUST_UNSHARE_FILE($service, $CustomerFolderback);
                             }
-                            if($InvoiceId[0] == 0)
+                            if($InvoiceId[0] == 0){
                                 echo $InvoiceId[3];
-                            if($ContractId[0] == 0)
+                                exit;}
+                            if($ContractId[0] == 0){
                                 echo $ContractId[3];
-                            exit;
+                            exit;}exit;
                         }
                     }
-//                    $this->db->trans_savepoint_release($Confirm_savepoint) ;
                 }
                 else
                 {
@@ -593,9 +594,7 @@ class Mdl_customer_search_update_delete extends CI_Model
                         echo 0;
                         exit;
                     }
-//                    $this->db->trans_savepoint_rollback($Confirm_savepoint) ;
-//                    echo $Confirm_Meessage;
-//                    exit;
+
                 }
             }
             else
@@ -627,7 +626,6 @@ class Mdl_customer_search_update_delete extends CI_Model
             if ($CustomerFolderback != '') {
                 $this->Mdl_eilib_invoice_contract->CUST_UNSHARE_FILE($service, $CustomerFolderback);
             }
-//            $this->db->trans_rollback();
             return 0;
             exit;
         }

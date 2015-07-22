@@ -84,10 +84,11 @@ require_once('application/libraries/EI_HDR.php');
                     }
                     if((EU_response.EU_unitno_err_roomstamp_flag=='EU_flag_roomstamp')||(EU_response.EU_unitno_err_roomstamp_flag=='EU_flag_deposit_roomstamp')||(EU_response.EU_unitno_err_roomstamp_flag=='EU_flag_stamptype')){
                         if(EU_stamp.length==0){
-                            $('#EU_lb_oldstamptype').replaceWith('<input type="text" name="EU_tb_newstamptype" id="EU_tb_newstamptype" maxlength=12 class="EU_class_validupdate form-control autosize" placeholder="Stamp Duty Type" />');
+                            $('#EU_lb_oldstamptype').replaceWith('<input type="text" name="EU_tb_newstamptype" id="EU_tb_newstamptype" maxlength=12 class="EU_class_validupdate autosize alphaonly EU_class_title_alpha form-control" placeholder="Stamp Duty Type" />');
                             $('#EU_btn_addstamptype').hide();
                             $('#EU_btn_removestamptype').hide();
                             $(".autosize").doValidation({rule:'general',prop:{autosize:true}});
+                            $(".EU_class_title_alpha").prop("title",EU_errorMsg_array[0].replace('NUMBERS','ALPHABETS').EMC_DATA);
                         }
                         else{
                             var EU_stampoptions ='<option>SELECT</option>';
@@ -153,7 +154,7 @@ require_once('application/libraries/EI_HDR.php');
                 $('#EU_div_errroom').text('');
                 if($(this).attr('id')=="EU_btn_addroomtype"){
                     EU_flag_room='false';
-                    $('#EU_lb_oldroomtype').replaceWith('<input type="text" name="EU_tb_newroomtype" id="EU_tb_newroomtype" maxlength=30 class="EU_class_validupdate autosize form-control"/>');
+                    $('#EU_lb_oldroomtype').replaceWith('<input type="text" name="EU_tb_newroomtype" id="EU_tb_newroomtype" maxlength=30 class="EU_class_validupdate autosize form-control" placeholder="Room Type"/>');
                     $(this).replaceWith('<input type="button" name="EU_btn_removeroomtype" value="CLEAR" id="EU_btn_removeroomtype" class="btn btn-info EU_class_validupdate" />');
                     $('.autosize').doValidation({rule:'general',prop:{autosize:true}});
                 }
@@ -220,9 +221,10 @@ require_once('application/libraries/EI_HDR.php');
                 $('#EU_div_errstamp').text('');
                 if($(this).attr('id')=="EU_btn_addstamptype"){
                     EU_flag_stamp='false';
-                    $('#EU_lb_oldstamptype').replaceWith('<input type="text" name="EU_tb_newstamptype" id="EU_tb_newstamptype" maxlength=12 class="EU_class_validupdate autosize form-control" />');
+                    $('#EU_lb_oldstamptype').replaceWith('<input type="text" name="EU_tb_newstamptype" id="EU_tb_newstamptype" maxlength=12 class="autosize EU_class_validupdate alphaonly EU_class_title_alpha form-control" placeholder="Stamp Duty Type"/>');
                     $(this).replaceWith('<input type="button" name="EU_btn_removestamptype" value="CLEAR" id="EU_btn_removestamptype" class="btn btn-info EU_class_validupdate"/>');
                     $('.autosize').doValidation({rule:'general',prop:{autosize:true}});
+                    $(".EU_class_title_alpha").prop("title",EU_errorMsg_array[0].EMC_DATA.replace('NUMBERS','ALPHABETS'));
                 }
                 if($(this).attr('id')=='EU_btn_removestamptype'){
                     EU_flag_stamp='true';
@@ -250,6 +252,11 @@ require_once('application/libraries/EI_HDR.php');
                     $("#EU_btn_update").removeAttr("disabled");
                 else
                     $("#EU_btn_update").attr("disabled", "disabled");
+            });
+            $(document).on("keyup",'.alphaonly',function() {
+                if (this.value.match(/[^a-zA-Z\ ]/g)) {
+                    this.value = this.value.replace(/[^a-zA-Z\ ]/g, '').toUpperCase();
+                }
             });
         // CHANGE EVENT FUNCTION FOR STAMP TYPE
             $(document).on("change blur",'#EU_tb_newstamptype',function(){

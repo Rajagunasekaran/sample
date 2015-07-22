@@ -1049,7 +1049,7 @@ class Mdl_eilib_invoice_contract extends CI_Model{
                 $companyTemp="company";
             }
             if($proratedrentflag==0){
-                $arrCheckDateAmtConcate.= $A5.'^^'.$cdate1.'^^'.$cdate2;
+                $arrCheckDateAmtConcate.= $replaceSum.'^^'.$cdate1.'^^'.$cdate2;
                 $reminingmonths=$replaceSum;
             }
             $title="INVOICE"."   -"." ".$unit." ". "-". " ".$tenant_fetch."_INV".$todaysDate.''.$Slno;

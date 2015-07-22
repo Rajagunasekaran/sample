@@ -39,6 +39,21 @@ class Ctrl_Staff_Employee_Entry_Search_Update_Delete extends CI_Controller{
         $result = $this->Mdl_staff_employee_entry_search_update_delete->fetch_data($timeZoneFormat,$this->input->post('EMPSRC_UPD_DEL_lb_designation_listbox'),$this->input->post('emp_first_name'),$this->input->post('emp_last_name'),$this->input->post('EMPSRC_UPD_DEL_ta_mobile'),$this->input->post('EMPSRC_UPD_DEL_lb_employeename_listbox'),$this->input->post('EMPSRC_UPD_DEL_lb_searchoption'),$this->input->post('EMPSRC_UPD_DEL_ta_email'),$this->input->post('EMPSRC_UPD_DEL_ta_comments')) ;
         echo JSON_encode($result);
     }
+    public  function EMPLOYEE_pdf(){
+
+        $timeZoneFormat=$this->Mdl_eilib_common_function->getTimezone();
+        $this->load->library('pdf');
+        $pdfresult='';
+        $pdfresult=$this->Mdl_staff_employee_entry_search_update_delete->Employee_pdf($timeZoneFormat,$_GET['EMPSRC_UPD_DEL_lb_designation_listbox'],$_GET['emp_first_name'],$_GET['emp_last_name'],$_GET['EMPSRC_UPD_DEL_ta_mobile'],$_GET['EMPSRC_UPD_DEL_lb_employeename_listbox'],$_GET['EMPSRC_UPD_DEL_lb_searchoption'],$_GET['EMPSRC_UPD_DEL_ta_email'],$_GET['EMPSRC_UPD_DEL_ta_comments']);
+        $header=$_GET['header'];
+        $pdfheader=$header;//'TICKLER HISTORY FOR CUSTOMER:'.$TH_fname.' '.$TH_lname;
+        $pdf = $this->pdf->load();
+        $pdf=new mPDF('utf-8','A4');
+        $pdf->SetHTMLHeader('<div style="text-align: center; font-weight: bold;">'.$pdfheader.'</div>', 'O', true);
+        $pdf->SetHTMLFooter('<div style="text-align: center;">{PAGENO}</div>');
+        $pdf->WriteHTML($pdfresult);
+        $pdf->Output($pdfheader.'.pdf', 'D');
+    }
     //PDLY_SEARCH_lb_comments
     public function EMPSRC_UPD_DEL_comments()
     {
@@ -55,6 +70,7 @@ class Ctrl_Staff_Employee_Entry_Search_Update_Delete extends CI_Controller{
     public function EMPSRC_UPD_DEL_update()
     {
         $USERSTAMP=$this->Mdl_eilib_common_function->getSessionUserStamp();
+
         $result = $this->Mdl_staff_employee_entry_search_update_delete->EMPSRC_UPD_DEL_update($USERSTAMP,$this->input->post('EMPSRC_UPD_DEL_email'),$this->input->post('EMPSRC_UPD_DEL_comments'),$this->input->post('EMP_ENTRY_radio_null'),$this->input->post('submenu'),$this->input->post('EMPSRC_UPD_DEL_id')) ;
         echo JSON_encode($result);
     }

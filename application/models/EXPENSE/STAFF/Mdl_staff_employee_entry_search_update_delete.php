@@ -110,59 +110,93 @@ class Mdl_staff_employee_entry_search_update_delete extends CI_Model{
     public function fetch_data($timeZoneFormat,$EMPSRC_UPD_DEL_lb_designation_listbox,$emp_first_name,$emp_last_name,$EMPSRC_UPD_DEL_ta_mobile,$EMPSRC_UPD_DEL_ta_email,$EMPSRC_UPD_DEL_lb_searchoption,$EMPSRC_UPD_DEL_ta_comments)
     {
         if($EMPSRC_UPD_DEL_lb_searchoption==95){
-            $this->db->select("ED.EMP_ID AS ID, ED.EMP_FIRST_NAME AS Femployeename,ED.EMP_LAST_NAME AS Lemployeename,ED.EMP_MOBILE AS mobile,ED.EMP_EMAIL AS email,EXPCONFIG.ECN_DATA AS designation,ED.EMP_COMMENTS AS comments,ULD.ULD_LOGINID AS userstamp,UASD.UASD_ACCESS_CARD AS cardnumber,DATE_FORMAT(CONVERT_TZ(ED.EMP_TIMESTAMP,".$timeZoneFormat."), '%d-%m-%Y %T') AS timestamp,U.UNIT_NO AS EMPSRC_UPD_DEL_unitno");
+            $this->db->select("ED.EMP_ID AS ID, ED.EMP_FIRST_NAME AS Femployeename,ED.EMP_LAST_NAME AS Lemployeename,ED.EMP_MOBILE AS mobile,ED.EMP_EMAIL AS email,EXPCONFIG.ECN_DATA AS designation,ED.EMP_COMMENTS AS comments,ULD.ULD_LOGINID AS userstamp,UASD.UASD_ACCESS_CARD AS cardnumber,DATE_FORMAT(CONVERT_TZ(ED.EMP_TIMESTAMP,$timeZoneFormat), '%d-%m-%Y %T') AS timestamp,U.UNIT_NO AS EMPSRC_UPD_DEL_unitno");
             $this->db->from("EMPLOYEE_DETAILS ED,EXPENSE_CONFIGURATION EXPCONFIG ,USER_LOGIN_DETAILS ULD");
             $this->db->join('EMPLOYEE_CARD_DETAILS ECD','ED.EMP_ID=ECD.EMP_ID','left');
             $this->db->join('UNIT_ACCESS_STAMP_DETAILS UASD','ECD.UASD_ID=UASD.UASD_ID','left');
             $this->db->join('UNIT U','UASD.UNIT_ID=U.UNIT_ID','left');
             $this->db->where("ULD.ULD_ID=ED.ULD_ID AND (EXPCONFIG.ECN_DATA= '$EMPSRC_UPD_DEL_lb_designation_listbox') AND (ED.ECN_ID=EXPCONFIG.ECN_ID)");
             $query = $this->db->get();
-            return $query->result();
         }
         if($EMPSRC_UPD_DEL_lb_searchoption==90){
-            $this->db->select("ED.EMP_ID AS ID, ED.EMP_FIRST_NAME AS Femployeename,ED.EMP_LAST_NAME AS Lemployeename,ED.EMP_MOBILE AS mobile,ED.EMP_EMAIL AS email,EXPCONFIG.ECN_DATA AS designation,ED.EMP_COMMENTS AS comments,ULD.ULD_LOGINID AS userstamp,UASD.UASD_ACCESS_CARD AS cardnumber,DATE_FORMAT(CONVERT_TZ(ED.EMP_TIMESTAMP,".$timeZoneFormat."), '%d-%m-%Y %T') AS timestamp,U.UNIT_NO AS EMPSRC_UPD_DEL_unitno");
+            $this->db->select("ED.EMP_ID AS ID, ED.EMP_FIRST_NAME AS Femployeename,ED.EMP_LAST_NAME AS Lemployeename,ED.EMP_MOBILE AS mobile,ED.EMP_EMAIL AS email,EXPCONFIG.ECN_DATA AS designation,ED.EMP_COMMENTS AS comments,ULD.ULD_LOGINID AS userstamp,UASD.UASD_ACCESS_CARD AS cardnumber,DATE_FORMAT(CONVERT_TZ(ED.EMP_TIMESTAMP,$timeZoneFormat), '%d-%m-%Y %T') AS timestamp,U.UNIT_NO AS EMPSRC_UPD_DEL_unitno");
             $this->db->from("EMPLOYEE_DETAILS ED,EXPENSE_CONFIGURATION EXPCONFIG ,USER_LOGIN_DETAILS ULD");
             $this->db->join('EMPLOYEE_CARD_DETAILS ECD','ED.EMP_ID=ECD.EMP_ID','left');
             $this->db->join('UNIT_ACCESS_STAMP_DETAILS UASD','ECD.UASD_ID=UASD.UASD_ID','left');
             $this->db->join('UNIT U','UASD.UNIT_ID=U.UNIT_ID','left');
             $this->db->where("ULD.ULD_ID=ED.ULD_ID AND (ED.EMP_FIRST_NAME ='$emp_first_name' AND ED.EMP_LAST_NAME ='$emp_last_name') AND (ED.ECN_ID=EXPCONFIG.ECN_ID)");
             $query = $this->db->get();
-            return $query->result();
         }
         if($EMPSRC_UPD_DEL_lb_searchoption==99)//MOBILE NO
         {
-            $this->db->select("ED.EMP_ID AS ID, ED.EMP_FIRST_NAME AS Femployeename,ED.EMP_LAST_NAME AS Lemployeename,ED.EMP_MOBILE AS mobile,ED.EMP_EMAIL AS email,EXPCONFIG.ECN_DATA AS designation,ED.EMP_COMMENTS AS comments,ULD.ULD_LOGINID AS userstamp,UASD.UASD_ACCESS_CARD AS cardnumber,DATE_FORMAT(CONVERT_TZ(ED.EMP_TIMESTAMP,".$timeZoneFormat."'), '%d-%m-%Y %T') AS timestamp,U.UNIT_NO AS EMPSRC_UPD_DEL_unitno");
+            $this->db->select("ED.EMP_ID AS ID, ED.EMP_FIRST_NAME AS Femployeename,ED.EMP_LAST_NAME AS Lemployeename,ED.EMP_MOBILE AS mobile,ED.EMP_EMAIL AS email,EXPCONFIG.ECN_DATA AS designation,ED.EMP_COMMENTS AS comments,ULD.ULD_LOGINID AS userstamp,UASD.UASD_ACCESS_CARD AS cardnumber,DATE_FORMAT(CONVERT_TZ(ED.EMP_TIMESTAMP,$timeZoneFormat), '%d-%m-%Y %T') AS timestamp,U.UNIT_NO AS EMPSRC_UPD_DEL_unitno");
             $this->db->from("EMPLOYEE_DETAILS ED,EXPENSE_CONFIGURATION EXPCONFIG ,USER_LOGIN_DETAILS ULD");
             $this->db->join('EMPLOYEE_CARD_DETAILS ECD','ED.EMP_ID=ECD.EMP_ID','left');
             $this->db->join('UNIT_ACCESS_STAMP_DETAILS UASD','ECD.UASD_ID=UASD.UASD_ID','left');
             $this->db->join('UNIT U','UASD.UNIT_ID=U.UNIT_ID','left');
             $this->db->where("ULD.ULD_ID=ED.ULD_ID AND (ED.EMP_MOBILE ='$EMPSRC_UPD_DEL_ta_mobile') AND (ED.ECN_ID=EXPCONFIG.ECN_ID)");
             $query = $this->db->get();
-            return $query->result();
         }
         if($EMPSRC_UPD_DEL_lb_searchoption==96)//EMAIL ID
         {
-            $this->db->select("ED.EMP_ID AS ID, ED.EMP_FIRST_NAME AS Femployeename,ED.EMP_LAST_NAME AS Lemployeename,ED.EMP_MOBILE AS mobile,ED.EMP_EMAIL AS email,EXPCONFIG.ECN_DATA AS designation,ED.EMP_COMMENTS AS comments,ULD.ULD_LOGINID AS userstamp,UASD.UASD_ACCESS_CARD AS cardnumber,DATE_FORMAT(CONVERT_TZ(ED.EMP_TIMESTAMP,".$timeZoneFormat."), '%d-%m-%Y %T') AS timestamp,U.UNIT_NO AS EMPSRC_UPD_DEL_unitno");
+            $this->db->select("ED.EMP_ID AS ID, ED.EMP_FIRST_NAME AS Femployeename,ED.EMP_LAST_NAME AS Lemployeename,ED.EMP_MOBILE AS mobile,ED.EMP_EMAIL AS email,EXPCONFIG.ECN_DATA AS designation,ED.EMP_COMMENTS AS comments,ULD.ULD_LOGINID AS userstamp,UASD.UASD_ACCESS_CARD AS cardnumber,DATE_FORMAT(CONVERT_TZ(ED.EMP_TIMESTAMP,$timeZoneFormat), '%d-%m-%Y %T') AS timestamp,U.UNIT_NO AS EMPSRC_UPD_DEL_unitno");
             $this->db->from("EMPLOYEE_DETAILS ED,EXPENSE_CONFIGURATION EXPCONFIG ,USER_LOGIN_DETAILS ULD");
             $this->db->join('EMPLOYEE_CARD_DETAILS ECD','ED.EMP_ID=ECD.EMP_ID','left');
             $this->db->join('UNIT_ACCESS_STAMP_DETAILS UASD','ECD.UASD_ID=UASD.UASD_ID','left');
             $this->db->join('UNIT U','UASD.UNIT_ID=U.UNIT_ID','left');
             $this->db->where("ULD.ULD_ID=ED.ULD_ID AND (ED.EMP_EMAIL ='$EMPSRC_UPD_DEL_ta_email') AND (ED.ECN_ID=EXPCONFIG.ECN_ID)");
             $query = $this->db->get();
-            return $query->result();
         }
         if($EMPSRC_UPD_DEL_lb_searchoption==94)//COMMENTS
         {
-            $this->db->select("ED.EMP_ID AS ID, ED.EMP_FIRST_NAME AS Femployeename,ED.EMP_LAST_NAME AS Lemployeename,ED.EMP_MOBILE AS mobile,ED.EMP_EMAIL AS email,EXPCONFIG.ECN_DATA AS designation,ED.EMP_COMMENTS AS comments,ULD.ULD_LOGINID AS userstamp,UASD.UASD_ACCESS_CARD AS cardnumber,DATE_FORMAT(CONVERT_TZ(ED.EMP_TIMESTAMP,".$timeZoneFormat."), '%d-%m-%Y %T') AS timestamp,U.UNIT_NO AS EMPSRC_UPD_DEL_unitno");
+            $this->db->select("ED.EMP_ID AS ID, ED.EMP_FIRST_NAME AS Femployeename,ED.EMP_LAST_NAME AS Lemployeename,ED.EMP_MOBILE AS mobile,ED.EMP_EMAIL AS email,EXPCONFIG.ECN_DATA AS designation,ED.EMP_COMMENTS AS comments,ULD.ULD_LOGINID AS userstamp,UASD.UASD_ACCESS_CARD AS cardnumber,DATE_FORMAT(CONVERT_TZ(ED.EMP_TIMESTAMP,$timeZoneFormat), '%d-%m-%Y %T') AS timestamp,U.UNIT_NO AS EMPSRC_UPD_DEL_unitno");
             $this->db->from("EMPLOYEE_DETAILS ED,EXPENSE_CONFIGURATION EXPCONFIG ,USER_LOGIN_DETAILS ULD");
             $this->db->join('EMPLOYEE_CARD_DETAILS ECD','ED.EMP_ID=ECD.EMP_ID','left');
             $this->db->join('UNIT_ACCESS_STAMP_DETAILS UASD','ECD.UASD_ID=UASD.UASD_ID','left');
             $this->db->join('UNIT U','UASD.UNIT_ID=U.UNIT_ID','left');
             $this->db->where("ULD.ULD_ID=ED.ULD_ID AND (ED.EMP_COMMENTS ='$EMPSRC_UPD_DEL_ta_comments') AND (ED.ECN_ID=EXPCONFIG.ECN_ID)");
             $query = $this->db->get();
-            return $query->result();
         }
+        return $query->result();
    }
+    public  function Employee_pdf($timeZoneFormat,$EMPSRC_UPD_DEL_lb_designation_listbox,$emp_first_name,$emp_last_name,$EMPSRC_UPD_DEL_ta_mobile,$EMPSRC_UPD_DEL_ta_email,$EMPSRC_UPD_DEL_lb_searchoption,$EMPSRC_UPD_DEL_ta_comments){
+        $EMPSRC_UPD_DEL_result_array=$this->fetch_data($timeZoneFormat,$EMPSRC_UPD_DEL_lb_designation_listbox,$emp_first_name,$emp_last_name,$EMPSRC_UPD_DEL_ta_mobile,$EMPSRC_UPD_DEL_ta_email,$EMPSRC_UPD_DEL_lb_searchoption,$EMPSRC_UPD_DEL_ta_comments);
+//        $ET_SRC_UPD_DEL_table_header='<table id="STDTL_SEARCH_tble_htmltable" border="1"  cellspacing="0" class="srcresult" style="width:1500px;border-collapse: collapse;" ><sethtmlpageheader name="header" page="all" value="on" show-this-page="1"/><thead  style="color:#fff !important; background-color:#498af3;text-align:center;font-weight: bold;"><tr><th style="color:#fff !important; background-color:#498af3;text-align:center;font-weight: bold;">EMPLOYEE NAME</th><th style="color:#fff !important; background-color:#498af3;text-align:center;font-weight: bold;width:20px">CPF NUMBER</th><th style="color:#fff !important; background-color:#498af3;text-align:center;font-weight: bold;width:20px">CPF AMOUNT</th><th style="color:#fff !important; background-color:#498af3;text-align:center;font-weight: bold;width:20px">LEVY AMOUNT</th><th style="color:#fff !important; background-color:#498af3;text-align:center;font-weight: bold;width:20px">SALARY AMOUNT</th><th style="color:#fff !important; background-color:#498af3;text-align:center;font-weight: bold;width:190px">COMMENTS</th><th style="color:#fff !important; background-color:#498af3;text-align:center;font-weight: bold;;width:130px">USERSTAMP</th><th  style="color:#fff !important; background-color:#498af3;text-align:center;font-weight: bold;width:100px">TIMESTAMP</th></tr></thead><tbody>';
+
+        $EMPSRC_UPD_DEL_header='<table id="EMPSRC_UPD_DEL_tble_htmltable" border="1"  cellspacing="0" class="srcresult" style="width:1500px;border-collapse: collapse;" ><sethtmlpageheader name="header" page="all" value="on" show-this-page="1"/><thead  style="color:#fff !important; background-color:#498af3;text-align:center;font-weight: bold;"><tr><th style="color:#fff !important; background-color:#498af3;text-align:center;font-weight: bold;">FIRST NAME</th><th style="color:#fff !important; background-color:#498af3;text-align:center;font-weight: bold;">LAST NAME</th><th style="color:#fff !important; background-color:#498af3;text-align:center;font-weight: bold;width:80px">MOBILE</th><th style="color:#fff !important; background-color:#498af3;text-align:center;font-weight: bold;">EMAIL</th><th style="color:#fff !important; background-color:#498af3;text-align:center;font-weight: bold;">DESIGNATION</th><th style="color:#fff !important; background-color:#498af3;text-align:center;font-weight: bold;">UNIT NO</th><th style="color:#fff !important; background-color:#498af3;text-align:center;font-weight: bold;">CARD NUMBER</th><th style="color:#fff !important; background-color:#498af3;text-align:center;font-weight: bold;">COMMENTS</th><th style="color:#fff !important; background-color:#498af3;text-align:center;font-weight: bold;">USERSTAMP</th><th style="color:#fff !important; background-color:#498af3;text-align:center;font-weight: bold;">TIMESTAMP</th></tr></thead><tbody>';
+        for($j=0;$j<count($EMPSRC_UPD_DEL_result_array);$j++){
+            $EMPSRC_UPD_DEL_values=$EMPSRC_UPD_DEL_result_array[$j];
+            $id=$EMPSRC_UPD_DEL_result_array[$j]->ID;
+            $EMPSRC_UPD_DEL_fname=$EMPSRC_UPD_DEL_result_array[$j]->Femployeename;
+            $EMPSRC_UPD_DEL_lname=$EMPSRC_UPD_DEL_result_array[$j]->Lemployeename;
+            $EMPSRC_UPD_DEL_mobileno=$EMPSRC_UPD_DEL_result_array[$j]->mobile;
+            $EMPSRC_UPD_DEL_destination=$EMPSRC_UPD_DEL_result_array[$j]->designation;
+            $comments=$EMPSRC_UPD_DEL_result_array[$j]->comments;
+            if(($comments==null)||($comments==undefined))
+            {
+                $comments='';
+            }
+            $EMPSRC_UPD_DEL_unitno=$EMPSRC_UPD_DEL_result_array[$j]->EMPSRC_UPD_DEL_unitno;
+            if(($EMPSRC_UPD_DEL_unitno==null)||($EMPSRC_UPD_DEL_unitno==undefined))
+            {
+                $EMPSRC_UPD_DEL_unitno='';
+            }
+            $EMPSRC_UPD_DEL_emailid=$EMPSRC_UPD_DEL_result_array[$j]->email;
+            if(($EMPSRC_UPD_DEL_emailid==null)||($EMPSRC_UPD_DEL_emailid==undefined))
+            {
+                $EMPSRC_UPD_DEL_emailid='';
+            }
+            $cardnumber=$EMPSRC_UPD_DEL_result_array[$j]->cardnumber;
+            if(($cardnumber==null)||($cardnumber==undefined))
+            {
+                $cardnumber='';
+            }
+            $EMPSRC_UPD_DEL_header.='<tr><td>'.$EMPSRC_UPD_DEL_fname.'</td><td>'.$EMPSRC_UPD_DEL_lname.'</td><td>'.$EMPSRC_UPD_DEL_mobileno.'</td><td>'.$EMPSRC_UPD_DEL_emailid.'</td><td>'.$EMPSRC_UPD_DEL_destination.'</td><td>'.$EMPSRC_UPD_DEL_unitno.'</td><td>'.$cardnumber.'</td><td>'.$comments.'</td><td>'.$EMPSRC_UPD_DEL_values->userstamp.'</td><td>'.$EMPSRC_UPD_DEL_values->timestamp.'</td></tr>';
+        }
+        $EMPSRC_UPD_DEL_header.='</tbody></table>';
+        return $EMPSRC_UPD_DEL_header;
+
+    }
     //FUNCTION FOR COMMENTS
     public function EMPSRC_UPD_DEL_comments($EMPSRC_UPD_DEL_lb_searchoption){
         if($EMPSRC_UPD_DEL_lb_searchoption==99)
@@ -256,16 +290,12 @@ class Mdl_staff_employee_entry_search_update_delete extends CI_Model{
         $EMPSRC_UPD_DEL_lastname = $_POST['EMPSRC_UPD_DEL_lastname'];
         $EMPSRC_UPD_DEL_empdesigname =$_POST['EMPSRC_UPD_DEL_empdesigname'];
         $EMPSRC_UPD_DEL_mobilenumber = $_POST['EMPSRC_UPD_DEL_mobilenumber'];
-//echo 'll'.$EMPSRC_UPD_DEL_comments.'test';
         $EMPSRC_UPD_DEL_commentsupdate=array();
-
         if($EMPSRC_UPD_DEL_email!=''){
-
             $EMPSRC_UPD_DEL_email="'$EMPSRC_UPD_DEL_email'";
         }
         if($EMPSRC_UPD_DEL_comments!=''){
-//echo 'adad';
-//            exit;
+
             $EMPSRC_UPD_DEL_comments="'$EMPSRC_UPD_DEL_comments'";
         }
 
@@ -311,7 +341,7 @@ class Mdl_staff_employee_entry_search_update_delete extends CI_Model{
             $EMPSRC_UPD_DEL_getcardnoarray_final='null';
         }
         if(count($EMPSRC_UPD_DEL_getcardnoarray)==0 ||$EMP_ENTRY_radio_null=='null'){
-            $EMPSRC_UPD_DEL_getcardnoarray_final='null';
+            $EMPSRC_UPD_DEL_getcardnoarray_final=null;
         }
         else{
             $EMPSRC_UPD_DEL_getcardnoarray_final="'".$EMPSRC_UPD_DEL_getcardnoarray_final."'";
@@ -341,40 +371,27 @@ class Mdl_staff_employee_entry_search_update_delete extends CI_Model{
         }
 
             $EMPSRC_UPD_DEL_lastupdatecard=$EMPSRC_UPD_DEL_cardno_final;
-//        echo "CALL SP_EMPDTL_UPDATE('$EMPSRC_UPD_DEL_id','$EMPSRC_UPD_DEL_firstname','$EMPSRC_UPD_DEL_lastname','$EMPSRC_UPD_DEL_empdesigname','$EMPSRC_UPD_DEL_mobilenumber',$EMPSRC_UPD_DEL_email,$EMPSRC_UPD_DEL_comments,'$USERSTAMP',".$EMPSRC_UPD_DEL_getcardnoarray_final.",".$EMPSRC_UPD_DEL_lastupdatecard.",@FLAG_ENTRYEMP)";
-//         print_r($EMPSRC_UPD_DEL_cardno);
-//        print_r($EMPSRC_UPD_DEL_getcardnoarray);
-//        echo $EMPSRC_UPD_DEL_email;
 
-//        exit;
            if($EMPSRC_UPD_DEL_email=='' &&  $EMPSRC_UPD_DEL_comments=='')
            {
-//               echo 'if';
-        $insertquery = "CALL SP_EMPDTL_UPDATE('$EMPSRC_UPD_DEL_id','$EMPSRC_UPD_DEL_firstname','$EMPSRC_UPD_DEL_lastname','$EMPSRC_UPD_DEL_empdesigname','$EMPSRC_UPD_DEL_mobilenumber','$EMPSRC_UPD_DEL_email','$EMPSRC_UPD_DEL_comments','$USERSTAMP',".$EMPSRC_UPD_DEL_getcardnoarray_final.",".$EMPSRC_UPD_DEL_lastupdatecard.",@FLAG_ENTRYEMP)";
+
+        $insertquery = "CALL SP_EMPDTL_UPDATE('$EMPSRC_UPD_DEL_id','$EMPSRC_UPD_DEL_firstname','$EMPSRC_UPD_DEL_lastname','$EMPSRC_UPD_DEL_empdesigname','$EMPSRC_UPD_DEL_mobilenumber','$EMPSRC_UPD_DEL_email','$EMPSRC_UPD_DEL_comments','$USERSTAMP',$EMPSRC_UPD_DEL_getcardnoarray_final,$EMPSRC_UPD_DEL_lastupdatecard,@FLAG_ENTRYEMP)";
            }
            else if($EMPSRC_UPD_DEL_comments=='')
            {
-               $insertquery = "CALL SP_EMPDTL_UPDATE('$EMPSRC_UPD_DEL_id','$EMPSRC_UPD_DEL_firstname','$EMPSRC_UPD_DEL_lastname','$EMPSRC_UPD_DEL_empdesigname','$EMPSRC_UPD_DEL_mobilenumber',$EMPSRC_UPD_DEL_email,'$EMPSRC_UPD_DEL_comments','$USERSTAMP',".$EMPSRC_UPD_DEL_getcardnoarray_final.",".$EMPSRC_UPD_DEL_lastupdatecard.",@FLAG_ENTRYEMP)";
+               $insertquery = "CALL SP_EMPDTL_UPDATE('$EMPSRC_UPD_DEL_id','$EMPSRC_UPD_DEL_firstname','$EMPSRC_UPD_DEL_lastname','$EMPSRC_UPD_DEL_empdesigname','$EMPSRC_UPD_DEL_mobilenumber',$EMPSRC_UPD_DEL_email,'$EMPSRC_UPD_DEL_comments','$USERSTAMP',$EMPSRC_UPD_DEL_getcardnoarray_final,$EMPSRC_UPD_DEL_lastupdatecard,@FLAG_ENTRYEMP)";
 
            }
            else if($EMPSRC_UPD_DEL_email=='' )
            {
-//               echo 'asd';
-//               exit;
-               $insertquery = "CALL SP_EMPDTL_UPDATE('$EMPSRC_UPD_DEL_id','$EMPSRC_UPD_DEL_firstname','$EMPSRC_UPD_DEL_lastname','$EMPSRC_UPD_DEL_empdesigname','$EMPSRC_UPD_DEL_mobilenumber','$EMPSRC_UPD_DEL_email',$EMPSRC_UPD_DEL_comments,'$USERSTAMP',".$EMPSRC_UPD_DEL_getcardnoarray_final.",".$EMPSRC_UPD_DEL_lastupdatecard.",@FLAG_ENTRYEMP)";
+
+               $insertquery = "CALL SP_EMPDTL_UPDATE('$EMPSRC_UPD_DEL_id','$EMPSRC_UPD_DEL_firstname','$EMPSRC_UPD_DEL_lastname','$EMPSRC_UPD_DEL_empdesigname','$EMPSRC_UPD_DEL_mobilenumber','$EMPSRC_UPD_DEL_email',$EMPSRC_UPD_DEL_comments,'$USERSTAMP',$EMPSRC_UPD_DEL_getcardnoarray_final,$EMPSRC_UPD_DEL_lastupdatecard,@FLAG_ENTRYEMP)";
 
            }
-//        if($EMPSRC_UPD_DEL_cardno=='null' || $EMPSRC_UPD_DEL_getcardnoarray=='null')
-//           {
-//               print_r($EMPSRC_UPD_DEL_cardno);
-//               print_r($EMPSRC_UPD_DEL_getcardnoarray);
-//               exit;
-//               $insertquery = "CALL SP_EMPDTL_UPDATE('$EMPSRC_UPD_DEL_id','$EMPSRC_UPD_DEL_firstname','$EMPSRC_UPD_DEL_lastname','$EMPSRC_UPD_DEL_empdesigname','$EMPSRC_UPD_DEL_mobilenumber',$EMPSRC_UPD_DEL_email,$EMPSRC_UPD_DEL_comments,'$USERSTAMP',$EMPSRC_UPD_DEL_getcardnoarray,$EMPSRC_UPD_DEL_cardno,@FLAG_ENTRYEMP)";
-//
-//           }
+
         else
         {
-        $insertquery = "CALL SP_EMPDTL_UPDATE('$EMPSRC_UPD_DEL_id','$EMPSRC_UPD_DEL_firstname','$EMPSRC_UPD_DEL_lastname','$EMPSRC_UPD_DEL_empdesigname','$EMPSRC_UPD_DEL_mobilenumber',$EMPSRC_UPD_DEL_email,$EMPSRC_UPD_DEL_comments,'$USERSTAMP',".$EMPSRC_UPD_DEL_getcardnoarray_final.",".$EMPSRC_UPD_DEL_lastupdatecard.",@FLAG_ENTRYEMP)";
+        $insertquery = "CALL SP_EMPDTL_UPDATE('$EMPSRC_UPD_DEL_id','$EMPSRC_UPD_DEL_firstname','$EMPSRC_UPD_DEL_lastname','$EMPSRC_UPD_DEL_empdesigname','$EMPSRC_UPD_DEL_mobilenumber',$EMPSRC_UPD_DEL_email,$EMPSRC_UPD_DEL_comments,'$USERSTAMP',$EMPSRC_UPD_DEL_getcardnoarray_final,$EMPSRC_UPD_DEL_lastupdatecard,@FLAG_ENTRYEMP)";
         }
         $query = $this->db->query($insertquery);
         $FLAG= $this->db->query('SELECT @FLAG_ENTRYEMP as SUCCESSMSG');
@@ -383,10 +400,9 @@ class Mdl_staff_employee_entry_search_update_delete extends CI_Model{
 
         if(($EMPSRC_UPD_DEL_searchoption==94)||($EMPSRC_UPD_DEL_searchoption==96)||($EMPSRC_UPD_DEL_searchoption==99))
         {
-            $EMPSRC_UPD_DEL_commentsupdate=EMPSRC_UPD_DEL_comments($EMPSRC_UPD_DEL_searchoption);
+            $EMPSRC_UPD_DEL_commentsupdate=$this->EMPSRC_UPD_DEL_comments($EMPSRC_UPD_DEL_searchoption);
         }
-//        echo $EMPSRC_UPD_DEL_comments;
-//        exit;
+
         return $result[]=array($EMPSRC_UPD_DEL_multi_array,$EMPSRC_UPD_DEL_commentsupdate,$finalFLAG);
 //        return $insertquery;
 //        return $result[]=array($finalFLAG);

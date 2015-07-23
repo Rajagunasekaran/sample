@@ -325,7 +325,7 @@ require_once('application/libraries/EI_HDR.php');
             <fieldset>
                 <div class="form-group" id="DCSU_unitno">
                     <label class="col-sm-2">UNIT NUMBER <em>*</em></label>
-                    <div class="col-sm-2"><select name="DCSU_lb_unitnumber" id="DCSU_lb_unitnumber" class="form-control"></select></div>
+                    <div class="col-sm-2"><select name="DCSU_lb_unitnumber" id="DCSU_lb_unitnumber" class="form-control"><option>SELECT</option></select></div>
                 </div>
                 <div class="form-group" id="DCSU_div_errmsgdooor" hidden>
                     <label id="DCSU_lbl_errmsgdooor" class="srctitle col-lg-12"></label>

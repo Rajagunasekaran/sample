@@ -216,8 +216,8 @@ class Mdl_unit_creation_search_update extends CI_Model{
         }
         $this->load->model('EILIB/Mdl_eilib_common_function');
         $ErrorMessage= $this->Mdl_eilib_common_function->getErrorMessageList('1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,45,52,98,248,307,308,317,318,319,322,323,324,325,326,333,334,401,101,402,403,457,458');
-        $UC_result=array($result1,$result2,$ErrorMessage);
-        return $UC_result;
+        $USU_result=array($result1,$result2,$ErrorMessage);
+        return $USU_result;
     }
     public function Usu_searchby_option($USU_unit_optionfetch,$USU_parentfunc,$USU_load_lb){
         $loaddta=[];
@@ -511,9 +511,11 @@ class Mdl_unit_creation_search_update extends CI_Model{
         ,$USU_upd_lost,$USU_upd_inventory,$USU_update_lb_roomtype,$USU_upd_tb_stampamt,$USU_update_lb_stampdate,$USU_upd_typeofcard,$USU_cb_inventory
         ,$USU_cb_lost,$USU_obj_rowvalue,$USU_unit_searchby,$USU_dutyamt_fromamt,$USU_dutyamt_toamt,$USU_payment_frmamt,$USU_payment_toamt,$USU_frmdate
         ,$USU_enddate,$USU_all_searchby,$USU_accesscard,$USU_parent_updation,$timeZoneFrmt,$UserStamp,$cal){
-        $this->load->model('EILIB/Mdl_eilib_common_function');
-        $this->load->model('EILIB/Mdl_eilib_Calender');
-        $USU_sh_arr=$this->Mdl_eilib_common_function->getStarHubUnitCalTime();
+        if (($USU_upd_selectoption_unit == 3) || ($USU_upd_selectoption_unit == 4) || ($USU_upd_selectoption_unit == 6) || ($USU_upd_selectoption_unit == 7)) {
+            $this->load->model('EILIB/Mdl_eilib_common_function');
+            $this->load->model('EILIB/Mdl_eilib_calender');
+            $USU_sh_arr=$this->Mdl_eilib_common_function->getStarHubUnitCalTime();
+        }
         $USU_oldvalues_sdate = date('Y-m-d',strtotime($USU_obj_rowvalue['USU_tr_second']));
         $USU_oldvalues_edate = date('Y-m-d',strtotime($USU_obj_rowvalue['USU_tr_third']));
         $savepoint='';$USU_flag_flag_update=0;
@@ -619,22 +621,24 @@ class Mdl_unit_creation_search_update extends CI_Model{
             $USU_flag_rs=$this->db->query("SELECT @FLAG_UPDATE AS FLAG_UPDATE");
             $USU_flag_flag_update=$USU_flag_rs->row()->FLAG_UPDATE;
             $cal_value=0;$caldel_value=0;
-            if($USU_flag_flag_update==1){
-                if(($USU_upd_selectoption_unit==3)||($USU_upd_selectoption_unit==4)||($USU_upd_selectoption_unit==6)||($USU_upd_selectoption_unit==7)){
-                    $caldel_value=$this->Mdl_eilib_calender->StarHubUnit_DeleteCalEvent($cal,$USU_obj_rowvalue['USU_tr_first'],$USU_oldvalues_sdate,$USU_sh_arr[0]['ECN_DATA'],$USU_sh_arr[1]['ECN_DATA'],$USU_oldvalues_edate,$USU_sh_arr[0]['ECN_DATA'],$USU_sh_arr[1]['ECN_DATA'],'UNIT');
-                    $cal_value=$this->Mdl_eilib_calender->StarHubUnit_CreateCalEvent($cal,$USU_upd_startdate_update,$USU_sh_arr[0]['ECN_DATA'],$USU_sh_arr[1]['ECN_DATA'],$USU_upd_enddate_update,$USU_sh_arr[0]['ECN_DATA'],$USU_sh_arr[1]['ECN_DATA'],'',$USU_upd_unitno,'','START DATE','END DATE',$USU_upd_nonei_event,$USU_upd_unitpayment);
+            if (($USU_upd_selectoption_unit == 3) || ($USU_upd_selectoption_unit == 4) || ($USU_upd_selectoption_unit == 6) || ($USU_upd_selectoption_unit == 7)) {
+                if ($USU_flag_flag_update == 1) {
+                    if (($USU_upd_selectoption_unit == 3) || ($USU_upd_selectoption_unit == 4) || ($USU_upd_selectoption_unit == 6) || ($USU_upd_selectoption_unit == 7)) {
+                        $caldel_value = $this->Mdl_eilib_calender->StarHubUnit_DeleteCalEvent($cal, $USU_obj_rowvalue['USU_tr_first'], $USU_oldvalues_sdate, $USU_sh_arr[0]['ECN_DATA'], $USU_sh_arr[1]['ECN_DATA'], $USU_oldvalues_edate, $USU_sh_arr[0]['ECN_DATA'], $USU_sh_arr[1]['ECN_DATA'], 'UNIT');
+                        $cal_value = $this->Mdl_eilib_calender->StarHubUnit_CreateCalEvent($cal, $USU_upd_startdate_update, $USU_sh_arr[0]['ECN_DATA'], $USU_sh_arr[1]['ECN_DATA'], $USU_upd_enddate_update, $USU_sh_arr[0]['ECN_DATA'], $USU_sh_arr[1]['ECN_DATA'], '', $USU_upd_unitno, '', 'START DATE', 'END DATE', $USU_upd_nonei_event, $USU_upd_unitpayment);
+                    }
+                    if ($cal_value == 1 && $caldel_value == 1) {
+                        $this->db->trans_savepoint_release($savepoint);
+                    }
+                    else {
+                        $this->db->trans_savepoint_rollback($savepoint);
+                        $caldel_value = $this->Mdl_eilib_calender->StarHubUnit_DeleteCalEvent($cal, $USU_obj_rowvalue['USU_tr_first'], $USU_upd_startdate_update, $USU_sh_arr[0]['ECN_DATA'], $USU_sh_arr[1]['ECN_DATA'], $USU_upd_enddate_update, $USU_sh_arr[0]['ECN_DATA'], $USU_sh_arr[1]['ECN_DATA'], 'UNIT');
+                        $calvalue = $this->Mdl_eilib_calender->StarHubUnit_CreateCalEvent($cal, $USU_oldvalues_sdate, $USU_sh_arr[0]['ECN_DATA'], $USU_sh_arr[1]['ECN_DATA'], $USU_oldvalues_edate, $USU_sh_arr[0]['ECN_DATA'], $USU_sh_arr[1]['ECN_DATA'], '', $USU_obj_rowvalue['USU_tr_first'], '', 'START DATE', 'END DATE', $USU_obj_rowvalue['USU_tr_five'], $USU_obj_rowvalue['USU_tr_six']);
+                    }
                 }
-                if($cal_value==1 && $caldel_value==1) {
-                    $this->db->trans_savepoint_release($savepoint);
-                }
-                else{
+                else {
                     $this->db->trans_savepoint_rollback($savepoint);
-                    $caldel_value=$this->Mdl_eilib_calender->StarHubUnit_DeleteCalEvent($cal,$USU_obj_rowvalue['USU_tr_first'],$USU_upd_startdate_update,$USU_sh_arr[0]['ECN_DATA'],$USU_sh_arr[1]['ECN_DATA'],$USU_upd_enddate_update,$USU_sh_arr[0]['ECN_DATA'],$USU_sh_arr[1]['ECN_DATA'],'UNIT');
-                    $calvalue=$this->Mdl_eilib_calender->StarHubUnit_CreateCalEvent($cal,$USU_oldvalues_sdate,$USU_sh_arr[0]['ECN_DATA'],$USU_sh_arr[1]['ECN_DATA'],$USU_oldvalues_edate,$USU_sh_arr[0]['ECN_DATA'],$USU_sh_arr[1]['ECN_DATA'],'',$USU_obj_rowvalue['USU_tr_first'],'','START DATE','END DATE',$USU_obj_rowvalue['USU_tr_five'],$USU_obj_rowvalue['USU_tr_six']);
                 }
-            }
-            else{
-                $this->db->trans_savepoint_rollback($savepoint);
             }
             if($USU_flag_flag_update==0){
                 return ["USU_parentfunc_obj"=>'zero'];

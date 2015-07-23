@@ -90,11 +90,14 @@ class Ctrl_Unit_Creation_Search_Update extends CI_Controller{
     public function USU_func_update(){
         $timeZoneFrmt= $this->Mdl_eilib_common_function->getTimezone();
         $USERSTAMP=$this->Mdl_eilib_common_function->getSessionUserStamp();
-        $calndr=$this->Cal_service();
         $USU_form_values=$this->input->post("USU_obj_formvalues");
         $USU_obj_rowvalue=$this->input->post("USU_obj_rowvalue");
         $USU_obj_flex=$this->input->post("USU_obj_flex");
         $USU_upd_selectoption_unit= $USU_form_values['USU_lb_selectoption_unit'];
+        $calndr='';
+        if (($USU_upd_selectoption_unit == 3) || ($USU_upd_selectoption_unit == 4) || ($USU_upd_selectoption_unit == 6) || ($USU_upd_selectoption_unit == 7)) {
+            $calndr=$this->Cal_service();
+        }
         $USU_upd_unitid_stampid = $USU_form_values['USU_radio_flex'];
         $USU_upd_startdate_update = $USU_form_values['USU_db_startdate_update'];
         $USU_upd_unitno = $USU_form_values['USU_tb_unitno'];

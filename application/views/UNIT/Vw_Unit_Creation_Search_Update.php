@@ -852,7 +852,10 @@ require_once('application/libraries/EI_HDR.php');
                     $("#USU_lbl_errmsg_paymentdate").text('');
             });
         // CHANGE EVENT FOR UNTI LISTBOX
-            $(document).on('change','#USU_lb_unitno',function(){
+            $(document).on('change','#USU_lb_unitno',function(event){
+                event.stopPropagation();
+                event.preventDefault();
+                event.stopImmediatePropagation();
                 $('#USU_cardtype,#USU_cardno,#USU_paymentamtdiv,#USU_stampamtdiv,#USU_div_flex,#USU_headermsg,#USU_errmsg_roominventory,#USU_div_updateform').hide();
                 $('#USU_form_unitupdate').find('input:text').val('');
                 $('#USU_cardtype,#USU_cardno').find('select').val('SELECT');
@@ -891,7 +894,10 @@ require_once('application/libraries/EI_HDR.php');
                 }
             });
         // CHANGE EVENT FOR ROOM TYPE LISTBOX
-        $(document).on('change','#USU_lb_roomtyps',function(){
+        $(document).on('change','#USU_lb_roomtyps',function(event){
+            event.stopPropagation();
+            event.preventDefault();
+            event.stopImmediatePropagation();
             $('#USU_cardtype,#USU_cardno,#USU_paymentamtdiv,#USU_stampamtdiv,#USU_div_flex,#USU_headermsg,#USU_errmsg_roominventory,#USU_div_updateform').hide();
             $('#USU_form_unitupdate').find('input:text').val('');
             $('#USU_cardtype,#USU_cardno').find('select').val('SELECT');
@@ -955,7 +961,10 @@ require_once('application/libraries/EI_HDR.php');
                 }
             });
         // CHANGE EVENT FOR SEARCH BY LISTBOX
-            $(document).on('change','#USU_lb_cardno',function(){
+            $(document).on('change','#USU_lb_cardno',function(event){
+                event.stopPropagation();
+                event.preventDefault();
+                event.stopImmediatePropagation();
                 $('#USU_paymentamtdiv,#USU_stampamtdiv,#USU_div_flex,#USU_headermsg,#USU_errmsg_roominventory,#USU_div_updateform').hide();
                 $('#USU_form_unitupdate').find('input:text').val('');
                 $('#USU_headermsg,#USU_errmsg_roominventory').text('');
@@ -996,7 +1005,10 @@ require_once('application/libraries/EI_HDR.php');
                 }
             });
         // CLICK FUNCTION FOR DATE,AMOUNT SEARCH BUTTON
-            $(document).on('click','#USU_btn_search',function(){
+            $(document).on('click','#USU_btn_search',function(evnt){
+                evnt.stopPropagation();
+                evnt.preventDefault();
+                evnt.stopImmediatePropagation();
                 $(".preloader").show();
                 var formelement=$('#unit_createupdate_form').serialize();
                 $.ajax({
@@ -1297,7 +1309,7 @@ require_once('application/libraries/EI_HDR.php');
                                 var USU_replace_errmsg=USU_errormsg_arr[45].EMC_DATA;
                             else
                                 var USU_replace_errmsg=USU_errormsg_arr[38].EMC_DATA.replace('[UNITNO]',USU_obj_rowvalue.USU_tr_first);
-                            show_msgbox("UNIT SEARCH/UPDATE",USU_replace_errmsg,'error',false);
+                            show_msgbox("UNIT SEARCH/UPDATE",USU_replace_errmsg,'success',false);
                         }
                     }
                     else{
@@ -1347,7 +1359,16 @@ require_once('application/libraries/EI_HDR.php');
                 {
                     USU_upd_tr +='<div id="USU_updateform" style="padding-top:20px"> <div class="form-group" id="USU_unitno"> <label class="col-sm-2">UNIT NUMBER <em>*</em></label> <div class="col-sm-2"><input type="text" value="'+tds[1]+'" name="USU_tb_unitno" id="USU_tb_unitno" maxlength=4 class="USU_class_title_nums USU_class_updvalidation numonlyzero form-control" placeholder="Unit Number"></div> <div class="col-sm-4"> <label id="USU_lbl_alreadyexists" class="errormsg errpadding"></label> </div> </div> <div class="form-group" id="USU_startdate"> <label class="col-sm-2">START DATE <em>*</em></label> <div class="col-sm-2"> <div class="input-group addon"> <input value="'+tds[2]+'" type="text" name="USU_db_startdate_update" id="USU_db_startdate_update" class="USU_class_updvalidation form-control" placeholder="Start Date"/> <label for="USU_db_startdate_update" class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></label> </div> </div> </div> <div class="form-group" id="USU_enddate"> <label class="col-sm-2">END DATE <em>*</em></label> <div class="col-sm-2"> <div class="input-group addon"> <input value="'+tds[3]+'" type="text" name="USU_db_enddate_update" id="USU_db_enddate_update" class="USU_class_updvalidation form-control" placeholder="End Date"/> <label for="USU_db_enddate_update" class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></label> </div> </div> <div class="col-sm-2"> <div class="checkbox"> <label id="USU_lbl_obsolete"><input id ="USU_cb_obsolete" type="checkbox" name="USU_cb_obsolete" class="USU_class_obsolete USU_class_updvalidation" disabled>OBSOLETE</label> </div> </div> <div class="col-sm-4 errpadding errormsg" id="USU_lbl_obsolete_errmsg"> </div> </div> <div class="form-group" id="USU_unitrent"> <label class="col-sm-2">UNIT RENTAL <em>*</em></label> <div class="col-sm-2"><input value="'+tds[6]+'" id= "USU_tb_unitreltal" type = "text" name="USU_tb_unitreltal" maxlength=4 class="numonly USU_class_title_nums USU_class_updvalidation form-control" placeholder="Unit Rental"></div> </div> <div class="form-group" id="USU_unitdepo"> <label class="col-sm-2">UNIT DEPOSIT </label> <div class="col-sm-2"><input value="'+tds[7]+'" id="USU_tb_unitdeposit" type="text" name = "USU_tb_unitdeposit" maxlength=5 class="numonly USU_class_title_nums USU_class_updvalidation form-control" placeholder="Unit Deposit"></div> </div> <div class="form-group" id="USU_accntnumber"> <label class="col-sm-2">ACCOUNT NUMBER </label> <div class="col-sm-2"><input value="'+tds[8]+'" id ="USU_tb_accnoid" type="USU_tb_accnoid" name="USU_tb_accnoid" placeholder="Account Number" maxlength="15" class="numonlyzero USU_class_updvalidation USU_class_title_nums form-control"/></div> </div> <div class="form-group" id="USU_accntname"> <label class="col-sm-2">ACCOUNT NAME </label> <div class="col-sm-3"><input id="USU_tb_accname" type="text" name="USU_tb_accname" value="'+tds[9]+'" maxlength=25 class="uppercase USU_class_updvalidation form-control" placeholder="Account Name"/></div> </div> <div class="form-group" id="USU_bankcode"> <label class="col-sm-2">BANK CODE</label> <div class="col-sm-2"><input id = "USU_tb_bankcodeid" type="text" name="USU_tb_bankcodeid"  maxlength=5 value="'+tds[10]+'" class="numonlyzero USU_class_title_nums USU_class_updvalidation form-control" placeholder="Bank Code"/></div> </div> <div class="form-group" id="USU_branchcode"> <label class="col-sm-2">BRANCH CODE</label> <div class="col-sm-2"><input id ="USU_tb_branchcode" type="text" name="USU_tb_branchcode" value="'+tds[11]+'" maxlength=5 class="numonlyzero USU_class_title_nums USU_class_updvalidation form-control" placeholder="Branch Code"/></div> </div> <div class="form-group" id="USU_bankaddress"> <label class="col-sm-2">BANK ADDRESS</label> <div class="col-sm-4"><textarea id="USU_tb_bankaddr" name="USU_tb_bankaddr" placeholder="Bank Address" class="USU_class_updvalidation form-control" style="height: 114px" rows="5">'+tds[12]+'</textarea></div> </div> <div class="form-group" id="USU_comments"> <label class="col-sm-2">COMMENTS</label> <div class="col-sm-4"><textarea id="USU_ta_comments" name="USU_ta_comments" placeholder="Comments" class="USU_class_updvalidation form-control" style="height: 114px" rows="5">'+tds[13]+'</textarea></div> </div> <div class="form-group" id="USU_nonEI"> <label class="col-sm-2">EI/NON_EI</label> <div class="radio"> <label><input type="checkbox" name="USU_cb_nonei" id ="USU_cb_nonei" class="USU_class_updvalidation"></label> </div> </div> </div>';
                     $(USU_upd_tr).appendTo($("#USU_tble_update"));
-                    $("#USU_db_startdate_update").datepicker({dateFormat: "dd-mm-yy",changeYear:true,changeMonth:true,maxDate:'+2Y' });
+                    $("#USU_db_startdate_update").datepicker({dateFormat: "dd-mm-yy",changeYear:true,changeMonth:true,maxDate:'+2Y',
+                        onSelect: function(date) {
+                            if((parseInt($('#USU_tb_unitno').val())==0)||($('#USU_tb_unitno').val()=='')||($('#USU_db_startdate_update').val()=='')||($('#USU_db_enddate_update').val()=='')||(parseInt($('#USU_tb_unitreltal').val())=='')||($('#USU_tb_unitreltal').val()=='')||($("#USU_tb_unitno").val().length<4)||(($('#USU_tb_unitno').val()==USU_obj_rowvalue.USU_tr_first)&&($('#USU_db_startdate_update').val()==USU_obj_rowvalue.USU_tr_second)&&($('#USU_db_enddate_update').val()==USU_obj_rowvalue.USU_tr_third)&&($('#USU_tb_unitreltal').val()==USU_obj_rowvalue.USU_tr_six)&&($('#USU_tb_unitdeposit').val()==USU_obj_rowvalue.USU_tr_seven)&&($('#USU_tb_accnoid').val()==USU_obj_rowvalue.USU_tr_eight)&&(($('#USU_tb_accname').val()).trim()==USU_obj_rowvalue.USU_tr_nine)&&($('#USU_tb_bankcodeid').val()==USU_obj_rowvalue.USU_tr_ten)&&($('#USU_tb_branchcode').val()==USU_obj_rowvalue.USU_tr_eleven)&&(($('#USU_tb_bankaddr').val()).trim()==USU_obj_rowvalue.USU_tr_twelve)&&(($('#USU_ta_comments').val()).trim()==USU_obj_rowvalue.USU_tr_thirteen))){
+                                $("#USU_btn_update").attr("disabled","disabled");
+                            }
+                            else{
+                                $('#USU_btn_update').removeAttr("disabled", "disabled");
+                            }
+                        }
+                    });
                     $("#USU_db_enddate_update").datepicker({dateFormat: "dd-mm-yy" ,changeYear:true,changeMonth:true,
                         onSelect: function(date) {
                             if((parseInt($('#USU_tb_unitno').val())==0)||($('#USU_tb_unitno').val()=='')||($('#USU_db_startdate_update').val()=='')||($('#USU_db_enddate_update').val()=='')||(parseInt($('#USU_tb_unitreltal').val())=='')||($('#USU_tb_unitreltal').val()=='')||($("#USU_tb_unitno").val().length<4)||(($('#USU_tb_unitno').val()==USU_obj_rowvalue.USU_tr_first)&&($('#USU_db_startdate_update').val()==USU_obj_rowvalue.USU_tr_second)&&($('#USU_db_enddate_update').val()==USU_obj_rowvalue.USU_tr_third)&&($('#USU_tb_unitreltal').val()==USU_obj_rowvalue.USU_tr_six)&&($('#USU_tb_unitdeposit').val()==USU_obj_rowvalue.USU_tr_seven)&&($('#USU_tb_accnoid').val()==USU_obj_rowvalue.USU_tr_eight)&&(($('#USU_tb_accname').val()).trim()==USU_obj_rowvalue.USU_tr_nine)&&($('#USU_tb_bankcodeid').val()==USU_obj_rowvalue.USU_tr_ten)&&($('#USU_tb_branchcode').val()==USU_obj_rowvalue.USU_tr_eleven)&&(($('#USU_tb_bankaddr').val()).trim()==USU_obj_rowvalue.USU_tr_twelve)&&(($('#USU_ta_comments').val()).trim()==USU_obj_rowvalue.USU_tr_thirteen))){
@@ -1506,17 +1527,26 @@ require_once('application/libraries/EI_HDR.php');
                 }
                 $('#USU_tble_update_reset').show();
                 // VALIDATION FOR NUMBERS,ALPHABETS & AMOUNT FIELDS
-                $(".uppercase").Setcase({caseValue : 'upper'});
                 $('textarea').autogrow({onInitialize: true});
                 $(".numonlyzero").doValidation({rule:'numbersonly',prop:{leadzero:true}});
                 $(".general").doValidation({rule:'general',prop:{whitespace:true,autosize:true}});
                 $(".numonly").doValidation({rule:'numbersonly'});
 //                $(".alphaonly").doValidation({rule:'alphanumeric'});
                 $("#USU_tb_stampamt").doValidation({rule:'numbersonly',prop:{realpart:4,imaginary:2}});
-                $("#USU_db_stampdate").datepicker({dateFormat: "dd-mm-yy" ,changeYear: true,changeMonth: true });
+                $("#USU_db_stampdate").datepicker({dateFormat: "dd-mm-yy" ,changeYear: true,changeMonth: true,
+                    onSelect: function(date) {
+                        if(($("#USU_lb_roomtype").val()==USU_obj_rowvalue.USU_tr_six)&&($("#USU_lb_stamptype").val()==USU_obj_rowvalue.USU_tr_eight)&&($("#USU_db_stampdate").val()==USU_obj_rowvalue.USU_tr_seven)&&($("#USU_tb_stampamt").val()==USU_obj_rowvalue.USU_tr_nine)&&(($("#USU_ta_accesscomment").val()).trim()==USU_obj_rowvalue.USU_tr_ten)){
+                            $("#USU_btn_update").attr("disabled","disabled");
+                        }
+                        else{
+                            $('#USU_btn_update').removeAttr("disabled", "disabled");
+                        }
+                    }
+                });
                 $(".USU_class_title_nums").prop("title",USU_errormsg_arr[1].EMC_DATA);
                 $(".USU_class_title_alpha").prop("title",USU_errormsg_arr[0].EMC_DATA);
                 $(".USU_class_ta_cmts").doValidation({rule:'general',prop:{uppercase:false}});
+                $(".uppercase").Setcase({caseValue : 'upper'});
                 function USU_success_unitno_trans(USU_response_unitno_trans){
                     $(".preloader").hide();
                     $("#USU_div_updateform").show();
@@ -1666,6 +1696,7 @@ require_once('application/libraries/EI_HDR.php');
                         data: {'inventory_unitno':USU_roomstamptype_val,'typeofcard':'','flag_card_unitno':USU_parentfunc_already,'USU_parent_func':''},
                         success: function(existdata) {
                             var exist_data=JSON.parse(existdata);
+                            alert(existdata)
                             USU_success_alreadyexists(exist_data);
                             if(USU_flag_updbtn==1){
                                 $(".preloader").show();
@@ -1782,10 +1813,12 @@ require_once('application/libraries/EI_HDR.php');
                             USU_flag_roomtype=0;
                         }
                     }
-                    if((USU_flag_updbtn==1)&&(USU_flag_roomtype==1)&&(USU_flag_access==1)&&(USU_flag_unitno==1)&&(USU_flag_enddate==1))
+                    if((USU_flag_updbtn==1)&&(USU_flag_roomtype==1)&&(USU_flag_access==1)&&(USU_flag_unitno==1)&&(USU_flag_enddate==1)){
                         $("#USU_btn_update").removeAttr("disabled");
-                    else
+                    }
+                    else{
                         $('#USU_btn_update').attr("disabled", "disabled")
+                    }
                 }
             }
             $(document).on('blur','#USU_tb_bankaddr',function(){
@@ -2013,6 +2046,7 @@ require_once('application/libraries/EI_HDR.php');
                     url: ctrl_unitcreate_url+'/USU_func_update',
                     data: {'USU_obj_formvalues':USU_obj_formvalues,'USU_obj_rowvalue':USU_obj_rowvalue,'USU_obj_flex':USU_obj_flex},
                     success: function(successdata) {
+                        alert(successdata)
                         var success_data=JSON.parse(successdata);
                         USU_success_flex(success_data);
                         rid=undefined;
@@ -2025,7 +2059,10 @@ require_once('application/libraries/EI_HDR.php');
                 });
             }
         // UPDATE BUTTON EVENT
-            $(document).on('click','#USU_btn_update',function(){
+            $(document).on('click','#USU_btn_update',function(event){
+                event.stopPropagation();
+                event.preventDefault();
+                event.stopImmediatePropagation();
                 $(".preloader").show();
                 Unit_search_Update();
             });
@@ -2062,19 +2099,25 @@ require_once('application/libraries/EI_HDR.php');
                     if($("#USU_tb_access").val().length==0){
                         $('#USU_cb_lost,#USU_cb_inventory').prop("checked", false);
                     }
-                    if ($('#USU_cb_lost').is(":checked"))
+                    if ($('#USU_cb_lost').is(":checked")){
                         var USU_cb_lost='X';
-                    else
+                    }
+                    else{
                         var USU_cb_lost='';
-                    if ($('#USU_cb_inventory').is(":checked"))
+                    }
+                    if ($('#USU_cb_inventory').is(":checked")){
                         var USU_cb_inventory='X';
-                    else
+                    }
+                    else{
                         var USU_cb_inventory='';
-                    if(USU_obj_rowvalue.USU_tr_eight=='')
+                    }
+                    if(USU_obj_rowvalue.USU_tr_eight==''){
                         USU_obj_rowvalue.USU_tr_eight='SELECT';
-                    if(USU_obj_rowvalue.USU_tr_six=='')
+                    }
+                    if(USU_obj_rowvalue.USU_tr_six==''){
                         USU_obj_rowvalue.USU_tr_six='SELECT';
-                    if(($("#USU_lb_roomtype").val()==USU_obj_rowvalue.USU_tr_six)&&($("#USU_lb_stamptype").val()==USU_obj_rowvalue.USU_tr_eight)&&($("#USU_db_stampdate").val()==USU_obj_rowvalue.USU_tr_seven)&&($("#USU_tb_stampamt").val()==USU_obj_rowvalue.USU_tr_nine)&&(($("#USU_ta_accesscomment").val()).trim()==USU_obj_rowvalue.USU_tr_ten)&&(USU_cb_lost==USU_obj_rowvalue.USU_tr_five)&&(USU_cb_inventory==USU_obj_rowvalue.USU_tr_four)){
+                    }
+                    if(($("#USU_lb_roomtype").val()==USU_obj_rowvalue.USU_tr_six)&&($("#USU_lb_stamptype").val()==USU_obj_rowvalue.USU_tr_eight)&&($("#USU_tb_stampamt").val()==USU_obj_rowvalue.USU_tr_nine)&&(($("#USU_ta_accesscomment").val()).trim()==USU_obj_rowvalue.USU_tr_ten)&&(USU_cb_lost==USU_obj_rowvalue.USU_tr_five)&&(USU_cb_inventory==USU_obj_rowvalue.USU_tr_four)){
                         USU_flag_updbtn=0;
                     }
                     else{
@@ -2097,7 +2140,7 @@ require_once('application/libraries/EI_HDR.php');
                     else{
                         var USU_cb_obsolete='';
                     }
-                    if((parseInt($('#USU_tb_unitno').val())==0)||($('#USU_tb_unitno').val()=='')||($('#USU_db_startdate_update').val()=='')||(parseInt($('#USU_tb_unitreltal').val())=='')||($('#USU_tb_unitreltal').val()=='')||($("#USU_tb_unitno").val().length<4)||(($('#USU_tb_unitno').val()==USU_obj_rowvalue.USU_tr_first)&&($('#USU_db_startdate_update').val()==USU_obj_rowvalue.USU_tr_second)&&($('#USU_tb_unitreltal').val()==USU_obj_rowvalue.USU_tr_six)&&($('#USU_tb_unitdeposit').val()==USU_obj_rowvalue.USU_tr_seven)&&(USU_cb_obsolete==USU_obj_rowvalue.USU_tr_four)&&($('#USU_tb_accnoid').val()==USU_obj_rowvalue.USU_tr_eight)&&(($('#USU_tb_accname').val()).trim()==USU_obj_rowvalue.USU_tr_nine)&&($('#USU_tb_bankcodeid').val()==USU_obj_rowvalue.USU_tr_ten)&&($('#USU_tb_branchcode').val()==USU_obj_rowvalue.USU_tr_eleven)&&(USU_cb_nonei==USU_obj_rowvalue.USU_tr_five)&&(($('#USU_tb_bankaddr').val()).trim()==USU_obj_rowvalue.USU_tr_twelve)&&(($('#USU_ta_comments').val()).trim()==USU_obj_rowvalue.USU_tr_thirteen))){
+                    if((parseInt($('#USU_tb_unitno').val())==0)||($('#USU_tb_unitno').val()=='')||(parseInt($('#USU_tb_unitreltal').val())=='')||($('#USU_tb_unitreltal').val()=='')||($("#USU_tb_unitno").val().length<4)||(($('#USU_tb_unitno').val()==USU_obj_rowvalue.USU_tr_first)&&($('#USU_tb_unitreltal').val()==USU_obj_rowvalue.USU_tr_six)&&($('#USU_tb_unitdeposit').val()==USU_obj_rowvalue.USU_tr_seven)&&(USU_cb_obsolete==USU_obj_rowvalue.USU_tr_four)&&($('#USU_tb_accnoid').val()==USU_obj_rowvalue.USU_tr_eight)&&(($('#USU_tb_accname').val()).trim()==USU_obj_rowvalue.USU_tr_nine)&&($('#USU_tb_bankcodeid').val()==USU_obj_rowvalue.USU_tr_ten)&&($('#USU_tb_branchcode').val()==USU_obj_rowvalue.USU_tr_eleven)&&(USU_cb_nonei==USU_obj_rowvalue.USU_tr_five)&&(($('#USU_tb_bankaddr').val()).trim()==USU_obj_rowvalue.USU_tr_twelve)&&(($('#USU_ta_comments').val()).trim()==USU_obj_rowvalue.USU_tr_thirteen))){
                         USU_flag_updbtn=0;
                     }
                     else{
@@ -2105,6 +2148,7 @@ require_once('application/libraries/EI_HDR.php');
                     }
                 }
                 if((USU_flag_updbtn==1)&&(USU_flag_roomtype==1)&&(USU_flag_access==1)&&(USU_flag_unitno==1)&&(USU_flag_enddate==1)){
+                    $('#USU_btn_update').removeAttr("disabled", "disabled");
                 }
                 else{
                     $('#USU_btn_update').attr("disabled", "disabled")

@@ -239,7 +239,6 @@ class Mdl_customer_search_update_delete extends CI_Model
             CED.CED_REC_VER='.$leaseperiod.' AND C.CUSTOMER_ID='.$customerid.' AND ((CACD.ACN_ID BETWEEN 1 AND 4) OR
             CACD.ACN_ID IS NULL) AND CED.CED_REC_VER=CTD.CED_REC_VER AND CTD.ULD_ID=ULD.ULD_ID
           ORDER BY C.CUSTOMER_ID,CED.CED_REC_VER,CACD.CACD_GUEST_CARD';
-//        echo $CSRC_customerflextable_query;
         $resultset=$this->db->query($CSRC_customerflextable_query);
         $this->db->query('DROP TABLE IF EXISTS '.$csrc_tablename);
         return $resultset->result();
@@ -297,7 +296,6 @@ class Mdl_customer_search_update_delete extends CI_Model
     public function Customer_Search_Update($UserStamp,$Leaseperiod,$Quoters)
     {
         try {
-//            set_time_limit(0);
             $FirstName = $_POST['CCRE_SRC_FirstName'];
             $Lastname = $_POST['CCRE_SRC_LastName'];
             $Name=$FirstName.' '.$Lastname;
@@ -388,7 +386,6 @@ class Mdl_customer_search_update_delete extends CI_Model
            '$Leaseperiod','$Quoters','$processwaived','$Prorated','$NoticePeriod','$NoticePeriodDate','$Rent','$DepositFee','$ProcessingFee','$Fixedaircon_fee','$Quaterlyfee','$ElectricitycapFee','$CheckOutCleanFee','$Curtain_DrycleanFee',
            '$UserStamp','$Startdate','$Enddate','$Nationality','$Mobile','$IntlMobile','$Emailid','$PassportNo','$PassportDate','$DOB','$EpNo','$EPDate','$Comments','$acesscard','$Accesscarddates',@SUCCESS_FLAG,@CC_UPDATE_SAVEPOINT)";
             $this->db->query($Update_query);
-echo $Update_query;
 //            return $Update_query;
             $Confirm_query = 'SELECT @SUCCESS_FLAG AS CONFIRM';
             $Confirm_result = $this->db->query($Confirm_query);
@@ -440,7 +437,6 @@ echo $Update_query;
                     $this->Mdl_eilib_common_function->Customer_FileUpload($service, $filename, 'PersonalDetails', $CustomerFolder, $mimetype, $filetempname);
                 }
             }
-//            return $Confirm_Meessage.'confirmmsg';
             if ($Confirm_Meessage == 1)
             {
                 if($Customerflag==1)
@@ -845,7 +841,6 @@ echo $Update_query;
     }
     public function getCustomerRecordDelete($Customerid,$UserStamp)
     {
-//        set_time_limit(0);
         $this->load->library('Google');
         $this->load->model('EILIB/Mdl_eilib_calender');
         $cal = $this->Mdl_eilib_calender->createCalendarService();

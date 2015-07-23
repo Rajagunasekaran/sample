@@ -2,7 +2,6 @@
 error_reporting(0);
 require_once 'google/appengine/api/mail/Message.php';
 use google\appengine\api\mail\Message;
-//require_once 'PHPMailer-master/PHPMailerAutoload.php';
 class Mdl_customer_creation extends CI_Model
 {
     public function Customer_Creation_Save($UserStamp,$Leaseperiod,$Quoters)
@@ -232,6 +231,7 @@ class Mdl_customer_creation extends CI_Model
                             if ($InvoiceId[0] == 1) {
                                 $this->InvoiceCreation($InvoiceId, $Emailtemplate, $Username, $Confirm_Meessage, $Uint, $Name, $Sendmailid, $UserStamp);
                                 $this->db->trans_savepoint_release($savepoint) ;
+                                $this->db->query('DROP TABLE IF EXISTS ' . $temptable);
                                 echo $InvoiceId[0];
                                 exit;
                             } else {
@@ -252,6 +252,7 @@ class Mdl_customer_creation extends CI_Model
                             if ($ContractId[0] == 1) {
                                 $this->ContractCreation($ContractId, $Emailtemplate, $Username, $Confirm_Meessage, $Uint, $Name, $Sendmailid, $UserStamp);
                                 $this->db->trans_savepoint_release($savepoint) ;
+                                $this->db->query('DROP TABLE IF EXISTS ' . $temptable);
                                 echo $Confirm_Meessage;
                                 exit;
                             } else {
@@ -273,6 +274,7 @@ class Mdl_customer_creation extends CI_Model
                             $ContractId = $this->Mdl_eilib_invoice_contract->CUST_contract($service, $Uint, $Startdate, $Enddate, $CompanyName, $Name, $NoticePeriod, $PassportNo, $PassportDate, $EpNo, $EPDate, $NoticePeriodDate, $Leaseperiod, $Cont_cardno, $Rent, $InvQuaterlyfee, $InvFixedaircon_fee, $InvElectricitycapFee, $InvCurtain_DrycleanFee, $InvCheckOutCleanFee, $InvProcessingFee, $InvDepositFee, $Invwaived, $RoomType, $InvProrated, 'RECHECKIN', $Sendmailid, $Docowner, $CustomerFolder);
                             if ($InvoiceId[0] == 1 && $ContractId[0] == 1) {
                                 $this->db->trans_savepoint_release($savepoint) ;
+                                $this->db->query('DROP TABLE IF EXISTS ' . $temptable);
                                 $this->InvoiceandContract($InvoiceId, $ContractId, $Emailtemplate, $Username, $Confirm_Meessage, $Uint, $Name, $Sendmailid, $UserStamp);
                                 echo $Confirm_Meessage;
                                 exit;
@@ -302,6 +304,7 @@ class Mdl_customer_creation extends CI_Model
                     {
                         if ($calresponse == 1) {
                             $this->db->trans_savepoint_release($savepoint) ;
+                            $this->db->query('DROP TABLE IF EXISTS ' . $temptable);
                             echo $Confirm_Meessage;
                             exit;
                         }

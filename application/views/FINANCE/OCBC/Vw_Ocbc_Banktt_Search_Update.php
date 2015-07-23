@@ -14,6 +14,7 @@ require_once('application/libraries/EI_HDR.php');
 </style>
 <script>
     $(document).ready(function(){
+        $('#spacewidth').height('0%');
         $('#BankTT_Updation_Form').hide();
         var controller_url="<?php echo base_url(); ?>" + '/index.php/FINANCE/OCBC/Ctrl_Ocbc_Banktt_Search_Update/' ;
         var Allunits;
@@ -113,6 +114,7 @@ require_once('application/libraries/EI_HDR.php');
                 }
                 $('#Banktt_SRC_Uintsearch').html(unitoptions);
                 $('.preloader').hide();
+                $("html, body").animate({ scrollTop: $(document).height() }, "slow");
             }
             if(searchoption==2)
             {
@@ -138,6 +140,7 @@ require_once('application/libraries/EI_HDR.php');
                 }
                 $('#Banktt_SRC_unit').html(unitoptions);
                 $('.preloader').hide();
+                $("html, body").animate({ scrollTop: $(document).height() }, "slow");
             }
             if(searchoption==3)
             {
@@ -163,6 +166,7 @@ require_once('application/libraries/EI_HDR.php');
                 $('#Banktt_SRC_fromdate').datepicker("option","maxDate",changeyear);
                 $("#Banktt_SRC_fromdate").focus();
                 $('.preloader').hide();
+                $("html, body").animate({ scrollTop: $(document).height() }, "slow");
             }
             if(searchoption==5)
             {
@@ -182,6 +186,7 @@ require_once('application/libraries/EI_HDR.php');
                 $('#Banktt_SRC_lbl_amounterrormsg').text(SRC_ErrorMsg[4].EMC_DATA);
                 $("#Banktt_SRC_FromAmount").focus();
                 $('.preloader').hide();
+                $("html, body").animate({ scrollTop: $(document).height() }, "slow");
             }
             if(searchoption==6)
             {
@@ -203,6 +208,7 @@ require_once('application/libraries/EI_HDR.php');
                 }
                 $('#Banktt_SRC_Modelsearch').html(modeloptions);
                 $('.preloader').hide();
+                $("html, body").animate({ scrollTop: $(document).height() }, "slow");
             }
             else if(searchoption==4)
             {
@@ -229,6 +235,7 @@ require_once('application/libraries/EI_HDR.php');
                         $('#autocompleteerrormsg').text(SRC_ErrorMsg[6].EMC_DATA);
                         $("#Banktt_SRC_accname").focus();
                         $('.preloader').hide();
+                        $("html, body").animate({ scrollTop: $(document).height() }, "slow");
                     },
                     error: function(data){
                         show_msgbox("BANKTT/SEARCH/UPDATE",JSON.stringify(data),"success",false);
@@ -473,7 +480,6 @@ require_once('application/libraries/EI_HDR.php');
                 url: controller_url+"Banktt_Search_Details",
                 data:inputdata,
                 success: function(data){
-
                     var valuearray = JSON.parse(data);
                     if(valuearray.length!=0) {
                         var tabledata = '<table style="width:3500px" id="Banktt_Datatable" border="1" cellspacing="0" data-class="table" class="srcresult"><thead bgcolor="#6495ed" style="color:white"><tr>';
@@ -580,34 +586,34 @@ require_once('application/libraries/EI_HDR.php');
                                 createdby = valuearray[i].BANK_TRANSFER_CREATED_BY;
                             }
                             tabledata += '<tr id=' + valuearray[i].BT_ID + '>' +
-                            "<td ><div class='col-lg-2'><span style='display: block;color:green' title='Edit' class='glyphicon glyphicon-edit Banktt_editbutton' id=" + edit + "></div></td>" +
-                            "<td >" + valuearray[i].BANK_TRANSFER_TYPE + "</td>" +
-                            "<td  >" + valuearray[i].BT_DATE + "</td>" +
-                            "<td>" + accname + "</td>" +
-                            "<td>" + accno + "</td>" +
-                            "<td>" + valuearray[i].BT_AMOUNT + "</td>" +
-                            "<td>" + unit + "</td>" +
-                            "<td>" + customer + "</td>" +
-                            "<td>" + status + "</td>" +
-                            "<td>" + debitedon + "</td>" +
-                            "<td>" + bankcode + "</td>" +
-                            "<td>" + branchcode + "</td>" +
-                            "<td>" + bankaddress + "</td>" +
-                            "<td>" + swiftcode + "</td>" +
-                            "<td>" + chargesto + "</td>" +
-                            "<td>" + custoref + "</td>" +
-                            "<td>" + invdetails + "</td>" +
-                            "<td>" + comments + "</td>" +
-                            "<td>" + createdby + "</td>" +
-                            "<td>" + valuearray[i].ULD_LOGINID + "</td>" +
-                            "<td>" + valuearray[i].BT_TIME_STAMP + "</td>" +
-                            "</tr>";
+                                "<td ><div class='col-lg-2'><span style='display: block;color:green' title='Edit' class='glyphicon glyphicon-edit Banktt_editbutton' id=" + edit + "></div></td>" +
+                                "<td >" + valuearray[i].BANK_TRANSFER_TYPE + "</td>" +
+                                "<td  >" + valuearray[i].BT_DATE + "</td>" +
+                                "<td>" + accname + "</td>" +
+                                "<td>" + accno + "</td>" +
+                                "<td>" + valuearray[i].BT_AMOUNT + "</td>" +
+                                "<td>" + unit + "</td>" +
+                                "<td>" + customer + "</td>" +
+                                "<td>" + status + "</td>" +
+                                "<td>" + debitedon + "</td>" +
+                                "<td>" + bankcode + "</td>" +
+                                "<td>" + branchcode + "</td>" +
+                                "<td>" + bankaddress + "</td>" +
+                                "<td>" + swiftcode + "</td>" +
+                                "<td>" + chargesto + "</td>" +
+                                "<td>" + custoref + "</td>" +
+                                "<td>" + invdetails + "</td>" +
+                                "<td>" + comments + "</td>" +
+                                "<td>" + createdby + "</td>" +
+                                "<td>" + valuearray[i].ULD_LOGINID + "</td>" +
+                                "<td>" + valuearray[i].BT_TIME_STAMP + "</td>" +
+                                "</tr>";
                         }
                         tabledata += "</body>";
                         $('#tableheader').text(header);
                         $('section').html(tabledata);
-                        $('.preloader').hide();
                         $('#Banktt_Search_DataTable').show();
+                        $('.preloader').hide();
                         $('#Banktt_Datatable').DataTable({
                             "sDom":"Rlfrtip",
                             "deferRender":    true,
@@ -631,6 +637,7 @@ require_once('application/libraries/EI_HDR.php');
                         $('#emptytableheader').text(emptyheader);
                     }
                     $('.preloader').hide();
+                    $("html, body").animate({ scrollTop: $(document).height() }, "slow");
                 },
                 error: function(data){
                     show_msgbox("BANK TT ENTRY",'error in getting'+JSON.stringify(data),"error",false);
@@ -744,28 +751,28 @@ require_once('application/libraries/EI_HDR.php');
                     createdby = valuearray[i].BANK_TRANSFER_CREATED_BY;
                 }
                 tabledata += '<tr id=' + valuearray[i].BT_ID + '>' +
-                "<td ><div class='col-lg-2'><span style='display: block;color:green' title='Edit' class='glyphicon glyphicon-edit Banktt_editbutton' id=" + edit + "></div></td>" +
-                "<td >" + valuearray[i].BANK_TRANSFER_TYPE + "</td>" +
-                "<td  >" + valuearray[i].BT_DATE + "</td>" +
-                "<td>" + accname + "</td>" +
-                "<td>" + accno + "</td>" +
-                "<td>" + valuearray[i].BT_AMOUNT + "</td>" +
-                "<td>" + unit + "</td>" +
-                "<td>" + customer + "</td>" +
-                "<td>" + status + "</td>" +
-                "<td>" + debitedon + "</td>" +
-                "<td>" + bankcode + "</td>" +
-                "<td>" + branchcode + "</td>" +
-                "<td>" + bankaddress + "</td>" +
-                "<td>" + swiftcode + "</td>" +
-                "<td>" + chargesto + "</td>" +
-                "<td>" + custoref + "</td>" +
-                "<td>" + invdetails + "</td>" +
-                "<td>" + comments + "</td>" +
-                "<td>" + createdby + "</td>" +
-                "<td>" + valuearray[i].ULD_LOGINID + "</td>" +
-                "<td>" + valuearray[i].BT_TIME_STAMP + "</td>" +
-                "</tr>";
+                    "<td ><div class='col-lg-2'><span style='display: block;color:green' title='Edit' class='glyphicon glyphicon-edit Banktt_editbutton' id=" + edit + "></div></td>" +
+                    "<td >" + valuearray[i].BANK_TRANSFER_TYPE + "</td>" +
+                    "<td  >" + valuearray[i].BT_DATE + "</td>" +
+                    "<td>" + accname + "</td>" +
+                    "<td>" + accno + "</td>" +
+                    "<td>" + valuearray[i].BT_AMOUNT + "</td>" +
+                    "<td>" + unit + "</td>" +
+                    "<td>" + customer + "</td>" +
+                    "<td>" + status + "</td>" +
+                    "<td>" + debitedon + "</td>" +
+                    "<td>" + bankcode + "</td>" +
+                    "<td>" + branchcode + "</td>" +
+                    "<td>" + bankaddress + "</td>" +
+                    "<td>" + swiftcode + "</td>" +
+                    "<td>" + chargesto + "</td>" +
+                    "<td>" + custoref + "</td>" +
+                    "<td>" + invdetails + "</td>" +
+                    "<td>" + comments + "</td>" +
+                    "<td>" + createdby + "</td>" +
+                    "<td>" + valuearray[i].ULD_LOGINID + "</td>" +
+                    "<td>" + valuearray[i].BT_TIME_STAMP + "</td>" +
+                    "</tr>";
             }
             tabledata += "</body>";
             $('#tableheader').text(header);
@@ -896,6 +903,7 @@ require_once('application/libraries/EI_HDR.php');
                     $('#Banktt_SRC_Debitedon').datepicker("option","maxDate",new Date());
                     $('#BankTT_Updation_Form').show();
                     $('.preloader').hide();
+                    $("html, body").animate({ scrollTop: $(document).height() }, "slow");
                 },
                 error: function(data){
                     $('#BankTT_Updation_Form').hide();
@@ -903,6 +911,7 @@ require_once('application/libraries/EI_HDR.php');
                     $('.preloader').hide();
                 }
             });
+//            $("html, body").animate({ scrollTop: $(document).height() }, "slow");
         });
         $(document).on('change','#Banktt_SRC_Date',function() {
             var debiteddate=$('#Banktt_SRC_Date').val();

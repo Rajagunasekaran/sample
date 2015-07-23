@@ -14,117 +14,117 @@ require_once('application/libraries/EI_HDR.php');
     }
 </style>
 <script>
-$(document).ready(function(){
-    $('.preloader').show();
-    var controller_url="<?php echo base_url(); ?>" + '/index.php/FINANCE/OCBC/Ctrl_Ocbc_Banktt_Entry/' ;
-    $(".date-picker").datepicker({
-        dateFormat:"dd-mm-yy",
-        changeYear: true,
-        changeMonth: true
-    });
-    $(".date-picker").on("change", function () {
-        var id = $(this).attr("id");
-        var val = $("label[for='" + id + "']").text();
-        $("#msg").text(val + " changed");
-    });
-    var max = 250;
-    $('#banktt_ta_address').keypress(function(e) {
-        if (e.which < 0x20) {
-            // e.which < 0x20, then it's not a printable character
-            // e.which === 0 - Not a character
-            return;     // Do nothing
-        }
-        if (this.value.length == max) {
-            e.preventDefault();
-        } else if (this.value.length > max) {
-            // Maximum exceeded
-            this.value = this.value.substring(0, max);
-        }
-    });
-    $('textarea').autogrow({onInitialize: true});
-    $(".amtonly").doValidation({rule:'numbersonly',prop:{realpart:5,imaginary:2}});
-    $(".alphanumonly").doValidation({rule:'alphanumeric'});
-    $(".uppercase").doValidation({rule:'general'});
-    $(".autosize").doValidation({rule:'general',prop:{whitespace:true,autosize:true}});
-    $(".compautosize").doValidation({rule:'general',prop:{autosize:true}});
-    $(".numonly").doValidation({rule:'numbersonly'});
-    $("#banktt_tb_accno").doValidation({rule:'numbersonly',prop:{realpart:25,leadzero:true}});
-    $("#banktt_tb_bankcode").doValidation({rule:'numbersonly',prop:{realpart:4,leadzero:true}});
-    $("#banktt_tb_branchcode").doValidation({rule:'numbersonly',prop:{realpart:3,leadzero:true}});
+    $(document).ready(function(){
+        $('.preloader').show();
+        var controller_url="<?php echo base_url(); ?>" + '/index.php/FINANCE/OCBC/Ctrl_Ocbc_Banktt_Entry/' ;
+        $(".date-picker").datepicker({
+            dateFormat:"dd-mm-yy",
+            changeYear: true,
+            changeMonth: true
+        });
+        $(".date-picker").on("change", function () {
+            var id = $(this).attr("id");
+            var val = $("label[for='" + id + "']").text();
+            $("#msg").text(val + " changed");
+        });
+        var max = 250;
+        $('#banktt_ta_address').keypress(function(e) {
+            if (e.which < 0x20) {
+                // e.which < 0x20, then it's not a printable character
+                // e.which === 0 - Not a character
+                return;     // Do nothing
+            }
+            if (this.value.length == max) {
+                e.preventDefault();
+            } else if (this.value.length > max) {
+                // Maximum exceeded
+                this.value = this.value.substring(0, max);
+            }
+        });
+        $('textarea').autogrow({onInitialize: true});
+        $(".amtonly").doValidation({rule:'numbersonly',prop:{realpart:5,imaginary:2}});
+        $(".alphanumonly").doValidation({rule:'alphanumeric'});
+        $(".uppercase").doValidation({rule:'general'});
+        $(".autosize").doValidation({rule:'general',prop:{whitespace:true,autosize:true}});
+        $(".compautosize").doValidation({rule:'general',prop:{autosize:true}});
+        $(".numonly").doValidation({rule:'numbersonly'});
+        $("#banktt_tb_accno").doValidation({rule:'numbersonly',prop:{realpart:25,leadzero:true}});
+        $("#banktt_tb_bankcode").doValidation({rule:'numbersonly',prop:{realpart:4,leadzero:true}});
+        $("#banktt_tb_branchcode").doValidation({rule:'numbersonly',prop:{realpart:3,leadzero:true}});
 
-    $('#banktt_customer').hide();
-    $('#banktt_model').hide();
-    $('#banktt_tb_bankcode').val('');
-    $('#banktt_bankcode').hide().val('');
-    $('#banktt_tb_branchcode').val('');
-    $('#banktt_branchcode').hide().val('');
-    $('#banktt_tb_swiftcode').val('');
-    $('#banktt_swiftcode').hide().val('');
-    $('#banktt_chargeto').hide();
-    $('#banktt_errormsgcustomer').hide();
-    $('#banktt_modelnameerrormsg').hide();
-    $('#banktt_date').datepicker("option","minDate",new Date(new Date().getFullYear()-1,new Date().getMonth(),new Date().getDate()));
-    $('#banktt_date').datepicker("option","maxDate",new Date());
+        $('#banktt_customer').hide();
+        $('#banktt_model').hide();
+        $('#banktt_tb_bankcode').val('');
+        $('#banktt_bankcode').hide().val('');
+        $('#banktt_tb_branchcode').val('');
+        $('#banktt_branchcode').hide().val('');
+        $('#banktt_tb_swiftcode').val('');
+        $('#banktt_swiftcode').hide().val('');
+        $('#banktt_chargeto').hide();
+        $('#banktt_errormsgcustomer').hide();
+        $('#banktt_modelnameerrormsg').hide();
+        $('#banktt_date').datepicker("option","minDate",new Date(new Date().getFullYear()-1,new Date().getMonth(),new Date().getDate()));
+        $('#banktt_date').datepicker("option","maxDate",new Date());
 
-    // initial data
-    var type;
-    var model;
-    var unit;
-    var charges;
-    var errormsg;
-    $.ajax({
-        type: "POST",
-        url: controller_url+"Initialdata",
-        success: function(data){
-            var value=JSON.parse(data);
-            $('.preloader').hide();
-            type=value[0];
-            model=value[1];
-            unit=value[2];
-            charges=value[3];
-            errormsg=value[4];
-            if(type!=''){
-                $('#banktt_lb_transtype').append($('<option> SELECT </option>'));
-                for(var i=0;i<type.length;i++)
-                {
-                    var data=type[i].BCN_DATA;
-                    $('#banktt_lb_transtype').append($('<option>').text(data).attr('value', data));
+        // initial data
+        var type;
+        var model;
+        var unit;
+        var charges;
+        var errormsg;
+        $.ajax({
+            type: "POST",
+            url: controller_url+"Initialdata",
+            success: function(data){
+                var value=JSON.parse(data);
+                $('.preloader').hide();
+                type=value[0];
+                model=value[1];
+                unit=value[2];
+                charges=value[3];
+                errormsg=value[4];
+                if(type!=''){
+                    $('#banktt_lb_transtype').append($('<option> SELECT </option>'));
+                    for(var i=0;i<type.length;i++)
+                    {
+                        var data=type[i].BCN_DATA;
+                        $('#banktt_lb_transtype').append($('<option>').text(data).attr('value', data));
+                    }
                 }
-            }
-            if(model!=''){
-                $('#banktt_lb_model').append($('<option> SELECT </option>'));
-                for(var j=0;j<model.length;j++)
-                {
-                    var data=model[j].BTM_DATA;
-                    $('#banktt_lb_model').append($('<option>').text(data).attr('value', data));
+                if(model!=''){
+                    $('#banktt_lb_model').append($('<option> SELECT </option>'));
+                    for(var j=0;j<model.length;j++)
+                    {
+                        var data=model[j].BTM_DATA;
+                        $('#banktt_lb_model').append($('<option>').text(data).attr('value', data));
+                    }
                 }
-            }
-            if(unit!=''){
-                $('#banktt_lb_unit').append($('<option> SELECT </option>'));
-                for(var k=0;k<unit.length;k++)
-                {
-                    var data=unit[k].UNIT_NO;
-                    $('#banktt_lb_unit').append($('<option>').text(data).attr('value', data));
+                if(unit!=''){
+                    $('#banktt_lb_unit').append($('<option> SELECT </option>'));
+                    for(var k=0;k<unit.length;k++)
+                    {
+                        var data=unit[k].UNIT_NO;
+                        $('#banktt_lb_unit').append($('<option>').text(data).attr('value', data));
+                    }
                 }
-            }
-            if(charges!=''){
-                $('#banktt_lb_chargeto').append($('<option> SELECT </option>'));
-                for(var l=0;l<charges.length;l++)
-                {
-                    var data=charges[l].BCN_DATA;
-                    $('#banktt_lb_chargeto').append($('<option>').text(data).attr('value', data));
+                if(charges!=''){
+                    $('#banktt_lb_chargeto').append($('<option> SELECT </option>'));
+                    for(var l=0;l<charges.length;l++)
+                    {
+                        var data=charges[l].BCN_DATA;
+                        $('#banktt_lb_chargeto').append($('<option>').text(data).attr('value', data));
+                    }
                 }
-            }
-            $('#banktt_tb_amt').prop('title',errormsg[1].EMC_DATA);
-            if(unit.length==0 || unit.length=='')
-            {
-                if(unit.length==0)
+                $('#banktt_tb_amt').prop('title',errormsg[1].EMC_DATA);
+                if(unit.length==0 || unit.length=='')
                 {
-                    var uniterrormsg='<p><label class="errormsg">'+errormsg[5].EMC_DATA+'</label></p>';
-                    $('#banktt_errormessagetable').append(uniterrormsg);
-                    $('#banktt_entry_form').hide();
-                    $('#banktt_errormessageform').show();
-                }
+                    if(unit.length==0)
+                    {
+                        var uniterrormsg='<p><label class="errormsg">'+errormsg[5].EMC_DATA+'</label></p>';
+                        $('#banktt_errormessagetable').append(uniterrormsg);
+                        $('#banktt_entry_form').hide();
+                        $('#banktt_errormessageform').show();
+                    }
 //                if(emailname==null)
 //                {
 //                    var emailerrormsg='<p><label class="errormsg">'+errormsg[3].EMC_DATA+'</label></p>';
@@ -132,299 +132,300 @@ $(document).ready(function(){
 //                    $('#banktt_entry_form').hide();
 //                    $('#banktt_errormessageform').show();
 //                }
-            }
-            else
-            {
-                $('#banktt_entry_form').show();
-            }
-        }
-    });
-    //UNIQUE FUNCTION
-    function unique(a) {
-        var result = [];
-        $.each(a, function(i, e) {
-            if ($.inArray(e, result) == -1) result.push(e);
-        });
-        return result;
-    }
-    //unit chsange
-    var customer=[];
-    $(document).on('change','#banktt_lb_unit',function(){
-        $('#banktt_errormsgcustomer').hide();
-        var unitno=$('#banktt_lb_unit').val();
-        if(unitno!='SELECT'){
-            $('.preloader').show();
-            $.ajax({
-                type: "POST",
-                url: controller_url+"Customername",
-                data:"unitno="+ unitno,
-                success: function(data){
-                    $('.preloader').hide();
-                    var value=JSON.parse(data);
-                    customer=value;
-                    var customername_array=[];
-                    for(var k=0;k<customer.length;k++)
-                    {
-                        customername_array.push(customer[k].CUSTOMER_NAME);
-                    }
-                    customername_array=unique(customername_array);
-                    $('#banktt_lb_customer').append($('<option> SELECT </option>'));
-                    if(customer.length!=0){
-                        var customeroptions='<OPTION>SELECT</OPTION>';
-                        for (var i = 0; i < customername_array.length; i++)
-                        {
-                            var data=customername_array[i];
-                            customeroptions += '<option value="' + data +'">' + data + '</option>';
-                        }
-                        $('#banktt_lb_customer').html(customeroptions);
-                        $('#banktt_errormsgcustomer').hide();
-                        $('#banktt_customer').show();
-                        $('#banktt_lb_customer').val('SELECT').show();
-                    }
-                    else{
-                        var msg=errormsg[4].EMC_DATA.replace('[UNIT NO]',unitno);
-                        $('#banktt_errormsgcustomer').text(msg).show();
-                        $('#banktt_customer').hide();
-                        $('#banktt_lb_customer').val('SELECT').hide();
-                    }
-                }
-            });
-        }
-        else{
-            $('#banktt_modelnameerrormsg').hide();
-            $('#banktt_customer').hide();
-            $('#banktt_lb_customer').val('SELECT').hide();
-            $("#banktt_submitbutton").attr("disabled", "disabled");
-        }
-    });
-    $(document).on('change','#banktt_lb_customer',function(){
-      var selectedcustomer=$('#banktt_lb_customer').val();
-        var custonmername_array=[];
-        for(var i=0;i<customer.length;i++)
-        {
-            if(selectedcustomer==customer[i].CUSTOMER_NAME)
-            {
-                custonmername_array.push(customer[i].CUSTOMER_NAME+'-'+customer[i].CUSTOMER_ID)
-            }
-        }
-        if(custonmername_array.length==1)
-        {
-            var value=custonmername_array[0].split('-');
-            GetcustomerOldDetails(value[1]);
-            $('#multiplecustomerdiv').html('');
-        }
-        else
-        {
-            var appeneddata='';
-            for(var a=0;a<custonmername_array.length;a++)
-            {
-                var value=custonmername_array[a].split('-');
-                var radioname=custonmername_array[a];
-                var radiovalue=value[1];
-                appeneddata+='<div class="row form-group">';
-                appeneddata+='<div class="col-md-2">';
-                appeneddata+='</div>'
-                appeneddata+='<div class="col-md-6" >';
-                appeneddata+='<input type="radio" class="Multiplecustomer" name="Customer" id=multiplecustomer-'+a+' value='+radiovalue+'>'+radioname;
-                appeneddata+='</div></div>';
-            }
-            $('#multiplecustomerdiv').html(appeneddata);
-            $('#multiplecustomerdiv').show();
-        }
-    });
-    $(document).on('click','.Multiplecustomer',function(){
-        var radiovalue=($('input[name="Customer"]:checked').val());
-        GetcustomerOldDetails(radiovalue);
-    });
-    function GetcustomerOldDetails(id)
-    {
-      $('#temp_customerid').val(id)
-    }
-    // form reset
-    $('#banktt_resetbutton').click(function(){
-        BANKTT_ENTRY_reset();
-    });
-    function BANKTT_ENTRY_reset(){
-        $("#banktt_entry_form").find('input:text, textarea').val('');
-        $("#banktt_entry_form").find('select').val('SELECT');
-        $('#banktt_transtype').show();
-        $('#banktt_dt').show();
-        $('#banktt_unit').show();
-        $('#banktt_model').hide();
-        $('#banktt_custref').show();
-        $('#banktt_swiftcode').show();
-        $('#banktt_amt').show();
-        $('#banktt_chargeto').hide();
-        $('#banktt_customer').hide();
-        $('#banktt_bankaddress').show();
-        $('#banktt_invdetails').show();
-        $('#banktt_comments').show();
-        $('#banktt_bankcode').hide();
-        $('#banktt_branchcode').hide();
-        $('#banktt_accname').show();
-        $('#banktt_accno').show();
-        $("#banktt_submitbutton").attr("disabled", "disabled");
-        $('#banktt_errormsgcustomer').hide();
-        $('#banktt_modelnameerrormsg').hide();
-        $('#temp_customerid').val();
-        $('#multiplecustomerdiv').html('');
-    }
-    // type change
-    $(document).on('change','#banktt_lb_transtype',function(){
-        $('#banktt_ta_address').val('');
-        $('#banktt_tb_custref').val('');
-        $('#banktt_ta_invdetails').val('');
-        $('#banktt_ta_comments').val('');
-        $('#banktt_errormsgcustomer').hide();
-        $('#banktt_modelnameerrormsg').hide();
-        $("#banktt_entry_form").find('input:text, textarea').val('');
-        if($('#banktt_lb_transtype').val()=='TT')
-        {
-            $('#banktt_bankcode').hide();
-            $('#banktt_branchcode').hide();
-            $('#banktt_model').hide();
-            $('#banktt_lb_model').val('SELECT').hide();
-            $('#banktt_accno').show();
-            $('#banktt_unit').show();
-            $('#banktt_lb_unit').val('SELECT').show();
-            $('#banktt_customer').hide();
-            $('#banktt_lb_customer').val('SELECT').hide();
-            $('#banktt_accname').show();
-            $('#banktt_swiftcode').show();
-            $('#banktt_amt').show();
-            $('#banktt_dt').show();
-            $('#banktt_chargeto').show();
-            $('#banktt_lb_chargeto').val('SELECT').show();
-            $('#banktt_modelnameerrormsg').hide();
-            $("#banktt_submitbutton").attr("disabled", "disabled");
-        }
-        if($('#banktt_lb_transtype').val()=='GIRO')
-        {
-            $('#banktt_amt').show();
-            $('#banktt_dt').show();
-            $('#banktt_swiftcode').hide();
-            $('#banktt_chargeto').hide();
-            $('#banktt_lb_chargeto').val('SELECT').hide();
-            $('#banktt_model').hide();
-            $('#banktt_lb_model').val('SELECT').hide();
-            $('#banktt_accno').show();
-            $('#banktt_unit').show();
-            $('#banktt_lb_unit').val('SELECT').show();
-            $('#banktt_customer').hide();
-            $('#banktt_lb_customer').val('SELECT').hide();
-            $('#banktt_accname').show();
-            $('#banktt_bankcode').show();
-            $('#banktt_branchcode').show();
-            $('#banktt_modelnameerrormsg').hide();
-            $("#banktt_submitbutton").attr("disabled", "disabled");
-        }
-        if($('#banktt_lb_transtype').val()=='MODEL')
-        {
-            $('#banktt_accno').hide();
-            $('#banktt_amt').show();
-            $('#banktt_dt').show();
-            $('#banktt_unit').hide();
-            $('#banktt_lb_unit').val('SELECT').hide();
-            $('#banktt_customer').hide();
-            $('#banktt_lb_customer').val('SELECT').hide();
-            $('#banktt_accname').hide();
-            $('#banktt_swiftcode').hide();
-            $('#banktt_chargeto').hide();
-            $('#banktt_lb_chargeto').val('SELECT').hide();
-            $('#banktt_bankcode').hide();
-            $('#banktt_branchcode').hide();
-            if(model.length!=0)
-            {
-                $('#banktt_model').show();
-                $('#banktt_lb_model').val('SELECT').show();
-                $('#banktt_modelnameerrormsg').hide();
-
-            }
-            else
-            {
-                $('#banktt_model').hide();
-                $('#banktt_lb_model').val('SELECT').hide();
-                $('#banktt_modelnameerrormsg').show();
-
-            }
-            $("#banktt_submitbutton").attr("disabled", "disabled");
-        }
-    });
-
-    // button validation
-    $(document).on('change blur','.banktt_erntryform',function(){
-        if($('#banktt_lb_transtype').val()=="TT")
-        {
-            if($('#banktt_date').val()!='' && $('#banktt_tb_amt').val()!='' && $('#banktt_lb_unit').val()!='SELECT'
-                && $('#banktt_lb_customer').val()!='SELECT' && $('#banktt_lb_customer').val()!='' && $('#banktt_lb_customer').val()!=undefined
-                && $('#banktt_tb_swiftcode').val()!='' && $('#banktt_lb_chargeto').val()!="SELECT"
-                && $('#banktt_tb_accno').val()!='' && $('#banktt_tb_accname').val()!='')
-            {
-                $("#banktt_submitbutton").removeAttr("disabled");
-            }
-            else
-            {
-                $("#banktt_submitbutton").attr("disabled", "disabled");
-            }
-        }
-        else if($('#banktt_lb_transtype').val()=="GIRO")
-        {
-            if($('#banktt_date').val()!='' && $('#banktt_tb_amt').val()!='' && $('#banktt_lb_unit').val()!='SELECT'
-                &&  $('#banktt_lb_customer').val()!='SELECT' && $('#banktt_lb_customer').val()!='' && $('#banktt_lb_customer').val()!=undefined
-                && $('#banktt_tb_accno').val()!='' && $('#banktt_tb_accname').val()!='')
-            {
-                $("#banktt_submitbutton").removeAttr("disabled");
-            }
-            else
-            {
-                $("#banktt_submitbutton").attr("disabled", "disabled");
-            }
-        }
-        else if($('#banktt_lb_transtype').val()=="MODEL")
-        {
-            if($('#banktt_date').val()!='' && $('#banktt_tb_amt').val()!='' && $('#banktt_lb_model').val()!="SELECT")
-            {
-                $("#banktt_submitbutton").removeAttr("disabled");
-            }
-            else
-            {
-                $("#banktt_submitbutton").attr("disabled", "disabled");
-            }
-        }
-        else
-        {
-            $("#banktt_submitbutton").attr("disabled", "disabled");
-        }
-    });
-    // save part
-    $(document).on('click','#banktt_submitbutton',function(){
-        $('.preloader').show();
-        var FormElements=$('#banktt_entry_form').serialize();
-        $.ajax({
-            type: "POST",
-            url: controller_url+"Banktt_Entry_Save",
-            data:FormElements,
-            success: function(data){
-                var returnvalue=JSON.parse(data);
-                if(returnvalue==1)
-                {
-                    show_msgbox("BANK TT ENTRY",errormsg[2].EMC_DATA,"success",false);
-                    BANKTT_ENTRY_reset();
-                    $('.preloader').hide();
                 }
                 else
                 {
-                    show_msgbox("BANK TT ENTRY",returnvalue,"success",false);
-                    $('.preloader').hide();
+                    $('#banktt_entry_form').show();
                 }
-                $('.preloader').hide();
-            },
-            error: function(data){
-                show_msgbox("BANK TT ENTRY",'error in getting'+JSON.stringify(data),"error",false);
             }
         });
+        //UNIQUE FUNCTION
+        function unique(a) {
+            var result = [];
+            $.each(a, function(i, e) {
+                if ($.inArray(e, result) == -1) result.push(e);
+            });
+            return result;
+        }
+        //unit chsange
+        var customer=[];
+        $(document).on('change','#banktt_lb_unit',function(){
+            $('#banktt_errormsgcustomer').hide();
+            var unitno=$('#banktt_lb_unit').val();
+            if(unitno!='SELECT'){
+                $('.preloader').show();
+                $.ajax({
+                    type: "POST",
+                    url: controller_url+"Customername",
+                    data:"unitno="+ unitno,
+                    success: function(data){
+                        $('.preloader').hide();
+                        var value=JSON.parse(data);
+                        customer=value;
+                        var customername_array=[];
+                        for(var k=0;k<customer.length;k++)
+                        {
+                            customername_array.push(customer[k].CUSTOMER_NAME);
+                        }
+                        customername_array=unique(customername_array);
+                        $('#banktt_lb_customer').append($('<option> SELECT </option>'));
+                        if(customer.length!=0){
+                            var customeroptions='<OPTION>SELECT</OPTION>';
+                            for (var i = 0; i < customername_array.length; i++)
+                            {
+                                var data=customername_array[i];
+                                customeroptions += '<option value="' + data +'">' + data + '</option>';
+                            }
+                            $('#banktt_lb_customer').html(customeroptions);
+                            $('#banktt_errormsgcustomer').hide();
+                            $('#banktt_customer').show();
+                            $('#banktt_lb_customer').val('SELECT').show();
+                        }
+                        else{
+                            var msg=errormsg[4].EMC_DATA.replace('[UNIT NO]',unitno);
+                            $('#banktt_errormsgcustomer').text(msg).show();
+                            $('#banktt_customer').hide();
+                            $('#banktt_lb_customer').val('SELECT').hide();
+                        }
+                    }
+                });
+            }
+            else{
+                $('#banktt_modelnameerrormsg').hide();
+                $('#banktt_customer').hide();
+                $('#banktt_lb_customer').val('SELECT').hide();
+                $("#banktt_submitbutton").attr("disabled", "disabled");
+            }
+        });
+        $(document).on('change','#banktt_lb_customer',function(){
+            var selectedcustomer=$('#banktt_lb_customer').val();
+            var custonmername_array=[];
+            for(var i=0;i<customer.length;i++)
+            {
+                if(selectedcustomer==customer[i].CUSTOMER_NAME)
+                {
+                    custonmername_array.push(customer[i].CUSTOMER_NAME+'-'+customer[i].CUSTOMER_ID)
+                }
+            }
+            if(custonmername_array.length==1)
+            {
+                var value=custonmername_array[0].split('-');
+                GetcustomerOldDetails(value[1]);
+                $('#multiplecustomerdiv').html('');
+            }
+            else
+            {
+                var appeneddata='';
+                for(var a=0;a<custonmername_array.length;a++)
+                {
+                    var value=custonmername_array[a].split('-');
+                    var radioname=custonmername_array[a];
+                    var radiovalue=value[1];
+                    appeneddata+='<div class="row form-group">';
+                    appeneddata+='<div class="col-md-2">';
+                    appeneddata+='</div>'
+                    appeneddata+='<div class="col-md-6" >';
+                    appeneddata+='<input type="radio" class="Multiplecustomer" name="Customer" id=multiplecustomer-'+a+' value='+radiovalue+'>'+radioname;
+                    appeneddata+='</div></div>';
+                }
+                $('#multiplecustomerdiv').html(appeneddata);
+                $('#multiplecustomerdiv').show();
+            }
+        });
+        $(document).on('click','.Multiplecustomer',function(){
+            var radiovalue=($('input[name="Customer"]:checked').val());
+            GetcustomerOldDetails(radiovalue);
+        });
+        function GetcustomerOldDetails(id)
+        {
+            $('#temp_customerid').val(id)
+        }
+        // form reset
+        $('#banktt_resetbutton').click(function(){
+            BANKTT_ENTRY_reset();
+        });
+        function BANKTT_ENTRY_reset(){
+            $("#banktt_entry_form").find('input:text, textarea').val('');
+            $("#banktt_entry_form").find('select').val('SELECT');
+            $('#banktt_transtype').show();
+            $('#banktt_dt').show();
+            $('#banktt_unit').show();
+            $('#banktt_model').hide();
+            $('#banktt_custref').show();
+            $('#banktt_swiftcode').show();
+            $('#banktt_amt').show();
+            $('#banktt_chargeto').hide();
+            $('#banktt_customer').hide();
+            $('#banktt_bankaddress').show();
+            $('#banktt_invdetails').show();
+            $('#banktt_comments').show();
+            $('#banktt_bankcode').hide();
+            $('#banktt_branchcode').hide();
+            $('#banktt_accname').show();
+            $('#banktt_accno').show();
+            $("#banktt_submitbutton").attr("disabled", "disabled");
+            $('#banktt_errormsgcustomer').hide();
+            $('#banktt_modelnameerrormsg').hide();
+            $('#temp_customerid').val();
+            $('#multiplecustomerdiv').html('');
+        }
+        // type change
+        $(document).on('change','#banktt_lb_transtype',function(){
+            $('#banktt_ta_address').val('');
+            $('#banktt_tb_custref').val('');
+            $('#banktt_ta_invdetails').val('');
+            $('#banktt_ta_comments').val('');
+            $('#banktt_errormsgcustomer').hide();
+            $('#banktt_modelnameerrormsg').hide();
+            $("#banktt_entry_form").find('input:text, textarea').val('');
+            if($('#banktt_lb_transtype').val()=='TT')
+            {
+                $('#banktt_bankcode').hide();
+                $('#banktt_branchcode').hide();
+                $('#banktt_model').hide();
+                $('#banktt_lb_model').val('SELECT').hide();
+                $('#banktt_accno').show();
+                $('#banktt_unit').show();
+                $('#banktt_lb_unit').val('SELECT').show();
+                $('#banktt_customer').hide();
+                $('#banktt_lb_customer').val('SELECT').hide();
+                $('#banktt_accname').show();
+                $('#banktt_swiftcode').show();
+                $('#banktt_amt').show();
+                $('#banktt_dt').show();
+                $('#banktt_chargeto').show();
+                $('#banktt_lb_chargeto').val('SELECT').show();
+                $('#banktt_modelnameerrormsg').hide();
+                $("#banktt_submitbutton").attr("disabled", "disabled");
+            }
+            if($('#banktt_lb_transtype').val()=='GIRO')
+            {
+                $('#banktt_amt').show();
+                $('#banktt_dt').show();
+                $('#banktt_swiftcode').hide();
+                $('#banktt_chargeto').hide();
+                $('#banktt_lb_chargeto').val('SELECT').hide();
+                $('#banktt_model').hide();
+                $('#banktt_lb_model').val('SELECT').hide();
+                $('#banktt_accno').show();
+                $('#banktt_unit').show();
+                $('#banktt_lb_unit').val('SELECT').show();
+                $('#banktt_customer').hide();
+                $('#banktt_lb_customer').val('SELECT').hide();
+                $('#banktt_accname').show();
+                $('#banktt_bankcode').show();
+                $('#banktt_branchcode').show();
+                $('#banktt_modelnameerrormsg').hide();
+                $("#banktt_submitbutton").attr("disabled", "disabled");
+            }
+            if($('#banktt_lb_transtype').val()=='MODEL')
+            {
+                $('#banktt_accno').hide();
+                $('#banktt_amt').show();
+                $('#banktt_dt').show();
+                $('#banktt_unit').hide();
+                $('#banktt_lb_unit').val('SELECT').hide();
+                $('#banktt_customer').hide();
+                $('#banktt_lb_customer').val('SELECT').hide();
+                $('#banktt_accname').hide();
+                $('#banktt_swiftcode').hide();
+                $('#banktt_chargeto').hide();
+                $('#banktt_lb_chargeto').val('SELECT').hide();
+                $('#banktt_bankcode').hide();
+                $('#banktt_branchcode').hide();
+                if(model.length!=0)
+                {
+                    $('#banktt_model').show();
+                    $('#banktt_lb_model').val('SELECT').show();
+                    $('#banktt_modelnameerrormsg').hide();
+
+                }
+                else
+                {
+                    $('#banktt_model').hide();
+                    $('#banktt_lb_model').val('SELECT').hide();
+                    $('#banktt_modelnameerrormsg').show();
+
+                }
+                $("#banktt_submitbutton").attr("disabled", "disabled");
+            }
+            $("html, body").animate({ scrollTop: "1050px" }, "slow");
+        });
+
+        // button validation
+        $(document).on('change blur','.banktt_erntryform',function(){
+            if($('#banktt_lb_transtype').val()=="TT")
+            {
+                if($('#banktt_date').val()!='' && $('#banktt_tb_amt').val()!='' && $('#banktt_lb_unit').val()!='SELECT'
+                    && $('#banktt_lb_customer').val()!='SELECT' && $('#banktt_lb_customer').val()!='' && $('#banktt_lb_customer').val()!=undefined
+                    && $('#banktt_tb_swiftcode').val()!='' && $('#banktt_lb_chargeto').val()!="SELECT"
+                    && $('#banktt_tb_accno').val()!='' && $('#banktt_tb_accname').val()!='')
+                {
+                    $("#banktt_submitbutton").removeAttr("disabled");
+                }
+                else
+                {
+                    $("#banktt_submitbutton").attr("disabled", "disabled");
+                }
+            }
+            else if($('#banktt_lb_transtype').val()=="GIRO")
+            {
+                if($('#banktt_date').val()!='' && $('#banktt_tb_amt').val()!='' && $('#banktt_lb_unit').val()!='SELECT'
+                    &&  $('#banktt_lb_customer').val()!='SELECT' && $('#banktt_lb_customer').val()!='' && $('#banktt_lb_customer').val()!=undefined
+                    && $('#banktt_tb_accno').val()!='' && $('#banktt_tb_accname').val()!='')
+                {
+                    $("#banktt_submitbutton").removeAttr("disabled");
+                }
+                else
+                {
+                    $("#banktt_submitbutton").attr("disabled", "disabled");
+                }
+            }
+            else if($('#banktt_lb_transtype').val()=="MODEL")
+            {
+                if($('#banktt_date').val()!='' && $('#banktt_tb_amt').val()!='' && $('#banktt_lb_model').val()!="SELECT")
+                {
+                    $("#banktt_submitbutton").removeAttr("disabled");
+                }
+                else
+                {
+                    $("#banktt_submitbutton").attr("disabled", "disabled");
+                }
+            }
+            else
+            {
+                $("#banktt_submitbutton").attr("disabled", "disabled");
+            }
+        });
+        // save part
+        $(document).on('click','#banktt_submitbutton',function(){
+            $('.preloader').show();
+            var FormElements=$('#banktt_entry_form').serialize();
+            $.ajax({
+                type: "POST",
+                url: controller_url+"Banktt_Entry_Save",
+                data:FormElements,
+                success: function(data){
+                    var returnvalue=JSON.parse(data);
+                    if(returnvalue==1)
+                    {
+                        show_msgbox("BANK TT ENTRY",errormsg[2].EMC_DATA,"success",false);
+                        BANKTT_ENTRY_reset();
+                        $('.preloader').hide();
+                    }
+                    else
+                    {
+                        show_msgbox("BANK TT ENTRY",returnvalue,"success",false);
+                        $('.preloader').hide();
+                    }
+                    $('.preloader').hide();
+                },
+                error: function(data){
+                    show_msgbox("BANK TT ENTRY",'error in getting'+JSON.stringify(data),"error",false);
+                }
+            });
+        });
     });
-});
 </script>
 <!--BODY TAG START-->
 <body>

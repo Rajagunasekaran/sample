@@ -6,6 +6,7 @@
 <?php require_once('application/libraries/EI_HDR.php'); ?>
 <script>
     $(document).ready(function(){
+        $('#spacewidth').height('0%');
         var Model_Errormsg;
         var Allmodels;
         var allmodelsarray=[];
@@ -66,15 +67,16 @@
                 var DeleteId='Delete_'+rowid;
                 if(modeldetails[i].BTM_OBSOLETE==null){var obsolete=''}else{obsolete=modeldetails[i].BTM_OBSOLETE};
                 Model_Tabledata+='<tr style="text-align: center !important;vertical-align: middle">' +
-                "<td style='width:100px !important;'><div class='col-lg-1'><div class='col-lg-1'><span style='display: block;color:red' class='glyphicon glyphicon-trash Model_removebutton' id="+DeleteId+"></div></td>" +
-                "<td style='width:300px !important;text-align: left !important' class='ModelEdit' id=Modelname_"+rowid+">"+modeldetails[i].BTM_DATA+"</td>" +
-                "<td style='width:100px !important;text-align: left !important' class='ModelEdit' id=Obsoletechk_"+rowid+">"+obsolete+"</td>" +
-                "<td style='width:250px !important;text-align: left !important'>"+modeldetails[i].ULD_LOGINID+"</td>" +
-                "<td style='width:150px !important;vertical-align: middle'>"+modeldetails[i].BTM_TIME_STAMP+"</td></tr>";
+                    "<td style='width:100px !important;'><div class='col-lg-1'><div class='col-lg-1'><span style='display: block;color:red' class='glyphicon glyphicon-trash Model_removebutton' id="+DeleteId+"></div></td>" +
+                    "<td style='width:300px !important;text-align: left !important' class='ModelEdit' id=Modelname_"+rowid+">"+modeldetails[i].BTM_DATA+"</td>" +
+                    "<td style='width:100px !important;text-align: left !important' class='ModelEdit' id=Obsoletechk_"+rowid+">"+obsolete+"</td>" +
+                    "<td style='width:250px !important;text-align: left !important'>"+modeldetails[i].ULD_LOGINID+"</td>" +
+                    "<td style='width:150px !important;vertical-align: middle'>"+modeldetails[i].BTM_TIME_STAMP+"</td></tr>";
             }
             Model_Tabledata+="</body>";
             $('section').html(Model_Tabledata);
             $('#Model_Search_DataTable').show();
+            $("html, body").animate({ scrollTop: $(document).height() }, "slow");
             var oTable=$('#Model_Datatable').DataTable( {
                 "aaSorting": [],
                 "sDom":"Rlfrtip",

@@ -37,9 +37,7 @@ class Mdl_staff_daily_entry_search_update_delete extends CI_Model{
             else{
                 $STDLY_INPUT_comments="'$STDLY_INPUT_comments'";
             }
-        $insertquery = "INSERT INTO EXPENSE_AGENT(ULD_ID,EA_DATE,EA_COMM_AMOUNT,EA_COMMENTS) VALUES((SELECT ULD_ID FROM USER_LOGIN_DETAILS WHERE ULD_LOGINID='$USERSTAMP'),'$STDLY_INPUT_commision_date','$STDLY_INPUT_commision_amount',$STDLY_INPUT_comments)";
-
-
+            $insertquery = "INSERT INTO EXPENSE_AGENT(ULD_ID,EA_DATE,EA_COMM_AMOUNT,EA_COMMENTS) VALUES((SELECT ULD_ID FROM USER_LOGIN_DETAILS WHERE ULD_LOGINID='$USERSTAMP'),'$STDLY_INPUT_commision_date','$STDLY_INPUT_commision_amount',$STDLY_INPUT_comments)";
             $this->db->query($insertquery);
             if ($this->db->affected_rows() > 0) {
                 return 1;
@@ -48,8 +46,7 @@ class Mdl_staff_daily_entry_search_update_delete extends CI_Model{
                 return 0;
             }
         }
-       else if($STDLY_INPUT_lbtypeofexpense==40)
-        {
+       else if($STDLY_INPUT_lbtypeofexpense==40){
             $STDLY_INPUT_paid_date=$_POST['staffdly_paiddate'];
             $STDLY_INPUT_paid_date = date('Y-m-d',strtotime($STDLY_INPUT_paid_date));
             $STDLY_INPUT_from_period=$_POST['staffdly_fromdate'];
@@ -61,7 +58,6 @@ class Mdl_staff_daily_entry_search_update_delete extends CI_Model{
             $salarysalaryoptradio=(isset($_POST['salarysalaryopt']));
             $STDLY_INPUT_levyradio =(isset($_POST["salarylevyamtopt"]));
             $STDLY_INPUT_hidencpfamount= $_POST['staffdly_tb_curcpfamt'];
-
             if($salarycpfamtoptradio==true)
             {
                 if($STDLY_INPUT_cpfamount=='')
@@ -148,8 +144,7 @@ class Mdl_staff_daily_entry_search_update_delete extends CI_Model{
         $STDLY_INPUT_comments_split='';$STDLY_INPUT_invfrom_split='';$STDLY_INPUT_invitem_split='';
         $STDLY_INPUT_ctrylist=''; $STDLY_INPUT_amountsplit='';$STDLY_INPUT_datesplit='';
         if((is_array($PDLY_INPUT_inv_from))==true){
-            for($i=0;$i<count($PDLY_INPUT_inv_from);$i++)
-              {
+            for($i=0;$i<count($PDLY_INPUT_inv_from);$i++){
                   if($STDLY_INPUT_comments[$i] == ' '){
                   if($i==0)
                       $STDLY_INPUT_comments_split .=' ';
@@ -178,7 +173,7 @@ class Mdl_staff_daily_entry_search_update_delete extends CI_Model{
                     $STDLY_INPUT_ctrylist .= "," . $STDLY_INPUT_expenselist[$i];
                     $STDLY_INPUT_amountsplit .= "," . $STDLY_INPUT_invoiceAmount[$i];
                 }
-        }
+            }
         }
         else
         {
@@ -200,7 +195,7 @@ class Mdl_staff_daily_entry_search_update_delete extends CI_Model{
         $flagresult=$successflagresult->row()->FLAG_INSERT;
         return $flagresult;
     }
-//GET DATA BY AGENT SEARCH......................
+    //GET DATA BY AGENT SEARCH......................
     public function STDLY_SEARCH_searchby_agent()
     {
         $this->db->select('ECN_ID,ECN_DATA');
@@ -223,7 +218,6 @@ class Mdl_staff_daily_entry_search_update_delete extends CI_Model{
         $result3 = $query->result();
         $this->load->model('EILIB/Mdl_eilib_common_function');
         $Errormessagelist=$this->Mdl_eilib_common_function->getErrorMessageList('45,106,107,127,128,129,130,131,132,133,134,135,136,137,138,139,140,141,142,143,144,145,146,147,148,149,150,151,152,169,170,315,377,378,379,401');
-
         return $result[]=array($result1,$result2,$result3,$Errormessagelist);
     }
     public function fetch_data()
@@ -231,7 +225,6 @@ class Mdl_staff_daily_entry_search_update_delete extends CI_Model{
         $STDLY_SEARCH_searchoptio=$_POST['STDLY_SEARCH_searchoptio'];
         if($STDLY_SEARCH_searchoptio==78)
         {
-
         $STDLY_SEARCH_startdate=$_POST['STDLY_SEARCH_startdate'];
         $STDLY_SEARCH_startdate = date('Y-m-d',strtotime($STDLY_SEARCH_startdate));
         $STDLY_SEARCH_enddate=$_POST['STDLY_SEARCH_enddate'];
@@ -245,8 +238,7 @@ class Mdl_staff_daily_entry_search_update_delete extends CI_Model{
         $query = $this->db->get();
         return $query->result();
         }
-       else if($STDLY_SEARCH_searchoptio==76)
-        {
+        else if($STDLY_SEARCH_searchoptio==76){
             $STDLY_SEARCH_startdate=$_POST['STDLY_SEARCH_startdate'];
             $STDLY_SEARCH_startdate = date('Y-m-d',strtotime($STDLY_SEARCH_startdate));
             $STDLY_SEARCH_enddate=$_POST['STDLY_SEARCH_enddate'];
@@ -258,8 +250,7 @@ class Mdl_staff_daily_entry_search_update_delete extends CI_Model{
             $query = $this->db->get();
             return $query->result();
         }
-       else if($STDLY_SEARCH_searchoptio==77)
-       {
+        else if($STDLY_SEARCH_searchoptio==77){
            $STDLY_SEARCH_searchcomments=$_POST['STDLY_SEARCH_searchcomments'];
            $this->db->select("EA.EA_ID,DATE_FORMAT(EA.EA_DATE,'%d-%m-%Y') AS DATE,EA.EA_COMM_AMOUNT AS AMNT,EA.EA_COMMENTS AS COMMENTS,ULD.ULD_LOGINID AS userstamp,DATE_FORMAT(CONVERT_TZ(EA.EA_TIMESTAMP,'+00:00','+05:30'), '%d-%m-%Y %T') AS timestamp");
            $this->db->from('EXPENSE_AGENT EA,USER_LOGIN_DETAILS ULD');
@@ -270,12 +261,10 @@ class Mdl_staff_daily_entry_search_update_delete extends CI_Model{
        }
     }
     public function Staff_Daily_pdf(){
-
         $STDLY_SEARCH_listoption=$_GET['STDLY_SEARCH_listoption'];
         if($STDLY_SEARCH_listoption==39) {
             $STDLY_SEARCH_searchoptio = $_GET['STDLY_SEARCH_searchoptio'];
             if ($STDLY_SEARCH_searchoptio == 78) {
-
                 $STDLY_SEARCH_startdate = $_GET['STDLY_SEARCH_startdate'];
                 $STDLY_SEARCH_startdate = date('Y-m-d', strtotime($STDLY_SEARCH_startdate));
                 $STDLY_SEARCH_enddate = $_GET['STDLY_SEARCH_enddate'];
@@ -288,7 +277,8 @@ class Mdl_staff_daily_entry_search_update_delete extends CI_Model{
                 $this->db->order_by("DATE", "ASC");
                 $query = $this->db->get();
                 $values_array = $query->result();
-            } else if ($STDLY_SEARCH_searchoptio == 76) {
+            }
+            else if ($STDLY_SEARCH_searchoptio == 76) {
                 $STDLY_SEARCH_startdate = $_GET['STDLY_SEARCH_startdate'];
                 $STDLY_SEARCH_startdate = date('Y-m-d', strtotime($STDLY_SEARCH_startdate));
                 $STDLY_SEARCH_enddate = $_GET['STDLY_SEARCH_enddate'];
@@ -299,7 +289,8 @@ class Mdl_staff_daily_entry_search_update_delete extends CI_Model{
                 $this->db->order_by("DATE", "ASC");
                 $query = $this->db->get();
                 $values_array = $query->result();
-            } else if ($STDLY_SEARCH_searchoptio == 77) {
+            }
+            else if ($STDLY_SEARCH_searchoptio == 77) {
                 $STDLY_SEARCH_searchcomments = $_GET['STDLY_SEARCH_searchcomments'];
                 $this->db->select("EA.EA_ID,DATE_FORMAT(EA.EA_DATE,'%d-%m-%Y') AS DATE,EA.EA_COMM_AMOUNT AS AMNT,EA.EA_COMMENTS AS COMMENTS,ULD.ULD_LOGINID AS userstamp,DATE_FORMAT(CONVERT_TZ(EA.EA_TIMESTAMP,'+00:00','+08:00'), '%d-%m-%Y %T') AS timestamp");
                 $this->db->from('EXPENSE_AGENT EA,USER_LOGIN_DETAILS ULD');
@@ -308,7 +299,6 @@ class Mdl_staff_daily_entry_search_update_delete extends CI_Model{
                 $query = $this->db->get();
                 $values_array = $query->result();
             }
-
             $STDLY_SEARCH_table_value = '<table id="STDLY_SEARCH_tbl_htmltable" border="1"  cellspacing="0" class="srcresult"  style="width:3000px;border-collapse: collapse;"><sethtmlpageheader name="header" page="all" value="on" show-this-page="1"/><thead style="color:#fff !important; background-color:#498af3;text-align:center;font-weight: bold;"><tr><th style="color:#fff !important; background-color:#498af3;text-align:center;font-weight: bold;width:75px">AGENT DATE</th><th style="color:#fff !important; background-color:#498af3;text-align:center;font-weight: bold;width:60px">COMMISSION AMOUNT</th><th style="color:#fff !important; background-color:#498af3;text-align:center;font-weight: bold;width:300px;">COMMENTS</th><th style="color:#fff !important; background-color:#498af3;text-align:center;font-weight: bold;width:200px;">USERSTAMP</th><th style="color:#fff !important; background-color:#498af3;text-align:center;font-weight: bold;width:100px;" >TIMESTAMP</th></tr></thead><tbody>';
             for ($j = 0; $j < count($values_array); $j++) {
                 $STDLY_SEARCH_date = $values_array[$j]->DATE;
@@ -326,7 +316,6 @@ class Mdl_staff_daily_entry_search_update_delete extends CI_Model{
             return $STDLY_SEARCH_table_value;
         }
         else if($STDLY_SEARCH_listoption==40) {
-
             $STDLY_SEARCH_searchoptio = $_GET['STDLY_SEARCH_searchoptio'];
             if ($STDLY_SEARCH_searchoptio == 86) {
                 $STDLY_SEARCH_startdate = $_GET['STDLY_SEARCH_startdate'];
@@ -340,7 +329,8 @@ class Mdl_staff_daily_entry_search_update_delete extends CI_Model{
                 $this->db->where("ULD.ULD_ID=ESS.ULD_ID AND (EMPDTL.EMP_ID=EDSS.EMP_ID) AND (EDSS.EDSS_ID=ESS.EDSS_ID) AND (ESS.ESS_INVOICE_DATE BETWEEN '$STDLY_SEARCH_startdate' AND '$STDLY_SEARCH_enddate') AND (ESS.ESS_CPF_AMOUNT BETWEEN '$STDLY_SEARCH_fromamount' AND '$STDLY_SEARCH_toamount')");
                 $query = $this->db->get();
                 $values_array= $query->result();
-            } else if ($STDLY_SEARCH_searchoptio == 87)//LEVY
+            }
+            else if ($STDLY_SEARCH_searchoptio == 87)//LEVY
             {
                 $STDLY_SEARCH_startdate = $_GET['STDLY_SEARCH_startdate'];
                 $STDLY_SEARCH_startdate = date('Y-m-d', strtotime($STDLY_SEARCH_startdate));
@@ -354,7 +344,8 @@ class Mdl_staff_daily_entry_search_update_delete extends CI_Model{
                 $this->db->order_by("ESS.ESS_INVOICE_DATE", "ASC");
                 $query = $this->db->get();
                 $values_array= $query->result();
-            } else if ($STDLY_SEARCH_searchoptio == 88)//SALARY
+            }
+            else if ($STDLY_SEARCH_searchoptio == 88)//SALARY
             {
                 $STDLY_SEARCH_startdate = $_GET['STDLY_SEARCH_startdate'];
                 $STDLY_SEARCH_startdate = date('Y-m-d', strtotime($STDLY_SEARCH_startdate));
@@ -368,7 +359,8 @@ class Mdl_staff_daily_entry_search_update_delete extends CI_Model{
                 $this->db->order_by("ESS.ESS_INVOICE_DATE", "ASC");
                 $query = $this->db->get();
                 $values_array= $query->result();
-            } else if ($STDLY_SEARCH_searchoptio == 91)//SALARY
+            }
+            else if ($STDLY_SEARCH_searchoptio == 91)//SALARY
             {
                 $STDLY_SEARCH_startdate = $_GET['STDLY_SEARCH_startdate'];
                 $STDLY_SEARCH_startdate = date('Y-m-d', strtotime($STDLY_SEARCH_startdate));
@@ -380,7 +372,8 @@ class Mdl_staff_daily_entry_search_update_delete extends CI_Model{
                 $this->db->order_by("ESS.ESS_INVOICE_DATE", "ASC");
                 $query = $this->db->get();
                 $values_array= $query->result();
-            } else if ($STDLY_SEARCH_searchoptio == 92)//SALARY
+            }
+            else if ($STDLY_SEARCH_searchoptio == 92)//SALARY
             {
                 $STDLY_SEARCH_startdate = $_GET['STDLY_SEARCH_startdate'];
                 $STDLY_SEARCH_startdate = date('Y-m-d', strtotime($STDLY_SEARCH_startdate));
@@ -392,7 +385,8 @@ class Mdl_staff_daily_entry_search_update_delete extends CI_Model{
                 $this->db->order_by("ESS.ESS_INVOICE_DATE", "ASC");
                 $query = $this->db->get();
                 $values_array= $query->result();
-            } else if ($STDLY_SEARCH_searchoptio == 89)//SALARY
+            }
+            else if ($STDLY_SEARCH_searchoptio == 89)//SALARY
             {
                 $STDLY_SEARCH_startdate = $_GET['STDLY_SEARCH_startdate'];
                 $STDLY_SEARCH_startdate = date('Y-m-d', strtotime($STDLY_SEARCH_startdate));
@@ -404,7 +398,8 @@ class Mdl_staff_daily_entry_search_update_delete extends CI_Model{
                 $this->db->order_by("ESS.ESS_INVOICE_DATE", "ASC");
                 $query = $this->db->get();
                 $values_array= $query->result();
-            } else if ($STDLY_SEARCH_searchoptio == 93)//CPF NUMBER
+            }
+            else if ($STDLY_SEARCH_searchoptio == 93)//CPF NUMBER
             {
                 $STDLY_SEARCH_selectedcpfno = $_GET['STDLY_SEARCH_selectedcpfno'];
                 $this->db->select("ESS.ESS_ID,EDSS.EDSS_CPF_AMOUNT AS CPF,EDSS.EDSS_LEVY_AMOUNT AS LEVY,EDSS.EDSS_SALARY_AMOUNT AS SALARY,EMPDTL.EMP_FIRST_NAME AS FIRST,EMPDTL.EMP_LAST_NAME AS LAST,EDSS.EDSS_CPF_NUMBER AS CPFNO,DATE_FORMAT(ESS.ESS_INVOICE_DATE,'%d-%m-%Y') AS INVOICE,DATE_FORMAT(ESS.ESS_TO_PERIOD,'%d-%m-%Y') AS TOPERIOD,DATE_FORMAT(ESS.ESS_FROM_PERIOD,'%d-%m-%Y') AS FROMPERIOD,ESS.ESS_CPF_AMOUNT AS CPFESS,ESS.ESS_LEVY_AMOUNT AS LEVYESS,ESS.ESS_SALARY_AMOUNT AS SALARYESS,ESS.ESS_SALARY_COMMENTS AS COMMENTS,ULD.ULD_LOGINID AS USERSTAMP,DATE_FORMAT(CONVERT_TZ(ESS.ESS_TIMESTAMP,'+00:00','+08:00'), '%d-%m-%Y %T') AS timestamp");
@@ -413,7 +408,8 @@ class Mdl_staff_daily_entry_search_update_delete extends CI_Model{
                 $this->db->order_by("ESS.ESS_INVOICE_DATE", "ASC");
                 $query = $this->db->get();
                 $values_array= $query->result();
-            } else if ($STDLY_SEARCH_searchoptio == 85)//CPF NUMBER
+            }
+            else if ($STDLY_SEARCH_searchoptio == 85)//CPF NUMBER
             {
                 $STDLY_SEARCH_searchcomments = $this->db->escape_like_str($_POST['STDLY_SEARCH_searchcomments']);
                 $query = $this->db->query("SELECT ESS.ESS_ID,EDSS.EDSS_CPF_AMOUNT AS CPF,EDSS.EDSS_LEVY_AMOUNT AS LEVY,EDSS.EDSS_SALARY_AMOUNT AS SALARY,EMPDTL.EMP_FIRST_NAME AS FIRST,EMPDTL.EMP_LAST_NAME AS LAST,EDSS.EDSS_CPF_NUMBER  AS CPFNO,DATE_FORMAT(ESS.ESS_INVOICE_DATE,'%d-%m-%Y')  AS INVOICE,DATE_FORMAT(ESS.ESS_TO_PERIOD,'%d-%m-%Y') AS TOPERIOD,DATE_FORMAT(ESS.ESS_FROM_PERIOD,'%d-%m-%Y') AS FROMPERIOD,ESS.ESS_CPF_AMOUNT AS CPFESS,ESS.ESS_LEVY_AMOUNT AS LEVYESS,ESS.ESS_SALARY_AMOUNT AS SALARYESS,ESS.ESS_SALARY_COMMENTS AS COMMENTS,ULD.ULD_LOGINID AS USERSTAMP,DATE_FORMAT(CONVERT_TZ(ESS.ESS_TIMESTAMP,'+00:00','+08:00'),'%d-%m-%Y %T') AS timestamp FROM EMPLOYEE_DETAILS EMPDTL,EXPENSE_DETAIL_STAFF_SALARY EDSS,EXPENSE_STAFF_SALARY ESS ,USER_LOGIN_DETAILS ULD WHERE ULD.ULD_ID=ESS.ULD_ID AND (EMPDTL.EMP_ID=EDSS.EMP_ID) AND (EDSS.EDSS_ID=ESS.EDSS_ID) AND (ESS.ESS_SALARY_COMMENTS='$STDLY_SEARCH_searchcomments') ORDER BY ESS.ESS_INVOICE_DATE ASC");
@@ -427,7 +423,6 @@ class Mdl_staff_daily_entry_search_update_delete extends CI_Model{
                 $query = $this->db->query("SELECT ESS.ESS_ID,EDSS.EDSS_CPF_AMOUNT AS CPF,EDSS.EDSS_LEVY_AMOUNT AS LEVY,EDSS.EDSS_SALARY_AMOUNT AS SALARY,EMPDTL.EMP_FIRST_NAME AS FIRST,EMPDTL.EMP_LAST_NAME AS LAST,EDSS.EDSS_CPF_NUMBER  AS CPFNO,DATE_FORMAT(ESS.ESS_INVOICE_DATE,'%d-%m-%Y')  AS INVOICE,DATE_FORMAT(ESS.ESS_TO_PERIOD,'%d-%m-%Y') AS TOPERIOD,DATE_FORMAT(ESS.ESS_FROM_PERIOD,'%d-%m-%Y') AS FROMPERIOD,ESS.ESS_CPF_AMOUNT AS CPFESS,ESS.ESS_LEVY_AMOUNT AS LEVYESS,ESS.ESS_SALARY_AMOUNT AS SALARYESS,ESS.ESS_SALARY_COMMENTS AS COMMENTS,ULD.ULD_LOGINID AS USERSTAMP,DATE_FORMAT(CONVERT_TZ(ESS.ESS_TIMESTAMP,'+00:00','+08:00'),'%d-%m-%Y %T') AS timestamp FROM EMPLOYEE_DETAILS EMPDTL,EXPENSE_DETAIL_STAFF_SALARY EDSS,EXPENSE_STAFF_SALARY ESS ,USER_LOGIN_DETAILS ULD WHERE ULD.ULD_ID=ESS.ULD_ID AND (EMPDTL.EMP_ID=EDSS.EMP_ID) AND (EDSS.EDSS_ID=ESS.EDSS_ID) AND (EMPDTL.EMP_FIRST_NAME='$STDLY_SEARCH_firstname' AND EMPDTL.EMP_LAST_NAME ='$STDLY_SEARCH_lastname') ORDER BY ESS.ESS_INVOICE_DATE ASC");
                 $values_array= $query->result();
             }
-
             $STDLY_SEARCH_table_value='<table id="STDLY_SEARCH_tbl_salaryhtmltable" border="1"  cellspacing="0" class="srcresult" style="width:1500px;border-collapse: collapse;" ><sethtmlpageheader name="header" page="all" value="on" show-this-page="1"/><thead  style="color:#fff !important; background-color:#498af3;text-align:center;font-weight: bold;"><tr><th style="color:#fff !important; background-color:#498af3;text-align:center;font-weight: bold;width:90px">FIRST NAME</th><th style="color:#fff !important; background-color:#498af3;text-align:center;font-weight: bold;width:90px">LAST NAME</th><th style="color:#fff !important; background-color:#498af3;text-align:center;font-weight: bold;width:100px;">INVOICE DATE</th><th style="color:#fff !important; background-color:#498af3;text-align:center;font-weight: bold;width:160px;">FROM PERIOD</th><th style="color:#fff !important; background-color:#498af3;text-align:center;font-weight: bold;width:160px;">TO PERIOD</th><th style="color:#fff !important; background-color:#498af3;text-align:center;font-weight: bold;width:80px;">CPF NUMBER</th><th style="color:#fff !important; background-color:#498af3;text-align:center;font-weight: bold;width:80px;">CPF AMOUNT</th><th style="color:#fff !important; background-color:#498af3;text-align:center;font-weight: bold;width:80px;">LEVY AMOUNT</th><th style="color:#fff !important; background-color:#498af3;text-align:center;font-weight: bold;width:80px;">SALARY AMOUNT</th><th style="color:#fff !important; background-color:#498af3;text-align:center;font-weight: bold;width:320px;">COMMENTS</th><th style="color:#fff !important; background-color:#498af3;text-align:center;font-weight: bold;width:160px;">USERSTAMP</th><th style="color:#fff !important; background-color:#498af3;text-align:center;font-weight: bold;width:160px;">TIMESTAMP</th></tr></thead><tbody>';
             for($j=0;$j<count($values_array);$j++){
             $STDLY_SEARCH_cpfamount=$values_array[$j]->CPF;
@@ -474,12 +469,10 @@ class Mdl_staff_daily_entry_search_update_delete extends CI_Model{
             }
             $STDLY_SEARCH_table_value.='</tbody></table>';
             return $STDLY_SEARCH_table_value;
-
         }
         else if($STDLY_SEARCH_listoption==41){
             $STDLY_SEARCH_searchoptio=$_GET['STDLY_SEARCH_searchoptio'];
-            if($STDLY_SEARCH_searchoptio==80)
-            {
+            if($STDLY_SEARCH_searchoptio==80){
                 $STDLY_SEARCH_staffexpansecategory1=$_GET['STDLY_SEARCH_staffexpansecategory'];
                 $STDLY_SEARCH_staffexpansecategory=str_replace("^","&",$STDLY_SEARCH_staffexpansecategory1);
                 $STDLY_SEARCH_startdate=$_GET['STDLY_SEARCH_startdate'];
@@ -494,7 +487,6 @@ class Mdl_staff_daily_entry_search_update_delete extends CI_Model{
                 $this->db->order_by("ES.ES_INVOICE_DATE", "ASC");
                 $query = $this->db->get();
                 $values_array= $query->result();
-
             }
             else if($STDLY_SEARCH_searchoptio==84)
             {
@@ -566,7 +558,6 @@ class Mdl_staff_daily_entry_search_update_delete extends CI_Model{
                 $query = $this->db->get();
                 $values_array= $query->result();
             }
-
             $STDLY_SEARCH_table_value='<table id="STDLY_SEARCH_tbl_staffhtmltable" border="1"  cellspacing="0" class="srcresult" style="width:1500px;border-collapse: collapse;" ><sethtmlpageheader name="header" page="all" value="on" show-this-page="1"/><thead style="color:#fff !important; background-color:#498af3;text-align:center;font-weight: bold;"><tr><th style="color:#fff !important; background-color:#498af3;text-align:center;font-weight: bold;width:170px;">STAFF EXPENSE</th><th style="color:#fff !important; background-color:#498af3;text-align:center;font-weight: bold;width:105px;">INVOICE DATE</th><th style="color:#fff !important; background-color:#498af3;text-align:center;font-weight: bold;width:65px;">INVOICE AMOUNT</th><th style="color:#fff !important; background-color:#498af3;text-align:center;font-weight: bold;width:150px;">INVOICE ITEMS</th><th style="color:#fff !important; background-color:#498af3;text-align:center;font-weight: bold;width:150px;">INVOICE FROM</th><th style="color:#fff !important; background-color:#498af3;text-align:center;font-weight: bold;width:200px;">COMMENTS</th><th style="color:#fff !important; background-color:#498af3;text-align:center;font-weight: bold;width:150px;">USERSTAMP</th><th style="color:#fff !important; background-color:#498af3;text-align:center;font-weight: bold;width:160px;">TIMESTAMP</th></tr></thead><tbody>';
             for($j=0;$j<count($values_array);$j++){
                  $STDLY_SEARCH_values=$values_array[$j];
@@ -588,8 +579,7 @@ class Mdl_staff_daily_entry_search_update_delete extends CI_Model{
         $STDLY_SEARCH_startdate = date('Y-m-d',strtotime($STDLY_SEARCH_startdate));
         $STDLY_SEARCH_enddate = date('Y-m-d',strtotime($STDLY_SEARCH_enddate));
         $STDTL_SEARCH_autocomplete=[];
-        if($STDLY_SEARCH_sec_searchoption==77)
-        {
+        if($STDLY_SEARCH_sec_searchoption==77){
             $this->db->distinct();
             $this->db->select("EA_COMMENTS");
             $this->db->from("EXPENSE_AGENT");
@@ -601,8 +591,7 @@ class Mdl_staff_daily_entry_search_update_delete extends CI_Model{
             }
             return $STDTL_SEARCH_autocomplete;
         }
-       elseif($STDLY_SEARCH_sec_searchoption==85)
-        {
+        elseif($STDLY_SEARCH_sec_searchoption==85){
             $this->db->distinct();
             $this->db->select("ESS_SALARY_COMMENTS");
             $this->db->from("EXPENSE_STAFF_SALARY");
@@ -658,7 +647,6 @@ class Mdl_staff_daily_entry_search_update_delete extends CI_Model{
     public function fetch_salarydata()
     {
         $STDLY_SEARCH_searchoptio=$_POST['STDLY_SEARCH_searchoptio'];
-
         if($STDLY_SEARCH_searchoptio==86)
         {
             $STDLY_SEARCH_startdate=$_POST['STDLY_SEARCH_startdate'];
@@ -790,30 +778,13 @@ class Mdl_staff_daily_entry_search_update_delete extends CI_Model{
             return false;
         }
     }
-
     public function  update_staff($USERSTAMP,$STDLY_SEARCH_lbstaffexpense,$STDLY_SEARCH_dbinvoicedate,$STDLY_SEARCH_staff_fullamount,$STDLY_SEARCH_tbinvoiceitems,$STDLY_SEARCH_tbinvoicefrom,$STDLY_SEARCH_tbcomments,$id)
-
     {
-
-//        $STDLY_SEARCH_lbstaffexpense = $_POST['STDLY_SEARCH_lbstaffexpense'];
-//        echo $STDLY_SEARCH_lbstaffexpense;
-//        exit;
-//        $STDLY_SEARCH_selectquery = $this->db->query("SELECT EXPSTAFF.ECN_ID AS CATEGORYID FROM EXPENSE_STAFF EXPSTAFF , EXPENSE_CONFIGURATION CONFIG WHERE CONFIG.ECN_DATA='$STDLY_SEARCH_lbstaffexpense' and CONFIG.ECN_ID=EXPSTAFF.ECN_ID ");
-//        $STDLY_SEARCH_lbstaffexpense = $STDLY_SEARCH_selectquery->row()->CATEGORYID;
-//        $STDLY_SEARCH_dbinvoicedate = $_POST['STDLY_SEARCH_dbinvoicedate'];
-//        $STDLY_SEARCH_dbinvoicedate = date('Y-m-d', strtotime($STDLY_SEARCH_dbinvoicedate));
-//        $STDLY_SEARCH_staff_fullamount = $_POST['STDLY_SEARCH_staff_fullamount'];
-//        $STDLY_SEARCH_tbinvoiceitems = $_POST['STDLY_SEARCH_tbinvoiceitems'];
-//        $STDLY_SEARCH_tbinvoicefrom = $_POST['STDLY_SEARCH_tbinvoicefrom'];
-//        $STDLY_SEARCH_tbcomments = $_POST['STDLY_SEARCH_tbcomments'];
-
         if ($STDLY_SEARCH_tbcomments == '') {
             $STDLY_SEARCH_tbcomments = 'null';
         } else {
             $STDLY_SEARCH_tbcomments = "'$STDLY_SEARCH_tbcomments'";
         }
-
-
         $updatequery = "UPDATE EXPENSE_STAFF SET ES_INVOICE_DATE='$STDLY_SEARCH_dbinvoicedate',ES_INVOICE_AMOUNT='$STDLY_SEARCH_staff_fullamount',ES_INVOICE_ITEMS='$STDLY_SEARCH_tbinvoiceitems',ES_INVOICE_FROM='$STDLY_SEARCH_tbinvoicefrom',ES_COMMENTS=$STDLY_SEARCH_tbcomments,ULD_ID=(SELECT ULD_ID FROM USER_LOGIN_DETAILS WHERE ULD_LOGINID='$USERSTAMP'),ECN_ID=(SELECT ECN_ID FROM EXPENSE_CONFIGURATION WHERE ECN_DATA='$STDLY_SEARCH_lbstaffexpense' AND CGN_ID=26) WHERE ES_ID='$id'";
         $this->db->query($updatequery);
         if ($this->db->affected_rows() > 0) {
@@ -822,7 +793,6 @@ class Mdl_staff_daily_entry_search_update_delete extends CI_Model{
             return 'false';
         }
     }
-
     //GET DATA FOR SALARY SEARCH OPTIONS.................................FROM SALARY ENTRY...........
     public function fetch_staffsalarydata()
     {
@@ -913,7 +883,6 @@ class Mdl_staff_daily_entry_search_update_delete extends CI_Model{
            $query = $this->db->get();
            return $query->result();
        }
-
     }
     public function STDLY_SEARCH_getempcpfno()
     {
@@ -937,8 +906,7 @@ class Mdl_staff_daily_entry_search_update_delete extends CI_Model{
             $STDLY_SEARCH_emp_fname='';$STDLY_SEARCH_epm_lname='';
             $STDLY_SEARCH_selectEmployeeName = "SELECT ED.EMP_FIRST_NAME,ED.EMP_LAST_NAME FROM EMPLOYEE_DETAILS ED WHERE ED.EMP_ID IN (SELECT EMP_ID FROM EXPENSE_DETAIL_STAFF_SALARY) ORDER BY ED.EMP_FIRST_NAME ASC";
             $STDLY_SEARCH_employeeName = $this->db->query($STDLY_SEARCH_selectEmployeeName);
-            foreach($STDLY_SEARCH_employeeName->result_array() as $row)
-            {
+            foreach($STDLY_SEARCH_employeeName->result_array() as $row){
                 $STDLY_SEARCH_emp_fname = $row["EMP_FIRST_NAME"];
                 $STDLY_SEARCH_epm_lname = $row["EMP_LAST_NAME"];
                 $STDLY_SEARCH_employee_Name_List[]=$STDLY_SEARCH_emp_fname.'_'.$STDLY_SEARCH_epm_lname;
@@ -946,7 +914,6 @@ class Mdl_staff_daily_entry_search_update_delete extends CI_Model{
             }
             return [$STDLY_SEARCH_employee_Name_List,$STDLY_SEARCH_employee_Name_List1];
         }
-
     }
     //SINGLE ROW DELETION PROCESS CALLING EILIB  FUNCTION
     public function DeleteRecord($USERSTAMP,$rowid,$STDLY_SEARCH_typelist,$STDLY_SEARCH_srchoption,$startdate,$enddate)
@@ -960,7 +927,6 @@ class Mdl_staff_daily_entry_search_update_delete extends CI_Model{
             $STDLY_INPUT_arr_comments=$this->STDLY_SEARCH_comments($USERSTAMP,$STDLY_SEARCH_srchoption,$startdate,$enddate);
         return [$STDLY_SEARCH_flag_delete,$STDLY_INPUT_arr_comments];
     }
-
     //FUNCTION FOR SAVE staff PART
     public function STDLY_salaryupdate($USERSTAMP){
         $STDLY_SEARCH_id=$_POST['id'];
@@ -978,7 +944,6 @@ class Mdl_staff_daily_entry_search_update_delete extends CI_Model{
         $STDLY_SEARCH_cpfamount = $_POST['STDLY_SEARCH_tb_hidecpf1'];
         $STDLY_SEARCH_searchoption=$_POST['STDLY_SEARCH_lb_salarysearchoption'];
         $STDLY_SEARCH_lb_salarysearchoption=$_POST['STDLY_SEARCH_lb_salarysearchoption'];
-
         if($STDLY_SEARCH_comments=="")//COMMENTS
         {  $STDLY_SEARCH_comments='null';}else{
             $STDLY_SEARCH_comments=$this->db->escape_like_str($STDLY_SEARCH_comments);

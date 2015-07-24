@@ -1696,7 +1696,6 @@ require_once('application/libraries/EI_HDR.php');
                         data: {'inventory_unitno':USU_roomstamptype_val,'typeofcard':'','flag_card_unitno':USU_parentfunc_already,'USU_parent_func':''},
                         success: function(existdata) {
                             var exist_data=JSON.parse(existdata);
-                            alert(existdata)
                             USU_success_alreadyexists(exist_data);
                             if(USU_flag_updbtn==1){
                                 $(".preloader").show();
@@ -2046,7 +2045,6 @@ require_once('application/libraries/EI_HDR.php');
                     url: ctrl_unitcreate_url+'/USU_func_update',
                     data: {'USU_obj_formvalues':USU_obj_formvalues,'USU_obj_rowvalue':USU_obj_rowvalue,'USU_obj_flex':USU_obj_flex},
                     success: function(successdata) {
-                        alert(successdata)
                         var success_data=JSON.parse(successdata);
                         USU_success_flex(success_data);
                         rid=undefined;

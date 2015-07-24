@@ -81,7 +81,7 @@ class Mdl_ocbc_banktt_entry extends CI_Model {
         $this->load->model('EILIB/Mdl_eilib_common_function');
         $Sendmailid=$this->Mdl_eilib_common_function->getProfileEmailId('BANKTT');
         $Displayname=$this->Mdl_eilib_common_function->Get_MailDisplayName('BANK_TT');
-        $username=explode('@',$Sendmailid);
+        $username=explode('@',$Sendmailid[0]);
         $mailusername=strtoupper($username[0]);
         $headerarray=['DATE','TRANSACTION TYPE','MODEL NAME','ACC NAME','ACC NO','AMOUNT','UNIT','CUSTOMER','BANK CODE','BRANCH CODE','BANK ADDRESS','SWIFT CODE','CHARGES TO','CUST REF','INV DETAILS','COMMENTS'];
         $dataarray=[$_POST['banktt_date'],$type,$model,$accname,$accno,$amount,$unit,$customername,$bankttcode,$banktt_branchcode,$bankaddress,$swiftcode,$chargesto,$customerref,$invdetails,$comments];
@@ -260,7 +260,7 @@ class Mdl_ocbc_banktt_entry extends CI_Model {
         $this->load->model('EILIB/Mdl_eilib_common_function');
         $Sendmailid=$this->Mdl_eilib_common_function->getProfileEmailId('BANKTT');
         $Displayname=$this->Mdl_eilib_common_function->Get_MailDisplayName('BANK_TT');
-        $username=explode('@',$Sendmailid);
+        $username=explode('@',$Sendmailid[0]);
         $mailusername=strtoupper($username[0]);
         $headerarray=['DATE','TRANSACTION TYPE','MODEL NAME','ACC NAME','ACC NO','AMOUNT','UNIT','CUSTOMER','STATUS','DEBITED/REJECTED DATE','BANK CODE','BRANCH CODE','BANK ADDRESS','SWIFT CODE','CHARGES TO','CUST REF','INV DETAILS','DONE BY','COMMENTS'];
         $dataarray=[$_POST['Banktt_SRC_Date'],$type,$model,$accname,$accno,$amount,$unit,$customername,$status,$debitedon,$bankttcode,$banktt_branchcode,$_POST['Banktt_SRC_BankAddress'],$swiftcode,$chargesto,$_POST['Banktt_SRC_Customerref'],$_POST['Banktt_SRC_Invdetails'],$createdby,$_POST['Banktt_SRC_Comments']];

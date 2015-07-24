@@ -876,7 +876,9 @@ require_once('application/libraries/EI_HDR.php');
                     $('#Banktt_SRC_Date').val(FormTableDateFormat(returnvalue[0].BT_DATE));
                     $('#Banktt_SRC_Amount').val(returnvalue[0].BT_AMOUNT);
                     $('#Banktt_SRC_Status').val(returnvalue[0].STATUS);
-                    $('#Banktt_SRC_Debitedon').val(FormTableDateFormat(returnvalue[0].DEBITED_ON));
+                    if(returnvalue[0].DEBITED_ON!=null)
+                        $('#Banktt_SRC_Debitedon').val(FormTableDateFormat(returnvalue[0].DEBITED_ON));else
+                        $('#Banktt_SRC_Debitedon').val("");
                     $('#Banktt_SRC_BankAddress').val(returnvalue[0].BANK_ADDRESS);
                     $('#Banktt_SRC_Customerref').val(returnvalue[0].CUST_REF);
                     $('#Banktt_SRC_Invdetails').val(returnvalue[0].INV_DETAILS);
@@ -902,6 +904,7 @@ require_once('application/libraries/EI_HDR.php');
                     $('#Banktt_SRC_Debitedon').datepicker("option","minDate",BANKTT_db_chkindate1);
                     $('#Banktt_SRC_Debitedon').datepicker("option","maxDate",new Date());
                     $('#BankTT_Updation_Form').show();
+                    $("#Banktt_SRC_Updatebutton").attr("disabled", "disabled");
                     $('.preloader').hide();
                     $("html, body").animate({ scrollTop: $(document).height() }, "slow");
                 },

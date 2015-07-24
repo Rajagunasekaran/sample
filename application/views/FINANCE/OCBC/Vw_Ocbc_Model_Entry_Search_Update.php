@@ -6,6 +6,79 @@
 <?php require_once('application/libraries/EI_HDR.php'); ?>
 <script>
     $(document).ready(function(){
+//        $('#example').html("<thead><tr><th>First name</th><th>Last name</th><th>Position</th><th>Office</th><th>Age</th><th>Start date</th><th>Salary</th>"
+//        +"<th>Extn.</th>"
+//            +"<th>E-mail</th>"
+//            +"<th>Extn.</th>"
+//            +"<th>E-mail</th>"
+//            +"</tr>"
+//            +"</thead>"
+//
+//            +"<tbody>"
+//            +"<tr>"
+//            +"<td>Tiger</td>"
+//            +"<td>Nixon</td>"
+//            +"<td>System Architect</td>"
+//            +"<td>Edinburgh</td>"
+//            +"<td>61</td>"
+//            +"<td>2011/04/25</td>"
+//            +"<td>$320,800</td>"
+//            +"<td>5421</td>"
+//            +"<td>t.nixon@datatables.net</td>"
+//            +"<td>5421</td>"
+//            +"<td>t.nixon@datatables.net</td>"
+//            +"</tr>"
+//            +"<tr>"
+//            +"<td>Garrett</td>"
+//            +"<td>Winters</td>"
+//            +"<td>Accountant</td>"
+//            +"<td>Tokyo</td>"
+//            +"<td>63</td>"
+//            +"<td>2011/07/25</td>"
+//            +"<td>$170,750</td>"
+//            +"<td>8422</td>"
+//            +"<td>g.winters@datatables.net</td>"
+//            +"<td>5421</td>"
+//            +"<td>t.nixon@datatables.net</td>"
+//            +"</tr>"
+//            +"<tr>"
+//            +"<td>Ashton</td>"
+//            +"<td>Cox</td>"
+//            +"<td>Junior Technical Author</td>"
+//            +"<td>San Francisco</td>"
+//            +"<td>66</td>"
+//            +"<td>2009/01/12</td>"
+//            +"<td>$86,000</td>"
+//            +"<td>1562</td>"
+//            +"<td>a.cox@datatables.net</td>"
+//            +"<td>5421</td>"
+//            +"<td>t.nixon@datatables.net</td>"
+//            +"</tr>"
+//            +"<tr>"
+//            +"<td>Cedric</td>"
+//            +"<td>Kelly</td>"
+//            +"<td>Senior Javascript Developer</td>"
+//            +"<td>Edinburgh</td>"
+//            +"<td>22</td>"
+//            +"<td>2012/03/29</td>"
+//            +"<td>$433,060</td>"
+//            +"<td>6224</td>"
+//            +"<td>c.kelly@datatables.net</td>"
+//            +"<td>5421</td>"
+//            +"<td>t.nixon@datatables.net</td>"
+//            +"</tr></tbody>")
+//        $('#example').DataTable({
+//                "sDom":"Rlfrtip",
+//                "deferRender":    true,
+//                "dom":            "frtiS",
+//                "scrollY": 200,
+//                "scrollX": true,
+//                "scrollCollapse": true
+//            }
+//        );
+//        $.extend( $.fn.dataTable.defaults, {
+//            responsive: true
+//        } );
         $('#spacewidth').height('0%');
         var Model_Errormsg;
         var Allmodels;
@@ -54,39 +127,66 @@
         //*****************Common Function ***************//
         function InitialDataLoad(modeldetails)
         {
-            var Model_Tabledata='<table style="width:1200px" id="Model_Datatable" border="1" cellspacing="0" data-class="table" class="srcresult"><thead bgcolor="#6495ed" style="color:white"><tr>';
-            Model_Tabledata+="<th style='text-align:center;vertical-align: top'>UPDATE / DELETE</th>";
-            Model_Tabledata+="<th style='text-align:center;vertical-align: top'>MODEL NAME</th>";
-            Model_Tabledata+="<th style='text-align:center;vertical-align: top'>OBSOLETE</th>";
-            Model_Tabledata+="<th style='text-align:center;vertical-align: top'>USERSTAMP</th>";
-            Model_Tabledata+="<th style='text-align:center;vertical-align: top' class='uk-timestp-column'>TIMESTAMP</th>";
+//            var Model_Tabledata='<table style="width:1200px" id="Model_Datatable" border="1" cellspacing="0" data-class="table" class="srcresult"><thead bgcolor="#6495ed" style="color:white"><tr>';
+//            Model_Tabledata+="<th style='width: 102.767px !important;text-align:center;vertical-align: top'>UPDATE / DELETE</th>";
+//            Model_Tabledata+="<th style='text-align:center;vertical-align: top'>MODEL NAME</th>";
+//            Model_Tabledata+="<th style='text-align:center;vertical-align: top'>OBSOLETE</th>";
+//            Model_Tabledata+="<th style='text-align:center;vertical-align: top'>USERSTAMP</th>";
+//            Model_Tabledata+="<th style='text-align:center;vertical-align: top' class='uk-timestp-column'>TIMESTAMP</th>";
+//            Model_Tabledata+="</tr></thead><tbody>";
+//            for(var i=0;i<modeldetails.length;i++)
+//            {
+//                var rowid=modeldetails[i].BTM_ID;
+//                var DeleteId='Delete_'+rowid;
+//                if(modeldetails[i].BTM_OBSOLETE==null){var obsolete=''}else{obsolete=modeldetails[i].BTM_OBSOLETE};
+//                Model_Tabledata+='<tr style="text-align: center !important;vertical-align: middle">' +
+//                    "<td style='width: 102.767px !important;'><div class='col-lg-1'><div class='col-lg-1'><span style='display: block;color:red' class='glyphicon glyphicon-trash Model_removebutton' id="+DeleteId+"></div></td>" +
+//                    "<td style='width:300px !important;text-align: left !important' class='ModelEdit' id=Modelname_"+rowid+">"+modeldetails[i].BTM_DATA+"</td>" +
+//                    "<td style='width:100px !important;text-align: left !important' class='ModelEdit' id=Obsoletechk_"+rowid+">"+obsolete+"</td>" +
+//                    "<td style='width:250px !important;text-align: left !important'>"+modeldetails[i].ULD_LOGINID+"</td>" +
+//                    "<td style='width:150px !important;vertical-align: middle'>"+modeldetails[i].BTM_TIME_STAMP+"</td></tr>";
+//            }
+//            Model_Tabledata+="</body>";
+//            $('section').html(Model_Tabledata);
+            var Model_Tabledata='<table id="Model_Datatable" class="nowrap srcresult" cellspacing="0" width="100%"><thead><tr>';
+            Model_Tabledata+="<th >UPDATE / DELETE</th>";
+            Model_Tabledata+="<th >MODEL NAME</th>";
+            Model_Tabledata+="<th >OBSOLETE</th>";
+            Model_Tabledata+="<th >USERSTAMP</th>";
+            Model_Tabledata+="<th  class='uk-timestp-column'>TIMESTAMP</th>";
             Model_Tabledata+="</tr></thead><tbody>";
             for(var i=0;i<modeldetails.length;i++)
             {
                 var rowid=modeldetails[i].BTM_ID;
                 var DeleteId='Delete_'+rowid;
                 if(modeldetails[i].BTM_OBSOLETE==null){var obsolete=''}else{obsolete=modeldetails[i].BTM_OBSOLETE};
-                Model_Tabledata+='<tr style="text-align: center !important;vertical-align: middle">' +
-                    "<td style='width:100px !important;'><div class='col-lg-1'><div class='col-lg-1'><span style='display: block;color:red' class='glyphicon glyphicon-trash Model_removebutton' id="+DeleteId+"></div></td>" +
-                    "<td style='width:300px !important;text-align: left !important' class='ModelEdit' id=Modelname_"+rowid+">"+modeldetails[i].BTM_DATA+"</td>" +
-                    "<td style='width:100px !important;text-align: left !important' class='ModelEdit' id=Obsoletechk_"+rowid+">"+obsolete+"</td>" +
-                    "<td style='width:250px !important;text-align: left !important'>"+modeldetails[i].ULD_LOGINID+"</td>" +
-                    "<td style='width:150px !important;vertical-align: middle'>"+modeldetails[i].BTM_TIME_STAMP+"</td></tr>";
+                Model_Tabledata+='<tr >' +
+                    "<td ><div class='col-lg-1'><div class='col-lg-1'><span style='display: block;color:red' class='glyphicon glyphicon-trash Model_removebutton' id="+DeleteId+"></div></td>" +
+                    "<td  class='ModelEdit' id=Modelname_"+rowid+">"+modeldetails[i].BTM_DATA+"</td>" +
+                    "<td class='ModelEdit' id=Obsoletechk_"+rowid+">"+obsolete+"</td>" +
+                    "<td >"+modeldetails[i].ULD_LOGINID+"</td>" +
+                    "<td >"+modeldetails[i].BTM_TIME_STAMP+"</td></tr>";
             }
-            Model_Tabledata+="</body>";
+            Model_Tabledata+="</tbody></table>";
             $('section').html(Model_Tabledata);
             $('#Model_Search_DataTable').show();
             $("html, body").animate({ scrollTop: $(document).height() }, "slow");
             var oTable=$('#Model_Datatable').DataTable( {
                 "aaSorting": [],
-                "sDom":"Rlfrtip",
-                "deferRender":    true,
-                "scrollY": 200,
-                "scrollX": 500,
-                "scrollCollapse": true,
+//                "sDom":"Rlfrtip",
+//                "deferRender":    true,
+//                "scrollY": 200,
+//                "scrollX": 500,
+//                "scrollCollapse": true,
                 "pageLength": 10,
                 "sPaginationType":"full_numbers",
-                "aoColumnDefs" : [{ "aTargets" : ["uk-timestp-column"] , "sType" : "uk_timestp"} ]
+                "aoColumnDefs" : [{ "aTargets" : ["uk-timestp-column"] , "sType" : "uk_timestp"} ],
+                "sDom":"Rlfrtip",
+                "deferRender":    true,
+                "dom":            "frtiS",
+                "scrollY": 200,
+                "scrollX": true,
+                "scrollCollapse": true
             });
             if ( $.browser.webkit ) {
                 setTimeout(function () {
@@ -278,8 +378,6 @@
         <div class ='row content'>
             <div class="panel-body">
                 <div id="Model_SearchformDiv">
-
-
                 </div>
                 <div id="Model_Search_DataTable" class="table-responsive" hidden>
                     <div><input type="button" class="maxbtn" value="ADD MODEL" id="AddNewModel"></div>
@@ -292,5 +390,8 @@
             </div>
         </div>
     </div>
+    <!--    <table id="example" class="display nowrap" cellspacing="0" width="100%">-->
+
+
 </div>
 </body>

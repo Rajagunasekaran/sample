@@ -407,7 +407,7 @@
                     var value_array=JSON.parse(data);
                     if(value_array.length!=0) {
                         $('#Tableheader').text(title);
-                        var tabledata = '<table style="width:2500px" id="CHEQUE_Datatable" border="1" cellspacing="0" data-class="table" class="srcresult"><thead bgcolor="#6495ed" style="color:white"><tr>';
+                        var tabledata = '<table  id="CHEQUE_Datatable" border="1" cellspacing="0"  class="nowrap srcresult"><thead><tr>';
                         tabledata += "<th style='text-align:center;vertical-align: top'>EDIT/UPDATE</th>";
                         tabledata += "<th style='text-align:center;vertical-align: top' class='uk-date-column'>CHEQUE DATE<span class='labelrequired'><em>*</em></span></th>";
                         tabledata += "<th style='text-align:center;vertical-align: top''>CHEQUE NO<span class='labelrequired'><em>*</em></span></th>";
@@ -442,18 +442,18 @@
                                 date = value_array[i].CHEQUE_DEBITED_RETURNED_DATE;
                             }
                             tabledata += '<tr id=' + value_array[i].CHEQUE_ID + '>' +
-                                "<td id=ICON_"+value_array[i].CHEQUE_ID+" style='width:80px !important;vertical-align: middle' nowrap><div class='col-lg-2'><span style='display: block;color:green' title='Edit' class='glyphicon glyphicon-edit Cheque_editbutton' disabled id=" + edit + "></div></td>" +
-                                "<td id=CHKDATE_"+value_array[i].CHEQUE_ID+" style='width:100px !important;vertical-align: middle;text-align: center' nowrap>" + value_array[i].CHEQUE_DATE + "</td>" +
-                                "<td id=CHKNO_"+value_array[i].CHEQUE_ID+" style='width:100px !important;vertical-align: middle;text-align: center' nowrap>" + value_array[i].CHEQUE_NO + "</td>" +
-                                "<td id=CHKTO_"+value_array[i].CHEQUE_ID+" style='width:250px !important;vertical-align: middle' >" + value_array[i].CHEQUE_TO + "</td>" +
-                                "<td id=CHKFOR_"+value_array[i].CHEQUE_ID+" style='width:250px !important;vertical-align: middle' >" + value_array[i].CHEQUE_FOR + "</td>" +
-                                "<td id=CHKAMT_"+value_array[i].CHEQUE_ID+" style='width:120px !important;vertical-align: middle;text-align: center' nowrap>" + value_array[i].CHEQUE_AMOUNT + "</td>" +
-                                "<td id=UNIT_"+value_array[i].CHEQUE_ID+" style='width:150px !important;vertical-align: middle;text-align: center'nowrap>" + unit + "</td>" +
-                                "<td id=STATUS_"+value_array[i].CHEQUE_ID+" style='width:100px !important;vertical-align: middle;text-align: center' nowrap>" + value_array[i].BCN_DATA + "</td>" +
-                                "<td id=DEBITED_"+value_array[i].CHEQUE_ID+" style='width:100px !important;vertical-align: middle;text-align: center' nowrap>" + date + "</td>" +
-                                "<td id=COMMENTS_"+value_array[i].CHEQUE_ID+" style='width:250px !important;vertical-align: middle'>" + comments + "</td>" +
-                                "<td id=USERSTAMP_"+value_array[i].CHEQUE_ID+" style='width:200px !important;vertical-align: middle' nowrap>" + value_array[i].ULD_LOGINID + "</td>" +
-                                "<td id=TIMESTAMP_"+value_array[i].CHEQUE_ID+" style='width:150px !important;vertical-align: middle' nowrap>" + value_array[i].CED_TIME_STAMP + "</td></tr>";
+                                "<td id=ICON_"+value_array[i].CHEQUE_ID+" style='vertical-align: middle' nowrap><div class='col-lg-2'><span style='display: block;color:green' title='Edit' class='glyphicon glyphicon-edit Cheque_editbutton' disabled id=" + edit + "></div></td>" +
+                                "<td id=CHKDATE_"+value_array[i].CHEQUE_ID+" style='vertical-align: middle;text-align: center' nowrap>" + value_array[i].CHEQUE_DATE + "</td>" +
+                                "<td id=CHKNO_"+value_array[i].CHEQUE_ID+" style='vertical-align: middle;text-align: center' nowrap>" + value_array[i].CHEQUE_NO + "</td>" +
+                                "<td id=CHKTO_"+value_array[i].CHEQUE_ID+" style='vertical-align: middle' >" + value_array[i].CHEQUE_TO + "</td>" +
+                                "<td id=CHKFOR_"+value_array[i].CHEQUE_ID+" style='vertical-align: middle' >" + value_array[i].CHEQUE_FOR + "</td>" +
+                                "<td id=CHKAMT_"+value_array[i].CHEQUE_ID+" style='vertical-align: middle;text-align: center' nowrap>" + value_array[i].CHEQUE_AMOUNT + "</td>" +
+                                "<td id=UNIT_"+value_array[i].CHEQUE_ID+" style='vertical-align: middle;text-align: center'nowrap>" + unit + "</td>" +
+                                "<td id=STATUS_"+value_array[i].CHEQUE_ID+" style='vertical-align: middle;text-align: center' nowrap>" + value_array[i].BCN_DATA + "</td>" +
+                                "<td id=DEBITED_"+value_array[i].CHEQUE_ID+" style='vertical-align: middle;text-align: center' nowrap>" + date + "</td>" +
+                                "<td id=COMMENTS_"+value_array[i].CHEQUE_ID+" style='vertical-align: middle'>" + comments + "</td>" +
+                                "<td id=USERSTAMP_"+value_array[i].CHEQUE_ID+" style='vertical-align: middle' nowrap>" + value_array[i].ULD_LOGINID + "</td>" +
+                                "<td id=TIMESTAMP_"+value_array[i].CHEQUE_ID+" style='vertical-align: middle' nowrap>" + value_array[i].CED_TIME_STAMP + "</td></tr>";
                         }
                         tabledata += "</body>";
                         $('section').html(tabledata);

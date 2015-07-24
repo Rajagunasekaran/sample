@@ -528,7 +528,7 @@ $(document).ready(function(){
                 <fieldset>
                     <div class="form-group" id="chart_name">
                         <label class="col-sm-2">CHART NAME</label>
-                        <div class="col-sm-3"> <select name="chart_lb_name" id="chart_lb_name" class="form-control chart_formvalidation"></select></div>
+                        <div class="col-sm-3"> <select name="chart_lb_name" id="chart_lb_name" class="form-control chart_formvalidation"><option>SELECT</option></select></div>
                     </div>
                     <div class="form-group" id="chart_srch_data" hidden>
                         <label class="col-sm-2">SUB CHART</label>

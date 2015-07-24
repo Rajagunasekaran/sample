@@ -582,7 +582,10 @@ require_once('application/libraries/EI_HDR.php');
                 }
             }
         // CLICK FUNCTION FOR UPDATION
-            $(document).on('click','#EU_btn_update',function(){
+            $(document).on('click','#EU_btn_update',function(event){
+                event.stopPropagation();
+                event.preventDefault();
+                event.stopImmediatePropagation();
                 $(".preloader").show();
                 if($('#EU_radio_doorloginpswd').is(':checked')) {
                     $("#EU_hidden_flag").val('EU_doorlogpwd');

@@ -541,7 +541,7 @@ require_once('application/libraries/EI_HDR.php');
                 <div id="maintable">
                     <div class="form-group" id="DDC_unitno">
                         <label class="col-sm-2">SELECT A UNIT <em>*</em></label>
-                        <div class="col-sm-2"><select name="DDC_lb_unitselect" id="DDC_lb_unitselect" class="form-control"></select></div>
+                        <div class="col-sm-2"><select name="DDC_lb_unitselect" id="DDC_lb_unitselect" class="form-control"><option>SELECT</option></select></div>
                     </div>
                     <div class="form-group" id="DDC_customerselect" hidden>
                         <label class="col-sm-2">CUSTOMER NAME <em>*</em></label>

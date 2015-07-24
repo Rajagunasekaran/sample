@@ -572,7 +572,7 @@ require_once('application/libraries/EI_HDR.php');
             <fieldset>
                 <div class="form-group" id="CV_searchby">
                     <label class="col-sm-2">SEARCH BY <em>*</em></label>
-                    <div class="col-sm-3"> <select name="CV_lb_searchby" id="CV_lb_searchby" class="form-control CV_formvalidation"></select></div>
+                    <div class="col-sm-3"> <select name="CV_lb_searchby" id="CV_lb_searchby" class="form-control CV_formvalidation"><option>SELECT</option></select></div>
                 </div>
                 <div class="form-group" id="CV_cardno" hidden>
                     <label class="col-sm-2">CARD NUMBER <em>*</em></label>

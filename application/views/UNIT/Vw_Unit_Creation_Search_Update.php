@@ -68,6 +68,7 @@ require_once('application/libraries/EI_HDR.php');
             });
             $("#UC_db_enddate").datepicker({dateFormat: "dd-mm-yy",changeYear: true,changeMonth: true,maxDate: '+2Y'});
             $('#UNIT_form_unitcreate').focus();
+            $(".uppercase").Setcase({caseValue : 'upper'});
         // RADIO BUTTON CLICK FUNCTION
             $('.UNIT_selectform').click(function(){
                 var radiooption=$(this).val();
@@ -1696,7 +1697,6 @@ require_once('application/libraries/EI_HDR.php');
                         data: {'inventory_unitno':USU_roomstamptype_val,'typeofcard':'','flag_card_unitno':USU_parentfunc_already,'USU_parent_func':''},
                         success: function(existdata) {
                             var exist_data=JSON.parse(existdata);
-                            alert(existdata)
                             USU_success_alreadyexists(exist_data);
                             if(USU_flag_updbtn==1){
                                 $(".preloader").show();
@@ -2046,7 +2046,6 @@ require_once('application/libraries/EI_HDR.php');
                     url: ctrl_unitcreate_url+'/USU_func_update',
                     data: {'USU_obj_formvalues':USU_obj_formvalues,'USU_obj_rowvalue':USU_obj_rowvalue,'USU_obj_flex':USU_obj_flex},
                     success: function(successdata) {
-                        alert(successdata)
                         var success_data=JSON.parse(successdata);
                         USU_success_flex(success_data);
                         rid=undefined;
@@ -2230,7 +2229,7 @@ require_once('application/libraries/EI_HDR.php');
                 </div>
                 <div class="form-group" id="UC_accntname">
                     <label class="col-sm-2">ACCOUNT NAME </label>
-                    <div class="col-sm-3"><input type="text" name="UC_tb_accntname" id="UC_tb_accntname" placeholder="Account Name" maxlength="25" class="form-control"/></div>
+                    <div class="col-sm-3"><input type="text" name="UC_tb_accntname" id="UC_tb_accntname" placeholder="Account Name" maxlength="25" class="uppercase form-control"/></div>
                 </div>
                 <div class="form-group" id="UC_bankcode">
                     <label class="col-sm-2">BANK CODE</label>

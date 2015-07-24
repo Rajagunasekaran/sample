@@ -846,7 +846,7 @@ require_once('application/libraries/EI_HDR.php');
             <fieldset>
                 <div class="form-group" id="CA_unitno">
                     <label class="col-sm-3">UNIT NUMBER <em>*</em></label>
-                    <div class="col-sm-2"> <select name="CA_lb_unitno" id="CA_lb_unitno" class="form-control CA_formvalidation"></select></div>
+                    <div class="col-sm-2"> <select name="CA_lb_unitno" id="CA_lb_unitno" class="form-control CA_formvalidation"><option>SELECT</option></select></div>
                 </div>
                 <div class="form-group" id="CA_custname" hidden>
                     <label class="col-sm-3">CUSTOMER NAME <em>*</em></label>
@@ -856,7 +856,7 @@ require_once('application/libraries/EI_HDR.php');
                 </div>
                 <div class="form-group" id="CA_leaseperiod" hidden>
                     <label class="col-sm-3">LEASE PERIOD <em>*</em></label>
-                    <div class="col-sm-2"><select name="CA_lb_leaseperiod" id="CA_lb_leaseperiod" class="CA_formvalidation form-control"></select></div>
+                    <div class="col-sm-2"><select name="CA_lb_leaseperiod" id="CA_lb_leaseperiod" class="CA_formvalidation form-control" style="width:110px"></select></div>
                 </div>
                 <div class="col-sm-offset-3 col-sm-10" id="CA_error">
                     <label id="CA_lbl_error" name="CA_lbl_error" class="errormsg"></label>

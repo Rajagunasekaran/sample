@@ -100,7 +100,10 @@ require_once('application/libraries/EI_HDR.php');
                 }
             }
         // CLICK FUNCTION FOR UPDATION
-            $("#UT_btn_terminate").click(function(){
+            $("#UT_btn_terminate").click(function(event){
+                event.stopPropagation();
+                event.preventDefault();
+                event.stopImmediatePropagation();
                 $(".preloader").show();
                 var UT_unitnumber=$('#UT_lb_unitnumber').val();
                 $.ajax({
@@ -164,7 +167,7 @@ require_once('application/libraries/EI_HDR.php');
             <fieldset>
                 <div class="form-group" id="UT_unitno">
                     <label class="col-sm-2">UNIT NUMBER <em>*</em></label>
-                    <div class="col-sm-2"><select name="UT_lb_unitnumber" id="UT_lb_unitnumber" class="form-control"></select></div>
+                    <div class="col-sm-2"><select name="UT_lb_unitnumber" id="UT_lb_unitnumber" class="form-control"><option>SELECT</option></select></div>
                 </div>
                 <div id="UT_div_form" hidden>
                     <div class="form-group" id="UT_startdate">

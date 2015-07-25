@@ -1,4 +1,7 @@
 <?php
+//******************************************Card Assign********************************************//
+//VER 0.01-SD:04/05/2015 ED:07/05/2015,initial version BY RAJA
+//*******************************************************************************************************//
 class Ctrl_Access_Card_Card_Assign extends CI_Controller{
     function __construct() {
         parent::__construct();

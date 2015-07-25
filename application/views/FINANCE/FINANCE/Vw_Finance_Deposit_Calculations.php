@@ -1,10 +1,10 @@
 <?php
-require_once('application/libraries/EI_HDR.php');
 //******************************************Deposit_Calculations********************************************//
-//VER 0.03-SD:02/06/2015 ED:03/06/2015,moved to folder and changed filename eilib file name
-//VER 0.02-SD:28/05/2015 ED:04/06/2015,did the ss part for deposit calculation and ss insert part
-//VER 0.01-SD:25/05/2015 ED:26/05/2015,completed form design and validation without ss part
+//VER 0.03-SD:02/06/2015 ED:03/06/2015,moved to folder and changed filename eilib file name BY RAJA
+//VER 0.02-SD:28/05/2015 ED:04/06/2015,did the ss part for deposit calculation and ss insert part BY RAJA
+//VER 0.01-SD:25/05/2015 ED:26/05/2015,completed form design and validation without ss part BY RAJA
 //*******************************************************************************************************//
+require_once('application/libraries/EI_HDR.php');
 ?>
 <html>
 <head>
@@ -72,6 +72,7 @@ require_once('application/libraries/EI_HDR.php');
                     }
                 });
             });
+        // SUCCESS FUNCTION
             function DDC_conformationmsg(DDC_conformationmsgvalue)
             {
                 $(".preloader").hide();

@@ -1,4 +1,7 @@
 <?php
+//******************************************Card Assign********************************************//
+//VER 0.01-SD:04/05/2015 ED:07/05/2015,initial version BY RAJA
+//*******************************************************************************************************//
 class Mdl_access_card_card_assign extends CI_Model{
     public function Initial_data($ErrorMessage){
         $this->db->select('UNIT_ID,UNIT_NO,CED_REC_VER,CUSTOMER_ID,CUSTOMERNAME,DATE_FORMAT(CLP_STARTDATE,"%d-%m-%Y") as CLP_STARTDATE,DATE_FORMAT(CLP_ENDDATE,"%d-%m-%Y") as CLP_ENDDATE,DATE_FORMAT(CLP_PRETERMINATE_DATE,"%d-%m-%Y") as CLP_PRETERMINATE_DATE');

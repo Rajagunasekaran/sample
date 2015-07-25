@@ -1,4 +1,8 @@
 <?php
+//******************************************charts********************************************//
+//VER 0.02-SD:27/04/2015 ED:28/04/2015,did db part BY RAJA
+//VER 0.01-SD:24/04/2015 ED:25/04/2015,completed form design and validation BY RAJA
+//*******************************************************************************************************//
 class Ctrl_Report_Charts extends CI_Controller{
     function __construct() {
         parent::__construct();

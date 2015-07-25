@@ -1,4 +1,7 @@
 <?php
+//******************************************Card Search Update********************************************//
+//VER 0.01-SD:08/05/2015 ED:09/05/2015,initial version BY RAJA
+//*******************************************************************************************************//
 class Mdl_access_card_search_update extends CI_Model{
     public function Initial_data($ErrorMessage){
         $this->db->select();

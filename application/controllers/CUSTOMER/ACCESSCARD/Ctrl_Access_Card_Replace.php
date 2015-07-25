@@ -1,4 +1,7 @@
 <?php
+//******************************************Card Replace********************************************//
+//VER 0.01-SD:07/05/2015 ED:08/05/2015,initial version BY RAJA
+//*******************************************************************************************************//
 class Ctrl_Access_Card_Replace extends CI_Controller{
     function __construct() {
         parent::__construct();

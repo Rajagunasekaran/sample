@@ -1,4 +1,7 @@
 <?php
+//******************************************Card Replace********************************************//
+//VER 0.01-SD:07/05/2015 ED:08/05/2015,initial version BY RAJA
+//*******************************************************************************************************//
 class Mdl_access_card_replace extends CI_Model{
     public function Initial_data($ErrorMessage){
         $this->db->select();

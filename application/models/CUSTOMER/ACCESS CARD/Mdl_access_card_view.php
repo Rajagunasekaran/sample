@@ -1,4 +1,7 @@
 <?php
+//******************************************View All Card********************************************//
+//VER 0.01-SD:09/05/2015 ED:12/05/2015,initial version BY RAJA
+//*******************************************************************************************************//
 class Mdl_access_card_view extends CI_Model{
     public function Initial_data($ErrorMessage){
         $this->db->select('UNIT_NO');

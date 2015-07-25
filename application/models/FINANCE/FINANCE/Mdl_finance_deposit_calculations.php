@@ -57,6 +57,7 @@ class Mdl_finance_deposit_calculations extends CI_Model{
         $DDC_all_array[]=($DDC_RESULTS);
         return $DDC_all_array;
     }
+    // LOAD REC VER FOR THE CUSTOMER WITH UNIT
     public function DDC_load_datebox($DDC_getcustid,$DDC_name,$DDC_unitno){
         $DDC_custid=[];
         $DDC_custid=$DDC_getcustid;
@@ -89,6 +90,7 @@ class Mdl_finance_deposit_calculations extends CI_Model{
         $joinarray[]=($custidarray);
         return $joinarray;
     }
+    // GET FILES FROM THE TEMPLATE FOLDER
     public function GetAllFilesName($service,$folderid){
         try{
             $children1 = $service->children->listChildren($folderid);
@@ -106,6 +108,7 @@ class Mdl_finance_deposit_calculations extends CI_Model{
             return $filenamelisterr;
         }
     }
+    // DEPOSIT CALCULATION INSERT FUNCTION
     public function DDC_depcal_submit($unit_value,$name,$chkbox,$radio,$startdate,$enddate,$dep_custid,$DDC_recverlgth,$DDC_recdate,$UserStamp,$service){
         $this->load->model('EILIB/Mdl_eilib_common_function');
         $this->load->model('EILIB/Mdl_eilib_invoice_contract');
@@ -173,12 +176,14 @@ class Mdl_finance_deposit_calculations extends CI_Model{
         $DDC_currentdateyear=$date[1];
         $DDC_currentmonth=$date[0];
         $DDC_ssname_currentyear='EI_DEPOSIT_DEDUCTIONS_'.$DDC_currentdateyear;
+        // GET FILES FROM TEMPLATE FOLDERS
         $DDC_getfiles = $this->GetAllFilesName($service,$DDC_folderid);
         if($DDC_getfiles==0){return ['Get_access'];}
         $DDC_flag_ss=0;
         $DDC_ssname_getid='';
         $DDC_currentfile_id='';
         $DDC_ssname_oldyear='';
+        // MATCH THE FILE WITH CURRENT SS NAME
         for($i=0;$i<count($DDC_getfiles);$i++){
             $DDC_oldfile=$DDC_getfiles[$i]['title'];
             $DDC_oldfile_id=$DDC_getfiles[$i]['id'];
@@ -192,8 +197,9 @@ class Mdl_finance_deposit_calculations extends CI_Model{
                 $DDC_ssname_getid=$DDC_oldfile_id;
             }
         }
+        // IF OLD SS NOT IN FOLDER MEANS IT WILL DELETE CURRENT FILE AND RETURN NO SHEET AVAILABLE
         if($DDC_flag_ss!=1){
-            if($DDC_ssname_getid==''){
+            if($DDC_ssname_getid=='' || $DDC_ssname_getid=='undefined'){
                 $DDC_getfiles = $this->GetAllFilesName($service,$DDC_folderid);
                 if($DDC_getfiles==0){return ['Get_access'];}
                 for($i=0;$i<count($DDC_getfiles);$i++){
@@ -293,6 +299,7 @@ class Mdl_finance_deposit_calculations extends CI_Model{
                 $DDC_calltemptable="SELECT * FROM ".$DDC_temptble_name." where DDRECVER=".$recverlen[$i];
             }
             $DDC_temptblresult=$this->db->query($DDC_calltemptable);
+            // FORM ALL DATA FOR SS
             foreach($DDC_temptblresult->result_array() as $row){
                 if($row['DDCUSTOMERID']!=null){
                     $DDC_custid=$row["DDCUSTOMERID"];

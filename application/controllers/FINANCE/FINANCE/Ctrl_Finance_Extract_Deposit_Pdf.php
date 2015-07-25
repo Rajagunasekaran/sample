@@ -1,4 +1,8 @@
 <?php
+//******************************************Deposit_Extraction********************************************//
+//VER 0.02-SD:06/06/2015 ED:10/06/2015,did the ss part for deposit extraction and ss insert part BY RAJA
+//VER 0.01-SD:26/05/2015 ED:27/05/2015,completed form design and validation without ss part BY RAJA
+//*******************************************************************************************************//
 class Ctrl_Finance_Extract_Deposit_Pdf extends CI_Controller{
     function __construct() {
         parent::__construct();

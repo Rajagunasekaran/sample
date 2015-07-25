@@ -1,4 +1,8 @@
 <?php
+//******************************************Deposit_Extraction********************************************//
+//VER 0.02-SD:06/06/2015 ED:10/06/2015,did the ss part for deposit extraction and ss insert part BY RAJA
+//VER 0.01-SD:26/05/2015 ED:27/05/2015,completed form design and validation without ss part BY RAJA
+//*******************************************************************************************************//
 require_once('application/libraries/EI_HDR.php');
 ?>
 <html>
@@ -357,7 +361,6 @@ require_once('application/libraries/EI_HDR.php');
                 $("#DDE_btn_sbutton").hide();
                 $("#DDE_btn_rbutton").hide();
             }
-        // LOAD THE CUSTOMER NAME FROM SHEET TO CUSTOMER LISTBOX..................
             function DDE_unique(a) {
                 var result = [];
                 $.each(a, function(i, e) {
@@ -365,6 +368,7 @@ require_once('application/libraries/EI_HDR.php');
                 });
                 return result;
             }
+        // LOAD THE CUSTOMER NAME FROM SHEET TO CUSTOMER LISTBOX..................
             function DDE_custname(response){
                 $(".preloader").hide();
                 $("#DDE_btn_sbutton").hide();

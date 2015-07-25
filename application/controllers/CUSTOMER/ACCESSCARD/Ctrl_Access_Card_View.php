@@ -1,4 +1,7 @@
 <?php
+//******************************************View All Card********************************************//
+//VER 0.01-SD:09/05/2015 ED:12/05/2015,initial version BY RAJA
+//*******************************************************************************************************//
 class Ctrl_Access_Card_View extends CI_Controller{
     function __construct() {
         parent::__construct();

@@ -1,7 +1,12 @@
 <?php
+//******************************************Deposit_Extraction********************************************//
+//VER 0.02-SD:06/06/2015 ED:10/06/2015,did the ss part for deposit extraction and ss insert part BY RAJA
+//VER 0.01-SD:26/05/2015 ED:27/05/2015,completed form design and validation without ss part BY RAJA
+//*******************************************************************************************************//
 require_once 'google/appengine/api/mail/Message.php';
 use \google\appengine\api\mail\Message;
 class Mdl_finance_extract_deposit_pdf extends CI_Model{
+    // GET FILES FORM TEMPLATE FOLDER
     public function GetAllFilesName($service,$folderid){
         try{
             $children1 = $service->children->listChildren($folderid);
@@ -64,6 +69,7 @@ class Mdl_finance_extract_deposit_pdf extends CI_Model{
         $montherrmsg=(object)['montharray'=>$montharray,'DDE_errorAarray'=>$ErrorMessage,'srtemailarray'=>$srtemailarray,'shturl'=>$shturl];
         return $montherrmsg;
     }
+    // GET UNIT FOR GIVEN SHEET MONTH
     public function DDE_getsheet_unit($month,$shturl){
         $this->load->model('EILIB/Mdl_eilib_common_function');
         $data1=array('DDE_flag'=>2,'shturl'=>$shturl,'selectedsheet'=>$month);
@@ -74,6 +80,7 @@ class Mdl_finance_extract_deposit_pdf extends CI_Model{
         sort($unitarray);
         return $unitarray;
     }
+    // GET CUST NAME FOR GIVEN UNIT NO,MNTH
     public function DDE_customer_name($unitno,$month,$shturl){
         $sendcustname=[]; $DDE_same_name=[];
         $this->load->model('EILIB/Mdl_eilib_common_function');
@@ -96,6 +103,7 @@ class Mdl_finance_extract_deposit_pdf extends CI_Model{
         }
         return [$sendcustname,$DDE_same_name];
     }
+    // GET REV VER FOR CUSTOMER
     public function DDE_get_custid($unitno,$month,$name,$shturl){
         $this->load->model('EILIB/Mdl_eilib_common_function');
         $data3=array('DDE_flag'=>4,'shturl'=>$shturl,'selectedunit'=>$unitno,'selectedname'=>$name,'selectedsheet'=>$month);
@@ -110,6 +118,7 @@ class Mdl_finance_extract_deposit_pdf extends CI_Model{
         }
         return $custidarray;
     }
+    // EXTRACT REC VER FORM THE SHEET FOR GIVEN MNTH,UNIT,CUSTNAME
     public function DDE_Dep_Exct_recversion($getid,$unitno,$month,$name,$shturl,$nocustid){
         $this->load->model('EILIB/Mdl_eilib_common_function');
         $data4=array('DDE_flag'=>5,'shturl'=>$shturl,'selectedunit'=>$unitno,'selectedname'=>$name,'selectedsheet'=>$month,
@@ -119,6 +128,7 @@ class Mdl_finance_extract_deposit_pdf extends CI_Model{
         $recverarray=json_decode($recverarray,true);
         return $recverarray;
     }
+    // EXTRACT DATA FORM THE SHEET FOR GIVEN INPUT
     public function DDE_Dep_Exctsubmit($shturl,$selectedunit,$customername,$checkarray,$selectedsheet,$customermail,$customeridname,$UserStamp){
         $test=array();
         $submit_array=array();$submitarray=array();

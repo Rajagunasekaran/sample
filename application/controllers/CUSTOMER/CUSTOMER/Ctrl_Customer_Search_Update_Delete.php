@@ -94,7 +94,7 @@ Class Ctrl_Customer_Search_Update_Delete extends CI_Controller
         $timeZoneFormat= $this->Mdl_eilib_common_function->getTimezone();
         $searchoption=$_POST['SearchOption'];
         $data1=$_POST['data1'];
-        $data2=$_POST['data2'];
+        $data2=isset($_POST['data2']);
         $Resultset=$this->Mdl_customer_search_update_delete->getSearchResults($searchoption,$data1,$data2,$UserStamp,$timeZoneFormat);
         echo json_encode($Resultset);
     }

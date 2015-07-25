@@ -11,6 +11,9 @@ require_once('application/libraries/EI_HDR.php');
     .errormsg{
         padding-top:12px;
     }
+    textarea{
+        min-height:116px;
+    }
 </style>
 <script>
     $(document).ready(function(){
@@ -817,7 +820,10 @@ require_once('application/libraries/EI_HDR.php');
                 return ((x < y) ? 1 : ((x > y) ?  -1 : 0));
             };
         }
-        $(document).on('click','.Banktt_editbutton',function() {
+        $(document).on('click','.Banktt_editbutton',function(e) {
+            e.stopPropagation();
+            e.preventDefault();
+            e.stopImmediatePropagation();
             var cid = $(this).attr('id');
             var SplittedData=cid.split('_');
             var Rowid=SplittedData[1];
@@ -877,12 +883,20 @@ require_once('application/libraries/EI_HDR.php');
                     $('#Banktt_SRC_Amount').val(returnvalue[0].BT_AMOUNT);
                     $('#Banktt_SRC_Status').val(returnvalue[0].STATUS);
                     if(returnvalue[0].DEBITED_ON!=null)
-                        $('#Banktt_SRC_Debitedon').val(FormTableDateFormat(returnvalue[0].DEBITED_ON));else
+                        $('#Banktt_SRC_Debitedon').val(FormTableDateFormat(returnvalue[0].DEBITED_ON));
+                    else
                         $('#Banktt_SRC_Debitedon').val("");
+//                    if(returnvalue[0].STATUS=="ENTERED" || returnvalue[0].STATUS=="CREATED"){
+//                        $('#debittedondiv').hide();
+//                    }
+//                    else
+//                    {
+//                        $('#debittedondiv').show();
+//                    }
                     $('#Banktt_SRC_BankAddress').val(returnvalue[0].BANK_ADDRESS);
                     $('#Banktt_SRC_Customerref').val(returnvalue[0].CUST_REF);
                     $('#Banktt_SRC_Invdetails').val(returnvalue[0].INV_DETAILS);
-                    if(returnvalue[0].CREATED_BY!='')
+                    if(returnvalue[0].CREATED_BY!=null)
                     {
                         $('#Banktt_SRC_Createdby').val(returnvalue[0].CREATED_BY);
                     }
@@ -893,7 +907,7 @@ require_once('application/libraries/EI_HDR.php');
                     var BANKTT_db_chkindate1 = BANKTT_db_chkindate1.toDateString();
                     BANKTT_db_chkindate1 = new Date( Date.parse( BANKTT_db_chkindate1 ) );
                     $('#Banktt_SRC_Date').datepicker("option","minDate",new Date(BANKTT_db_chkindate1.getFullYear()-1,BANKTT_db_chkindate1.getMonth(),BANKTT_db_chkindate1.getDate()));
-                    if(returnvalue[0].DEBITED_ON=='')
+                    if(returnvalue[0].DEBITED_ON==null)
                     {
                         $('#debittedondiv').hide().val('');
                     }
@@ -1039,7 +1053,7 @@ require_once('application/libraries/EI_HDR.php');
                 data:FormElements,
                 success: function(data){
                     var returnvalue=JSON.parse(data);
-                    if(returnvalue==1)
+                    if(returnvalue[0]==1)
                     {
                         show_msgbox("BANK TT ENTRY",SRC_ErrorMsg[2].EMC_DATA,"success",false);
                         $('#BankTT_Updation_Form').hide();

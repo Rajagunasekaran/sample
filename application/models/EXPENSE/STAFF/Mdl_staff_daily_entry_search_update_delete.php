@@ -8,18 +8,15 @@ class Mdl_staff_daily_entry_search_update_delete extends CI_Model{
         $this->db->order_by('ECN_ID');
         $query = $this->db->get();
         $result1 = $query->result();
-
         $this->db->select('DISTINCT CONCAT(ED.EMP_FIRST_NAME," ",ED.EMP_LAST_NAME) AS EMPLOYEE_NAME,ED.EMP_ID,EDSS.EDSS_ID,EDSS.EDSS_CPF_NUMBER,EDSS.EDSS_LEVY_AMOUNT,EDSS.EDSS_SALARY_AMOUNT,EDSS.EDSS_CPF_AMOUNT',FALSE);
         $this->db->from('EMPLOYEE_DETAILS ED,EXPENSE_DETAIL_STAFF_SALARY EDSS');
         $this->db->where('ED.EMP_ID=EDSS.EMP_ID');
         $query = $this->db->get();
         $result2 = $query->result();
-
         $this->db->select('EMP_ID');
         $this->db->from('EMPLOYEE_DETAILS');
         $query = $this->db->get();
         $result3 = $query->result();
-
         return $result[]=array($result1,$result2,$result3,$ErrorMessage);
     }
     //FUNCTION FOR SAVE PART
@@ -73,10 +70,8 @@ class Mdl_staff_daily_entry_search_update_delete extends CI_Model{
             {
                 $STDLY_INPUT_cpfamount='null';
             }
-
             $STDLY_INPUT_levyamount = $_POST['staffdly_tb_newlevyamt'];
             $STDLY_INPUT_hidenlevyamount = $_POST['staffdly_tb_curlevyamt'];
-
             if($STDLY_INPUT_levyradio==true)
             {
                 if($STDLY_INPUT_levyamount!='' )
@@ -94,7 +89,6 @@ class Mdl_staff_daily_entry_search_update_delete extends CI_Model{
             }
             $STDLY_INPUT_salaryamount = $_POST['staffdly_tb_newsalary'];
             $STDLY_INPUT_hidensalaryamount = $_POST['staffdly_tb_cursalary'];
-
             if($salarysalaryoptradio==true) {
                 if($STDLY_INPUT_salaryamount!='')
                 {
@@ -123,14 +117,13 @@ class Mdl_staff_daily_entry_search_update_delete extends CI_Model{
             else{
                 $STDLY_INPUT_edssid=$STDLY_INPUT_radio_employee;
             }
-           $insertquery = "CALL SP_STAFFDLY_STAFF_SALARY_INSERT('$STDLY_INPUT_edssid','$STDLY_INPUT_paid_date','$STDLY_INPUT_from_period','$STDLY_INPUT_to_period','$STDLY_INPUT_cpfamount',$STDLY_INPUT_levyamount,$STDLY_INPUT_salaryamount,$STDLY_INPUT_comments,'$USERSTAMP',@SUCCESS_MSG)";
+            $insertquery = "CALL SP_STAFFDLY_STAFF_SALARY_INSERT('$STDLY_INPUT_edssid','$STDLY_INPUT_paid_date','$STDLY_INPUT_from_period','$STDLY_INPUT_to_period','$STDLY_INPUT_cpfamount',$STDLY_INPUT_levyamount,$STDLY_INPUT_salaryamount,$STDLY_INPUT_comments,'$USERSTAMP',@SUCCESS_MSG)";
             $query = $this->db->query($insertquery);
             $successflag="SELECT @SUCCESS_MSG as SUCCESS_MSG";
             $successflagresult=$this->db->query($successflag);
             $flagresult=$successflagresult->row()->SUCCESS_MSG;
-           return  $flagresult;
+            return  $flagresult;
        }
-
     }
     //FUNCTION FOR SAVE staff PART
     public function STDLY_INPUT_insertstaff($USERSTAMP){
@@ -146,18 +139,18 @@ class Mdl_staff_daily_entry_search_update_delete extends CI_Model{
         if((is_array($PDLY_INPUT_inv_from))==true){
             for($i=0;$i<count($PDLY_INPUT_inv_from);$i++){
                   if($STDLY_INPUT_comments[$i] == ' '){
-                  if($i==0)
-                      $STDLY_INPUT_comments_split .=' ';
-                    else
-                        $STDLY_INPUT_comments_split .='^^'.' ';
+                      if($i==0)
+                          $STDLY_INPUT_comments_split .=' ';
+                           else
+                            $STDLY_INPUT_comments_split .='^^'.' ';
                   }
                   else{
-                  if($i==0){
-                      $STDLY_INPUT_comments_split.=$this->db->escape_like_str($STDLY_INPUT_comments[$i]);
-                  }
-                  else{
-                      $STDLY_INPUT_comments_split.='^^'.$this->db->escape_like_str($STDLY_INPUT_comments[$i]);
-                  }
+                      if($i==0){
+                          $STDLY_INPUT_comments_split.=$this->db->escape_like_str($STDLY_INPUT_comments[$i]);
+                      }
+                      else{
+                          $STDLY_INPUT_comments_split.='^^'.$this->db->escape_like_str($STDLY_INPUT_comments[$i]);
+                      }
                   }
                 if($i==0){
                     $STDLY_INPUT_invitem_split.=$this->db->escape_like_str($STDLY_INPUT_in_items[$i]);

@@ -45,6 +45,7 @@ require_once('application/libraries/EI_HDR.php');
             //LIST BOX ITEM CHANGE FUNCTION
             $('.PE_rd_selectform').click(function(){
                 $(".preloader").show();
+
                 listboxoption=$(this).val();
                 $('#ET_ENTRY_ta_subject').val('');
                 $('#CONFIG_SRCH_UPD_div_htmltable').hide();
@@ -62,10 +63,8 @@ require_once('application/libraries/EI_HDR.php');
                 $('#EMPSRC_UPD_DEL_lbl_htmltablemsg').hide();
                 if(listboxoption=='EMPLOYEE ENTRY')
                 {
-                    $('#enrtyfrm').show();
+
                     $('section').html('');
-                    $('#EMP_ENTRY_lbl_firstname').show();
-                    $('#EMP_ENTRY_tb_firstname').show();
                     $('#searchfrm').hide();
                     $('#STDTL_SEARCH_lbl_searchoptionheader').hide();
                     $('#STDTL_SEARCH_tble_amt_option').hide();
@@ -79,6 +78,7 @@ require_once('application/libraries/EI_HDR.php');
                         data:{'ErrorList':'1,2,34,71,154,248,135,136,153,155,157,158,163,164,165,166,167,168,169,170,315,339,400,401,446'},
                         success: function(data){
                             $('.preloader').hide();
+                            $("html, body").animate({ scrollTop: $(document).height() }, "slow");
                             EMP_ENTRY_fullarr=JSON.parse(data);
                             EMP_ENTRY_emparr_employeedesig=EMP_ENTRY_fullarr[0];
                             EMP_ENTRY_unitArray=EMP_ENTRY_fullarr[1];
@@ -88,9 +88,12 @@ require_once('application/libraries/EI_HDR.php');
                             $("#EMP_ENTRY_tb_mobile").prop("title",EMP_ENTRY_error[1].EMC_DATA)
                             if(((EMP_ENTRY_unitArray).length!=0))
                             {
+                                $('#enrtyfrm').show();
                                 $('#EMP_ENTRY_form_errormsg').show();
                                 $('#EMP_ENTRY_table_employeetbl').show();
                                 $('#EMP_ENTRY_lb_empdesig').empty();
+                                $('#EMP_ENTRY_lbl_firstname').show();
+                                $('#EMP_ENTRY_tb_firstname').show().focus();
                                 $('#EMP_ENTRY_table_errormsg > div ').remove().hide();
                                 var EMP_ENTRY_emparray_employee ='<option>SELECT</option>';
                                 $('#EMP_ENTRY_lb_empdesig').append(EMP_ENTRY_emparray_employee);
@@ -118,7 +121,6 @@ require_once('application/libraries/EI_HDR.php');
                 }
                 else if(listboxoption=='EMPLOYEE SEARCH/UPDATE')
                 {
-
                     $("#enrtyfrm").hide();
                     $("#STDTL_INPUT_lb_employeename").val('SELECT').show();
                     $("#STDTL_INPUT_lbl_employeename").show();
@@ -141,6 +143,7 @@ require_once('application/libraries/EI_HDR.php');
                     data:{'ErrorList':'1,2,34,71,154,248,135,136,153,155,157,158,163,164,165,166,167,168,169,170,315,339,400,401,446'},
                     success: function(data){
                         $('.preloader').hide();
+                        $("html, body").animate({ scrollTop: $(document).height() }, "slow");
                         $('#EMPSRC_UPD_DEL_lb_searchoption').empty();
                         EMPSRC_UPD_DEL_fullarray=JSON.parse(data);
                         EMPSRC_UPD_DEL_searchoption=EMPSRC_UPD_DEL_fullarray[0]
@@ -326,7 +329,10 @@ require_once('application/libraries/EI_HDR.php');
                 }
             });
             //CLASS USED FOR TREE VIEW//
-            $(document).on("click",'.exp,.collapse1', function (){
+            $(document).on("click",'.exp,.collapse1', function (evt){
+                evt.stopPropagation();
+                evt.preventDefault();
+                evt.stopImmediatePropagation();
                 var id=$(this).attr("id")
                 var btnid=id.split("_");
                 var menu_btnid=btnid[1]
@@ -553,7 +559,6 @@ require_once('application/libraries/EI_HDR.php');
                 resetPreloader(newPos);
                 $(".preloader").show();
                 $("textarea").height(116);
-//                $("textarea").width(300);
                 $('#EMPSRC_UPD_DEL_table_updateform').hide();
                 $('#EMPSRC_UPD_DEL_deletebutton').hide();
                 $('#EMPSRC_UPD_DEL_searchbutton').hide();
@@ -575,6 +580,7 @@ require_once('application/libraries/EI_HDR.php');
                 $('#EMPSRC_UPD_DEL_btn_search_autocomplt').attr("disabled", "disabled");
                 $('#EMPSRC_UPD_DEL_btn_search_autocomplt').hide();
                 var EMPSRC_UPD_DEL_search_option = $(this).val();
+                $("html, body").animate({ scrollTop: $(document).height() }, "slow");
                 if(EMPSRC_UPD_DEL_search_option=='SELECT')
                 {
                     $(".preloader").hide();
@@ -594,7 +600,7 @@ require_once('application/libraries/EI_HDR.php');
                 if(EMPSRC_UPD_DEL_search_option==95)//DESIGNATION
                 {
                     $('#EMPSRC_UPD_DEL_lbl_designation_listbox').show();
-                    $('#EMPSRC_UPD_DEL_lb_designation_listbox').show();
+                    $('#EMPSRC_UPD_DEL_lb_designation_listbox').show().focus();
                     $('#EMPSRC_UPD_DEL_lb_designation_listbox').val('SELECT');
                     var EMPSRC_UPD_DEL_searchheader=$('#EMPSRC_UPD_DEL_lb_searchoption').find('option:selected').text();
                     $('#EMPSRC_UPD_DEL_lbl_searchoptionheader').text(EMPSRC_UPD_DEL_searchheader).show();
@@ -605,7 +611,7 @@ require_once('application/libraries/EI_HDR.php');
                 {
                     $('#EMPSRC_UPD_DEL_lbl_employeename_listbox').show();
                     $('#EMPSRC_UPD_DEL_lb_employeename_listbox').show();
-                    $('#EMPSRC_UPD_DEL_lb_employeename_listbox').val('SELECT');
+                    $('#EMPSRC_UPD_DEL_lb_employeename_listbox').val('SELECT').focus();
                     var EMPSRC_UPD_DEL_searchheader=$('#EMPSRC_UPD_DEL_lb_searchoption').find('option:selected').text();
                     $('#EMPSRC_UPD_DEL_lbl_searchoptionheader').text(EMPSRC_UPD_DEL_searchheader).show();
                     $(".preloader").hide();
@@ -614,7 +620,7 @@ require_once('application/libraries/EI_HDR.php');
                 {
                     EMPSRC_UPD_DEL_autocomplts_autocompleteresult()
                     $('#STDTL_INPUT_lbl_email').show();
-                    $('#EMPSRC_UPD_DEL_ta_email').show();
+                    $('#EMPSRC_UPD_DEL_ta_email').show().focus();
                     $('#EMPSRC_UPD_DEL_btn_search_autocomplt').show();
                     var EMPSRC_UPD_DEL_searchheader=$('#EMPSRC_UPD_DEL_lb_searchoption').find('option:selected').text();
                     $('#EMPSRC_UPD_DEL_lbl_searchoptionheader').text(EMPSRC_UPD_DEL_searchheader).show();
@@ -627,7 +633,7 @@ require_once('application/libraries/EI_HDR.php');
                 {
                     EMPSRC_UPD_DEL_autocomplts_autocompleteresult()
                     $('#STDTL_INPUT_lbl_mobile').show();
-                    $('#EMPSRC_UPD_DEL_ta_mobile').show();
+                    $('#EMPSRC_UPD_DEL_ta_mobile').show().focus();
                     $('#EMPSRC_UPD_DEL_btn_search_autocomplt').show();
                     var EMPSRC_UPD_DEL_searchheader=$('#EMPSRC_UPD_DEL_lb_searchoption').find('option:selected').text();
                     $('#EMPSRC_UPD_DEL_lbl_searchoptionheader').text(EMPSRC_UPD_DEL_searchheader).show();
@@ -646,7 +652,7 @@ require_once('application/libraries/EI_HDR.php');
                     $('#EMPSRC_UPD_DEL_div_htmltable').hide();
                     $('#EMPSRC_UPD_DEL_ta_comments').val('');
                     $('#EMPSRC_UPD_DEL_lbl_comments').show();
-                    $('#EMPSRC_UPD_DEL_ta_comments').show();
+                    $('#EMPSRC_UPD_DEL_ta_comments').show().focus();
                     $(".preloader").hide();
                 }
             });
@@ -872,8 +878,8 @@ require_once('application/libraries/EI_HDR.php');
                     url:EMP_ENTRY_controller_url+"fetchdata",
                     data:form_element+"&EMPSRC_UPD_DEL_lb_designation_listbox="+EMPSRC_UPD_DEL_lb_designation_listbox+"&emp_first_name="+emp_first_name+"&emp_last_name="+emp_last_name,
                     success: function(data) {
-
                         $('.preloader').hide();
+                        $("html, body").animate({ scrollTop: $(document).height() }, "slow");
                         EMPSRC_UPD_DEL_result_array = JSON.parse(data);
                         if (EMPSRC_UPD_DEL_result_array.length == 0) {
                             if (EMPSRC_UPD_DEL_search_option == 95)//DESIGNATION
@@ -986,7 +992,9 @@ require_once('application/libraries/EI_HDR.php');
                         alert(JSON.stringify(data))
                     }
 
+
                 });
+
             }
             $(document).on('click','#EMPSRC_UPD_DEL_btn_pdf',function(){
                 var EMPSRC_UPD_DEL_search_option = $('#EMPSRC_UPD_DEL_lb_searchoption').val();
@@ -1049,13 +1057,13 @@ require_once('application/libraries/EI_HDR.php');
             function EMPSRC_UPD_DEL_updatefunction(currentid)
             {
                 $("textarea").height(116);
-//                $("textarea").width(300);
                 $.ajax({
                     type: "POST",
                     url:EMP_ENTRY_controller_url+"EMPSRC_UPD_DEL_getcardnoandunitno",
                     data :{'EMPSRC_UPD_DEL_id':currentid},
                     success: function(data){
                         $('.preloader').hide();
+                        $("html, body").animate({ scrollTop: $(document).height() }, "slow");
                         EMPSRC_UPD_DEL_result=JSON.parse(data);
                         var EMPSRC_UPD_DEL_getallunitno=[];
                         var EMPSRC_UPD_DEL_getallcardno=[];
@@ -1074,7 +1082,7 @@ require_once('application/libraries/EI_HDR.php');
                         }
                     }
                 });
-               EMPSRC_UPD_DEL_radiovalue = $('input:radio[name=EMPSRC_UPD_DEL_radio_empdetail]:checked').val();
+                EMPSRC_UPD_DEL_radiovalue = $('input:radio[name=EMPSRC_UPD_DEL_radio_empdetail]:checked').val();
                 for(var j=0;j<EMPSRC_UPD_DEL_result_array.length;j++){
                     var id=EMPSRC_UPD_DEL_result_array[j].ID;
                     if(id==currentid)
@@ -1360,6 +1368,7 @@ require_once('application/libraries/EI_HDR.php');
             $('#EMPSRC_UPD_DEL_btn_update').click(function(){
 
                 var EMPSRC_UPD_DEL_bmobilenolength=$('#EMPSRC_UPD_DEL_tb_mobile').val();
+
                 if(EMPSRC_UPD_DEL_bmobilenolength.length<6 || EMPSRC_UPD_DEL_bmobilenolength=="" )
                 {
                     $(".preloader").hide();
@@ -1369,16 +1378,19 @@ require_once('application/libraries/EI_HDR.php');
                 }
                 else
                 {
+
                     $("#EMPSRC_UPD_DEL_lbl_errmsg").hide();
                     $('#EMPSRC_UPD_DEL_tb_mobile').removeClass('invalid');
                     var EMPSRC_UPD_DEL_carccheckarray=[];
+
                     $('input[name="submenu[]"]:checked').each(function() {
-                        EMPSRC_UPD_DEL_carccheckarray.push(this.value);
+                        EMPSRC_UPD_DEL_carccheckarray.push($(this).val());
                     });
                     var EMPSRC_UPD_DEL_carcunitarray=[];
                     $('input[name="menu"]:checked').each(function() {
-                        EMPSRC_UPD_DEL_carcunitarray.push(this.value);
+                        EMPSRC_UPD_DEL_carcunitarray.push($(this).val());
                     });
+
                     EMPSRC_UPD_DEL_conformation_result(EMPSRC_UPD_DEL_carccheckarray,EMPSRC_UPD_DEL_carcunitarray)
                 }
             });
@@ -1386,6 +1398,7 @@ require_once('application/libraries/EI_HDR.php');
             var EMPSRC_UPD_DEL_updateresult;
             function EMPSRC_UPD_DEL_conformation_result(EMPSRC_UPD_DEL_carccheckarray,EMPSRC_UPD_DEL_carcunitarray)
             {
+                $(".preloader").show();
                 var EMPSRC_UPD_DEL_searchoption = $('#EMPSRC_UPD_DEL_lb_searchoption').val();
                 var EMPSRC_UPD_DEL_firstname = $('#EMPSRC_UPD_DEL_tb_firstname').val();
                 var EMPSRC_UPD_DEL_lastname = $('#EMPSRC_UPD_DEL_tb_lastname').val();
@@ -1412,38 +1425,32 @@ require_once('application/libraries/EI_HDR.php');
                             var EMPSRC_UPD_DEL_searchoption=$('#EMPSRC_UPD_DEL_lb_searchoption').val();
                             var EMPSRC_UPD_DEL_multi_val=[];
                             EMPSRC_UPD_DEL_multi_val=EMPSRC_UPD_DEL_conformation_resultval;
-                            EMPSRC_UPD_DEL_multi_array=EMPSRC_UPD_DEL_multi_val[0];
-//                            EMPSRC_UPD_DEL_comments=EMPSRC_UPD_DEL_conformation_resultval[1].EMPSRC_UPD_DEL_searchvalue_autocomplts;
-//                            EMPSRC_UPD_DEL_email=EMPSRC_UPD_DEL_conformation_resultval[1].EMPSRC_UPD_DEL_searchvalue_autocomplts;
-//                            EMPSRC_UPD_DEL_mobile=EMPSRC_UPD_DEL_conformation_resultval[1].EMPSRC_UPD_DEL_searchvalue_autocomplts;
-//                            EMPSRC_UPD_DEL_autocomplt_flag=EMPSRC_UPD_DEL_conformation_resultval[1].EMPSRC_UPD_DEL_flag_autocomplts;
-//                            EMPSRC_UPD_DEL_sucsval=1;
+                            EMPSRC_UPD_DEL_multi_array=EMPSRC_UPD_DEL_multi_val[0];//
                             $('#EMPSRC_UPD_DEL_table_updateform').hide();
                             $('#EMPSRC_UPD_DEL_btn_update').hide();
                             $('#EMPSRC_UPD_DEL_btn_reset').hide();
                             if((EMPSRC_UPD_DEL_firstnamehide!=EMPSRC_UPD_DEL_firstname && EMPSRC_UPD_DEL_searchoption==90)||(EMPSRC_UPD_DEL_lastnamehide!=EMPSRC_UPD_DEL_lastname && EMPSRC_UPD_DEL_searchoption==90))
-                            {$(".preloader").show();
+                            {
+                                $(".preloader").show();
                                 EMPSRC_UPD_DEL_employlstbx()
                                 show_msgbox("EMPLOYEE DETAIL ENTRY/SEARCH/UPDATE/DELETE",EMP_ENTRY_error[15].EMC_DATA,"success",false);
-
-//                                google.script.run.withFailureHandler(EMPSRC_UPD_error).withSuccessHandler(EMPSRC_UPD_DEL_employlstbx).EMPSRC_UPD_DEL_searchoption();
-                            }
-                            else
-                            {$(".preloader").show();
-                                EMPSRC_UPD_DEL_srch_result()
-                                show_msgbox("EMPLOYEE DETAIL ENTRY/SEARCH/UPDATE/DELETE",EMP_ENTRY_error[15].EMC_DATA,"success",false);
-//                                google.script.run.withFailureHandler(EMPSRC_UPD_error).withSuccessHandler(EMPSRC_UPD_DEL_srch_result).EMPSRC_UPD_DEL_flextabel_getdatas(document.getElementById('EMPSRC_UPD_DEL_form_employeelist'));
-                            }
-                        }
-                        else{
-//MESSAGE BOX FOR NOT SAVED
-                            if(EMPSRC_UPD_DEL_updateresultflag==0 || EMPSRC_UPD_DEL_updateresultflag==''){
-                                show_msgbox("EMPLOYEE DETAIL ENTRY/SEARCH/UPDATE/DELETE",EMPSRC_UPD_DEL_updateresultflag,"error",false);
                             }
                             else
                             {
-//CARD SHOULD NOT BE ASSIGNED
-                                show_msgbox("EMPLOYEE DETAIL ENTRY/SEARCH/UPDATE/DELETE",EMPSRC_UPD_DEL_updateresultflag,"success",false);
+                                $(".preloader").show();
+                                EMPSRC_UPD_DEL_srch_result()
+                                show_msgbox("EMPLOYEE DETAIL ENTRY/SEARCH/UPDATE/DELETE",EMP_ENTRY_error[15].EMC_DATA,"success",false);
+                            }
+                        }
+                        else{
+                            //MESSAGE BOX FOR NOT SAVED
+                            if(EMPSRC_UPD_DEL_updateresultflag==0 || EMPSRC_UPD_DEL_updateresultflag==''){
+                                show_msgbox("EMPLOYEE DETAIL ENTRY/SEARCH/UPDATE/DELETE",EMP_ENTRY_error[24].EMC_DATA,"error",false);
+                            }
+                            else
+                            {
+                            //CARD SHOULD NOT BE ASSIGNED
+                                show_msgbox("EMPLOYEE DETAIL ENTRY/SEARCH/UPDATE/DELETE",EMP_ENTRY_error[24].EMC_DATA,"success",false);
                             }
                         }
                     },
@@ -1471,23 +1478,22 @@ require_once('application/libraries/EI_HDR.php');
                         var EMPSRC_UPD_DEL_searchoption=$('#EMPSRC_UPD_DEL_lb_searchoption').val();
                         if(EMPSRC_UPD_DEL_deletemsgvalue==1)
                         {
-//                            EMPSRC_UPD_DEL_sucsval=2;
                             if(EMPSRC_UPD_DEL_searchoption==90)
                             {$(".preloader").show();
                                 EMPSRC_UPD_DEL_employlstbx()
                                 EMPSRC_UPD_DEL_srch_result()
-//                                google.script.run.withFailureHandler(EMPSRC_UPD_error).withSuccessHandler(EMPSRC_UPD_DEL_employlstbx).EMPSRC_UPD_DEL_searchoption();
                                 show_msgbox("EMPLOYEE DETAIL ENTRY/SEARCH/UPDATE/DELETE",EMP_ENTRY_error[16].EMC_DATA,"success",false);
                             }
                             else
-                            {$(".preloader").show();
+                            {
+                                $(".preloader").show();
                                 EMPSRC_UPD_DEL_srch_result()
                                 show_msgbox("EMPLOYEE DETAIL ENTRY/SEARCH/UPDATE/DELETE",EMP_ENTRY_error[16].EMC_DATA,"success",false);
                             }
                         }
                         else
                         {
-//MESSAGE BOX FOR NOT DELETE
+                            //MESSAGE BOX FOR NOT DELETE
                             show_msgbox("EMPLOYEE DETAIL ENTRY/SEARCH/UPDATE/DELETE",EMP_ENTRY_error[18].EMC_DATA,"error",false);
                         }
                     }
@@ -1652,19 +1658,19 @@ require_once('application/libraries/EI_HDR.php');
                     <!----------ELEMENT TO CREATE SEARCH FORM FOR COMMENTS------------------------------------------------>
                     <div class="row form-group">
                         <label name="EMPSRC_UPD_DEL_lbl_comments" id="EMPSRC_UPD_DEL_lbl_comments"  class="col-sm-2" hidden>COMMENTS</label>
-                        <div class="col-sm-3"><textarea name="EMPSRC_UPD_DEL_ta_comments"  id="EMPSRC_UPD_DEL_ta_comments" class="form-control  auto commentsresultsvalidate keypressvalid" hidden></textarea>
+                        <div class="col-sm-4"><textarea name="EMPSRC_UPD_DEL_ta_comments"  id="EMPSRC_UPD_DEL_ta_comments" class="form-control   commentsresultsvalidate keypressvalid" hidden></textarea>
                         </div>
                     </div>
                     <!----------ELEMENT TO CREATE SEARCH FORM FOR EMAIL------------------------------------------------>
                     <div class="row form-group">
                         <label name="STDTL_INPUT_lbl_email" id="STDTL_INPUT_lbl_email"  class="col-sm-2" hidden>E-MAIL ID</label>
-                        <div class="col-sm-3"><textarea name="EMPSRC_UPD_DEL_ta_email"  id="EMPSRC_UPD_DEL_ta_email" class="form-control  auto commentsresultsvalidate keypressvalid" hidden></textarea>
+                        <div class="col-sm-4"><textarea name="EMPSRC_UPD_DEL_ta_email"  id="EMPSRC_UPD_DEL_ta_email" class="form-control  commentsresultsvalidate keypressvalid" hidden></textarea>
                         </div>
                     </div>
                     <!----------ELEMENT TO CREATE SEARCH FORM FOR MOBILE------------------------------------------------>
                     <div class="row form-group">
                         <label name="STDTL_INPUT_lbl_mobile" id="STDTL_INPUT_lbl_mobile"  class="col-sm-2" hidden>MOBILE</label>
-                        <div class="col-sm-3"><textarea name="EMPSRC_UPD_DEL_ta_mobile"  id="EMPSRC_UPD_DEL_ta_mobile" class="form-control auto commentsresultsvalidate keypressvalid" hidden></textarea>
+                        <div class="col-sm-4"><textarea name="EMPSRC_UPD_DEL_ta_mobile"  id="EMPSRC_UPD_DEL_ta_mobile" class="form-control  commentsresultsvalidate keypressvalid" hidden></textarea>
                         </div>
                     </div>
                     <div class="form-group>
@@ -1731,7 +1737,7 @@ require_once('application/libraries/EI_HDR.php');
                     <div class="row form-group">
                         <label name="EMPSRC_UPD_DEL_lbl_mobile" id="EMPSRC_UPD_DEL_lbl_mobile" class="col-sm-2">MOBILE<em>*</em></label>
                         <div class="col-sm-3">
-                            <input type="text" name="EMPSRC_UPD_DEL_tb_mobile" id="EMPSRC_UPD_DEL_tb_mobile"  maxlength='10' style="width:75px" class="form-control"><label hidden name="EMPSRC_UPD_DEL_lbl_errmsg" id="EMPSRC_UPD_DEL_lbl_errmsg" class="errormsg"></label>
+                            <input type="text" name="EMPSRC_UPD_DEL_tb_mobile" id="EMPSRC_UPD_DEL_tb_mobile"  maxlength='10' style="width:110px" class="form-control"><label hidden name="EMPSRC_UPD_DEL_lbl_errmsg" id="EMPSRC_UPD_DEL_lbl_errmsg" class="errormsg"></label>
                         </div>
                     </div>
                     <div class="row form-group">

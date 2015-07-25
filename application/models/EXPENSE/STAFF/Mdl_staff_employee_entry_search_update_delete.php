@@ -298,16 +298,14 @@ class Mdl_staff_employee_entry_search_update_delete extends CI_Model{
 
             $EMPSRC_UPD_DEL_comments="'$EMPSRC_UPD_DEL_comments'";
         }
-
         $EMPSRC_UPD_DEL_getcardnoarray=array();
         $finalarray=array();
         $EMPSRC_UPD_DEL_cardunitnoarray =$this->EMPSRC_UPD_DEL_getcardnoandunitno($EMPSRC_UPD_DEL_id);
-
         if($EMP_ENTRY_radio_null=='NULL' || $EMP_ENTRY_radio_null=='undefined')
         {
-            $EMPSRC_UPD_DEL_cardno="null";
+            $EMPSRC_UPD_DEL_cardno='null';
             $EMPSRC_UPD_DEL_getcardnoarray =$EMPSRC_UPD_DEL_cardunitnoarray[1];
-            $EMPSRC_UPD_DEL_getcardnoarray="null";
+            $EMPSRC_UPD_DEL_getcardnoarray='null';
         }
         else
         {
@@ -316,96 +314,74 @@ class Mdl_staff_employee_entry_search_update_delete extends CI_Model{
             {
                 if($key=(array_search($EMPSRC_UPD_DEL_cardunitnoarray[1][$i],$EMPSRC_UPD_DEL_cardno)== false))
                 {
-                    $finalarray[$j]=$EMPSRC_UPD_DEL_cardunitnoarray[1][$i];
+                    if($EMPSRC_UPD_DEL_cardunitnoarray[1][$i]!=''){
+                        $finalarray[$j]=$EMPSRC_UPD_DEL_cardunitnoarray[1][$i];
+                    }
                     $j++;
                 }
                 $EMPSRC_UPD_DEL_getcardnoarray = $finalarray;
-//            }
             }
         }
-
-//GET CARD FROM DB ARRAY TTON NORMAL
+        //GET CARD FROM DB ARRAY TTON NORMAL
         $EMPSRC_UPD_DEL_getcardnoarray_final='';
         if($EMPSRC_UPD_DEL_getcardnoarray!='null'){
-        for($i=0;$i<count($EMPSRC_UPD_DEL_getcardnoarray);$i++){
-            if($i==0){
-                $EMPSRC_UPD_DEL_getcardnoarray_final=$EMPSRC_UPD_DEL_getcardnoarray[$i];
+            for($i=0;$i<count($EMPSRC_UPD_DEL_getcardnoarray);$i++){
+                if($i==0){
+                    $EMPSRC_UPD_DEL_getcardnoarray_final=$EMPSRC_UPD_DEL_getcardnoarray[$i];
+                }
+                else{
+                    $EMPSRC_UPD_DEL_getcardnoarray_final=$EMPSRC_UPD_DEL_getcardnoarray_final.','.$EMPSRC_UPD_DEL_getcardnoarray[$i];
+                }
             }
-            else{
-                $EMPSRC_UPD_DEL_getcardnoarray_final=$EMPSRC_UPD_DEL_getcardnoarray_final.','.$EMPSRC_UPD_DEL_getcardnoarray[$i];
-            }
-        }
         }
         else
         {
             $EMPSRC_UPD_DEL_getcardnoarray_final='null';
         }
-        if(count($EMPSRC_UPD_DEL_getcardnoarray)==0 ||$EMP_ENTRY_radio_null=='null'){
-            $EMPSRC_UPD_DEL_getcardnoarray_final=null;
+        if(count($EMPSRC_UPD_DEL_getcardnoarray)==0){
+            $EMPSRC_UPD_DEL_getcardnoarray_final='null';
         }
         else{
-            $EMPSRC_UPD_DEL_getcardnoarray_final="'".$EMPSRC_UPD_DEL_getcardnoarray_final."'";
+            $EMPSRC_UPD_DEL_getcardnoarray_final="'$EMPSRC_UPD_DEL_getcardnoarray_final'";
         }
-
         //GET CARD FROM DB ARRAY TTON NORMAL
         $EMPSRC_UPD_DEL_cardno_final='';
         if($EMPSRC_UPD_DEL_cardno!='null')
         {
-        for($i=0;$i<count($EMPSRC_UPD_DEL_cardno);$i++){
-            if($i==0){
-                $EMPSRC_UPD_DEL_cardno_final=$EMPSRC_UPD_DEL_cardno[$i];
+            for($i=0;$i<count($EMPSRC_UPD_DEL_cardno);$i++){
+                if($i==0){
+                    $EMPSRC_UPD_DEL_cardno_final=$EMPSRC_UPD_DEL_cardno[$i];
+                }
+                else{
+                    $EMPSRC_UPD_DEL_cardno_final=$EMPSRC_UPD_DEL_cardno_final.','.$EMPSRC_UPD_DEL_cardno[$i];
+                }
             }
-            else{
-                $EMPSRC_UPD_DEL_cardno_final=$EMPSRC_UPD_DEL_cardno_final.','.$EMPSRC_UPD_DEL_cardno[$i];
-            }
-        }
+            $EMPSRC_UPD_DEL_cardno_final="'$EMPSRC_UPD_DEL_cardno_final'";
         }
         else{
             $EMPSRC_UPD_DEL_cardno_final='null';
         }
-        if(count($EMPSRC_UPD_DEL_cardno)==0 ||$EMP_ENTRY_radio_null=='null'){
-            $EMPSRC_UPD_DEL_cardno_final='null';
-        }
-        else{
-            $EMPSRC_UPD_DEL_cardno_final="'".$EMPSRC_UPD_DEL_cardno_final."'";
-        }
-
-            $EMPSRC_UPD_DEL_lastupdatecard=$EMPSRC_UPD_DEL_cardno_final;
-
-           if($EMPSRC_UPD_DEL_email=='' &&  $EMPSRC_UPD_DEL_comments=='')
-           {
-
-        $insertquery = "CALL SP_EMPDTL_UPDATE('$EMPSRC_UPD_DEL_id','$EMPSRC_UPD_DEL_firstname','$EMPSRC_UPD_DEL_lastname','$EMPSRC_UPD_DEL_empdesigname','$EMPSRC_UPD_DEL_mobilenumber','$EMPSRC_UPD_DEL_email','$EMPSRC_UPD_DEL_comments','$USERSTAMP',$EMPSRC_UPD_DEL_getcardnoarray_final,$EMPSRC_UPD_DEL_lastupdatecard,@FLAG_ENTRYEMP)";
+       if($EMPSRC_UPD_DEL_email=='' &&  $EMPSRC_UPD_DEL_comments==''){
+             $insertquery = "CALL SP_EMPDTL_UPDATE('$EMPSRC_UPD_DEL_id','$EMPSRC_UPD_DEL_firstname','$EMPSRC_UPD_DEL_lastname','$EMPSRC_UPD_DEL_empdesigname','$EMPSRC_UPD_DEL_mobilenumber','$EMPSRC_UPD_DEL_email','$EMPSRC_UPD_DEL_comments','$USERSTAMP',$EMPSRC_UPD_DEL_getcardnoarray_final,$EMPSRC_UPD_DEL_cardno_final,@FLAG_ENTRYEMP)";
+       }
+       else if($EMPSRC_UPD_DEL_comments==''){
+             $insertquery = "CALL SP_EMPDTL_UPDATE('$EMPSRC_UPD_DEL_id','$EMPSRC_UPD_DEL_firstname','$EMPSRC_UPD_DEL_lastname','$EMPSRC_UPD_DEL_empdesigname','$EMPSRC_UPD_DEL_mobilenumber',$EMPSRC_UPD_DEL_email,'$EMPSRC_UPD_DEL_comments','$USERSTAMP',$EMPSRC_UPD_DEL_getcardnoarray_final,$EMPSRC_UPD_DEL_cardno_final,@FLAG_ENTRYEMP)";
+       }
+       else if($EMPSRC_UPD_DEL_email=='' ){
+             $insertquery = "CALL SP_EMPDTL_UPDATE('$EMPSRC_UPD_DEL_id','$EMPSRC_UPD_DEL_firstname','$EMPSRC_UPD_DEL_lastname','$EMPSRC_UPD_DEL_empdesigname','$EMPSRC_UPD_DEL_mobilenumber','$EMPSRC_UPD_DEL_email',$EMPSRC_UPD_DEL_comments,'$USERSTAMP',$EMPSRC_UPD_DEL_getcardnoarray_final,$EMPSRC_UPD_DEL_cardno_final,@FLAG_ENTRYEMP)";
+       }
+       else{
+             $insertquery = "CALL SP_EMPDTL_UPDATE('$EMPSRC_UPD_DEL_id','$EMPSRC_UPD_DEL_firstname','$EMPSRC_UPD_DEL_lastname','$EMPSRC_UPD_DEL_empdesigname','$EMPSRC_UPD_DEL_mobilenumber',$EMPSRC_UPD_DEL_email,$EMPSRC_UPD_DEL_comments,'$USERSTAMP',$EMPSRC_UPD_DEL_getcardnoarray_final,$EMPSRC_UPD_DEL_cardno_final,@FLAG_ENTRYEMP)";
+       }
+           $query = $this->db->query($insertquery);
+           $FLAG= $this->db->query('SELECT @FLAG_ENTRYEMP as SUCCESSMSG');
+           $finalFLAG = $FLAG->row()->SUCCESSMSG;
+           $EMPSRC_UPD_DEL_multi_array = $this->EMPSRC_UPD_DEL_gettreeviewunit($EMPSRC_UPD_DEL_id) ;
+           if(($EMPSRC_UPD_DEL_searchoption==94)||($EMPSRC_UPD_DEL_searchoption==96)||($EMPSRC_UPD_DEL_searchoption==99)){
+                $EMPSRC_UPD_DEL_commentsupdate=$this->EMPSRC_UPD_DEL_comments($EMPSRC_UPD_DEL_searchoption);
            }
-           else if($EMPSRC_UPD_DEL_comments=='')
-           {
-               $insertquery = "CALL SP_EMPDTL_UPDATE('$EMPSRC_UPD_DEL_id','$EMPSRC_UPD_DEL_firstname','$EMPSRC_UPD_DEL_lastname','$EMPSRC_UPD_DEL_empdesigname','$EMPSRC_UPD_DEL_mobilenumber',$EMPSRC_UPD_DEL_email,'$EMPSRC_UPD_DEL_comments','$USERSTAMP',$EMPSRC_UPD_DEL_getcardnoarray_final,$EMPSRC_UPD_DEL_lastupdatecard,@FLAG_ENTRYEMP)";
+           return $result[]=array($EMPSRC_UPD_DEL_multi_array,$EMPSRC_UPD_DEL_commentsupdate,$finalFLAG);
 
-           }
-           else if($EMPSRC_UPD_DEL_email=='' )
-           {
-
-               $insertquery = "CALL SP_EMPDTL_UPDATE('$EMPSRC_UPD_DEL_id','$EMPSRC_UPD_DEL_firstname','$EMPSRC_UPD_DEL_lastname','$EMPSRC_UPD_DEL_empdesigname','$EMPSRC_UPD_DEL_mobilenumber','$EMPSRC_UPD_DEL_email',$EMPSRC_UPD_DEL_comments,'$USERSTAMP',$EMPSRC_UPD_DEL_getcardnoarray_final,$EMPSRC_UPD_DEL_lastupdatecard,@FLAG_ENTRYEMP)";
-
-           }
-
-        else
-        {
-        $insertquery = "CALL SP_EMPDTL_UPDATE('$EMPSRC_UPD_DEL_id','$EMPSRC_UPD_DEL_firstname','$EMPSRC_UPD_DEL_lastname','$EMPSRC_UPD_DEL_empdesigname','$EMPSRC_UPD_DEL_mobilenumber',$EMPSRC_UPD_DEL_email,$EMPSRC_UPD_DEL_comments,'$USERSTAMP',$EMPSRC_UPD_DEL_getcardnoarray_final,$EMPSRC_UPD_DEL_lastupdatecard,@FLAG_ENTRYEMP)";
-        }
-        $query = $this->db->query($insertquery);
-        $FLAG= $this->db->query('SELECT @FLAG_ENTRYEMP as SUCCESSMSG');
-        $finalFLAG = $FLAG->row()->SUCCESSMSG;
-        $EMPSRC_UPD_DEL_multi_array = $this->EMPSRC_UPD_DEL_gettreeviewunit($EMPSRC_UPD_DEL_id) ;
-
-        if(($EMPSRC_UPD_DEL_searchoption==94)||($EMPSRC_UPD_DEL_searchoption==96)||($EMPSRC_UPD_DEL_searchoption==99))
-        {
-            $EMPSRC_UPD_DEL_commentsupdate=$this->EMPSRC_UPD_DEL_comments($EMPSRC_UPD_DEL_searchoption);
-        }
-
-        return $result[]=array($EMPSRC_UPD_DEL_multi_array,$EMPSRC_UPD_DEL_commentsupdate,$finalFLAG);
-//        return $insertquery;
-//        return $result[]=array($finalFLAG);
     }
     //FUNCTION FOR DELETE PART
     public function deleteoption($USERSTAMP,$EMPSRC_UPD_DEL_deleteid)

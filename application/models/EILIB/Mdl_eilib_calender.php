@@ -232,12 +232,12 @@ class Mdl_eilib_calender  extends CI_Model {
                 $event->setDescription($contactaddr);
                 $event->setLocation($detailsend1);
                 $event->setSummary($detailsend);
-                if(count($fileDoc)>0) {
-                    $event->setAttachments($attachments);
-                    $createdEvent = $calPrimary->events->insert($calId, $event,array('supportsAttachments' => TRUE)); // to create a event
-                }else{
+//                if(count($fileDoc)>0) {
+//                    $event->setAttachments($attachments);
+//                    $createdEvent = $calPrimary->events->insert($calId, $event,array('supportsAttachments' => TRUE)); // to create a event
+//                }else{
                     $createdEvent = $calPrimary->events->insert($calId, $event);
-                }
+//                }
             }
             return 1;
         }

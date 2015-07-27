@@ -210,6 +210,7 @@ class Mdl_customer_search_update_delete extends CI_Model
     {
         $temptablequery="CALL SP_CUSTOMER_SEARCH_TEMP_FEE_DETAIL('$customerid','$UserStamp',@CUSTOMER_SEARCH_FEE_TEMPTBLNAME)";
         $this->db->query($temptablequery);
+//        echo $temptablequery;
         $outparm_query = 'SELECT @CUSTOMER_SEARCH_FEE_TEMPTBLNAME AS TEMP_TABLE';
         $outparm_result = $this->db->query($outparm_query);
         $csrc_tablename=$outparm_result->row()->TEMP_TABLE;
@@ -246,8 +247,11 @@ class Mdl_customer_search_update_delete extends CI_Model
     public function getUploadfileDetails($Unit,$Customerid)
     {
         $Customerfolderselect="SELECT  CUFD_CUSTOMER_FOLDER_ID FROM CUSTOMER_FILE_DIRECTORY CFD,UNIT_FOLDER_DIRECTORY UFD WHERE CFD.CUSTOMER_ID='$Customerid' AND UFD.UNIT_ID=(SELECT UNIT_ID FROM UNIT WHERE UNIT_NO='$Unit')AND CFD.UFD_ID=UFD.UFD_ID";
+//        echo $Customerfolderselect;
+        $customerfolderid="";
         $outparm_result = $this->db->query($Customerfolderselect);
-        $customerfolderid=$outparm_result->row()->CUFD_CUSTOMER_FOLDER_ID;
+        if($outparm_result->num_rows>0 && $outparm_result->num_rows!="")
+            $customerfolderid=$outparm_result->row()->CUFD_CUSTOMER_FOLDER_ID;
         if($customerfolderid!='')
         {
             $customernameselectquery = "SELECT CONCAT(CUSTOMER_FIRST_NAME,' ',CUSTOMER_LAST_NAME) AS CUSTOMERNAME FROM CUSTOMER WHERE CUSTOMER_ID='$Customerid'";
@@ -569,7 +573,7 @@ class Mdl_customer_search_update_delete extends CI_Model
                                 exit;}
                             if($ContractId[0] == 0){
                                 echo $ContractId[3];
-                            exit;}exit;
+                                exit;}exit;
                         }
                     }
                 }
@@ -764,15 +768,16 @@ class Mdl_customer_search_update_delete extends CI_Model
             for($k=0;$k<count($calevents);$k++)
             {
                 $attachments=[];
-                for($j=0;$j<count($folderIdCustomer)&&count($folderIdCustomer)>0;$j++){
-                    $servicedoc= $this->Mdl_eilib_common_function->get_service_document();
-                    $file = $servicedoc->files->get($folderIdCustomer[$j]);
-                    $attachments[]= array(
-                        'fileUrl' => $file->alternateLink,
-                        'mimeType' => $file->mimeType,
-                        'title' => $file->title
-                    );}
                 $Events=explode(',',$calevents[$k]);
+                if($Events[5]=="CHECKIN"){
+                    for($j=0;$j<count($folderIdCustomer)&&count($folderIdCustomer)>0;$j++){
+                        $servicedoc= $this->Mdl_eilib_common_function->get_service_document();
+                        $file = $servicedoc->files->get($folderIdCustomer[$j]);
+                        $attachments[]= array(
+                            'fileUrl' => $file->alternateLink,
+                            'mimeType' => $file->mimeType,
+                            'title' => $file->title
+                        );}}
                 $initialsdate = $Events[2];
                 $calendername = $firstname . ' ' . $lastname;
                 $contactno = "";
@@ -790,9 +795,9 @@ class Mdl_customer_search_update_delete extends CI_Model
                     $contactaddr = $custid . " " . "EMAIL :" . $customermailid;
                 }
                 if ($Events[1] != "") {
-                    $details = $Events[0] . " " . $calendername . " " . $Events[1] . " " . $Events[0];
+                    $details = $Events[0] . " " . $calendername . " " . $Events[1] . " " . $Events[5];
                 } else {
-                    $details = $Events[0] . " " . $calendername . " " . $Events[0];
+                    $details = $Events[0] . " " . $calendername . " " . $Events[5];
                 }
                 $details1 = $Events[0] . " " . $Events[1];
                 if ($initialsdate != "") {
@@ -803,7 +808,7 @@ class Mdl_customer_search_update_delete extends CI_Model
                     $event->setDescription($contactaddr);
                     $event->setLocation($details1);
                     $event->setSummary($details);
-                    if(count($folderIdCustomer)>0) {
+                    if(count($folderIdCustomer)>0 && $Events[5]=="CHECKIN") {
                         $event->setAttachments($attachments);
                         $createdEvent = $calPrimary->events->insert($calId, $event,array('supportsAttachments' => TRUE)); // to create a event
                     }else{
@@ -875,3 +880,4 @@ class Mdl_customer_search_update_delete extends CI_Model
         return $Calresponse;
     }
 }
+

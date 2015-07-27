@@ -431,7 +431,9 @@ textarea:focus{
 
 }
 
-
+textarea{
+    min-height:116px;
+}
 
 textarea:focus:hover {
 

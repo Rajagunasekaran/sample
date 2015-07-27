@@ -1,4 +1,7 @@
 <?php
+//******************************************Unit Termination********************************************//
+//VER 0.01-SD:21/05/2015 ED:21/05/2015,initial version BY RAJA
+//*******************************************************************************************************//
 class Mdl_unit_termination extends CI_Model{
     public function Initial_data(){
         $this->db->select('UNIT_NO');

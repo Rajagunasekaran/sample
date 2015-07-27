@@ -1,4 +1,8 @@
 <?php
+//******************************************Existing Unit********************************************//
+//VER 0.02-SD:25/05/2015 ED:25/05/2015,did save part BY RAJA
+//VER 0.01-SD:22/05/2015 ED:23/05/2015,completed form design and validation BY RAJA
+//*******************************************************************************************************//
 class Mdl_unit_existing_unit extends CI_Model{
     public function Initial_data($EU_unitno,$EU_flag_unitno_err_roomstamp){
         $this->load->model('EILIB/Mdl_eilib_common_function');

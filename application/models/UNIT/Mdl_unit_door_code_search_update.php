@@ -1,4 +1,8 @@
 <?php
+//******************************************Door Code Search Update********************************************//
+//VER 0.02-SD:22/05/2015 ED:22/05/2015,did inline edit for save part BY RAJA
+//VER 0.01-SD:21/05/2015 ED:21/05/2015,completed form design and validation BY RAJA
+//*******************************************************************************************************//
 class Mdl_unit_door_code_search_update extends CI_Model{
     public function Initial_data(){
         $this->load->model('EILIB/Mdl_eilib_common_function');

@@ -1,4 +1,10 @@
 <?php
+//******************************************Unit Create Search Update********************************************//
+//VER 0.04-SD:19/05/2015 ED:20/05/2015,did update part for unit search update without calendar updation BY RAJA
+//VER 0.03-SD:18/05/2015 ED:19/05/2015,did the form design and validation for unit search update BY RAJA
+//VER 0.02-SD:15/05/2015 ED:16/05/2015,did save part for unit creation without calendar creation BY RAJA
+//VER 0.01-SD:13/05/2015 ED:15/05/2015,completed form design and validation for unit creation BY RAJA
+//*******************************************************************************************************//
 class Mdl_unit_creation_search_update extends CI_Model{
     public function Initial_data($flag){
         $this->db->select('URTD_ROOM_TYPE');

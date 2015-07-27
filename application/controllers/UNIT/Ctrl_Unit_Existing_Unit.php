@@ -1,4 +1,8 @@
 <?php
+//******************************************Existing Unit********************************************//
+//VER 0.02-SD:25/05/2015 ED:25/05/2015,did save part BY RAJA
+//VER 0.01-SD:22/05/2015 ED:23/05/2015,completed form design and validation BY RAJA
+//*******************************************************************************************************//
 class Ctrl_Unit_Existing_Unit extends CI_Controller{
     function __construct() {
         parent::__construct();

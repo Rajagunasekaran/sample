@@ -1,4 +1,10 @@
 <?php
+//******************************************Unit Create Search Update********************************************//
+//VER 0.04-SD:19/05/2015 ED:20/05/2015,did update part for unit search update without calendar updation BY RAJA
+//VER 0.03-SD:18/05/2015 ED:19/05/2015,did the form design and validation for unit search update BY RAJA
+//VER 0.02-SD:15/05/2015 ED:16/05/2015,did save part for unit creation without calendar creation BY RAJA
+//VER 0.01-SD:13/05/2015 ED:15/05/2015,completed form design and validation for unit creation BY RAJA
+//*******************************************************************************************************//
 require_once('application/libraries/EI_HDR.php');
 ?>
 <html>
@@ -68,7 +74,9 @@ require_once('application/libraries/EI_HDR.php');
             });
             $("#UC_db_enddate").datepicker({dateFormat: "dd-mm-yy",changeYear: true,changeMonth: true,maxDate: '+2Y'});
             $('#UNIT_form_unitcreate').focus();
-            $(".uppercase").Setcase({caseValue : 'upper'});
+            $(document).on("keyup",'.alphanum',function() {
+                this.value = this.value.toUpperCase();
+            });
         // RADIO BUTTON CLICK FUNCTION
             $('.UNIT_selectform').click(function(){
                 var radiooption=$(this).val();
@@ -2229,7 +2237,7 @@ require_once('application/libraries/EI_HDR.php');
                 </div>
                 <div class="form-group" id="UC_accntname">
                     <label class="col-sm-2">ACCOUNT NAME </label>
-                    <div class="col-sm-3"><input type="text" name="UC_tb_accntname" id="UC_tb_accntname" placeholder="Account Name" maxlength="25" class="uppercase form-control"/></div>
+                    <div class="col-sm-3"><input type="text" name="UC_tb_accntname" id="UC_tb_accntname" placeholder="Account Name" maxlength="25" class="alphanum form-control"/></div>
                 </div>
                 <div class="form-group" id="UC_bankcode">
                     <label class="col-sm-2">BANK CODE</label>

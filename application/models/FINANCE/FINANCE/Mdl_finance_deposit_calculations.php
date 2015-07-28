@@ -706,10 +706,9 @@ class Mdl_finance_deposit_calculations extends CI_Model{
                 'unitinvoicedate'=>$unitinvoicedate,'unitamount'=>$unitamount,'unitdivamount'=>$unitdivamount,'checkout_clean'=>$checkout_clean,'DDC_maintenancelength'=>$DDC_maintenancelength,
                 'drycleaning'=>$drycleaning,'DDC_chargelength'=>$DDC_chargelength,'chargtype'=>$chargtype,'chargamount'=>$chargamount,'DDC_unitsubtotal'=>$DDC_unitsubtotal,
                 'DDC_totalallsubtl'=>$DDC_totalallsubtl,'DDC_tefundtotal'=>$DDC_tefundtotal,'invoicedatekey'=>$invoicedatekey,'electrcapkey'=>$electrcapkey);
-            $ssreangtemp=array();
+            $ssreangtemp='';
             $ssreangtemp=$this->Mdl_eilib_common_function->Func_curl($data2);
-            $ssreangtemp=explode(',',$ssreangtemp);
-            if($ssreangtemp[0]==0 && $ssreangtemp[1]==1){
+            if($ssreangtemp=='no_template_sheet'){
                 return [0,1];
             }
         }

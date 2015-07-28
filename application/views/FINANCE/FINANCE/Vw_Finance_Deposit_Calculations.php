@@ -419,7 +419,7 @@ require_once('application/libraries/EI_HDR.php');
                     {
                         var sdateclear="";
                         var edateclear="";
-                        recver = '<div class="form-group"><div class="col-sm-2"><div class="checkbox"><label><input type="checkbox" name="DDC_chk_checkboxinc[]" id="'+checkvalid+'" value="'+rbutton+'" class="calcheckbox">' + version + '</label></div></div><div class="col-sm-2"><input type="text" name="DDC_db_startdate" id="'+sdateid+'" value="'+sdateclear+'" class="rdonly form-control" readonly></div><div class="col-sm-2"><input type="text" name="DDC_db_enddate" id='+edateid+' value="'+edateclear+'" class="rdonly form-control" readonly></div><div><label id="'+errid+'" hidden class="errormsg errpadding"></label></div></div>';
+                        recver = '<div class="form-group"><div class="col-sm-2"><div class="checkbox"><label><input type="checkbox" name="DDC_chk_checkboxinc[]" id="'+checkvalid+'" value="'+rbutton+'" class="calcheckbox">' + version + '</label></div></div><div class="col-sm-2"><input type="text" name="DDC_db_startdate" id="'+sdateid+'" value="'+sdateclear+'" class="rdonly form-control" readonly></div><div class="col-sm-2"><input type="text" name="DDC_db_enddate" id='+edateid+' value="'+edateclear+'" class="rdonly form-control" readonly></div><div class="col-sm-6"><label id="'+errid+'" hidden class="errormsg errpadding"></label></div></div>';
                         $('#DDC_recvertable').append(recver);
                     }
                     else
@@ -428,20 +428,20 @@ require_once('application/libraries/EI_HDR.php');
                         if(sd=="01-01-1970")
                         {
                             var sdateclear="";
-                            recver = '<div class="form-group"><div class="col-sm-2"><div class="checkbox"><label><input type="checkbox" name="DDC_chk_checkboxinc[]" id="'+checkvalid+'" value="'+rbutton+'" class="calcheckbox">' + version + '</label></div></div><div class="col-sm-2"><input type="text" name="DDC_db_startdate" id="'+sdateid+'" value="'+sdateclear+'" class="rdonly form-control" readonly></div><div class="col-sm-2"><input type="text" name="DDC_db_enddate" id='+edateid+' value="'+ed+'" class="rdonly form-control" readonly></div><div><label id="'+errid+'" hidden class="errormsg errpadding"></label></div></div>';
+                            recver = '<div class="form-group"><div class="col-sm-2"><div class="checkbox"><label><input type="checkbox" name="DDC_chk_checkboxinc[]" id="'+checkvalid+'" value="'+rbutton+'" class="calcheckbox">' + version + '</label></div></div><div class="col-sm-2"><input type="text" name="DDC_db_startdate" id="'+sdateid+'" value="'+sdateclear+'" class="rdonly form-control" readonly></div><div class="col-sm-2"><input type="text" name="DDC_db_enddate" id='+edateid+' value="'+ed+'" class="rdonly form-control" readonly></div><div class="col-sm-6"><label id="'+errid+'" hidden class="errormsg errpadding"></label></div></div>';
                             $('#DDC_recvertable').append(recver);
                         }
                         if(ed=="01-01-1970")
                         {
                             var edateclear="";
-                            recver = '<div class="form-group"><div class="col-sm-2"><div class="checkbox"><label><input type="checkbox" name="DDC_chk_checkboxinc[]" id="'+checkvalid+'" value="'+rbutton+'" class="calcheckbox">' + version + '</label></div></div><div class="col-sm-2"><input type="text" name="DDC_db_startdate" id="'+sdateid+'" value="'+sd+'" class="rdonly form-control" readonly></div><div class="col-sm-2"><input type="text" name="DDC_db_enddate" id='+edateid+' value="'+edateclear+'" class="rdonly form-control" readonly></div><div><label id="'+errid+'" hidden class="errormsg errpadding"></label></div></div>';
+                            recver = '<div class="form-group"><div class="col-sm-2"><div class="checkbox"><label><input type="checkbox" name="DDC_chk_checkboxinc[]" id="'+checkvalid+'" value="'+rbutton+'" class="calcheckbox">' + version + '</label></div></div><div class="col-sm-2"><input type="text" name="DDC_db_startdate" id="'+sdateid+'" value="'+sd+'" class="rdonly form-control" readonly></div><div class="col-sm-2"><input type="text" name="DDC_db_enddate" id='+edateid+' value="'+edateclear+'" class="rdonly form-control" readonly></div><div class="col-sm-6"><label id="'+errid+'" hidden class="errormsg errpadding"></label></div></div>';
                             $('#DDC_recvertable').append(recver);
                         }
                     }
                     if((sd!="01-01-1970")&&(ed!="01-01-1970"))
                     {
                         var lblid=checkvalid+'_1';
-                        recver = '<div class="form-group"><div class="col-sm-2"><div class="checkbox"><label id="'+lblid+'"><input type="checkbox" name="DDC_chk_checkboxinc[]" id="'+checkvalid+'" value="'+rbutton+'" class="calcheckbox">' + version + '</label></div></div><div class="col-sm-2"><input type="text" name="DDC_db_startdate" id="'+sdateid+'" value="'+sd+'" class="rdonly form-control" readonly></div><div class="col-sm-2"><input type="text" name="DDC_db_enddate" id='+edateid+' value="'+ed+'" class="rdonly form-control" readonly></div><div><label id="'+errid+'" hidden class="errormsg errpadding"></label></div></div>';
+                        recver = '<div class="form-group"><div class="col-sm-2"><div class="checkbox"><label id="'+lblid+'"><input type="checkbox" name="DDC_chk_checkboxinc[]" id="'+checkvalid+'" value="'+rbutton+'" class="calcheckbox">' + version + '</label></div></div><div class="col-sm-2"><input type="text" name="DDC_db_startdate" id="'+sdateid+'" value="'+sd+'" class="rdonly form-control" readonly></div><div class="col-sm-2"><input type="text" name="DDC_db_enddate" id='+edateid+' value="'+ed+'" class="rdonly form-control" readonly></div><div class="col-sm-6"><label id="'+errid+'" hidden class="errormsg errpadding"></label></div></div>';
                         $('#DDC_recvertable').append(recver);
                     }
                 }

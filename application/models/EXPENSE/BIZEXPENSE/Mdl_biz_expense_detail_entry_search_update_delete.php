@@ -1095,8 +1095,8 @@ Class Mdl_biz_expense_detail_entry_search_update_delete extends CI_Model {
             $BTDTL_invoiceto = null;
         }
         else {
-            $invoiceto = "'$invoiceto'";
             $BTDTL_invoiceto=$invoiceto;
+            $invoiceto = "'$invoiceto'";
             }
         if($ssid=="")//SSID
         {  $ssid='null';
@@ -1175,7 +1175,6 @@ Class Mdl_biz_expense_detail_entry_search_update_delete extends CI_Model {
             $BTDTL_SEARCH_oldmodemserno = $row["EDSH_MODEM_SERIAL_NO"];
             $BTDTL_SEARCH_oldbasicgroup= $row["EDSH_BASIC_GROUP"];
             $BTDTL_SEARCH_oldadtnlchanel = $row["EDSH_ADDTNL_CH"];
-
           if(($acctno!=$BTDTL_SEARCH_accountno||$BTDTL_SEARCH_oldinvoiceto!=$BTDTL_invoiceto||$BTDTL_SEARCH_oldappldate!=$BTDTL_SEARCH_starhub_tbleappldate ||$BTDTL_SEARCH_cablesdate!=$BTDTL_SEARCH_starhub_tblecablestartdate
                     ||$BTDTL_SEARCH_cableedate!=$BTDTL_SEARCH_starhub_tblecableenddate
                     ||$BTDTL_SEARCH_internetsdate!=$BTDTL_SEARCH_starhub_tbleinternetstartdate||$BTDTL_SEARCH_internetedate!=$BTDTL_SEARCH_starhub_tbleinternetenddate

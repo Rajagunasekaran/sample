@@ -133,7 +133,6 @@ require_once('application/libraries/EI_HDR.php');
                     url: controller_url+"initialvalues",
                     data:{"ErrorList":'2,8,9,10,105,169,204,205,206,207,208,242,245,246,247,248,250,256,258,400'},
                     success: function(res) {
-                        $('.preloader').hide();
                         $("html, body").animate({ scrollTop: $(document).height() }, "slow");
                         initial_values=JSON.parse(res);
                         BDLY_INPUT_load_initialvalue(initial_values)
@@ -170,7 +169,6 @@ require_once('application/libraries/EI_HDR.php');
                     type: "POST",
                     url: controller_url+"BDLY_SRC_getInitialvalue",
                     success: function(res) {
-                        $('.preloader').hide();
                         $("html, body").animate({ scrollTop: $(document).height() }, "slow");
                         var initialvalue=JSON.parse(res);
                         BDLY_SRC_result_getInitialvalue(initialvalue)
@@ -448,8 +446,10 @@ require_once('application/libraries/EI_HDR.php');
             }
             $('#BDLY_INPUT_lb_selectexptype').html(BDLY_INPUT_exptype_options)
             $('#BDLY_INPUT_lb_selectexptype').show();
+            $('#BDLY_INPUT_lb_selectexptype').focus();
             $('#BDLY_INPUT_lbl_exptype').show();
             BDLY_INPUT_Sortit('BDLY_INPUT_lb_selectexptype');
+            $('.preloader').hide();
         }
         function BDLY_INPUT_Sortit(lbid) {
             var $r = $("#"+lbid+" "+"option");
@@ -888,7 +888,7 @@ require_once('application/libraries/EI_HDR.php');
                     $('#BDLY_INPUT_ta_star_comments1').hide();
                 }
                 else{
-                    $('#BDLY_INPUT_lb_unitno').html(BDLY_INPUT_unitno_options);
+                    $('#BDLY_INPUT_lb_unitno').html(BDLY_INPUT_unitno_options).focus();
                     $('#BDLY_INPUT_lbl_unitno').show();
                     $('#BDLY_INPUT_lb_unitno').show();
                     $('#typeofexpense').show();
@@ -1386,7 +1386,10 @@ require_once('application/libraries/EI_HDR.php');
             }
         });
         var BDLY_INPUT_values=[];
-        $(document).on('change','#BDLY_INPUT_lb_unitno',function() {
+        $(document).on('change','#BDLY_INPUT_lb_unitno',function(evnt) {
+            evnt.stopPropagation();
+            evnt.preventDefault();
+            evnt.stopImmediatePropagation();
             $(".preloader").show();
             $('#BDLY_INPUT_lbl_pcarderrmsg').hide();
             var BDLY_INPUT_unitno=$('#BDLY_INPUT_lb_unitno').val();
@@ -1586,8 +1589,12 @@ require_once('application/libraries/EI_HDR.php');
             $('#BDLY_INPUT_btn_resetbutton').show();
             $('#BDLY_INPUT_btn_submitbutton').attr("disabled", "disabled");
         }
-        $(document).on('change','.BDLY_INPUT_class_unit',function()
-        { $(".preloader").show();
+        $(document).on('change','.BDLY_INPUT_class_unit',function(evnt)
+        {
+            evnt.stopPropagation();
+            evnt.preventDefault();
+            evnt.stopImmediatePropagation();
+            $(".preloader").show();
             var BDLY_INPUT_id=$(this).attr('id');
             $('#BDLY_INPUT_tb_access_cardno').removeClass('invalid')
             BDLY_INPUT_id_no =BDLY_INPUT_id.split("-");
@@ -2102,7 +2109,10 @@ require_once('application/libraries/EI_HDR.php');
                 }
             }
         });
-        $('#BDLY_INPUT_btn_submitbutton').click(function(){
+        $('#BDLY_INPUT_btn_submitbutton').click(function(evnt){
+            evnt.stopPropagation();
+            evnt.preventDefault();
+            evnt.stopImmediatePropagation();
             $(".preloader").show();
             $('#BDLY_INPUT_lbl_checkcardno').val("save");
             var BDLY_INPUT_listvalue=$('#BDLY_INPUT_lb_selectexptype').val();
@@ -2458,7 +2468,10 @@ require_once('application/libraries/EI_HDR.php');
                 });
             }
         });
-        $('#BDLY_INPUT_btn_multisubmitbutton').click(function(){
+        $('#BDLY_INPUT_btn_multisubmitbutton').click(function(evnt){
+            evnt.stopPropagation();
+            evnt.preventDefault();
+            evnt.stopImmediatePropagation();
             $(".preloader").show();
             $.ajax({
                 type: "POST",
@@ -2584,8 +2597,11 @@ require_once('application/libraries/EI_HDR.php');
                 show_msgbox("BIZ EXPENSE DAILY ENTRY/SEARCH/UPDATE/DELETE",BDLY_INPUT_clearresponse[1],"success",false);
             }$(".preloader").hide();
         }
-        $(document).on('change','.BDLY_INPUT_uexp_class_unit',function()
+        $(document).on('change','.BDLY_INPUT_uexp_class_unit',function(evnt)
         {
+            evnt.stopPropagation();
+            evnt.preventDefault();
+            evnt.stopImmediatePropagation();
             $('#BDLY_INPUT_lbl_hourmsg').hide();
             var BDLY_INPUT_uexp_id=$(this).attr('id');
             BDLY_INPUT_uexp_id_no =BDLY_INPUT_uexp_id.split("-");
@@ -3472,7 +3488,9 @@ require_once('application/libraries/EI_HDR.php');
                     options +='<option value="'+ExpenseList[i][0]+'">' + ExpenseList[i][1] + '</option>';
                 }
                 $('#BDLY_SRC_lb_ExpenseList').append(options).show();
+                $('#BDLY_SRC_lb_ExpenseList').focus();
             }
+            $('.preloader').hide();
         }
         /*---------------------------------FUNCTION TO GET ERR MESSAGES-------------------------------------------*/
         function BDLY_SRC_getAllErrorMessages(BDLY_SRC_finalerrrcodes)
@@ -3970,7 +3988,10 @@ require_once('application/libraries/EI_HDR.php');
             $(".preloader").fadeOut(500);
         }
         /*------------------------------------------FUNCTION TO GET CUSTOMER NAME FOR  LB --------------------------------------------------------*/
-        $(document).on('change','#BDLY_SRC_lb_category',function(){
+        $(document).on('change','#BDLY_SRC_lb_category',function(evnt){
+            evnt.stopPropagation();
+            evnt.preventDefault();
+            evnt.stopImmediatePropagation();
             if($(this).val()==23 && startdate!="" && enddate!=""){
                 $(".preloader").show();
                 $('#BDLY_SRC_btn_search').attr("disabled", "disabled");
@@ -4157,7 +4178,10 @@ require_once('application/libraries/EI_HDR.php');
             return string[2]+'-'+ string[1]+'-'+string[0];
         }
         /*------------------------------------------TO PERFORM AUTO COMPLETE DATA OR DYNAMIC DATA RANGE TO APPEND IN LIST BOX-------------------------------------------------------*/
-        $(document).on('change','.BDLY_class_sedatechange,.BDLT_SRC_Month_picker',function(){
+        $(document).on('change','.BDLY_class_sedatechange,.BDLT_SRC_Month_picker',function(evnt){
+            evnt.stopPropagation();
+            evnt.preventDefault();
+            evnt.stopImmediatePropagation();
             var BDLY_SRC_searchoptionarr={1:[159],2:[179],3:[185,189,190],4:[167],5:[153],6:[175],7:[171],8:[128],9:[125],10:[139,140],11:[143],12:[146]};
             var selectedSearchopt = $('#BDLY_SRC_lb_serachopt').val(),selectedexpense=$('#BDLY_SRC_lb_ExpenseList').val();
             var BDLY_SRC_getsearch_optiontypearray=["CATEGORY","ACCOUNT NO","INVOICE TO","CLEANER NAME","CARD NO","CAR NO","SERVICED BY","UNIT NO","VOCIE NO"];
@@ -4415,7 +4439,10 @@ require_once('application/libraries/EI_HDR.php');
                 $('#BDLY_SRC_btn_search').attr("disabled", "disabled");
         });
         /*----------------------------------FUNCTION TO GET SEARCH RESULT OF INPUT VALUES---------------------------------------------*/
-        $(document).on('click','#BDLY_SRC_btn_search',function(){
+        $(document).on('click','#BDLY_SRC_btn_search',function(evnt){
+            evnt.stopPropagation();
+            evnt.preventDefault();
+            evnt.stopImmediatePropagation();
             $(".preloader").show();
             BDLY_SRC_sucsval=0;
             $.ajax({
@@ -5107,7 +5134,10 @@ require_once('application/libraries/EI_HDR.php');
             }
         });
         /*------------------------------------------------TO DELETE EACH ROW FROM TABLE AFTER CONFIRMATION----------------------------*/
-        $(document).on('click','.deleteconfirm',function(){
+        $(document).on('click','.deleteconfirm',function(evnt){
+            evnt.stopPropagation();
+            evnt.preventDefault();
+            evnt.stopImmediatePropagation();
             $(".preloader").show();
             var selectedexpense=$('#BDLY_SRC_lb_ExpenseList').val();
             $.ajax({
@@ -5274,7 +5304,10 @@ require_once('application/libraries/EI_HDR.php');
                 oTable.fnUpdate(record, 1);}
         }
         /*-----------------------------------ACTON TO EDIT EACH ROW IN DATA TABLE---------------------*/
-        $(document).on('click','.edit',function() {
+        $(document).on('click','.edit',function(evnt) {
+            evnt.stopPropagation();
+            evnt.preventDefault();
+            evnt.stopImmediatePropagation();
             $(".preloader").show();
             var BDLY_DT_wrongendate='';
             var tr = $(this).closest("tr").index()+1;
@@ -5587,7 +5620,10 @@ require_once('application/libraries/EI_HDR.php');
             }
         });
         /*---------------------------------------------------ACTION ON UNIT EXPENSE CATEGORY CHANGE --------------------*/
-        $(document).on('change','#DT_unit_category_lb',function() {
+        $(document).on('change','#DT_unit_category_lb',function(evnt) {
+            evnt.stopPropagation();
+            evnt.preventDefault();
+            evnt.stopImmediatePropagation();
             var BDLY_DT_unit_category_lb=$(this).val();
             $(this).parent().next().html('');
             if(BDLY_DT_unit_category_lb==23){

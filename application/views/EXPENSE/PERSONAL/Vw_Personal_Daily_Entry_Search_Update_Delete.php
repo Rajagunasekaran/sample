@@ -95,7 +95,6 @@ $(document).ready(function(){
                 url: controller_url+"commondata",
                 data:{"ErrorList":'105,106,400,401'},
                 success: function(res) {
-                    $('.preloader').hide();
                     $("html, body").animate({ scrollTop: $(document).height() }, "slow");
                     var arrayvalues=JSON.parse(res);
                     error_message=arrayvalues[4];
@@ -132,6 +131,7 @@ $(document).ready(function(){
                         if(perinvfrom[m].EP_INVOICE_FROM!='' && perinvfrom[m].EP_INVOICE_FROM!=null)
                             invfromarray.push(perinvfrom[m].EP_INVOICE_FROM);
                     }
+                    $('.preloader').hide();
                 },
                 error: function (data) {
                     alert('error in getting' + JSON.stringify(data));
@@ -139,7 +139,7 @@ $(document).ready(function(){
             });
             $('#PE_entryform').show();
             $('#entrytypeexpense').show();
-            $('#PE_lb_expensetype').val('SELECT').show();
+            $('#PE_lb_expensetype').val('SELECT').focus();
             $('#form_baby').hide();
             $('#form_car').hide();
             $('#form_carloan').hide();
@@ -153,7 +153,6 @@ $(document).ready(function(){
                 url: controller_url+"srchupdatecommondata",
                 data:{"ErrorList":'2,20,45,105,106,107,108,109,110,111,112,113,114,115,116,117,118,119,120,121,122,123,124,125,126,127,128,129,130,134,140,170,209,210,211,212,315,401'},
                 success: function(res) {
-                    $('.preloader').hide();
                     $("html, body").animate({ scrollTop: $(document).height() }, "slow");
                     var searcharrayvalues=JSON.parse(res);
                     PDLY_SEARCH_expensepersonalArray=searcharrayvalues[0];
@@ -189,6 +188,7 @@ $(document).ready(function(){
                         if(invfromarray[m].EP_INVOICE_FROM!='' && invfromarray[m].EP_INVOICE_FROM!=null)
                             personalinvoicefrom.push(invfromarray[m].EP_INVOICE_FROM);
                     }
+                    $('.preloader').hide();
                 },
                 error: function (data) {
                     alert('error in getting' + JSON.stringify(data));
@@ -196,7 +196,7 @@ $(document).ready(function(){
             });
             $('#PE_searchform').show();
             $('#typesearchlb').show();
-            $('#PDLY_SEARCH_lb_typelist').val('SELECT').show();
+            $('#PDLY_SEARCH_lb_typelist').val('SELECT').focus();
             $('#searchoption').hide();
             $("#PDLY_SEARCH_tble_searchtable").hide();
             $('#PDLY_SEARCH_lbl_bybabycmts').hide();
@@ -234,12 +234,14 @@ $(document).ready(function(){
             $('#form_baby').hide();
             $('#form_car').show();
             $('#form_carloan').hide();
+            $('#PCE_lb_ctry').focus();
         }
         else if(expensetype==38)
         {
             $('#form_carloan').show();
             $('#form_baby').hide();
             $('#form_car').hide();
+            $('#PCLE_tb_paiddte').focus();
         }
         else if(expensetype==37)
         {
@@ -910,6 +912,7 @@ $(document).ready(function(){
         $('#PDLY_SEARCH_lb_babysearchoption').html(PDLY_SEARCH_options);
         PDLY_SEARCH_Sortit('PDLY_SEARCH_lb_babysearchoption');
         $('#PDLY_SEARCH_lb_babysearchoption').show();
+        $('#PDLY_SEARCH_lb_babysearchoption').focus();
         $("select#PDLY_SEARCH_lb_babysearchoption")[0].selectedIndex = 0;
         $('#searchoption').show();
     }
@@ -973,6 +976,7 @@ $(document).ready(function(){
             $('#div_category').hide();
             $('#PDLY_SEARCH_lbl_startdate').show();
             $('#PDLY_SEARCH_db_startdate').val('').show();
+            $('#PDLY_SEARCH_db_startdate').focus();
             $('#div_startdate').show();
             $('#PDLY_SEARCH_lbl_enddate').show();
             $('#PDLY_SEARCH_db_enddate').val('').show();
@@ -1030,6 +1034,7 @@ $(document).ready(function(){
                     $('#PDLY_SEARCH_lb_babyexpansecategory').show();
                     $('#div_category').show();
                     $("select#PDLY_SEARCH_lb_babyexpansecategory")[0].selectedIndex = 0;
+                    $('#PDLY_SEARCH_lb_babyexpansecategory').focus();
                     $('#PDLY_SEARCH_lbl_startdate').show();
                     $('#PDLY_SEARCH_db_startdate').val('').show();
                     $('#div_startdate').show();
@@ -1071,6 +1076,7 @@ $(document).ready(function(){
             $('#div_fromamt').show();
             $('#PDLY_SEARCH_lbl_startdate').show();
             $('#PDLY_SEARCH_db_startdate').val('').show();
+            $('#PDLY_SEARCH_db_startdate').focus();
             $('#div_startdate').show();
             $('#PDLY_SEARCH_lbl_enddate').show();
             $('#PDLY_SEARCH_db_enddate').val('').show();
@@ -1109,6 +1115,7 @@ $(document).ready(function(){
             $('#div_startdate').show();
             $('#PDLY_SEARCH_lbl_enddate').show();
             $('#PDLY_SEARCH_db_enddate').val('').show();
+            $('#PDLY_SEARCH_db_startdate').focus();
             $('#div_enddate').show();
             $('#PDLY_SEARCH_btn_babybutton').show();
             $('#PDLY_SEARCH_btn_babybutton').attr("disabled", "disabled");
@@ -1141,6 +1148,7 @@ $(document).ready(function(){
             $('#PDLY_SEARCH_lbl_startdate').show();
             $('#PDLY_SEARCH_db_startdate').val('').show();
             $('#div_startdate').show();
+            $('#PDLY_SEARCH_db_startdate').focus();
             $('#PDLY_SEARCH_lbl_enddate').show();
             $('#PDLY_SEARCH_db_enddate').val('').show();
             $('#div_enddate').show();
@@ -1175,6 +1183,7 @@ $(document).ready(function(){
             $('#PDLY_SEARCH_lbl_startdate').show();
             $('#PDLY_SEARCH_db_startdate').val('').show();
             $('#div_startdate').show();
+            $('#PDLY_SEARCH_db_startdate').focus();
             $('#PDLY_SEARCH_lbl_enddate').show();
             $('#PDLY_SEARCH_db_enddate').val('').show();
             $('#div_enddate').show();
@@ -2198,7 +2207,7 @@ $(document).ready(function(){
         }
         if(ifcondition=='ebinvdate')
         {
-            $('#'+cid).replaceWith("<td  class='new' id='"+previous_id+"'><input type='text' id='Eb_invdate' name='Eb_invdate'  class='babyupdate form-control date-picker' style='width: 110px' value='"+cval+"'></td>");
+            $('#'+cid).replaceWith("<td  class='new' id='"+previous_id+"'><input type='text' id='Eb_invdate' name='Eb_invdate'  class='babyupdate form-control date-picker datemandtry' style='width: 110px' value='"+cval+"'></td>");
             $(".date-picker").datepicker({dateFormat:'dd-mm-yy',
                 changeYear: true,
                 changeMonth: true
@@ -2213,6 +2222,7 @@ $(document).ready(function(){
         if(ifcondition=='ebinvfrom')
         {
             $('#'+cid).replaceWith("<td  class='new' id='"+previous_id+"'><input type='text' id='Eb_invfrom' name='Eb_invfrom'  class='babyupdate form-control autosize autocompinc' style='width: 150px' value='"+cval+"'></td>");
+//            $(".uppercase").Setcase({caseValue : 'upper'});
             $(".autosize").doValidation({rule:'general',prop:{autosize:true}});
         }
         if(ifcondition=='ebinvitem')
@@ -2225,7 +2235,10 @@ $(document).ready(function(){
         }
     });
     // EXPENSE BABY UPDATE FUNCTION
-    $(document).on('change','.babyupdate', function (){
+    $(document).on('change','.babyupdate', function (evnt){
+        evnt.stopPropagation();
+        evnt.preventDefault();
+        evnt.stopImmediatePropagation();
         if($('#ebcategory_'+combineid).hasClass("babyedit")==true){
 
             var babycategory=$('#ebcategory_'+combineid).text();
@@ -2268,7 +2281,7 @@ $(document).ready(function(){
         else{
             var babycomment=$('#Eb_invcomments').val();
         }
-        if($('#Eb_category').val()!='SELECT') {
+        if($('#Eb_category').val()!='SELECT' && babyinvdate!='' && babyinamt!='' && babyinfromt!='' && babyinvitem!='') {
             $('.preloader').show();
             $.ajax({
                 type: "POST",
@@ -2296,7 +2309,7 @@ $(document).ready(function(){
                             $('#PDLY_SEARCH_lbl_flextableheader').hide();
                             $('#PDLY_btn_pdf').hide();
                             PDLY_SEARCH_searchvalue()
-
+                            previous_id = undefined;
                         }
                         else {
                             PDLY_SEARCH_loadflextable()
@@ -2345,7 +2358,7 @@ $(document).ready(function(){
         }
         if(carifcondition=='ecinvdate')
         {
-            $('#'+cid).replaceWith("<td  class='new' id='"+carprevious_id+"'><input type='text' id='Ec_invdate' name='Ec_invdate'  class='carupdate form-control date-picker' style='width: 110px' value='"+carcval+"'></td>");
+            $('#'+cid).replaceWith("<td  class='new' id='"+carprevious_id+"'><input type='text' id='Ec_invdate' name='Ec_invdate'  class='carupdate form-control date-picker datemandtry' style='width: 110px' value='"+carcval+"'></td>");
             $(".date-picker").datepicker({dateFormat:'dd-mm-yy',
                 changeYear: true,
                 changeMonth: true
@@ -2354,12 +2367,13 @@ $(document).ready(function(){
         }
         if(carifcondition=='ecamount')
         {
-            $('#'+cid).replaceWith("<td class='new' id='"+carprevious_id+"'><input type='text' id='Ec_invamt' name='Ec_invamt'  class='carupdate form-control amtonlyinc' style='width: 80px' value='"+carcval+"'></td>");
+            $('#'+cid).replaceWith("<td class='new' id='"+carprevious_id+"'><input type='text' id='Ec_invamt' name='Ec_invamt'  class='carupdate form-control amtonlyinc' style='width: 90px' value='"+carcval+"'></td>");
             $(".amtonlyinc").doValidation({rule:'numbersonly',prop:{realpart:5,imaginary:2}});
         }
         if(carifcondition=='ecinvfrom')
         {
             $('#'+cid).replaceWith("<td  class='new' id='"+carprevious_id+"'><input type='text' id='Ec_invfrom' name='Ec_invfrom'  class='carupdate form-control autosize autocompinc' style='width: 150px' value='"+carcval+"'></td>");
+//            $(".uppercase").Setcase({caseValue : 'upper'});
             $(".autosize").doValidation({rule:'general',prop:{autosize:true}});
 
         }
@@ -2373,7 +2387,10 @@ $(document).ready(function(){
         }
     });
     // EXPENSE CAR UPDATE FUNCTION
-    $(document).on('change','.carupdate', function (){
+    $(document).on('change','.carupdate', function (evnt){
+        evnt.stopPropagation();
+        evnt.preventDefault();
+        evnt.stopImmediatePropagation();
         if($('#eccategory_'+carcombineid).hasClass("caredit")==true){
 
             var carcategory=$('#eccategory_'+carcombineid).text();
@@ -2416,7 +2433,7 @@ $(document).ready(function(){
         else{
             var carcomment=$('#Ec_invcomments').val();
         }
-        if($('#Ec_category').val()!='SELECT') {
+        if($('#Ec_category').val()!='SELECT' && carinvdate!='' && carinamt!='' && carinfromt!='' && carinvitem!='') {
             $('.preloader').show();
             $.ajax({
                 type: "POST",
@@ -2444,6 +2461,7 @@ $(document).ready(function(){
                             $('#PDLY_SEARCH_lbl_flextableheader').hide();
                             $('#PDLY_btn_pdf').hide();
                             PDLY_SEARCH_searchvalue()
+                            carprevious_id = undefined;
                         }
                         else {
                             PDLY_SEARCH_loadflextable()
@@ -2491,7 +2509,7 @@ $(document).ready(function(){
         }
         if(personalifcondition=='epinvdate')
         {
-            $('#'+cid).replaceWith("<td  class='new' id='"+personalprevious_id+"'><input type='text' id='Ep_invdate' name='Ep_invdate'  class='personalupdate form-control date-picker' style='width: 110px' value='"+personalcval+"'></td>");
+            $('#'+cid).replaceWith("<td  class='new' id='"+personalprevious_id+"'><input type='text' id='Ep_invdate' name='Ep_invdate'  class='personalupdate form-control date-picker datemandtry' style='width: 110px' value='"+personalcval+"'></td>");
             $(".date-picker").datepicker({dateFormat:'dd-mm-yy',
                 changeYear: true,
                 changeMonth: true
@@ -2506,6 +2524,7 @@ $(document).ready(function(){
         if(personalifcondition=='epinvfrom')
         {
             $('#'+cid).replaceWith("<td  class='new' id='"+personalprevious_id+"'><input type='text' id='Ep_invfrom' name='Ep_invfrom'  class='personalupdate form-control autosize autocompinc' style='width: 200px' value='"+personalcval+"'></td>");
+//            $(".uppercase").Setcase({caseValue : 'upper'});
             $(".autosize").doValidation({rule:'general',prop:{autosize:true}});
         }
         if(personalifcondition=='epinvitem')
@@ -2541,7 +2560,10 @@ $(document).ready(function(){
         }
     });
     // EXPENSE PERSONAL UPDATE FUNCTION
-    $(document).on('change','.personalupdate', function (){
+    $(document).on('change','.personalupdate', function (evnt){
+        evnt.stopPropagation();
+        evnt.preventDefault();
+        evnt.stopImmediatePropagation();
         if($('#epcategory_'+personalcombineid).hasClass("personaledit")==true){
 
             var personalcategory=$('#epcategory_'+personalcombineid).text();
@@ -2584,7 +2606,7 @@ $(document).ready(function(){
         else{
             var personalcomment=$('#Ep_invcomments').val();
         }
-        if($('#Ep_category').val()!='SELECT') {
+        if($('#Ep_category').val()!='SELECT' && personalinvdate!='' && personalinamt!='' && personalinfromt!='' && personalinvitem!='') {
             $('.preloader').show();
             $.ajax({
                 type: "POST",
@@ -2612,6 +2634,7 @@ $(document).ready(function(){
                             $('#PDLY_SEARCH_lbl_flextableheader').hide();
                             $('#PDLY_btn_pdf').hide();
                             PDLY_SEARCH_searchvalue()
+                            personalprevious_id = undefined;
                         }
                         else {
                             PDLY_SEARCH_loadflextable()
@@ -2649,7 +2672,7 @@ $(document).ready(function(){
         carloancval = $(this).text();
         if(carloanifcondition=='eclpaiddate')
         {
-            $('#'+cid).replaceWith("<td  class='new' id='"+carloanprevious_id+"'><input type='text' id='Ecl_paiddate' name='Ecl_paiddate'  class='carloanupdate form-control date-picker' style='width: 110px' value='"+carloancval+"'></td>");
+            $('#'+cid).replaceWith("<td  class='new' id='"+carloanprevious_id+"'><input type='text' id='Ecl_paiddate' name='Ecl_paiddate'  class='carloanupdate form-control date-picker datemandtry' style='width: 110px' value='"+carloancval+"'></td>");
             $("#Ecl_paiddate").datepicker({dateFormat:'dd-mm-yy',
                 changeYear: true,
                 changeMonth: true
@@ -2658,7 +2681,7 @@ $(document).ready(function(){
         }
         if(carloanifcondition=='eclfromperiod')
         {
-            $('#'+cid).replaceWith("<td  class='new' id='"+carloanprevious_id+"'><input type='text' id='Ecl_fromperiod' name='Ecl_fromperiod'  class='carloanupdate form-control date-picker' style='width: 110px' value='"+carloancval+"'></td>");
+            $('#'+cid).replaceWith("<td  class='new' id='"+carloanprevious_id+"'><input type='text' id='Ecl_fromperiod' name='Ecl_fromperiod'  class='carloanupdate form-control date-picker datemandtry' style='width: 110px' value='"+carloancval+"'></td>");
             $("#Ecl_fromperiod").datepicker({dateFormat:'dd-mm-yy',
                 changeYear: true,
                 changeMonth: true
@@ -2667,7 +2690,7 @@ $(document).ready(function(){
         }
         if(carloanifcondition=='ecltopaid')
         {
-            $('#'+cid).replaceWith("<td  class='new' id='"+carloanprevious_id+"'><input type='text' id='Ecl_toperiod' name='Ecl_toperiod'  class='carloanupdate form-control date-picker'  style='width: 110px' value='"+carloancval+"'></td>");
+            $('#'+cid).replaceWith("<td  class='new' id='"+carloanprevious_id+"'><input type='text' id='Ecl_toperiod' name='Ecl_toperiod'  class='carloanupdate form-control date-picker datemandtry'  style='width: 110px' value='"+carloancval+"'></td>");
             $("#Ecl_toperiod").datepicker({dateFormat:'dd-mm-yy',
                 changeYear: true,
                 changeMonth: true
@@ -2687,7 +2710,10 @@ $(document).ready(function(){
 
     });
     // EXPENSE CARLOAN UPDATE FUNCTION
-    $(document).on('change','.carloanupdate', function (){
+    $(document).on('change','.carloanupdate', function (evnt){
+        evnt.stopPropagation();
+        evnt.preventDefault();
+        evnt.stopImmediatePropagation();
         $('.preloader').show();
         if($('#eclpaiddate_'+carloancombineid).hasClass("carloanedit")==true){
 
@@ -2724,51 +2750,63 @@ $(document).ready(function(){
         else{
             var eclcomments=$('#Ecl_invcomments').val();
         }
-        //CHECK PAID DATE GREATER THAN FROM PERIOD & TO PERIOD
-        $.ajax({
-            type: "POST",
-            url: controller_url+"expensecarloanupdate",
-            data:{'rowid':carloancombineid,'eclpaiddate':eclpaiddate,'eclfromperiod':eclfromperiod,'ecltopaid':ecltopaid,'eclamount':eclamount,'eclcomments':eclcomments},
-            success: function(data) {
-                $('.preloader').hide();
-                var resultflag=data;
-                if(resultflag==1)
-                {
-                    var PDLY_INPUT_expensetypetext=$('#PDLY_SEARCH_lb_typelist').find('option:selected').text();
-                    var PDLY_INPUT_CONFSAVEMSG =PDLY_SEARCH_hdrmsgArray[3].EMC_DATA.replace('[TYPE]', PDLY_INPUT_expensetypetext);
-                    show_msgbox("PERSONAL EXPENSE ENTRY/SEARCH/UPDATE/DELETE",PDLY_INPUT_CONFSAVEMSG,"success",false);
-                    var PDLY_SEARCH_lb_babysearchoptionvalue=$('#PDLY_SEARCH_lb_babysearchoption').val();
-                    if((PDLY_SEARCH_lb_babysearchoptionvalue==67))
-                    {
-                        $('#PDLY_SEARCH_tbl_htmltable').hide();
-                        $('#PDLY_SEARCH_div_htmltable').hide();
-                        $('#PDLY_SEARCH_lbl_flextableheader').hide();
-                        $('#PDLY_btn_pdf').hide();
-                        PDLY_SEARCH_searchvalue()
+        if(eclpaiddate!='' && eclfromperiod!='' && ecltopaid!='' && eclamount!='') {
+            //CHECK PAID DATE GREATER THAN FROM PERIOD & TO PERIOD
+            $.ajax({
+                type: "POST",
+                url: controller_url + "expensecarloanupdate",
+                data: {
+                    'rowid': carloancombineid,
+                    'eclpaiddate': eclpaiddate,
+                    'eclfromperiod': eclfromperiod,
+                    'ecltopaid': ecltopaid,
+                    'eclamount': eclamount,
+                    'eclcomments': eclcomments
+                },
+                success: function (data) {
+                    $('.preloader').hide();
+                    var resultflag = data;
+                    if (resultflag == 1) {
+                        var PDLY_INPUT_expensetypetext = $('#PDLY_SEARCH_lb_typelist').find('option:selected').text();
+                        var PDLY_INPUT_CONFSAVEMSG = PDLY_SEARCH_hdrmsgArray[3].EMC_DATA.replace('[TYPE]', PDLY_INPUT_expensetypetext);
+                        show_msgbox("PERSONAL EXPENSE ENTRY/SEARCH/UPDATE/DELETE", PDLY_INPUT_CONFSAVEMSG, "success", false);
+                        var PDLY_SEARCH_lb_babysearchoptionvalue = $('#PDLY_SEARCH_lb_babysearchoption').val();
+                        if ((PDLY_SEARCH_lb_babysearchoptionvalue == 67)) {
+                            $('#PDLY_SEARCH_tbl_htmltable').hide();
+                            $('#PDLY_SEARCH_div_htmltable').hide();
+                            $('#PDLY_SEARCH_lbl_flextableheader').hide();
+                            $('#PDLY_btn_pdf').hide();
+                            PDLY_SEARCH_searchvalue()
+                            carloanprevious_id = undefined;
+                        }
+                        else {
+                            PDLY_SEARCH_loadflextable()
+                            carloanprevious_id = undefined;
+                        }
                     }
-                    else
-                    {
-                        PDLY_SEARCH_loadflextable()
-                        carloanprevious_id=undefined;
+                    else {
+                        show_msgbox("PERSONAL EXPENSE ENTRY/SEARCH/UPDATE/DELETE", PDLY_SEARCH_hdrmsgArray[36].EMC_DATA, "success", false);
                     }
+                },
+                error: function (data) {
+                    alert('error in getting' + JSON.stringify(data));
                 }
-                else
-                {
-                    show_msgbox("PERSONAL EXPENSE ENTRY/SEARCH/UPDATE/DELETE",PDLY_SEARCH_hdrmsgArray[36].EMC_DATA,"success",false);
-                }
-            },
-            error: function (data) {
-                alert('error in getting' + JSON.stringify(data));
-            }
-        });
+            });
+        }
     }) ;
     var PDLY_rowid='';
     //DELETE THE REQUIRED RECORD FOR ALL FORMS//
-    $(document).on('click','.PDLY_SEARCH_btn_deletebutton',function(){
+    $(document).on('click','.PDLY_SEARCH_btn_deletebutton',function(evnt){
+        evnt.stopPropagation();
+        evnt.preventDefault();
+        evnt.stopImmediatePropagation();
         PDLY_rowid = $(this).attr('id');
         show_msgbox("PERSONAL EXPENSE ENTRY/SEARCH/UPDATE/DELETE",PDLY_SEARCH_hdrmsgArray[35].EMC_DATA,"success","delete");
     });
-    $(document).on('click','.deleteconfirm',function(){
+    $(document).on('click','.deleteconfirm',function(evnt){
+        evnt.stopPropagation();
+        evnt.preventDefault();
+        evnt.stopImmediatePropagation();
         $(".preloader").show();
         var PDLY_SEARCH_obj_rowvalue=[];
         var PDLY_SEARCH_lb_typelistvalue=$('#PDLY_SEARCH_lb_typelist').val();
@@ -2920,7 +2958,7 @@ $(document).ready(function(){
         <div class="form-group">
             <label id="PCE_lbl_invitems" class="col-sm-2" >INVOICE AMOUNT<em>*</em></label>
             <div class="col-sm-3">
-                <input type="text" style="max-width: 80px;" placeholder="Invoice Amount" id="PCE_tb_invamt" name="PCE_tb_invamt" class="form-control amtonly carsubmultivalid" />
+                <input type="text" style="max-width: 90px;" placeholder="Invoice Amount" id="PCE_tb_invamt" name="PCE_tb_invamt" class="form-control amtonly carsubmultivalid" />
             </div>
         </div>
         <div class="form-group">
@@ -2932,7 +2970,7 @@ $(document).ready(function(){
         <div class="form-group">
             <label id="PCE_lbl_invfrom" class="col-sm-2" >INVOICE FROM<em>*</em></label>
             <div class="col-sm-2">
-                <input type="text" placeholder="Invoice From" id="PCE_tb_invfrom" class="form-control carsubmultivalid autosize" name="PCE_tb_invfrom" />
+                <input type="text" placeholder="Invoice From"  maxlength="200" id="PCE_tb_invfrom" class="form-control carsubmultivalid autosize" name="PCE_tb_invfrom" />
             </div>
         </div>
         <div class="form-group">
@@ -2977,7 +3015,7 @@ $(document).ready(function(){
         <div class="form-group">
             <label id="PCLE_lbl_invamt" class="col-sm-2" >INVOICE AMOUNT<em>*</em></label>
             <div class="col-sm-3">
-                <input type="text" placeholder="Invoice Amount" style="max-width: 80px;" id="PCLE_tb_invamt" class="form-control amtonly carloansubmultivalid" name="PCLE_tb_invamt" />
+                <input type="text" placeholder="Invoice Amount" style="max-width: 90px;" id="PCLE_tb_invamt" class="form-control amtonly carloansubmultivalid" name="PCLE_tb_invamt" />
             </div>
         </div>
         <div class="form-group">
